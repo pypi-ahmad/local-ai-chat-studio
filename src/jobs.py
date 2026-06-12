@@ -13,6 +13,7 @@ thread. They touch SQLite / ChromaDB / Ollama directly.
 from __future__ import annotations
 
 import threading
+import time
 from dataclasses import dataclass, field
 from typing import Any, Iterator
 
@@ -33,14 +34,29 @@ class Job:
 
     conv_id: str
     model_name: str
-    status: str = "running"  # running | done | error
+    status: str = "running"  # running | done | error | cancelled
     text: str = ""
     error: str = ""
     references: list[str] = field(default_factory=list)
+    cancelled: bool = False
+    start_ts: float = field(default_factory=time.monotonic)
+
+    def elapsed(self) -> float:
+        return time.monotonic() - self.start_ts
 
 
 _jobs: dict[str, Job] = {}
 _lock = threading.Lock()
+
+
+def stop(conv_id: str) -> None:
+    """Request cancellation. The UI stops showing the job immediately; the worker
+    discards its result (does not persist) once the in-flight request unblocks."""
+    with _lock:
+        job = _jobs.get(conv_id)
+        if job and job.status == "running":
+            job.cancelled = True
+            job.status = "cancelled"
 
 
 def get(conv_id: str | None) -> Job | None:
@@ -120,28 +136,41 @@ def _run(
     try:
         parts: list[str] = []
         for chunk in _stream(provider, model_name, messages, temperature):
+            if job.cancelled:
+                logger.info("generation cancelled for {}", job.conv_id)
+                return  # discard partial output; do not persist
             parts.append(chunk)
             with _lock:
                 job.text = "".join(parts)
+        if job.cancelled:
+            return
         answer = "".join(parts).strip()
 
         ref_meta = [{"name": r, "kind": "reference"} for r in references]
         chat_store.add_message(job.conv_id, "assistant", answer, ref_meta or None)
 
+        # Mark done now so the UI settles to the final message immediately; the
+        # title/indexing/memory steps below are background polish, not blocking.
+        with _lock:
+            job.status = "done"
+    except Exception as exc:  # surfaced to the UI; never crashes the app
+        if job.cancelled:
+            return  # request was cancelled; the error is just the aborted connection
+        logger.exception("generation job failed for {}", job.conv_id)
+        with _lock:
+            job.error = str(exc)
+            job.status = "error"
+        return
+
+    try:  # best-effort post-processing — failures here never affect the reply
         if is_first_turn and helper_model:
             _autotitle(job.conv_id, user_text, answer, helper_model)
         if embed_model:
             after_turn_indexing(job.conv_id, embed_model, user_text, answer)
         if memory_on and helper_model and embed_model:
             _maybe_extract(job.conv_id, helper_model, embed_model)
-
-        with _lock:
-            job.status = "done"
-    except Exception as exc:  # surfaced to the UI; never crashes the app
-        logger.exception("generation job failed for {}", job.conv_id)
-        with _lock:
-            job.error = str(exc)
-            job.status = "error"
+    except Exception:
+        logger.exception("post-processing failed for {}", job.conv_id)
 
 
 def _autotitle(conv_id: str, first_user: str, first_assistant: str, helper_model: str) -> None:
