@@ -2,7 +2,7 @@
 
 import streamlit as st
 
-from src import chat_store, memory, rag
+from src import chat_store, memory, providers, rag
 from src.config import config
 
 st.set_page_config(page_title="Settings", page_icon="⚙️", layout="centered")
@@ -74,6 +74,70 @@ if st.session_state.get("confirm_clear_chats"):
     with cc2:
         if st.button("Cancel"):
             st.session_state.confirm_clear_chats = False
+            st.rerun()
+
+st.subheader("Assistants (presets)")
+st.caption(
+    "An assistant bundles a system prompt + model + temperature. Pick it from the "
+    "sidebar on the chat page. The 🧑‍💻 Coding Agent is built in."
+)
+for p in chat_store.list_presets():
+    pc1, pc2 = st.columns([5, 1])
+    with pc1:
+        st.markdown(
+            f"**{p['name']}** — `{p['model_key']}` · temp {p['temperature']}"
+            + (" · built-in" if p["builtin"] else "")
+        )
+    with pc2:
+        if st.button("🗑", key=f"delp_{p['id']}", help="Delete preset"):
+            chat_store.delete_preset(p["id"])
+            st.rerun()
+
+with st.form("new_preset"):
+    st.markdown("**Create an assistant from the current chat settings**")
+    preset_name = st.text_input("Name", placeholder="e.g. SQL Tutor")
+    preset_prompt = st.text_area(
+        "System prompt",
+        value=st.session_state.get("settings_system_prompt", ""),
+        placeholder="You are…",
+    )
+    preset_temp = st.slider("Temperature", 0.0, 1.5,
+                            value=float(st.session_state.get("settings_temperature", config.temperature)),
+                            step=0.05)
+    if st.form_submit_button("Save assistant"):
+        model_key = st.session_state.get("selected_model", "")
+        if preset_name.strip() and model_key:
+            chat_store.save_preset(preset_name.strip(), preset_prompt, model_key, preset_temp)
+            st.success(f"Saved “{preset_name.strip()}” (model: {model_key}).")
+            st.rerun()
+        else:
+            st.error("Give it a name, and pick a model on the chat page first.")
+
+st.subheader("Data controls")
+imp = st.file_uploader("Import chats (JSONL export from this app)", type=["jsonl", "json"])
+if imp is not None and st.button("Import now"):
+    n = chat_store.import_jsonl(imp.getvalue().decode("utf-8", errors="replace"))
+    st.success(f"Imported {n} conversation(s).")
+
+if st.button("🧨 Panic wipe — erase EVERYTHING"):
+    st.session_state.confirm_wipe = True
+if st.session_state.get("confirm_wipe"):
+    st.error(
+        "This erases **all chats, memories, your profile, presets, vectors, and "
+        "in-memory API keys**. There is no undo. Export first if unsure."
+    )
+    wc1, wc2 = st.columns(2)
+    with wc1:
+        if st.button("Yes, erase everything", type="primary"):
+            chat_store.wipe_everything()
+            rag.clear_all_vectors()
+            providers.clear_all_secrets()
+            st.session_state.conv_id = None
+            st.session_state.confirm_wipe = False
+            st.success("Everything wiped. Fresh start.")
+    with wc2:
+        if st.button("Cancel wipe"):
+            st.session_state.confirm_wipe = False
             st.rerun()
 
 st.caption(

@@ -102,11 +102,12 @@ def start(
     memory_on: bool,
     crosschat_on: bool,
     is_first_turn: bool,
+    web_search: bool = False,
 ) -> Job:
     """Spawn a background worker for one assistant reply and return its Job.
 
     Takes raw inputs (text, uploaded file bytes, history) — ALL slow work
-    (file parsing/OCR, document indexing, memory & cross-chat retrieval, prompt
+    (file parsing/OCR, document indexing, web search, retrieval, prompt
     assembly, generation) happens in the worker so the UI rerenders instantly.
     """
     job = Job(conv_id=conv_id, model_name=model_name)
@@ -117,7 +118,7 @@ def start(
         args=(
             job, provider, model_name, is_vision, user_text, raw_files, history,
             custom_system, temperature, embed_model, helper_model,
-            vision_fallback, memory_on, crosschat_on, is_first_turn,
+            vision_fallback, memory_on, crosschat_on, is_first_turn, web_search,
         ),
         daemon=True,
     )
@@ -125,14 +126,85 @@ def start(
     return job
 
 
-def _stream(provider: str, model_name: str, messages: list[dict[str, Any]], temperature: float) -> Iterator[str]:
+def run_ephemeral(key: str, provider: str, model_name: str, user_text: str,
+                  system: str, temperature: float) -> Job:
+    """Fire-and-forget generation NOT tied to a conversation (model compare).
+
+    Streams into the registry under ``key``; nothing is persisted to SQLite.
+    """
+    job = Job(conv_id=key, model_name=model_name, phase="generating")
+    with _lock:
+        _jobs[key] = job
+
+    def _worker() -> None:
+        try:
+            messages: list[dict[str, Any]] = []
+            if system:
+                messages.append({"role": "system", "content": system})
+            messages.append({"role": "user", "content": user_text})
+            stats: dict[str, Any] = {}
+            parts: list[str] = []
+            t0 = time.monotonic()
+            for chunk in _stream(provider, model_name, messages, temperature, stats):
+                if job.cancelled:
+                    return
+                parts.append(chunk)
+                with _lock:
+                    job.text = "".join(parts)
+            secs = time.monotonic() - t0
+            tok_s = _tokens_per_sec(stats, secs)
+            with _lock:
+                job.notes = [f"{secs:.1f}s" + (f" · {tok_s:.0f} tok/s" if tok_s else "")]
+                job.status = "done"
+        except Exception as exc:
+            with _lock:
+                job.error = _friendly_error(str(exc))
+                job.status = "error"
+
+    threading.Thread(target=_worker, daemon=True).start()
+    return job
+
+
+def _tokens_per_sec(stats: dict[str, Any], secs: float) -> float | None:
+    if stats.get("tokens") and stats.get("eval_ns"):  # Ollama: exact decode rate
+        return stats["tokens"] / (stats["eval_ns"] / 1e9)
+    if stats.get("tokens") and secs > 0:  # cloud: wall-clock approximation
+        return stats["tokens"] / secs
+    return None
+
+
+def _stream(
+    provider: str,
+    model_name: str,
+    messages: list[dict[str, Any]],
+    temperature: float,
+    stats: dict[str, Any] | None = None,
+) -> Iterator[str]:
     if provider == "ollama":
         for m in messages:  # Ollama wants raw image bytes, not (bytes, mime) tuples
             if m.get("images"):
                 m["images"] = [img for img, _mime in m["images"]]
-        yield from ollama_stream(model_name, messages, temperature=temperature)
+        yield from ollama_stream(model_name, messages, temperature=temperature, stats=stats)
     else:
-        yield from providers.stream_chat(provider, model_name, messages, temperature)
+        yield from providers.stream_chat(provider, model_name, messages, temperature, stats=stats)
+
+
+def _web_search(query: str, max_results: int = 5) -> list[dict[str, str]]:
+    """DuckDuckGo search (no API key). Returns [{title, url, snippet}]; never raises."""
+    try:
+        try:
+            from ddgs import DDGS  # current package name
+        except ImportError:
+            from duckduckgo_search import DDGS  # legacy fallback
+        results = DDGS().text(query, max_results=max_results) or []
+        return [
+            {"title": r.get("title", ""), "url": r.get("href", ""), "snippet": r.get("body", "")}
+            for r in results
+            if r.get("href")
+        ]
+    except Exception as exc:
+        logger.warning("web search failed: {}", exc)
+        return []
 
 
 def _process_attachments(
@@ -192,12 +264,29 @@ def _run(
     memory_on: bool,
     crosschat_on: bool,
     is_first_turn: bool,
+    web_search: bool,
 ) -> None:
     try:
         # Phase 1: prepare — file parsing/OCR/indexing + retrieval + prompt assembly.
         attachment_context, images = _process_attachments(
             job, raw_files, is_vision, vision_fallback, embed_model
         )
+        if job.cancelled:
+            return
+        sources: list[dict[str, str]] = []
+        if web_search:
+            job.notes.append("searching the web")
+            sources = _web_search(user_text)
+            if sources:
+                lines = [
+                    f"[{i}] {s['title']} — {s['snippet']} ({s['url']})"
+                    for i, s in enumerate(sources, 1)
+                ]
+                attachment_context += (
+                    "\n\n## Web search results\n"
+                    "Use these results when relevant and cite them inline as [n].\n"
+                    + "\n".join(lines)
+                )
         if job.cancelled:
             return
         messages, references = build_messages(
@@ -222,7 +311,9 @@ def _run(
 
         # Phase 2: generate.
         parts: list[str] = []
-        for chunk in _stream(provider, model_name, messages, temperature):
+        stats: dict[str, Any] = {}
+        t0 = time.monotonic()
+        for chunk in _stream(provider, model_name, messages, temperature, stats):
             if job.cancelled:
                 logger.info("generation cancelled for {}", job.conv_id)
                 return  # discard partial output; do not persist
@@ -232,9 +323,18 @@ def _run(
         if job.cancelled:
             return
         answer = "".join(parts).strip()
+        secs = time.monotonic() - t0
 
-        ref_meta = [{"name": r, "kind": "reference"} for r in references]
-        chat_store.add_message(job.conv_id, "assistant", answer, ref_meta or None)
+        meta: list[dict[str, Any]] = [{"name": r, "kind": "reference"} for r in references]
+        meta.extend({"kind": "source", "name": s["title"][:80], "url": s["url"]} for s in sources)
+        tok_s = _tokens_per_sec(stats, secs)
+        meta.append({
+            "kind": "meta", "name": "meta", "model": model_name,
+            "secs": round(secs, 1),
+            "tokens": stats.get("tokens"),
+            "tok_s": round(tok_s, 1) if tok_s else None,
+        })
+        chat_store.add_message(job.conv_id, "assistant", answer, meta)
 
         # Mark done now so the UI settles to the final message immediately; the
         # title/indexing/memory steps below are background polish, not blocking.

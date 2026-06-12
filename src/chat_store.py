@@ -49,6 +49,15 @@ CREATE TABLE IF NOT EXISTS kv (
     value TEXT NOT NULL,
     updated_at TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS presets (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE,
+    system_prompt TEXT NOT NULL DEFAULT '',
+    model_key TEXT NOT NULL DEFAULT '',
+    temperature REAL NOT NULL DEFAULT 0.7,
+    builtin INTEGER NOT NULL DEFAULT 0,
+    created_at TEXT NOT NULL
+);
 """
 
 
@@ -67,6 +76,10 @@ def _conn() -> sqlite3.Connection:
 def init_db() -> None:
     with _conn() as conn:
         conn.executescript(_SCHEMA)
+        try:  # lightweight migration for pre-existing databases
+            conn.execute("ALTER TABLE conversations ADD COLUMN pinned INTEGER NOT NULL DEFAULT 0")
+        except sqlite3.OperationalError:
+            pass  # column already exists
 
 
 # --- conversations -----------------------------------------------------------
@@ -106,6 +119,34 @@ def rename_conversation(conv_id: str, title: str) -> None:
 def delete_conversation(conv_id: str) -> None:
     with _conn() as conn:
         conn.execute("DELETE FROM conversations WHERE id=?", (conv_id,))
+
+
+def set_pinned(conv_id: str, pinned: bool) -> None:
+    with _conn() as conn:
+        conn.execute("UPDATE conversations SET pinned=? WHERE id=?", (1 if pinned else 0, conv_id))
+
+
+def search_conversations(query: str, limit: int = 30) -> list[str]:
+    """Conversation ids whose title or any message matches (full-text LIKE)."""
+    like = f"%{query}%"
+    with _conn() as conn:
+        rows = conn.execute(
+            "SELECT DISTINCT c.id FROM conversations c "
+            "LEFT JOIN messages m ON m.conv_id = c.id "
+            "WHERE c.title LIKE ? OR m.content LIKE ? "
+            "ORDER BY c.updated_at DESC LIMIT ?",
+            (like, like, limit),
+        ).fetchall()
+    return [r["id"] for r in rows]
+
+
+def delete_messages_from(conv_id: str, ts: str) -> int:
+    """Delete the message at ``ts`` and everything after it (edit/regenerate)."""
+    with _conn() as conn:
+        cur = conn.execute(
+            "DELETE FROM messages WHERE conv_id=? AND ts >= ?", (conv_id, ts)
+        )
+    return cur.rowcount
 
 
 def clear_all_conversations() -> int:
@@ -273,6 +314,80 @@ def kv_set(key: str, value: str) -> None:
 
 
 # --- export --------------------------------------------------------------------
+
+# --- presets ("assistants") -----------------------------------------------------
+
+def list_presets() -> list[dict[str, Any]]:
+    with _conn() as conn:
+        return [dict(r) for r in conn.execute(
+            "SELECT * FROM presets ORDER BY builtin DESC, name"
+        ).fetchall()]
+
+
+def save_preset(name: str, system_prompt: str, model_key: str, temperature: float,
+                builtin: bool = False) -> str:
+    pid = uuid.uuid4().hex
+    with _conn() as conn:
+        conn.execute(
+            "INSERT INTO presets (id, name, system_prompt, model_key, temperature, builtin, created_at) "
+            "VALUES (?,?,?,?,?,?,?) "
+            "ON CONFLICT(name) DO UPDATE SET system_prompt=excluded.system_prompt, "
+            "model_key=excluded.model_key, temperature=excluded.temperature",
+            (pid, name.strip(), system_prompt, model_key, temperature, 1 if builtin else 0, _now()),
+        )
+    return pid
+
+
+def delete_preset(preset_id: str) -> None:
+    with _conn() as conn:
+        conn.execute("DELETE FROM presets WHERE id=?", (preset_id,))
+
+
+def get_preset_by_name(name: str) -> dict[str, Any] | None:
+    with _conn() as conn:
+        row = conn.execute("SELECT * FROM presets WHERE name=?", (name,)).fetchone()
+    return dict(row) if row else None
+
+
+# --- data controls ----------------------------------------------------------------
+
+def export_conversation_markdown(conv_id: str) -> str:
+    conv = get_conversation(conv_id)
+    if not conv:
+        return ""
+    lines = [f"# {conv['title']}", f"_model: {conv['model']}_", ""]
+    for m in get_messages(conv_id):
+        who = "**You**" if m["role"] == "user" else "**Assistant**"
+        lines += [f"{who}:", "", m["content"], "", "---", ""]
+    return "\n".join(lines)
+
+
+def import_jsonl(data: str) -> int:
+    """Import conversations from a JSONL export. Returns # imported."""
+    n = 0
+    for line in data.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            obj = json.loads(line)
+            conv_id = create_conversation(obj.get("model") or "ollama::unknown")
+            rename_conversation(conv_id, obj.get("title") or "Imported chat")
+            for m in obj.get("messages", []):
+                if m.get("role") in ("user", "assistant") and m.get("content"):
+                    add_message(conv_id, m["role"], m["content"])
+            n += 1
+        except (json.JSONDecodeError, KeyError, TypeError):
+            continue
+    return n
+
+
+def wipe_everything() -> None:
+    """Panic wipe: all conversations, messages, memories, feedback, profile, presets."""
+    with _conn() as conn:
+        for table in ("conversations", "memories", "kv", "presets"):
+            conn.execute(f"DELETE FROM {table}")
+
 
 def export_jsonl() -> str:
     """All conversations as JSONL (one conversation per line) for future fine-tuning."""
