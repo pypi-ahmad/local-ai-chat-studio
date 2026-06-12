@@ -11,7 +11,7 @@ from loguru import logger
 from src import chat_store, jobs, memory, providers, rag
 from src.config import config
 from src.files import ACCEPTED_TYPES, chunk_text, parse_upload
-from src.model_labels import dropdown_label, hint_for
+from src.model_labels import hint_for
 from src.ollama_client import (
     ModelInfo,
     chat_models,
@@ -31,6 +31,17 @@ chat_store.init_db()
 MEMORY_EXTRACT_EVERY = 8  # messages
 
 
+PROVIDER_BADGES = {
+    "Ollama (local)": "🦙",
+    "Ollama (cloud)": "☁️",
+    "OpenAI": "🟢",
+    "Anthropic": "🟣",
+    "OpenRouter": "🔻",
+    "xAI (Grok)": "⚫",
+    "Google Gemini": "🔷",
+}
+
+
 @dataclass
 class SelectedModel:
     """Uniform view over an Ollama model or a cloud-provider model."""
@@ -38,10 +49,16 @@ class SelectedModel:
     key: str  # 'ollama::<name>' or '<provider>::<id>'
     provider: str
     name: str
-    label: str
-    hint: str
+    hint: str  # short, for the dropdown line
+    detail: str  # longer (capabilities / cloud-api), shown as a caption
     is_vision: bool
+    group: str  # provider category, e.g. "Ollama (local)" / "OpenRouter"
+    group_rank: int  # ordering: local first, then cloud Ollama, then providers
     context_length: int | None = None
+
+    @property
+    def badge(self) -> str:
+        return PROVIDER_BADGES.get(self.group, "🔌")
 
 
 @st.cache_data(ttl=60, show_spinner=False)
@@ -64,31 +81,53 @@ def normalize_model_key(value: str) -> str:
 
 
 def build_model_catalog(models: list[ModelInfo], show_cloud: bool) -> dict[str, SelectedModel]:
-    """Unified, ordered {key: SelectedModel} for the dropdown."""
+    """Unified {key: SelectedModel} for the dropdown, ordered and grouped by provider."""
     catalog: dict[str, SelectedModel] = {}
     for m in chat_models(models, include_cloud=show_cloud):
         key = f"ollama::{m.name}"
+        group = "Ollama (cloud)" if m.is_cloud else "Ollama (local)"
+        size = "cloud" if m.is_cloud else f"{m.size_gb:.1f} GB"
         catalog[key] = SelectedModel(
             key=key,
             provider="ollama",
             name=m.name,
-            label=dropdown_label(m),
-            hint=hint_for(m) + (" · capabilities: " + " · ".join(m.capabilities or ["completion"])),
+            hint=f"{hint_for(m)} · {size}",
+            detail="capabilities: " + " · ".join(m.capabilities or ["completion"]),
             is_vision=m.is_vision,
+            group=group,
+            group_rank=0 if not m.is_cloud else 1,
             context_length=m.context_length,
         )
     for provider in providers.configured_providers():
+        label = providers.PROVIDERS[provider]["label"]
         for am in cached_provider_models(provider):
             catalog[am.key] = SelectedModel(
                 key=am.key,
                 provider=provider,
                 name=am.id,
-                label=am.dropdown_label,
-                hint=am.hint + " · cloud API",
+                hint=am.hint,
+                detail="cloud API",
                 is_vision=am.is_vision,
+                group=label,
+                group_rank=2,
                 context_length=am.context_length,
             )
     return catalog
+
+
+def ordered_keys(catalog: dict[str, SelectedModel], group_filter: str | None) -> list[str]:
+    """Keys ordered by (group_rank, group, name); optionally filtered to one group."""
+    items = [v for v in catalog.values() if group_filter in (None, "All", v.group)]
+    items.sort(key=lambda v: (v.group_rank, v.group.lower(), v.name.lower()))
+    return [v.key for v in items]
+
+
+def present_groups(catalog: dict[str, SelectedModel]) -> list[str]:
+    """Distinct provider groups present, in display order."""
+    seen: dict[str, int] = {}
+    for v in catalog.values():
+        seen.setdefault(v.group, v.group_rank)
+    return [g for g, _ in sorted(seen.items(), key=lambda kv: (kv[1], kv[0].lower()))]
 
 
 def get_state(key: str, default=None):
@@ -216,28 +255,60 @@ st.session_state.helper_model = helper_info.name if helper_info else None
 
 pending_model = st.session_state.pop("pending_model", None)
 if pending_model and pending_model in catalog:
+    # Restoring a conversation's model: show "All" so it's present in the dropdown.
+    st.session_state.provider_filter = "All"
     st.session_state.selected_model = pending_model
 
 with st.sidebar:
     st.title("🤖 Chat Studio")
 
-    col1, col2 = st.columns([4, 1])
-    with col1:
-        selected_key = st.selectbox(
-            "Model",
-            options=list(catalog.keys()),
-            format_func=lambda k: catalog[k].label,
-            key="selected_model",
+    if not catalog:
+        st.warning("No models available. Start Ollama or add a provider key on **Providers**.")
+        st.stop()
+
+    # Provider category filter (also tames providers like OpenRouter with 100s of models).
+    groups = present_groups(catalog)
+    filter_options = ["All"] + groups
+    if st.session_state.get("provider_filter") not in filter_options:
+        st.session_state.provider_filter = "All"
+
+    fcol, rcol = st.columns([4, 1])
+    with fcol:
+        provider_filter = st.selectbox(
+            "Provider",
+            options=filter_options,
+            format_func=lambda g: ("🌐 All providers" if g == "All"
+                                    else f"{PROVIDER_BADGES.get(g, '🔌')} {g}"),
+            key="provider_filter",
         )
-    with col2:
+    with rcol:
         st.write("")
         if st.button("⟳", help="Refresh model lists (Ollama + providers)"):
             cached_models.clear()
             cached_provider_models.clear()
             st.rerun()
 
+    model_keys = ordered_keys(catalog, provider_filter)
+    # Reconcile the stored selection so the selectbox never errors on a missing option.
+    if st.session_state.get("selected_model") not in model_keys:
+        st.session_state.pop("selected_model", None)
+
+    show_group = provider_filter == "All"
+
+    def _model_label(k: str) -> str:
+        sm = catalog[k]
+        head = f"{sm.badge} {sm.group} · " if show_group else f"{sm.badge} "
+        return f"{head}{sm.name} — {sm.hint}"
+
+    selected_key = st.selectbox(
+        "Model",
+        options=model_keys,
+        format_func=_model_label,
+        key="selected_model",
+    )
+
     selected = catalog[selected_key]
-    st.caption(f"**{selected.hint}**")
+    st.caption(f"**{selected.badge} {selected.group}** · {selected.hint} · {selected.detail}")
     if not embed_info:
         st.caption("⚠️ No embedding model — memory & RAG off. `ollama pull embeddinggemma`")
     if not providers.configured_providers():

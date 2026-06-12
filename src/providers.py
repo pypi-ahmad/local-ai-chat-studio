@@ -5,17 +5,17 @@ released models appear automatically — same zero-code-change principle as the
 Ollama integration. Anthropic uses the official ``anthropic`` SDK; the others
 speak the OpenAI-compatible API via the ``openai`` SDK.
 
-API keys are stored locally in ``data/providers.json`` (chmod 600), with
-environment variables as a fallback. Keys never leave this machine except to
-their own provider.
+API keys are kept ONLY in the server's process memory for the session — never
+written to disk, logged, or exported. Environment variables are supported as a
+read-only fallback. Keys never leave this machine except to their own provider.
 """
 
 from __future__ import annotations
 
 import base64
-import json
 import os
 import re
+import threading
 from dataclasses import dataclass, field
 from typing import Any, Iterator
 
@@ -113,87 +113,94 @@ class ApiModel:
         return f"{self.id}  —  {self.hint} · cloud API  ({PROVIDERS[self.provider]['label']})"
 
 
-# --- key storage -----------------------------------------------------------------
+# --- key storage (IN-MEMORY ONLY — never written to disk) -------------------------
+# Security posture: API keys live only in the running server's process memory for
+# the lifetime of the session. They are NEVER persisted to disk, logged, exported,
+# or sent anywhere except the provider they belong to. Restarting the app wipes
+# them. A read-only fallback to environment variables is supported (those are set
+# by the user outside the app; we never write them). The store is guarded by a
+# lock because background generation threads read it too.
 
-def _keys_path():
-    return config.data_dir / "providers.json"
+_secrets: dict[str, str] = {}
+_secrets_lock = threading.Lock()
+
+OLLAMA_CLOUD_URL = "https://ollama.com"
+_OLLAMA_HOST_KEY = "__ollama_host__"
+_OLLAMA_API_KEY = "__ollama_key__"
 
 
-def _load_keys() -> dict[str, str]:
-    try:
-        return json.loads(_keys_path().read_text())
-    except (FileNotFoundError, json.JSONDecodeError):
-        return {}
+def _get_secret(name: str) -> str | None:
+    with _secrets_lock:
+        return _secrets.get(name)
+
+
+def _set_secret(name: str, value: str | None) -> None:
+    with _secrets_lock:
+        if value:
+            _secrets[name] = value
+        else:
+            _secrets.pop(name, None)
 
 
 def get_api_key(provider: str) -> str | None:
-    key = _load_keys().get(provider)
-    if key:
-        return key
-    return os.environ.get(PROVIDERS[provider]["env"]) or None
+    return _get_secret(provider) or os.environ.get(PROVIDERS[provider]["env"]) or None
 
 
 def key_source(provider: str) -> str | None:
-    """'saved' | 'env' | None — where the active key comes from."""
-    if _load_keys().get(provider):
-        return "saved"
+    """'session' (in-memory) | 'env' | None — where the active key comes from."""
+    if _get_secret(provider):
+        return "session"
     if os.environ.get(PROVIDERS[provider]["env"]):
         return "env"
     return None
 
 
 def set_api_key(provider: str, key: str) -> None:
-    keys = _load_keys()
-    keys[provider] = key.strip()
-    path = _keys_path()
-    path.write_text(json.dumps(keys, indent=2))
-    path.chmod(0o600)
+    _set_secret(provider, (key or "").strip() or None)
 
 
 def remove_api_key(provider: str) -> None:
-    keys = _load_keys()
-    keys.pop(provider, None)
-    _keys_path().write_text(json.dumps(keys, indent=2))
+    _set_secret(provider, None)
 
 
 def configured_providers() -> list[str]:
     return [p for p in PROVIDERS if get_api_key(p)]
 
 
+def clear_all_secrets() -> None:
+    """Wipe every in-memory key (used by a 'forget all keys' control)."""
+    with _secrets_lock:
+        _secrets.clear()
+
+
 # --- Ollama endpoint configuration (host + optional API key) ----------------------
-# Lets the user point the app at a remote Ollama server or Ollama's hosted API
-# from the UI, with an optional Bearer token, without touching any config file.
-
-_OLLAMA_HOST_KEY = "__ollama_host__"
-_OLLAMA_API_KEY = "__ollama_key__"
-
+# Point the app at a local server, a remote Ollama, or Ollama's hosted cloud
+# (https://ollama.com) with an API key — also in-memory only.
 
 def get_ollama_host() -> str:
-    saved = _load_keys().get(_OLLAMA_HOST_KEY)
-    return saved or os.environ.get("CHAT_OLLAMA_HOST") or config.ollama_host
+    return _get_secret(_OLLAMA_HOST_KEY) or os.environ.get("CHAT_OLLAMA_HOST") or config.ollama_host
 
 
 def get_ollama_key() -> str | None:
-    return _load_keys().get(_OLLAMA_API_KEY) or os.environ.get("OLLAMA_API_KEY") or None
+    return _get_secret(_OLLAMA_API_KEY) or os.environ.get("OLLAMA_API_KEY") or None
+
+
+def ollama_key_source() -> str | None:
+    if _get_secret(_OLLAMA_API_KEY):
+        return "session"
+    if os.environ.get("OLLAMA_API_KEY"):
+        return "env"
+    return None
 
 
 def set_ollama_config(host: str, api_key: str | None) -> None:
-    keys = _load_keys()
-    keys[_OLLAMA_HOST_KEY] = (host or "").strip() or config.ollama_host
-    if api_key and api_key.strip():
-        keys[_OLLAMA_API_KEY] = api_key.strip()
-    else:
-        keys.pop(_OLLAMA_API_KEY, None)
-    path = _keys_path()
-    path.write_text(json.dumps(keys, indent=2))
-    path.chmod(0o600)
+    _set_secret(_OLLAMA_HOST_KEY, (host or "").strip() or config.ollama_host)
+    _set_secret(_OLLAMA_API_KEY, (api_key or "").strip() or None)
 
 
 def reset_ollama_config() -> None:
-    keys = _load_keys()
-    keys.pop(_OLLAMA_HOST_KEY, None)
-    keys.pop(_OLLAMA_API_KEY, None)
-    _keys_path().write_text(json.dumps(keys, indent=2))
+    _set_secret(_OLLAMA_HOST_KEY, None)
+    _set_secret(_OLLAMA_API_KEY, None)
 
 
 # --- model discovery ----------------------------------------------------------------
@@ -373,13 +380,20 @@ def _stream_openai_compat(
 
 # --- OpenRouter OAuth PKCE ("login with account") -----------------------------------
 
+_OR_VERIFIER_KEY = "__openrouter_verifier__"
+
+
 def openrouter_auth_url(callback_url: str) -> str:
-    """Start the PKCE flow: generates+persists a verifier, returns the auth URL."""
+    """Start the PKCE flow: generate an in-memory verifier, return the auth URL.
+
+    The verifier is a short-lived secret kept in process memory only (never on
+    disk); it survives the browser round-trip because the server process stays up.
+    """
     import hashlib
     import secrets
 
     verifier = secrets.token_urlsafe(48)
-    (config.data_dir / ".openrouter_verifier").write_text(verifier)
+    _set_secret(_OR_VERIFIER_KEY, verifier)
     digest = hashlib.sha256(verifier.encode()).digest()
     challenge = base64.urlsafe_b64encode(digest).rstrip(b"=").decode()
     return (
@@ -390,25 +404,21 @@ def openrouter_auth_url(callback_url: str) -> str:
 
 
 def openrouter_exchange_code(code: str) -> bool:
-    """Finish the PKCE flow: exchange the callback code for an API key."""
-    verifier_file = config.data_dir / ".openrouter_verifier"
-    if not verifier_file.exists():
+    """Finish the PKCE flow: exchange the callback code for an API key (kept in memory)."""
+    verifier = _get_secret(_OR_VERIFIER_KEY)
+    if not verifier:
         return False
     try:
         resp = httpx.post(
             "https://openrouter.ai/api/v1/auth/keys",
-            json={
-                "code": code,
-                "code_verifier": verifier_file.read_text().strip(),
-                "code_challenge_method": "S256",
-            },
+            json={"code": code, "code_verifier": verifier, "code_challenge_method": "S256"},
             timeout=30,
         )
         resp.raise_for_status()
         key = resp.json().get("key")
         if key:
             set_api_key("openrouter", key)
-            verifier_file.unlink(missing_ok=True)
+            _set_secret(_OR_VERIFIER_KEY, None)
             return True
     except Exception as exc:
         logger.warning("OpenRouter code exchange failed: {}", exc)
