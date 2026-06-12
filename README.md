@@ -47,7 +47,10 @@ your chats, memory, and API keys never leave your machine.
 - **Non-blocking generation** — replies run in a background thread, so you can
   start another chat, open Settings, or browse while an answer keeps streaming.
   The sidebar shows ⏳ for running conversations and the finished reply is saved
-  even if you navigate away.
+  even if you navigate away. While a model works you get an **animated thinking
+  indicator** (bouncing dots → streaming text with a blinking cursor), a **⏹ Stop**
+  button to cancel, and a "still waiting…" hint if a model is slow to load. Slow
+  or stuck endpoints time out with a clear error instead of hanging forever.
 - **Configurable Ollama endpoint** — defaults to local `localhost:11434`; point it
   at a remote or hosted Ollama (with an optional Bearer key) from the Providers page.
 - **Saved chats** — every message persists to SQLite instantly; conversations are

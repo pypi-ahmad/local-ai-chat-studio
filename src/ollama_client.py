@@ -34,7 +34,9 @@ def _client() -> ollama.Client:
     if client is None:
         _client_cache.clear()
         headers = {"Authorization": f"Bearer {key}"} if key else None
-        client = ollama.Client(host=host, headers=headers)
+        # Generous timeout so model-load latency is tolerated, but a wedged or
+        # unreachable server eventually errors instead of hanging forever.
+        client = ollama.Client(host=host, headers=headers, timeout=config.request_timeout)
         _client_cache[sig] = client
     return client
 

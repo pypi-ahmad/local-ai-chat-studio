@@ -22,6 +22,7 @@ class AppConfig(BaseSettings):
     # Generation defaults (user-adjustable in Settings page)
     temperature: float = 0.7
     keep_alive: str = "10m"  # how long Ollama keeps a model in VRAM
+    request_timeout: float = 300.0  # seconds; caps a hung/slow Ollama request
 
     # Feature toggles
     show_cloud_models: bool = True  # Ollama :cloud models (run on ollama.com account)

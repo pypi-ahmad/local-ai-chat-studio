@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import time
 from dataclasses import dataclass
 
 import streamlit as st
@@ -29,6 +28,26 @@ st.set_page_config(page_title="Local AI Chat Studio", page_icon="🤖", layout="
 chat_store.init_db()
 
 MEMORY_EXTRACT_EVERY = 8  # messages
+
+# Animated "assistant is thinking / typing" indicator (bouncing dots + cursor).
+TYPING_CSS = """
+<style>
+@keyframes lacs-blink { 0%, 80%, 100% { opacity: .25; transform: translateY(0); }
+                        40% { opacity: 1; transform: translateY(-3px); } }
+.lacs-typing { display: inline-flex; gap: 6px; align-items: center; padding: 6px 2px; }
+.lacs-typing span { width: 8px; height: 8px; border-radius: 50%; background: currentColor;
+                    opacity: .4; animation: lacs-blink 1.4s infinite both; }
+.lacs-typing span:nth-child(2) { animation-delay: .2s; }
+.lacs-typing span:nth-child(3) { animation-delay: .4s; }
+@keyframes lacs-cursor { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+.blink-cursor { animation: lacs-cursor 1s steps(1) infinite; font-weight: bold; }
+</style>
+"""
+TYPING_HTML = (
+    "<div class='lacs-typing' aria-label='Assistant is thinking'>"
+    "<span></span><span></span><span></span></div>"
+)
+st.markdown(TYPING_CSS, unsafe_allow_html=True)
 
 
 PROVIDER_BADGES = {
@@ -236,6 +255,40 @@ def _feedback_widget(message_id: str, current: dict[str, int]) -> None:
             chat_store.set_feedback(message_id, rating)
 
 
+@st.fragment(run_every=0.6)
+def render_live_generation(conv_id: str) -> None:
+    """Auto-refreshing view of an in-flight reply: animated dots → streaming text
+    with a blinking cursor, a Stop button, and a 'taking a while' hint. Only this
+    fragment reruns on the interval, so the page (input, sidebar) stays stable."""
+    job = jobs.get(conv_id)
+    if job is None:
+        return
+    with st.chat_message("assistant"):
+        if job.references:
+            st.caption("🔗 referencing: " + " · ".join(f"_{r}_" for r in job.references))
+        if job.status == "running":
+            if job.text:
+                st.markdown(job.text + " <span class='blink-cursor'>▌</span>", unsafe_allow_html=True)
+            else:
+                st.markdown(TYPING_HTML, unsafe_allow_html=True)
+            waited = job.elapsed()
+            if waited > 20 and not job.text:
+                st.caption(
+                    f"⏳ Still waiting for the model… {int(waited)}s. It may be loading into "
+                    "memory (slow on first use / limited VRAM). You can **Stop** and try a smaller model."
+                )
+            if st.button("⏹ Stop", key=f"stop_{conv_id}"):
+                jobs.stop(conv_id)
+                st.rerun(scope="app")
+        elif job.status == "error":
+            st.error(f"Generation failed: {job.error}")
+        elif job.status == "cancelled":
+            st.info("Stopped.")
+    if job.status != "running":
+        jobs.clear(conv_id)
+        st.rerun(scope="app")
+
+
 # --- sidebar -------------------------------------------------------------------
 
 if not ollama_alive():
@@ -372,23 +425,12 @@ for m in history_msgs:
 
 # Live view of a background reply for THIS conversation (it keeps running even if
 # the user navigates away; the worker persists the final message to SQLite).
-active_job = jobs.get(conv_id)
-if active_job and active_job.status == "running":
-    with st.chat_message("assistant"):
-        if active_job.references:
-            st.caption("🔗 referencing: " + " · ".join(f"_{r}_" for r in active_job.references))
-        st.markdown((active_job.text or "_thinking…_") + " ▌")
-    time.sleep(0.4)
-    st.rerun()
-elif active_job:  # done or error — finished message is already in SQLite
-    if active_job.status == "error":
-        st.error(f"Generation failed: {active_job.error}")
-    jobs.clear(conv_id)
-    st.rerun()
+if jobs.get(conv_id):
+    render_live_generation(conv_id)
 
 busy = jobs.is_running(conv_id)
 prompt = st.chat_input(
-    "Generating… open a new chat to ask something else" if busy else f"Message {selected.name}...",
+    "Generating… (open a New chat to ask something else)" if busy else f"Message {selected.name}...",
     accept_file="multiple",
     file_type=ACCEPTED_TYPES,
     disabled=busy,
