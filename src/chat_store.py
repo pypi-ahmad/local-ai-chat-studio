@@ -108,6 +108,19 @@ def delete_conversation(conv_id: str) -> None:
         conn.execute("DELETE FROM conversations WHERE id=?", (conv_id,))
 
 
+def clear_all_conversations() -> int:
+    """Delete every conversation (and, via cascade, its messages and feedback).
+
+    Long-term memories and the user profile are intentionally left untouched —
+    those are managed on the Memory page. Returns the number of conversations
+    removed.
+    """
+    with _conn() as conn:
+        (n,) = conn.execute("SELECT COUNT(*) FROM conversations").fetchone()
+        conn.execute("DELETE FROM conversations")
+    return n
+
+
 def mark_memory_extracted(conv_id: str) -> None:
     with _conn() as conn:
         conn.execute(

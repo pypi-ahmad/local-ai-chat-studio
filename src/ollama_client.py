@@ -15,7 +15,28 @@ from loguru import logger
 
 from src.config import config
 
-_client = ollama.Client(host=config.ollama_host)
+_client_cache: dict = {}
+
+
+def _client() -> ollama.Client:
+    """Build (and cache) an Ollama client from the runtime-configured host/key.
+
+    The host and optional API key are read from the Providers settings each call,
+    so pointing the app at a remote or hosted Ollama takes effect without a
+    restart. The constructed client is cached per (host, key).
+    """
+    from src import providers  # lazy import to avoid any import cycle at load time
+
+    host = providers.get_ollama_host()
+    key = providers.get_ollama_key()
+    sig = (host, key)
+    client = _client_cache.get(sig)
+    if client is None:
+        _client_cache.clear()
+        headers = {"Authorization": f"Bearer {key}"} if key else None
+        client = ollama.Client(host=host, headers=headers)
+        _client_cache[sig] = client
+    return client
 
 
 @dataclass
@@ -55,7 +76,7 @@ def list_models() -> list[ModelInfo]:
     the caller level, so this stays cheap).
     """
     models: list[ModelInfo] = []
-    resp = _client.list()
+    resp = _client().list()
     for m in resp.get("models", []):
         raw: dict[str, Any] = dict(m) if not isinstance(m, dict) else m
         name = raw.get("name") or raw.get("model", "")
@@ -66,7 +87,7 @@ def list_models() -> list[ModelInfo]:
         context_length = details.get("context_length")
         if not capabilities:
             try:
-                show = _client.show(name)
+                show = _client().show(name)
                 capabilities = list(getattr(show, "capabilities", None) or [])
                 model_info = getattr(show, "modelinfo", None) or {}
                 for key, value in model_info.items():
@@ -142,7 +163,7 @@ def stream_chat(
     temperature: float | None = None,
 ) -> Iterator[str]:
     """Stream a chat completion, yielding content deltas."""
-    stream = _client.chat(
+    stream = _client().chat(
         model=model,
         messages=messages,
         stream=True,
@@ -161,7 +182,7 @@ def generate(model: str, prompt: str, system: str | None = None, temperature: fl
     if system:
         messages.append({"role": "system", "content": system})
     messages.append({"role": "user", "content": prompt})
-    resp = _client.chat(
+    resp = _client().chat(
         model=model,
         messages=messages,
         options={"temperature": temperature},
@@ -179,7 +200,7 @@ def describe_image(model: str, image_bytes: bytes, hint: str = "") -> str:
     )
     if hint:
         prompt += f" The user said: {hint}"
-    resp = _client.chat(
+    resp = _client().chat(
         model=model,
         messages=[{"role": "user", "content": prompt, "images": [image_bytes]}],
         options={"temperature": 0.1},
@@ -190,13 +211,13 @@ def describe_image(model: str, image_bytes: bytes, hint: str = "") -> str:
 
 def embed_texts(model: str, texts: list[str]) -> list[list[float]]:
     """Embed a batch of texts with the auto-detected Ollama embedding model."""
-    resp = _client.embed(model=model, input=texts)
+    resp = _client().embed(model=model, input=texts)
     return list(resp["embeddings"])
 
 
 def ollama_alive() -> bool:
     try:
-        _client.list()
+        _client().list()
         return True
     except Exception:
         return False

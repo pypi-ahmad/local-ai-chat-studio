@@ -160,6 +160,42 @@ def configured_providers() -> list[str]:
     return [p for p in PROVIDERS if get_api_key(p)]
 
 
+# --- Ollama endpoint configuration (host + optional API key) ----------------------
+# Lets the user point the app at a remote Ollama server or Ollama's hosted API
+# from the UI, with an optional Bearer token, without touching any config file.
+
+_OLLAMA_HOST_KEY = "__ollama_host__"
+_OLLAMA_API_KEY = "__ollama_key__"
+
+
+def get_ollama_host() -> str:
+    saved = _load_keys().get(_OLLAMA_HOST_KEY)
+    return saved or os.environ.get("CHAT_OLLAMA_HOST") or config.ollama_host
+
+
+def get_ollama_key() -> str | None:
+    return _load_keys().get(_OLLAMA_API_KEY) or os.environ.get("OLLAMA_API_KEY") or None
+
+
+def set_ollama_config(host: str, api_key: str | None) -> None:
+    keys = _load_keys()
+    keys[_OLLAMA_HOST_KEY] = (host or "").strip() or config.ollama_host
+    if api_key and api_key.strip():
+        keys[_OLLAMA_API_KEY] = api_key.strip()
+    else:
+        keys.pop(_OLLAMA_API_KEY, None)
+    path = _keys_path()
+    path.write_text(json.dumps(keys, indent=2))
+    path.chmod(0o600)
+
+
+def reset_ollama_config() -> None:
+    keys = _load_keys()
+    keys.pop(_OLLAMA_HOST_KEY, None)
+    keys.pop(_OLLAMA_API_KEY, None)
+    _keys_path().write_text(json.dumps(keys, indent=2))
+
+
 # --- model discovery ----------------------------------------------------------------
 
 def _excluded(provider: str, model_id: str) -> bool:

@@ -36,8 +36,15 @@ your chats, memory, and API keys never leave your machine.
   - Documents (PDF/docx/doc/xlsx/xls/txt/md/csv/...) are injected directly if
     small, or chunked + embedded + retrieved per-question (RAG) if large.
     Excel parses every sheet; legacy `.doc` needs `antiword` or LibreOffice.
+- **Non-blocking generation** — replies run in a background thread, so you can
+  start another chat, open Settings, or browse while an answer keeps streaming.
+  The sidebar shows ⏳ for running conversations and the finished reply is saved
+  even if you navigate away.
+- **Configurable Ollama endpoint** — defaults to local `localhost:11434`; point it
+  at a remote or hosted Ollama (with an optional Bearer key) from the Providers page.
 - **Saved chats** — every message persists to SQLite instantly; conversations are
   auto-titled by a small local model; reopening a chat restores its model.
+  Wipe them all from **Settings → Clear all chats** (memories are kept).
 - **Cross-chat references** — past conversations are embedded into ChromaDB; relevant
   snippets are retrieved into new chats ("🔗 referencing: _Fraud Detection Models_").
 - **ChatGPT-style memory** — durable facts about you are extracted after conversations,

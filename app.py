@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
+import time
 from dataclasses import dataclass
 
 import streamlit as st
 from loguru import logger
 
-from src import chat_store, memory, providers, rag
+from src import chat_store, jobs, memory, providers, rag
 from src.config import config
 from src.files import ACCEPTED_TYPES, chunk_text, parse_upload
 from src.model_labels import dropdown_label, hint_for
@@ -16,14 +17,12 @@ from src.ollama_client import (
     chat_models,
     describe_image,
     embedding_model,
-    generate,
     list_models,
     ollama_alive,
     smallest_text_model,
-    stream_chat,
     vision_fallback_model,
 )
-from src.orchestrator import after_turn_indexing, build_messages
+from src.orchestrator import build_messages
 from src.personalization import note_conversation_done, rebuild_profile
 
 st.set_page_config(page_title="Local AI Chat Studio", page_icon="🤖", layout="wide")
@@ -101,7 +100,9 @@ def get_state(key: str, default=None):
 def switch_conversation(conv_id: str | None, catalog: dict[str, SelectedModel]) -> None:
     """Change active conversation, extracting memories from the one we leave."""
     prev = st.session_state.get("conv_id")
-    if prev and st.session_state.get("settings_memory", config.memory_enabled):
+    # Don't extract from a conversation whose reply is still streaming — the
+    # worker will run extraction itself when it finishes.
+    if prev and not jobs.is_running(prev) and st.session_state.get("settings_memory", config.memory_enabled):
         _maybe_extract_memories(prev, force=True)
     st.session_state.conv_id = conv_id
     if conv_id:  # restore the model this conversation was using, if still available
@@ -130,25 +131,6 @@ def _maybe_extract_memories(conv_id: str, force: bool = False) -> None:
         if note_conversation_done():
             with st.spinner("Refreshing your profile..."):
                 rebuild_profile(helper)
-
-
-def _autotitle(conv_id: str, first_user: str, first_assistant: str) -> None:
-    helper = st.session_state.get("helper_model")
-    if not helper:
-        return
-    try:
-        title = generate(
-            helper,
-            f"User: {first_user[:400]}\nAssistant: {first_assistant[:400]}",
-            system=(
-                "Write a 3-6 word title for this conversation. "
-                "Output ONLY the title, no quotes, no punctuation at the end."
-            ),
-        )
-        title = title.strip().strip('"')[:60] or "New chat"
-        chat_store.rename_conversation(conv_id, title)
-    except Exception as exc:
-        logger.warning("autotitle failed: {}", exc)
 
 
 def _handle_attachments(files, selected: SelectedModel, models: list[ModelInfo], conv_id: str):
@@ -215,23 +197,12 @@ def _feedback_widget(message_id: str, current: dict[str, int]) -> None:
             chat_store.set_feedback(message_id, rating)
 
 
-def _stream_for(selected: SelectedModel, messages, temperature: float):
-    """Route streaming to Ollama or the selected cloud provider."""
-    if selected.provider == "ollama":
-        # Ollama wants raw image bytes, not (bytes, mime) tuples
-        for m in messages:
-            if m.get("images"):
-                m["images"] = [img for img, _mime in m["images"]]
-        return stream_chat(selected.name, messages, temperature=temperature)
-    return providers.stream_chat(selected.provider, selected.name, messages, temperature)
-
-
 # --- sidebar -------------------------------------------------------------------
 
 if not ollama_alive():
     st.error(
-        f"Cannot reach Ollama at `{config.ollama_host}`. "
-        "Start it with `ollama serve` and reload."
+        f"Cannot reach Ollama at `{providers.get_ollama_host()}`. "
+        "Start it with `ollama serve`, or set the endpoint on the **Providers** page, then reload."
     )
     st.stop()
 
@@ -277,13 +248,15 @@ with st.sidebar:
         st.rerun()
 
     st.divider()
-    st.caption("Conversations")
+    running = jobs.running_conversations()
+    st.caption(f"Conversations{f' · ⏳ {len(running)} running' if running else ''}")
     for conv in chat_store.list_conversations(limit=50):
         c1, c2 = st.columns([5, 1])
         active = st.session_state.get("conv_id") == conv["id"]
         with c1:
+            prefix = "⏳ " if conv["id"] in running else ("● " if active else "")
             if st.button(
-                ("● " if active else "") + conv["title"],
+                prefix + conv["title"],
                 key=f"conv_{conv['id']}",
                 use_container_width=True,
             ):
@@ -301,10 +274,14 @@ with st.sidebar:
 # --- main chat area ---------------------------------------------------------------
 
 conv_id = st.session_state.get("conv_id")
+# Guard against a stale pointer (e.g. after "Clear all chats" on another page).
+if conv_id and not chat_store.get_conversation(conv_id):
+    conv_id = None
+    st.session_state.conv_id = None
 history_msgs = chat_store.get_messages(conv_id) if conv_id else []
 feedback_map = chat_store.get_feedback(conv_id) if conv_id else {}
 
-if not history_msgs:
+if not history_msgs and not jobs.get(conv_id):
     st.markdown(
         f"### Chat with `{selected.name}`\n"
         f"*{selected.hint}* — upload files or images right in the message box."
@@ -322,10 +299,28 @@ for m in history_msgs:
         if m["role"] == "assistant":
             _feedback_widget(m["id"], feedback_map)
 
+# Live view of a background reply for THIS conversation (it keeps running even if
+# the user navigates away; the worker persists the final message to SQLite).
+active_job = jobs.get(conv_id)
+if active_job and active_job.status == "running":
+    with st.chat_message("assistant"):
+        if active_job.references:
+            st.caption("🔗 referencing: " + " · ".join(f"_{r}_" for r in active_job.references))
+        st.markdown((active_job.text or "_thinking…_") + " ▌")
+    time.sleep(0.4)
+    st.rerun()
+elif active_job:  # done or error — finished message is already in SQLite
+    if active_job.status == "error":
+        st.error(f"Generation failed: {active_job.error}")
+    jobs.clear(conv_id)
+    st.rerun()
+
+busy = jobs.is_running(conv_id)
 prompt = st.chat_input(
-    f"Message {selected.name}...",
+    "Generating… open a new chat to ask something else" if busy else f"Message {selected.name}...",
     accept_file="multiple",
     file_type=ACCEPTED_TYPES,
+    disabled=busy,
 )
 
 if prompt:
@@ -342,11 +337,8 @@ if prompt:
         files, selected, models, conv_id
     )
 
+    is_first_turn = len(history_msgs) == 0
     chat_store.add_message(conv_id, "user", user_text, att_meta or None)
-    with st.chat_message("user"):
-        if att_meta:
-            st.caption("📎 " + ", ".join(a["name"] for a in att_meta))
-        st.markdown(user_text)
 
     memory_on = get_state("settings_memory", config.memory_enabled)
     crosschat_on = get_state("settings_crosschat", config.cross_chat_references)
@@ -365,28 +357,19 @@ if prompt:
         current_turn["images"] = images
     messages.append(current_turn)
 
-    with st.chat_message("assistant"):
-        if references:
-            st.caption("🔗 referencing: " + " · ".join(f"_{r}_" for r in references))
-        try:
-            answer = st.write_stream(
-                _stream_for(
-                    selected,
-                    messages,
-                    temperature=get_state("settings_temperature", config.temperature),
-                )
-            )
-        except Exception as exc:
-            st.error(f"Generation failed: {exc}")
-            st.stop()
-
-    ref_meta = [{"name": r, "kind": "reference"} for r in references]
-    chat_store.add_message(conv_id, "assistant", str(answer), ref_meta or None)
-
-    if len(history_msgs) == 0:  # title first so indexed turns carry the real title
-        _autotitle(conv_id, user_text, str(answer))
-    after_turn_indexing(conv_id, st.session_state.embed_model, user_text, str(answer))
-
-    if memory_on:
-        _maybe_extract_memories(conv_id)
+    # Run generation in the background so it survives navigation. The worker
+    # streams into a registry the UI polls, and persists the final message.
+    jobs.start(
+        conv_id=conv_id,
+        provider=selected.provider,
+        model_name=selected.name,
+        messages=messages,
+        references=references,
+        temperature=get_state("settings_temperature", config.temperature),
+        embed_model=st.session_state.embed_model,
+        helper_model=st.session_state.helper_model,
+        memory_on=memory_on,
+        is_first_turn=is_first_turn,
+        user_text=user_text,
+    )
     st.rerun()

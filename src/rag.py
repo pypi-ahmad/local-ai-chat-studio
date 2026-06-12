@@ -99,6 +99,15 @@ def delete_conv_vectors(conv_id: str) -> None:
             logger.warning("vector cleanup failed for {}: {}", conv_id, exc)
 
 
+def clear_all_chat_vectors() -> None:
+    """Drop all uploaded-document and chat-history vectors (memories are kept)."""
+    for name in (DOCS_COLLECTION, HISTORY_COLLECTION):
+        try:
+            _chroma.delete_collection(name)
+        except Exception as exc:
+            logger.warning("collection drop failed for {}: {}", name, exc)
+
+
 # --- memories -------------------------------------------------------------------
 
 def index_memory(embed_model: str, mem_id: str, content: str) -> None:
