@@ -9,19 +9,17 @@ from loguru import logger
 
 from src import chat_store, jobs, memory, providers, rag
 from src.config import config
-from src.files import ACCEPTED_TYPES, chunk_text, parse_upload
+from src.files import ACCEPTED_TYPES, IMAGE_TYPES
 from src.model_labels import hint_for
 from src.ollama_client import (
     ModelInfo,
     chat_models,
-    describe_image,
     embedding_model,
     list_models,
     ollama_alive,
     smallest_text_model,
     vision_fallback_model,
 )
-from src.orchestrator import build_messages
 from src.personalization import note_conversation_done, rebuild_profile
 
 st.set_page_config(page_title="Local AI Chat Studio", page_icon="🤖", layout="wide")
@@ -41,6 +39,18 @@ TYPING_CSS = """
 .lacs-typing span:nth-child(3) { animation-delay: .4s; }
 @keyframes lacs-cursor { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 .blink-cursor { animation: lacs-cursor 1s steps(1) infinite; font-weight: bold; }
+/* User messages on the right (ChatGPT-style), with a subtle bubble. */
+div[data-testid="stChatMessage"]:has([aria-label="Chat message from user"]),
+div[aria-label="Chat message from user"] {
+    flex-direction: row-reverse;
+    text-align: right;
+    background-color: rgba(28, 131, 225, 0.08);
+    border-radius: 14px;
+    padding: 0.6rem 0.9rem;
+}
+div[data-testid="stChatMessage"]:has([aria-label="Chat message from user"]) p {
+    text-align: right;
+}
 </style>
 """
 TYPING_HTML = (
@@ -48,6 +58,8 @@ TYPING_HTML = (
     "<span></span><span></span><span></span></div>"
 )
 st.markdown(TYPING_CSS, unsafe_allow_html=True)
+
+AVATARS = {"user": "🧑‍💻", "assistant": "🤖"}
 
 
 PROVIDER_BADGES = {
@@ -191,60 +203,6 @@ def _maybe_extract_memories(conv_id: str, force: bool = False) -> None:
                 rebuild_profile(helper)
 
 
-def _handle_attachments(files, selected: SelectedModel, models: list[ModelInfo], conv_id: str):
-    """Process uploads. Returns (attachment_context, images_for_model, attachment_meta).
-
-    images_for_model is a list of (bytes, mime) tuples.
-    """
-    context_parts: list[str] = []
-    images: list[tuple[bytes, str]] = []
-    meta: list[dict] = []
-    embed = st.session_state.get("embed_model")
-
-    for f in files:
-        att = parse_upload(f.name, f.getvalue())
-        meta.append({"name": att.name, "kind": att.kind})
-        if att.kind == "image":
-            if selected.is_vision:
-                images.append((att.image_bytes, att.mime))
-            else:
-                fallback = vision_fallback_model(models)
-                if fallback:
-                    st.info(
-                        f"`{selected.name}` can't see images — extracting content "
-                        f"with local `{fallback.name}` instead."
-                    )
-                    with st.spinner(f"Reading {att.name} with {fallback.name}..."):
-                        desc = describe_image(fallback.name, att.image_bytes)
-                    context_parts.append(
-                        f"## Image uploaded by user: {att.name}\n"
-                        f"(extracted by a vision model)\n{desc}"
-                    )
-                else:
-                    st.warning(f"No vision-capable model available to read {att.name}.")
-        else:  # document
-            if not att.text.strip():
-                st.warning(
-                    f"Could not extract text from {att.name}."
-                    + (" Install `antiword` or LibreOffice for .doc support." if att.name.endswith(".doc") else "")
-                )
-                continue
-            if len(att.text) <= config.doc_context_budget_chars:
-                context_parts.append(f"## Uploaded document: {att.name}\n{att.text}")
-            elif embed:
-                chunks = chunk_text(att.text, config.chunk_chars, config.chunk_overlap_chars)
-                with st.spinner(f"Indexing {att.name} ({len(chunks)} chunks)..."):
-                    rag.index_doc_chunks(embed, conv_id, att.name, chunks)
-                st.info(f"`{att.name}` is large — indexed for retrieval; ask away.")
-            else:
-                context_parts.append(
-                    f"## Uploaded document: {att.name} (truncated)\n"
-                    f"{att.text[: config.doc_context_budget_chars]}"
-                )
-                st.warning("No embedding model found — large file truncated to fit context.")
-    return "\n\n".join(context_parts), images, meta
-
-
 def _feedback_widget(message_id: str, current: dict[str, int]) -> None:
     key = f"fb_{message_id}"
     existing = current.get(message_id)
@@ -268,13 +226,16 @@ def render_live_generation(conv_id: str) -> None:
         jobs.clear(conv_id)
         st.rerun(scope="app")
         return
-    with st.chat_message("assistant"):
+    with st.chat_message("assistant", avatar=AVATARS["assistant"]):
         if job.references:
             st.caption("🔗 referencing: " + " · ".join(f"_{r}_" for r in job.references))
         if job.text:
             st.markdown(job.text + " <span class='blink-cursor'>▌</span>", unsafe_allow_html=True)
         else:
             st.markdown(TYPING_HTML, unsafe_allow_html=True)
+            if job.phase == "preparing":
+                note = f" — {job.notes[-1]}" if job.notes else ""
+                st.caption(f"📚 reading files & gathering context{note}…")
         waited = job.elapsed()
         if waited > 20 and not job.text:
             st.caption(
@@ -410,7 +371,7 @@ if not history_msgs and not jobs.get(conv_id):
 
 for m in history_msgs:
     is_error = any(a.get("kind") == "error" for a in m["attachments"])
-    with st.chat_message(m["role"]):
+    with st.chat_message(m["role"], avatar=AVATARS.get(m["role"])):
         files_meta = [a for a in m["attachments"] if a.get("kind") not in ("reference", "error")]
         refs_meta = [a for a in m["attachments"] if a.get("kind") == "reference"]
         if files_meta:
@@ -447,47 +408,37 @@ if prompt:
         conv_id = chat_store.create_conversation(selected.key)
         st.session_state.conv_id = conv_id
 
-    attachment_context, images, att_meta = _handle_attachments(
-        files, selected, models, conv_id
-    )
-
+    # Persist the user message IMMEDIATELY — it must appear in the chat no
+    # matter what happens next. All slow work (file parsing/OCR, retrieval,
+    # prompt assembly, generation) runs in the background worker.
+    raw_files = [(f.name, f.getvalue()) for f in files]
+    att_meta = [
+        {"name": n, "kind": "image" if n.rsplit(".", 1)[-1].lower() in IMAGE_TYPES else "document"}
+        for n, _ in raw_files
+    ]
     is_first_turn = len(history_msgs) == 0
     chat_store.add_message(conv_id, "user", user_text, att_meta or None)
 
-    memory_on = get_state("settings_memory", config.memory_enabled)
-    crosschat_on = get_state("settings_crosschat", config.cross_chat_references)
-    messages, references = build_messages(
+    fallback = vision_fallback_model(models)
+    jobs.start(
         conv_id=conv_id,
+        provider=selected.provider,
+        model_name=selected.name,
+        is_vision=selected.is_vision,
         user_text=user_text,
-        embed_model=st.session_state.embed_model,
+        raw_files=raw_files,
         history=[
             {"role": m["role"], "content": m["content"]}
             for m in history_msgs
             if not any(a.get("kind") == "error" for a in m["attachments"])
         ],
-        attachment_context=attachment_context,
         custom_system=get_state("settings_system_prompt", ""),
-        memory_enabled=memory_on,
-        cross_chat_enabled=crosschat_on,
-    )
-    current_turn = {"role": "user", "content": user_text}
-    if images:
-        current_turn["images"] = images
-    messages.append(current_turn)
-
-    # Run generation in the background so it survives navigation. The worker
-    # streams into a registry the UI polls, and persists the final message.
-    jobs.start(
-        conv_id=conv_id,
-        provider=selected.provider,
-        model_name=selected.name,
-        messages=messages,
-        references=references,
         temperature=get_state("settings_temperature", config.temperature),
         embed_model=st.session_state.embed_model,
         helper_model=st.session_state.helper_model,
-        memory_on=memory_on,
+        vision_fallback=fallback.name if fallback else None,
+        memory_on=get_state("settings_memory", config.memory_enabled),
+        crosschat_on=get_state("settings_crosschat", config.cross_chat_references),
         is_first_turn=is_first_turn,
-        user_text=user_text,
     )
     st.rerun()

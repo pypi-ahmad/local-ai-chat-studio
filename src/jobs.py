@@ -20,9 +20,12 @@ from typing import Any, Iterator
 from loguru import logger
 
 from src import chat_store, memory, providers, rag
+from src.config import config
+from src.files import Attachment, chunk_text, parse_upload
+from src.ollama_client import describe_image
 from src.ollama_client import generate as ollama_generate
 from src.ollama_client import stream_chat as ollama_stream
-from src.orchestrator import after_turn_indexing
+from src.orchestrator import after_turn_indexing, build_messages
 from src.personalization import note_conversation_done, rebuild_profile
 
 MEMORY_EXTRACT_EVERY = 8  # keep in sync with app.py
@@ -35,9 +38,11 @@ class Job:
     conv_id: str
     model_name: str
     status: str = "running"  # running | done | error | cancelled
+    phase: str = "preparing"  # preparing (files/context) | generating
     text: str = ""
     error: str = ""
     references: list[str] = field(default_factory=list)
+    notes: list[str] = field(default_factory=list)  # e.g. "image read by OCR model"
     cancelled: bool = False
     start_ts: float = field(default_factory=time.monotonic)
 
@@ -85,24 +90,34 @@ def start(
     conv_id: str,
     provider: str,
     model_name: str,
-    messages: list[dict[str, Any]],
-    references: list[str],
+    is_vision: bool,
+    user_text: str,
+    raw_files: list[tuple[str, bytes]],
+    history: list[dict[str, Any]],
+    custom_system: str,
     temperature: float,
     embed_model: str | None,
     helper_model: str | None,
+    vision_fallback: str | None,
     memory_on: bool,
+    crosschat_on: bool,
     is_first_turn: bool,
-    user_text: str,
 ) -> Job:
-    """Spawn a background worker for one assistant reply and return its Job."""
-    job = Job(conv_id=conv_id, model_name=model_name, references=references)
+    """Spawn a background worker for one assistant reply and return its Job.
+
+    Takes raw inputs (text, uploaded file bytes, history) — ALL slow work
+    (file parsing/OCR, document indexing, memory & cross-chat retrieval, prompt
+    assembly, generation) happens in the worker so the UI rerenders instantly.
+    """
+    job = Job(conv_id=conv_id, model_name=model_name)
     with _lock:
         _jobs[conv_id] = job
     thread = threading.Thread(
         target=_run,
         args=(
-            job, provider, model_name, messages, references, temperature,
-            embed_model, helper_model, memory_on, is_first_turn, user_text,
+            job, provider, model_name, is_vision, user_text, raw_files, history,
+            custom_system, temperature, embed_model, helper_model,
+            vision_fallback, memory_on, crosschat_on, is_first_turn,
         ),
         daemon=True,
     )
@@ -120,20 +135,92 @@ def _stream(provider: str, model_name: str, messages: list[dict[str, Any]], temp
         yield from providers.stream_chat(provider, model_name, messages, temperature)
 
 
+def _process_attachments(
+    job: Job,
+    raw_files: list[tuple[str, bytes]],
+    is_vision: bool,
+    vision_fallback: str | None,
+    embed_model: str | None,
+) -> tuple[str, list[tuple[bytes, str]]]:
+    """Parse uploads into context text + images for the model (worker-side)."""
+    context_parts: list[str] = []
+    images: list[tuple[bytes, str]] = []
+    for name, raw in raw_files:
+        att: Attachment = parse_upload(name, raw)
+        if att.kind == "image":
+            if is_vision:
+                images.append((att.image_bytes, att.mime))
+            elif vision_fallback:
+                job.notes.append(f"reading {att.name} with {vision_fallback} (model can't see images)")
+                desc = describe_image(vision_fallback, att.image_bytes)
+                context_parts.append(
+                    f"## Image uploaded by user: {att.name}\n(extracted by a vision model)\n{desc}"
+                )
+            else:
+                context_parts.append(f"## Image uploaded by user: {att.name}\n(no vision model available to read it)")
+        else:  # document
+            if not att.text.strip():
+                context_parts.append(f"## Uploaded document: {att.name}\n(no text could be extracted)")
+                continue
+            if len(att.text) <= config.doc_context_budget_chars:
+                context_parts.append(f"## Uploaded document: {att.name}\n{att.text}")
+            elif embed_model:
+                job.notes.append(f"indexing {att.name} for retrieval (large file)")
+                chunks = chunk_text(att.text, config.chunk_chars, config.chunk_overlap_chars)
+                rag.index_doc_chunks(embed_model, job.conv_id, att.name, chunks)
+            else:
+                context_parts.append(
+                    f"## Uploaded document: {att.name} (truncated)\n"
+                    f"{att.text[: config.doc_context_budget_chars]}"
+                )
+    return "\n\n".join(context_parts), images
+
+
 def _run(
     job: Job,
     provider: str,
     model_name: str,
-    messages: list[dict[str, Any]],
-    references: list[str],
+    is_vision: bool,
+    user_text: str,
+    raw_files: list[tuple[str, bytes]],
+    history: list[dict[str, Any]],
+    custom_system: str,
     temperature: float,
     embed_model: str | None,
     helper_model: str | None,
+    vision_fallback: str | None,
     memory_on: bool,
+    crosschat_on: bool,
     is_first_turn: bool,
-    user_text: str,
 ) -> None:
     try:
+        # Phase 1: prepare — file parsing/OCR/indexing + retrieval + prompt assembly.
+        attachment_context, images = _process_attachments(
+            job, raw_files, is_vision, vision_fallback, embed_model
+        )
+        if job.cancelled:
+            return
+        messages, references = build_messages(
+            conv_id=job.conv_id,
+            user_text=user_text,
+            embed_model=embed_model,
+            history=history,
+            attachment_context=attachment_context,
+            custom_system=custom_system,
+            memory_enabled=memory_on,
+            cross_chat_enabled=crosschat_on,
+        )
+        current_turn: dict[str, Any] = {"role": "user", "content": user_text}
+        if images:
+            current_turn["images"] = images
+        messages.append(current_turn)
+        with _lock:
+            job.references = references
+            job.phase = "generating"
+        if job.cancelled:
+            return
+
+        # Phase 2: generate.
         parts: list[str] = []
         for chunk in _stream(provider, model_name, messages, temperature):
             if job.cancelled:
