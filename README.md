@@ -64,6 +64,30 @@ your chats, memory, and API keys never leave your machine.
 - **Future fine-tuning ready** — export all chats as JSONL from Settings for a
   QLoRA personalization run when hardware allows.
 
+## Privacy & security
+
+- **API keys never touch disk.** Provider and Ollama-cloud keys live only in the
+  running server's process memory for the session. They are never written to a
+  file, logged, or included in chat exports, and are sent only to the provider
+  they belong to. Restarting the app forgets them.
+- **Read-only env fallback.** If you'd rather not retype keys each launch, set
+  them as environment variables (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`,
+  `OPENROUTER_API_KEY`, `XAI_API_KEY`, `GEMINI_API_KEY`, `OLLAMA_API_KEY`). The
+  app reads them but never writes them.
+- **One-click wipe.** The Providers page has per-key **Forget** and a global
+  **🧹 Forget all keys** control; password fields keep keys off the screen.
+- **Everything else stays local.** Chats, memories, and vectors live in `data/`
+  (SQLite + ChromaDB) on your machine. The app has no telemetry and no login —
+  only expose it beyond `localhost` on a network you trust.
+
+## Model picker
+
+The sidebar has a **Provider filter** (`🌐 All`, `🦙 Ollama (local)`,
+`☁️ Ollama (cloud)`, then each connected cloud provider) above the model
+dropdown. In **All** mode every model is grouped and badge-prefixed by provider;
+picking a single provider narrows the list — handy for providers like OpenRouter
+that expose hundreds of models. Hit ⟳ any time to re-fetch every list.
+
 ## Requirements
 
 | What | Why | Check |
@@ -105,10 +129,12 @@ Then open **http://localhost:8501** (Streamlit prints the exact URL; use
 
 ### First things to try
 
-1. Pick a model in the sidebar dropdown — hints tell you what each is good at.
+1. Pick a model — use the **Provider filter** to jump to a provider, then choose
+   a model from the grouped dropdown (hints tell you what each is good at).
 2. Type a message; attach files or images with the 📎 in the message box.
 3. *(optional)* Open **Providers** and add an OpenAI / Anthropic / OpenRouter /
-   xAI / Gemini API key — their models join the dropdown after a ⟳ refresh.
+   xAI / Gemini API key (or set the Ollama endpoint to cloud) — models join the
+   dropdown after a ⟳ refresh.
 4. After a few chats, check the **Memory** page to see what it has learned.
 
 ### Run on a fixed port, reachable from your LAN (optional)
@@ -129,6 +155,9 @@ uv run streamlit run app.py --server.port 8503 --server.address 0.0.0.0
 | `:cloud` model returns 403 | That model needs an Ollama subscription, or run `ollama signin` |
 | First reply very slow | Ollama is swapping models in 8 GB VRAM — later replies are fast |
 | `.doc` upload extracts nothing | Install LibreOffice (`sudo apt install libreoffice`) or `antiword` |
+| Provider key gone after restart | By design — keys are session-only. Re-enter on **Providers**, or set the env var (e.g. `OPENROUTER_API_KEY`) for a read-only fallback |
+| No local Ollama at all | On **Providers** → Ollama endpoint, click **Use Ollama Cloud** and paste an Ollama API key |
+| Too many models in the dropdown | Use the **Provider filter** above it to narrow to one provider |
 
 ## Configuration
 
