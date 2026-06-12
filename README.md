@@ -213,7 +213,10 @@ local-ai-chat-studio/
 ## 🤝 Contributing
 
 Contributions are very welcome — this is an open-source project and PRs, issues, and
-ideas are always appreciated. 🙌
+ideas are always appreciated. 🙌 Read the full guide in
+[CONTRIBUTING.md](CONTRIBUTING.md); issues and PRs come with templates, and the
+project follows a [Code of Conduct](CODE_OF_CONDUCT.md). Security reports go through
+[SECURITY.md](SECURITY.md).
 
 1. Fork and create a feature branch: `git checkout -b feat/your-idea`
 2. Keep changes focused; match the existing style (type hints, Google-style
