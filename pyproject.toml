@@ -1,0 +1,20 @@
+[project]
+name = "local-ai-chat-studio"
+version = "0.1.0"
+description = "A local-first, ChatGPT-style AI chat studio over Ollama with optional BYOK cloud providers, built-in memory, and self-improving personalization."
+requires-python = ">=3.12"
+dependencies = [
+    "anthropic>=0.109.1",
+    "chromadb>=1.5.9",
+    "loguru>=0.7.3",
+    "ollama>=0.6.2",
+    "openai>=2.41.1",
+    "openpyxl>=3.1.5",
+    "pandas>=3.0.3",
+    "pillow>=12.2.0",
+    "pydantic-settings>=2.14.1",
+    "pypdf>=6.13.2",
+    "python-docx>=1.2.0",
+    "streamlit>=1.58.0",
+    "xlrd>=2.0.2",
+]

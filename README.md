@@ -1,0 +1,174 @@
+# Local AI Chat Studio
+
+A ChatGPT-style AI tool centered on your **local Ollama models**, with optional
+bring-your-own-key cloud providers. Streamlit UI, SQLite + ChromaDB storage —
+your chats, memory, and API keys never leave your machine.
+
+<p>
+  <img alt="Python" src="https://img.shields.io/badge/python-3.12-blue.svg">
+  <img alt="Streamlit" src="https://img.shields.io/badge/UI-Streamlit-FF4B4B.svg">
+  <img alt="Ollama" src="https://img.shields.io/badge/LLM-Ollama-black.svg">
+  <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-green.svg">
+  <img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg">
+</p>
+
+> 100% local by default. Cloud providers are entirely optional and opt-in — add a
+> key only if you want them. Built to keep working unchanged as you pull new models
+> or upgrade your hardware: every model list is discovered live at runtime.
+
+## Features
+
+- **Auto-discovered models** — the dropdown is populated live from Ollama's API
+  (local **and** `:cloud` models) plus every connected provider's models endpoint.
+  Pull or release a new model anywhere, hit ⟳, it appears with an auto-generated
+  use hint (e.g. `gemma4:12b — vision, reasoning · strongest, slower`). No code
+  changes, ever. Hints derive from API metadata: capabilities (vision/thinking/
+  tools), name patterns (coder/OCR/medical/translation), and size tiers.
+- **BYOK cloud providers** (Providers page) — OpenAI, Anthropic, OpenRouter,
+  xAI (Grok), and Google Gemini. Paste an API key (or set the env var), or for
+  OpenRouter log in with your account (OAuth PKCE). Anthropic uses the official
+  `anthropic` SDK; the rest use their OpenAI-compatible endpoints. Keys live in
+  `data/providers.json` (chmod 600) and are sent only to their own provider.
+- **File & image uploads** in the chat box:
+  - Images go straight to vision models (local or cloud); for text-only models
+    they're automatically read by your best local vision/OCR model and injected
+    as text.
+  - Documents (PDF/docx/doc/xlsx/xls/txt/md/csv/...) are injected directly if
+    small, or chunked + embedded + retrieved per-question (RAG) if large.
+    Excel parses every sheet; legacy `.doc` needs `antiword` or LibreOffice.
+- **Saved chats** — every message persists to SQLite instantly; conversations are
+  auto-titled by a small local model; reopening a chat restores its model.
+- **Cross-chat references** — past conversations are embedded into ChromaDB; relevant
+  snippets are retrieved into new chats ("🔗 referencing: _Fraud Detection Models_").
+- **ChatGPT-style memory** — durable facts about you are extracted after conversations,
+  deduplicated by embedding similarity, and injected when relevant. Manage them on the
+  **Memory** page (edit / pin / archive / delete).
+- **Self-improving personalization** — a rolling user profile (expertise, style,
+  preferences) is rebuilt periodically from your chats and 👍/👎 feedback, and shapes
+  every system prompt. Unused memories decay; pinned ones never do.
+- **Future fine-tuning ready** — export all chats as JSONL from Settings for a
+  QLoRA personalization run when hardware allows.
+
+## Requirements
+
+| What | Why | Check |
+|---|---|---|
+| [Ollama](https://ollama.com/download) running locally | Serves all local models | `ollama --version` |
+| At least one chat model | Something to talk to | `ollama list` |
+| An embedding model | Memory, cross-chat references, RAG over big files | `ollama pull embeddinggemma` |
+| Python 3.12 + [uv](https://docs.astral.sh/uv/) | Runs the app | `uv --version` |
+| *(optional)* LibreOffice or `antiword` | Legacy `.doc` upload parsing | `which soffice antiword` |
+| *(optional)* Ollama account | `:cloud` models (run on ollama.com) | `ollama signin` |
+
+## How to run
+
+### First-time setup
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/pypi-ahmad/local-ai-chat-studio.git
+cd local-ai-chat-studio
+
+# 2. Make sure Ollama is up (usually already running as a service)
+ollama serve            # skip if `ollama list` already works
+
+# 3. Pull an embedding model once — enables memory + RAG
+ollama pull embeddinggemma
+
+# 4. Install dependencies into the project venv
+uv sync
+```
+
+### Start the app
+
+```bash
+uv run streamlit run app.py
+```
+
+Then open **http://localhost:8501** (Streamlit prints the exact URL; use
+`--server.port 8503` to pick a fixed port). Stop with `Ctrl+C`.
+
+### First things to try
+
+1. Pick a model in the sidebar dropdown — hints tell you what each is good at.
+2. Type a message; attach files or images with the 📎 in the message box.
+3. *(optional)* Open **Providers** and add an OpenAI / Anthropic / OpenRouter /
+   xAI / Gemini API key — their models join the dropdown after a ⟳ refresh.
+4. After a few chats, check the **Memory** page to see what it has learned.
+
+### Run on a fixed port, reachable from your LAN (optional)
+
+```bash
+uv run streamlit run app.py --server.port 8503 --server.address 0.0.0.0
+```
+
+> ⚠️ The app has no login — only expose it beyond `localhost` on a network you trust.
+
+### Troubleshooting
+
+| Symptom | Fix |
+|---|---|
+| "Cannot reach Ollama" banner | Start Ollama: `ollama serve` (or `systemctl start ollama`) |
+| "No embedding model — memory & RAG off" | `ollama pull embeddinggemma`, then ⟳ in the sidebar |
+| New model not in dropdown | Click ⟳ (model lists are cached 1–5 min) |
+| `:cloud` model returns 403 | That model needs an Ollama subscription, or run `ollama signin` |
+| First reply very slow | Ollama is swapping models in 8 GB VRAM — later replies are fast |
+| `.doc` upload extracts nothing | Install LibreOffice (`sudo apt install libreoffice`) or `antiword` |
+
+## Configuration
+
+Defaults live in `src/config.py`; override any of them with `CHAT_`-prefixed env vars
+(or a `.env` file), e.g. `CHAT_OLLAMA_HOST=http://192.168.1.5:11434`,
+`CHAT_PROFILE_REFRESH_EVERY=10`.
+
+All data (SQLite DB, Chroma vectors, uploads) lives in `data/` — delete it to reset.
+
+## How the smart parts work
+
+| Concern | Mechanism |
+|---|---|
+| Model labels | Rule-based on `/api/tags` metadata — works for models that don't exist yet |
+| Helper tasks (titles, extraction, profile) | Smallest general-purpose local model ≥1 GB, auto-selected |
+| Vision fallback | Smallest vision-capable model; OCR models by name as last resort |
+| Memory dedup | Cosine similarity ≥ 0.88 against existing memories bumps usage instead of duplicating |
+| Personalization | Profile rebuilt every N conversations from recent chats + rated answers |
+| VRAM | One model in VRAM at a time (Ollama scheduler), `keep_alive` configurable |
+
+## Project layout
+
+```
+local-ai-chat-studio/
+├── app.py              # Streamlit entry point (chat UI)
+├── pages/              # Memory, Settings, Providers pages
+├── src/
+│   ├── config.py       # Pydantic settings (env-overridable)
+│   ├── ollama_client.py# Local + :cloud model discovery and streaming
+│   ├── providers.py    # BYOK: OpenAI / Anthropic / OpenRouter / xAI / Gemini
+│   ├── model_labels.py # Rule-based "use hint" generator
+│   ├── files.py        # Upload parsing (PDF, Office, images, ...)
+│   ├── rag.py          # ChromaDB indexing + retrieval
+│   ├── memory.py       # Fact extraction, dedup, decay
+│   ├── personalization.py # Rolling user profile
+│   ├── orchestrator.py # Per-turn prompt assembly
+│   └── chat_store.py   # SQLite persistence
+└── data/               # SQLite DB, Chroma vectors, keys (git-ignored)
+```
+
+## Contributing
+
+Contributions are very welcome — this is an open-source project and PRs, issues,
+and ideas are always appreciated. 🙌
+
+1. Fork the repo and create a feature branch: `git checkout -b feat/your-idea`.
+2. Make your change. Keep it focused, and match the existing style (type hints,
+   Google-style docstrings, `loguru` for logging).
+3. Run the app locally and confirm your change works end to end.
+4. Commit with a clear message and open a pull request describing the *why*.
+
+Good first contributions: new file-type parsers, additional BYOK providers,
+better model-hint heuristics, UI polish, or tests. Found a bug or have a feature
+request? [Open an issue](https://github.com/pypi-ahmad/local-ai-chat-studio/issues).
+
+## License
+
+Released under the [MIT License](LICENSE) — free to use, modify, and share.
