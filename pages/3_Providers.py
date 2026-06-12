@@ -2,7 +2,7 @@
 
 import streamlit as st
 
-from src import providers
+from src import ollama_client, providers
 from src.config import config
 
 st.set_page_config(page_title="Providers", page_icon="🔌", layout="centered")
@@ -63,6 +63,52 @@ for pid, meta in providers.PROVIDERS.items():
             if source == "saved" and st.button("Remove key", key=f"rm_{pid}"):
                 providers.remove_api_key(pid)
                 st.rerun()
+
+st.divider()
+st.subheader("Ollama endpoint")
+st.markdown(
+    "By default the app talks to a local Ollama at `http://localhost:11434`. "
+    "Point it at a **remote Ollama server** or **Ollama's hosted API** by setting the "
+    "host below; add a Bearer **API key** if the endpoint requires one (e.g. a "
+    "secured remote or hosted Ollama). Local models, `:cloud` models, embeddings, "
+    "and vision all flow through whatever endpoint you set here."
+)
+ollama_host = st.text_input(
+    "Ollama host URL",
+    value=providers.get_ollama_host(),
+    key="ollama_host_input",
+    placeholder="http://localhost:11434",
+)
+ollama_key = st.text_input(
+    "Ollama API key (optional)",
+    value="",
+    type="password",
+    key="ollama_key_input",
+    placeholder="Leave blank for a local/unauthenticated server",
+)
+oc1, oc2, oc3 = st.columns(3)
+with oc1:
+    if st.button("Save endpoint"):
+        providers.set_ollama_config(ollama_host, ollama_key or None)
+        ollama_client._client_cache.clear()
+        st.success("Saved. Hit ⟳ on the chat page to refresh models.")
+with oc2:
+    if st.button("Test"):
+        providers.set_ollama_config(ollama_host, ollama_key or None)
+        ollama_client._client_cache.clear()
+        if ollama_client.ollama_alive():
+            n = len(ollama_client.list_models())
+            st.success(f"Connected — {n} models at this endpoint.")
+        else:
+            st.error("Could not reach this Ollama endpoint.")
+with oc3:
+    if st.button("Reset to local"):
+        providers.reset_ollama_config()
+        ollama_client._client_cache.clear()
+        st.rerun()
+
+if providers.get_ollama_key():
+    st.caption("🔑 An API key is set for the Ollama endpoint.")
 
 st.divider()
 st.subheader("Ollama cloud models")
