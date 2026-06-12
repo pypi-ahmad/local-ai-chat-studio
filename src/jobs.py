@@ -157,8 +157,15 @@ def _run(
         if job.cancelled:
             return  # request was cancelled; the error is just the aborted connection
         logger.exception("generation job failed for {}", job.conv_id)
+        msg = _friendly_error(str(exc))
+        # Persist the error as a visible assistant turn so the reason stays on
+        # screen (it's marked so it's shown in red and excluded from model context).
+        try:
+            chat_store.add_message(job.conv_id, "assistant", msg, [{"kind": "error", "name": "error"}])
+        except Exception:
+            logger.exception("failed to persist error message for {}", job.conv_id)
         with _lock:
-            job.error = str(exc)
+            job.error = msg
             job.status = "error"
         return
 
@@ -171,6 +178,23 @@ def _run(
             _maybe_extract(job.conv_id, helper_model, embed_model)
     except Exception:
         logger.exception("post-processing failed for {}", job.conv_id)
+
+
+def _friendly_error(raw: str) -> str:
+    """Turn a raw exception string into a clear, actionable chat message."""
+    low = raw.lower()
+    if "requires a subscription" in low or "upgrade for access" in low:
+        return ("⚠️ This Ollama Cloud model needs a paid subscription, so it can't run "
+                "on the free tier. Pick a free `:cloud` model (e.g. `gemma4:31b-cloud`) or a "
+                "local model. Details: " + raw)
+    if "timed out" in low or "timeout" in low:
+        return ("⚠️ The model didn't respond in time. It may be loading or the endpoint is "
+                "busy/unreachable — try again, pick a smaller model, or check the endpoint. "
+                "Details: " + raw)
+    if "connection" in low or "refused" in low or "max retries" in low:
+        return ("⚠️ Couldn't reach the model endpoint. If this is a remote/cloud Ollama, check "
+                "the host and API key on the Providers page. Details: " + raw)
+    return f"⚠️ Generation failed: {raw}"
 
 
 def _autotitle(conv_id: str, first_user: str, first_assistant: str, helper_model: str) -> None:

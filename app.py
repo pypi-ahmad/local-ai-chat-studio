@@ -263,30 +263,27 @@ def render_live_generation(conv_id: str) -> None:
     job = jobs.get(conv_id)
     if job is None:
         return
+    if job.status != "running":
+        # done (message persisted), error (error message persisted), or cancelled
+        jobs.clear(conv_id)
+        st.rerun(scope="app")
+        return
     with st.chat_message("assistant"):
         if job.references:
             st.caption("🔗 referencing: " + " · ".join(f"_{r}_" for r in job.references))
-        if job.status == "running":
-            if job.text:
-                st.markdown(job.text + " <span class='blink-cursor'>▌</span>", unsafe_allow_html=True)
-            else:
-                st.markdown(TYPING_HTML, unsafe_allow_html=True)
-            waited = job.elapsed()
-            if waited > 20 and not job.text:
-                st.caption(
-                    f"⏳ Still waiting for the model… {int(waited)}s. It may be loading into "
-                    "memory (slow on first use / limited VRAM). You can **Stop** and try a smaller model."
-                )
-            if st.button("⏹ Stop", key=f"stop_{conv_id}"):
-                jobs.stop(conv_id)
-                st.rerun(scope="app")
-        elif job.status == "error":
-            st.error(f"Generation failed: {job.error}")
-        elif job.status == "cancelled":
-            st.info("Stopped.")
-    if job.status != "running":
-        jobs.clear(conv_id)
-        st.rerun(scope="app")
+        if job.text:
+            st.markdown(job.text + " <span class='blink-cursor'>▌</span>", unsafe_allow_html=True)
+        else:
+            st.markdown(TYPING_HTML, unsafe_allow_html=True)
+        waited = job.elapsed()
+        if waited > 20 and not job.text:
+            st.caption(
+                f"⏳ Still waiting for the model… {int(waited)}s. It may be loading into "
+                "memory (slow on first use / limited VRAM). You can **Stop** and try a smaller model."
+            )
+        if st.button("⏹ Stop", key=f"stop_{conv_id}"):
+            jobs.stop(conv_id)
+            st.rerun(scope="app")
 
 
 # --- sidebar -------------------------------------------------------------------
@@ -412,16 +409,20 @@ if not history_msgs and not jobs.get(conv_id):
     )
 
 for m in history_msgs:
+    is_error = any(a.get("kind") == "error" for a in m["attachments"])
     with st.chat_message(m["role"]):
-        files_meta = [a for a in m["attachments"] if a.get("kind") != "reference"]
+        files_meta = [a for a in m["attachments"] if a.get("kind") not in ("reference", "error")]
         refs_meta = [a for a in m["attachments"] if a.get("kind") == "reference"]
         if files_meta:
             st.caption("📎 " + ", ".join(a["name"] for a in files_meta))
         if refs_meta:
             st.caption("🔗 referencing: " + " · ".join(f"_{a['name']}_" for a in refs_meta))
-        st.markdown(m["content"])
-        if m["role"] == "assistant":
-            _feedback_widget(m["id"], feedback_map)
+        if is_error:
+            st.error(m["content"])
+        else:
+            st.markdown(m["content"])
+            if m["role"] == "assistant":
+                _feedback_widget(m["id"], feedback_map)
 
 # Live view of a background reply for THIS conversation (it keeps running even if
 # the user navigates away; the worker persists the final message to SQLite).
@@ -459,7 +460,11 @@ if prompt:
         conv_id=conv_id,
         user_text=user_text,
         embed_model=st.session_state.embed_model,
-        history=[{"role": m["role"], "content": m["content"]} for m in history_msgs],
+        history=[
+            {"role": m["role"], "content": m["content"]}
+            for m in history_msgs
+            if not any(a.get("kind") == "error" for a in m["attachments"])
+        ],
         attachment_context=attachment_context,
         custom_system=get_state("settings_system_prompt", ""),
         memory_enabled=memory_on,
