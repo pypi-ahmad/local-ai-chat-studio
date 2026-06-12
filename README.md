@@ -1,6 +1,4 @@
-<div align="center">
-
-# ✦ Local AI Chat Studio
+# Local AI Chat Studio
 
 **A local-first, ChatGPT-style AI platform over Ollama — with optional BYOK cloud
 providers, built-in memory, assistants, model compare, and self-improving
@@ -11,33 +9,27 @@ personalization. Your chats, memories, and API keys never leave your machine.**
   <a href="https://streamlit.io/"><img alt="Streamlit" src="https://img.shields.io/badge/UI-Streamlit-FF4B4B.svg"></a>
   <a href="https://ollama.com/"><img alt="Ollama" src="https://img.shields.io/badge/LLM-Ollama-black.svg"></a>
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-green.svg"></a>
-  <a href="#-contributing"><img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"></a>
+  <a href="#contributing"><img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"></a>
 </p>
 
 <img src="docs/screenshot-chat.png" alt="Chat Studio — dark theme with the built-in Coding Agent" width="85%">
 
-</div>
+## Table of Contents
 
----
+- [Background](#background)
+- [Features](#features)
+- [Screenshots](#screenshots)
+- [Setup](#setup)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [Privacy and Security](#privacy-and-security)
+- [Architecture](#architecture)
+- [Troubleshooting](#troubleshooting)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
 
-## Table of contents
-
-- [Why this exists](#-why-this-exists)
-- [Features](#-features)
-- [Screenshots](#-screenshots)
-- [Quick start](#-quick-start)
-- [Usage](#-usage)
-- [Configuration](#-configuration)
-- [Privacy & security](#-privacy--security)
-- [Architecture](#-architecture)
-- [Troubleshooting](#-troubleshooting)
-- [Roadmap](#-roadmap)
-- [Contributing](#-contributing)
-- [License](#-license)
-
----
-
-## 🎯 Why this exists
+## Background
 
 Most AI chat tools make you choose: a polished cloud app that reads your data, or a
 local toy that forgets everything between messages. Chat Studio is built around three
@@ -51,7 +43,7 @@ promises:
 3. **It knows you** — ChatGPT-style long-term memory, cross-conversation references,
    and a personalization profile that improves the more you chat.
 
-## ✨ Features
+## Features
 
 | | Feature | Details |
 |---|---|---|
@@ -71,13 +63,13 @@ promises:
 | 📤 | **Data controls** | Per-chat Markdown export, full JSONL export/import, "Clear all chats", and a 🧨 panic wipe (chats + memories + profile + keys). |
 | 🩺 | **Health bar** | Live endpoint latency + which models are loaded in VRAM, refreshed every 15 s. |
 
-## 📸 Screenshots
+## Screenshots
 
 | Chat (dark theme, Coding Agent) | Model compare |
 |---|---|
 | <img src="docs/screenshot-chat.png" width="100%"> | <img src="docs/screenshot-compare.png" width="100%"> |
 
-## 🚀 Quick start
+## Setup
 
 ### Prerequisites
 
@@ -102,14 +94,34 @@ cd local-ai-chat-studio
 # 2. Pull an embedding model once (enables memory + RAG)
 ollama pull embeddinggemma
 
-# 3. Install dependencies and start
+# 3. Install dependencies
 uv sync
+```
+
+### Start the app
+
+```bash
 uv run streamlit run app.py
 ```
 
-Open **http://localhost:8501** (Streamlit prints the exact URL). Stop with `Ctrl+C`.
+Streamlit prints the URL — usually **http://localhost:8501**. Use `--server.port 8503`
+(or any port) to fix it:
 
-## 📖 Usage
+```bash
+uv run streamlit run app.py --server.port 8503
+```
+
+### Stop the app
+
+Press **`Ctrl+C`** in the terminal where it's running.
+
+If it was started in the background and you've lost the terminal:
+
+```bash
+pkill -f "streamlit run app.py"
+```
+
+## Usage
 
 - **Chat** — pick an assistant and a model in the sidebar (filter by provider), type,
   attach files/images with 📎, or start from a prompt chip. Toggle 🌐 web search for
@@ -127,7 +139,7 @@ Open **http://localhost:8501** (Streamlit prints the exact URL). Stop with `Ctrl
 - **Memory** — review what it has learned about you on **Memory** (pin, edit,
   archive, delete; rebuild your profile on demand).
 
-## ⚙️ Configuration
+## Configuration
 
 Defaults live in [`src/config.py`](src/config.py); override any of them with
 `CHAT_`-prefixed environment variables or a `.env` file.
@@ -144,7 +156,7 @@ Defaults live in [`src/config.py`](src/config.py); override any of them with
 
 All data (SQLite DB, Chroma vectors, uploads) lives in `data/` — delete it to reset.
 
-## 🔐 Privacy & security
+## Privacy and Security
 
 - **API keys never touch disk.** Keys entered in the UI live only in the server
   process memory for the session — never written to a file, logged, or exported, and
@@ -155,7 +167,7 @@ All data (SQLite DB, Chroma vectors, uploads) lives in `data/` — delete it to 
 - **Everything else stays local** — SQLite + ChromaDB in `data/`, no telemetry.
 - **No auth built in** — only expose beyond `localhost` on a network you trust.
 
-## 🏗 Architecture
+## Architecture
 
 ```
 local-ai-chat-studio/
@@ -190,7 +202,7 @@ local-ai-chat-studio/
 - *Helper tasks stay local.* Titles, memory extraction, embeddings, and OCR always use
   local models — even when you chat with a cloud provider.
 
-## 🧰 Troubleshooting
+## Troubleshooting
 
 | Symptom | Fix |
 |---|---|
@@ -202,7 +214,7 @@ local-ai-chat-studio/
 | Provider key gone after restart | By design (session-only). Use env vars to persist |
 | `.doc` extracts nothing | Install LibreOffice or `antiword` |
 
-## 🗺 Roadmap
+## Roadmap
 
 - [ ] Voice in/out (local faster-whisper + Piper)
 - [ ] Folders & tags for conversations
@@ -210,7 +222,7 @@ local-ai-chat-studio/
 - [ ] Test suite + CI
 - [ ] Docker one-liner
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are very welcome — this is an open-source project and PRs, issues, and
 ideas are always appreciated. 🙌 Read the full guide in
@@ -228,6 +240,6 @@ Good first issues: new file parsers, more BYOK providers, model-hint heuristics,
 tests, UI polish. Found a bug?
 [Open an issue](https://github.com/pypi-ahmad/local-ai-chat-studio/issues).
 
-## 📄 License
+## License
 
 Released under the [MIT License](LICENSE) — free to use, modify, and share.
