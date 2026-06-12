@@ -27,10 +27,16 @@ your chats, memory, and API keys never leave your machine.
   changes, ever. Hints derive from API metadata: capabilities (vision/thinking/
   tools), name patterns (coder/OCR/medical/translation), and size tiers.
 - **BYOK cloud providers** (Providers page) — OpenAI, Anthropic, OpenRouter,
-  xAI (Grok), and Google Gemini. Paste an API key (or set the env var), or for
-  OpenRouter log in with your account (OAuth PKCE). Anthropic uses the official
-  `anthropic` SDK; the rest use their OpenAI-compatible endpoints. Keys live in
-  `data/providers.json` (chmod 600) and are sent only to their own provider.
+  xAI (Grok), and Google Gemini, grouped by provider in the model dropdown with a
+  provider filter. Paste an API key (or set the env var), or for OpenRouter log in
+  with your account (OAuth PKCE). Anthropic uses the official `anthropic` SDK; the
+  rest use their OpenAI-compatible endpoints.
+  🔒 **Keys are held only in server memory for the session** — never written to
+  disk, logged, or exported, and sent only to the provider they belong to.
+  Restarting forgets them; env vars work as a read-only fallback.
+- **Ollama Cloud / remote (no local install needed)** — on the Providers page,
+  point the Ollama endpoint at `ollama.com` (or a remote server) and paste an
+  Ollama API key to run entirely in the cloud.
 - **File & image uploads** in the chat box:
   - Images go straight to vision models (local or cloud); for text-only models
     they're automatically read by your best local vision/OCR model and injected
