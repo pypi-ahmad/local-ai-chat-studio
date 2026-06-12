@@ -289,22 +289,26 @@ def stream_chat(
     model: str,
     messages: list[dict[str, Any]],
     temperature: float = 0.7,
+    stats: dict[str, Any] | None = None,
 ) -> Iterator[str]:
     """Stream a chat completion from a cloud provider.
 
     ``messages`` use the app's internal shape: {role, content, images?} where
     images is a list of (bytes, mime) tuples on the turn they were uploaded.
+    If ``stats`` is given it is filled with output token counts when available.
     """
     api_key = get_api_key(provider)
     if not api_key:
         raise RuntimeError(f"No API key configured for {PROVIDERS[provider]['label']}.")
     if provider == "anthropic":
-        yield from _stream_anthropic(api_key, model, messages)
+        yield from _stream_anthropic(api_key, model, messages, stats)
     else:
-        yield from _stream_openai_compat(provider, api_key, model, messages, temperature)
+        yield from _stream_openai_compat(provider, api_key, model, messages, temperature, stats)
 
 
-def _stream_anthropic(api_key: str, model: str, messages: list[dict[str, Any]]) -> Iterator[str]:
+def _stream_anthropic(
+    api_key: str, model: str, messages: list[dict[str, Any]], stats: dict[str, Any] | None = None
+) -> Iterator[str]:
     import anthropic
 
     client = anthropic.Anthropic(api_key=api_key)
@@ -338,6 +342,12 @@ def _stream_anthropic(api_key: str, model: str, messages: list[dict[str, Any]]) 
         messages=converted,
     ) as stream:
         yield from stream.text_stream
+        if stats is not None:
+            try:
+                final = stream.get_final_message()
+                stats["tokens"] = final.usage.output_tokens
+            except Exception:
+                pass
 
 
 def _stream_openai_compat(
@@ -346,6 +356,7 @@ def _stream_openai_compat(
     model: str,
     messages: list[dict[str, Any]],
     temperature: float,
+    stats: dict[str, Any] | None = None,
 ) -> Iterator[str]:
     from openai import OpenAI
 
@@ -366,16 +377,22 @@ def _stream_openai_compat(
             converted.append({"role": m["role"], "content": content})
         else:
             converted.append({"role": m["role"], "content": m["content"]})
+    kwargs: dict[str, Any] = {}
+    if stats is not None and provider in ("openai", "openrouter"):
+        kwargs["stream_options"] = {"include_usage": True}  # supported by these two
     stream = client.chat.completions.create(
         model=model,
         messages=converted,
         temperature=temperature,
         stream=True,
         extra_headers=extra_headers or None,
+        **kwargs,
     )
     for chunk in stream:
         if chunk.choices and chunk.choices[0].delta.content:
             yield chunk.choices[0].delta.content
+        if stats is not None and getattr(chunk, "usage", None):
+            stats["tokens"] = chunk.usage.completion_tokens
 
 
 # --- OpenRouter OAuth PKCE ("login with account") -----------------------------------

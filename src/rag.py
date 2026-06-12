@@ -108,6 +108,24 @@ def clear_all_chat_vectors() -> None:
             logger.warning("collection drop failed for {}: {}", name, exc)
 
 
+def clear_all_vectors() -> None:
+    """Panic wipe: drop every collection, memories included."""
+    for name in (DOCS_COLLECTION, HISTORY_COLLECTION, MEMORY_COLLECTION):
+        try:
+            _chroma.delete_collection(name)
+        except Exception as exc:
+            logger.warning("collection drop failed for {}: {}", name, exc)
+
+
+def search_history_all(embed_model: str, query: str, top_k: int = 8) -> list[dict[str, Any]]:
+    """Semantic search across ALL conversations (sidebar chat search)."""
+    col = _collection(HISTORY_COLLECTION)
+    if col.count() == 0:
+        return []
+    res = col.query(query_embeddings=_embed(embed_model, [query]), n_results=top_k)
+    return _flatten(res)
+
+
 # --- memories -------------------------------------------------------------------
 
 def index_memory(embed_model: str, mem_id: str, content: str) -> None:

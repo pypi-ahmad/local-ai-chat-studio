@@ -163,8 +163,13 @@ def stream_chat(
     model: str,
     messages: list[dict[str, Any]],
     temperature: float | None = None,
+    stats: dict[str, Any] | None = None,
 ) -> Iterator[str]:
-    """Stream a chat completion, yielding content deltas."""
+    """Stream a chat completion, yielding content deltas.
+
+    If ``stats`` is given, it is filled with token counts from the final chunk
+    (eval_count / eval_duration in ns) for tokens-per-second display.
+    """
     stream = _client().chat(
         model=model,
         messages=messages,
@@ -176,6 +181,25 @@ def stream_chat(
         content = chunk.get("message", {}).get("content", "")
         if content:
             yield content
+        if stats is not None and chunk.get("done"):
+            stats["tokens"] = chunk.get("eval_count")
+            stats["eval_ns"] = chunk.get("eval_duration")
+
+
+def running_models() -> list[dict[str, Any]]:
+    """Models currently loaded in (V)RAM, for the health bar. Never raises."""
+    try:
+        resp = _client().ps()
+        out = []
+        for m in resp.get("models", []):
+            raw = dict(m) if not isinstance(m, dict) else m
+            out.append({
+                "name": raw.get("name") or raw.get("model", "?"),
+                "size_gb": (raw.get("size_vram") or raw.get("size") or 0) / 1e9,
+            })
+        return out
+    except Exception:
+        return []
 
 
 def generate(model: str, prompt: str, system: str | None = None, temperature: float = 0.2) -> str:
