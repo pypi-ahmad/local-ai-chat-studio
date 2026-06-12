@@ -1,3 +1,5 @@
+Repository: https://github.com/pypi-ahmad/local-ai-chat-studio
+
 # Local AI Chat Studio
 
 A ChatGPT-style AI tool centered on your **local Ollama models**, with optional
