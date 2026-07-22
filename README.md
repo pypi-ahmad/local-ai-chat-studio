@@ -1,8 +1,8 @@
 # Local AI Chat Studio
 
-**A local-first, ChatGPT-style AI platform over Ollama — with optional BYOK cloud
-providers, built-in memory, assistants, model compare, and self-improving
-personalization. Your chats, memories, and API keys never leave your machine.**
+**A local-first AI studio with a FastAPI + React workspace, Ollama, optional BYOK
+cloud providers, session-isolated credentials, streaming runs, memory, assistants,
+and model comparison.**
 
 <p>
   <a href="https://www.python.org/"><img alt="Python" src="https://img.shields.io/badge/python-3.12-blue.svg"></a>
@@ -99,6 +99,22 @@ uv sync
 ```
 
 ### Start the app
+
+The v2 application uses one local FastAPI server. Build the frontend once, then start
+the studio:
+
+```bash
+cd frontend
+npm ci
+npm run build
+cd ..
+uv run chat-studio
+```
+
+Open **http://127.0.0.1:8000**. For frontend development, run `npm run dev` from
+`frontend/` in a second terminal; Vite proxies `/api` to FastAPI.
+
+The previous Streamlit interface remains available during the parity window:
 
 ```bash
 uv run streamlit run app.py
