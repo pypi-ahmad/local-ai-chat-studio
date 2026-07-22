@@ -1,0 +1,152 @@
+{
+  "app.py": {
+    "mtime": 1784273830.697123,
+    "ast_hash": "ccbd3d03458874989aa0562a3dd88d21",
+    "semantic_hash": "ccbd3d03458874989aa0562a3dd88d21"
+  },
+  "pages/1_Memory.py": {
+    "mtime": 1784273830.7001388,
+    "ast_hash": "8585a3b3b76e656a297f0a34f6e489f0",
+    "semantic_hash": "8585a3b3b76e656a297f0a34f6e489f0"
+  },
+  "pages/2_Settings.py": {
+    "mtime": 1784273830.7001388,
+    "ast_hash": "bcf679920dbd07fa5a979e10851935b7",
+    "semantic_hash": "bcf679920dbd07fa5a979e10851935b7"
+  },
+  "pages/3_Providers.py": {
+    "mtime": 1784273830.7011392,
+    "ast_hash": "af27ec2e0a46b7119379587bba337b6f",
+    "semantic_hash": "af27ec2e0a46b7119379587bba337b6f"
+  },
+  "pages/4_Compare.py": {
+    "mtime": 1784273830.7011392,
+    "ast_hash": "3ccf2a9f216eda2d3d2165bfdc3b03b6",
+    "semantic_hash": "3ccf2a9f216eda2d3d2165bfdc3b03b6"
+  },
+  "pyproject.toml": {
+    "mtime": 1784273830.7011392,
+    "ast_hash": "8c158e1cc55cfbcf947c3ec6dd0ba24e",
+    "semantic_hash": "8c158e1cc55cfbcf947c3ec6dd0ba24e"
+  },
+  "src/catalog.py": {
+    "mtime": 1784273830.7021286,
+    "ast_hash": "e26eef32cfa2ed72de31567f04b92b6b",
+    "semantic_hash": "e26eef32cfa2ed72de31567f04b92b6b"
+  },
+  "src/chat_store.py": {
+    "mtime": 1784273830.7031207,
+    "ast_hash": "0325e5ecafab886c8029d140fceb1f8d",
+    "semantic_hash": "0325e5ecafab886c8029d140fceb1f8d"
+  },
+  "src/config.py": {
+    "mtime": 1784273830.7031207,
+    "ast_hash": "06d9a338e6d09f37d194a973b02b4116",
+    "semantic_hash": "06d9a338e6d09f37d194a973b02b4116"
+  },
+  "src/files.py": {
+    "mtime": 1784273830.7031207,
+    "ast_hash": "b13483d0e8b8c10ad5887034a95d360e",
+    "semantic_hash": "b13483d0e8b8c10ad5887034a95d360e"
+  },
+  "src/jobs.py": {
+    "mtime": 1784273830.7041712,
+    "ast_hash": "42873904b0216b0a39aeb0b3ab26c58d",
+    "semantic_hash": "42873904b0216b0a39aeb0b3ab26c58d"
+  },
+  "src/memory.py": {
+    "mtime": 1784273830.7051685,
+    "ast_hash": "ce81f8087fbafde686bd87a1e88fa834",
+    "semantic_hash": "ce81f8087fbafde686bd87a1e88fa834"
+  },
+  "src/model_labels.py": {
+    "mtime": 1784273830.7051685,
+    "ast_hash": "b2463284f6762678e6780726c85609f7",
+    "semantic_hash": "b2463284f6762678e6780726c85609f7"
+  },
+  "src/ollama_client.py": {
+    "mtime": 1784273830.7061677,
+    "ast_hash": "4c0e1dfba17ede8ed9d183ef47951d3a",
+    "semantic_hash": "4c0e1dfba17ede8ed9d183ef47951d3a"
+  },
+  "src/orchestrator.py": {
+    "mtime": 1784273830.7061677,
+    "ast_hash": "870f83a2d285680925334c7f50948844",
+    "semantic_hash": "870f83a2d285680925334c7f50948844"
+  },
+  "src/personalization.py": {
+    "mtime": 1784273830.707167,
+    "ast_hash": "009d7741af200e30d627c684587d0aa3",
+    "semantic_hash": "009d7741af200e30d627c684587d0aa3"
+  },
+  "src/providers.py": {
+    "mtime": 1784273830.707167,
+    "ast_hash": "fdcdbb998947d2a2c5656db459993633",
+    "semantic_hash": "fdcdbb998947d2a2c5656db459993633"
+  },
+  "src/rag.py": {
+    "mtime": 1784273830.707167,
+    "ast_hash": "fb83a9c467838df40bdfdcf39d3949b4",
+    "semantic_hash": "fb83a9c467838df40bdfdcf39d3949b4"
+  },
+  ".github/ISSUE_TEMPLATE/bug_report.md": {
+    "mtime": 1784273830.687935,
+    "ast_hash": "3d1289b27f34219f29cc9f61c0f76c5d",
+    "semantic_hash": "3d1289b27f34219f29cc9f61c0f76c5d"
+  },
+  ".github/ISSUE_TEMPLATE/feature_request.md": {
+    "mtime": 1784273830.687935,
+    "ast_hash": "bd32898faa18f189f349f8c2bea5d700",
+    "semantic_hash": "bd32898faa18f189f349f8c2bea5d700"
+  },
+  ".github/pull_request_template.md": {
+    "mtime": 1784273830.6889489,
+    "ast_hash": "048a49e90aa1a83a1ce9cadf134ea5db",
+    "semantic_hash": "048a49e90aa1a83a1ce9cadf134ea5db"
+  },
+  "CHANGELOG.md": {
+    "mtime": 1784273830.6911159,
+    "ast_hash": "0f28d56b63a42e832fd9a3cd6f0aeb9e",
+    "semantic_hash": "0f28d56b63a42e832fd9a3cd6f0aeb9e"
+  },
+  "CODE_OF_CONDUCT.md": {
+    "mtime": 1784273830.692119,
+    "ast_hash": "19dc1f23ffb9283ac378e2c47de65796",
+    "semantic_hash": "19dc1f23ffb9283ac378e2c47de65796"
+  },
+  "DATASET.md": {
+    "mtime": 1784273830.692119,
+    "ast_hash": "186a5f52d0fbe71ee56fc8507b9936e4",
+    "semantic_hash": "186a5f52d0fbe71ee56fc8507b9936e4"
+  },
+  "README.md": {
+    "mtime": 1784273830.6931214,
+    "ast_hash": "b7da306ee48cecf3019be22a7876df9a",
+    "semantic_hash": "b7da306ee48cecf3019be22a7876df9a"
+  },
+  "SECURITY.md": {
+    "mtime": 1784273830.6941354,
+    "ast_hash": "6a9747aae6ee1a096b5f2a93a3089380",
+    "semantic_hash": "6a9747aae6ee1a096b5f2a93a3089380"
+  },
+  "ZERO_TO_HERO_STUDY_HANDBOOK.md": {
+    "mtime": 1784273830.6941354,
+    "ast_hash": "a92b4af6a18f0ff4ef4ed1a3b32051c4",
+    "semantic_hash": "a92b4af6a18f0ff4ef4ed1a3b32051c4"
+  },
+  "ZERO_TO_HERO_STUDY_HANDBOOK.pdf": {
+    "mtime": 1784273830.6961167,
+    "ast_hash": "45bbcce2a3b67a4b9968e33d848409b1",
+    "semantic_hash": "45bbcce2a3b67a4b9968e33d848409b1"
+  },
+  "docs/screenshot-chat.png": {
+    "mtime": 1784273830.6981153,
+    "ast_hash": "b1c1d8f0626050dd0120fe985f7092f6",
+    "semantic_hash": "b1c1d8f0626050dd0120fe985f7092f6"
+  },
+  "docs/screenshot-compare.png": {
+    "mtime": 1784273830.6991155,
+    "ast_hash": "143cf7c453675ec3bbf4a1c37128f830",
+    "semantic_hash": "143cf7c453675ec3bbf4a1c37128f830"
+  }
+}

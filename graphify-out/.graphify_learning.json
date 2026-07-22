@@ -1,0 +1,118 @@
+{
+  "generated_at": "2026-07-22T14:28:41.289442+00:00",
+  "nodes": {
+    "app": {
+      "code_fingerprint": "ac5ed2c70d95b802bcf70573572edd2d41f04b328e0b8164e61b50585e29a6de",
+      "label": "app.py",
+      "last": "2026-07-22T14:26:55.108224+00:00",
+      "provenance": [
+        {
+          "date": "2026-07-22T14:26:55.108224+00:00",
+          "outcome": "useful",
+          "q": "yes - trace why ModelInfo connects five architectural communities"
+        }
+      ],
+      "score": 0.999971606,
+      "source_file": "app.py",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_catalog_build_model_catalog": {
+      "code_fingerprint": "3b52afc0e156b0468f44269f033b9efc2f84ce8d2345d1d3a95fa788e545c118",
+      "label": "build_model_catalog()",
+      "last": "2026-07-22T14:26:55.108224+00:00",
+      "provenance": [
+        {
+          "date": "2026-07-22T14:26:55.108224+00:00",
+          "outcome": "useful",
+          "q": "yes - trace why ModelInfo connects five architectural communities"
+        }
+      ],
+      "score": 0.999971606,
+      "source_file": "src/catalog.py",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_catalog_selectedmodel": {
+      "code_fingerprint": "3b52afc0e156b0468f44269f033b9efc2f84ce8d2345d1d3a95fa788e545c118",
+      "label": "SelectedModel",
+      "last": "2026-07-22T14:26:55.108224+00:00",
+      "provenance": [
+        {
+          "date": "2026-07-22T14:26:55.108224+00:00",
+          "outcome": "useful",
+          "q": "yes - trace why ModelInfo connects five architectural communities"
+        }
+      ],
+      "score": 0.999971606,
+      "source_file": "src/catalog.py",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_ollama_client_embedding_model": {
+      "code_fingerprint": "10a82ed8bbd91b0083ecaff014e85a9297cf03d00f3b609ea1710c2b6bb8b5c1",
+      "label": "embedding_model()",
+      "last": "2026-07-22T14:26:55.108224+00:00",
+      "provenance": [
+        {
+          "date": "2026-07-22T14:26:55.108224+00:00",
+          "outcome": "useful",
+          "q": "yes - trace why ModelInfo connects five architectural communities"
+        }
+      ],
+      "score": 0.999971606,
+      "source_file": "src/ollama_client.py",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_ollama_client_list_models": {
+      "code_fingerprint": "10a82ed8bbd91b0083ecaff014e85a9297cf03d00f3b609ea1710c2b6bb8b5c1",
+      "label": "list_models()",
+      "last": "2026-07-22T14:26:55.108224+00:00",
+      "provenance": [
+        {
+          "date": "2026-07-22T14:26:55.108224+00:00",
+          "outcome": "useful",
+          "q": "yes - trace why ModelInfo connects five architectural communities"
+        }
+      ],
+      "score": 0.999971606,
+      "source_file": "src/ollama_client.py",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_ollama_client_modelinfo": {
+      "code_fingerprint": "10a82ed8bbd91b0083ecaff014e85a9297cf03d00f3b609ea1710c2b6bb8b5c1",
+      "label": "ModelInfo",
+      "last": "2026-07-22T14:26:55.108224+00:00",
+      "provenance": [
+        {
+          "date": "2026-07-22T14:26:55.108224+00:00",
+          "outcome": "useful",
+          "q": "yes - trace why ModelInfo connects five architectural communities"
+        }
+      ],
+      "score": 0.999971606,
+      "source_file": "src/ollama_client.py",
+      "status": "tentative",
+      "uses": 1
+    },
+    "src_ollama_client_smallest_text_model": {
+      "code_fingerprint": "10a82ed8bbd91b0083ecaff014e85a9297cf03d00f3b609ea1710c2b6bb8b5c1",
+      "label": "smallest_text_model()",
+      "last": "2026-07-22T14:26:55.108224+00:00",
+      "provenance": [
+        {
+          "date": "2026-07-22T14:26:55.108224+00:00",
+          "outcome": "useful",
+          "q": "yes - trace why ModelInfo connects five architectural communities"
+        }
+      ],
+      "score": 0.999971606,
+      "source_file": "src/ollama_client.py",
+      "status": "tentative",
+      "uses": 1
+    }
+  },
+  "version": 1
+}
