@@ -1,395 +1,564 @@
-# Zero to Hero Study Handbook: local-ai-chat-studio
+# Local AI Chat Studio: Zero-to-Hero Study Handbook
 
-## Module 1: Foundations & Architecture
+> Verified against repository version **v0.2.0 on 2026-07-23**. Status markers: **[v2]** FastAPI/React v2, **[legacy]** Streamlit application, **[shared]** repository-wide tooling or concepts, and **[gap]** designed or displayed but not wired end to end.
 
-### What this project does
-`local-ai-chat-studio` is a local-first Streamlit application that provides a ChatGPT-style interface on top of:
-- Local Ollama models (default path).
-- Optional BYOK cloud providers (`openai`, `anthropic`, `openrouter`, `xai`, `gemini`).
-- Long-term memory and semantic retrieval over uploaded files and past chats.
+This handbook takes a beginner from “what is an LLM?” to making a focused contribution. It is intentionally honest about the transition in this repository: the v2 backend is functional, but the v2 React app is mostly a visual shell. The legacy Streamlit application still contains the rich chat, files, RAG, memory, personalization, assistant, and comparison behavior.
 
-Main use cases supported by code:
-- Multi-turn assistant chat with streaming output (`app.py`, `src/jobs.py`).
-- File-assisted chat over PDFs, Office docs, spreadsheets, text/code, and images (`src/files.py`, `src/jobs.py`).
-- Cross-chat semantic recall and long-term memory injection (`src/rag.py`, `src/memory.py`, `src/orchestrator.py`).
-- Provider key management and dynamic model discovery (`pages/3_Providers.py`, `src/providers.py`, `src/catalog.py`).
-- Side-by-side model comparison (`pages/4_Compare.py`, `src/jobs.py`).
+Today, the legacy Streamlit path is the complete local end-user application; v2 is not yet end to end, and neither stack is production deployment-ready as shipped because the repository does not include authentication or hardened network deployment controls.
 
-### Core paradigms and patterns used here
-Definition first, then where it appears:
+## 1. Start with the product boundary
 
-1. Local-first architecture.
-The app stores chats/vectors locally by default (`data/app.db`, `data/chroma`) and talks to local Ollama unless you explicitly configure cloud endpoints.
+Local AI Chat Studio is a local-first interface for chatting with models served by Ollama or optional bring-your-own-key (BYOK) cloud providers.
 
-2. Event-driven UI with reruns.
-Streamlit reruns scripts on interaction; this app uses `st.session_state`, `st.fragment(run_every=...)`, and callbacks to keep state consistent while rendering live updates (`app.py`, `pages/*.py`).
+| Capability | Status | What exists now |
+|---|---|---|
+| FastAPI health, conversations, messages | [v2] | Working REST routes backed by `data/v2/studio.db` by default. |
+| Provider credentials and discovery | [v2] | Session-scoped in-memory vault, environment fallback, seven adapters, concurrent discovery. |
+| Streaming model runs | [v2] | In-memory run manager, provider dispatch, cancellation, replayable SSE events. |
+| OpenRouter authorization | [v2] | PKCE start, callback, and manual-completion routes; verifier and resulting key remain in process memory. |
+| React workspace | [v2] [gap] | Polished navigation and static/demo content; buttons and composer do not yet drive real conversations or runs. |
+| TypeScript API layer | [v2] [gap] | Generated schema plus `createRun`, `cancelRun`, and `providers` client primitives; no UI integration or SSE client. |
+| Rich chat, attachments, RAG, memory | [legacy] | Implemented in Streamlit and `src/`; not ported to v2 contracts. |
+| Assistants and model comparison | [legacy] | Implemented; v2 screens are placeholders. |
+| Shared v2/legacy persistence | [gap] | They use different SQLite schemas and default locations; there is no migration or synchronization. |
+| v2 durable run history | [gap] | A `runs` table is created, but `RunManager` keeps runs only in memory and does not use it. |
+| Authentication/multi-user authorization | [gap] | A browser-session cookie scopes keys, but it is not user authentication. Bind to localhost. |
 
-3. Background worker pattern.
-Long-running generation runs in daemon threads via a process-global `Job` registry (`src/jobs.py`) so the UI thread stays responsive.
+The safest mental model is **two applications in one repository during a parity migration**, not one UI with two equivalent implementations.
 
-4. Retrieval-augmented generation (RAG) pipeline.
-Uploaded docs and chat history are embedded and queried through ChromaDB (`src/rag.py`), then injected into system/context messages (`src/orchestrator.py`).
+## 2. Foundations: the ideas behind the code
 
-5. Functional module style with typed data carriers.
-Most logic is organized as module-level functions, with small dataclasses for structured data (`ModelInfo`, `ApiModel`, `SelectedModel`, `Attachment`, `Job`).
+### 2.1 LLMs, tokens, context, and temperature
 
-### Architecture and component interaction
-Primary runtime components:
-- UI and orchestration shell: `app.py`.
-- Stateful pages: `pages/1_Memory.py`, `pages/2_Settings.py`, `pages/3_Providers.py`, `pages/4_Compare.py`.
-- Persistence: SQLite (`src/chat_store.py`).
-- Retrieval/vector index: Chroma (`src/rag.py`).
-- Generation workers: `src/jobs.py`.
-- Prompt/context assembly: `src/orchestrator.py`.
-- Provider adapters and key vault: `src/providers.py`.
-- Ollama client and model capabilities: `src/ollama_client.py`.
-- Config and storage paths: `src/config.py`.
+An **LLM** (large language model) predicts the next token from prior tokens. A **token** is a model-specific text unit: sometimes a word, often part of a word, punctuation, or whitespace. Token counts determine context usage, latency, and often cloud cost.
 
-ASCII main-flow diagram:
+The **context window** is the maximum token budget available to the request and generated answer. Chat history, system instructions, retrieved documents, and the answer all compete for this budget. The legacy orchestrator therefore selects recent history and bounded retrieval results instead of injecting everything.
+
+**Temperature** controls sampling variability. Lower values usually make output more repeatable; higher values allow more varied choices. It is not a truth or creativity switch. [v2] `RunCreate.temperature` accepts `0..2` and defaults to `0.7`; adapters pass it to providers. [legacy] settings also default to `0.7`.
+
+### 2.2 Embeddings, cosine similarity, vector databases, and RAG
+
+An **embedding** maps text to a numeric vector whose direction represents semantic meaning. Similar ideas should have nearby vectors even when they use different words.
+
+**Cosine similarity** compares vector direction:
 
 ```text
-User (Streamlit UI)
-  -> app.py (send_user_message)
-    -> chat_store.add_message(role='user')
-    -> jobs.start(...)
-      -> background thread _run
-        -> _process_attachments
-           -> files.parse_upload / files.chunk_text
-           -> rag.index_doc_chunks (for large docs)
-        -> orchestrator.build_messages
-           -> personalization.get_profile
-           -> memory.relevant_memories
-           -> rag.search_history / rag.search_docs
-        -> _stream
-           -> ollama_client.stream_chat OR providers.stream_chat
-        -> chat_store.add_message(role='assistant', attachments=meta)
-        -> post-processing
-           -> orchestrator.after_turn_indexing
-           -> memory.extract_memories (periodic)
-           -> personalization.rebuild_profile (periodic)
-
-Persistent state:
-  SQLite: data/app.db (conversations, messages, memories, feedback, kv, presets)
-  Chroma: data/chroma (doc chunks, chat history, memories)
+cosine(a, b) = (a · b) / (||a|| ||b||)
 ```
 
-## Module 2: Repository Map
+It ranges theoretically from `-1` to `1`; larger values mean more similar directions. Chroma may return a distance, so [legacy] `src/rag.py::_flatten` converts distance to `similarity = 1 - distance`.
 
-| File/Directory Path | Primary Responsibility | Key Classes/Functions | Important Configs/Variables |
-|---|---|---|---|
-| `app.py` | Main Chat page, sidebar navigation, live streaming UI, chat actions | `send_user_message`, `start_generation`, `regenerate_last`, `render_live_generation`, `render_health` | `MEMORY_EXTRACT_EVERY`, session keys (`selected_model`, `conv_id`, `settings_*`) |
-| `pages/1_Memory.py` | Memory/profile management UI | `get_profile`, `rebuild_profile`, `chat_store.update_memory`, `rag.delete_memory_vector` | Uses `st.session_state.helper_model` |
-| `pages/2_Settings.py` | Generation/features toggles, maintenance, import/export, wipe controls | `memory.run_decay`, `chat_store.export_jsonl`, `chat_store.import_jsonl`, `chat_store.wipe_everything` | `settings_temperature`, `settings_system_prompt`, `settings_memory`, `settings_crosschat`, `settings_show_cloud` |
-| `pages/3_Providers.py` | API key entry, OpenRouter OAuth, Ollama endpoint config | `providers.set_api_key`, `providers.test_connection`, `providers.openrouter_auth_url`, `providers.set_ollama_config` | Provider env vars, `OLLAMA_CLOUD_URL`, Ollama host/key state |
-| `pages/4_Compare.py` | Side-by-side ephemeral generation across two models | `jobs.run_ephemeral`, `render_compare`, `build_model_catalog` | `KEY_A`, `KEY_B`, `cmp_*` session keys |
-| `src/config.py` | Typed app settings and data directories | `AppConfig`, `ensure_dirs`, `db_path`, `chroma_dir` | `CHAT_` env prefix, `.env`, `data_dir`, `request_timeout`, retrieval/memory tuning fields |
-| `src/chat_store.py` | SQLite schema and data access layer for chats/memories/profile/presets | `init_db`, `create_conversation`, `add_message`, `list_memories`, `set_feedback`, `kv_get/kv_set`, `export_jsonl` | `_SCHEMA`, tables: `conversations`, `messages`, `memories`, `feedback`, `kv`, `presets` |
-| `src/jobs.py` | Background generation lifecycle and cancellation | `Job`, `start`, `_run`, `_process_attachments`, `_stream`, `run_ephemeral` | `_jobs` registry, `_lock`, `MEMORY_EXTRACT_EVERY` |
-| `src/orchestrator.py` | Build final message stack (system + memory + retrieval + history) | `build_messages`, `after_turn_indexing` | `BASE_SYSTEM`, `config.cross_chat_top_k`, `config.rag_top_k` |
-| `src/rag.py` | Chroma indexing/query for docs/history/memories | `index_doc_chunks`, `search_docs`, `index_history_turn`, `search_history`, `search_memories` | Collections: `doc_chunks`, `chat_history`, `memories` |
-| `src/memory.py` | Extract durable user facts and retrieve relevant memories | `extract_memories`, `relevant_memories`, `run_decay` | `_EXTRACT_SYSTEM`, `config.memory_max_injected`, dedup threshold in `rag.similar_memory` |
-| `src/personalization.py` | Rolling profile rebuild based on chats + feedback | `get_profile`, `note_conversation_done`, `rebuild_profile` | KV keys: `user_profile`, `convs_since_profile`, `config.profile_refresh_every` |
-| `src/providers.py` | Provider catalog metadata, key vault, streaming adapters, OAuth helpers | `ApiModel`, `list_provider_models`, `stream_chat`, `openrouter_auth_url` | `PROVIDERS`, in-memory `_secrets`, env fallbacks (`OPENAI_API_KEY`, etc.), `_OLLAMA_HOST_KEY`, `_OLLAMA_API_KEY` |
-| `src/ollama_client.py` | Ollama model discovery, health, chat streaming, embeddings, vision fallback | `ModelInfo`, `list_models`, `stream_chat`, `embed_texts`, `describe_image`, `ollama_alive` | `_client_cache`, `config.keep_alive`, `config.request_timeout` |
-| `src/catalog.py` | Unified model catalog across local/cloud providers | `SelectedModel`, `build_model_catalog`, `ordered_keys`, `best_coding_model` | Key format (`ollama::<name>`, `<provider>::<id>`), provider group ranking |
-| `src/files.py` | Parse uploaded files and chunk text | `Attachment`, `parse_upload`, `_parse_pdf`, `_parse_docx`, `_parse_excel`, `chunk_text` | `IMAGE_TYPES`, `DOC_TYPES`, `ACCEPTED_TYPES`, `MIME_BY_EXT` |
-| `.streamlit/config.toml` | Streamlit app theme/client/server defaults | N/A | `server.maxUploadSize=100`, theme colors, `browser.gatherUsageStats=false` |
-| `pyproject.toml` | Project metadata and dependencies | N/A | Python `>=3.12`, runtime deps (`streamlit`, `ollama`, `chromadb`, provider SDKs) |
+A **vector database** stores embeddings plus source text and metadata, then performs nearest-neighbor search. [legacy] ChromaDB persists document chunks, prior chat turns, and memories under `data/chroma`.
 
-## Module 3: Core Execution Flows
+**RAG** (retrieval-augmented generation) means: index source text, embed a question, retrieve relevant chunks, and add them to the model request. Retrieval does not train the model and does not guarantee correctness; it supplies evidence inside the current context.
 
-### Flow A: Startup and model catalog build (main chat path)
+### 2.3 BYOK, SPA, REST, SSE, and PKCE
 
-Step-by-step:
-1. `app.py` initializes page config and ensures DB schema with `chat_store.init_db()`.
-2. Health gate: `ollama_alive()` must pass or app stops with an error.
-3. `cached_models()` calls `list_models()` to fetch Ollama model metadata.
-4. Provider model lists are fetched only for configured providers (`providers.configured_providers()`).
-5. `build_model_catalog(models, show_cloud, provider_models)` creates one unified catalog of selectable models.
-6. Embedding/helper models are auto-selected using:
-   - `embedding_model(models)` for vectors/memory.
-   - `smallest_text_model(models)` for helper tasks (titles/profile/memory extraction).
-7. `seed_builtin_presets(catalog)` inserts built-in Coding Agent preset if missing.
+- **BYOK** means “bring your own key.” Keys entered into this app are used to call the selected external provider.
+- A **SPA** (single-page application) loads one browser application and changes views client-side. [v2] React is the SPA; Vite builds it into static files.
+- **REST** uses HTTP resources and verbs. [v2] examples include `POST /api/v1/conversations` and `DELETE /api/v1/runs/{run_id}`.
+- **SSE** (Server-Sent Events) is a one-way HTTP stream from server to browser. [v2] run events use `text/event-stream`, with named events such as `run.delta`. It is simpler than WebSockets when only server-to-client updates are needed.
+- **PKCE** protects an authorization-code exchange with a one-time secret verifier. [v2] creates a verifier, sends its SHA-256 challenge to OpenRouter, and presents the verifier when exchanging the returned code. The current implementation stores one pending verifier per session.
 
-Core data shape used by the UI (`SelectedModel` in `src/catalog.py`):
+### 2.4 Persistence and concurrency
 
-```python
-SelectedModel(
-    key: str,         # 'ollama::<name>' or '<provider>::<id>'
-    provider: str,    # 'ollama' | 'openai' | 'anthropic' | ...
-    name: str,
-    hint: str,
-    detail: str,
-    is_vision: bool,
-    group: str,
-    group_rank: int,
-    context_length: int | None,
-)
+**Persistence** survives process restart. SQLite conversations do; in-memory credentials and v2 runs do not. Chroma persists legacy vectors separately.
+
+**Concurrency** means work overlaps. Relevant examples:
+
+- [v2] `asyncio.gather` discovers provider models concurrently.
+- [v2] each run is an `asyncio` task; events wake consumers through `asyncio.Event`.
+- [v2] `threading.RLock` protects shared run, credential, and SQLite state accessed across threads.
+- [legacy] daemon threads stream generation while Streamlit reruns its UI script.
+
+Locks make individual critical sections safe, not entire workflows atomic. The legacy and v2 stores both calculate ordering while holding a lock and transaction. Neither architecture is currently designed for multiple server processes sharing its in-memory state.
+
+## 3. Install and run
+
+### 3.1 Prerequisites
+
+- Python 3.12 or newer and [uv](https://docs.astral.sh/uv/).
+- Node.js and npm for the v2 React build.
+- [Ollama](https://ollama.com/download) plus a chat model for local inference.
+- `ollama pull embeddinggemma` for legacy memory/RAG.
+- Optional LibreOffice or `antiword` for legacy `.doc` parsing.
+
+### 3.2 Windows PowerShell
+
+```powershell
+git clone https://github.com/pypi-ahmad/local-ai-chat-studio.git
+Set-Location local-ai-chat-studio
+uv sync --locked --dev
+
+Set-Location frontend
+npm ci
+npm run build
+Set-Location ..
+
+uv run chat-studio
 ```
 
-### Flow B: User sends a message and receives a streamed answer
+Open `http://127.0.0.1:8000`. For frontend development, keep the backend running and use a second PowerShell window:
 
-Step-by-step:
-1. UI receives `st.chat_input(...)` in `app.py`.
-2. `send_user_message(user_text, raw_files)` runs:
-   - Create conversation if needed (`chat_store.create_conversation`).
-   - Persist user message immediately via `chat_store.add_message(..., role='user', attachments=att_meta)`.
-   - Queue background generation with `start_generation(...)` -> `jobs.start(...)`.
-3. `jobs.start` creates a `Job` object and daemon thread that runs `_run(...)`.
-4. `_run` phase `preparing`:
-   - `_process_attachments` parses files with `files.parse_upload`.
-   - Small docs are injected directly; large docs are chunked (`chunk_text`) and indexed (`rag.index_doc_chunks`).
-   - Image handling depends on model capability:
-     - Vision-capable target model: raw images passed forward.
-     - Text-only target model: optional OCR/description through `describe_image` fallback.
-   - Optional web search via `_web_search` (DuckDuckGo) and source list assembly.
-5. `_run` builds model input:
-   - `orchestrator.build_messages(...)` assembles system/profile/memory/retrieval/history.
-   - Current user turn is appended; images added as `images` field when present.
-6. `_run` phase `generating`:
-   - `_stream(...)` dispatches to `ollama_stream` or `providers.stream_chat`.
-   - Partial chunks update `job.text` for live UI fragment rendering.
-7. Completion:
-   - Assistant message persisted via `chat_store.add_message(role='assistant', content=answer, attachments=meta)`.
-   - `meta` includes reference titles, optional web sources, and runtime stats (`secs`, `tokens`, `tok_s`).
-8. Post-processing (best effort):
-   - `_autotitle` on first turn.
-   - `after_turn_indexing` for cross-chat vectors.
-   - periodic `_maybe_extract` for memory/profile refresh.
-
-Internal message shape expected by generation functions:
-
-```python
-{"role": "user" | "assistant" | "system", "content": str, "images": [(bytes, mime)]?}
+```powershell
+Set-Location frontend
+npm run dev
 ```
 
-SQLite `messages` row as returned by `chat_store.get_messages`:
+Vite proxies `/api` to `http://127.0.0.1:8000`. Run the legacy application with:
 
-```python
-{
-  "id": str,
-  "conv_id": str,
-  "role": "user" | "assistant",
-  "content": str,
-  "attachments_json": str | None,
-  "ts": str,
-  "attachments": list[dict],
-}
-```
-
-`Job` runtime state (`src/jobs.py`):
-
-```python
-Job(
-  conv_id: str,
-  model_name: str,
-  status: "running" | "done" | "error" | "cancelled",
-  phase: "preparing" | "generating",
-  text: str,
-  error: str,
-  references: list[str],
-  notes: list[str],
-  cancelled: bool,
-)
-```
-
-### Flow C: Context assembly (memory + references + documents)
-
-`build_messages(...)` in `src/orchestrator.py` constructs the final prompt in this order:
-1. Base or custom system prompt.
-2. User profile from `personalization.get_profile()` when memory is enabled.
-3. Long-term memories from `memory.relevant_memories(...)`.
-4. Cross-chat semantic hits from `rag.search_history(...)` with configurable `min_similarity`.
-5. Uploaded document retrieval snippets from `rag.search_docs(...)` when docs exist for that conversation.
-6. Attachment context (parsed docs/OCR/web search text).
-7. Last up to 20 history turns.
-
-Return value shape:
-
-```python
-(messages: list[dict[str, Any]], reference_titles: list[str])
-```
-
-Cross-chat/doc/memory query result shape from `rag._flatten`:
-
-```python
-{"id": str, "text": str, "similarity": float, ...metadata}
-```
-
-### Flow D: Memory extraction and profile refresh loop
-
-Memory loop (`src/memory.py`, `src/jobs.py`):
-1. Trigger condition: `_maybe_extract` runs when message count is a multiple of `MEMORY_EXTRACT_EVERY` (8).
-2. `memory.extract_memories` creates a transcript of recent turns and calls `ollama_client.generate` with `_EXTRACT_SYSTEM` JSON instructions.
-3. Extracted facts are parsed by `_parse_json_list`, deduplicated by vector similarity (`rag.similar_memory`), then inserted into SQLite + Chroma.
-4. Conversation marker `memory_extracted_at` is updated.
-
-Profile loop (`src/personalization.py`):
-1. `note_conversation_done` increments counter in `kv`.
-2. When counter reaches `config.profile_refresh_every` (default 5), `rebuild_profile` regenerates bullet-profile text from recent user snippets + rated assistant responses.
-3. Profile text is stored in `kv` key `user_profile`.
-
-### Flow E: Provider and endpoint management
-
-Provider path (`pages/3_Providers.py`, `src/providers.py`):
-1. User sets key in UI -> `providers.set_api_key(provider, key)` stores it in in-memory `_secrets`.
-2. If no session key exists, read-only env fallback applies via `get_api_key`.
-3. `list_provider_models` fetches live model lists per provider.
-4. `providers.stream_chat` adapts internal message format to provider-specific streaming APIs.
-
-Ollama endpoint path:
-1. Host/API key managed via `providers.set_ollama_config(host, api_key)`.
-2. `src/ollama_client._client()` uses `(host, key)` signature to rebuild cached client.
-3. All model listing, streaming, embedding, and health checks use this configured endpoint.
-
-## Module 4: Setup & Run Guide
-
-### 1. Prerequisites
-- Python `>=3.12` (from `pyproject.toml`).
-- `uv` for dependency management.
-- Ollama endpoint reachable (local or remote/cloud).
-- At least one chat model available in Ollama.
-- Optional for `.doc` parsing in `src/files.py`: `antiword` or `soffice` (LibreOffice).
-
-### 2. Install dependencies
-
-```bash
-uv sync
-```
-
-Dependencies are declared in `pyproject.toml`, including:
-- UI/runtime: `streamlit`, `loguru`.
-- Local inference: `ollama`.
-- Retrieval: `chromadb`.
-- Providers: `openai`, `anthropic`, `httpx`.
-- File parsing: `pypdf`, `python-docx`, `pandas`, `openpyxl`, `xlrd`, `pillow`.
-
-### 3. Run the app
-
-```bash
-uv run streamlit run app.py
-```
-
-Optional custom port (as documented in README):
-
-```bash
-uv run streamlit run app.py --server.port 8503
-```
-
-### 4. Environment variables and config
-
-Config loading source:
-- `src/config.py` uses `SettingsConfigDict(env_prefix="CHAT_", env_file=".env")`.
-- Any `AppConfig` field can be overridden via `CHAT_<FIELD_NAME_IN_UPPERCASE>`.
-
-Common `CHAT_` keys used by runtime:
-- `CHAT_OLLAMA_HOST`
-- `CHAT_DATA_DIR`
-- `CHAT_TEMPERATURE`
-- `CHAT_KEEP_ALIVE`
-- `CHAT_REQUEST_TIMEOUT`
-- `CHAT_SHOW_CLOUD_MODELS`
-- `CHAT_MEMORY_ENABLED`
-- `CHAT_CROSS_CHAT_REFERENCES`
-- `CHAT_CHUNK_CHARS`
-- `CHAT_CHUNK_OVERLAP_CHARS`
-- `CHAT_DOC_CONTEXT_BUDGET_CHARS`
-- `CHAT_RAG_TOP_K`
-- `CHAT_CROSS_CHAT_TOP_K`
-- `CHAT_CROSS_CHAT_MIN_SIMILARITY`
-- `CHAT_MEMORY_MAX_INJECTED`
-- `CHAT_MEMORY_DECAY_DAYS`
-- `CHAT_PROFILE_REFRESH_EVERY`
-
-Provider/API keys supported by code (`src/providers.py`):
-- `OPENAI_API_KEY`
-- `ANTHROPIC_API_KEY`
-- `OPENROUTER_API_KEY`
-- `XAI_API_KEY`
-- `GEMINI_API_KEY`
-- `OLLAMA_API_KEY` (for secured/hosted Ollama endpoint)
-
-UI/runtime config files:
-- `.streamlit/config.toml` for theme, `server.maxUploadSize`, telemetry toggle.
-- `.env` optional for `CHAT_*` overrides.
-
-### 5. Data storage locations
-Derived from `config.data_dir` (default `<repo>/data`):
-- SQLite DB: `data/app.db`
-- Chroma persistent store: `data/chroma`
-- Uploads directory: `data/uploads`
-
-### 6. Migrations, seeding, and initialization
-There is no separate migration command. Runtime initialization handles it:
-- `chat_store.init_db()` creates schema on startup for all pages.
-- Lightweight migration attempt in `init_db`: adds `conversations.pinned` if missing.
-- Built-in assistant seeding in `app.py`: `seed_builtin_presets(...)` ensures the built-in coding preset exists when a catalog is available.
-
-### 7. Typical startup sequence on a clean machine
-
-```bash
-# 1) install deps
-uv sync
-
-# 2) (recommended) ensure an embedding model exists for memory/RAG
+```powershell
 ollama pull embeddinggemma
-
-# 3) run app
 uv run streamlit run app.py
 ```
 
-If you use cloud-only/provider models, configure keys and endpoint from `pages/3_Providers.py` UI.
+Stop either server with `Ctrl+C` in its terminal.
 
-## Module 5: Study Plan & Practice Exercises
+### 3.3 POSIX shells
 
-### Ordered study plan for a new learner
-1. Read `README.md` to understand product goals, feature set, and runtime assumptions.
-2. Read `src/config.py` and `src/chat_store.py` to understand core state, persistence schema, and data paths.
-3. Read `app.py` top-to-bottom for user journey and orchestration entrypoints.
-4. Read `src/jobs.py` for the non-blocking execution design and generation lifecycle.
-5. Read `src/orchestrator.py`, `src/rag.py`, `src/memory.py`, `src/personalization.py` to understand context assembly and personalization loops.
-6. Read `src/providers.py` and `src/ollama_client.py` for model/provider adapters and endpoint behavior.
-7. Read `pages/2_Settings.py`, `pages/1_Memory.py`, `pages/3_Providers.py`, `pages/4_Compare.py` for operational controls and alternate flows.
-8. Read `src/catalog.py`, `src/model_labels.py`, `src/files.py` for model UX and file preprocessing details.
+```bash
+git clone https://github.com/pypi-ahmad/local-ai-chat-studio.git
+cd local-ai-chat-studio
+uv sync --locked --dev
 
-### Practice exercises (with solution outlines)
+cd frontend
+npm ci
+npm run build
+cd ..
 
-1. Trace one full chat turn from UI input to assistant persistence.
-Solution outline: follow `app.py` `st.chat_input` -> `send_user_message` -> `jobs.start` -> `jobs._run` -> `_stream` -> `chat_store.add_message(role='assistant')`.
+uv run chat-studio
+```
 
-2. Identify where and how message metadata is stored for references, sources, and timing.
-Solution outline: inspect `jobs._run` `meta` list construction and how it is saved in `chat_store.add_message(..., attachments=meta)`; inspect rendering in `app.py` where `kind` is parsed (`reference`, `source`, `meta`, `error`).
+In another terminal, use `cd frontend && npm run dev` for Vite development. Use `ollama pull embeddinggemma && uv run streamlit run app.py` for the legacy app.
 
-3. Explain the exact condition for memory extraction and profile rebuild.
-Solution outline: extraction trigger is in `jobs._maybe_extract` when `message_count % MEMORY_EXTRACT_EVERY == 0` and not already extracted; profile rebuild is gated by `personalization.note_conversation_done()` counter vs `config.profile_refresh_every`.
+### 3.4 Configuration and data
 
-4. Show how cloud provider models appear in the same dropdown as local models.
-Solution outline: provider keys -> `providers.configured_providers()` -> per-provider `cached_provider_models` -> `catalog.build_model_catalog` merges into `SelectedModel` dict -> `ordered_keys` drives selectbox in `app.py`.
+| Setting | v2 effect | Legacy effect |
+|---|---|---|
+| `CHAT_DATA_DIR` | Base for `studio.db`; default relative `data/v2`. | Pydantic `data_dir`; default repository `data`. |
+| `CHAT_OLLAMA_HOST` | Ollama adapter host. | Ollama client endpoint default. |
+| Provider key variables | Session-vault fallback. | Process-memory vault fallback. |
+| `.env` | No explicit v2 settings loader. | Loaded by Pydantic settings. |
 
-5. Determine the fallback behavior when the selected model cannot process images.
-Solution outline: `jobs._process_attachments` checks `is_vision`; if false and `vision_fallback` exists, calls `describe_image` and injects extracted text context; otherwise adds a note that no vision model is available.
+Provider variables are `OLLAMA_API_KEY`, `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, `OPENROUTER_API_KEY`, `XAI_API_KEY`, and [v2] `OMNIROUTE_API_KEY`. Never commit them.
 
-6. Find where cross-chat semantic search is used and how current conversation is excluded.
-Solution outline: `orchestrator.build_messages` calls `rag.search_history`; that function queries Chroma with `where={"conv_id": {"$ne": exclude_conv}}` and filters by `min_similarity`.
+## 4. Repository map
 
-7. Confirm how secret handling avoids disk persistence.
-Solution outline: `src/providers.py` stores keys in process memory `_secrets` with lock; functions use env vars as read-only fallback; comments and page text explicitly state session-only behavior; no DB/file write path for keys.
+```text
+backend/app/             [v2] FastAPI routes, contracts, store, sessions, providers, runs, CLI
+frontend/src/            [v2] React shell, styles, UI primitives, API client/schema
+scripts/                 [shared] OpenAPI-to-TypeScript generator
+tests/                   [v2] API and provider contract tests
+app.py                   [legacy] Streamlit chat entry point
+pages/                   [legacy] Memory, Settings, Providers, Compare pages
+src/                     [legacy] jobs, orchestration, providers, files, RAG, memory, persistence
+.github/workflows/ci.yml [shared] backend and frontend CI jobs
+data/                    runtime data; ignored, not source
+docs/tutorial/           generated/interactive learning companion when present
+```
 
-8. Explain what is deleted by each cleanup action.
-Solution outline: read `pages/2_Settings.py` and `chat_store.py`/`rag.py`: `Clear all chats` deletes conversations/messages/feedback + chat vectors only; `Panic wipe` deletes conversations, memories, kv, presets, all vector collections, and in-memory secrets.
+Suggested reading order: `backend/app/contracts.py` → `store.py` → `sessions.py` → `providers.py` → `runs.py` → `main.py` → `frontend/src/api/` → `App.tsx`; then study `app.py` → `src/jobs.py` → `src/orchestrator.py` and the legacy feature modules.
 
-9. Reconstruct database schema and identify the join used for feedback retrieval.
-Solution outline: inspect `_SCHEMA` in `chat_store.py`; `get_feedback` joins `feedback` and `messages` on `message_id` filtered by `conv_id`.
+## 5. FastAPI v2, module by module
 
-10. Compare persistent vs ephemeral generation paths.
-Solution outline: persistent path uses `jobs.start`/`_run` and stores assistant turn; ephemeral compare path uses `jobs.run_ephemeral` with keys (`compare::a`, `compare::b`) and never writes to SQLite.
+### 5.1 `backend/app/main.py`: composition and HTTP contracts
 
-### Self-check checklist
-- Can you explain how `app.py` delegates slow work to `src/jobs.py` without blocking UI reruns?
-- Can you describe the message and metadata shapes passed between `app.py`, `src/jobs.py`, and `src/chat_store.py`?
-- Can you explain when `src/orchestrator.py` injects profile, memories, cross-chat hits, and doc excerpts?
-- Can you list which features require an embedding model and where this dependency is checked?
-- Can you explain provider key flow (session memory vs env fallback) and where secrets are stored?
-- Can you trace how uploaded files are parsed, chunked, indexed, and later retrieved for context?
-- Can you explain the difference between `Clear all chats` and `Panic wipe` using actual functions?
-- Can you identify where model catalogs are built and how model keys are normalized across old/new conversations?
+`create_app(database_url=None, provider_registry=None)` is the composition root. Dependency injection of a database path and provider registry makes tests deterministic. It constructs one `Store`, `SessionVault`, `ProviderRegistry`, and `RunManager`, exposes them on `app.state`, and closes SQLite during lifespan shutdown.
+
+The middleware reads `chat_session` or generates a random ID, adds it to `request.state`, and sets an `HttpOnly`, `SameSite=Strict`, non-secure cookie. This scopes credentials but does not prove user identity.
+
+| Method and path | Contract | Behavior |
+|---|---|---|
+| `GET /api/v1/health` | object | Health/version probe. |
+| `POST /api/v1/conversations` | `ConversationCreate → Conversation` | Creates a conversation, status 201. |
+| `GET /api/v1/conversations` | `Conversation[]` | Lists newest-updated first, without messages. |
+| `GET /api/v1/conversations/{id}` | `Conversation` | Returns messages ordered by position; 404 if absent. |
+| `POST /api/v1/conversations/{id}/messages` | `MessageCreate → Message` | Appends a message, status 201. |
+| `GET /api/v1/providers` | provider summaries | Reports `session`, `env`, or no key source. |
+| `GET /api/v1/providers/models` | discovery map | Concurrent discovery; failure is isolated per provider. |
+| `PUT/DELETE /api/v1/providers/{id}/credential` | 204 | Sets/removes the current session value. |
+| `POST /api/v1/providers/openrouter/auth/start` | URLs | Starts PKCE. |
+| `GET .../auth/callback`, `POST .../auth/complete` | redirect/204 | Exchanges code and stores key. |
+| `POST /api/v1/runs` | `RunCreate → RunSnapshot` | Queues async work, status 202. |
+| `GET /api/v1/runs/{id}` | snapshot | Reads current in-memory state. |
+| `GET /api/v1/runs/{id}/events` | SSE | Replays existing events and waits for new ones until terminal. |
+| `DELETE /api/v1/runs/{id}` | snapshot | Requests cooperative cancellation. |
+
+After routes are registered, FastAPI mounts `frontend/dist` at `/` only if that directory exists. In development, Vite serves the SPA instead. API routes must remain registered before the catch-all static mount.
+
+### 5.2 `contracts.py`: one source for request/response shapes
+
+Pydantic validates roles, required text, title length, temperature, and run status. `RunSnapshot` represents lifecycle state; `RunEvent` represents an occurrence. Mutable defaults appear as `[]`/`{}` in models, but Pydantic copies model defaults per instance.
+
+`conversation_id` exists on `RunCreate`, but [gap] the v2 run path does not persist prompts or output into that conversation.
+
+### 5.3 `store.py`: SQLite and ordering
+
+The v2 schema has `conversations`, `messages`, and `runs`. Foreign keys cascade message deletion, though [gap] there is no delete-conversation route. `Store.add_message` verifies the conversation, computes `MAX(position)+1`, inserts, and updates the conversation timestamp under one re-entrant lock and transaction.
+
+The `runs` table is currently unused. Actual `RunState` objects live in `RunManager._runs`, so restart loses them.
+
+### 5.4 `sessions.py`: credential isolation
+
+`SessionVault` stores `{session_id: {provider: key}}` in memory. `get` prefers a session value and falls back to the provider environment variable. `source` reveals only where a key came from, not its value. There is no expiry or cleanup of session dictionaries yet.
+
+### 5.5 `providers.py`: normalized adapters
+
+Every adapter implements `list_models(api_key)` and async `stream(api_key, model, messages, temperature)`. The registry contains Ollama, OpenAI, Anthropic, Gemini, OpenRouter, xAI, and OmniRoute.
+
+- OpenAI, OpenRouter, xAI, and OmniRoute share `OpenAICompatibleAdapter` with different base URLs.
+- Ollama uses `CHAT_OLLAMA_HOST` and an optional bearer key.
+- Anthropic separates system messages and caps output at 4096 tokens.
+- Gemini currently flattens the normalized message list into a labeled text prompt.
+- Model discovery catches each adapter error and returns it in `ProviderDiscovery` rather than failing the whole response.
+
+### 5.6 `runs.py`: lifecycle, events, and cancellation
+
+`create` immediately stores a queued snapshot and schedules `_execute`. Execution emits:
+
+```text
+queued → running → completed
+                 ↘ cancelled
+                 ↘ failed
+events: run.started, zero or more run.delta, then one terminal event
+```
+
+The built-in `echo` provider exists only as a deterministic contract-test path. Cancellation is cooperative: `DELETE` sets a threading event; status changes only when the streaming loop next observes it. A provider stalled before yielding cannot be interrupted immediately.
+
+SSE framing in `main.py` is:
+
+```text
+event: run.delta
+data: {"type":"run.delta", ...}
+
+```
+
+### 5.7 `cli.py` and static serving
+
+The `chat-studio` console script invokes Uvicorn on `127.0.0.1:8000`, without reload. Build `frontend/dist` before production-style local use. The loopback host is an intentional safety boundary; changing it to `0.0.0.0` exposes an unauthenticated service.
+
+## 6. React v2: shell, client, schema, and gaps
+
+`frontend/src/App.tsx` renders a navigation rail, sample conversation history, a chat composer, provider cards, and generic workspace placeholders. State switches pages and fills prompt suggestions. It uses React and local shadcn/Base UI-style components.
+
+What it does **not** currently do:
+
+- [gap] load/create conversations or persist messages;
+- [gap] discover models or configure credentials;
+- [gap] submit the composer to `createRun`;
+- [gap] consume SSE deltas or display actual responses;
+- [gap] cancel active runs, upload files, use RAG/memory, compare models, or manage assistants;
+- [gap] derive its “Backend connected” indicator from `/health`.
+
+`frontend/src/api/client.ts` contains only `createRun`, `cancelRun`, and `providers`. Its shared request helper sends JSON and same-origin cookies. There is no EventSource/fetch-stream implementation and no conversation client methods.
+
+`frontend/src/api/schema.ts` is generated by `scripts/generate_api_types.py` from FastAPI OpenAPI. Do not hand-edit it. The generator covers the repository’s current simple schemas; it is not a general OpenAPI generator.
+
+## 7. Legacy Streamlit: where feature-rich behavior lives
+
+### 7.1 `app.py` and pages
+
+`app.py` is the chat UI and integration shell. It initializes state, builds a unified model catalog, persists the user turn, starts a background job, polls live output, and offers conversation/message actions.
+
+- `pages/1_Memory.py`: inspect, pin, edit, archive, delete memories and rebuild the profile.
+- `pages/2_Settings.py`: generation/features, assistants, export/import, clearing, and panic wipe.
+- `pages/3_Providers.py`: keys, endpoint configuration, testing, model discovery, and OpenRouter flow.
+- `pages/4_Compare.py`: two parallel ephemeral runs; results are not chat history.
+
+Streamlit reruns the script after interactions. `st.session_state` retains browser-session UI state, while `src/jobs.py` keeps generation alive outside a single rerun.
+
+### 7.2 `src/jobs.py` and `src/orchestrator.py`
+
+`jobs.start` creates a process-global `Job` and daemon thread. `_run` parses attachments, optionally searches the web, assembles context, dispatches streaming, updates visible text, persists the assistant response, then performs best-effort title/index/memory/profile work.
+
+`orchestrator.build_messages` layers:
+
+1. base/custom system instruction;
+2. personalization profile;
+3. relevant durable memories;
+4. cross-chat retrieval hits;
+5. current-conversation document hits;
+6. direct attachment/OCR/web context;
+7. recent history.
+
+`after_turn_indexing` embeds a completed exchange for later cross-chat recall.
+
+### 7.3 Catalog, providers, and Ollama
+
+`src/catalog.py` merges Ollama `ModelInfo` and cloud `ApiModel` records into `SelectedModel` keys such as `ollama::<name>` and `<provider>::<id>`. It groups models and chooses a coding-model candidate heuristically.
+
+`src/providers.py` implements the legacy provider key vault, model listing, streaming, connection tests, and older OpenRouter authorization helpers. `src/ollama_client.py` centralizes endpoint-aware model discovery, chat/generate calls, embeddings, image description, running-model health, and capability selection.
+
+These modules are not imported by the v2 provider stack; similar concepts are currently duplicated.
+
+### 7.4 Files and RAG
+
+`src/files.py` recognizes PDFs, Word documents, spreadsheets, text/code, and images. `parse_upload` returns an `Attachment`; `chunk_text` creates overlapping text windows. Legacy `.doc` extraction shells out to LibreOffice or `antiword` when available.
+
+In `jobs._process_attachments`, small extracted documents fit directly into prompt context. Large documents are chunked and indexed through `src/rag.py`. Vision-capable models can receive image bytes; text-only targets may use a local vision fallback to describe the image.
+
+`src/rag.py` owns three Chroma collections: document chunks, chat history, and memories. Metadata maintains conversation/document identity. Retrieval is scoped appropriately, including excluding the active conversation from cross-chat recall.
+
+### 7.5 Memory and personalization
+
+`src/memory.py` asks a local helper model to extract durable facts, parses a JSON list, rejects near-duplicates using embedding similarity, and stores accepted facts in SQLite plus Chroma. Relevant memories are touched when used; old unpinned memories can decay to archived state.
+
+`src/personalization.py` stores a prose profile in legacy SQLite key/value state. It rebuilds periodically from user messages and rated assistant samples. Memory means atomic facts; profile means a synthesized description of preferences and expertise.
+
+### 7.6 `src/chat_store.py`
+
+The legacy database at `data/app.db` contains richer conversations, messages, memories, feedback, key/value profile state, and presets. It supports rename, pin, search, partial deletion, exports/imports, Markdown export, cleanup, and wipe operations. Attachment metadata stores references, sources, stats, and errors alongside messages.
+
+## 8. End-to-end traces
+
+### 8.1 v2 API run
+
+```text
+Browser POST /api/v1/runs
+  → session middleware chooses chat_session
+  → Pydantic validates RunCreate
+  → RunManager stores queued RunState and schedules task
+  → adapter receives session/env credential
+  → GET /events replays run.started and run.delta events
+  → terminal event closes SSE stream
+  → GET /runs/{id} returns accumulated output
+```
+
+Important [gap]: the React composer does not initiate this trace, and the result is not written to `Store` or linked to `conversation_id`.
+
+### 8.2 v2 conversation persistence
+
+```text
+POST /conversations → SQLite row
+POST /conversations/{id}/messages → ordered SQLite row + updated timestamp
+GET /conversations/{id} → conversation with messages by position
+```
+
+The caller currently has to coordinate conversation messages and runs itself.
+
+### 8.3 legacy rich turn
+
+```text
+st.chat_input
+  → app.py persists user message
+  → jobs.start daemon thread
+  → parse/index attachments + optional web search
+  → orchestrator injects profile/memory/history/docs
+  → Ollama or cloud provider streams chunks
+  → Streamlit fragment polls Job.text
+  → assistant message + metadata persist
+  → title, history vector, memories, profile update best effort
+```
+
+### 8.4 legacy RAG question
+
+```text
+upload → parse text → chunk overlapping windows → embed → Chroma
+question → embed → nearest chunks → bounded context → model answer
+```
+
+## 9. Data, privacy, and security
+
+- [v2] conversation text persists in `data/v2/studio.db`; [legacy] richer data persists under `data/` and vectors in `data/chroma`.
+- Session-entered keys remain in process memory. Environment fallback keys live outside app storage but are readable by the process.
+- A cloud-provider request sends its messages and selected context to that provider. “Local-first” is not “always local.”
+- Legacy uploaded content may be parsed locally, embedded by configured Ollama, and injected into a cloud-model request if a cloud model is selected.
+- The cookie is `HttpOnly` and `SameSite=Strict`, but `secure=False` for local HTTP. It scopes secrets; it is not authentication, authorization, CSRF proof for every deployment, or encryption at rest.
+- PKCE protects code exchange, not the application itself. Pending verifiers and keys disappear on restart.
+- Exception strings currently surface in discovery/run failures; avoid placing secrets in upstream error text and logs.
+- SQLite locks are process-local. In-memory runs/vaults will diverge across multiple Uvicorn workers.
+- Never expose either app publicly without an authentication, TLS, origin, and deployment review.
+
+## 10. Contributor tutorials
+
+### 10.1 Add a v2 provider
+
+1. Add the provider ID and environment variable to `backend/app/sessions.py::PROVIDER_ENV`.
+2. Add its user-facing label to `PROVIDER_LABELS` in `main.py`.
+3. Implement a `ProviderAdapter` or configure `OpenAICompatibleAdapter` in `build_provider_registry`.
+4. Normalize results to `ModelDescriptor` and messages to the provider’s format.
+5. Add adapter tests for registry presence, discovery failure isolation, and streamed deltas.
+6. Add API tests for credential scope if behavior differs.
+
+Tradeoff: reusing the OpenAI-compatible adapter is smallest, but only correct if the endpoint really matches the used models/chat streaming semantics.
+
+### 10.2 Add an endpoint and regenerate frontend types
+
+1. Define request/response models in `backend/app/contracts.py`.
+2. Add the route in `create_app`; return explicit status codes and translate domain misses to HTTP errors.
+3. Add a public-contract test in `tests/test_api_contract.py`.
+4. Run `uv run python scripts/generate_api_types.py` (or `npm run generate:api` inside `frontend`).
+5. Inspect the diff in `frontend/src/api/schema.ts`; never patch generated types manually.
+6. Add a typed method to `frontend/src/api/client.ts` and a UI integration test.
+
+If the schema becomes more complex than this generator supports, extend and test the generator before relying on its output.
+
+### 10.3 Wire one React workspace
+
+Use a narrow vertical slice, for example provider status:
+
+1. Add loading, success, and error state to the Providers workspace.
+2. Call `api.providers()` in an effect and render returned `key_source` values.
+3. Remove only the corresponding hard-coded demo status.
+4. Test loading/error/success behavior with mocked fetch.
+
+For chat, the minimum coherent slice is larger: conversation creation, user-message persistence, run creation, SSE parsing, delta display, terminal/error/cancel handling, and assistant-message persistence. Decide explicitly whether the browser or backend owns that orchestration before implementing it.
+
+### 10.4 Add a legacy file parser
+
+1. Add the extension/MIME type to `src/files.py` constants.
+2. Implement a focused parser accepting bytes and returning clean text.
+3. Dispatch it from `parse_upload`, preserving filename, type, and errors.
+4. Add representative parser tests, including empty/malformed input.
+5. Exercise the full small-file direct-context and large-file chunk/RAG paths.
+
+Avoid a new dependency if an existing library or the standard library suffices. Parsers handle untrusted input, so bound resource use and do not execute embedded content.
+
+## 11. Testing, CI, and debugging
+
+### 11.1 Local checks
+
+```powershell
+uv run python -m pytest -q
+uv run ruff check backend tests
+Set-Location frontend
+npm run lint
+npm test
+npm run build
+```
+
+The same commands work in POSIX shells with `cd frontend`. CI runs backend and frontend jobs on Ubuntu, Python 3.12, and Node 22.12. The backend tests inject an in-memory database and fake registry where needed; the `echo` run avoids a network model.
+
+Current test scope is intentionally small: API contracts, credential session isolation, SSE completion, PKCE construction, provider registry/discovery, and React shell rendering/navigation. [gap] Legacy feature paths have no committed automated coverage in the current tree.
+
+### 11.2 Debugging playbook
+
+| Symptom | First checks |
+|---|---|
+| `/` returns 404 on port 8000 | Build `frontend/dist`; confirm backend startup directory. |
+| Vite UI cannot call API | Confirm backend on 8000 and `vite.config.ts` proxy. |
+| provider discovery shows an error | Check only that provider’s key, base URL, and network; discovery intentionally degrades independently. |
+| run stays queued/running | Inspect `/runs/{id}` and `/events`; check provider stream and server exception. |
+| cancel appears delayed | Cancellation is checked between received chunks. |
+| key disappears | Session keys are memory-only; restart/new cookie loses them. |
+| legacy RAG returns nothing | Confirm embedding model, successful parsing, Chroma data, conversation scope, and similarity. |
+| `.doc` is empty | Install LibreOffice or `antiword`; prefer `.docx` where possible. |
+
+Debug in the sequence reproduce → localize → form one hypothesis → change one variable → verify. Read the complete server traceback and browser network response before changing code.
+
+## 12. Module atlas
+
+| Module | Marker | Owns |
+|---|---|---|
+| `backend/app/main.py` | [v2] | HTTP routes, middleware, PKCE exchange, static mount. |
+| `backend/app/contracts.py` | [v2] | Pydantic API and event types. |
+| `backend/app/store.py` | [v2] | Minimal SQLite conversations/messages schema. |
+| `backend/app/sessions.py` | [v2] | Session credential vault and env fallback. |
+| `backend/app/providers.py` | [v2] | Async adapters and concurrent discovery. |
+| `backend/app/runs.py` | [v2] | In-memory streaming run lifecycle. |
+| `backend/app/cli.py` | [v2] | Uvicorn console entry point. |
+| `frontend/src/App.tsx` | [v2] [gap] | Mostly static SPA workspace shell. |
+| `frontend/src/api/client.ts` | [v2] [gap] | Three API request primitives. |
+| `frontend/src/api/schema.ts` | [v2] | Generated TypeScript contracts. |
+| `scripts/generate_api_types.py` | [shared] | OpenAPI schema conversion. |
+| `app.py` | [legacy] | Streamlit chat and UI orchestration. |
+| `pages/*.py` | [legacy] | Memory, settings, providers, compare screens. |
+| `src/jobs.py` | [legacy] | Background generation and attachments/search pipeline. |
+| `src/orchestrator.py` | [legacy] | Context assembly and post-turn indexing. |
+| `src/catalog.py` | [legacy] | Unified model selection. |
+| `src/providers.py` | [legacy] | Cloud providers, secrets, endpoint/OAuth helpers. |
+| `src/ollama_client.py` | [legacy] | Ollama discovery, generation, embeddings, vision, health. |
+| `src/files.py` | [legacy] | File parsing and chunking. |
+| `src/rag.py` | [legacy] | Chroma indexes and retrieval. |
+| `src/memory.py` | [legacy] | Durable-fact extraction, deduplication, decay. |
+| `src/personalization.py` | [legacy] | Rolling user profile. |
+| `src/chat_store.py` | [legacy] | Rich SQLite domain store and data controls. |
+| `src/config.py` | [legacy] | `CHAT_` Pydantic settings and data paths. |
+
+## 13. Exercises and solution outlines
+
+1. **Classify a feature.** Is “Memory” available in v2 because the navigation button exists?
+   **Outline:** No. The React button and placeholder are [v2], but behavior is [legacy]; porting is [gap].
+
+2. **Trace a run without the UI.** Create a run using the `echo` provider and consume events.
+   **Outline:** POST a `RunCreate`, retain the ID, GET its `/events`, verify started/delta/completed, then GET its snapshot.
+
+3. **Explain restart behavior.** What survives a v2 restart?
+   **Outline:** SQLite conversations/messages survive. Runs, events, session keys, and PKCE verifiers do not.
+
+4. **Find a concurrency guarantee.** Why can two messages get unique positions?
+   **Outline:** `Store.add_message` calculates and inserts the next position within its `RLock` and SQLite transaction for one process.
+
+5. **Find a concurrency limit.** Why are multiple Uvicorn workers unsafe for session keys?
+   **Outline:** Each worker owns a separate in-memory vault and run registry; a cookie does not route every request to the same worker.
+
+6. **Compare streaming architectures.**
+   **Outline:** v2 uses async tasks and SSE; legacy uses daemon threads and Streamlit polling of shared `Job.text`.
+
+7. **Explain RAG versus memory.**
+   **Outline:** RAG retrieves source chunks relevant to a query; memory extracts durable user facts and deduplicates them. Both use embeddings but have different lifecycle and intent.
+
+8. **Assess privacy for a cloud run.**
+   **Outline:** keys are not written by the vault, but request messages/context leave the machine for the selected cloud provider. Local storage does not make that call local.
+
+9. **Design the smallest frontend contribution.**
+   **Outline:** Wire provider status first: one existing API method, three UI states, and a focused test. Full chat requires an orchestration ownership decision.
+
+10. **Add a contract safely.**
+    **Outline:** Pydantic model → route → pytest → regenerate schema → typed client → UI test → all CI commands.
+
+11. **Investigate unused persistence.**
+    **Outline:** Locate `runs` DDL in `store.py`; confirm `RunManager` never receives `Store`; propose either persistence integration or removing misleading schema in a separately approved change.
+
+12. **Test a parser contribution.**
+    **Outline:** valid bytes, malformed bytes, empty extraction, direct-context threshold, chunk overlap, indexing/retrieval, and no execution of embedded data.
+
+## 14. Glossary
+
+| Term | Meaning here |
+|---|---|
+| Adapter | Provider-specific implementation behind a normalized model interface. |
+| API contract | Validated request, response, status, and event behavior callers may rely on. |
+| Async task | Cooperative unit scheduled on an event loop. |
+| BYOK | User supplies a cloud-provider credential. |
+| ChromaDB | Legacy persistent vector database. |
+| Context window | Token capacity shared by prompt and generated output. |
+| Cosine similarity | Direction-based vector similarity measure. |
+| Embedding | Numeric semantic representation. |
+| EventSource/SSE | Browser/API mechanism for one-way server event streams. |
+| LLM | Model that predicts token sequences. |
+| Ollama | Local/remote model server used by both stacks. |
+| Persistence | State that remains after restart. |
+| PKCE | Proof Key for Code Exchange authorization protection. |
+| RAG | Retrieve external evidence and add it to a generation request. |
+| REST | Resource-oriented HTTP interface. |
+| SPA | Browser application that changes views without full document navigation. |
+| Temperature | Sampling parameter affecting output variability. |
+| Token | Model-specific unit of text. |
+| Vector database | Store/query system optimized for embedding similarity. |
+
+## 15. Official sources
+
+- [FastAPI documentation](https://fastapi.tiangolo.com/)
+- [FastAPI streaming responses](https://fastapi.tiangolo.com/advanced/custom-response/#streamingresponse)
+- [Pydantic documentation](https://docs.pydantic.dev/latest/)
+- [Python `asyncio`](https://docs.python.org/3/library/asyncio.html)
+- [SQLite documentation](https://www.sqlite.org/docs.html)
+- [React documentation](https://react.dev/)
+- [Vite documentation](https://vite.dev/guide/)
+- [MDN: Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events)
+- [OAuth 2.0 PKCE, RFC 7636](https://www.rfc-editor.org/rfc/rfc7636)
+- [Ollama documentation](https://docs.ollama.com/)
+- [Chroma documentation](https://docs.trychroma.com/)
+- [OpenAI API documentation](https://platform.openai.com/docs/)
+- [Anthropic API documentation](https://docs.anthropic.com/)
+- [Google Gen AI SDK documentation](https://googleapis.github.io/python-genai/)
+- [OpenRouter OAuth PKCE documentation](https://openrouter.ai/docs/use-cases/oauth-pkce)
+- [uv documentation](https://docs.astral.sh/uv/)
+- [Streamlit documentation](https://docs.streamlit.io/)
+
+## 16. A practical contributor path
+
+First run both applications and observe the parity gap. Next, read and test one v2 vertical slice. Make one small contract-backed change, regenerate types if needed, and run both CI command sets. Treat legacy modules as the behavioral reference, not as code that must be copied: preserve behavior while choosing interfaces appropriate to FastAPI and React.
+
+Before opening a pull request, answer four questions: What user-visible behavior changed? Which stack owns it? What persists and what is session-only? Which automated test proves the public contract?

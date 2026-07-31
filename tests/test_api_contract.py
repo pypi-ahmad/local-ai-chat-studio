@@ -1,0 +1,90 @@
+from __future__ import annotations
+
+import json
+from urllib.parse import parse_qs, urlparse
+
+from fastapi.testclient import TestClient
+
+
+def test_health_and_session_cookie(client: TestClient) -> None:
+    response = client.get("/api/v1/health")
+
+    assert response.status_code == 200
+    assert response.json() == {"status": "ok", "version": "2"}
+    assert response.cookies.get("chat_session")
+
+
+def test_conversation_crud_preserves_message_order(client: TestClient) -> None:
+    created = client.post("/api/v1/conversations", json={"title": "TDD chat"})
+    assert created.status_code == 201
+    conversation_id = created.json()["id"]
+
+    first = client.post(
+        f"/api/v1/conversations/{conversation_id}/messages",
+        json={"role": "user", "content": "first"},
+    )
+    second = client.post(
+        f"/api/v1/conversations/{conversation_id}/messages",
+        json={"role": "assistant", "content": "second"},
+    )
+
+    assert first.status_code == second.status_code == 201
+    detail = client.get(f"/api/v1/conversations/{conversation_id}")
+    assert [message["content"] for message in detail.json()["messages"]] == [
+        "first",
+        "second",
+    ]
+
+
+def test_provider_secret_is_scoped_to_browser_session(client: TestClient) -> None:
+    connected = client.put(
+        "/api/v1/providers/openai/credential", json={"api_key": "sk-test"}
+    )
+    assert connected.status_code == 204
+    assert client.get("/api/v1/providers").json()["providers"][1]["key_source"] == "session"
+
+    isolated = TestClient(client.app)
+    providers = isolated.get("/api/v1/providers").json()["providers"]
+    assert next(item for item in providers if item["id"] == "openai")["key_source"] != "session"
+
+
+def test_run_stream_contract_retains_completed_output(client: TestClient) -> None:
+    created = client.post(
+        "/api/v1/runs",
+        json={
+            "provider": "echo",
+            "model": "deterministic",
+            "messages": [{"role": "user", "content": "hello"}],
+        },
+    )
+    assert created.status_code == 202
+    run_id = created.json()["id"]
+
+    with client.stream("GET", f"/api/v1/runs/{run_id}/events") as stream:
+        events = [
+            json.loads(line.removeprefix("data: "))
+            for line in stream.iter_lines()
+            if line.startswith("data: ")
+        ]
+
+    assert events[0]["type"] == "run.started"
+    assert any(event["type"] == "run.delta" for event in events)
+    assert events[-1]["type"] == "run.completed"
+    snapshot = client.get(f"/api/v1/runs/{run_id}").json()
+    assert snapshot["status"] == "completed"
+    assert snapshot["output"] == "hello"
+
+
+def test_openrouter_auth_uses_session_pkce_and_current_callback_origin(client: TestClient) -> None:
+    response = client.post("/api/v1/providers/openrouter/auth/start")
+
+    assert response.status_code == 200
+    payload = response.json()
+    parsed = urlparse(payload["authorization_url"])
+    query = parse_qs(parsed.query)
+    assert parsed.netloc == "openrouter.ai"
+    assert query["code_challenge_method"] == ["S256"]
+    assert query["callback_url"] == [
+        "http://testserver/api/v1/providers/openrouter/auth/callback"
+    ]
+    assert len(query["code_challenge"][0]) >= 43

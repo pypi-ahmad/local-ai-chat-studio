@@ -1,8 +1,8 @@
 # Local AI Chat Studio
 
-**A local-first, ChatGPT-style AI platform over Ollama — with optional BYOK cloud
-providers, built-in memory, assistants, model compare, and self-improving
-personalization. Your chats, memories, and API keys never leave your machine.**
+**A local-first AI studio with a FastAPI + React workspace, Ollama, optional BYOK
+cloud providers, session-isolated credentials, streaming runs, memory, assistants,
+and model comparison.**
 
 <p>
   <a href="https://www.python.org/"><img alt="Python" src="https://img.shields.io/badge/python-3.12-blue.svg"></a>
@@ -19,6 +19,7 @@ personalization. Your chats, memories, and API keys never leave your machine.**
 - [Background](#background)
 - [Features](#features)
 - [Screenshots](#screenshots)
+- [Learning guide](#learning-guide)
 - [Setup](#setup)
 - [Usage](#usage)
 - [Configuration](#configuration)
@@ -69,6 +70,19 @@ promises:
 |---|---|
 | <img src="docs/screenshot-chat.png" width="100%"> | <img src="docs/screenshot-compare.png" width="100%"> |
 
+## Learning guide
+
+New to the app itself? Read the [User Guide](USER_GUIDE.md) for a plain-language,
+feature-by-feature walkthrough (setup, usage, and the "why" behind each feature) aimed
+at technical and non-technical readers alike.
+
+Want to understand the code? Start with the
+[Zero-to-Hero Study Handbook](ZERO_TO_HERO_STUDY_HANDBOOK.md) for a repository-grounded
+path from AI foundations to contributing. The companion
+[interactive tutorial](docs/tutorial/index.html) provides a browser-friendly walkthrough.
+The former Streamlit-only handbook PDF is retained only as a
+[legacy archive](docs/archive/ZERO_TO_HERO_STUDY_HANDBOOK.legacy-v1.pdf).
+
 ## Setup
 
 ### Prerequisites
@@ -99,6 +113,22 @@ uv sync
 ```
 
 ### Start the app
+
+The v2 application uses one local FastAPI server. Build the frontend once, then start
+the studio:
+
+```bash
+cd frontend
+npm ci
+npm run build
+cd ..
+uv run chat-studio
+```
+
+Open **http://127.0.0.1:8000**. For frontend development, run `npm run dev` from
+`frontend/` in a second terminal; Vite proxies `/api` to FastAPI.
+
+The previous Streamlit interface remains available during the parity window:
 
 ```bash
 uv run streamlit run app.py

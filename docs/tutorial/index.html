@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en" data-js="off">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Offline systems field manual for Local AI Chat Studio v0.2.0.">
+<title>Local AI Chat Studio — Systems Field Manual</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23184E77'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='sans-serif' font-size='24' font-weight='700' fill='white'%3ELA%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="tutorial.css">
+<style>.layout>*,main,.chapters{min-width:0}@media(max-width:900px){.layout{grid-template-columns:minmax(0,1fr)}.chapters ol{width:100%;max-width:100%}}@media print{details>*:not(summary){display:block!important}}</style>
+<script>document.documentElement.dataset.js='on'</script><script src="tutorial.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to field manual</a><div class="progress" aria-hidden="true"><span id="progress"></span></div>
+<header class="masthead"><div class="mark" aria-hidden="true">LA</div><div><p class="kicker">SYSTEMS FIELD MANUAL · VERIFIED 2026-07-23</p><h1>Local AI Chat Studio</h1><p>A zero-to-contributor guide to two applications sharing one repository.</p></div><div class="rev">REV <strong>v0.2.0</strong><small>offline edition</small></div></header>
+<div class="layout">
+<nav class="chapters" aria-label="Chapters">
+<label for="search">Search this manual</label><div class="search"><input id="search" type="search" placeholder="SSE, memory, runs…"><button id="clear" type="button">Clear</button></div><output id="count" aria-live="polite"></output>
+<ol>
+<li><a href="#orientation">01 Orientation</a></li><li><a href="#foundations">02 Foundations</a></li><li><a href="#status">03 Status board</a></li><li><a href="#setup">04 Setup</a></li><li><a href="#map">05 Repository map</a></li><li><a href="#flow">06 Request flow</a></li><li><a href="#v2">07 v2 backend</a></li><li><a href="#react">08 React gaps</a></li><li><a href="#legacy">09 Legacy engine</a></li><li><a href="#privacy">10 Privacy</a></li><li><a href="#labs">11 Extension labs</a></li><li><a href="#debug">12 Tests & debugging</a></li><li><a href="#atlas">13 Module atlas</a></li><li><a href="#exercises">14 Exercises</a></li><li><a href="#sources">15 Sources</a></li>
+</ol></nav>
+<main id="main" tabindex="-1">
+<section id="orientation" class="chapter searchable"><p class="label">CHAPTER 01 · SITUATION REPORT</p><h2>Start with the product boundary</h2><p class="callout"><strong>The safest mental model:</strong> two applications in one repository during a parity migration—not one UI with two equivalent implementations.</p>
+<p>The legacy Streamlit path is currently the complete local end-user app. V2 is not yet end to end, and neither stack is production deployment-ready as shipped because authentication and hardened network controls are absent.</p>
+<div class="tracks"><article><span class="tag v2">v2</span><h3>FastAPI + React</h3><p>The API persists conversations, discovers providers, and streams runs. The React workspace is a polished shell not yet wired to those contracts.</p></article><article><span class="tag legacy">legacy</span><h3>Streamlit + src/</h3><p>The mature path contains chat, files, RAG, memory, assistants, personalization, and comparison in a separate runtime and store.</p></article></div>
+<figure><img src="../screenshot-chat.png" alt="Legacy Streamlit chat workspace showing a conversation, navigation, and local model controls."><figcaption>Field evidence A — legacy chat workspace</figcaption></figure></section>
+
+<section id="foundations" class="chapter searchable"><p class="label">CHAPTER 02 · THEORY KIT</p><h2>Concepts the code assumes</h2><div class="definitions">
+<details><summary>LLM, tokens, context, temperature</summary><p>An LLM predicts the next token. Instructions, history, retrieved documents, and output share a finite context budget. Temperature changes sampling variability, not truth; v2 accepts 0–2 and defaults to 0.7.</p></details>
+<details><summary>Embeddings and cosine similarity</summary><p>Embeddings map meaning to vectors. Similar direction suggests semantic similarity. Legacy Chroma distance becomes <code>similarity = 1 - distance</code>.</p><pre><code>cosine(a,b) = (a · b) / (||a|| ||b||)</code></pre></details>
+<details><summary>RAG and vector databases</summary><p>RAG indexes source chunks, retrieves relevant evidence, and adds bounded results to a request. It neither trains the model nor guarantees correctness.</p></details>
+<details><summary>REST, SSE, and PKCE</summary><p>REST models HTTP resources. SSE is a one-way server-to-browser event stream. PKCE binds an authorization code to a one-time verifier.</p></details>
+<details><summary>Persistence and concurrency</summary><p>SQLite survives restart; v2 runs and credentials do not. Locks protect critical sections, not workflows across multiple processes.</p></details></div></section>
+
+<section id="status" class="chapter searchable"><p class="label">CHAPTER 03 · CAPABILITY LEDGER</p><h2>Honest status board</h2>
+<div class="filters" aria-label="Status filters"><button class="active" data-filter="all" aria-pressed="true">All</button><button data-filter="v2" aria-pressed="false">v2</button><button data-filter="legacy" aria-pressed="false">Legacy</button><button data-filter="shared" aria-pressed="false">Shared</button><button data-filter="gap" aria-pressed="false">Gap</button></div>
+<div class="table"><table><thead><tr><th>Capability</th><th>Status</th><th>Operational truth</th></tr></thead><tbody>
+<tr data-status="v2"><td>Conversations/messages</td><td><span class="tag v2">v2</span></td><td>Working REST routes backed by <code>data/v2/studio.db</code>.</td></tr>
+<tr data-status="v2"><td>Providers and streaming</td><td><span class="tag v2">v2</span></td><td>Seven adapters, concurrent discovery, in-memory runs, cancellation, replayable SSE.</td></tr>
+<tr data-status="v2 gap"><td>React workspace</td><td><span class="tag v2">v2</span> <span class="tag gap">gap</span></td><td>Navigation and demos exist; conversations and runs are not connected.</td></tr>
+<tr data-status="legacy"><td>Files, RAG, memory</td><td><span class="tag legacy">legacy</span></td><td>Implemented in Streamlit and <code>src/</code>; absent from v2 contracts.</td></tr>
+<tr data-status="legacy"><td>Assistants/comparison</td><td><span class="tag legacy">legacy</span></td><td>Implemented in legacy; v2 screens are placeholders.</td></tr>
+<tr data-status="gap"><td>Shared persistence</td><td><span class="tag gap">gap</span></td><td>Different schemas and locations; no migration or synchronization.</td></tr>
+<tr data-status="gap"><td>Durable v2 runs</td><td><span class="tag gap">gap</span></td><td>A runs table exists, but <code>RunManager</code> uses memory only.</td></tr>
+<tr data-status="shared gap"><td>Authentication</td><td><span class="tag gap">gap</span></td><td>The session cookie scopes keys; it does not authenticate users.</td></tr>
+</tbody></table></div></section>
+
+<section id="setup" class="chapter searchable"><p class="label">CHAPTER 04 · BRING-UP PROCEDURE</p><h2>Install and run both stacks</h2><p>Prerequisites: Python 3.12+, <code>uv</code>, Node/npm, and Ollama. Pull <code>embeddinggemma</code> for legacy memory and RAG.</p>
+<div class="tabs"><div role="tablist" aria-label="Operating system commands"><button role="tab" id="win-tab" aria-controls="win" aria-selected="true">Windows PowerShell</button><button role="tab" id="posix-tab" aria-controls="posix" aria-selected="false" tabindex="-1">POSIX shell</button></div>
+<div id="win" role="tabpanel" aria-labelledby="win-tab"><button class="copy" type="button">Copy</button><pre><code>git clone https://github.com/pypi-ahmad/local-ai-chat-studio.git
+Set-Location local-ai-chat-studio
+uv sync --locked --dev
+Set-Location frontend
+npm ci
+npm run build
+Set-Location ..
+uv run chat-studio
+
+# Legacy app (run separately)
+ollama pull embeddinggemma
+uv run streamlit run app.py</code></pre></div>
+<div id="posix" role="tabpanel" aria-labelledby="posix-tab" hidden><button class="copy" type="button">Copy</button><pre><code>git clone https://github.com/pypi-ahmad/local-ai-chat-studio.git
+cd local-ai-chat-studio
+uv sync --locked --dev
+cd frontend
+npm ci
+npm run build
+cd ..
+uv run chat-studio
+
+# Legacy app (run separately)
+ollama pull embeddinggemma
+uv run streamlit run app.py</code></pre></div></div>
+<aside><strong>Local boundary:</strong> open <code>http://127.0.0.1:8000</code>. Keep loopback binding unless authentication, TLS, and deployment controls are reviewed.</aside></section>
+
+<section id="map" class="chapter searchable"><p class="label">CHAPTER 05 · TERRAIN MAP</p><h2>Repository reading order</h2><pre><code>backend/app/          [v2] routes · contracts · store · providers · runs
+frontend/src/         [v2] React shell · typed API layer
+scripts/              [shared] OpenAPI → TypeScript generator
+tests/                [v2] API and provider contracts
+app.py + pages/       [legacy] Streamlit entry and feature screens
+src/                  [legacy] jobs · RAG · memory · persistence
+data/                 runtime data; ignored, not source</code></pre><p><strong>Route:</strong> <code>contracts.py → store.py → sessions.py → providers.py → runs.py → main.py → frontend/src/api → App.tsx</code>; then <code>app.py → jobs.py → orchestrator.py</code>.</p></section>
+
+<section id="flow" class="chapter searchable signature"><p class="label">CHAPTER 06 · SIGNATURE INSTRUMENT</p><h2>Dual-track request-flow rail</h2><p>Switch tracks to reveal the responsible files, concepts, and parity break.</p>
+<div class="flow-switch"><button class="active" data-flow="v2" aria-pressed="true"><span class="tag v2">v2</span> API run</button><button data-flow="legacy" aria-pressed="false"><span class="tag legacy">legacy</span> Rich turn</button></div>
+<div class="rail" id="rail" aria-live="polite">
+<article><b>01</b><h3>Browser request</h3><p>POST /api/v1/runs</p><small>React integration is still a gap.</small></article>
+<article><b>02</b><h3>Session + validation</h3><p>main.py and contracts.py</p><small>Cookie scopes credential lookup.</small></article>
+<article><b>03</b><h3>Run scheduled</h3><p>runs.py creates async task</p><small>Process memory only.</small></article>
+<article><b>04</b><h3>Provider stream</h3><p>providers.py yields deltas</p><small>Session key beats env fallback.</small></article>
+<article><b>05</b><h3>SSE replay</h3><p>started → delta* → terminal</p><small>Existing events replay first.</small></article>
+<article><b>06</b><h3>Output snapshot</h3><p>GET /runs/{id}</p><small>Gap: not persisted to conversation.</small></article></div>
+<noscript><aside><strong>Legacy static trace:</strong> chat input → <code>app.py</code> persists the user message → <code>src/jobs.py</code> starts a daemon thread → <code>src/orchestrator.py</code> layers profile, memory, RAG, files, and history → Ollama or a cloud provider streams chunks → Streamlit polls <code>Job.text</code> → the response and best-effort enrichments persist.</aside></noscript></section>
+
+<section id="v2" class="chapter searchable"><p class="label">CHAPTER 07 · V2 BACKEND</p><h2>Contracts, state, and streaming</h2><div class="modules">
+<article><h3><code>main.py</code></h3><p>Composition root and HTTP routes. API registration precedes the optional static mount.</p></article><article><h3><code>contracts.py</code></h3><p>Pydantic request, response, status, and event types. Never hand-edit generated frontend schemas.</p></article><article><h3><code>store.py</code></h3><p>SQLite conversations/messages ordered under a lock and transaction. The runs table is unused.</p></article><article><h3><code>sessions.py</code></h3><p>Session-memory credentials with environment fallback; no expiry or cleanup.</p></article><article><h3><code>providers.py</code></h3><p>Normalized adapters and isolated concurrent discovery. Gemini flattens normalized messages.</p></article><article><h3><code>runs.py</code></h3><p>Queued/running/terminal lifecycle, replayable events, and cooperative cancellation between chunks.</p></article></div><pre><code>queued → running → completed
+                 ↘ cancelled
+                 ↘ failed</code></pre></section>
+
+<section id="react" class="chapter searchable"><p class="label">CHAPTER 08 · REACT RECONNAISSANCE</p><h2>A convincing shell, not a connected client</h2><p><code>App.tsx</code> renders sample history, composer, provider cards, and placeholders. The client only provides <code>createRun</code>, <code>cancelRun</code>, and <code>providers</code>.</p><ul><li>No conversation load/create or message persistence.</li><li>No model discovery or credential integration.</li><li>No SSE parser, delta display, terminal handling, or cancellation UI.</li><li>No files, RAG, memory, compare, or assistants.</li><li>“Backend connected” is not derived from health.</li></ul><p class="callout"><strong>Best first slice:</strong> wire provider status with loading, success, and error states. Full chat requires an explicit orchestration owner.</p></section>
+
+<section id="legacy" class="chapter searchable"><p class="label">CHAPTER 09 · LEGACY ENGINE</p><h2>Where rich behavior lives</h2><figure><img src="../screenshot-compare.png" alt="Legacy Streamlit model comparison workspace with two model responses displayed side by side."><figcaption>Field evidence B — parallel ephemeral comparison</figcaption></figure>
+<p><code>app.py</code> persists the user turn, starts a background job, and polls output. <code>jobs.py</code> parses files, retrieves context, streams a provider, persists the answer, then performs best-effort indexing and enrichment.</p>
+<ol class="layers"><li>System instruction</li><li>Personalization profile</li><li>Durable memories</li><li>Cross-chat retrieval</li><li>Conversation document hits</li><li>Attachments, OCR, or web context</li><li>Recent history</li></ol>
+<p>Small documents enter context directly; large documents are chunked into Chroma. Memory stores atomic facts; personalization stores a synthesized profile.</p></section>
+
+<section id="privacy" class="chapter searchable"><p class="label">CHAPTER 10 · SECURITY PERIMETER</p><h2>Local-first is not always local</h2><div class="risks"><article><strong>Persists</strong><p>v2 conversations in <code>data/v2/studio.db</code>; richer legacy state and vectors under <code>data/</code>.</p></article><article><strong>Evaporates</strong><p>v2 runs, events, entered keys, and PKCE verifiers vanish on restart.</p></article><article><strong>Leaves the machine</strong><p>Messages and chosen context sent to a cloud provider.</p></article><article><strong>Does not authenticate</strong><p>The cookie scopes secrets; it is not identity, encryption, or authorization.</p></article></div><aside><strong>Rule:</strong> never expose either app publicly without authentication, TLS, origin controls, and a security review.</aside></section>
+
+<section id="labs" class="chapter searchable"><p class="label">CHAPTER 11 · EXTENSION LABS</p><h2>Small contributions with visible contracts</h2>
+<details><summary>Lab A — add a v2 provider</summary><ol><li>Register environment variable and label.</li><li>Implement or correctly reuse an adapter.</li><li>Normalize discovery and deltas.</li><li>Test presence, failure isolation, and credential scope.</li></ol></details>
+<details><summary>Lab B — add an endpoint</summary><ol><li>Define Pydantic contracts.</li><li>Add route and explicit status.</li><li>Test the public contract.</li><li>Regenerate and inspect <code>schema.ts</code>.</li><li>Add typed client and UI test.</li></ol></details>
+<details><summary>Lab C — wire provider status</summary><ol><li>Add loading/success/error state.</li><li>Call <code>api.providers()</code>.</li><li>Render real <code>key_source</code> values.</li><li>Remove only the corresponding demo data and test all outcomes.</li></ol></details>
+<details><summary>Lab D — add a legacy file parser</summary><ol><li>Recognize type and implement bytes-to-text parsing.</li><li>Preserve metadata and errors.</li><li>Test valid, empty, and malformed input.</li><li>Exercise direct-context and chunk/RAG paths.</li></ol></details></section>
+
+<section id="debug" class="chapter searchable"><p class="label">CHAPTER 12 · VERIFICATION</p><h2>Tests and debugging discipline</h2><div class="command"><button class="copy" type="button">Copy</button><pre><code>uv run python -m pytest -q
+uv run ruff check backend tests
+Set-Location frontend
+npm run lint
+npm test
+npm run build</code></pre></div>
+<div class="table"><table><thead><tr><th>Symptom</th><th>First checks</th></tr></thead><tbody><tr><td><code>/</code> is 404</td><td>Build <code>frontend/dist</code>; confirm startup directory.</td></tr><tr><td>Run stays queued</td><td>Inspect snapshot/events and provider traceback.</td></tr><tr><td>Cancel is delayed</td><td>Cancellation is checked between chunks.</td></tr><tr><td>Key disappears</td><td>Restart/new cookie loses memory-only keys.</td></tr><tr><td>RAG returns nothing</td><td>Check embedding model, parsing, Chroma, scope, similarity.</td></tr></tbody></table></div><p class="callout">Reproduce → localize → one hypothesis → one changed variable → verify.</p></section>
+
+<section id="atlas" class="chapter searchable"><p class="label">CHAPTER 13 · MODULE ATLAS</p><h2>Ownership at a glance</h2><div class="atlas">
+<p><code>backend/app/main.py</code><span class="tag v2">v2</span><span>HTTP, middleware, PKCE</span></p><p><code>backend/app/runs.py</code><span class="tag v2">v2</span><span>Streaming lifecycle</span></p><p><code>frontend/src/App.tsx</code><span class="tag gap">gap</span><span>Mostly static shell</span></p><p><code>scripts/generate_api_types.py</code><span class="tag shared">shared</span><span>OpenAPI conversion</span></p><p><code>app.py</code><span class="tag legacy">legacy</span><span>Streamlit shell</span></p><p><code>src/jobs.py</code><span class="tag legacy">legacy</span><span>Generation pipeline</span></p><p><code>src/rag.py</code><span class="tag legacy">legacy</span><span>Chroma retrieval</span></p><p><code>src/chat_store.py</code><span class="tag legacy">legacy</span><span>Rich domain store</span></p></div></section>
+
+<section id="exercises" class="chapter searchable"><p class="label">CHAPTER 14 · QUALIFICATION DRILLS</p><h2>Check your mental model</h2>
+<details><summary>Is Memory available in v2 because the button exists?</summary><p>No. The shell is v2, behavior is legacy, and porting remains a gap.</p></details><details><summary>What survives a v2 restart?</summary><p>SQLite conversations/messages; not runs, events, session keys, or PKCE verifiers.</p></details><details><summary>Why are multiple workers unsafe?</summary><p>Each has a separate in-memory vault and run registry; a cookie does not ensure affinity.</p></details><details><summary>How does streaming differ?</summary><p>v2 uses async tasks and SSE. Legacy uses daemon threads and Streamlit polling.</p></details>
+<h3>Compact glossary</h3><dl><dt>Adapter</dt><dd>Provider-specific normalized implementation.</dd><dt>BYOK</dt><dd>Bring your own cloud credential.</dd><dt>SSE</dt><dd>One-way named HTTP events.</dd><dt>RAG</dt><dd>Retrieve evidence into a current request.</dd><dt>PKCE</dt><dd>Verifier protection for code exchange.</dd><dt>Persistence</dt><dd>State surviving process restart.</dd></dl></section>
+
+<section id="sources" class="chapter searchable"><p class="label">CHAPTER 15 · PRIMARY REFERENCES</p><h2>Continue with official sources</h2><ul class="sources"><li><a href="https://fastapi.tiangolo.com/">FastAPI</a></li><li><a href="https://docs.pydantic.dev/latest/">Pydantic</a></li><li><a href="https://docs.python.org/3/library/asyncio.html">Python asyncio</a></li><li><a href="https://www.sqlite.org/docs.html">SQLite</a></li><li><a href="https://react.dev/">React</a></li><li><a href="https://vite.dev/guide/">Vite</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events">MDN: SSE</a></li><li><a href="https://www.rfc-editor.org/rfc/rfc7636">RFC 7636: PKCE</a></li><li><a href="https://docs.ollama.com/">Ollama</a></li><li><a href="https://docs.trychroma.com/">Chroma</a></li><li><a href="https://docs.astral.sh/uv/">uv</a></li><li><a href="https://docs.streamlit.io/">Streamlit</a></li></ul><footer>Field manual v0.2.0 · verified 2026-07-23 · canonical: ZERO_TO_HERO_STUDY_HANDBOOK.md</footer></section>
+<p id="none" class="none" hidden>No chapters match. Try a module, concept, or status.</p>
+</main></div></body></html>
