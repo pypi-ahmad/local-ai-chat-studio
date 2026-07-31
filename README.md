@@ -76,12 +76,24 @@ New to the app itself? Read the [User Guide](USER_GUIDE.md) for a plain-language
 feature-by-feature walkthrough (setup, usage, and the "why" behind each feature) aimed
 at technical and non-technical readers alike.
 
-Want to understand the code? Start with the
-[Zero-to-Hero Study Handbook](ZERO_TO_HERO_STUDY_HANDBOOK.md) for a repository-grounded
-path from AI foundations to contributing. The companion
+Want to understand the code? [CODE_TUTORIAL.md](CODE_TUTORIAL.md) reads every
+module out loud, function by function, with real snippets — start there for a
+narrative walkthrough. For dense reference tables (routes, config keys,
+glossary, contributor recipes) see the
+[Zero-to-Hero Study Handbook](ZERO_TO_HERO_STUDY_HANDBOOK.md). The companion
 [interactive tutorial](docs/tutorial/index.html) provides a browser-friendly walkthrough.
 The former Streamlit-only handbook PDF is retained only as a
 [legacy archive](docs/archive/ZERO_TO_HERO_STUDY_HANDBOOK.legacy-v1.pdf).
+
+Prefer browsing docs as a website? `docs/site/index.html` presents every doc
+above through one page with sidebar navigation. It fetches the `.md` files
+directly, so it must be served (not opened as `file://`):
+
+```bash
+python -m http.server 8080   # from the repo root
+```
+
+Then open `http://localhost:8080/docs/site/index.html`.
 
 ## Setup
 
