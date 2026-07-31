@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Local AI Chat Studio — Docs</title>
+  <link rel="icon" href="data:," />
+  <script src="https://unpkg.com/htmx.org@2.0.4"
+    integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@13/marked.min.js"
+    integrity="sha384-YTBHtsL8yVTHcLakYNyrOfK3K+QQcXiECuaALJ+3j7Mo681Rtzadt8NR6WrZH+eQ"
+    crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #ffffff; --fg: #1a1a1a; --muted: #6b7280; --border: #e5e7eb;
+      --code-bg: #f3f4f6; --link: #2563eb; --nav-active-bg: #eef2ff;
+      --nav-active-fg: #3730a3;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111114; --fg: #e5e7eb; --muted: #9ca3af; --border: #2a2a30;
+        --code-bg: #1c1c22; --link: #7dabff; --nav-active-bg: #1e2140;
+        --nav-active-fg: #b6c2ff;
+      }
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      display: flex; min-height: 100vh; background: var(--bg); color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.6;
+    }
+    nav {
+      width: 240px; flex-shrink: 0; border-right: 1px solid var(--border);
+      padding: 1.5rem 0.75rem; position: sticky; top: 0; height: 100vh; overflow-y: auto;
+    }
+    nav h1 { font-size: 0.95rem; margin: 0 0.5rem 1rem; }
+    nav a {
+      display: block; padding: 0.45rem 0.6rem; border-radius: 6px; color: var(--fg);
+      text-decoration: none; font-size: 0.9rem; margin-bottom: 2px;
+    }
+    nav a:hover { background: var(--code-bg); }
+    nav a.active { background: var(--nav-active-bg); color: var(--nav-active-fg); font-weight: 600; }
+    main {
+      flex: 1; padding: 2rem 3rem; max-width: 80ch; overflow-x: auto;
+    }
+    #notice {
+      display: none; background: var(--code-bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 1.5rem; font-size: 0.85rem;
+    }
+    #content pre {
+      background: var(--code-bg); padding: 1rem; border-radius: 8px; overflow-x: auto;
+    }
+    #content code { background: var(--code-bg); padding: 0.15em 0.4em; border-radius: 4px; }
+    #content pre code { background: none; padding: 0; }
+    #content table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+    #content th, #content td {
+      border: 1px solid var(--border); padding: 0.5rem 0.75rem; text-align: left;
+    }
+    #content img { max-width: 100%; }
+    #content a { color: var(--link); }
+    #content blockquote { border-left: 3px solid var(--border); margin: 1rem 0; padding-left: 1rem; color: var(--muted); }
+    #raw-holder { display: none; }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <h1>Local AI Chat Studio</h1>
+    <a href="#readme" data-src="../../README.md">README</a>
+    <a href="#user-guide" data-src="../../USER_GUIDE.md">User Guide</a>
+    <a href="#code-tutorial" data-src="../../CODE_TUTORIAL.md">Code Tutorial</a>
+    <a href="#handbook" data-src="../../ZERO_TO_HERO_STUDY_HANDBOOK.md">Zero-to-Hero Handbook</a>
+    <a href="#contributing" data-src="../../CONTRIBUTING.md">Contributing</a>
+    <a href="#changelog" data-src="../../CHANGELOG.md">Changelog</a>
+    <a href="#security" data-src="../../SECURITY.md">Security Policy</a>
+    <a href="#code-of-conduct" data-src="../../CODE_OF_CONDUCT.md">Code of Conduct</a>
+    <a href="#dataset" data-src="../../DATASET.md">Dataset</a>
+    <a href="#frontend-readme" data-src="../../frontend/README.md">Frontend README</a>
+  </nav>
+  <main>
+    <div id="notice">
+      Viewing this over <code>file://</code>? Browsers block cross-file fetches
+      from <code>file://</code>, and this page needs to reach files outside its
+      own folder. Serve it from the <strong>repo root</strong> instead:
+      <code>python -m http.server 8080</code>, then open
+      <code>http://localhost:8080/docs/site/index.html</code>.
+    </div>
+    <div id="raw-holder"></div>
+    <div id="content">Loading…</div>
+  </main>
+  <script>
+    const nav = document.getElementById('nav');
+    const content = document.getElementById('content');
+    const rawHolder = document.getElementById('raw-holder');
+    const notice = document.getElementById('notice');
+
+    if (location.protocol === 'file:') notice.style.display = 'block';
+
+    async function loadDoc(src, hash) {
+      try {
+        const res = await fetch(src);
+        if (!res.ok) throw new Error(res.status);
+        const text = await res.text();
+        content.innerHTML = marked.parse(text);
+        // Relative image/link paths in the source .md are relative to that
+        // file's own directory, not this page's URL — rebase them so they
+        // still resolve after being rendered into this page.
+        const base = new URL(src, location.href);
+        for (const el of content.querySelectorAll('img[src], a[href]')) {
+          const attr = el.tagName === 'IMG' ? 'src' : 'href';
+          const value = el.getAttribute(attr);
+          if (value && !/^([a-z]+:|\/|#)/i.test(value)) {
+            el.setAttribute(attr, new URL(value, base).href);
+          }
+        }
+      } catch (err) {
+        content.innerHTML = '<p><strong>Could not load this doc.</strong> ' +
+          (location.protocol === 'file:'
+            ? 'You are viewing this via file:// — see the notice above.'
+            : ('Error: ' + err)) + '</p>';
+      }
+      for (const a of nav.querySelectorAll('a')) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + hash);
+      }
+    }
+
+    function routeFromHash() {
+      const hash = (location.hash || '#readme').slice(1);
+      const link = nav.querySelector(`a[href="#${hash}"]`) || nav.querySelector('a');
+      loadDoc(link.dataset.src, hash.startsWith('#') ? hash.slice(1) : (link.getAttribute('href').slice(1)));
+    }
+
+    nav.addEventListener('click', (e) => {
+      const a = e.target.closest('a');
+      if (!a) return;
+      e.preventDefault();
+      const hash = a.getAttribute('href').slice(1);
+      history.pushState(null, '', '#' + hash);
+      loadDoc(a.dataset.src, hash);
+    });
+
+    window.addEventListener('popstate', routeFromHash);
+    window.addEventListener('hashchange', routeFromHash);
+    routeFromHash();
+  </script>
+</body>
+</html>
