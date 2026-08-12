@@ -16,7 +16,7 @@ from urllib.parse import urlencode
 import httpx
 
 from fastapi import FastAPI, HTTPException, Request, Response, status
-from fastapi.responses import RedirectResponse, StreamingResponse
+from fastapi.responses import PlainTextResponse, RedirectResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
 from backend.app.contracts import (
@@ -28,10 +28,13 @@ from backend.app.contracts import (
     ConversationUpdate,
     ContextPlan,
     CredentialInput,
+    DataImport,
+    FeedbackInput,
     FocusCreate,
     FocusSession,
     Memory,
     MemoryCreate,
+    MemoryUpdate,
     Message,
     MessageCreate,
     OAuthCodeInput,
@@ -46,6 +49,7 @@ from backend.app.contracts import (
     TurnPreflight,
     Upload,
     UploadCreate,
+    WipeRequest,
 )
 from backend.app.runs import RunManager
 from backend.app.providers import ProviderRegistry, build_provider_registry
@@ -337,6 +341,21 @@ def create_app(
             quarantine_reason=findings[0].message if findings else None,
         )
 
+    @app.patch("/api/v1/memories/{memory_id}", response_model=Memory)
+    def update_memory(memory_id: str, payload: MemoryUpdate) -> Memory:
+        try:
+            return store.update_memory(memory_id, **payload.model_dump(exclude_unset=True))
+        except KeyError as exc:
+            raise HTTPException(404, "Memory not found") from exc
+
+    @app.delete("/api/v1/memories/{memory_id}", status_code=204)
+    def delete_memory(memory_id: str) -> Response:
+        try:
+            store.delete_memory(memory_id)
+        except KeyError as exc:
+            raise HTTPException(404, "Memory not found") from exc
+        return Response(status_code=204)
+
     @app.get("/api/v1/presets", response_model=list[Preset])
     def list_presets() -> list[Preset]:
         return store.list_presets()
@@ -349,6 +368,52 @@ def create_app(
             if "UNIQUE constraint" in str(exc):
                 raise HTTPException(409, "Preset name already exists") from exc
             raise
+
+    @app.delete("/api/v1/presets/{preset_id}", status_code=204)
+    def delete_preset(preset_id: str) -> Response:
+        try:
+            store.delete_preset(preset_id)
+        except KeyError as exc:
+            raise HTTPException(404, "Preset not found") from exc
+        return Response(status_code=204)
+
+    @app.put("/api/v1/messages/{message_id}/feedback", status_code=204)
+    def set_feedback(message_id: str, payload: FeedbackInput) -> Response:
+        try:
+            store.set_feedback(message_id, payload.rating)
+        except KeyError as exc:
+            raise HTTPException(404, "Message not found") from exc
+        return Response(status_code=204)
+
+    @app.get("/api/v1/conversations/{conversation_id}/feedback")
+    def get_feedback(conversation_id: str) -> dict[str, int]:
+        try:
+            return store.get_feedback(conversation_id)
+        except KeyError as exc:
+            raise HTTPException(404, "Conversation not found") from exc
+
+    @app.get(
+        "/api/v1/conversations/{conversation_id}/export.md",
+        response_class=PlainTextResponse,
+    )
+    def export_conversation(conversation_id: str) -> str:
+        try:
+            return store.export_conversation_markdown(conversation_id)
+        except KeyError as exc:
+            raise HTTPException(404, "Conversation not found") from exc
+
+    @app.get("/api/v1/data/export")
+    def export_data() -> dict[str, str]:
+        return {"jsonl": store.export_jsonl()}
+
+    @app.post("/api/v1/data/import")
+    def import_data(payload: DataImport) -> dict[str, int]:
+        return {"imported": store.import_jsonl(payload.jsonl)}
+
+    @app.post("/api/v1/data/wipe", status_code=204)
+    def wipe_data(_: WipeRequest) -> Response:
+        store.wipe()
+        return Response(status_code=204)
 
     @app.post("/api/v1/uploads", response_model=Upload, status_code=201)
     def create_upload(payload: UploadCreate) -> Upload:
@@ -413,7 +478,11 @@ def create_app(
             raise HTTPException(404, "Run not found") from exc
 
     @app.get("/api/v1/runs/{run_id}/bundle", response_model=ReplayBundle)
-    def run_bundle(run_id: str, request: Request) -> ReplayBundle:
+    def run_bundle(
+        run_id: str, request: Request, mode: str = "full"
+    ) -> ReplayBundle:
+        if mode not in {"full", "redacted"}:
+            raise HTTPException(422, "Bundle mode must be full or redacted")
         try:
             bundle = store.run_bundle(run_id, request.state.session_id)
         except KeyError as exc:
@@ -423,7 +492,7 @@ def create_app(
         return ReplayBundle(
             run=run,
             messages=request_data.get("messages", []),
-            context=bundle["context"],
+            context=None if mode == "redacted" else bundle["context"],
             integrity={"algorithm": "sha256-chain", "hash": run.receipt_hash or ""},
         )
 

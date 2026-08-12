@@ -120,7 +120,19 @@ CREATE TABLE IF NOT EXISTS presets (
     name TEXT NOT NULL UNIQUE,
     system_prompt TEXT NOT NULL DEFAULT '',
     model_key TEXT NOT NULL DEFAULT '',
-    temperature REAL NOT NULL DEFAULT 0.7
+    temperature REAL NOT NULL DEFAULT 0.7,
+    builtin INTEGER NOT NULL DEFAULT 0,
+    created_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS feedback (
+    message_id TEXT PRIMARY KEY REFERENCES messages(id) ON DELETE CASCADE,
+    rating INTEGER NOT NULL,
+    ts TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS kv (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL,
+    updated_at TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS uploads (
     id TEXT PRIMARY KEY,
@@ -535,25 +547,169 @@ class Store:
             )]
         return [self.get_memory(item) for item in ids]
 
+    def update_memory(
+        self,
+        memory_id: str,
+        *,
+        content: str | None = None,
+        category: str | None = None,
+        status: str | None = None,
+        pinned: bool | None = None,
+    ) -> Memory:
+        self.get_memory(memory_id)
+        fields: list[str] = []
+        values: list[Any] = []
+        if content is not None:
+            fields.append("content = ?")
+            values.append(content)
+        if category is not None:
+            fields.append("category = ?")
+            values.append(category)
+        if status is not None:
+            fields.extend(["status = ?", "active = ?"])
+            values.extend([status, int(status == "active")])
+            if status == "active":
+                fields.append("quarantine_reason = NULL")
+        if pinned is not None:
+            fields.append("pinned = ?")
+            values.append(int(pinned))
+        if fields:
+            values.append(memory_id)
+            with self.lock, self.connection:
+                self.connection.execute(
+                    f"UPDATE memories SET {', '.join(fields)} WHERE id = ?", values
+                )
+        return self.get_memory(memory_id)
+
+    def delete_memory(self, memory_id: str) -> None:
+        with self.lock, self.connection:
+            cursor = self.connection.execute("DELETE FROM memories WHERE id = ?", (memory_id,))
+        if cursor.rowcount == 0:
+            raise KeyError(memory_id)
+
     def create_preset(self, payload: PresetCreate) -> Preset:
-        preset_id = str(uuid.uuid4())
+        preset_id, now = str(uuid.uuid4()), utc_now()
         with self.lock, self.connection:
             self.connection.execute(
-                "INSERT INTO presets VALUES (?, ?, ?, ?, ?)",
+                "INSERT INTO presets "
+                "(id, name, system_prompt, model_key, temperature, builtin, created_at) "
+                "VALUES (?, ?, ?, ?, ?, 0, ?)",
                 (
                     preset_id,
                     payload.name,
                     payload.system_prompt,
                     payload.model_key,
                     payload.temperature,
+                    now,
                 ),
             )
         return Preset(id=preset_id, **payload.model_dump())
 
     def list_presets(self) -> list[Preset]:
         with self.lock:
-            rows = self.connection.execute("SELECT * FROM presets ORDER BY name").fetchall()
+            rows = self.connection.execute(
+                "SELECT id, name, system_prompt, model_key, temperature "
+                "FROM presets ORDER BY builtin DESC, name"
+            ).fetchall()
         return [Preset(**dict(row)) for row in rows]
+
+    def delete_preset(self, preset_id: str) -> None:
+        with self.lock, self.connection:
+            cursor = self.connection.execute("DELETE FROM presets WHERE id = ?", (preset_id,))
+        if cursor.rowcount == 0:
+            raise KeyError(preset_id)
+
+    def set_feedback(self, message_id: str, rating: int) -> None:
+        with self.lock, self.connection:
+            exists = self.connection.execute(
+                "SELECT 1 FROM messages WHERE id = ?", (message_id,)
+            ).fetchone()
+            if exists is None:
+                raise KeyError(message_id)
+            self.connection.execute(
+                "INSERT INTO feedback (message_id, rating, ts) VALUES (?, ?, ?) "
+                "ON CONFLICT(message_id) DO UPDATE SET rating = excluded.rating, ts = excluded.ts",
+                (message_id, rating, utc_now()),
+            )
+
+    def get_feedback(self, conversation_id: str) -> dict[str, int]:
+        self.get_conversation(conversation_id)
+        with self.lock:
+            rows = self.connection.execute(
+                "SELECT f.message_id, f.rating FROM feedback f "
+                "JOIN messages m ON m.id = f.message_id WHERE m.conv_id = ?",
+                (conversation_id,),
+            ).fetchall()
+        return {row["message_id"]: row["rating"] for row in rows}
+
+    def export_conversation_markdown(self, conversation_id: str) -> str:
+        conversation = self.get_conversation(conversation_id)
+        lines = [f"# {conversation.title}", f"_model: {conversation.model}_", ""]
+        for message in conversation.messages:
+            who = "**You**" if message.role == "user" else "**Assistant**"
+            lines.extend([f"{who}:", "", message.content, "", "---", ""])
+        return "\n".join(lines)
+
+    def export_jsonl(self) -> str:
+        lines = []
+        for conversation in self.list_conversations():
+            full = self.get_conversation(conversation.id)
+            lines.append(
+                json.dumps(
+                    {
+                        "id": full.id,
+                        "title": full.title,
+                        "model": full.model,
+                        "messages": [
+                            {"role": message.role, "content": message.content}
+                            for message in full.messages
+                            if message.role in {"user", "assistant"}
+                        ],
+                    },
+                    ensure_ascii=False,
+                )
+            )
+        return "\n".join(lines)
+
+    def import_jsonl(self, data: str) -> int:
+        imported = 0
+        for line in data.splitlines():
+            try:
+                value = json.loads(line)
+                messages = value.get("messages", [])
+                if not isinstance(value, dict) or not isinstance(messages, list):
+                    continue
+                conversation = self.create_conversation(
+                    str(value.get("title") or "Imported chat"),
+                    str(value.get("model") or "unknown"),
+                )
+                for message in messages:
+                    if (
+                        isinstance(message, dict)
+                        and message.get("role") in {"user", "assistant"}
+                        and isinstance(message.get("content"), str)
+                        and message["content"]
+                    ):
+                        self.add_message(conversation.id, message["role"], message["content"])
+                imported += 1
+            except (json.JSONDecodeError, AttributeError, TypeError):
+                continue
+        return imported
+
+    def wipe(self) -> None:
+        with self.lock, self.connection:
+            for table in (
+                "run_events",
+                "runs",
+                "backpack_items",
+                "backpacks",
+                "conversations",
+                "memories",
+                "kv",
+                "presets",
+                "provider_policies",
+            ):
+                self.connection.execute(f"DELETE FROM {table}")
 
     def create_upload(
         self,

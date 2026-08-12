@@ -246,6 +246,13 @@ class Memory(MemoryCreate):
     quarantine_reason: str | None = None
 
 
+class MemoryUpdate(BaseModel):
+    content: str | None = Field(default=None, min_length=1, max_length=20_000)
+    category: str | None = Field(default=None, min_length=1, max_length=50)
+    status: Literal["active", "quarantined", "archived"] | None = None
+    pinned: bool | None = None
+
+
 class PresetCreate(BaseModel):
     name: str = Field(min_length=1, max_length=100)
     system_prompt: str = Field(default="", max_length=50_000)
@@ -278,3 +285,15 @@ class ReplayCreate(BaseModel):
     provider: str
     model: str
     temperature: float | None = Field(default=None, ge=0, le=2)
+
+
+class FeedbackInput(BaseModel):
+    rating: Literal[-1, 1]
+
+
+class DataImport(BaseModel):
+    jsonl: str = Field(max_length=50_000_000)
+
+
+class WipeRequest(BaseModel):
+    confirmation: Literal["WIPE"]
