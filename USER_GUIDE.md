@@ -4,7 +4,7 @@
 
 On Windows 11, double-click **Launch Chat Studio.cmd** in the repository root. The
 launcher installs missing portable runtimes and dependencies, builds the browser client
-when needed, starts the server, and opens <http://127.0.0.1:8000>. Its console remains
+when needed, starts the server, and opens <http://127.0.0.1:8506>. Its console remains
 open for logs; press Ctrl+C to stop. Run `Launch Chat Studio.cmd --check` from a terminal
 for a non-installing status report.
 
@@ -18,7 +18,7 @@ cd ..
 uv run chat-studio
 ```
 
-Open <http://127.0.0.1:8000>.
+Open <http://127.0.0.1:8506>.
 
 ## Main workflows
 

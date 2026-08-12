@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from urllib.parse import parse_qs, urlparse
+from unittest.mock import Mock
 
 from fastapi.testclient import TestClient
 
@@ -12,6 +13,34 @@ def test_health_and_session_cookie(client: TestClient) -> None:
     assert response.status_code == 200
     assert response.json() == {"status": "ok", "version": "2"}
     assert response.cookies.get("chat_session")
+
+
+def test_managed_server_can_be_stopped_from_the_local_ui() -> None:
+    from backend.app.main import create_app
+
+    shutdown = Mock()
+    with TestClient(
+        create_app(database_url=":memory:", shutdown_callback=shutdown)
+    ) as client:
+        response = client.post(
+            "/api/v1/runtime/shutdown",
+            headers={"X-Local-Studio": "shutdown"},
+        )
+
+    assert response.status_code == 202
+    assert response.json() == {"status": "stopping"}
+    shutdown.assert_called_once_with()
+
+
+def test_shutdown_rejects_cross_site_and_unmanaged_requests(client: TestClient) -> None:
+    assert client.post("/api/v1/runtime/shutdown").status_code == 403
+    assert (
+        client.post(
+            "/api/v1/runtime/shutdown",
+            headers={"X-Local-Studio": "shutdown"},
+        ).status_code
+        == 503
+    )
 
 
 def test_conversation_crud_preserves_message_order(client: TestClient) -> None:

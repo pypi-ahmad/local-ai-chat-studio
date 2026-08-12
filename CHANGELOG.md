@@ -7,17 +7,30 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-08-12
+
 ### Added
 
 - Added concise top-level usage and technical entrypoints for users and
   contributors.
+- Added a Settings action that gracefully stops the managed Studio server and
+  cancels active model runs before shutdown.
 
 ### Changed
 
 - Refreshed contributor, conduct, security, and README navigation guidance for
   the current local FastAPI and React workspace.
+- Changed the default local application port from 8000 to 8506 across the
+  backend, Windows launcher, frontend development proxy, and documentation.
+- Refreshed the checked-in Understand Anything and Graphify architecture
+  artifacts for the current codebase.
 
 ### Fixed
+
+- Fixed the Windows launcher when `CHAT_STUDIO_LAUNCH_ARGS` is unset and made
+  portable uv installer parsing robust on PowerShell.
+- Ensured managed shutdown waits for background generation tasks and closes the
+  SQLite connection cleanly.
 
 ## [0.2.0] - 2026-07-23
 

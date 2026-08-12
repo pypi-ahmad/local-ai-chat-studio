@@ -92,6 +92,9 @@ export async function streamRun(
 export const api = {
   health: () => request<{ status: string; version: string }>('/health'),
   runtimeHealth: () => request<{ ollama_available: boolean; running_models: { name: string; size_gb: number }[] }>('/runtime/health'),
+  shutdown: () => request<{ status: string }>('/runtime/shutdown', {
+    method: 'POST', headers: { 'X-Local-Studio': 'shutdown' },
+  }),
   profile: () => request<{ content: string }>('/profile'),
   setProfile: (content: string) => request<{ content: string }>('/profile', { method: 'PUT', body: JSON.stringify({ content }) }),
   sanitize: (content: string) =>

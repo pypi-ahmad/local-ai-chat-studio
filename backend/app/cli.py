@@ -6,10 +6,18 @@ from backend.app.main import create_app
 
 
 def main() -> None:
-    uvicorn.run(
-        create_app(),
-        host="127.0.0.1",
-        port=8000,
-        reload=False,
-        log_level="info",
+    server: uvicorn.Server
+
+    def shutdown() -> None:
+        server.should_exit = True
+
+    server = uvicorn.Server(
+        uvicorn.Config(
+            create_app(shutdown_callback=shutdown),
+            host="127.0.0.1",
+            port=8506,
+            reload=False,
+            log_level="info",
+        )
     )
+    server.run()

@@ -87,6 +87,11 @@ class RunManager:
             if state.task and not state.task.done():
                 state.task.cancel()
 
+    async def shutdown(self) -> None:
+        self.clear()
+        if self._tasks:
+            await asyncio.gather(*tuple(self._tasks), return_exceptions=True)
+
     async def events(self, run_id: str, session_id: str) -> AsyncIterator[RunEvent]:
         state, offset = self._state(run_id, session_id), 0
         terminal = {RunStatus.completed, RunStatus.cancelled, RunStatus.failed}

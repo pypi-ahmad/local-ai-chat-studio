@@ -23,5 +23,5 @@ uv run ruff check backend tests
 cd frontend; npm run lint; npm test; npm run build
 ```
 
-The local server binds to `127.0.0.1:8000`. Configuration uses `CHAT_` environment
+The local server binds to `127.0.0.1:8506`. Configuration uses `CHAT_` environment
 variables plus provider-specific key variables. SQLite has no ORM.

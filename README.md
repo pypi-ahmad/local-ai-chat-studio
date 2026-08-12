@@ -44,7 +44,7 @@ cd ..
 uv run chat-studio
 ```
 
-Open <http://127.0.0.1:8000>. For frontend development, run `npm run dev` in
+Open <http://127.0.0.1:8506>. For frontend development, run `npm run dev` in
 `frontend`; Vite proxies `/api` to the backend.
 
 ## Data and migration

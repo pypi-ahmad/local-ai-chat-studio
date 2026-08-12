@@ -15,7 +15,10 @@ function json(value: unknown, status = 200) {
 beforeEach(() => {
   vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
     const path = String(input)
+    if (path.endsWith('/runtime/health')) return json({ ollama_available: true, running_models: [] })
     if (path.endsWith('/health')) return json({ status: 'ok', version: '2' })
+    if (path.endsWith('/profile')) return json({ content: '' })
+    if (path.endsWith('/runtime/shutdown')) return json({ status: 'stopping' }, 202)
     if (path.endsWith('/conversations')) {
       return init?.method === 'POST' ? json(conversation, 201) : json([conversation])
     }
@@ -94,5 +97,18 @@ describe('studio workspace', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Providers' }))
 
     expect(await screen.findByRole('button', { name: 'Connect Claude Pro/Max through OpenCode' })).toBeInTheDocument()
+  })
+
+  it('confirms and stops the managed Studio server from Settings', async () => {
+    vi.spyOn(window, 'confirm').mockReturnValue(true)
+    render(<App />)
+    fireEvent.click(screen.getByRole('button', { name: 'Settings' }))
+    fireEvent.click(await screen.findByRole('button', { name: 'Stop Studio' }))
+
+    expect(await screen.findByRole('button', { name: 'Stopping…' })).toBeDisabled()
+    expect(fetch).toHaveBeenCalledWith('/api/v1/runtime/shutdown', expect.objectContaining({
+      method: 'POST',
+      headers: expect.objectContaining({ 'X-Local-Studio': 'shutdown' }),
+    }))
   })
 })

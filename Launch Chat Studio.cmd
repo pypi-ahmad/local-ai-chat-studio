@@ -20,9 +20,9 @@ $NodeDir = Join-Path $Runtime "node"
 $Node = Join-Path $NodeDir "node.exe"
 $Npm = Join-Path $NodeDir "npm.cmd"
 $Frontend = Join-Path $Root "frontend"
-$AppUrl = "http://127.0.0.1:8000"
+$AppUrl = "http://127.0.0.1:8506"
 $HealthUrl = "$AppUrl/api/v1/health"
-$CheckOnly = $env:CHAT_STUDIO_LAUNCH_ARGS.Trim() -eq "--check"
+$CheckOnly = ([string]$env:CHAT_STUDIO_LAUNCH_ARGS).Trim() -eq "--check"
 
 function Write-Step([string]$Message) {
     Write-Host "`n==> $Message" -ForegroundColor Cyan
@@ -40,7 +40,7 @@ function Test-AppHealth {
 function Test-LocalPort {
     $client = [Net.Sockets.TcpClient]::new()
     try {
-        $pending = $client.BeginConnect("127.0.0.1", 8000, $null, $null)
+        $pending = $client.BeginConnect("127.0.0.1", 8506, $null, $null)
         return $pending.AsyncWaitHandle.WaitOne(400) -and $client.Connected
     } catch {
         return $false
@@ -72,7 +72,7 @@ function Install-Uv {
     New-Item -ItemType Directory -Path $UvDir -Force | Out-Null
     $env:UV_UNMANAGED_INSTALL = $UvDir
     $env:UV_NO_MODIFY_PATH = "1"
-    $installer = (Invoke-WebRequest -UseBasicParsing -Uri "https://astral.sh/uv/install.ps1").Content
+    $installer = Invoke-RestMethod -Uri "https://astral.sh/uv/install.ps1"
     & ([scriptblock]::Create($installer))
     if (!(Test-Path $Uv)) { throw "uv installation did not create $Uv" }
 }
@@ -135,7 +135,7 @@ try {
         Write-Host "npm packages:     $(if ($frontendState.NeedsInstall) { 'would install' } else { 'ready' })"
         Write-Host "Frontend build:   $(if ($frontendState.NeedsBuild) { 'would build' } else { 'ready' })"
         Write-Host "Ollama:           $(if (Get-Command ollama -ErrorAction SilentlyContinue) { 'available' } else { 'optional; not installed' })"
-        Write-Host "Port 8000:        $(if (Test-AppHealth) { 'app already running' } elseif (Test-LocalPort) { 'occupied by another process' } else { 'available' })"
+        Write-Host "Port 8506:        $(if (Test-AppHealth) { 'app already running' } elseif (Test-LocalPort) { 'occupied by another process' } else { 'available' })"
         exit 0
     }
 
@@ -144,7 +144,7 @@ try {
         Start-Process $AppUrl
         exit 0
     }
-    if (Test-LocalPort) { throw "Port 8000 is already used by another process" }
+    if (Test-LocalPort) { throw "Port 8506 is already used by another process" }
 
     if (!(Test-Path $Uv)) { Install-Uv }
     if (!(Test-Path $Node)) { Install-Node }

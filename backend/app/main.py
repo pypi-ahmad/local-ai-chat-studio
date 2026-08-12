@@ -10,14 +10,14 @@ import logging
 import os
 import secrets
 import time
-from collections.abc import AsyncIterator
+from collections.abc import AsyncIterator, Callable
 from contextlib import asynccontextmanager
 from pathlib import Path
 from urllib.parse import urlencode
 
 import httpx
 
-from fastapi import FastAPI, HTTPException, Request, Response, status
+from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response, status
 from fastapi.responses import PlainTextResponse, RedirectResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -89,6 +89,7 @@ def create_app(
     database_url: str | None = None,
     provider_registry: ProviderRegistry | None = None,
     v2_database_url: str | None = None,
+    shutdown_callback: Callable[[], None] | None = None,
 ) -> FastAPI:
     data_dir = Path(os.getenv("CHAT_DATA_DIR", "data"))
     store = Store(database_url or str(data_dir / "app.db"))
@@ -147,8 +148,11 @@ def create_app(
 
     @asynccontextmanager
     async def lifespan(_: FastAPI):
-        yield
-        store.connection.close()
+        try:
+            yield
+        finally:
+            await runs.shutdown()
+            store.connection.close()
 
     app = FastAPI(title="Local AI Chat Studio API", version="2.0.0", lifespan=lifespan)
     app.state.store, app.state.vault, app.state.runs = store, vault, runs
@@ -187,6 +191,16 @@ def create_app(
             asyncio.to_thread(ollama_alive), asyncio.to_thread(running_models)
         )
         return {"ollama_available": available, "running_models": loaded}
+
+    @app.post("/api/v1/runtime/shutdown", status_code=202)
+    async def shutdown(request: Request, background_tasks: BackgroundTasks) -> dict[str, str]:
+        if request.headers.get("X-Local-Studio") != "shutdown":
+            raise HTTPException(403, "Shutdown request was not issued by the local Studio UI")
+        if shutdown_callback is None:
+            raise HTTPException(503, "Server shutdown is unavailable in unmanaged mode")
+        await runs.shutdown()
+        background_tasks.add_task(shutdown_callback)
+        return {"status": "stopping"}
 
     @app.get("/api/v1/profile", response_model=Profile)
     def get_profile() -> Profile:

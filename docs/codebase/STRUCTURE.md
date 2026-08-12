@@ -16,7 +16,7 @@
 | `tests/` | Backend contracts, lifecycle, provider, safety, and workspace tests |
 | `data/` | Local SQLite/Chroma runtime state |
 
-`chat-studio` starts `backend.app.cli:main` on `127.0.0.1:8000`. FastAPI serves
+`chat-studio` starts `backend.app.cli:main` on `127.0.0.1:8506`. FastAPI serves
 `frontend/dist` when it exists; Vite proxies `/api` during frontend development.
 
 The Streamlit entrypoint and `pages/` were removed after the React workspace moved to
