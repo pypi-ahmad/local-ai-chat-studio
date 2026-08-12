@@ -1,0 +1,194 @@
+{
+  "scriptCompleted": true,
+  "stats": {
+    "filesScanned": 84,
+    "filesWithImports": 32,
+    "totalEdges": 68
+  },
+  "importMap": {
+    ".github/ISSUE_TEMPLATE/bug_report.md": [],
+    ".github/ISSUE_TEMPLATE/feature_request.md": [],
+    ".github/pull_request_template.md": [],
+    ".github/workflows/ci.yml": [],
+    ".graphifyignore": [],
+    ".python-version": [],
+    "CHANGELOG.md": [],
+    "CODE_OF_CONDUCT.md": [],
+    "CODE_TUTORIAL.md": [],
+    "CONTRIBUTING.md": [],
+    "DATASET.md": [],
+    "Launch Chat Studio.cmd": [],
+    "README.md": [],
+    "SECURITY.md": [],
+    "USER_GUIDE.md": [],
+    "ZERO_TO_HERO_STUDY_HANDBOOK.md": [],
+    "backend/__init__.py": [],
+    "backend/app/__init__.py": [],
+    "backend/app/cli.py": [
+      "backend/app/main.py"
+    ],
+    "backend/app/contracts.py": [],
+    "backend/app/main.py": [
+      "backend/app/contracts.py",
+      "backend/app/memory.py",
+      "backend/app/providers.py",
+      "backend/app/runs.py",
+      "backend/app/sessions.py",
+      "backend/app/store.py",
+      "backend/app/workspace.py",
+      "src/files.py",
+      "src/ollama_client.py"
+    ],
+    "backend/app/memory.py": [
+      "backend/app/contracts.py",
+      "backend/app/providers.py",
+      "src/files.py"
+    ],
+    "backend/app/providers.py": [
+      "backend/app/contracts.py"
+    ],
+    "backend/app/runs.py": [
+      "backend/app/contracts.py",
+      "backend/app/providers.py",
+      "backend/app/sessions.py",
+      "backend/app/store.py"
+    ],
+    "backend/app/sessions.py": [],
+    "backend/app/store.py": [
+      "backend/app/contracts.py"
+    ],
+    "backend/app/workspace.py": [
+      "backend/app/contracts.py",
+      "backend/app/store.py"
+    ],
+    "docs/codebase/ARCHITECTURE.md": [],
+    "docs/codebase/CONCERNS.md": [],
+    "docs/codebase/CONVENTIONS.md": [],
+    "docs/codebase/INTEGRATIONS.md": [],
+    "docs/codebase/STACK.md": [],
+    "docs/codebase/STRUCTURE.md": [],
+    "docs/codebase/TESTING.md": [],
+    "docs/site/index.html": [],
+    "docs/tutorial/index.html": [],
+    "frontend/.oxlintrc.json": [],
+    "frontend/README.md": [],
+    "frontend/components.json": [],
+    "frontend/index.html": [],
+    "frontend/package.json": [],
+    "frontend/src/App.css": [],
+    "frontend/src/App.test.tsx": [
+      "frontend/src/App.tsx"
+    ],
+    "frontend/src/App.tsx": [
+      "frontend/src/api/client.ts",
+      "frontend/src/components/ui/badge.tsx",
+      "frontend/src/components/ui/button.tsx",
+      "frontend/src/components/ui/card.tsx",
+      "frontend/src/components/ui/input.tsx",
+      "frontend/src/components/ui/scroll-area.tsx",
+      "frontend/src/components/ui/textarea.tsx",
+      "frontend/src/components/ui/tooltip.tsx"
+    ],
+    "frontend/src/ErrorBoundary.tsx": [],
+    "frontend/src/api/client.ts": [
+      "frontend/src/api/schema.ts"
+    ],
+    "frontend/src/api/schema.ts": [],
+    "frontend/src/components/ui/badge.tsx": [
+      "frontend/src/lib/utils.ts"
+    ],
+    "frontend/src/components/ui/button.tsx": [
+      "frontend/src/lib/utils.ts"
+    ],
+    "frontend/src/components/ui/card.tsx": [
+      "frontend/src/lib/utils.ts"
+    ],
+    "frontend/src/components/ui/input.tsx": [
+      "frontend/src/lib/utils.ts"
+    ],
+    "frontend/src/components/ui/scroll-area.tsx": [
+      "frontend/src/lib/utils.ts"
+    ],
+    "frontend/src/components/ui/separator.tsx": [
+      "frontend/src/lib/utils.ts"
+    ],
+    "frontend/src/components/ui/textarea.tsx": [
+      "frontend/src/lib/utils.ts"
+    ],
+    "frontend/src/components/ui/tooltip.tsx": [
+      "frontend/src/lib/utils.ts"
+    ],
+    "frontend/src/index.css": [],
+    "frontend/src/lib/utils.ts": [],
+    "frontend/src/main.tsx": [
+      "frontend/src/App.css",
+      "frontend/src/App.tsx",
+      "frontend/src/ErrorBoundary.tsx",
+      "frontend/src/index.css"
+    ],
+    "frontend/src/test/setup.ts": [],
+    "frontend/tsconfig.app.json": [],
+    "frontend/tsconfig.json": [],
+    "frontend/tsconfig.node.json": [],
+    "frontend/vite.config.ts": [],
+    "frontend/vitest.config.ts": [],
+    "pyproject.toml": [],
+    "scripts/generate_api_types.py": [
+      "backend/app/main.py"
+    ],
+    "src/catalog.py": [
+      "src/model_labels.py",
+      "src/ollama_client.py"
+    ],
+    "src/chat_store.py": [
+      "src/config.py"
+    ],
+    "src/config.py": [],
+    "src/files.py": [],
+    "src/jobs.py": [
+      "src/config.py",
+      "src/files.py",
+      "src/ollama_client.py",
+      "src/orchestrator.py",
+      "src/personalization.py"
+    ],
+    "src/memory.py": [
+      "src/config.py",
+      "src/ollama_client.py"
+    ],
+    "src/model_labels.py": [
+      "src/ollama_client.py"
+    ],
+    "src/ollama_client.py": [
+      "src/config.py"
+    ],
+    "src/orchestrator.py": [
+      "src/config.py"
+    ],
+    "src/personalization.py": [
+      "src/config.py",
+      "src/ollama_client.py"
+    ],
+    "src/providers.py": [
+      "src/config.py"
+    ],
+    "src/rag.py": [
+      "src/config.py",
+      "src/ollama_client.py"
+    ],
+    "tasks/plan.md": [],
+    "tasks/todo.md": [],
+    "tests/conftest.py": [],
+    "tests/test_api_contract.py": [],
+    "tests/test_provider_adapters.py": [
+      "backend/app/contracts.py",
+      "backend/app/providers.py"
+    ],
+    "tests/test_workspace_features.py": [
+      "backend/app/contracts.py",
+      "backend/app/main.py",
+      "backend/app/providers.py",
+      "backend/app/store.py"
+    ]
+  }
+}

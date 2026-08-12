@@ -1,0 +1,655 @@
+{
+  "nodes": [
+    {
+      "id": "file:backend/app/memory.py",
+      "type": "file",
+      "name": "memory.py",
+      "filePath": "backend/app/memory.py",
+      "summary": "Uses a selected LLM to extract, consolidate, validate, and categorize useful long-term memories from conversation history.",
+      "tags": [
+        "backend",
+        "api",
+        "python"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/app/memory.py:extract_memories",
+      "type": "function",
+      "name": "extract_memories",
+      "summary": "Extracts concise, user-relevant memory candidates with an LLM and records their provenance.",
+      "tags": [
+        "backend",
+        "function",
+        "api"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        18,
+        87
+      ]
+    },
+    {
+      "id": "function:backend/app/memory.py:_complete",
+      "type": "function",
+      "name": "_complete",
+      "summary": "Implements complete behavior for this module.",
+      "tags": [
+        "backend",
+        "function",
+        "api"
+      ],
+      "complexity": "simple",
+      "lineRange": [
+        90,
+        108
+      ]
+    },
+    {
+      "id": "function:backend/app/memory.py:_selection_prompt",
+      "type": "function",
+      "name": "_selection_prompt",
+      "summary": "Implements selection_prompt behavior for this module.",
+      "tags": [
+        "backend",
+        "function",
+        "api"
+      ],
+      "complexity": "simple",
+      "lineRange": [
+        111,
+        120
+      ]
+    },
+    {
+      "id": "function:backend/app/memory.py:_consolidation_prompt",
+      "type": "function",
+      "name": "_consolidation_prompt",
+      "summary": "Implements consolidation_prompt behavior for this module.",
+      "tags": [
+        "backend",
+        "function",
+        "api"
+      ],
+      "complexity": "simple",
+      "lineRange": [
+        123,
+        133
+      ]
+    },
+    {
+      "id": "function:backend/app/memory.py:_parse_memories",
+      "type": "function",
+      "name": "_parse_memories",
+      "summary": "Implements parse_memories behavior for this module.",
+      "tags": [
+        "backend",
+        "function",
+        "api"
+      ],
+      "complexity": "simple",
+      "lineRange": [
+        136,
+        152
+      ]
+    },
+    {
+      "id": "function:backend/app/memory.py:_category",
+      "type": "function",
+      "name": "_category",
+      "summary": "Implements category behavior for this module.",
+      "tags": [
+        "backend",
+        "function",
+        "api"
+      ],
+      "complexity": "simple",
+      "lineRange": [
+        155,
+        160
+      ]
+    },
+    {
+      "id": "class:backend/app/memory.py:ExtractionOutcome",
+      "type": "class",
+      "name": "ExtractionOutcome",
+      "summary": "Defines the Extraction Outcome Pydantic or application contract used by the backend.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple",
+      "lineRange": [
+        13,
+        15
+      ]
+    },
+    {
+      "id": "file:backend/app/providers.py",
+      "type": "file",
+      "name": "providers.py",
+      "filePath": "backend/app/providers.py",
+      "summary": "Implements normalized provider adapters and the registry for local Ollama, cloud models, OpenAI-compatible APIs, and OpenCode.",
+      "tags": [
+        "backend",
+        "api",
+        "python"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/app/providers.py:build_provider_registry",
+      "type": "function",
+      "name": "build_provider_registry",
+      "summary": "Builds the configured provider adapter registry with local and cloud integrations.",
+      "tags": [
+        "backend",
+        "function",
+        "api"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        592,
+        620
+      ]
+    },
+    {
+      "id": "class:backend/app/providers.py:ProviderAdapter",
+      "type": "class",
+      "name": "ProviderAdapter",
+      "summary": "Defines the Provider Adapter Pydantic or application contract used by the backend.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple",
+      "lineRange": [
+        18,
+        36
+      ]
+    },
+    {
+      "id": "class:backend/app/providers.py:OpenAICompatibleAdapter",
+      "type": "class",
+      "name": "OpenAICompatibleAdapter",
+      "summary": "Defines the Open AICompatible Adapter Pydantic or application contract used by the backend.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        39,
+        91
+      ]
+    },
+    {
+      "id": "class:backend/app/providers.py:OllamaAdapter",
+      "type": "class",
+      "name": "OllamaAdapter",
+      "summary": "Defines the Ollama Adapter Pydantic or application contract used by the backend.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "complex",
+      "lineRange": [
+        94,
+        178
+      ]
+    },
+    {
+      "id": "class:backend/app/providers.py:AnthropicAdapter",
+      "type": "class",
+      "name": "AnthropicAdapter",
+      "summary": "Defines the Anthropic Adapter Pydantic or application contract used by the backend.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        181,
+        238
+      ]
+    },
+    {
+      "id": "class:backend/app/providers.py:GeminiAdapter",
+      "type": "class",
+      "name": "GeminiAdapter",
+      "summary": "Defines the Gemini Adapter Pydantic or application contract used by the backend.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        241,
+        286
+      ]
+    },
+    {
+      "id": "class:backend/app/providers.py:OpenCodeZenAdapter",
+      "type": "class",
+      "name": "OpenCodeZenAdapter",
+      "summary": "Defines the Open Code Zen Adapter Pydantic or application contract used by the backend.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "complex",
+      "lineRange": [
+        289,
+        399
+      ]
+    },
+    {
+      "id": "class:backend/app/providers.py:OpenCodeBridgeAdapter",
+      "type": "class",
+      "name": "OpenCodeBridgeAdapter",
+      "summary": "Defines the Open Code Bridge Adapter Pydantic or application contract used by the backend.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "complex",
+      "lineRange": [
+        402,
+        555
+      ]
+    },
+    {
+      "id": "class:backend/app/providers.py:ProviderRegistry",
+      "type": "class",
+      "name": "ProviderRegistry",
+      "summary": "Defines the Provider Registry Pydantic or application contract used by the backend.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        558,
+        589
+      ]
+    },
+    {
+      "id": "file:backend/app/runs.py",
+      "type": "file",
+      "name": "runs.py",
+      "filePath": "backend/app/runs.py",
+      "summary": "Coordinates asynchronous model runs, their state transitions, event streams, cancellation, and persisted results.",
+      "tags": [
+        "backend",
+        "api",
+        "python"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/app/runs.py:RunState",
+      "type": "class",
+      "name": "RunState",
+      "summary": "Defines the Run State Pydantic or application contract used by the backend.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple",
+      "lineRange": [
+        19,
+        27
+      ]
+    },
+    {
+      "id": "class:backend/app/runs.py:RunManager",
+      "type": "class",
+      "name": "RunManager",
+      "summary": "Defines the Run Manager Pydantic or application contract used by the backend.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "complex",
+      "lineRange": [
+        30,
+        211
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:extract_memories",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:extract_memories",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:_complete",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:_complete",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:_selection_prompt",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:_selection_prompt",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:_consolidation_prompt",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:_consolidation_prompt",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:_parse_memories",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:_parse_memories",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:_category",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:_category",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "class:backend/app/memory.py:ExtractionOutcome",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "class:backend/app/memory.py:ExtractionOutcome",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "file:src/files.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "function:backend/app/providers.py:build_provider_registry",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "function:backend/app/providers.py:build_provider_registry",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:ProviderAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:ProviderAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OpenAICompatibleAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OpenAICompatibleAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OllamaAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OllamaAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:AnthropicAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:AnthropicAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:GeminiAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:GeminiAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OpenCodeZenAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OpenCodeZenAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OpenCodeBridgeAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OpenCodeBridgeAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:ProviderRegistry",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:ProviderRegistry",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "class:backend/app/runs.py:RunState",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "class:backend/app/runs.py:RunState",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "class:backend/app/runs.py:RunManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "class:backend/app/runs.py:RunManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/sessions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "file:tests/test_provider_adapters.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "file:tests/test_workspace_features.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

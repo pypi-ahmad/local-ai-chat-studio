@@ -1,0 +1,14 @@
+D:\AI\Github\local-ai-chat-studio\CODE_TUTORIAL.md
+D:\AI\Github\local-ai-chat-studio\CONTRIBUTING.md
+D:\AI\Github\local-ai-chat-studio\README.md
+D:\AI\Github\local-ai-chat-studio\USER_GUIDE.md
+D:\AI\Github\local-ai-chat-studio\ZERO_TO_HERO_STUDY_HANDBOOK.md
+D:\AI\Github\local-ai-chat-studio\docs\codebase\ARCHITECTURE.md
+D:\AI\Github\local-ai-chat-studio\docs\codebase\CONCERNS.md
+D:\AI\Github\local-ai-chat-studio\docs\codebase\CONVENTIONS.md
+D:\AI\Github\local-ai-chat-studio\docs\codebase\INTEGRATIONS.md
+D:\AI\Github\local-ai-chat-studio\docs\codebase\STACK.md
+D:\AI\Github\local-ai-chat-studio\docs\codebase\STRUCTURE.md
+D:\AI\Github\local-ai-chat-studio\docs\codebase\TESTING.md
+D:\AI\Github\local-ai-chat-studio\docs\tutorial\index.html
+D:\AI\Github\local-ai-chat-studio\frontend\README.md

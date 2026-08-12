@@ -1,0 +1,244 @@
+{
+  "nodes": [
+    {
+      "id": "document:CHANGELOG.md",
+      "type": "document",
+      "name": "CHANGELOG.md",
+      "filePath": "CHANGELOG.md",
+      "summary": "Records released and unreleased changes, including the FastAPI v2 backend, React workspace, provider adapters, and streaming-run fixes in version 0.2.0.",
+      "tags": ["documentation", "changelog", "release-notes", "versioning"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:CODE_OF_CONDUCT.md",
+      "type": "document",
+      "name": "CODE_OF_CONDUCT.md",
+      "filePath": "CODE_OF_CONDUCT.md",
+      "summary": "Defines expected community behavior, enforcement authority, and reporting guidance for project discussions and contributions.",
+      "tags": ["documentation", "community", "governance", "conduct"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:CODE_TUTORIAL.md",
+      "type": "document",
+      "name": "CODE_TUTORIAL.md",
+      "filePath": "CODE_TUTORIAL.md",
+      "summary": "Provides a module-by-module tutorial of the legacy Streamlit and v2 FastAPI plus React architectures, including message-flow traces and extension guidance.",
+      "tags": ["documentation", "tutorial", "architecture", "fastapi", "streamlit"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:CONTRIBUTING.md",
+      "type": "document",
+      "name": "CONTRIBUTING.md",
+      "filePath": "CONTRIBUTING.md",
+      "summary": "Explains contribution setup, project conventions, required checks, API type regeneration, and pull-request expectations for both application stacks.",
+      "tags": ["documentation", "development", "contributing", "testing", "ci-cd"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:DATASET.md",
+      "type": "document",
+      "name": "DATASET.md",
+      "filePath": "DATASET.md",
+      "summary": "Clarifies that the application does not rely on a fixed public dataset and instead works with user-provided documents and data.",
+      "tags": ["documentation", "datasets", "user-data"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "Project entry-point documentation covering local-first AI chat capabilities, installation, configuration, privacy boundaries, architecture, and contribution links.",
+      "tags": ["documentation", "entry-point", "overview", "setup", "architecture"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:SECURITY.md",
+      "type": "document",
+      "name": "SECURITY.md",
+      "filePath": "SECURITY.md",
+      "summary": "Defines the local-first security model, including session-only provider keys, local data storage, network-exposure cautions, prompt-injection risk, and private vulnerability reporting.",
+      "tags": ["documentation", "security", "privacy", "vulnerability-reporting"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:USER_GUIDE.md",
+      "type": "document",
+      "name": "USER_GUIDE.md",
+      "filePath": "USER_GUIDE.md",
+      "summary": "Offers a plain-language setup guide and feature walkthrough for chat, providers, memory, model comparison, retrieval, data controls, and troubleshooting.",
+      "tags": ["documentation", "user-guide", "setup", "features", "troubleshooting"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "type": "document",
+      "name": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "filePath": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "summary": "Serves as a comprehensive study handbook covering AI concepts, repository architecture, module maps, end-to-end traces, contributor recipes, testing, and debugging.",
+      "tags": ["documentation", "tutorial", "architecture", "contributing", "reference"],
+      "complexity": "complex"
+    },
+    {
+      "id": "config:pyproject.toml",
+      "type": "config",
+      "name": "pyproject.toml",
+      "filePath": "pyproject.toml",
+      "summary": "Defines the Python package metadata, runtime and development dependencies, Hatch build settings, uv packaging behavior, and the chat-studio CLI entry point.",
+      "tags": ["configuration", "python", "dependencies", "build-system", "entry-point"],
+      "complexity": "simple",
+      "languageNotes": "Uses PEP 621 project metadata with Hatchling as the build backend and uv dependency groups."
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:backend/app/main.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:backend/app/runs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:src/jobs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:app.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CONTRIBUTING.md",
+      "target": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CONTRIBUTING.md",
+      "target": "document:SECURITY.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CONTRIBUTING.md",
+      "target": "pipeline:.github/workflows/ci.yml",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:backend/app/cli.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:app.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:USER_GUIDE.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:CONTRIBUTING.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:SECURITY.md",
+      "target": "file:src/providers.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:SECURITY.md",
+      "target": "file:src/orchestrator.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:SECURITY.md",
+      "target": "file:src/jobs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:USER_GUIDE.md",
+      "target": "file:backend/app/cli.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:USER_GUIDE.md",
+      "target": "file:app.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:backend/app/main.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:backend/app/contracts.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:src/jobs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:app.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:pyproject.toml",
+      "target": "file:backend/app/cli.py",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    }
+  ]
+}

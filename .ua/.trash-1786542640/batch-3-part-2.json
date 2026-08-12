@@ -1,0 +1,957 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/ollama_client.py",
+      "type": "file",
+      "name": "ollama_client.py",
+      "filePath": "src/ollama_client.py",
+      "summary": "ollama_client.py implements a backend capability.",
+      "tags": [
+        "backend",
+        "python",
+        "service"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src/ollama_client.py:_client",
+      "type": "function",
+      "name": "_client",
+      "filePath": "src/ollama_client.py",
+      "lineRange": [
+        21,
+        41
+      ],
+      "summary": "_client implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ollama_client.py:list_models",
+      "type": "function",
+      "name": "list_models",
+      "filePath": "src/ollama_client.py",
+      "lineRange": [
+        73,
+        111
+      ],
+      "summary": "list_models implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ollama_client.py:vision_fallback_model",
+      "type": "function",
+      "name": "vision_fallback_model",
+      "filePath": "src/ollama_client.py",
+      "lineRange": [
+        129,
+        139
+      ],
+      "summary": "vision_fallback_model implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ollama_client.py:smallest_text_model",
+      "type": "function",
+      "name": "smallest_text_model",
+      "filePath": "src/ollama_client.py",
+      "lineRange": [
+        145,
+        159
+      ],
+      "summary": "smallest_text_model implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ollama_client.py:stream_chat",
+      "type": "function",
+      "name": "stream_chat",
+      "filePath": "src/ollama_client.py",
+      "lineRange": [
+        162,
+        186
+      ],
+      "summary": "stream_chat implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ollama_client.py:running_models",
+      "type": "function",
+      "name": "running_models",
+      "filePath": "src/ollama_client.py",
+      "lineRange": [
+        189,
+        202
+      ],
+      "summary": "running_models implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ollama_client.py:generate",
+      "type": "function",
+      "name": "generate",
+      "filePath": "src/ollama_client.py",
+      "lineRange": [
+        205,
+        217
+      ],
+      "summary": "generate implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ollama_client.py:describe_image",
+      "type": "function",
+      "name": "describe_image",
+      "filePath": "src/ollama_client.py",
+      "lineRange": [
+        220,
+        235
+      ],
+      "summary": "describe_image implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:src/ollama_client.py:ModelInfo",
+      "type": "class",
+      "name": "ModelInfo",
+      "filePath": "src/ollama_client.py",
+      "lineRange": [
+        45,
+        70
+      ],
+      "summary": "ModelInfo provides structured backend state.",
+      "tags": [
+        "backend",
+        "python",
+        "data-model"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/orchestrator.py",
+      "type": "file",
+      "name": "orchestrator.py",
+      "filePath": "src/orchestrator.py",
+      "summary": "orchestrator.py implements a backend capability.",
+      "tags": [
+        "backend",
+        "python",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/orchestrator.py:build_messages",
+      "type": "function",
+      "name": "build_messages",
+      "filePath": "src/orchestrator.py",
+      "lineRange": [
+        17,
+        80
+      ],
+      "summary": "build_messages implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/orchestrator.py:after_turn_indexing",
+      "type": "function",
+      "name": "after_turn_indexing",
+      "filePath": "src/orchestrator.py",
+      "lineRange": [
+        83,
+        92
+      ],
+      "summary": "after_turn_indexing implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/personalization.py",
+      "type": "file",
+      "name": "personalization.py",
+      "filePath": "src/personalization.py",
+      "summary": "personalization.py implements a backend capability.",
+      "tags": [
+        "backend",
+        "python",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/personalization.py:rebuild_profile",
+      "type": "function",
+      "name": "rebuild_profile",
+      "filePath": "src/personalization.py",
+      "lineRange": [
+        38,
+        66
+      ],
+      "summary": "rebuild_profile implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/providers.py",
+      "type": "file",
+      "name": "providers.py",
+      "filePath": "src/providers.py",
+      "summary": "providers.py implements a backend capability.",
+      "tags": [
+        "backend",
+        "python",
+        "service"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src/providers.py:list_provider_models",
+      "type": "function",
+      "name": "list_provider_models",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        218,
+        227
+      ],
+      "summary": "list_provider_models implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:_list_openrouter",
+      "type": "function",
+      "name": "_list_openrouter",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        240,
+        260
+      ],
+      "summary": "_list_openrouter implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:_list_openai_compat",
+      "type": "function",
+      "name": "_list_openai_compat",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        263,
+        274
+      ],
+      "summary": "_list_openai_compat implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:stream_chat",
+      "type": "function",
+      "name": "stream_chat",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        287,
+        306
+      ],
+      "summary": "stream_chat implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:_stream_anthropic",
+      "type": "function",
+      "name": "_stream_anthropic",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        309,
+        350
+      ],
+      "summary": "_stream_anthropic implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/providers.py:_stream_openai_compat",
+      "type": "function",
+      "name": "_stream_openai_compat",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        353,
+        395
+      ],
+      "summary": "_stream_openai_compat implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/providers.py:openrouter_auth_url",
+      "type": "function",
+      "name": "openrouter_auth_url",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        403,
+        420
+      ],
+      "summary": "openrouter_auth_url implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:openrouter_exchange_code",
+      "type": "function",
+      "name": "openrouter_exchange_code",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        423,
+        442
+      ],
+      "summary": "openrouter_exchange_code implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:src/providers.py:ApiModel",
+      "type": "class",
+      "name": "ApiModel",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        86,
+        113
+      ],
+      "summary": "ApiModel provides structured backend state.",
+      "tags": [
+        "backend",
+        "python",
+        "data-model"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/rag.py",
+      "type": "file",
+      "name": "rag.py",
+      "filePath": "src/rag.py",
+      "summary": "rag.py implements a backend capability.",
+      "tags": [
+        "backend",
+        "python",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/rag.py:index_doc_chunks",
+      "type": "function",
+      "name": "index_doc_chunks",
+      "filePath": "src/rag.py",
+      "lineRange": [
+        31,
+        43
+      ],
+      "summary": "index_doc_chunks implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/rag.py:search_docs",
+      "type": "function",
+      "name": "search_docs",
+      "filePath": "src/rag.py",
+      "lineRange": [
+        46,
+        55
+      ],
+      "summary": "search_docs implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/rag.py:index_history_turn",
+      "type": "function",
+      "name": "index_history_turn",
+      "filePath": "src/rag.py",
+      "lineRange": [
+        65,
+        76
+      ],
+      "summary": "index_history_turn implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/rag.py:search_history",
+      "type": "function",
+      "name": "search_history",
+      "filePath": "src/rag.py",
+      "lineRange": [
+        79,
+        91
+      ],
+      "summary": "search_history implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/rag.py:similar_memory",
+      "type": "function",
+      "name": "similar_memory",
+      "filePath": "src/rag.py",
+      "lineRange": [
+        137,
+        146
+      ],
+      "summary": "similar_memory implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/rag.py:_flatten",
+      "type": "function",
+      "name": "_flatten",
+      "filePath": "src/rag.py",
+      "lineRange": [
+        166,
+        175
+      ],
+      "summary": "_flatten implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:_client",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:_client",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:list_models",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:list_models",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:vision_fallback_model",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:vision_fallback_model",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:smallest_text_model",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:smallest_text_model",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:stream_chat",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:stream_chat",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:running_models",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:running_models",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:generate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:generate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:describe_image",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:describe_image",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "class:src/ollama_client.py:ModelInfo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "class:src/ollama_client.py:ModelInfo",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/orchestrator.py",
+      "target": "function:src/orchestrator.py:build_messages",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/orchestrator.py",
+      "target": "function:src/orchestrator.py:build_messages",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/orchestrator.py",
+      "target": "function:src/orchestrator.py:after_turn_indexing",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/orchestrator.py",
+      "target": "function:src/orchestrator.py:after_turn_indexing",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/personalization.py",
+      "target": "function:src/personalization.py:rebuild_profile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/personalization.py",
+      "target": "function:src/personalization.py:rebuild_profile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:list_provider_models",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:list_provider_models",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_list_openrouter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_list_openrouter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_list_openai_compat",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_list_openai_compat",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:stream_chat",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:stream_chat",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_stream_anthropic",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_stream_anthropic",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_stream_openai_compat",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_stream_openai_compat",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:openrouter_auth_url",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:openrouter_auth_url",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:openrouter_exchange_code",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:openrouter_exchange_code",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "class:src/providers.py:ApiModel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "class:src/providers.py:ApiModel",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:index_doc_chunks",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:index_doc_chunks",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:search_docs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:search_docs",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:index_history_turn",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:index_history_turn",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:search_history",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:search_history",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:similar_memory",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:similar_memory",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:_flatten",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:_flatten",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/personalization.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/personalization.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/orchestrator.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

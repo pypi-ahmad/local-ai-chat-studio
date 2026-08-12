@@ -1,0 +1,1253 @@
+{
+  "nodes": [
+    {
+      "id": "file:frontend/src/App.test.tsx",
+      "type": "file",
+      "name": "App.test.tsx",
+      "filePath": "frontend/src/App.test.tsx",
+      "summary": "Exercises the main React application flow with mocked streaming responses and browser APIs.",
+      "tags": [
+        "test",
+        "frontend",
+        "react"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/App.tsx",
+      "type": "file",
+      "name": "App.tsx",
+      "filePath": "frontend/src/App.tsx",
+      "summary": "Implements the single-page chat studio interface, including conversations, streaming runs, provider setup, memories, files, and workspace views.",
+      "tags": [
+        "frontend",
+        "react",
+        "chat-interface"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:frontend/src/ErrorBoundary.tsx",
+      "type": "file",
+      "name": "ErrorBoundary.tsx",
+      "filePath": "frontend/src/ErrorBoundary.tsx",
+      "summary": "Provides a React error boundary that logs rendering failures and shows a recovery interface.",
+      "tags": [
+        "frontend",
+        "react",
+        "error-handling"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/api/client.ts",
+      "type": "file",
+      "name": "client.ts",
+      "filePath": "frontend/src/api/client.ts",
+      "summary": "Provides the typed browser client for the backend API, including JSON requests and streamed run events.",
+      "tags": [
+        "api-client",
+        "frontend",
+        "streaming"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/api/schema.ts",
+      "type": "file",
+      "name": "schema.ts",
+      "filePath": "frontend/src/api/schema.ts",
+      "summary": "Contains generated TypeScript types and endpoint definitions that describe the backend API contract.",
+      "tags": [
+        "api-schema",
+        "type-definition",
+        "generated"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:frontend/src/components/ui/badge.tsx",
+      "type": "file",
+      "name": "badge.tsx",
+      "filePath": "frontend/src/components/ui/badge.tsx",
+      "summary": "Defines a styled badge primitive with reusable variant classes for status labels.",
+      "tags": [
+        "component",
+        "ui",
+        "styling"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/components/ui/button.tsx",
+      "type": "file",
+      "name": "button.tsx",
+      "filePath": "frontend/src/components/ui/button.tsx",
+      "summary": "Defines a styled button primitive with size and variant options.",
+      "tags": [
+        "component",
+        "ui",
+        "styling"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/components/ui/card.tsx",
+      "type": "file",
+      "name": "card.tsx",
+      "filePath": "frontend/src/components/ui/card.tsx",
+      "summary": "Exports composable card layout primitives used to structure application panels.",
+      "tags": [
+        "component",
+        "ui",
+        "layout"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/components/ui/input.tsx",
+      "type": "file",
+      "name": "input.tsx",
+      "filePath": "frontend/src/components/ui/input.tsx",
+      "summary": "Defines the reusable styled text input control.",
+      "tags": [
+        "component",
+        "ui",
+        "form-control"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/scroll-area.tsx",
+      "type": "file",
+      "name": "scroll-area.tsx",
+      "filePath": "frontend/src/components/ui/scroll-area.tsx",
+      "summary": "Exports scroll-area and scrollbar primitives for scrollable panels.",
+      "tags": [
+        "component",
+        "ui",
+        "accessibility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/components/ui/separator.tsx",
+      "type": "file",
+      "name": "separator.tsx",
+      "filePath": "frontend/src/components/ui/separator.tsx",
+      "summary": "Defines a reusable horizontal or vertical visual separator.",
+      "tags": [
+        "component",
+        "ui",
+        "layout"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/textarea.tsx",
+      "type": "file",
+      "name": "textarea.tsx",
+      "filePath": "frontend/src/components/ui/textarea.tsx",
+      "summary": "Defines the reusable styled multiline text input control.",
+      "tags": [
+        "component",
+        "ui",
+        "form-control"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/tooltip.tsx",
+      "type": "file",
+      "name": "tooltip.tsx",
+      "filePath": "frontend/src/components/ui/tooltip.tsx",
+      "summary": "Exports tooltip primitives with configurable positioning and presentation.",
+      "tags": [
+        "component",
+        "ui",
+        "accessibility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/lib/utils.ts",
+      "type": "file",
+      "name": "utils.ts",
+      "filePath": "frontend/src/lib/utils.ts",
+      "summary": "Provides the shared class-name composition helper used by UI primitives.",
+      "tags": [
+        "utility",
+        "styling",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/main.tsx",
+      "type": "file",
+      "name": "main.tsx",
+      "filePath": "frontend/src/main.tsx",
+      "summary": "Bootstraps the React application, imports global styles, and mounts the error-protected app root.",
+      "tags": [
+        "entry-point",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/App.tsx:Navigation",
+      "type": "function",
+      "name": "Navigation",
+      "filePath": "frontend/src/App.tsx",
+      "lineRange": [
+        88,
+        111
+      ],
+      "summary": "Renders the primary navigation and reports page selections.",
+      "tags": [
+        "component",
+        "navigation",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/App.tsx:ConversationHistory",
+      "type": "function",
+      "name": "ConversationHistory",
+      "filePath": "frontend/src/App.tsx",
+      "lineRange": [
+        113,
+        154
+      ],
+      "summary": "Filters and renders conversation history with create, rename, select, and delete actions.",
+      "tags": [
+        "component",
+        "conversation-history",
+        "frontend"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/App.tsx:ContextRail",
+      "type": "function",
+      "name": "ContextRail",
+      "filePath": "frontend/src/App.tsx",
+      "lineRange": [
+        156,
+        169
+      ],
+      "summary": "Displays context-budget usage and the included context sections.",
+      "tags": [
+        "component",
+        "context-management",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/App.tsx:ChatWorkspace",
+      "type": "function",
+      "name": "ChatWorkspace",
+      "filePath": "frontend/src/App.tsx",
+      "lineRange": [
+        179,
+        290
+      ],
+      "summary": "Renders the interactive chat workspace, message actions, plan approval, uploads, and memory controls.",
+      "tags": [
+        "component",
+        "chat-interface",
+        "frontend"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:frontend/src/App.tsx:ComparePage",
+      "type": "function",
+      "name": "ComparePage",
+      "filePath": "frontend/src/App.tsx",
+      "lineRange": [
+        296,
+        311
+      ],
+      "summary": "Runs the same prompt against selected models and displays streamed comparison outputs.",
+      "tags": [
+        "component",
+        "model-comparison",
+        "streaming"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/App.tsx:ProviderCard",
+      "type": "function",
+      "name": "ProviderCard",
+      "filePath": "frontend/src/App.tsx",
+      "lineRange": [
+        339,
+        363
+      ],
+      "summary": "Renders provider connection controls and retrieves provider-specific policy and OAuth options.",
+      "tags": [
+        "component",
+        "provider-auth",
+        "frontend"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/App.tsx:LibraryPage",
+      "type": "function",
+      "name": "LibraryPage",
+      "filePath": "frontend/src/App.tsx",
+      "lineRange": [
+        369,
+        379
+      ],
+      "summary": "Renders memory, prompt preset, and upload management controls.",
+      "tags": [
+        "component",
+        "memory",
+        "file-management"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/App.tsx:App",
+      "type": "function",
+      "name": "App",
+      "filePath": "frontend/src/App.tsx",
+      "lineRange": [
+        397,
+        554
+      ],
+      "summary": "Coordinates application state, API refreshes, run streaming, and all workspace page callbacks.",
+      "tags": [
+        "entry-point",
+        "state-management",
+        "frontend"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:frontend/src/api/client.ts:request",
+      "type": "function",
+      "name": "request",
+      "filePath": "frontend/src/api/client.ts",
+      "lineRange": [
+        47,
+        58
+      ],
+      "summary": "Performs JSON API requests and raises ApiError for unsuccessful responses.",
+      "tags": [
+        "api-client",
+        "http",
+        "error-handling"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/api/client.ts:streamRun",
+      "type": "function",
+      "name": "streamRun",
+      "filePath": "frontend/src/api/client.ts",
+      "lineRange": [
+        66,
+        90
+      ],
+      "summary": "Consumes the backend streaming endpoint and forwards parsed events to the caller.",
+      "tags": [
+        "api-client",
+        "streaming",
+        "sse"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/components/ui/badge.tsx:Badge",
+      "type": "function",
+      "name": "Badge",
+      "filePath": "frontend/src/components/ui/badge.tsx",
+      "lineRange": [
+        30,
+        50
+      ],
+      "summary": "Renders a badge using the selected style variant and merged props.",
+      "tags": [
+        "component",
+        "ui",
+        "styling"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/components/ui/button.tsx:Button",
+      "type": "function",
+      "name": "Button",
+      "filePath": "frontend/src/components/ui/button.tsx",
+      "lineRange": [
+        43,
+        56
+      ],
+      "summary": "Renders a button with composable size and visual variants.",
+      "tags": [
+        "component",
+        "ui",
+        "styling"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/components/ui/card.tsx:Card",
+      "type": "function",
+      "name": "Card",
+      "filePath": "frontend/src/components/ui/card.tsx",
+      "lineRange": [
+        5,
+        21
+      ],
+      "summary": "Renders the outer card container with a selectable density.",
+      "tags": [
+        "component",
+        "ui",
+        "layout"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/components/ui/card.tsx:CardHeader",
+      "type": "function",
+      "name": "CardHeader",
+      "filePath": "frontend/src/components/ui/card.tsx",
+      "lineRange": [
+        23,
+        34
+      ],
+      "summary": "Renders the header region of a card.",
+      "tags": [
+        "component",
+        "ui",
+        "layout"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/card.tsx:CardTitle",
+      "type": "function",
+      "name": "CardTitle",
+      "filePath": "frontend/src/components/ui/card.tsx",
+      "lineRange": [
+        36,
+        47
+      ],
+      "summary": "Renders the title region of a card.",
+      "tags": [
+        "component",
+        "ui",
+        "layout"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/card.tsx:CardDescription",
+      "type": "function",
+      "name": "CardDescription",
+      "filePath": "frontend/src/components/ui/card.tsx",
+      "lineRange": [
+        49,
+        57
+      ],
+      "summary": "Renders descriptive text within a card header.",
+      "tags": [
+        "component",
+        "ui",
+        "layout"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/card.tsx:CardAction",
+      "type": "function",
+      "name": "CardAction",
+      "filePath": "frontend/src/components/ui/card.tsx",
+      "lineRange": [
+        59,
+        70
+      ],
+      "summary": "Renders an action region in a card header.",
+      "tags": [
+        "component",
+        "ui",
+        "layout"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/card.tsx:CardContent",
+      "type": "function",
+      "name": "CardContent",
+      "filePath": "frontend/src/components/ui/card.tsx",
+      "lineRange": [
+        72,
+        80
+      ],
+      "summary": "Renders the main content region of a card.",
+      "tags": [
+        "component",
+        "ui",
+        "layout"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/card.tsx:CardFooter",
+      "type": "function",
+      "name": "CardFooter",
+      "filePath": "frontend/src/components/ui/card.tsx",
+      "lineRange": [
+        82,
+        93
+      ],
+      "summary": "Renders the footer region of a card.",
+      "tags": [
+        "component",
+        "ui",
+        "layout"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/input.tsx:Input",
+      "type": "function",
+      "name": "Input",
+      "filePath": "frontend/src/components/ui/input.tsx",
+      "lineRange": [
+        6,
+        18
+      ],
+      "summary": "Renders a styled text input while preserving native input props.",
+      "tags": [
+        "component",
+        "ui",
+        "form-control"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/scroll-area.tsx:ScrollArea",
+      "type": "function",
+      "name": "ScrollArea",
+      "filePath": "frontend/src/components/ui/scroll-area.tsx",
+      "lineRange": [
+        5,
+        26
+      ],
+      "summary": "Renders a scrollable viewport with the project visual styles.",
+      "tags": [
+        "component",
+        "ui",
+        "accessibility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/components/ui/scroll-area.tsx:ScrollBar",
+      "type": "function",
+      "name": "ScrollBar",
+      "filePath": "frontend/src/components/ui/scroll-area.tsx",
+      "lineRange": [
+        28,
+        50
+      ],
+      "summary": "Renders a styled horizontal or vertical scrollbar.",
+      "tags": [
+        "component",
+        "ui",
+        "accessibility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/components/ui/separator.tsx:Separator",
+      "type": "function",
+      "name": "Separator",
+      "filePath": "frontend/src/components/ui/separator.tsx",
+      "lineRange": [
+        7,
+        23
+      ],
+      "summary": "Renders a styled horizontal or vertical separator.",
+      "tags": [
+        "component",
+        "ui",
+        "layout"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/textarea.tsx:Textarea",
+      "type": "function",
+      "name": "Textarea",
+      "filePath": "frontend/src/components/ui/textarea.tsx",
+      "lineRange": [
+        5,
+        16
+      ],
+      "summary": "Renders a styled multiline input while preserving native textarea props.",
+      "tags": [
+        "component",
+        "ui",
+        "form-control"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/tooltip.tsx:TooltipProvider",
+      "type": "function",
+      "name": "TooltipProvider",
+      "filePath": "frontend/src/components/ui/tooltip.tsx",
+      "lineRange": [
+        7,
+        18
+      ],
+      "summary": "Configures tooltip timing and shared provider behavior.",
+      "tags": [
+        "component",
+        "ui",
+        "accessibility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/tooltip.tsx:Tooltip",
+      "type": "function",
+      "name": "Tooltip",
+      "filePath": "frontend/src/components/ui/tooltip.tsx",
+      "lineRange": [
+        20,
+        22
+      ],
+      "summary": "Re-exports the base tooltip root component.",
+      "tags": [
+        "component",
+        "ui",
+        "accessibility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/tooltip.tsx:TooltipTrigger",
+      "type": "function",
+      "name": "TooltipTrigger",
+      "filePath": "frontend/src/components/ui/tooltip.tsx",
+      "lineRange": [
+        24,
+        26
+      ],
+      "summary": "Re-exports the control that opens a tooltip.",
+      "tags": [
+        "component",
+        "ui",
+        "accessibility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/tooltip.tsx:TooltipContent",
+      "type": "function",
+      "name": "TooltipContent",
+      "filePath": "frontend/src/components/ui/tooltip.tsx",
+      "lineRange": [
+        28,
+        64
+      ],
+      "summary": "Renders positioned tooltip content with styling and animation classes.",
+      "tags": [
+        "component",
+        "ui",
+        "accessibility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/lib/utils.ts:cn",
+      "type": "function",
+      "name": "cn",
+      "filePath": "frontend/src/lib/utils.ts",
+      "lineRange": [
+        4,
+        6
+      ],
+      "summary": "Combines conditional class names and resolves Tailwind class conflicts.",
+      "tags": [
+        "utility",
+        "styling",
+        "tailwind"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:frontend/src/ErrorBoundary.tsx:ErrorBoundary",
+      "type": "class",
+      "name": "ErrorBoundary",
+      "filePath": "frontend/src/ErrorBoundary.tsx",
+      "lineRange": [
+        11,
+        33
+      ],
+      "summary": "Catches descendant React render errors, records them, and renders a fallback view.",
+      "tags": [
+        "component",
+        "error-handling",
+        "react"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:frontend/src/api/client.ts:ApiError",
+      "type": "class",
+      "name": "ApiError",
+      "filePath": "frontend/src/api/client.ts",
+      "lineRange": [
+        36,
+        45
+      ],
+      "summary": "Represents failed API requests with HTTP status and structured error details.",
+      "tags": [
+        "api-client",
+        "error-handling",
+        "http"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:frontend/src/App.test.tsx",
+      "target": "file:frontend/src/App.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/api/client.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/badge.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/button.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/card.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/input.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/scroll-area.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/textarea.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/tooltip.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/api/client.ts",
+      "target": "file:frontend/src/api/schema.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/badge.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/button.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/input.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/scroll-area.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/separator.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/textarea.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/tooltip.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/main.tsx",
+      "target": "file:frontend/src/App.css",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/main.tsx",
+      "target": "file:frontend/src/App.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/main.tsx",
+      "target": "file:frontend/src/ErrorBoundary.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/main.tsx",
+      "target": "file:frontend/src/index.css",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "function:frontend/src/App.tsx:Navigation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "function:frontend/src/App.tsx:ConversationHistory",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "function:frontend/src/App.tsx:ContextRail",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "function:frontend/src/App.tsx:ChatWorkspace",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "function:frontend/src/App.tsx:ComparePage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "function:frontend/src/App.tsx:ProviderCard",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "function:frontend/src/App.tsx:LibraryPage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "function:frontend/src/App.tsx:App",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/api/client.ts",
+      "target": "function:frontend/src/api/client.ts:request",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/api/client.ts",
+      "target": "function:frontend/src/api/client.ts:streamRun",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/api/client.ts",
+      "target": "function:frontend/src/api/client.ts:streamRun",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/badge.tsx",
+      "target": "function:frontend/src/components/ui/badge.tsx:Badge",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/badge.tsx",
+      "target": "function:frontend/src/components/ui/badge.tsx:Badge",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/button.tsx",
+      "target": "function:frontend/src/components/ui/button.tsx:Button",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/button.tsx",
+      "target": "function:frontend/src/components/ui/button.tsx:Button",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:Card",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:Card",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardHeader",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardHeader",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardTitle",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardTitle",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardDescription",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardDescription",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardAction",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardAction",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardContent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardContent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardFooter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardFooter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/input.tsx",
+      "target": "function:frontend/src/components/ui/input.tsx:Input",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/input.tsx",
+      "target": "function:frontend/src/components/ui/input.tsx:Input",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/scroll-area.tsx",
+      "target": "function:frontend/src/components/ui/scroll-area.tsx:ScrollArea",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/scroll-area.tsx",
+      "target": "function:frontend/src/components/ui/scroll-area.tsx:ScrollArea",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/scroll-area.tsx",
+      "target": "function:frontend/src/components/ui/scroll-area.tsx:ScrollBar",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/scroll-area.tsx",
+      "target": "function:frontend/src/components/ui/scroll-area.tsx:ScrollBar",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/separator.tsx",
+      "target": "function:frontend/src/components/ui/separator.tsx:Separator",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/separator.tsx",
+      "target": "function:frontend/src/components/ui/separator.tsx:Separator",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/textarea.tsx",
+      "target": "function:frontend/src/components/ui/textarea.tsx:Textarea",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/textarea.tsx",
+      "target": "function:frontend/src/components/ui/textarea.tsx:Textarea",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/tooltip.tsx",
+      "target": "function:frontend/src/components/ui/tooltip.tsx:TooltipProvider",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/tooltip.tsx",
+      "target": "function:frontend/src/components/ui/tooltip.tsx:TooltipProvider",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/tooltip.tsx",
+      "target": "function:frontend/src/components/ui/tooltip.tsx:Tooltip",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/tooltip.tsx",
+      "target": "function:frontend/src/components/ui/tooltip.tsx:Tooltip",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/tooltip.tsx",
+      "target": "function:frontend/src/components/ui/tooltip.tsx:TooltipTrigger",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/tooltip.tsx",
+      "target": "function:frontend/src/components/ui/tooltip.tsx:TooltipTrigger",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/tooltip.tsx",
+      "target": "function:frontend/src/components/ui/tooltip.tsx:TooltipContent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/tooltip.tsx",
+      "target": "function:frontend/src/components/ui/tooltip.tsx:TooltipContent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/lib/utils.ts",
+      "target": "function:frontend/src/lib/utils.ts:cn",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/lib/utils.ts",
+      "target": "function:frontend/src/lib/utils.ts:cn",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/ErrorBoundary.tsx",
+      "target": "class:frontend/src/ErrorBoundary.tsx:ErrorBoundary",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/ErrorBoundary.tsx",
+      "target": "class:frontend/src/ErrorBoundary.tsx:ErrorBoundary",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/api/client.ts",
+      "target": "class:frontend/src/api/client.ts:ApiError",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/api/client.ts",
+      "target": "class:frontend/src/api/client.ts:ApiError",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

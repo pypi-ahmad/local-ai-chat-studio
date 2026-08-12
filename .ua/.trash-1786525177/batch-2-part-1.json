@@ -1,0 +1,2094 @@
+{
+  "nodes": [
+    {
+      "id": "file:app.py",
+      "type": "file",
+      "name": "app.py",
+      "filePath": "app.py",
+      "summary": "Streamlit workspace entry point that manages conversations, model selection, live generation, presets, and health status.",
+      "tags": [
+        "entry-point",
+        "streamlit",
+        "chat-interface",
+        "orchestration"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:app.py:cached_models",
+      "type": "function",
+      "name": "cached_models",
+      "filePath": "app.py",
+      "lineRange": [
+        97,
+        98
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through cached models.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:app.py:cached_provider_models",
+      "type": "function",
+      "name": "cached_provider_models",
+      "filePath": "app.py",
+      "lineRange": [
+        102,
+        107
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through cached provider models.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:app.py:get_state",
+      "type": "function",
+      "name": "get_state",
+      "filePath": "app.py",
+      "lineRange": [
+        110,
+        113
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through get state.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:app.py:switch_conversation",
+      "type": "function",
+      "name": "switch_conversation",
+      "filePath": "app.py",
+      "lineRange": [
+        116,
+        130
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through switch conversation.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:app.py:_maybe_extract_memories",
+      "type": "function",
+      "name": "_maybe_extract_memories",
+      "filePath": "app.py",
+      "lineRange": [
+        133,
+        149
+      ],
+      "summary": "Internal helper that supports this module’s workflow through maybe extract memories.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:app.py:_feedback_widget",
+      "type": "function",
+      "name": "_feedback_widget",
+      "filePath": "app.py",
+      "lineRange": [
+        152,
+        158
+      ],
+      "summary": "Internal helper that supports this module’s workflow through feedback widget.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:app.py:start_generation",
+      "type": "function",
+      "name": "start_generation",
+      "filePath": "app.py",
+      "lineRange": [
+        161,
+        183
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through start generation.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:app.py:send_user_message",
+      "type": "function",
+      "name": "send_user_message",
+      "filePath": "app.py",
+      "lineRange": [
+        186,
+        206
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through send user message.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:app.py:regenerate_last",
+      "type": "function",
+      "name": "regenerate_last",
+      "filePath": "app.py",
+      "lineRange": [
+        209,
+        231
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through regenerate last.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:app.py:seed_builtin_presets",
+      "type": "function",
+      "name": "seed_builtin_presets",
+      "filePath": "app.py",
+      "lineRange": [
+        234,
+        240
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through seed builtin presets.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:app.py:apply_preset",
+      "type": "function",
+      "name": "apply_preset",
+      "filePath": "app.py",
+      "lineRange": [
+        243,
+        257
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through apply preset.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:app.py:date_bucket",
+      "type": "function",
+      "name": "date_bucket",
+      "filePath": "app.py",
+      "lineRange": [
+        260,
+        274
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through date bucket.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:app.py:render_live_generation",
+      "type": "function",
+      "name": "render_live_generation",
+      "filePath": "app.py",
+      "lineRange": [
+        278,
+        305
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through render live generation.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:app.py:render_health",
+      "type": "function",
+      "name": "render_health",
+      "filePath": "app.py",
+      "lineRange": [
+        309,
+        320
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through render health.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:pages/1_Memory.py",
+      "type": "file",
+      "name": "1_Memory.py",
+      "filePath": "pages/1_Memory.py",
+      "summary": "Streamlit page for inspecting, editing, and managing persistent user memories.",
+      "tags": [
+        "streamlit",
+        "memory",
+        "settings",
+        "user-interface"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:pages/2_Settings.py",
+      "type": "file",
+      "name": "2_Settings.py",
+      "filePath": "pages/2_Settings.py",
+      "summary": "Streamlit settings page for configuring local storage, model providers, and workspace options.",
+      "tags": [
+        "streamlit",
+        "configuration",
+        "providers",
+        "user-interface"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:pages/4_Compare.py",
+      "type": "file",
+      "name": "4_Compare.py",
+      "filePath": "pages/4_Compare.py",
+      "summary": "Streamlit page that runs and presents side-by-side model comparison results.",
+      "tags": [
+        "streamlit",
+        "model-comparison",
+        "providers",
+        "user-interface"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:pages/4_Compare.py:_models",
+      "type": "function",
+      "name": "_models",
+      "filePath": "pages/4_Compare.py",
+      "lineRange": [
+        26,
+        27
+      ],
+      "summary": "Internal helper that supports this module’s workflow through models.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:pages/4_Compare.py:_provider_models",
+      "type": "function",
+      "name": "_provider_models",
+      "filePath": "pages/4_Compare.py",
+      "lineRange": [
+        31,
+        36
+      ],
+      "summary": "Internal helper that supports this module’s workflow through provider models.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:pages/4_Compare.py:_label",
+      "type": "function",
+      "name": "_label",
+      "filePath": "pages/4_Compare.py",
+      "lineRange": [
+        49,
+        51
+      ],
+      "summary": "Internal helper that supports this module’s workflow through label.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:pages/4_Compare.py:render_compare",
+      "type": "function",
+      "name": "render_compare",
+      "filePath": "pages/4_Compare.py",
+      "lineRange": [
+        79,
+        103
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through render compare.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/catalog.py",
+      "type": "file",
+      "name": "catalog.py",
+      "filePath": "src/catalog.py",
+      "summary": "Builds and orders the unified catalog of local and optional cloud language models.",
+      "tags": [
+        "model-catalog",
+        "selection",
+        "utility",
+        "data-model"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:src/catalog.py:SelectedModel",
+      "type": "class",
+      "name": "SelectedModel",
+      "filePath": "src/catalog.py",
+      "lineRange": [
+        23,
+        38
+      ],
+      "summary": "Represents SelectedModel data and behavior used by src/catalog.py.",
+      "tags": [
+        "data-model",
+        "class",
+        "application-logic"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/catalog.py:normalize_model_key",
+      "type": "function",
+      "name": "normalize_model_key",
+      "filePath": "src/catalog.py",
+      "lineRange": [
+        41,
+        43
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through normalize model key.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/catalog.py:build_model_catalog",
+      "type": "function",
+      "name": "build_model_catalog",
+      "filePath": "src/catalog.py",
+      "lineRange": [
+        46,
+        82
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through build model catalog.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/catalog.py:ordered_keys",
+      "type": "function",
+      "name": "ordered_keys",
+      "filePath": "src/catalog.py",
+      "lineRange": [
+        85,
+        89
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through ordered keys.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/catalog.py:present_groups",
+      "type": "function",
+      "name": "present_groups",
+      "filePath": "src/catalog.py",
+      "lineRange": [
+        92,
+        97
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through present groups.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/catalog.py:best_coding_model",
+      "type": "function",
+      "name": "best_coding_model",
+      "filePath": "src/catalog.py",
+      "lineRange": [
+        100,
+        108
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through best coding model.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/chat_store.py",
+      "type": "file",
+      "name": "chat_store.py",
+      "filePath": "src/chat_store.py",
+      "summary": "Provides the SQLite persistence layer for conversations, messages, memories, feedback, presets, and exports.",
+      "tags": [
+        "sqlite",
+        "persistence",
+        "chat-history",
+        "data-access"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src/chat_store.py:_now",
+      "type": "function",
+      "name": "_now",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        64,
+        65
+      ],
+      "summary": "Internal helper that supports chat workspace persistence through now.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:_conn",
+      "type": "function",
+      "name": "_conn",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        68,
+        73
+      ],
+      "summary": "Internal helper that supports chat workspace persistence through conn.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:init_db",
+      "type": "function",
+      "name": "init_db",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        76,
+        82
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through init db.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:create_conversation",
+      "type": "function",
+      "name": "create_conversation",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        87,
+        95
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through create conversation.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:list_conversations",
+      "type": "function",
+      "name": "list_conversations",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        98,
+        103
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through list conversations.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:get_conversation",
+      "type": "function",
+      "name": "get_conversation",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        106,
+        109
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through get conversation.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:rename_conversation",
+      "type": "function",
+      "name": "rename_conversation",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        112,
+        116
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through rename conversation.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:delete_conversation",
+      "type": "function",
+      "name": "delete_conversation",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        119,
+        121
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through delete conversation.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:set_pinned",
+      "type": "function",
+      "name": "set_pinned",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        124,
+        126
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through set pinned.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:search_conversations",
+      "type": "function",
+      "name": "search_conversations",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        129,
+        140
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through search conversations.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:delete_messages_from",
+      "type": "function",
+      "name": "delete_messages_from",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        143,
+        149
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through delete messages from.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:clear_all_conversations",
+      "type": "function",
+      "name": "clear_all_conversations",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        152,
+        162
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through clear all conversations.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:mark_memory_extracted",
+      "type": "function",
+      "name": "mark_memory_extracted",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        165,
+        169
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through mark memory extracted.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:add_message",
+      "type": "function",
+      "name": "add_message",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        174,
+        185
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through add message.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:get_messages",
+      "type": "function",
+      "name": "get_messages",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        188,
+        198
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through get messages.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:message_count",
+      "type": "function",
+      "name": "message_count",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        201,
+        204
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through message count.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:add_memory",
+      "type": "function",
+      "name": "add_memory",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        209,
+        218
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through add memory.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:list_memories",
+      "type": "function",
+      "name": "list_memories",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        221,
+        227
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through list memories.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:touch_memories",
+      "type": "function",
+      "name": "touch_memories",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        230,
+        238
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through touch memories.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:update_memory",
+      "type": "function",
+      "name": "update_memory",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        241,
+        248
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through update memory.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:delete_memory",
+      "type": "function",
+      "name": "delete_memory",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        251,
+        253
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through delete memory.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:decay_memories",
+      "type": "function",
+      "name": "decay_memories",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        256,
+        264
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through decay memories.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:set_feedback",
+      "type": "function",
+      "name": "set_feedback",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        269,
+        275
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through set feedback.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:get_feedback",
+      "type": "function",
+      "name": "get_feedback",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        278,
+        285
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through get feedback.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:recent_feedback_samples",
+      "type": "function",
+      "name": "recent_feedback_samples",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        288,
+        296
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through recent feedback samples.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:kv_get",
+      "type": "function",
+      "name": "kv_get",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        301,
+        304
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through kv get.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:kv_set",
+      "type": "function",
+      "name": "kv_set",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        307,
+        313
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through kv set.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:list_presets",
+      "type": "function",
+      "name": "list_presets",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        320,
+        324
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through list presets.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:save_preset",
+      "type": "function",
+      "name": "save_preset",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        327,
+        338
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through save preset.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:delete_preset",
+      "type": "function",
+      "name": "delete_preset",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        341,
+        343
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through delete preset.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:get_preset_by_name",
+      "type": "function",
+      "name": "get_preset_by_name",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        346,
+        349
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through get preset by name.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:export_conversation_markdown",
+      "type": "function",
+      "name": "export_conversation_markdown",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        354,
+        362
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through export conversation markdown.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:import_jsonl",
+      "type": "function",
+      "name": "import_jsonl",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        365,
+        382
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through import jsonl.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:wipe_everything",
+      "type": "function",
+      "name": "wipe_everything",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        385,
+        389
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through wipe everything.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:export_jsonl",
+      "type": "function",
+      "name": "export_jsonl",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        392,
+        405
+      ],
+      "summary": "Provides an operation that supports chat workspace persistence through export jsonl.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:cached_models",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:cached_models",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:cached_provider_models",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:cached_provider_models",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:get_state",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:get_state",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:switch_conversation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:switch_conversation",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:_maybe_extract_memories",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:_maybe_extract_memories",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:_feedback_widget",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:_feedback_widget",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:start_generation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:start_generation",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:send_user_message",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:send_user_message",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:regenerate_last",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:regenerate_last",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:seed_builtin_presets",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:seed_builtin_presets",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:apply_preset",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:apply_preset",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:date_bucket",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:date_bucket",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:render_live_generation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:render_live_generation",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:render_health",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:render_health",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:pages/4_Compare.py",
+      "target": "function:pages/4_Compare.py:_models",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:pages/4_Compare.py",
+      "target": "function:pages/4_Compare.py:_models",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:pages/4_Compare.py",
+      "target": "function:pages/4_Compare.py:_provider_models",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:pages/4_Compare.py",
+      "target": "function:pages/4_Compare.py:_provider_models",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:pages/4_Compare.py",
+      "target": "function:pages/4_Compare.py:_label",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:pages/4_Compare.py",
+      "target": "function:pages/4_Compare.py:_label",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:pages/4_Compare.py",
+      "target": "function:pages/4_Compare.py:render_compare",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:pages/4_Compare.py",
+      "target": "function:pages/4_Compare.py:render_compare",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "class:src/catalog.py:SelectedModel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "class:src/catalog.py:SelectedModel",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "function:src/catalog.py:normalize_model_key",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "function:src/catalog.py:normalize_model_key",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "function:src/catalog.py:build_model_catalog",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "function:src/catalog.py:build_model_catalog",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "function:src/catalog.py:ordered_keys",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "function:src/catalog.py:ordered_keys",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "function:src/catalog.py:present_groups",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "function:src/catalog.py:present_groups",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "function:src/catalog.py:best_coding_model",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "function:src/catalog.py:best_coding_model",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:_now",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:_now",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:_conn",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:_conn",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:init_db",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:init_db",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:create_conversation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:create_conversation",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:list_conversations",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:list_conversations",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:get_conversation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:get_conversation",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:rename_conversation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:rename_conversation",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:delete_conversation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:delete_conversation",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:set_pinned",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:set_pinned",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:search_conversations",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:search_conversations",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:delete_messages_from",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:delete_messages_from",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:clear_all_conversations",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:clear_all_conversations",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:mark_memory_extracted",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:mark_memory_extracted",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:add_message",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:add_message",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:get_messages",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:get_messages",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:message_count",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:message_count",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:add_memory",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:add_memory",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:list_memories",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:list_memories",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:touch_memories",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:touch_memories",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:update_memory",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:update_memory",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:delete_memory",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:delete_memory",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:decay_memories",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:decay_memories",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:set_feedback",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:set_feedback",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:get_feedback",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:get_feedback",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:recent_feedback_samples",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:recent_feedback_samples",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:kv_get",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:kv_get",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:kv_set",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:kv_set",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:list_presets",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:list_presets",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:save_preset",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:save_preset",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:delete_preset",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:delete_preset",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:get_preset_by_name",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:get_preset_by_name",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:export_conversation_markdown",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:export_conversation_markdown",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:import_jsonl",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:import_jsonl",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:wipe_everything",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:wipe_everything",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:export_jsonl",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:export_jsonl",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:src/catalog.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:src/files.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:src/personalization.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:pages/1_Memory.py",
+      "target": "file:src/personalization.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:pages/2_Settings.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:pages/4_Compare.py",
+      "target": "file:src/catalog.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:pages/4_Compare.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:pages/4_Compare.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "file:src/model_labels.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "function:app.py:cached_models",
+      "target": "function:src/ollama_client.py:list_models",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:app.py:switch_conversation",
+      "target": "function:src/catalog.py:normalize_model_key",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:app.py:_maybe_extract_memories",
+      "target": "function:src/personalization.py:note_conversation_done",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:app.py:_maybe_extract_memories",
+      "target": "function:src/personalization.py:rebuild_profile",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:app.py:start_generation",
+      "target": "function:src/ollama_client.py:vision_fallback_model",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:app.py:seed_builtin_presets",
+      "target": "function:src/catalog.py:best_coding_model",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:app.py:apply_preset",
+      "target": "function:src/catalog.py:normalize_model_key",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:app.py:render_health",
+      "target": "function:src/ollama_client.py:ollama_alive",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:app.py:render_health",
+      "target": "function:src/ollama_client.py:running_models",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:pages/4_Compare.py:_models",
+      "target": "function:src/ollama_client.py:list_models",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/catalog.py:build_model_catalog",
+      "target": "function:src/ollama_client.py:chat_models",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/catalog.py:build_model_catalog",
+      "target": "function:src/model_labels.py:hint_for",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

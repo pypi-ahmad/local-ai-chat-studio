@@ -1,0 +1,1616 @@
+{
+  "nodes": [
+    {
+      "id": "file:frontend/src/App.test.tsx",
+      "type": "file",
+      "name": "App.test.tsx",
+      "filePath": "frontend/src/App.test.tsx",
+      "summary": "Verifies the studio shell exposes its workspace navigation, three-pane chat view, and provider management page.",
+      "tags": [
+        "test",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/App.tsx",
+      "type": "file",
+      "name": "App.tsx",
+      "filePath": "frontend/src/App.tsx",
+      "summary": "Implements the interactive local AI studio shell with navigation, chat, provider management, and placeholder workspace pages.",
+      "tags": [
+        "entry-point",
+        "component",
+        "workspace",
+        "react"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/App.tsx:Navigation",
+      "type": "function",
+      "name": "Navigation",
+      "filePath": "frontend/src/App.tsx",
+      "lineRange": [
+        42,
+        64
+      ],
+      "summary": "Renders the primary workspace navigation and reports page selections to the application shell.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/App.tsx:ConversationHistory",
+      "type": "function",
+      "name": "ConversationHistory",
+      "filePath": "frontend/src/App.tsx",
+      "lineRange": [
+        66,
+        86
+      ],
+      "summary": "Renders the chat-history pane with a conversation search field and local-first status.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/App.tsx:ChatWorkspace",
+      "type": "function",
+      "name": "ChatWorkspace",
+      "filePath": "frontend/src/App.tsx",
+      "lineRange": [
+        88,
+        119
+      ],
+      "summary": "Renders the chat workspace, including prompt editing, suggestions, and composer controls.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/App.tsx:ProvidersPage",
+      "type": "function",
+      "name": "ProvidersPage",
+      "filePath": "frontend/src/App.tsx",
+      "lineRange": [
+        121,
+        135
+      ],
+      "summary": "Renders the configured provider catalog and its connection states.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/App.tsx:GenericPage",
+      "type": "function",
+      "name": "GenericPage",
+      "filePath": "frontend/src/App.tsx",
+      "lineRange": [
+        137,
+        146
+      ],
+      "summary": "Displays placeholder content for non-chat workspace pages.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/App.tsx:App",
+      "type": "function",
+      "name": "App",
+      "filePath": "frontend/src/App.tsx",
+      "lineRange": [
+        148,
+        157
+      ],
+      "summary": "Selects the active workspace and composes the navigation with its page content.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/avatar.tsx",
+      "type": "file",
+      "name": "avatar.tsx",
+      "filePath": "frontend/src/components/ui/avatar.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/components/ui/avatar.tsx:Avatar",
+      "type": "function",
+      "name": "Avatar",
+      "filePath": "frontend/src/components/ui/avatar.tsx",
+      "lineRange": [
+        8,
+        26
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/avatar.tsx:AvatarImage",
+      "type": "function",
+      "name": "AvatarImage",
+      "filePath": "frontend/src/components/ui/avatar.tsx",
+      "lineRange": [
+        28,
+        39
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/avatar.tsx:AvatarFallback",
+      "type": "function",
+      "name": "AvatarFallback",
+      "filePath": "frontend/src/components/ui/avatar.tsx",
+      "lineRange": [
+        41,
+        55
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/avatar.tsx:AvatarBadge",
+      "type": "function",
+      "name": "AvatarBadge",
+      "filePath": "frontend/src/components/ui/avatar.tsx",
+      "lineRange": [
+        57,
+        71
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/avatar.tsx:AvatarGroup",
+      "type": "function",
+      "name": "AvatarGroup",
+      "filePath": "frontend/src/components/ui/avatar.tsx",
+      "lineRange": [
+        73,
+        84
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/avatar.tsx:AvatarGroupCount",
+      "type": "function",
+      "name": "AvatarGroupCount",
+      "filePath": "frontend/src/components/ui/avatar.tsx",
+      "lineRange": [
+        86,
+        100
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/badge.tsx",
+      "type": "file",
+      "name": "badge.tsx",
+      "filePath": "frontend/src/components/ui/badge.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/badge.tsx:Badge",
+      "type": "function",
+      "name": "Badge",
+      "filePath": "frontend/src/components/ui/badge.tsx",
+      "lineRange": [
+        30,
+        50
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/button.tsx",
+      "type": "file",
+      "name": "button.tsx",
+      "filePath": "frontend/src/components/ui/button.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/components/ui/button.tsx:Button",
+      "type": "function",
+      "name": "Button",
+      "filePath": "frontend/src/components/ui/button.tsx",
+      "lineRange": [
+        43,
+        56
+      ],
+      "summary": "Renders a styled interactive item for the related UI primitive.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/card.tsx",
+      "type": "file",
+      "name": "card.tsx",
+      "filePath": "frontend/src/components/ui/card.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/components/ui/card.tsx:Card",
+      "type": "function",
+      "name": "Card",
+      "filePath": "frontend/src/components/ui/card.tsx",
+      "lineRange": [
+        5,
+        21
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/card.tsx:CardHeader",
+      "type": "function",
+      "name": "CardHeader",
+      "filePath": "frontend/src/components/ui/card.tsx",
+      "lineRange": [
+        23,
+        34
+      ],
+      "summary": "Renders a styled structural section for the related UI component.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/card.tsx:CardTitle",
+      "type": "function",
+      "name": "CardTitle",
+      "filePath": "frontend/src/components/ui/card.tsx",
+      "lineRange": [
+        36,
+        47
+      ],
+      "summary": "Renders styled descriptive text for the related UI component.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/card.tsx:CardDescription",
+      "type": "function",
+      "name": "CardDescription",
+      "filePath": "frontend/src/components/ui/card.tsx",
+      "lineRange": [
+        49,
+        57
+      ],
+      "summary": "Renders styled descriptive text for the related UI component.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/card.tsx:CardAction",
+      "type": "function",
+      "name": "CardAction",
+      "filePath": "frontend/src/components/ui/card.tsx",
+      "lineRange": [
+        59,
+        70
+      ],
+      "summary": "Renders a styled interactive item for the related UI primitive.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/card.tsx:CardContent",
+      "type": "function",
+      "name": "CardContent",
+      "filePath": "frontend/src/components/ui/card.tsx",
+      "lineRange": [
+        72,
+        80
+      ],
+      "summary": "Renders the styled content region for the related UI primitive.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/card.tsx:CardFooter",
+      "type": "function",
+      "name": "CardFooter",
+      "filePath": "frontend/src/components/ui/card.tsx",
+      "lineRange": [
+        82,
+        93
+      ],
+      "summary": "Renders a styled structural section for the related UI component.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/dialog.tsx",
+      "type": "file",
+      "name": "dialog.tsx",
+      "filePath": "frontend/src/components/ui/dialog.tsx",
+      "summary": "Provides composable overlay primitives with styled content, headers, footers, and accessibility controls.",
+      "tags": [
+        "component",
+        "overlay",
+        "dialog",
+        "react"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dialog.tsx:Dialog",
+      "type": "function",
+      "name": "Dialog",
+      "filePath": "frontend/src/components/ui/dialog.tsx",
+      "lineRange": [
+        8,
+        10
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dialog.tsx:DialogTrigger",
+      "type": "function",
+      "name": "DialogTrigger",
+      "filePath": "frontend/src/components/ui/dialog.tsx",
+      "lineRange": [
+        12,
+        14
+      ],
+      "summary": "Renders an interactive trigger for the related UI primitive.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dialog.tsx:DialogPortal",
+      "type": "function",
+      "name": "DialogPortal",
+      "filePath": "frontend/src/components/ui/dialog.tsx",
+      "lineRange": [
+        16,
+        18
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dialog.tsx:DialogClose",
+      "type": "function",
+      "name": "DialogClose",
+      "filePath": "frontend/src/components/ui/dialog.tsx",
+      "lineRange": [
+        20,
+        22
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dialog.tsx:DialogOverlay",
+      "type": "function",
+      "name": "DialogOverlay",
+      "filePath": "frontend/src/components/ui/dialog.tsx",
+      "lineRange": [
+        24,
+        38
+      ],
+      "summary": "Renders the backdrop layer for the related overlay component.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dialog.tsx:DialogContent",
+      "type": "function",
+      "name": "DialogContent",
+      "filePath": "frontend/src/components/ui/dialog.tsx",
+      "lineRange": [
+        40,
+        79
+      ],
+      "summary": "Renders the styled content region for the related UI primitive.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dialog.tsx:DialogHeader",
+      "type": "function",
+      "name": "DialogHeader",
+      "filePath": "frontend/src/components/ui/dialog.tsx",
+      "lineRange": [
+        81,
+        89
+      ],
+      "summary": "Renders a styled structural section for the related UI component.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dialog.tsx:DialogFooter",
+      "type": "function",
+      "name": "DialogFooter",
+      "filePath": "frontend/src/components/ui/dialog.tsx",
+      "lineRange": [
+        91,
+        116
+      ],
+      "summary": "Renders a styled structural section for the related UI component.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dialog.tsx:DialogTitle",
+      "type": "function",
+      "name": "DialogTitle",
+      "filePath": "frontend/src/components/ui/dialog.tsx",
+      "lineRange": [
+        118,
+        129
+      ],
+      "summary": "Renders styled descriptive text for the related UI component.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dialog.tsx:DialogDescription",
+      "type": "function",
+      "name": "DialogDescription",
+      "filePath": "frontend/src/components/ui/dialog.tsx",
+      "lineRange": [
+        131,
+        145
+      ],
+      "summary": "Renders styled descriptive text for the related UI component.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "type": "file",
+      "name": "dropdown-menu.tsx",
+      "filePath": "frontend/src/components/ui/dropdown-menu.tsx",
+      "summary": "Provides composable, styled dropdown-menu primitives including nested, checkbox, and radio items.",
+      "tags": [
+        "component",
+        "menu",
+        "overlay",
+        "react"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenu",
+      "type": "function",
+      "name": "DropdownMenu",
+      "filePath": "frontend/src/components/ui/dropdown-menu.tsx",
+      "lineRange": [
+        7,
+        9
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuPortal",
+      "type": "function",
+      "name": "DropdownMenuPortal",
+      "filePath": "frontend/src/components/ui/dropdown-menu.tsx",
+      "lineRange": [
+        11,
+        13
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuTrigger",
+      "type": "function",
+      "name": "DropdownMenuTrigger",
+      "filePath": "frontend/src/components/ui/dropdown-menu.tsx",
+      "lineRange": [
+        15,
+        17
+      ],
+      "summary": "Renders an interactive trigger for the related UI primitive.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuContent",
+      "type": "function",
+      "name": "DropdownMenuContent",
+      "filePath": "frontend/src/components/ui/dropdown-menu.tsx",
+      "lineRange": [
+        19,
+        48
+      ],
+      "summary": "Renders the styled content region for the related UI primitive.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuGroup",
+      "type": "function",
+      "name": "DropdownMenuGroup",
+      "filePath": "frontend/src/components/ui/dropdown-menu.tsx",
+      "lineRange": [
+        50,
+        52
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuLabel",
+      "type": "function",
+      "name": "DropdownMenuLabel",
+      "filePath": "frontend/src/components/ui/dropdown-menu.tsx",
+      "lineRange": [
+        54,
+        72
+      ],
+      "summary": "Renders styled descriptive text for the related UI component.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuItem",
+      "type": "function",
+      "name": "DropdownMenuItem",
+      "filePath": "frontend/src/components/ui/dropdown-menu.tsx",
+      "lineRange": [
+        74,
+        95
+      ],
+      "summary": "Renders a styled interactive item for the related UI primitive.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuSub",
+      "type": "function",
+      "name": "DropdownMenuSub",
+      "filePath": "frontend/src/components/ui/dropdown-menu.tsx",
+      "lineRange": [
+        97,
+        99
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuSubTrigger",
+      "type": "function",
+      "name": "DropdownMenuSubTrigger",
+      "filePath": "frontend/src/components/ui/dropdown-menu.tsx",
+      "lineRange": [
+        101,
+        123
+      ],
+      "summary": "Renders an interactive trigger for the related UI primitive.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuSubContent",
+      "type": "function",
+      "name": "DropdownMenuSubContent",
+      "filePath": "frontend/src/components/ui/dropdown-menu.tsx",
+      "lineRange": [
+        125,
+        144
+      ],
+      "summary": "Renders the styled content region for the related UI primitive.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuCheckboxItem",
+      "type": "function",
+      "name": "DropdownMenuCheckboxItem",
+      "filePath": "frontend/src/components/ui/dropdown-menu.tsx",
+      "lineRange": [
+        146,
+        178
+      ],
+      "summary": "Renders a styled interactive item for the related UI primitive.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuRadioGroup",
+      "type": "function",
+      "name": "DropdownMenuRadioGroup",
+      "filePath": "frontend/src/components/ui/dropdown-menu.tsx",
+      "lineRange": [
+        180,
+        187
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuRadioItem",
+      "type": "function",
+      "name": "DropdownMenuRadioItem",
+      "filePath": "frontend/src/components/ui/dropdown-menu.tsx",
+      "lineRange": [
+        189,
+        219
+      ],
+      "summary": "Renders a styled interactive item for the related UI primitive.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuSeparator",
+      "type": "function",
+      "name": "DropdownMenuSeparator",
+      "filePath": "frontend/src/components/ui/dropdown-menu.tsx",
+      "lineRange": [
+        221,
+        232
+      ],
+      "summary": "Renders a styled visual separator for the related UI component.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuShortcut",
+      "type": "function",
+      "name": "DropdownMenuShortcut",
+      "filePath": "frontend/src/components/ui/dropdown-menu.tsx",
+      "lineRange": [
+        234,
+        248
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "function:frontend/src/App.tsx:Navigation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "function:frontend/src/App.tsx:ConversationHistory",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "function:frontend/src/App.tsx:ChatWorkspace",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "function:frontend/src/App.tsx:ProvidersPage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "function:frontend/src/App.tsx:GenericPage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "function:frontend/src/App.tsx:App",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/avatar.tsx",
+      "target": "function:frontend/src/components/ui/avatar.tsx:Avatar",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/avatar.tsx",
+      "target": "function:frontend/src/components/ui/avatar.tsx:Avatar",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/avatar.tsx",
+      "target": "function:frontend/src/components/ui/avatar.tsx:AvatarImage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/avatar.tsx",
+      "target": "function:frontend/src/components/ui/avatar.tsx:AvatarImage",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/avatar.tsx",
+      "target": "function:frontend/src/components/ui/avatar.tsx:AvatarFallback",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/avatar.tsx",
+      "target": "function:frontend/src/components/ui/avatar.tsx:AvatarFallback",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/avatar.tsx",
+      "target": "function:frontend/src/components/ui/avatar.tsx:AvatarBadge",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/avatar.tsx",
+      "target": "function:frontend/src/components/ui/avatar.tsx:AvatarBadge",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/avatar.tsx",
+      "target": "function:frontend/src/components/ui/avatar.tsx:AvatarGroup",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/avatar.tsx",
+      "target": "function:frontend/src/components/ui/avatar.tsx:AvatarGroup",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/avatar.tsx",
+      "target": "function:frontend/src/components/ui/avatar.tsx:AvatarGroupCount",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/avatar.tsx",
+      "target": "function:frontend/src/components/ui/avatar.tsx:AvatarGroupCount",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/badge.tsx",
+      "target": "function:frontend/src/components/ui/badge.tsx:Badge",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/badge.tsx",
+      "target": "function:frontend/src/components/ui/badge.tsx:Badge",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/button.tsx",
+      "target": "function:frontend/src/components/ui/button.tsx:Button",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/button.tsx",
+      "target": "function:frontend/src/components/ui/button.tsx:Button",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:Card",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:Card",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardHeader",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardHeader",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardTitle",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardTitle",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardDescription",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardDescription",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardAction",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardAction",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardContent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardContent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardFooter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "function:frontend/src/components/ui/card.tsx:CardFooter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "function:frontend/src/components/ui/dialog.tsx:Dialog",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "function:frontend/src/components/ui/dialog.tsx:Dialog",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "function:frontend/src/components/ui/dialog.tsx:DialogTrigger",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "function:frontend/src/components/ui/dialog.tsx:DialogTrigger",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "function:frontend/src/components/ui/dialog.tsx:DialogPortal",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "function:frontend/src/components/ui/dialog.tsx:DialogPortal",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "function:frontend/src/components/ui/dialog.tsx:DialogClose",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "function:frontend/src/components/ui/dialog.tsx:DialogClose",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "function:frontend/src/components/ui/dialog.tsx:DialogOverlay",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "function:frontend/src/components/ui/dialog.tsx:DialogOverlay",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "function:frontend/src/components/ui/dialog.tsx:DialogContent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "function:frontend/src/components/ui/dialog.tsx:DialogContent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "function:frontend/src/components/ui/dialog.tsx:DialogHeader",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "function:frontend/src/components/ui/dialog.tsx:DialogHeader",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "function:frontend/src/components/ui/dialog.tsx:DialogFooter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "function:frontend/src/components/ui/dialog.tsx:DialogFooter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "function:frontend/src/components/ui/dialog.tsx:DialogTitle",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "function:frontend/src/components/ui/dialog.tsx:DialogTitle",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "function:frontend/src/components/ui/dialog.tsx:DialogDescription",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "function:frontend/src/components/ui/dialog.tsx:DialogDescription",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenu",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenu",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuPortal",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuPortal",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuTrigger",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuTrigger",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuContent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuContent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuGroup",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuGroup",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuLabel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuLabel",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuItem",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuItem",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuSub",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuSub",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuSubTrigger",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuSubTrigger",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuSubContent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuSubContent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuCheckboxItem",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuCheckboxItem",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuRadioGroup",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuRadioGroup",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuRadioItem",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuRadioItem",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuSeparator",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuSeparator",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuShortcut",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuShortcut",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/App.test.tsx",
+      "target": "file:frontend/src/App.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/badge.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/button.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/card.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/input.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/scroll-area.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/separator.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/textarea.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/tooltip.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/avatar.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/badge.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/button.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "file:frontend/src/components/ui/button.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/App.test.tsx",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

@@ -1,0 +1,222 @@
+{
+  "nodes": [
+    {
+      "id": "document:CHANGELOG.md",
+      "type": "document",
+      "name": "CHANGELOG.md",
+      "filePath": "CHANGELOG.md",
+      "summary": "Records unreleased and versioned changes to Local AI Chat Studio.",
+      "tags": [
+        "documentation",
+        "release-notes",
+        "project-history"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:CODE_OF_CONDUCT.md",
+      "type": "document",
+      "name": "CODE_OF_CONDUCT.md",
+      "filePath": "CODE_OF_CONDUCT.md",
+      "summary": "Defines expected community behavior and the enforcement process for contributors.",
+      "tags": [
+        "documentation",
+        "community",
+        "governance"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:CODE_TUTORIAL.md",
+      "type": "document",
+      "name": "CODE_TUTORIAL.md",
+      "filePath": "CODE_TUTORIAL.md",
+      "summary": "Provides a long-form zero-to-hero technical tutorial explaining both the legacy and current application stacks.",
+      "tags": [
+        "documentation",
+        "tutorial",
+        "architecture"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:CONTRIBUTING.md",
+      "type": "document",
+      "name": "CONTRIBUTING.md",
+      "filePath": "CONTRIBUTING.md",
+      "summary": "Explains development setup, style expectations, verification commands, and pull-request guidance.",
+      "tags": [
+        "documentation",
+        "development",
+        "contributing"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:DATASET.md",
+      "type": "document",
+      "name": "DATASET.md",
+      "filePath": "DATASET.md",
+      "summary": "Reserved documentation page for project datasets.",
+      "tags": [
+        "documentation",
+        "data",
+        "placeholder"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:Launch Chat Studio.cmd",
+      "type": "file",
+      "name": "Launch Chat Studio.cmd",
+      "filePath": "Launch Chat Studio.cmd",
+      "summary": "Provides a double-click Windows launcher that bootstraps portable tooling, installs dependencies, builds the frontend, and starts the application.",
+      "tags": [
+        "entry-point",
+        "windows",
+        "bootstrap"
+      ],
+      "complexity": "complex",
+      "languageNotes": "A batch wrapper executes an embedded PowerShell payload so one double-click can manage portable runtime setup and launch."
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "Introduces the local-first chat studio, its provider and memory features, installation paths, architecture, and verification commands.",
+      "tags": [
+        "documentation",
+        "entry-point",
+        "overview"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:SECURITY.md",
+      "type": "document",
+      "name": "SECURITY.md",
+      "filePath": "SECURITY.md",
+      "summary": "Defines the project security policy, supported scope, and private vulnerability-reporting path.",
+      "tags": [
+        "documentation",
+        "security",
+        "governance"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:USER_GUIDE.md",
+      "type": "document",
+      "name": "USER_GUIDE.md",
+      "filePath": "USER_GUIDE.md",
+      "summary": "Explains how to start the studio and use chat, context, providers, library, and settings workflows.",
+      "tags": [
+        "documentation",
+        "user-guide",
+        "workflows"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "type": "document",
+      "name": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "filePath": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "summary": "Provides a comprehensive learning handbook covering product concepts, setup, architecture, workflows, and repository code paths.",
+      "tags": [
+        "documentation",
+        "tutorial",
+        "architecture"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "config:pyproject.toml",
+      "type": "config",
+      "name": "pyproject.toml",
+      "filePath": "pyproject.toml",
+      "summary": "Defines the Python package metadata, runtime dependencies, console command, build backend, and development tool settings.",
+      "tags": [
+        "configuration",
+        "python",
+        "build-system"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:Launch Chat Studio.cmd:Test-LocalPort",
+      "type": "function",
+      "name": "Test-LocalPort",
+      "filePath": "Launch Chat Studio.cmd",
+      "lineRange": [
+        40,
+        50
+      ],
+      "summary": "Tests whether another process is accepting connections on the application port.",
+      "tags": [
+        "networking",
+        "health-check",
+        "windows"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:Launch Chat Studio.cmd:Get-FrontendState",
+      "type": "function",
+      "name": "Get-FrontendState",
+      "filePath": "Launch Chat Studio.cmd",
+      "lineRange": [
+        52,
+        68
+      ],
+      "summary": "Determines whether frontend dependencies or the production build need refreshing.",
+      "tags": [
+        "build-system",
+        "frontend",
+        "dependency-management"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:Launch Chat Studio.cmd:Install-Node",
+      "type": "function",
+      "name": "Install-Node",
+      "filePath": "Launch Chat Studio.cmd",
+      "lineRange": [
+        80,
+        121
+      ],
+      "summary": "Downloads, verifies, extracts, and installs the current Node.js LTS runtime into the project-local portable runtime directory.",
+      "tags": [
+        "bootstrap",
+        "nodejs",
+        "security"
+      ],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:Launch Chat Studio.cmd",
+      "target": "function:Launch Chat Studio.cmd:Test-LocalPort",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:Launch Chat Studio.cmd",
+      "target": "function:Launch Chat Studio.cmd:Get-FrontendState",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:Launch Chat Studio.cmd",
+      "target": "function:Launch Chat Studio.cmd:Install-Node",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    }
+  ]
+}

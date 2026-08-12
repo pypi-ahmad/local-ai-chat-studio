@@ -1,0 +1,13 @@
+{
+  "fixedSectionOk": true,
+  "nodesRecovered": 0,
+  "edgesRestored": 0,
+  "crossBatchEdgesAdded": 0,
+  "typesRemapped": 0,
+  "complexityRemapped": 0,
+  "notes": [
+    "The merge report contained no mechanical corrections or unresolved items.",
+    "All 88 import relationships derived from the 95 import-map entries are represented by imports edges.",
+    "Node types and complexity values use the expected normalized values."
+  ]
+}

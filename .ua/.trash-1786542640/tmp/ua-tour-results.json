@@ -1,0 +1,2090 @@
+{
+  "scriptCompleted": true,
+  "entryPointCandidates": [
+    {
+      "id": "document:README.md",
+      "score": 5,
+      "name": "README.md",
+      "summary": "Introduces the local-first chat studio, its provider and memory features, installation paths, architecture, and verification commands."
+    },
+    {
+      "id": "file:backend/app/main.py",
+      "score": 4,
+      "name": "main.py",
+      "summary": "Builds the FastAPI application and its HTTP API for conversations, runs, providers, memory, files, and workspace features."
+    },
+    {
+      "id": "file:frontend/src/main.tsx",
+      "score": 4,
+      "name": "main.tsx",
+      "summary": "Bootstraps the React application, imports global styles, and mounts the error-protected app root."
+    },
+    {
+      "id": "file:Launch Chat Studio.cmd",
+      "score": 3,
+      "name": "Launch Chat Studio.cmd",
+      "summary": "Provides a double-click Windows launcher that bootstraps portable tooling, installs dependencies, builds the frontend, and starts the application."
+    },
+    {
+      "id": "file:src/catalog.py",
+      "score": 3,
+      "name": "catalog.py",
+      "summary": "catalog.py implements a backend capability."
+    }
+  ],
+  "fanInRanking": [
+    {
+      "id": "file:backend/app/contracts.py",
+      "fanIn": 9,
+      "name": "contracts.py"
+    },
+    {
+      "id": "file:frontend/src/lib/utils.ts",
+      "fanIn": 8,
+      "name": "utils.ts"
+    },
+    {
+      "id": "file:src/config.py",
+      "fanIn": 8,
+      "name": "config.py"
+    },
+    {
+      "id": "file:src/ollama_client.py",
+      "fanIn": 7,
+      "name": "ollama_client.py"
+    },
+    {
+      "id": "file:backend/app/providers.py",
+      "fanIn": 6,
+      "name": "providers.py"
+    },
+    {
+      "id": "file:tests/test_workspace_features.py",
+      "fanIn": 6,
+      "name": "test_workspace_features.py"
+    },
+    {
+      "id": "file:backend/app/store.py",
+      "fanIn": 5,
+      "name": "store.py"
+    },
+    {
+      "id": "file:backend/app/main.py",
+      "fanIn": 4,
+      "name": "main.py"
+    },
+    {
+      "id": "file:frontend/src/App.tsx",
+      "fanIn": 4,
+      "name": "App.tsx"
+    },
+    {
+      "id": "file:src/files.py",
+      "fanIn": 3,
+      "name": "files.py"
+    },
+    {
+      "id": "file:tests/test_provider_adapters.py",
+      "fanIn": 3,
+      "name": "test_provider_adapters.py"
+    },
+    {
+      "id": "class:backend/app/contracts.py:Backpack",
+      "fanIn": 2,
+      "name": "Backpack"
+    },
+    {
+      "id": "class:backend/app/contracts.py:BackpackCreate",
+      "fanIn": 2,
+      "name": "BackpackCreate"
+    },
+    {
+      "id": "class:backend/app/contracts.py:BackpackItem",
+      "fanIn": 2,
+      "name": "BackpackItem"
+    },
+    {
+      "id": "class:backend/app/contracts.py:BackpackItemInput",
+      "fanIn": 2,
+      "name": "BackpackItemInput"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ChatMessage",
+      "fanIn": 2,
+      "name": "ChatMessage"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ContextPlan",
+      "fanIn": 2,
+      "name": "ContextPlan"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ContextSection",
+      "fanIn": 2,
+      "name": "ContextSection"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ContextSource",
+      "fanIn": 2,
+      "name": "ContextSource"
+    },
+    {
+      "id": "class:backend/app/contracts.py:Conversation",
+      "fanIn": 2,
+      "name": "Conversation"
+    }
+  ],
+  "fanOutRanking": [
+    {
+      "id": "file:backend/app/contracts.py",
+      "fanOut": 104,
+      "name": "contracts.py"
+    },
+    {
+      "id": "file:tests/test_workspace_features.py",
+      "fanOut": 38,
+      "name": "test_workspace_features.py"
+    },
+    {
+      "id": "file:src/jobs.py",
+      "fanOut": 23,
+      "name": "jobs.py"
+    },
+    {
+      "id": "file:backend/app/providers.py",
+      "fanOut": 21,
+      "name": "providers.py"
+    },
+    {
+      "id": "file:backend/app/workspace.py",
+      "fanOut": 20,
+      "name": "workspace.py"
+    },
+    {
+      "id": "file:src/ollama_client.py",
+      "fanOut": 19,
+      "name": "ollama_client.py"
+    },
+    {
+      "id": "file:src/providers.py",
+      "fanOut": 19,
+      "name": "providers.py"
+    },
+    {
+      "id": "file:backend/app/memory.py",
+      "fanOut": 17,
+      "name": "memory.py"
+    },
+    {
+      "id": "file:frontend/src/App.tsx",
+      "fanOut": 17,
+      "name": "App.tsx"
+    },
+    {
+      "id": "file:src/chat_store.py",
+      "fanOut": 17,
+      "name": "chat_store.py"
+    },
+    {
+      "id": "file:src/files.py",
+      "fanOut": 16,
+      "name": "files.py"
+    },
+    {
+      "id": "file:frontend/src/components/ui/card.tsx",
+      "fanOut": 15,
+      "name": "card.tsx"
+    },
+    {
+      "id": "file:src/rag.py",
+      "fanOut": 14,
+      "name": "rag.py"
+    },
+    {
+      "id": "file:tests/test_provider_adapters.py",
+      "fanOut": 14,
+      "name": "test_provider_adapters.py"
+    },
+    {
+      "id": "file:backend/app/main.py",
+      "fanOut": 13,
+      "name": "main.py"
+    },
+    {
+      "id": "file:tests/test_api_contract.py",
+      "fanOut": 12,
+      "name": "test_api_contract.py"
+    },
+    {
+      "id": "file:frontend/src/components/ui/tooltip.tsx",
+      "fanOut": 9,
+      "name": "tooltip.tsx"
+    },
+    {
+      "id": "file:backend/app/runs.py",
+      "fanOut": 8,
+      "name": "runs.py"
+    },
+    {
+      "id": "file:src/memory.py",
+      "fanOut": 8,
+      "name": "memory.py"
+    },
+    {
+      "id": "file:frontend/src/api/client.ts",
+      "fanOut": 6,
+      "name": "client.ts"
+    }
+  ],
+  "bfsTraversal": {
+    "startNode": "file:backend/app/main.py",
+    "order": [
+      "file:backend/app/main.py",
+      "file:backend/app/contracts.py",
+      "file:backend/app/memory.py",
+      "file:backend/app/providers.py",
+      "file:backend/app/runs.py",
+      "file:backend/app/sessions.py",
+      "file:backend/app/store.py",
+      "file:backend/app/workspace.py",
+      "file:src/files.py",
+      "file:src/ollama_client.py",
+      "file:src/config.py"
+    ],
+    "depthMap": {
+      "file:backend/app/main.py": 0,
+      "file:backend/app/contracts.py": 1,
+      "file:backend/app/memory.py": 1,
+      "file:backend/app/providers.py": 1,
+      "file:backend/app/runs.py": 1,
+      "file:backend/app/sessions.py": 1,
+      "file:backend/app/store.py": 1,
+      "file:backend/app/workspace.py": 1,
+      "file:src/files.py": 1,
+      "file:src/ollama_client.py": 1,
+      "file:src/config.py": 2
+    },
+    "byDepth": {
+      "0": [
+        "file:backend/app/main.py"
+      ],
+      "1": [
+        "file:backend/app/contracts.py",
+        "file:backend/app/memory.py",
+        "file:backend/app/providers.py",
+        "file:backend/app/runs.py",
+        "file:backend/app/sessions.py",
+        "file:backend/app/store.py",
+        "file:backend/app/workspace.py",
+        "file:src/files.py",
+        "file:src/ollama_client.py"
+      ],
+      "2": [
+        "file:src/config.py"
+      ]
+    }
+  },
+  "nonCodeFiles": {
+    "documentation": [
+      {
+        "id": "document:CHANGELOG.md",
+        "name": "CHANGELOG.md",
+        "type": "document",
+        "summary": "Records unreleased and versioned changes to Local AI Chat Studio."
+      },
+      {
+        "id": "document:CODE_OF_CONDUCT.md",
+        "name": "CODE_OF_CONDUCT.md",
+        "type": "document",
+        "summary": "Defines expected community behavior and the enforcement process for contributors."
+      },
+      {
+        "id": "document:CODE_TUTORIAL.md",
+        "name": "CODE_TUTORIAL.md",
+        "type": "document",
+        "summary": "Provides a long-form zero-to-hero technical tutorial explaining both the legacy and current application stacks."
+      },
+      {
+        "id": "document:CONTRIBUTING.md",
+        "name": "CONTRIBUTING.md",
+        "type": "document",
+        "summary": "Explains development setup, style expectations, verification commands, and pull-request guidance."
+      },
+      {
+        "id": "document:DATASET.md",
+        "name": "DATASET.md",
+        "type": "document",
+        "summary": "Reserved documentation page for project datasets."
+      },
+      {
+        "id": "document:README.md",
+        "name": "README.md",
+        "type": "document",
+        "summary": "Introduces the local-first chat studio, its provider and memory features, installation paths, architecture, and verification commands."
+      },
+      {
+        "id": "document:SECURITY.md",
+        "name": "SECURITY.md",
+        "type": "document",
+        "summary": "Defines the project security policy, supported scope, and private vulnerability-reporting path."
+      },
+      {
+        "id": "document:USER_GUIDE.md",
+        "name": "USER_GUIDE.md",
+        "type": "document",
+        "summary": "Explains how to start the studio and use chat, context, providers, library, and settings workflows."
+      },
+      {
+        "id": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+        "name": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
+        "type": "document",
+        "summary": "Provides a comprehensive learning handbook covering product concepts, setup, architecture, workflows, and repository code paths."
+      },
+      {
+        "id": "document:docs/codebase/ARCHITECTURE.md",
+        "name": "ARCHITECTURE.md",
+        "type": "document",
+        "summary": "Describes the React-to-FastAPI architecture, context-preflight flow, persisted runs, memory curation, provider boundaries, and localhost-first deployment model."
+      },
+      {
+        "id": "document:docs/codebase/CONCERNS.md",
+        "name": "CONCERNS.md",
+        "type": "document",
+        "summary": "Records deployment constraints, security boundaries, provider and retrieval tradeoffs, plus the high-blast-radius files that need focused tests."
+      },
+      {
+        "id": "document:docs/codebase/CONVENTIONS.md",
+        "name": "CONVENTIONS.md",
+        "type": "document",
+        "summary": "Defines Python and React naming, API-contract evolution, error handling, credential safety, and the project verification commands."
+      },
+      {
+        "id": "document:docs/codebase/INTEGRATIONS.md",
+        "name": "INTEGRATIONS.md",
+        "type": "document",
+        "summary": "Catalogs local and cloud model integrations, OpenCode OAuth bridging, attachment handling, memory persistence, and credential boundaries."
+      },
+      {
+        "id": "document:docs/codebase/STACK.md",
+        "name": "STACK.md",
+        "type": "document",
+        "summary": "Lists the backend, frontend, persistence, inference, search, file-processing, and development-tooling stack with key commands."
+      },
+      {
+        "id": "document:docs/codebase/STRUCTURE.md",
+        "name": "STRUCTURE.md",
+        "type": "document",
+        "summary": "Maps repository paths to their responsibilities and explains startup, static serving, and the retained shared modules."
+      },
+      {
+        "id": "document:docs/codebase/TESTING.md",
+        "name": "TESTING.md",
+        "type": "document",
+        "summary": "Documents backend and frontend test commands, test seams, coverage scope, and manual smoke-test gaps for external integrations."
+      },
+      {
+        "id": "document:frontend/README.md",
+        "name": "README.md",
+        "type": "document",
+        "summary": "Provides the brief starter documentation for the React frontend workspace."
+      },
+      {
+        "id": "document:.github/ISSUE_TEMPLATE/bug_report.md",
+        "name": "bug_report.md",
+        "type": "document",
+        "summary": "GitHub issue template that captures reproducible defects, runtime environment details, logs, and the selected model."
+      },
+      {
+        "id": "document:.github/ISSUE_TEMPLATE/feature_request.md",
+        "name": "feature_request.md",
+        "type": "document",
+        "summary": "GitHub issue template for describing a requested capability, its use case, alternatives, and supporting context."
+      },
+      {
+        "id": "document:.github/pull_request_template.md",
+        "name": "pull_request_template.md",
+        "type": "document",
+        "summary": "Pull request template that records change intent, end-to-end testing, and contribution-quality checks."
+      },
+      {
+        "id": "document:tasks/plan.md",
+        "name": "plan.md",
+        "type": "document",
+        "summary": "Implementation plan for the static htmx documentation site, including architecture decisions, acceptance criteria, and verification steps."
+      },
+      {
+        "id": "document:tasks/todo.md",
+        "name": "todo.md",
+        "type": "document",
+        "summary": "Completion checklist for the documentation-site plan, including verified milestones and deviations found during implementation."
+      }
+    ],
+    "infrastructure": [
+      {
+        "id": "pipeline:.github/workflows/ci.yml",
+        "name": "ci.yml",
+        "type": "pipeline",
+        "summary": "GitHub Actions workflow that validates the backend with uv, pytest, and Ruff, and validates the frontend with npm linting, tests, and a production build."
+      }
+    ],
+    "data": [],
+    "config": [
+      {
+        "id": "config:pyproject.toml",
+        "name": "pyproject.toml",
+        "type": "config",
+        "summary": "Defines the Python package metadata, runtime dependencies, console command, build backend, and development tool settings."
+      },
+      {
+        "id": "config:frontend/.oxlintrc.json",
+        "name": ".oxlintrc.json",
+        "type": "config",
+        "summary": "Configures the Oxlint plugins and rules used by the frontend workspace."
+      },
+      {
+        "id": "config:frontend/components.json",
+        "name": "components.json",
+        "type": "config",
+        "summary": "Configures the UI component generator, style preset, Tailwind settings, and import aliases."
+      },
+      {
+        "id": "config:frontend/package.json",
+        "name": "package.json",
+        "type": "config",
+        "summary": "Defines frontend scripts, production dependencies, and development tooling for the Vite React workspace."
+      },
+      {
+        "id": "config:frontend/tsconfig.app.json",
+        "name": "tsconfig.app.json",
+        "type": "config",
+        "summary": "Configures TypeScript compilation rules for browser application source files."
+      },
+      {
+        "id": "config:frontend/tsconfig.json",
+        "name": "tsconfig.json",
+        "type": "config",
+        "summary": "Provides the root TypeScript project references and shared compiler settings."
+      },
+      {
+        "id": "config:frontend/tsconfig.node.json",
+        "name": "tsconfig.node.json",
+        "type": "config",
+        "summary": "Configures TypeScript compilation for Node-based Vite and test configuration files."
+      }
+    ]
+  },
+  "clusters": [],
+  "layers": {
+    "count": 10,
+    "list": [
+      {
+        "id": "layer:ui",
+        "name": "User Interface",
+        "description": "The React single-page client, its reusable interface components, styles, and browser entry point.",
+        "nodeIds": [
+          "file:frontend/src/App.tsx",
+          "file:frontend/src/ErrorBoundary.tsx",
+          "file:frontend/src/components/ui/badge.tsx",
+          "file:frontend/src/components/ui/button.tsx",
+          "file:frontend/src/components/ui/card.tsx",
+          "file:frontend/src/components/ui/input.tsx",
+          "file:frontend/src/components/ui/scroll-area.tsx",
+          "file:frontend/src/components/ui/separator.tsx",
+          "file:frontend/src/components/ui/textarea.tsx",
+          "file:frontend/src/components/ui/tooltip.tsx",
+          "file:frontend/src/lib/utils.ts",
+          "file:frontend/src/main.tsx",
+          "file:frontend/index.html",
+          "file:frontend/src/App.css",
+          "file:frontend/src/index.css"
+        ]
+      },
+      {
+        "id": "layer:api",
+        "name": "API Layer",
+        "description": "FastAPI startup and command entry points that expose the local AI workspace over HTTP.",
+        "nodeIds": [
+          "file:backend/app/cli.py",
+          "file:backend/app/main.py",
+          "file:backend/__init__.py",
+          "file:backend/app/__init__.py"
+        ]
+      },
+      {
+        "id": "layer:service",
+        "name": "AI Services",
+        "description": "Provider integration, chat orchestration, file handling, retrieval, session workflows, and workspace logic.",
+        "nodeIds": [
+          "file:frontend/src/api/client.ts",
+          "file:backend/app/memory.py",
+          "file:backend/app/providers.py",
+          "file:backend/app/runs.py",
+          "file:backend/app/sessions.py",
+          "file:backend/app/workspace.py",
+          "file:scripts/generate_api_types.py",
+          "file:src/files.py",
+          "file:src/catalog.py",
+          "file:src/jobs.py",
+          "file:src/memory.py",
+          "file:src/model_labels.py",
+          "file:src/ollama_client.py",
+          "file:src/orchestrator.py",
+          "file:src/personalization.py",
+          "file:src/providers.py",
+          "file:src/rag.py"
+        ]
+      },
+      {
+        "id": "layer:data",
+        "name": "Data Layer",
+        "description": "SQLite-backed conversation persistence and application storage configuration.",
+        "nodeIds": [
+          "file:backend/app/store.py",
+          "file:src/chat_store.py",
+          "file:src/config.py"
+        ]
+      },
+      {
+        "id": "layer:types",
+        "name": "Contract Types",
+        "description": "Pydantic API contracts and generated TypeScript definitions shared across the API boundary.",
+        "nodeIds": [
+          "file:frontend/src/api/schema.ts",
+          "file:backend/app/contracts.py"
+        ]
+      },
+      {
+        "id": "layer:test",
+        "name": "Test Layer",
+        "description": "Pytest and Vitest coverage plus their shared test setup.",
+        "nodeIds": [
+          "file:frontend/src/App.test.tsx",
+          "file:tests/test_provider_adapters.py",
+          "file:tests/test_workspace_features.py",
+          "file:frontend/src/test/setup.ts",
+          "file:tests/conftest.py",
+          "file:tests/test_api_contract.py"
+        ]
+      },
+      {
+        "id": "layer:config",
+        "name": "Configuration",
+        "description": "Python and frontend manifests, compiler, lint, build, and runtime configuration.",
+        "nodeIds": [
+          "config:pyproject.toml",
+          "config:frontend/.oxlintrc.json",
+          "config:frontend/components.json",
+          "config:frontend/package.json",
+          "config:frontend/tsconfig.app.json",
+          "config:frontend/tsconfig.json",
+          "config:frontend/tsconfig.node.json",
+          "file:.python-version",
+          "file:frontend/vite.config.ts",
+          "file:frontend/vitest.config.ts"
+        ]
+      },
+      {
+        "id": "layer:documentation",
+        "name": "Documentation",
+        "description": "Project guides, contribution materials, issue templates, and the standalone handbook and documentation pages.",
+        "nodeIds": [
+          "document:CHANGELOG.md",
+          "document:CODE_OF_CONDUCT.md",
+          "document:CODE_TUTORIAL.md",
+          "document:CONTRIBUTING.md",
+          "document:DATASET.md",
+          "document:README.md",
+          "document:SECURITY.md",
+          "document:USER_GUIDE.md",
+          "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+          "document:docs/codebase/ARCHITECTURE.md",
+          "document:docs/codebase/CONCERNS.md",
+          "document:docs/codebase/CONVENTIONS.md",
+          "document:docs/codebase/INTEGRATIONS.md",
+          "document:docs/codebase/STACK.md",
+          "document:docs/codebase/STRUCTURE.md",
+          "document:docs/codebase/TESTING.md",
+          "document:frontend/README.md",
+          "document:.github/ISSUE_TEMPLATE/bug_report.md",
+          "document:.github/ISSUE_TEMPLATE/feature_request.md",
+          "document:.github/pull_request_template.md",
+          "file:docs/site/index.html",
+          "file:docs/tutorial/index.html",
+          "document:tasks/plan.md",
+          "document:tasks/todo.md"
+        ]
+      },
+      {
+        "id": "layer:ci-cd",
+        "name": "CI/CD",
+        "description": "GitHub Actions automation that checks the backend and frontend.",
+        "nodeIds": [
+          "pipeline:.github/workflows/ci.yml"
+        ]
+      },
+      {
+        "id": "layer:operations",
+        "name": "Project Operations",
+        "description": "The Windows launcher and maintenance tooling that support local development and distribution.",
+        "nodeIds": [
+          "file:Launch Chat Studio.cmd",
+          "file:.graphifyignore"
+        ]
+      }
+    ]
+  },
+  "nodeSummaryIndex": {
+    "file:frontend/src/App.test.tsx": {
+      "name": "App.test.tsx",
+      "type": "file",
+      "summary": "Exercises the main React application flow with mocked streaming responses and browser APIs."
+    },
+    "file:frontend/src/App.tsx": {
+      "name": "App.tsx",
+      "type": "file",
+      "summary": "Implements the single-page chat studio interface, including conversations, streaming runs, provider setup, memories, files, and workspace views."
+    },
+    "file:frontend/src/ErrorBoundary.tsx": {
+      "name": "ErrorBoundary.tsx",
+      "type": "file",
+      "summary": "Provides a React error boundary that logs rendering failures and shows a recovery interface."
+    },
+    "file:frontend/src/api/client.ts": {
+      "name": "client.ts",
+      "type": "file",
+      "summary": "Provides the typed browser client for the backend API, including JSON requests and streamed run events."
+    },
+    "file:frontend/src/api/schema.ts": {
+      "name": "schema.ts",
+      "type": "file",
+      "summary": "Contains generated TypeScript types and endpoint definitions that describe the backend API contract."
+    },
+    "file:frontend/src/components/ui/badge.tsx": {
+      "name": "badge.tsx",
+      "type": "file",
+      "summary": "Defines a styled badge primitive with reusable variant classes for status labels."
+    },
+    "file:frontend/src/components/ui/button.tsx": {
+      "name": "button.tsx",
+      "type": "file",
+      "summary": "Defines a styled button primitive with size and variant options."
+    },
+    "file:frontend/src/components/ui/card.tsx": {
+      "name": "card.tsx",
+      "type": "file",
+      "summary": "Exports composable card layout primitives used to structure application panels."
+    },
+    "file:frontend/src/components/ui/input.tsx": {
+      "name": "input.tsx",
+      "type": "file",
+      "summary": "Defines the reusable styled text input control."
+    },
+    "file:frontend/src/components/ui/scroll-area.tsx": {
+      "name": "scroll-area.tsx",
+      "type": "file",
+      "summary": "Exports scroll-area and scrollbar primitives for scrollable panels."
+    },
+    "file:frontend/src/components/ui/separator.tsx": {
+      "name": "separator.tsx",
+      "type": "file",
+      "summary": "Defines a reusable horizontal or vertical visual separator."
+    },
+    "file:frontend/src/components/ui/textarea.tsx": {
+      "name": "textarea.tsx",
+      "type": "file",
+      "summary": "Defines the reusable styled multiline text input control."
+    },
+    "file:frontend/src/components/ui/tooltip.tsx": {
+      "name": "tooltip.tsx",
+      "type": "file",
+      "summary": "Exports tooltip primitives with configurable positioning and presentation."
+    },
+    "file:frontend/src/lib/utils.ts": {
+      "name": "utils.ts",
+      "type": "file",
+      "summary": "Provides the shared class-name composition helper used by UI primitives."
+    },
+    "file:frontend/src/main.tsx": {
+      "name": "main.tsx",
+      "type": "file",
+      "summary": "Bootstraps the React application, imports global styles, and mounts the error-protected app root."
+    },
+    "function:frontend/src/App.tsx:Navigation": {
+      "name": "Navigation",
+      "type": "function",
+      "summary": "Renders the primary navigation and reports page selections."
+    },
+    "function:frontend/src/App.tsx:ConversationHistory": {
+      "name": "ConversationHistory",
+      "type": "function",
+      "summary": "Filters and renders conversation history with create, rename, select, and delete actions."
+    },
+    "function:frontend/src/App.tsx:ContextRail": {
+      "name": "ContextRail",
+      "type": "function",
+      "summary": "Displays context-budget usage and the included context sections."
+    },
+    "function:frontend/src/App.tsx:ChatWorkspace": {
+      "name": "ChatWorkspace",
+      "type": "function",
+      "summary": "Renders the interactive chat workspace, message actions, plan approval, uploads, and memory controls."
+    },
+    "function:frontend/src/App.tsx:ComparePage": {
+      "name": "ComparePage",
+      "type": "function",
+      "summary": "Runs the same prompt against selected models and displays streamed comparison outputs."
+    },
+    "function:frontend/src/App.tsx:ProviderCard": {
+      "name": "ProviderCard",
+      "type": "function",
+      "summary": "Renders provider connection controls and retrieves provider-specific policy and OAuth options."
+    },
+    "function:frontend/src/App.tsx:LibraryPage": {
+      "name": "LibraryPage",
+      "type": "function",
+      "summary": "Renders memory, prompt preset, and upload management controls."
+    },
+    "function:frontend/src/App.tsx:App": {
+      "name": "App",
+      "type": "function",
+      "summary": "Coordinates application state, API refreshes, run streaming, and all workspace page callbacks."
+    },
+    "function:frontend/src/api/client.ts:request": {
+      "name": "request",
+      "type": "function",
+      "summary": "Performs JSON API requests and raises ApiError for unsuccessful responses."
+    },
+    "function:frontend/src/api/client.ts:streamRun": {
+      "name": "streamRun",
+      "type": "function",
+      "summary": "Consumes the backend streaming endpoint and forwards parsed events to the caller."
+    },
+    "function:frontend/src/components/ui/badge.tsx:Badge": {
+      "name": "Badge",
+      "type": "function",
+      "summary": "Renders a badge using the selected style variant and merged props."
+    },
+    "function:frontend/src/components/ui/button.tsx:Button": {
+      "name": "Button",
+      "type": "function",
+      "summary": "Renders a button with composable size and visual variants."
+    },
+    "function:frontend/src/components/ui/card.tsx:Card": {
+      "name": "Card",
+      "type": "function",
+      "summary": "Renders the outer card container with a selectable density."
+    },
+    "function:frontend/src/components/ui/card.tsx:CardHeader": {
+      "name": "CardHeader",
+      "type": "function",
+      "summary": "Renders the header region of a card."
+    },
+    "function:frontend/src/components/ui/card.tsx:CardTitle": {
+      "name": "CardTitle",
+      "type": "function",
+      "summary": "Renders the title region of a card."
+    },
+    "function:frontend/src/components/ui/card.tsx:CardDescription": {
+      "name": "CardDescription",
+      "type": "function",
+      "summary": "Renders descriptive text within a card header."
+    },
+    "function:frontend/src/components/ui/card.tsx:CardAction": {
+      "name": "CardAction",
+      "type": "function",
+      "summary": "Renders an action region in a card header."
+    },
+    "function:frontend/src/components/ui/card.tsx:CardContent": {
+      "name": "CardContent",
+      "type": "function",
+      "summary": "Renders the main content region of a card."
+    },
+    "function:frontend/src/components/ui/card.tsx:CardFooter": {
+      "name": "CardFooter",
+      "type": "function",
+      "summary": "Renders the footer region of a card."
+    },
+    "function:frontend/src/components/ui/input.tsx:Input": {
+      "name": "Input",
+      "type": "function",
+      "summary": "Renders a styled text input while preserving native input props."
+    },
+    "function:frontend/src/components/ui/scroll-area.tsx:ScrollArea": {
+      "name": "ScrollArea",
+      "type": "function",
+      "summary": "Renders a scrollable viewport with the project visual styles."
+    },
+    "function:frontend/src/components/ui/scroll-area.tsx:ScrollBar": {
+      "name": "ScrollBar",
+      "type": "function",
+      "summary": "Renders a styled horizontal or vertical scrollbar."
+    },
+    "function:frontend/src/components/ui/separator.tsx:Separator": {
+      "name": "Separator",
+      "type": "function",
+      "summary": "Renders a styled horizontal or vertical separator."
+    },
+    "function:frontend/src/components/ui/textarea.tsx:Textarea": {
+      "name": "Textarea",
+      "type": "function",
+      "summary": "Renders a styled multiline input while preserving native textarea props."
+    },
+    "function:frontend/src/components/ui/tooltip.tsx:TooltipProvider": {
+      "name": "TooltipProvider",
+      "type": "function",
+      "summary": "Configures tooltip timing and shared provider behavior."
+    },
+    "function:frontend/src/components/ui/tooltip.tsx:Tooltip": {
+      "name": "Tooltip",
+      "type": "function",
+      "summary": "Re-exports the base tooltip root component."
+    },
+    "function:frontend/src/components/ui/tooltip.tsx:TooltipTrigger": {
+      "name": "TooltipTrigger",
+      "type": "function",
+      "summary": "Re-exports the control that opens a tooltip."
+    },
+    "function:frontend/src/components/ui/tooltip.tsx:TooltipContent": {
+      "name": "TooltipContent",
+      "type": "function",
+      "summary": "Renders positioned tooltip content with styling and animation classes."
+    },
+    "function:frontend/src/lib/utils.ts:cn": {
+      "name": "cn",
+      "type": "function",
+      "summary": "Combines conditional class names and resolves Tailwind class conflicts."
+    },
+    "class:frontend/src/ErrorBoundary.tsx:ErrorBoundary": {
+      "name": "ErrorBoundary",
+      "type": "class",
+      "summary": "Catches descendant React render errors, records them, and renders a fallback view."
+    },
+    "class:frontend/src/api/client.ts:ApiError": {
+      "name": "ApiError",
+      "type": "class",
+      "summary": "Represents failed API requests with HTTP status and structured error details."
+    },
+    "file:backend/app/cli.py": {
+      "name": "cli.py",
+      "type": "file",
+      "summary": "Provides the command-line entry point that starts the FastAPI application with Uvicorn."
+    },
+    "function:backend/app/cli.py:main": {
+      "name": "main",
+      "type": "function",
+      "summary": "Implements main behavior for this module."
+    },
+    "file:backend/app/contracts.py": {
+      "name": "contracts.py",
+      "type": "file",
+      "summary": "Defines Pydantic request and response contracts for chat, providers, memory, workspace, replay, and data-management APIs."
+    },
+    "function:backend/app/contracts.py:utc_now": {
+      "name": "utc_now",
+      "type": "function",
+      "summary": "Implements utc_now behavior for this module."
+    },
+    "class:backend/app/contracts.py:MessageCreate": {
+      "name": "MessageCreate",
+      "type": "class",
+      "summary": "Defines the Message Create Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:Message": {
+      "name": "Message",
+      "type": "class",
+      "summary": "Defines the Message Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:ConversationCreate": {
+      "name": "ConversationCreate",
+      "type": "class",
+      "summary": "Defines the Conversation Create Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:ConversationUpdate": {
+      "name": "ConversationUpdate",
+      "type": "class",
+      "summary": "Defines the Conversation Update Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:Conversation": {
+      "name": "Conversation",
+      "type": "class",
+      "summary": "Defines the Conversation Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:CredentialInput": {
+      "name": "CredentialInput",
+      "type": "class",
+      "summary": "Defines the Credential Input Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:OAuthCodeInput": {
+      "name": "OAuthCodeInput",
+      "type": "class",
+      "summary": "Defines the OAuth Code Input Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:OpenCodeOAuthStart": {
+      "name": "OpenCodeOAuthStart",
+      "type": "class",
+      "summary": "Defines the Open Code OAuth Start Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:OpenCodeOAuthComplete": {
+      "name": "OpenCodeOAuthComplete",
+      "type": "class",
+      "summary": "Defines the Open Code OAuth Complete Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:ImageInput": {
+      "name": "ImageInput",
+      "type": "class",
+      "summary": "Defines the Image Input Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:ChatMessage": {
+      "name": "ChatMessage",
+      "type": "class",
+      "summary": "Defines the Chat Message Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:ModelDescriptor": {
+      "name": "ModelDescriptor",
+      "type": "class",
+      "summary": "Defines the Model Descriptor Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:ProviderDiscovery": {
+      "name": "ProviderDiscovery",
+      "type": "class",
+      "summary": "Defines the Provider Discovery Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:RunCreate": {
+      "name": "RunCreate",
+      "type": "class",
+      "summary": "Defines the Run Create Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:RunStatus": {
+      "name": "RunStatus",
+      "type": "class",
+      "summary": "Defines the Run Status Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:RunSnapshot": {
+      "name": "RunSnapshot",
+      "type": "class",
+      "summary": "Defines the Run Snapshot Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:RunEvent": {
+      "name": "RunEvent",
+      "type": "class",
+      "summary": "Defines the Run Event Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:ContextSection": {
+      "name": "ContextSection",
+      "type": "class",
+      "summary": "Defines the Context Section Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:ContextSource": {
+      "name": "ContextSource",
+      "type": "class",
+      "summary": "Defines the Context Source Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:SafetyFinding": {
+      "name": "SafetyFinding",
+      "type": "class",
+      "summary": "Defines the Safety Finding Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:SafetyText": {
+      "name": "SafetyText",
+      "type": "class",
+      "summary": "Defines the Safety Text Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:ProviderPolicy": {
+      "name": "ProviderPolicy",
+      "type": "class",
+      "summary": "Defines the Provider Policy Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:TurnPreflight": {
+      "name": "TurnPreflight",
+      "type": "class",
+      "summary": "Defines the Turn Preflight Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:TurnCreate": {
+      "name": "TurnCreate",
+      "type": "class",
+      "summary": "Defines the Turn Create Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:ContextPlan": {
+      "name": "ContextPlan",
+      "type": "class",
+      "summary": "Defines the Context Plan Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:ConversationBranch": {
+      "name": "ConversationBranch",
+      "type": "class",
+      "summary": "Defines the Conversation Branch Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:BackpackItemInput": {
+      "name": "BackpackItemInput",
+      "type": "class",
+      "summary": "Defines the Backpack Item Input Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:BackpackCreate": {
+      "name": "BackpackCreate",
+      "type": "class",
+      "summary": "Defines the Backpack Create Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:BackpackItem": {
+      "name": "BackpackItem",
+      "type": "class",
+      "summary": "Defines the Backpack Item Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:Backpack": {
+      "name": "Backpack",
+      "type": "class",
+      "summary": "Defines the Backpack Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:FocusCreate": {
+      "name": "FocusCreate",
+      "type": "class",
+      "summary": "Defines the Focus Create Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:FocusSession": {
+      "name": "FocusSession",
+      "type": "class",
+      "summary": "Defines the Focus Session Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:FocusUpdate": {
+      "name": "FocusUpdate",
+      "type": "class",
+      "summary": "Defines the Focus Update Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:ProviderSimulationInput": {
+      "name": "ProviderSimulationInput",
+      "type": "class",
+      "summary": "Defines the Provider Simulation Input Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:ReplayBundle": {
+      "name": "ReplayBundle",
+      "type": "class",
+      "summary": "Defines the Replay Bundle Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:MemoryCreate": {
+      "name": "MemoryCreate",
+      "type": "class",
+      "summary": "Defines the Memory Create Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:Memory": {
+      "name": "Memory",
+      "type": "class",
+      "summary": "Defines the Memory Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:MemoryUpdate": {
+      "name": "MemoryUpdate",
+      "type": "class",
+      "summary": "Defines the Memory Update Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:MemoryExtractionRequest": {
+      "name": "MemoryExtractionRequest",
+      "type": "class",
+      "summary": "Defines the Memory Extraction Request Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:MemoryExtractionResult": {
+      "name": "MemoryExtractionResult",
+      "type": "class",
+      "summary": "Defines the Memory Extraction Result Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:PresetCreate": {
+      "name": "PresetCreate",
+      "type": "class",
+      "summary": "Defines the Preset Create Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:Preset": {
+      "name": "Preset",
+      "type": "class",
+      "summary": "Defines the Preset Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:UploadCreate": {
+      "name": "UploadCreate",
+      "type": "class",
+      "summary": "Defines the Upload Create Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:Upload": {
+      "name": "Upload",
+      "type": "class",
+      "summary": "Defines the Upload Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:ReplayCreate": {
+      "name": "ReplayCreate",
+      "type": "class",
+      "summary": "Defines the Replay Create Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:FeedbackInput": {
+      "name": "FeedbackInput",
+      "type": "class",
+      "summary": "Defines the Feedback Input Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:DataImport": {
+      "name": "DataImport",
+      "type": "class",
+      "summary": "Defines the Data Import Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:WipeRequest": {
+      "name": "WipeRequest",
+      "type": "class",
+      "summary": "Defines the Wipe Request Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:V2ImportRequest": {
+      "name": "V2ImportRequest",
+      "type": "class",
+      "summary": "Defines the V2Import Request Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/contracts.py:Profile": {
+      "name": "Profile",
+      "type": "class",
+      "summary": "Defines the Profile Pydantic or application contract used by the backend."
+    },
+    "file:backend/app/main.py": {
+      "name": "main.py",
+      "type": "file",
+      "summary": "Builds the FastAPI application and its HTTP API for conversations, runs, providers, memory, files, and workspace features."
+    },
+    "function:backend/app/main.py:create_app": {
+      "name": "create_app",
+      "type": "function",
+      "summary": "Constructs the FastAPI application, dependencies, and all public API routes."
+    },
+    "file:backend/app/memory.py": {
+      "name": "memory.py",
+      "type": "file",
+      "summary": "Uses a selected LLM to extract, consolidate, validate, and categorize useful long-term memories from conversation history."
+    },
+    "function:backend/app/memory.py:extract_memories": {
+      "name": "extract_memories",
+      "type": "function",
+      "summary": "Extracts concise, user-relevant memory candidates with an LLM and records their provenance."
+    },
+    "function:backend/app/memory.py:_complete": {
+      "name": "_complete",
+      "type": "function",
+      "summary": "Implements complete behavior for this module."
+    },
+    "function:backend/app/memory.py:_selection_prompt": {
+      "name": "_selection_prompt",
+      "type": "function",
+      "summary": "Implements selection_prompt behavior for this module."
+    },
+    "function:backend/app/memory.py:_consolidation_prompt": {
+      "name": "_consolidation_prompt",
+      "type": "function",
+      "summary": "Implements consolidation_prompt behavior for this module."
+    },
+    "function:backend/app/memory.py:_parse_memories": {
+      "name": "_parse_memories",
+      "type": "function",
+      "summary": "Implements parse_memories behavior for this module."
+    },
+    "function:backend/app/memory.py:_category": {
+      "name": "_category",
+      "type": "function",
+      "summary": "Implements category behavior for this module."
+    },
+    "class:backend/app/memory.py:ExtractionOutcome": {
+      "name": "ExtractionOutcome",
+      "type": "class",
+      "summary": "Defines the Extraction Outcome Pydantic or application contract used by the backend."
+    },
+    "file:backend/app/providers.py": {
+      "name": "providers.py",
+      "type": "file",
+      "summary": "Implements normalized provider adapters and the registry for local Ollama, cloud models, OpenAI-compatible APIs, and OpenCode."
+    },
+    "function:backend/app/providers.py:build_provider_registry": {
+      "name": "build_provider_registry",
+      "type": "function",
+      "summary": "Builds the configured provider adapter registry with local and cloud integrations."
+    },
+    "class:backend/app/providers.py:ProviderAdapter": {
+      "name": "ProviderAdapter",
+      "type": "class",
+      "summary": "Defines the Provider Adapter Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/providers.py:OpenAICompatibleAdapter": {
+      "name": "OpenAICompatibleAdapter",
+      "type": "class",
+      "summary": "Defines the Open AICompatible Adapter Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/providers.py:OllamaAdapter": {
+      "name": "OllamaAdapter",
+      "type": "class",
+      "summary": "Defines the Ollama Adapter Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/providers.py:AnthropicAdapter": {
+      "name": "AnthropicAdapter",
+      "type": "class",
+      "summary": "Defines the Anthropic Adapter Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/providers.py:GeminiAdapter": {
+      "name": "GeminiAdapter",
+      "type": "class",
+      "summary": "Defines the Gemini Adapter Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/providers.py:OpenCodeZenAdapter": {
+      "name": "OpenCodeZenAdapter",
+      "type": "class",
+      "summary": "Defines the Open Code Zen Adapter Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/providers.py:OpenCodeBridgeAdapter": {
+      "name": "OpenCodeBridgeAdapter",
+      "type": "class",
+      "summary": "Defines the Open Code Bridge Adapter Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/providers.py:ProviderRegistry": {
+      "name": "ProviderRegistry",
+      "type": "class",
+      "summary": "Defines the Provider Registry Pydantic or application contract used by the backend."
+    },
+    "file:backend/app/runs.py": {
+      "name": "runs.py",
+      "type": "file",
+      "summary": "Coordinates asynchronous model runs, their state transitions, event streams, cancellation, and persisted results."
+    },
+    "class:backend/app/runs.py:RunState": {
+      "name": "RunState",
+      "type": "class",
+      "summary": "Defines the Run State Pydantic or application contract used by the backend."
+    },
+    "class:backend/app/runs.py:RunManager": {
+      "name": "RunManager",
+      "type": "class",
+      "summary": "Defines the Run Manager Pydantic or application contract used by the backend."
+    },
+    "file:backend/app/sessions.py": {
+      "name": "sessions.py",
+      "type": "file",
+      "summary": "Stores browser-session identifiers and provider credentials while resolving Anthropic workload-identity configuration."
+    },
+    "function:backend/app/sessions.py:_anthropic_wif_configured": {
+      "name": "_anthropic_wif_configured",
+      "type": "function",
+      "summary": "Implements anthropic_wif_configured behavior for this module."
+    },
+    "class:backend/app/sessions.py:SessionVault": {
+      "name": "SessionVault",
+      "type": "class",
+      "summary": "Defines the Session Vault Pydantic or application contract used by the backend."
+    },
+    "file:backend/app/store.py": {
+      "name": "store.py",
+      "type": "file",
+      "summary": "Provides the SQLite persistence layer for conversations, messages, credentials, memory, runs, uploads, and workspace resources."
+    },
+    "class:backend/app/store.py:Store": {
+      "name": "Store",
+      "type": "class",
+      "summary": "Defines the Store Pydantic or application contract used by the backend."
+    },
+    "file:backend/app/workspace.py": {
+      "name": "workspace.py",
+      "type": "file",
+      "summary": "Plans safe context assembly from memories, retrieval, uploads, backpacks, and web sources for an individual turn."
+    },
+    "function:backend/app/workspace.py:search_web": {
+      "name": "search_web",
+      "type": "function",
+      "summary": "Implements search_web behavior for this module."
+    },
+    "function:backend/app/workspace.py:retrieve_context": {
+      "name": "retrieve_context",
+      "type": "function",
+      "summary": "Implements retrieve_context behavior for this module."
+    },
+    "function:backend/app/workspace.py:relevant_memories": {
+      "name": "relevant_memories",
+      "type": "function",
+      "summary": "Implements relevant_memories behavior for this module."
+    },
+    "function:backend/app/workspace.py:estimate_tokens": {
+      "name": "estimate_tokens",
+      "type": "function",
+      "summary": "Implements estimate_tokens behavior for this module."
+    },
+    "function:backend/app/workspace.py:scan_text": {
+      "name": "scan_text",
+      "type": "function",
+      "summary": "Implements scan_text behavior for this module."
+    },
+    "function:backend/app/workspace.py:sanitize_text": {
+      "name": "sanitize_text",
+      "type": "function",
+      "summary": "Implements sanitize_text behavior for this module."
+    },
+    "function:backend/app/workspace.py:build_context_plan": {
+      "name": "build_context_plan",
+      "type": "function",
+      "summary": "Builds a budgeted, safety-reviewed context plan from eligible conversation sources."
+    },
+    "function:backend/app/workspace.py:assemble_messages": {
+      "name": "assemble_messages",
+      "type": "function",
+      "summary": "Assembles the model message list from the approved context plan and user turn."
+    },
+    "function:backend/app/workspace.py:_redact": {
+      "name": "_redact",
+      "type": "function",
+      "summary": "Implements redact behavior for this module."
+    },
+    "file:scripts/generate_api_types.py": {
+      "name": "generate_api_types.py",
+      "type": "file",
+      "summary": "Generates the frontend TypeScript API schema from the FastAPI OpenAPI document."
+    },
+    "file:src/files.py": {
+      "name": "files.py",
+      "type": "file",
+      "summary": "Parses uploaded files into safe text previews and chunks them for contextual retrieval."
+    },
+    "function:src/files.py:_ext": {
+      "name": "_ext",
+      "type": "function",
+      "summary": "Implements ext behavior for this module."
+    },
+    "function:src/files.py:parse_upload": {
+      "name": "parse_upload",
+      "type": "function",
+      "summary": "Validates an uploaded file and extracts a safe text representation for storage."
+    },
+    "function:src/files.py:_parse_pdf": {
+      "name": "_parse_pdf",
+      "type": "function",
+      "summary": "Implements parse_pdf behavior for this module."
+    },
+    "function:src/files.py:_parse_docx": {
+      "name": "_parse_docx",
+      "type": "function",
+      "summary": "Implements parse_docx behavior for this module."
+    },
+    "function:src/files.py:_parse_excel": {
+      "name": "_parse_excel",
+      "type": "function",
+      "summary": "Implements parse_excel behavior for this module."
+    },
+    "function:src/files.py:_parse_legacy_doc": {
+      "name": "_parse_legacy_doc",
+      "type": "function",
+      "summary": "Implements parse_legacy_doc behavior for this module."
+    },
+    "function:src/files.py:chunk_text": {
+      "name": "chunk_text",
+      "type": "function",
+      "summary": "Splits extracted text into bounded chunks for retrieval."
+    },
+    "class:src/files.py:Attachment": {
+      "name": "Attachment",
+      "type": "class",
+      "summary": "Defines the Attachment Pydantic or application contract used by the backend."
+    },
+    "file:tests/test_provider_adapters.py": {
+      "name": "test_provider_adapters.py",
+      "type": "file",
+      "summary": "Covers normalized provider discovery, Ollama variants, and OpenCode bridge safety behavior."
+    },
+    "function:tests/test_provider_adapters.py:test_registry_contains_all_phase_one_providers": {
+      "name": "test_registry_contains_all_phase_one_providers",
+      "type": "function",
+      "summary": "Verifies registry_contains_all_phase_one_providers through the public application contract."
+    },
+    "function:tests/test_provider_adapters.py:test_model_discovery_is_concurrent_and_degrades_per_provider": {
+      "name": "test_model_discovery_is_concurrent_and_degrades_per_provider",
+      "type": "function",
+      "summary": "Verifies model_discovery_is_concurrent_and_degrades_per_provider through the public application contract."
+    },
+    "function:tests/test_provider_adapters.py:test_echo_like_adapter_contract_accepts_normalized_messages": {
+      "name": "test_echo_like_adapter_contract_accepts_normalized_messages",
+      "type": "function",
+      "summary": "Verifies echo_like_adapter_contract_accepts_normalized_messages through the public application contract."
+    },
+    "function:tests/test_provider_adapters.py:test_local_ollama_filters_daemon_cloud_models_and_reports_vision": {
+      "name": "test_local_ollama_filters_daemon_cloud_models_and_reports_vision",
+      "type": "function",
+      "summary": "Verifies local_ollama_filters_daemon_cloud_models_and_reports_vision through the public application contract."
+    },
+    "function:tests/test_provider_adapters.py:test_ollama_cloud_uses_bearer_auth": {
+      "name": "test_ollama_cloud_uses_bearer_auth",
+      "type": "function",
+      "summary": "Verifies ollama_cloud_uses_bearer_auth through the public application contract."
+    },
+    "function:tests/test_provider_adapters.py:test_opencode_bridge_rejects_non_loopback_urls": {
+      "name": "test_opencode_bridge_rejects_non_loopback_urls",
+      "type": "function",
+      "summary": "Verifies opencode_bridge_rejects_non_loopback_urls through the public application contract."
+    },
+    "file:tests/test_workspace_features.py": {
+      "name": "test_workspace_features.py",
+      "type": "file",
+      "summary": "Exercises workspace, memory, provenance, replay, attachment, privacy, and data-control API workflows end to end."
+    },
+    "function:tests/test_workspace_features.py:_conversation": {
+      "name": "_conversation",
+      "type": "function",
+      "summary": "Verifies conversation through the public application contract."
+    },
+    "function:tests/test_workspace_features.py:_complete_echo_run": {
+      "name": "_complete_echo_run",
+      "type": "function",
+      "summary": "Verifies complete_echo_run through the public application contract."
+    },
+    "function:tests/test_workspace_features.py:test_run_is_owned_by_browser_session": {
+      "name": "test_run_is_owned_by_browser_session",
+      "type": "function",
+      "summary": "Verifies run_is_owned_by_browser_session through the public application contract."
+    },
+    "function:tests/test_workspace_features.py:test_cloud_preflight_warns_about_secrets_and_excludes_private_context": {
+      "name": "test_cloud_preflight_warns_about_secrets_and_excludes_private_context",
+      "type": "function",
+      "summary": "Verifies cloud_preflight_warns_about_secrets_and_excludes_private_context through the public application contract."
+    },
+    "function:tests/test_workspace_features.py:test_turn_persists_messages_context_and_replay_bundle": {
+      "name": "test_turn_persists_messages_context_and_replay_bundle",
+      "type": "function",
+      "summary": "Verifies turn_persists_messages_context_and_replay_bundle through the public application contract."
+    },
+    "function:tests/test_workspace_features.py:test_branch_backpack_focus_and_provider_policy": {
+      "name": "test_branch_backpack_focus_and_provider_policy",
+      "type": "function",
+      "summary": "Verifies branch_backpack_focus_and_provider_policy through the public application contract."
+    },
+    "function:tests/test_workspace_features.py:test_memory_preset_upload_activity_and_replay": {
+      "name": "test_memory_preset_upload_activity_and_replay",
+      "type": "function",
+      "summary": "Verifies memory_preset_upload_activity_and_replay through the public application contract."
+    },
+    "function:tests/test_workspace_features.py:test_store_accepts_the_legacy_seven_column_preset_table": {
+      "name": "test_store_accepts_the_legacy_seven_column_preset_table",
+      "type": "function",
+      "summary": "Verifies store_accepts_the_legacy_seven_column_preset_table through the public application contract."
+    },
+    "function:tests/test_workspace_features.py:test_memory_lifecycle_feedback_and_data_controls": {
+      "name": "test_memory_lifecycle_feedback_and_data_controls",
+      "type": "function",
+      "summary": "Verifies memory_lifecycle_feedback_and_data_controls through the public application contract."
+    },
+    "function:tests/test_workspace_features.py:test_llm_memory_extraction_requires_cloud_confirmation_and_saves_provenance": {
+      "name": "test_llm_memory_extraction_requires_cloud_confirmation_and_saves_provenance",
+      "type": "function",
+      "summary": "Verifies llm_memory_extraction_requires_cloud_confirmation_and_saves_provenance through the public application contract."
+    },
+    "function:tests/test_workspace_features.py:test_redacted_replay_bundle_hides_private_context": {
+      "name": "test_redacted_replay_bundle_hides_private_context",
+      "type": "function",
+      "summary": "Verifies redacted_replay_bundle_hides_private_context through the public application contract."
+    },
+    "function:tests/test_workspace_features.py:test_workspace_resource_lifecycle_and_provider_simulator": {
+      "name": "test_workspace_resource_lifecycle_and_provider_simulator",
+      "type": "function",
+      "summary": "Verifies workspace_resource_lifecycle_and_provider_simulator through the public application contract."
+    },
+    "function:tests/test_workspace_features.py:test_web_sources_are_provenanced_and_replayed_without_a_second_search": {
+      "name": "test_web_sources_are_provenanced_and_replayed_without_a_second_search",
+      "type": "function",
+      "summary": "Verifies web_sources_are_provenanced_and_replayed_without_a_second_search through the public application contract."
+    },
+    "function:tests/test_workspace_features.py:test_cross_chat_retrieval_has_provenance_and_can_be_excluded": {
+      "name": "test_cross_chat_retrieval_has_provenance_and_can_be_excluded",
+      "type": "function",
+      "summary": "Verifies cross_chat_retrieval_has_provenance_and_can_be_excluded through the public application contract."
+    },
+    "function:tests/test_workspace_features.py:test_image_attachment_is_available_to_full_replay_but_not_redacted_share": {
+      "name": "test_image_attachment_is_available_to_full_replay_but_not_redacted_share",
+      "type": "function",
+      "summary": "Verifies image_attachment_is_available_to_full_replay_but_not_redacted_share through the public application contract."
+    },
+    "function:tests/test_workspace_features.py:test_context_budget_prunes_sources_and_private_text_can_be_sanitized": {
+      "name": "test_context_budget_prunes_sources_and_private_text_can_be_sanitized",
+      "type": "function",
+      "summary": "Verifies context_budget_prunes_sources_and_private_text_can_be_sanitized through the public application contract."
+    },
+    "function:tests/test_workspace_features.py:test_profile_runtime_health_and_opt_in_v2_import": {
+      "name": "test_profile_runtime_health_and_opt_in_v2_import",
+      "type": "function",
+      "summary": "Verifies profile_runtime_health_and_opt_in_v2_import through the public application contract."
+    },
+    "file:src/catalog.py": {
+      "name": "catalog.py",
+      "type": "file",
+      "summary": "catalog.py implements a backend capability."
+    },
+    "function:src/catalog.py:build_model_catalog": {
+      "name": "build_model_catalog",
+      "type": "function",
+      "summary": "build_model_catalog implements a focused backend operation."
+    },
+    "file:src/chat_store.py": {
+      "name": "chat_store.py",
+      "type": "file",
+      "summary": "chat_store.py implements a backend capability."
+    },
+    "function:src/chat_store.py:search_conversations": {
+      "name": "search_conversations",
+      "type": "function",
+      "summary": "search_conversations implements a focused backend operation."
+    },
+    "function:src/chat_store.py:clear_all_conversations": {
+      "name": "clear_all_conversations",
+      "type": "function",
+      "summary": "clear_all_conversations implements a focused backend operation."
+    },
+    "function:src/chat_store.py:add_message": {
+      "name": "add_message",
+      "type": "function",
+      "summary": "add_message implements a focused backend operation."
+    },
+    "function:src/chat_store.py:get_messages": {
+      "name": "get_messages",
+      "type": "function",
+      "summary": "get_messages implements a focused backend operation."
+    },
+    "function:src/chat_store.py:add_memory": {
+      "name": "add_memory",
+      "type": "function",
+      "summary": "add_memory implements a focused backend operation."
+    },
+    "function:src/chat_store.py:save_preset": {
+      "name": "save_preset",
+      "type": "function",
+      "summary": "save_preset implements a focused backend operation."
+    },
+    "function:src/chat_store.py:import_jsonl": {
+      "name": "import_jsonl",
+      "type": "function",
+      "summary": "import_jsonl implements a focused backend operation."
+    },
+    "function:src/chat_store.py:export_jsonl": {
+      "name": "export_jsonl",
+      "type": "function",
+      "summary": "export_jsonl implements a focused backend operation."
+    },
+    "file:src/config.py": {
+      "name": "config.py",
+      "type": "file",
+      "summary": "config.py implements a backend capability."
+    },
+    "class:src/config.py:AppConfig": {
+      "name": "AppConfig",
+      "type": "class",
+      "summary": "AppConfig provides structured backend state."
+    },
+    "file:src/jobs.py": {
+      "name": "jobs.py",
+      "type": "file",
+      "summary": "jobs.py implements a backend capability."
+    },
+    "function:src/jobs.py:start": {
+      "name": "start",
+      "type": "function",
+      "summary": "start implements a focused backend operation."
+    },
+    "function:src/jobs.py:run_ephemeral": {
+      "name": "run_ephemeral",
+      "type": "function",
+      "summary": "run_ephemeral implements a focused backend operation."
+    },
+    "function:src/jobs.py:_stream": {
+      "name": "_stream",
+      "type": "function",
+      "summary": "_stream implements a focused backend operation."
+    },
+    "function:src/jobs.py:_web_search": {
+      "name": "_web_search",
+      "type": "function",
+      "summary": "_web_search implements a focused backend operation."
+    },
+    "function:src/jobs.py:_process_attachments": {
+      "name": "_process_attachments",
+      "type": "function",
+      "summary": "_process_attachments implements a focused backend operation."
+    },
+    "function:src/jobs.py:_run": {
+      "name": "_run",
+      "type": "function",
+      "summary": "_run implements a focused backend operation."
+    },
+    "function:src/jobs.py:_friendly_error": {
+      "name": "_friendly_error",
+      "type": "function",
+      "summary": "_friendly_error implements a focused backend operation."
+    },
+    "function:src/jobs.py:_autotitle": {
+      "name": "_autotitle",
+      "type": "function",
+      "summary": "_autotitle implements a focused backend operation."
+    },
+    "function:src/jobs.py:_maybe_extract": {
+      "name": "_maybe_extract",
+      "type": "function",
+      "summary": "_maybe_extract implements a focused backend operation."
+    },
+    "file:src/memory.py": {
+      "name": "memory.py",
+      "type": "file",
+      "summary": "memory.py implements a backend capability."
+    },
+    "function:src/memory.py:extract_memories": {
+      "name": "extract_memories",
+      "type": "function",
+      "summary": "extract_memories implements a focused backend operation."
+    },
+    "function:src/memory.py:relevant_memories": {
+      "name": "relevant_memories",
+      "type": "function",
+      "summary": "relevant_memories implements a focused backend operation."
+    },
+    "function:src/memory.py:_parse_json_list": {
+      "name": "_parse_json_list",
+      "type": "function",
+      "summary": "_parse_json_list implements a focused backend operation."
+    },
+    "file:src/model_labels.py": {
+      "name": "model_labels.py",
+      "type": "file",
+      "summary": "model_labels.py implements a backend capability."
+    },
+    "function:src/model_labels.py:_size_tag": {
+      "name": "_size_tag",
+      "type": "function",
+      "summary": "_size_tag implements a focused backend operation."
+    },
+    "function:src/model_labels.py:hint_for": {
+      "name": "hint_for",
+      "type": "function",
+      "summary": "hint_for implements a focused backend operation."
+    },
+    "file:src/ollama_client.py": {
+      "name": "ollama_client.py",
+      "type": "file",
+      "summary": "ollama_client.py implements a backend capability."
+    },
+    "function:src/ollama_client.py:_client": {
+      "name": "_client",
+      "type": "function",
+      "summary": "_client implements a focused backend operation."
+    },
+    "function:src/ollama_client.py:list_models": {
+      "name": "list_models",
+      "type": "function",
+      "summary": "list_models implements a focused backend operation."
+    },
+    "function:src/ollama_client.py:vision_fallback_model": {
+      "name": "vision_fallback_model",
+      "type": "function",
+      "summary": "vision_fallback_model implements a focused backend operation."
+    },
+    "function:src/ollama_client.py:smallest_text_model": {
+      "name": "smallest_text_model",
+      "type": "function",
+      "summary": "smallest_text_model implements a focused backend operation."
+    },
+    "function:src/ollama_client.py:stream_chat": {
+      "name": "stream_chat",
+      "type": "function",
+      "summary": "stream_chat implements a focused backend operation."
+    },
+    "function:src/ollama_client.py:running_models": {
+      "name": "running_models",
+      "type": "function",
+      "summary": "running_models implements a focused backend operation."
+    },
+    "function:src/ollama_client.py:generate": {
+      "name": "generate",
+      "type": "function",
+      "summary": "generate implements a focused backend operation."
+    },
+    "function:src/ollama_client.py:describe_image": {
+      "name": "describe_image",
+      "type": "function",
+      "summary": "describe_image implements a focused backend operation."
+    },
+    "class:src/ollama_client.py:ModelInfo": {
+      "name": "ModelInfo",
+      "type": "class",
+      "summary": "ModelInfo provides structured backend state."
+    },
+    "file:src/orchestrator.py": {
+      "name": "orchestrator.py",
+      "type": "file",
+      "summary": "orchestrator.py implements a backend capability."
+    },
+    "function:src/orchestrator.py:build_messages": {
+      "name": "build_messages",
+      "type": "function",
+      "summary": "build_messages implements a focused backend operation."
+    },
+    "function:src/orchestrator.py:after_turn_indexing": {
+      "name": "after_turn_indexing",
+      "type": "function",
+      "summary": "after_turn_indexing implements a focused backend operation."
+    },
+    "file:src/personalization.py": {
+      "name": "personalization.py",
+      "type": "file",
+      "summary": "personalization.py implements a backend capability."
+    },
+    "function:src/personalization.py:rebuild_profile": {
+      "name": "rebuild_profile",
+      "type": "function",
+      "summary": "rebuild_profile implements a focused backend operation."
+    },
+    "file:src/providers.py": {
+      "name": "providers.py",
+      "type": "file",
+      "summary": "providers.py implements a backend capability."
+    },
+    "function:src/providers.py:list_provider_models": {
+      "name": "list_provider_models",
+      "type": "function",
+      "summary": "list_provider_models implements a focused backend operation."
+    },
+    "function:src/providers.py:_list_openrouter": {
+      "name": "_list_openrouter",
+      "type": "function",
+      "summary": "_list_openrouter implements a focused backend operation."
+    },
+    "function:src/providers.py:_list_openai_compat": {
+      "name": "_list_openai_compat",
+      "type": "function",
+      "summary": "_list_openai_compat implements a focused backend operation."
+    },
+    "function:src/providers.py:stream_chat": {
+      "name": "stream_chat",
+      "type": "function",
+      "summary": "stream_chat implements a focused backend operation."
+    },
+    "function:src/providers.py:_stream_anthropic": {
+      "name": "_stream_anthropic",
+      "type": "function",
+      "summary": "_stream_anthropic implements a focused backend operation."
+    },
+    "function:src/providers.py:_stream_openai_compat": {
+      "name": "_stream_openai_compat",
+      "type": "function",
+      "summary": "_stream_openai_compat implements a focused backend operation."
+    },
+    "function:src/providers.py:openrouter_auth_url": {
+      "name": "openrouter_auth_url",
+      "type": "function",
+      "summary": "openrouter_auth_url implements a focused backend operation."
+    },
+    "function:src/providers.py:openrouter_exchange_code": {
+      "name": "openrouter_exchange_code",
+      "type": "function",
+      "summary": "openrouter_exchange_code implements a focused backend operation."
+    },
+    "class:src/providers.py:ApiModel": {
+      "name": "ApiModel",
+      "type": "class",
+      "summary": "ApiModel provides structured backend state."
+    },
+    "file:src/rag.py": {
+      "name": "rag.py",
+      "type": "file",
+      "summary": "rag.py implements a backend capability."
+    },
+    "function:src/rag.py:index_doc_chunks": {
+      "name": "index_doc_chunks",
+      "type": "function",
+      "summary": "index_doc_chunks implements a focused backend operation."
+    },
+    "function:src/rag.py:search_docs": {
+      "name": "search_docs",
+      "type": "function",
+      "summary": "search_docs implements a focused backend operation."
+    },
+    "function:src/rag.py:index_history_turn": {
+      "name": "index_history_turn",
+      "type": "function",
+      "summary": "index_history_turn implements a focused backend operation."
+    },
+    "function:src/rag.py:search_history": {
+      "name": "search_history",
+      "type": "function",
+      "summary": "search_history implements a focused backend operation."
+    },
+    "function:src/rag.py:similar_memory": {
+      "name": "similar_memory",
+      "type": "function",
+      "summary": "similar_memory implements a focused backend operation."
+    },
+    "function:src/rag.py:_flatten": {
+      "name": "_flatten",
+      "type": "function",
+      "summary": "_flatten implements a focused backend operation."
+    },
+    "pipeline:.github/workflows/ci.yml": {
+      "name": "ci.yml",
+      "type": "pipeline",
+      "summary": "GitHub Actions workflow that validates the backend with uv, pytest, and Ruff, and validates the frontend with npm linting, tests, and a production build."
+    },
+    "document:CHANGELOG.md": {
+      "name": "CHANGELOG.md",
+      "type": "document",
+      "summary": "Records unreleased and versioned changes to Local AI Chat Studio."
+    },
+    "document:CODE_OF_CONDUCT.md": {
+      "name": "CODE_OF_CONDUCT.md",
+      "type": "document",
+      "summary": "Defines expected community behavior and the enforcement process for contributors."
+    },
+    "document:CODE_TUTORIAL.md": {
+      "name": "CODE_TUTORIAL.md",
+      "type": "document",
+      "summary": "Provides a long-form zero-to-hero technical tutorial explaining both the legacy and current application stacks."
+    },
+    "document:CONTRIBUTING.md": {
+      "name": "CONTRIBUTING.md",
+      "type": "document",
+      "summary": "Explains development setup, style expectations, verification commands, and pull-request guidance."
+    },
+    "document:DATASET.md": {
+      "name": "DATASET.md",
+      "type": "document",
+      "summary": "Reserved documentation page for project datasets."
+    },
+    "file:Launch Chat Studio.cmd": {
+      "name": "Launch Chat Studio.cmd",
+      "type": "file",
+      "summary": "Provides a double-click Windows launcher that bootstraps portable tooling, installs dependencies, builds the frontend, and starts the application."
+    },
+    "document:README.md": {
+      "name": "README.md",
+      "type": "document",
+      "summary": "Introduces the local-first chat studio, its provider and memory features, installation paths, architecture, and verification commands."
+    },
+    "document:SECURITY.md": {
+      "name": "SECURITY.md",
+      "type": "document",
+      "summary": "Defines the project security policy, supported scope, and private vulnerability-reporting path."
+    },
+    "document:USER_GUIDE.md": {
+      "name": "USER_GUIDE.md",
+      "type": "document",
+      "summary": "Explains how to start the studio and use chat, context, providers, library, and settings workflows."
+    },
+    "document:ZERO_TO_HERO_STUDY_HANDBOOK.md": {
+      "name": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "type": "document",
+      "summary": "Provides a comprehensive learning handbook covering product concepts, setup, architecture, workflows, and repository code paths."
+    },
+    "config:pyproject.toml": {
+      "name": "pyproject.toml",
+      "type": "config",
+      "summary": "Defines the Python package metadata, runtime dependencies, console command, build backend, and development tool settings."
+    },
+    "function:Launch Chat Studio.cmd:Test-LocalPort": {
+      "name": "Test-LocalPort",
+      "type": "function",
+      "summary": "Tests whether another process is accepting connections on the application port."
+    },
+    "function:Launch Chat Studio.cmd:Get-FrontendState": {
+      "name": "Get-FrontendState",
+      "type": "function",
+      "summary": "Determines whether frontend dependencies or the production build need refreshing."
+    },
+    "function:Launch Chat Studio.cmd:Install-Node": {
+      "name": "Install-Node",
+      "type": "function",
+      "summary": "Downloads, verifies, extracts, and installs the current Node.js LTS runtime into the project-local portable runtime directory."
+    },
+    "document:docs/codebase/ARCHITECTURE.md": {
+      "name": "ARCHITECTURE.md",
+      "type": "document",
+      "summary": "Describes the React-to-FastAPI architecture, context-preflight flow, persisted runs, memory curation, provider boundaries, and localhost-first deployment model."
+    },
+    "document:docs/codebase/CONCERNS.md": {
+      "name": "CONCERNS.md",
+      "type": "document",
+      "summary": "Records deployment constraints, security boundaries, provider and retrieval tradeoffs, plus the high-blast-radius files that need focused tests."
+    },
+    "document:docs/codebase/CONVENTIONS.md": {
+      "name": "CONVENTIONS.md",
+      "type": "document",
+      "summary": "Defines Python and React naming, API-contract evolution, error handling, credential safety, and the project verification commands."
+    },
+    "document:docs/codebase/INTEGRATIONS.md": {
+      "name": "INTEGRATIONS.md",
+      "type": "document",
+      "summary": "Catalogs local and cloud model integrations, OpenCode OAuth bridging, attachment handling, memory persistence, and credential boundaries."
+    },
+    "document:docs/codebase/STACK.md": {
+      "name": "STACK.md",
+      "type": "document",
+      "summary": "Lists the backend, frontend, persistence, inference, search, file-processing, and development-tooling stack with key commands."
+    },
+    "document:docs/codebase/STRUCTURE.md": {
+      "name": "STRUCTURE.md",
+      "type": "document",
+      "summary": "Maps repository paths to their responsibilities and explains startup, static serving, and the retained shared modules."
+    },
+    "document:docs/codebase/TESTING.md": {
+      "name": "TESTING.md",
+      "type": "document",
+      "summary": "Documents backend and frontend test commands, test seams, coverage scope, and manual smoke-test gaps for external integrations."
+    },
+    "config:frontend/.oxlintrc.json": {
+      "name": ".oxlintrc.json",
+      "type": "config",
+      "summary": "Configures the Oxlint plugins and rules used by the frontend workspace."
+    },
+    "document:frontend/README.md": {
+      "name": "README.md",
+      "type": "document",
+      "summary": "Provides the brief starter documentation for the React frontend workspace."
+    },
+    "config:frontend/components.json": {
+      "name": "components.json",
+      "type": "config",
+      "summary": "Configures the UI component generator, style preset, Tailwind settings, and import aliases."
+    },
+    "file:frontend/index.html": {
+      "name": "index.html",
+      "type": "file",
+      "summary": "Provides the browser HTML shell and root element that loads the React application entry point."
+    },
+    "config:frontend/package.json": {
+      "name": "package.json",
+      "type": "config",
+      "summary": "Defines frontend scripts, production dependencies, and development tooling for the Vite React workspace."
+    },
+    "config:frontend/tsconfig.app.json": {
+      "name": "tsconfig.app.json",
+      "type": "config",
+      "summary": "Configures TypeScript compilation rules for browser application source files."
+    },
+    "config:frontend/tsconfig.json": {
+      "name": "tsconfig.json",
+      "type": "config",
+      "summary": "Provides the root TypeScript project references and shared compiler settings."
+    },
+    "config:frontend/tsconfig.node.json": {
+      "name": "tsconfig.node.json",
+      "type": "config",
+      "summary": "Configures TypeScript compilation for Node-based Vite and test configuration files."
+    },
+    "document:.github/ISSUE_TEMPLATE/bug_report.md": {
+      "name": "bug_report.md",
+      "type": "document",
+      "summary": "GitHub issue template that captures reproducible defects, runtime environment details, logs, and the selected model."
+    },
+    "document:.github/ISSUE_TEMPLATE/feature_request.md": {
+      "name": "feature_request.md",
+      "type": "document",
+      "summary": "GitHub issue template for describing a requested capability, its use case, alternatives, and supporting context."
+    },
+    "document:.github/pull_request_template.md": {
+      "name": "pull_request_template.md",
+      "type": "document",
+      "summary": "Pull request template that records change intent, end-to-end testing, and contribution-quality checks."
+    },
+    "file:.graphifyignore": {
+      "name": ".graphifyignore",
+      "type": "file",
+      "summary": "Ignore rules that scope Graphify analysis to relevant repository content."
+    },
+    "file:.python-version": {
+      "name": ".python-version",
+      "type": "file",
+      "summary": "Pins the Python version expected by the project's uv-managed environment."
+    },
+    "file:backend/__init__.py": {
+      "name": "__init__.py",
+      "type": "file",
+      "summary": "Marks the backend directory as a Python package."
+    },
+    "file:backend/app/__init__.py": {
+      "name": "__init__.py",
+      "type": "file",
+      "summary": "Marks the FastAPI application directory as a Python package."
+    },
+    "file:docs/site/index.html": {
+      "name": "index.html",
+      "type": "file",
+      "summary": "Static documentation shell that fetches curated Markdown files, renders them in the browser, and supports hash-based navigation."
+    },
+    "file:docs/tutorial/index.html": {
+      "name": "index.html",
+      "type": "file",
+      "summary": "Standalone offline zero-to-hero handbook that explains the product, user workflows, business value, and implementation architecture."
+    },
+    "file:frontend/src/App.css": {
+      "name": "App.css",
+      "type": "file",
+      "summary": "Component-level stylesheet for the frontend application shell."
+    },
+    "file:frontend/src/index.css": {
+      "name": "index.css",
+      "type": "file",
+      "summary": "Global frontend stylesheet entry point."
+    },
+    "file:frontend/src/test/setup.ts": {
+      "name": "setup.ts",
+      "type": "file",
+      "summary": "Vitest setup module that installs DOM assertions and cleans up React test renders after each test."
+    },
+    "file:frontend/vite.config.ts": {
+      "name": "vite.config.ts",
+      "type": "file",
+      "summary": "Vite configuration for the React frontend, Tailwind integration, local API proxy, aliases, and jsdom tests."
+    },
+    "file:frontend/vitest.config.ts": {
+      "name": "vitest.config.ts",
+      "type": "file",
+      "summary": "Vitest configuration that enables React transforms, the source alias, jsdom, and the shared test setup file."
+    },
+    "document:tasks/plan.md": {
+      "name": "plan.md",
+      "type": "document",
+      "summary": "Implementation plan for the static htmx documentation site, including architecture decisions, acceptance criteria, and verification steps."
+    },
+    "document:tasks/todo.md": {
+      "name": "todo.md",
+      "type": "document",
+      "summary": "Completion checklist for the documentation-site plan, including verified milestones and deviations found during implementation."
+    },
+    "file:tests/conftest.py": {
+      "name": "conftest.py",
+      "type": "file",
+      "summary": "Pytest fixtures that provide an in-memory FastAPI test client for API contract tests."
+    },
+    "function:tests/conftest.py:client": {
+      "name": "client",
+      "type": "function",
+      "summary": "Creates an in-memory FastAPI TestClient fixture for each test."
+    },
+    "file:tests/test_api_contract.py": {
+      "name": "test_api_contract.py",
+      "type": "file",
+      "summary": "API contract tests covering health checks, conversation persistence, provider credential isolation, run streaming, and OpenRouter PKCE authentication."
+    },
+    "function:tests/test_api_contract.py:test_health_and_session_cookie": {
+      "name": "test_health_and_session_cookie",
+      "type": "function",
+      "summary": "Checks the health endpoint response and browser-session cookie."
+    },
+    "function:tests/test_api_contract.py:test_conversation_crud_preserves_message_order": {
+      "name": "test_conversation_crud_preserves_message_order",
+      "type": "function",
+      "summary": "Verifies conversation creation, message creation, retrieval, and ordering through the API."
+    },
+    "function:tests/test_api_contract.py:test_provider_secret_is_scoped_to_browser_session": {
+      "name": "test_provider_secret_is_scoped_to_browser_session",
+      "type": "function",
+      "summary": "Ensures provider credentials are isolated to the current browser session."
+    },
+    "function:tests/test_api_contract.py:test_anthropic_reports_workload_identity_source": {
+      "name": "test_anthropic_reports_workload_identity_source",
+      "type": "function",
+      "summary": "Verifies Anthropic provider metadata identifies workload-identity credentials."
+    },
+    "function:tests/test_api_contract.py:test_run_stream_contract_retains_completed_output": {
+      "name": "test_run_stream_contract_retains_completed_output",
+      "type": "function",
+      "summary": "Verifies streamed run events and the retained completed output snapshot."
+    },
+    "function:tests/test_api_contract.py:test_openrouter_auth_uses_session_pkce_and_current_callback_origin": {
+      "name": "test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+      "type": "function",
+      "summary": "Checks the OpenRouter authorization start endpoint builds session PKCE parameters and the current callback origin."
+    }
+  },
+  "totalNodes": 290,
+  "totalEdges": 495
+}

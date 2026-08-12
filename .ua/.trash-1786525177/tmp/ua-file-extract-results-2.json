@@ -1,0 +1,6252 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 16,
+  "filesSkipped": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 16,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 16,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "app.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 577,
+      "nonEmptyLines": 499,
+      "functions": [
+        {
+          "name": "cached_models",
+          "startLine": 97,
+          "endLine": 98,
+          "params": []
+        },
+        {
+          "name": "cached_provider_models",
+          "startLine": 102,
+          "endLine": 107,
+          "params": [
+            "provider"
+          ]
+        },
+        {
+          "name": "get_state",
+          "startLine": 110,
+          "endLine": 113,
+          "params": [
+            "key",
+            "default"
+          ]
+        },
+        {
+          "name": "switch_conversation",
+          "startLine": 116,
+          "endLine": 130,
+          "params": [
+            "conv_id",
+            "catalog"
+          ]
+        },
+        {
+          "name": "_maybe_extract_memories",
+          "startLine": 133,
+          "endLine": 149,
+          "params": [
+            "conv_id",
+            "force"
+          ]
+        },
+        {
+          "name": "_feedback_widget",
+          "startLine": 152,
+          "endLine": 158,
+          "params": [
+            "message_id",
+            "current"
+          ]
+        },
+        {
+          "name": "start_generation",
+          "startLine": 161,
+          "endLine": 183,
+          "params": [
+            "conv_id",
+            "user_text",
+            "raw_files",
+            "history",
+            "is_first_turn"
+          ]
+        },
+        {
+          "name": "send_user_message",
+          "startLine": 186,
+          "endLine": 206,
+          "params": [
+            "user_text",
+            "raw_files"
+          ]
+        },
+        {
+          "name": "regenerate_last",
+          "startLine": 209,
+          "endLine": 231,
+          "params": [
+            "history_msgs"
+          ]
+        },
+        {
+          "name": "seed_builtin_presets",
+          "startLine": 234,
+          "endLine": 240,
+          "params": [
+            "catalog"
+          ]
+        },
+        {
+          "name": "apply_preset",
+          "startLine": 243,
+          "endLine": 257,
+          "params": [
+            "name",
+            "catalog"
+          ]
+        },
+        {
+          "name": "date_bucket",
+          "startLine": 260,
+          "endLine": 274,
+          "params": [
+            "iso_ts"
+          ]
+        },
+        {
+          "name": "render_live_generation",
+          "startLine": 278,
+          "endLine": 305,
+          "params": [
+            "conv_id"
+          ]
+        },
+        {
+          "name": "render_health",
+          "startLine": 309,
+          "endLine": 320,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "cached_models",
+          "line": 96,
+          "isDefault": false
+        },
+        {
+          "name": "cached_provider_models",
+          "line": 101,
+          "isDefault": false
+        },
+        {
+          "name": "get_state",
+          "line": 110,
+          "isDefault": false
+        },
+        {
+          "name": "switch_conversation",
+          "line": 116,
+          "isDefault": false
+        },
+        {
+          "name": "_maybe_extract_memories",
+          "line": 133,
+          "isDefault": false
+        },
+        {
+          "name": "_feedback_widget",
+          "line": 152,
+          "isDefault": false
+        },
+        {
+          "name": "start_generation",
+          "line": 161,
+          "isDefault": false
+        },
+        {
+          "name": "send_user_message",
+          "line": 186,
+          "isDefault": false
+        },
+        {
+          "name": "regenerate_last",
+          "line": 209,
+          "isDefault": false
+        },
+        {
+          "name": "seed_builtin_presets",
+          "line": 234,
+          "isDefault": false
+        },
+        {
+          "name": "apply_preset",
+          "line": 243,
+          "isDefault": false
+        },
+        {
+          "name": "date_bucket",
+          "line": 260,
+          "isDefault": false
+        },
+        {
+          "name": "render_live_generation",
+          "line": 277,
+          "isDefault": false
+        },
+        {
+          "name": "render_health",
+          "line": 308,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "cached_models",
+          "callee": "list_models",
+          "lineNumber": 98
+        },
+        {
+          "caller": "cached_provider_models",
+          "callee": "providers.list_provider_models",
+          "lineNumber": 104
+        },
+        {
+          "caller": "cached_provider_models",
+          "callee": "logger.warning",
+          "lineNumber": 106
+        },
+        {
+          "caller": "switch_conversation",
+          "callee": "st.session_state.get",
+          "lineNumber": 118
+        },
+        {
+          "caller": "switch_conversation",
+          "callee": "jobs.is_running",
+          "lineNumber": 119
+        },
+        {
+          "caller": "switch_conversation",
+          "callee": "st.session_state.get",
+          "lineNumber": 119
+        },
+        {
+          "caller": "switch_conversation",
+          "callee": "_maybe_extract_memories",
+          "lineNumber": 120
+        },
+        {
+          "caller": "switch_conversation",
+          "callee": "chat_store.get_conversation",
+          "lineNumber": 123
+        },
+        {
+          "caller": "switch_conversation",
+          "callee": "normalize_model_key",
+          "lineNumber": 125
+        },
+        {
+          "caller": "_maybe_extract_memories",
+          "callee": "chat_store.get_conversation",
+          "lineNumber": 134
+        },
+        {
+          "caller": "_maybe_extract_memories",
+          "callee": "chat_store.message_count",
+          "lineNumber": 137
+        },
+        {
+          "caller": "_maybe_extract_memories",
+          "callee": "st.session_state.get",
+          "lineNumber": 142
+        },
+        {
+          "caller": "_maybe_extract_memories",
+          "callee": "st.session_state.get",
+          "lineNumber": 143
+        },
+        {
+          "caller": "_maybe_extract_memories",
+          "callee": "st.spinner",
+          "lineNumber": 145
+        },
+        {
+          "caller": "_maybe_extract_memories",
+          "callee": "memory.extract_memories",
+          "lineNumber": 146
+        },
+        {
+          "caller": "_maybe_extract_memories",
+          "callee": "note_conversation_done",
+          "lineNumber": 147
+        },
+        {
+          "caller": "_maybe_extract_memories",
+          "callee": "st.spinner",
+          "lineNumber": 148
+        },
+        {
+          "caller": "_maybe_extract_memories",
+          "callee": "rebuild_profile",
+          "lineNumber": 149
+        },
+        {
+          "caller": "_feedback_widget",
+          "callee": "current.get",
+          "lineNumber": 153
+        },
+        {
+          "caller": "_feedback_widget",
+          "callee": "st.feedback",
+          "lineNumber": 154
+        },
+        {
+          "caller": "_feedback_widget",
+          "callee": "chat_store.set_feedback",
+          "lineNumber": 158
+        },
+        {
+          "caller": "start_generation",
+          "callee": "vision_fallback_model",
+          "lineNumber": 164
+        },
+        {
+          "caller": "start_generation",
+          "callee": "cached_models",
+          "lineNumber": 164
+        },
+        {
+          "caller": "start_generation",
+          "callee": "jobs.start",
+          "lineNumber": 166
+        },
+        {
+          "caller": "start_generation",
+          "callee": "get_state",
+          "lineNumber": 174
+        },
+        {
+          "caller": "start_generation",
+          "callee": "get_state",
+          "lineNumber": 175
+        },
+        {
+          "caller": "start_generation",
+          "callee": "get_state",
+          "lineNumber": 179
+        },
+        {
+          "caller": "start_generation",
+          "callee": "get_state",
+          "lineNumber": 180
+        },
+        {
+          "caller": "start_generation",
+          "callee": "get_state",
+          "lineNumber": 182
+        },
+        {
+          "caller": "send_user_message",
+          "callee": "st.session_state.get",
+          "lineNumber": 188
+        },
+        {
+          "caller": "send_user_message",
+          "callee": "chat_store.create_conversation",
+          "lineNumber": 190
+        },
+        {
+          "caller": "send_user_message",
+          "callee": "chat_store.get_messages",
+          "lineNumber": 192
+        },
+        {
+          "caller": "send_user_message",
+          "callee": "n.rsplit(\".\", 1)[-1].lower",
+          "lineNumber": 194
+        },
+        {
+          "caller": "send_user_message",
+          "callee": "n.rsplit",
+          "lineNumber": 194
+        },
+        {
+          "caller": "send_user_message",
+          "callee": "chat_store.add_message",
+          "lineNumber": 197
+        },
+        {
+          "caller": "send_user_message",
+          "callee": "start_generation",
+          "lineNumber": 198
+        },
+        {
+          "caller": "send_user_message",
+          "callee": "any",
+          "lineNumber": 203
+        },
+        {
+          "caller": "send_user_message",
+          "callee": "a.get",
+          "lineNumber": 203
+        },
+        {
+          "caller": "send_user_message",
+          "callee": "len",
+          "lineNumber": 205
+        },
+        {
+          "caller": "regenerate_last",
+          "callee": "next",
+          "lineNumber": 215
+        },
+        {
+          "caller": "regenerate_last",
+          "callee": "range",
+          "lineNumber": 216
+        },
+        {
+          "caller": "regenerate_last",
+          "callee": "len",
+          "lineNumber": 216
+        },
+        {
+          "caller": "regenerate_last",
+          "callee": "chat_store.delete_messages_from",
+          "lineNumber": 220
+        },
+        {
+          "caller": "regenerate_last",
+          "callee": "start_generation",
+          "lineNumber": 221
+        },
+        {
+          "caller": "regenerate_last",
+          "callee": "any",
+          "lineNumber": 228
+        },
+        {
+          "caller": "regenerate_last",
+          "callee": "a.get",
+          "lineNumber": 228
+        },
+        {
+          "caller": "seed_builtin_presets",
+          "callee": "chat_store.get_preset_by_name",
+          "lineNumber": 235
+        },
+        {
+          "caller": "seed_builtin_presets",
+          "callee": "best_coding_model",
+          "lineNumber": 236
+        },
+        {
+          "caller": "seed_builtin_presets",
+          "callee": "chat_store.save_preset",
+          "lineNumber": 238
+        },
+        {
+          "caller": "apply_preset",
+          "callee": "chat_store.get_preset_by_name",
+          "lineNumber": 249
+        },
+        {
+          "caller": "apply_preset",
+          "callee": "normalize_model_key",
+          "lineNumber": 254
+        },
+        {
+          "caller": "date_bucket",
+          "callee": "datetime.fromisoformat",
+          "lineNumber": 262
+        },
+        {
+          "caller": "date_bucket",
+          "callee": "datetime.now",
+          "lineNumber": 265
+        },
+        {
+          "caller": "date_bucket",
+          "callee": "dt.date",
+          "lineNumber": 266
+        },
+        {
+          "caller": "date_bucket",
+          "callee": "dt.replace(tzinfo=timezone.utc).date",
+          "lineNumber": 266
+        },
+        {
+          "caller": "date_bucket",
+          "callee": "dt.replace",
+          "lineNumber": 266
+        },
+        {
+          "caller": "date_bucket",
+          "callee": "now.date",
+          "lineNumber": 267
+        },
+        {
+          "caller": "date_bucket",
+          "callee": "timedelta",
+          "lineNumber": 270
+        },
+        {
+          "caller": "date_bucket",
+          "callee": "timedelta",
+          "lineNumber": 272
+        },
+        {
+          "caller": "render_live_generation",
+          "callee": "jobs.get",
+          "lineNumber": 280
+        },
+        {
+          "caller": "render_live_generation",
+          "callee": "jobs.clear",
+          "lineNumber": 284
+        },
+        {
+          "caller": "render_live_generation",
+          "callee": "st.rerun",
+          "lineNumber": 285
+        },
+        {
+          "caller": "render_live_generation",
+          "callee": "st.chat_message",
+          "lineNumber": 287
+        },
+        {
+          "caller": "render_live_generation",
+          "callee": "st.caption",
+          "lineNumber": 289
+        },
+        {
+          "caller": "render_live_generation",
+          "callee": "\" · \".join",
+          "lineNumber": 289
+        },
+        {
+          "caller": "render_live_generation",
+          "callee": "st.markdown",
+          "lineNumber": 291
+        },
+        {
+          "caller": "render_live_generation",
+          "callee": "st.markdown",
+          "lineNumber": 293
+        },
+        {
+          "caller": "render_live_generation",
+          "callee": "st.caption",
+          "lineNumber": 296
+        },
+        {
+          "caller": "render_live_generation",
+          "callee": "job.elapsed",
+          "lineNumber": 297
+        },
+        {
+          "caller": "render_live_generation",
+          "callee": "st.caption",
+          "lineNumber": 299
+        },
+        {
+          "caller": "render_live_generation",
+          "callee": "int",
+          "lineNumber": 300
+        },
+        {
+          "caller": "render_live_generation",
+          "callee": "st.button",
+          "lineNumber": 303
+        },
+        {
+          "caller": "render_live_generation",
+          "callee": "jobs.stop",
+          "lineNumber": 304
+        },
+        {
+          "caller": "render_live_generation",
+          "callee": "st.rerun",
+          "lineNumber": 305
+        },
+        {
+          "caller": "render_health",
+          "callee": "time.perf_counter",
+          "lineNumber": 311
+        },
+        {
+          "caller": "render_health",
+          "callee": "ollama_alive",
+          "lineNumber": 312
+        },
+        {
+          "caller": "render_health",
+          "callee": "time.perf_counter",
+          "lineNumber": 313
+        },
+        {
+          "caller": "render_health",
+          "callee": "st.caption",
+          "lineNumber": 315
+        },
+        {
+          "caller": "render_health",
+          "callee": "running_models",
+          "lineNumber": 318
+        },
+        {
+          "caller": "render_health",
+          "callee": "\", \".join",
+          "lineNumber": 319
+        },
+        {
+          "caller": "render_health",
+          "callee": "st.caption",
+          "lineNumber": 320
+        },
+        {
+          "caller": "_on_preset_change",
+          "callee": "apply_preset",
+          "lineNumber": 366
+        },
+        {
+          "caller": "render_conv_row",
+          "callee": "st.session_state.get",
+          "lineNumber": 434
+        },
+        {
+          "caller": "render_conv_row",
+          "callee": "st.columns",
+          "lineNumber": 435
+        },
+        {
+          "caller": "render_conv_row",
+          "callee": "st.button",
+          "lineNumber": 438
+        },
+        {
+          "caller": "render_conv_row",
+          "callee": "switch_conversation",
+          "lineNumber": 440
+        },
+        {
+          "caller": "render_conv_row",
+          "callee": "st.rerun",
+          "lineNumber": 441
+        },
+        {
+          "caller": "render_conv_row",
+          "callee": "st.popover",
+          "lineNumber": 443
+        },
+        {
+          "caller": "render_conv_row",
+          "callee": "st.text_input",
+          "lineNumber": 444
+        },
+        {
+          "caller": "render_conv_row",
+          "callee": "new_title.strip",
+          "lineNumber": 445
+        },
+        {
+          "caller": "render_conv_row",
+          "callee": "chat_store.rename_conversation",
+          "lineNumber": 446
+        },
+        {
+          "caller": "render_conv_row",
+          "callee": "new_title.strip",
+          "lineNumber": 446
+        },
+        {
+          "caller": "render_conv_row",
+          "callee": "st.rerun",
+          "lineNumber": 447
+        },
+        {
+          "caller": "render_conv_row",
+          "callee": "conv.get",
+          "lineNumber": 448
+        },
+        {
+          "caller": "render_conv_row",
+          "callee": "st.button",
+          "lineNumber": 449
+        },
+        {
+          "caller": "render_conv_row",
+          "callee": "chat_store.set_pinned",
+          "lineNumber": 450
+        },
+        {
+          "caller": "render_conv_row",
+          "callee": "conv.get",
+          "lineNumber": 450
+        },
+        {
+          "caller": "render_conv_row",
+          "callee": "st.rerun",
+          "lineNumber": 451
+        },
+        {
+          "caller": "render_conv_row",
+          "callee": "st.download_button",
+          "lineNumber": 452
+        },
+        {
+          "caller": "render_conv_row",
+          "callee": "chat_store.export_conversation_markdown",
+          "lineNumber": 454
+        },
+        {
+          "caller": "render_conv_row",
+          "callee": "st.button",
+          "lineNumber": 460
+        },
+        {
+          "caller": "render_conv_row",
+          "callee": "chat_store.delete_conversation",
+          "lineNumber": 461
+        },
+        {
+          "caller": "render_conv_row",
+          "callee": "rag.delete_conv_vectors",
+          "lineNumber": 462
+        },
+        {
+          "caller": "render_conv_row",
+          "callee": "st.rerun",
+          "lineNumber": 465
+        }
+      ],
+      "metrics": {
+        "importCount": 5,
+        "exportCount": 14,
+        "functionCount": 14,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "pages/1_Memory.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 70,
+      "nonEmptyLines": 59,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "pages/2_Settings.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 146,
+      "nonEmptyLines": 133,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "pages/4_Compare.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 106,
+      "nonEmptyLines": 83,
+      "functions": [
+        {
+          "name": "_models",
+          "startLine": 26,
+          "endLine": 27,
+          "params": []
+        },
+        {
+          "name": "_provider_models",
+          "startLine": 31,
+          "endLine": 36,
+          "params": [
+            "provider"
+          ]
+        },
+        {
+          "name": "_label",
+          "startLine": 49,
+          "endLine": 51,
+          "params": [
+            "k"
+          ]
+        },
+        {
+          "name": "render_compare",
+          "startLine": 79,
+          "endLine": 103,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "_models",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "_provider_models",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "_label",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "render_compare",
+          "line": 78,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_models",
+          "callee": "list_models",
+          "lineNumber": 27
+        },
+        {
+          "caller": "_provider_models",
+          "callee": "providers.list_provider_models",
+          "lineNumber": 33
+        },
+        {
+          "caller": "_provider_models",
+          "callee": "logger.warning",
+          "lineNumber": 35
+        },
+        {
+          "caller": "render_compare",
+          "callee": "jobs.get",
+          "lineNumber": 80
+        },
+        {
+          "caller": "render_compare",
+          "callee": "jobs.get",
+          "lineNumber": 80
+        },
+        {
+          "caller": "render_compare",
+          "callee": "st.markdown",
+          "lineNumber": 83
+        },
+        {
+          "caller": "render_compare",
+          "callee": "st.session_state.get",
+          "lineNumber": 83
+        },
+        {
+          "caller": "render_compare",
+          "callee": "st.columns",
+          "lineNumber": 84
+        },
+        {
+          "caller": "render_compare",
+          "callee": "st.markdown",
+          "lineNumber": 87
+        },
+        {
+          "caller": "render_compare",
+          "callee": "_label",
+          "lineNumber": 87
+        },
+        {
+          "caller": "render_compare",
+          "callee": "st.caption",
+          "lineNumber": 89
+        },
+        {
+          "caller": "render_compare",
+          "callee": "st.markdown",
+          "lineNumber": 92
+        },
+        {
+          "caller": "render_compare",
+          "callee": "st.error",
+          "lineNumber": 94
+        },
+        {
+          "caller": "render_compare",
+          "callee": "st.markdown",
+          "lineNumber": 96
+        },
+        {
+          "caller": "render_compare",
+          "callee": "st.caption",
+          "lineNumber": 98
+        },
+        {
+          "caller": "render_compare",
+          "callee": "st.button",
+          "lineNumber": 100
+        },
+        {
+          "caller": "render_compare",
+          "callee": "jobs.stop",
+          "lineNumber": 101
+        },
+        {
+          "caller": "render_compare",
+          "callee": "jobs.stop",
+          "lineNumber": 102
+        },
+        {
+          "caller": "render_compare",
+          "callee": "st.rerun",
+          "lineNumber": 103
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/catalog.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 108,
+      "nonEmptyLines": 90,
+      "functions": [
+        {
+          "name": "normalize_model_key",
+          "startLine": 41,
+          "endLine": 43,
+          "params": [
+            "value"
+          ]
+        },
+        {
+          "name": "build_model_catalog",
+          "startLine": 46,
+          "endLine": 82,
+          "params": [
+            "models",
+            "show_cloud",
+            "provider_models"
+          ]
+        },
+        {
+          "name": "ordered_keys",
+          "startLine": 85,
+          "endLine": 89,
+          "params": [
+            "catalog",
+            "group_filter"
+          ]
+        },
+        {
+          "name": "present_groups",
+          "startLine": 92,
+          "endLine": 97,
+          "params": [
+            "catalog"
+          ]
+        },
+        {
+          "name": "best_coding_model",
+          "startLine": 100,
+          "endLine": 108,
+          "params": [
+            "catalog"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SelectedModel",
+          "startLine": 23,
+          "endLine": 38,
+          "methods": [
+            "badge"
+          ],
+          "properties": [
+            "key",
+            "provider",
+            "name",
+            "hint",
+            "detail",
+            "is_vision",
+            "group",
+            "group_rank",
+            "context_length"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SelectedModel",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "normalize_model_key",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "build_model_catalog",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "ordered_keys",
+          "line": 85,
+          "isDefault": false
+        },
+        {
+          "name": "present_groups",
+          "line": 92,
+          "isDefault": false
+        },
+        {
+          "name": "best_coding_model",
+          "line": 100,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "badge",
+          "callee": "PROVIDER_BADGES.get",
+          "lineNumber": 38
+        },
+        {
+          "caller": "build_model_catalog",
+          "callee": "chat_models",
+          "lineNumber": 53
+        },
+        {
+          "caller": "build_model_catalog",
+          "callee": "SelectedModel",
+          "lineNumber": 57
+        },
+        {
+          "caller": "build_model_catalog",
+          "callee": "hint_for",
+          "lineNumber": 61
+        },
+        {
+          "caller": "build_model_catalog",
+          "callee": "\" · \".join",
+          "lineNumber": 62
+        },
+        {
+          "caller": "build_model_catalog",
+          "callee": "provider_models.items",
+          "lineNumber": 68
+        },
+        {
+          "caller": "build_model_catalog",
+          "callee": "SelectedModel",
+          "lineNumber": 71
+        },
+        {
+          "caller": "ordered_keys",
+          "callee": "catalog.values",
+          "lineNumber": 87
+        },
+        {
+          "caller": "ordered_keys",
+          "callee": "items.sort",
+          "lineNumber": 88
+        },
+        {
+          "caller": "ordered_keys",
+          "callee": "v.group.lower",
+          "lineNumber": 88
+        },
+        {
+          "caller": "ordered_keys",
+          "callee": "v.name.lower",
+          "lineNumber": 88
+        },
+        {
+          "caller": "present_groups",
+          "callee": "catalog.values",
+          "lineNumber": 95
+        },
+        {
+          "caller": "present_groups",
+          "callee": "seen.setdefault",
+          "lineNumber": 96
+        },
+        {
+          "caller": "present_groups",
+          "callee": "sorted",
+          "lineNumber": 97
+        },
+        {
+          "caller": "present_groups",
+          "callee": "seen.items",
+          "lineNumber": 97
+        },
+        {
+          "caller": "present_groups",
+          "callee": "kv[0].lower",
+          "lineNumber": 97
+        },
+        {
+          "caller": "best_coding_model",
+          "callee": "catalog.values",
+          "lineNumber": 102
+        },
+        {
+          "caller": "best_coding_model",
+          "callee": "v.name.lower",
+          "lineNumber": 102
+        },
+        {
+          "caller": "best_coding_model",
+          "callee": "v.name.lower",
+          "lineNumber": 102
+        },
+        {
+          "caller": "best_coding_model",
+          "callee": "coders.sort",
+          "lineNumber": 104
+        },
+        {
+          "caller": "best_coding_model",
+          "callee": "catalog.values",
+          "lineNumber": 107
+        },
+        {
+          "caller": "best_coding_model",
+          "callee": "next",
+          "lineNumber": 108
+        },
+        {
+          "caller": "best_coding_model",
+          "callee": "iter",
+          "lineNumber": 108
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 6,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/chat_store.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 405,
+      "nonEmptyLines": 322,
+      "functions": [
+        {
+          "name": "_now",
+          "startLine": 64,
+          "endLine": 65,
+          "params": []
+        },
+        {
+          "name": "_conn",
+          "startLine": 68,
+          "endLine": 73,
+          "params": []
+        },
+        {
+          "name": "init_db",
+          "startLine": 76,
+          "endLine": 82,
+          "params": []
+        },
+        {
+          "name": "create_conversation",
+          "startLine": 87,
+          "endLine": 95,
+          "params": [
+            "model"
+          ]
+        },
+        {
+          "name": "list_conversations",
+          "startLine": 98,
+          "endLine": 103,
+          "params": [
+            "limit"
+          ]
+        },
+        {
+          "name": "get_conversation",
+          "startLine": 106,
+          "endLine": 109,
+          "params": [
+            "conv_id"
+          ]
+        },
+        {
+          "name": "rename_conversation",
+          "startLine": 112,
+          "endLine": 116,
+          "params": [
+            "conv_id",
+            "title"
+          ]
+        },
+        {
+          "name": "delete_conversation",
+          "startLine": 119,
+          "endLine": 121,
+          "params": [
+            "conv_id"
+          ]
+        },
+        {
+          "name": "set_pinned",
+          "startLine": 124,
+          "endLine": 126,
+          "params": [
+            "conv_id",
+            "pinned"
+          ]
+        },
+        {
+          "name": "search_conversations",
+          "startLine": 129,
+          "endLine": 140,
+          "params": [
+            "query",
+            "limit"
+          ]
+        },
+        {
+          "name": "delete_messages_from",
+          "startLine": 143,
+          "endLine": 149,
+          "params": [
+            "conv_id",
+            "ts"
+          ]
+        },
+        {
+          "name": "clear_all_conversations",
+          "startLine": 152,
+          "endLine": 162,
+          "params": []
+        },
+        {
+          "name": "mark_memory_extracted",
+          "startLine": 165,
+          "endLine": 169,
+          "params": [
+            "conv_id"
+          ]
+        },
+        {
+          "name": "add_message",
+          "startLine": 174,
+          "endLine": 185,
+          "params": [
+            "conv_id",
+            "role",
+            "content",
+            "attachments"
+          ]
+        },
+        {
+          "name": "get_messages",
+          "startLine": 188,
+          "endLine": 198,
+          "params": [
+            "conv_id"
+          ]
+        },
+        {
+          "name": "message_count",
+          "startLine": 201,
+          "endLine": 204,
+          "params": [
+            "conv_id"
+          ]
+        },
+        {
+          "name": "add_memory",
+          "startLine": 209,
+          "endLine": 218,
+          "params": [
+            "content",
+            "category",
+            "source_conv"
+          ]
+        },
+        {
+          "name": "list_memories",
+          "startLine": 221,
+          "endLine": 227,
+          "params": [
+            "active_only"
+          ]
+        },
+        {
+          "name": "touch_memories",
+          "startLine": 230,
+          "endLine": 238,
+          "params": [
+            "mem_ids"
+          ]
+        },
+        {
+          "name": "update_memory",
+          "startLine": 241,
+          "endLine": 248,
+          "params": [
+            "mem_id"
+          ]
+        },
+        {
+          "name": "delete_memory",
+          "startLine": 251,
+          "endLine": 253,
+          "params": [
+            "mem_id"
+          ]
+        },
+        {
+          "name": "decay_memories",
+          "startLine": 256,
+          "endLine": 264,
+          "params": [
+            "max_age_days"
+          ]
+        },
+        {
+          "name": "set_feedback",
+          "startLine": 269,
+          "endLine": 275,
+          "params": [
+            "message_id",
+            "rating"
+          ]
+        },
+        {
+          "name": "get_feedback",
+          "startLine": 278,
+          "endLine": 285,
+          "params": [
+            "conv_id"
+          ]
+        },
+        {
+          "name": "recent_feedback_samples",
+          "startLine": 288,
+          "endLine": 296,
+          "params": [
+            "limit"
+          ]
+        },
+        {
+          "name": "kv_get",
+          "startLine": 301,
+          "endLine": 304,
+          "params": [
+            "key",
+            "default"
+          ]
+        },
+        {
+          "name": "kv_set",
+          "startLine": 307,
+          "endLine": 313,
+          "params": [
+            "key",
+            "value"
+          ]
+        },
+        {
+          "name": "list_presets",
+          "startLine": 320,
+          "endLine": 324,
+          "params": []
+        },
+        {
+          "name": "save_preset",
+          "startLine": 327,
+          "endLine": 338,
+          "params": [
+            "name",
+            "system_prompt",
+            "model_key",
+            "temperature",
+            "builtin"
+          ]
+        },
+        {
+          "name": "delete_preset",
+          "startLine": 341,
+          "endLine": 343,
+          "params": [
+            "preset_id"
+          ]
+        },
+        {
+          "name": "get_preset_by_name",
+          "startLine": 346,
+          "endLine": 349,
+          "params": [
+            "name"
+          ]
+        },
+        {
+          "name": "export_conversation_markdown",
+          "startLine": 354,
+          "endLine": 362,
+          "params": [
+            "conv_id"
+          ]
+        },
+        {
+          "name": "import_jsonl",
+          "startLine": 365,
+          "endLine": 382,
+          "params": [
+            "data"
+          ]
+        },
+        {
+          "name": "wipe_everything",
+          "startLine": 385,
+          "endLine": 389,
+          "params": []
+        },
+        {
+          "name": "export_jsonl",
+          "startLine": 392,
+          "endLine": 405,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "_now",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "_conn",
+          "line": 68,
+          "isDefault": false
+        },
+        {
+          "name": "init_db",
+          "line": 76,
+          "isDefault": false
+        },
+        {
+          "name": "create_conversation",
+          "line": 87,
+          "isDefault": false
+        },
+        {
+          "name": "list_conversations",
+          "line": 98,
+          "isDefault": false
+        },
+        {
+          "name": "get_conversation",
+          "line": 106,
+          "isDefault": false
+        },
+        {
+          "name": "rename_conversation",
+          "line": 112,
+          "isDefault": false
+        },
+        {
+          "name": "delete_conversation",
+          "line": 119,
+          "isDefault": false
+        },
+        {
+          "name": "set_pinned",
+          "line": 124,
+          "isDefault": false
+        },
+        {
+          "name": "search_conversations",
+          "line": 129,
+          "isDefault": false
+        },
+        {
+          "name": "delete_messages_from",
+          "line": 143,
+          "isDefault": false
+        },
+        {
+          "name": "clear_all_conversations",
+          "line": 152,
+          "isDefault": false
+        },
+        {
+          "name": "mark_memory_extracted",
+          "line": 165,
+          "isDefault": false
+        },
+        {
+          "name": "add_message",
+          "line": 174,
+          "isDefault": false
+        },
+        {
+          "name": "get_messages",
+          "line": 188,
+          "isDefault": false
+        },
+        {
+          "name": "message_count",
+          "line": 201,
+          "isDefault": false
+        },
+        {
+          "name": "add_memory",
+          "line": 209,
+          "isDefault": false
+        },
+        {
+          "name": "list_memories",
+          "line": 221,
+          "isDefault": false
+        },
+        {
+          "name": "touch_memories",
+          "line": 230,
+          "isDefault": false
+        },
+        {
+          "name": "update_memory",
+          "line": 241,
+          "isDefault": false
+        },
+        {
+          "name": "delete_memory",
+          "line": 251,
+          "isDefault": false
+        },
+        {
+          "name": "decay_memories",
+          "line": 256,
+          "isDefault": false
+        },
+        {
+          "name": "set_feedback",
+          "line": 269,
+          "isDefault": false
+        },
+        {
+          "name": "get_feedback",
+          "line": 278,
+          "isDefault": false
+        },
+        {
+          "name": "recent_feedback_samples",
+          "line": 288,
+          "isDefault": false
+        },
+        {
+          "name": "kv_get",
+          "line": 301,
+          "isDefault": false
+        },
+        {
+          "name": "kv_set",
+          "line": 307,
+          "isDefault": false
+        },
+        {
+          "name": "list_presets",
+          "line": 320,
+          "isDefault": false
+        },
+        {
+          "name": "save_preset",
+          "line": 327,
+          "isDefault": false
+        },
+        {
+          "name": "delete_preset",
+          "line": 341,
+          "isDefault": false
+        },
+        {
+          "name": "get_preset_by_name",
+          "line": 346,
+          "isDefault": false
+        },
+        {
+          "name": "export_conversation_markdown",
+          "line": 354,
+          "isDefault": false
+        },
+        {
+          "name": "import_jsonl",
+          "line": 365,
+          "isDefault": false
+        },
+        {
+          "name": "wipe_everything",
+          "line": 385,
+          "isDefault": false
+        },
+        {
+          "name": "export_jsonl",
+          "line": 392,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_now",
+          "callee": "datetime.now(timezone.utc).isoformat",
+          "lineNumber": 65
+        },
+        {
+          "caller": "_now",
+          "callee": "datetime.now",
+          "lineNumber": 65
+        },
+        {
+          "caller": "_conn",
+          "callee": "sqlite3.connect",
+          "lineNumber": 69
+        },
+        {
+          "caller": "_conn",
+          "callee": "conn.execute",
+          "lineNumber": 71
+        },
+        {
+          "caller": "_conn",
+          "callee": "conn.execute",
+          "lineNumber": 72
+        },
+        {
+          "caller": "init_db",
+          "callee": "_conn",
+          "lineNumber": 77
+        },
+        {
+          "caller": "init_db",
+          "callee": "conn.executescript",
+          "lineNumber": 78
+        },
+        {
+          "caller": "init_db",
+          "callee": "conn.execute",
+          "lineNumber": 80
+        },
+        {
+          "caller": "create_conversation",
+          "callee": "uuid.uuid4",
+          "lineNumber": 88
+        },
+        {
+          "caller": "create_conversation",
+          "callee": "_now",
+          "lineNumber": 89
+        },
+        {
+          "caller": "create_conversation",
+          "callee": "_conn",
+          "lineNumber": 90
+        },
+        {
+          "caller": "create_conversation",
+          "callee": "conn.execute",
+          "lineNumber": 91
+        },
+        {
+          "caller": "list_conversations",
+          "callee": "_conn",
+          "lineNumber": 99
+        },
+        {
+          "caller": "list_conversations",
+          "callee": "conn.execute(\r\n            \"SELECT * FROM conversations ORDER BY updated_at DESC LIMIT ?\", (limit,)\r\n        ).fetchall",
+          "lineNumber": 100
+        },
+        {
+          "caller": "list_conversations",
+          "callee": "conn.execute",
+          "lineNumber": 100
+        },
+        {
+          "caller": "list_conversations",
+          "callee": "dict",
+          "lineNumber": 103
+        },
+        {
+          "caller": "get_conversation",
+          "callee": "_conn",
+          "lineNumber": 107
+        },
+        {
+          "caller": "get_conversation",
+          "callee": "conn.execute(\"SELECT * FROM conversations WHERE id=?\", (conv_id,)).fetchone",
+          "lineNumber": 108
+        },
+        {
+          "caller": "get_conversation",
+          "callee": "conn.execute",
+          "lineNumber": 108
+        },
+        {
+          "caller": "get_conversation",
+          "callee": "dict",
+          "lineNumber": 109
+        },
+        {
+          "caller": "rename_conversation",
+          "callee": "_conn",
+          "lineNumber": 113
+        },
+        {
+          "caller": "rename_conversation",
+          "callee": "conn.execute",
+          "lineNumber": 114
+        },
+        {
+          "caller": "rename_conversation",
+          "callee": "_now",
+          "lineNumber": 115
+        },
+        {
+          "caller": "delete_conversation",
+          "callee": "_conn",
+          "lineNumber": 120
+        },
+        {
+          "caller": "delete_conversation",
+          "callee": "conn.execute",
+          "lineNumber": 121
+        },
+        {
+          "caller": "set_pinned",
+          "callee": "_conn",
+          "lineNumber": 125
+        },
+        {
+          "caller": "set_pinned",
+          "callee": "conn.execute",
+          "lineNumber": 126
+        },
+        {
+          "caller": "search_conversations",
+          "callee": "_conn",
+          "lineNumber": 132
+        },
+        {
+          "caller": "search_conversations",
+          "callee": "conn.execute(\r\n            \"SELECT DISTINCT c.id FROM conversations c \"\r\n            \"LEFT JOIN messages m ON m.conv_id = c.id \"\r\n            \"WHERE c.title LIKE ? OR m.content LIKE ? \"\r\n            \"ORDER BY c.updated_at DESC LIMIT ?\",\r\n            (like, like, limit),\r\n        ).fetchall",
+          "lineNumber": 133
+        },
+        {
+          "caller": "search_conversations",
+          "callee": "conn.execute",
+          "lineNumber": 133
+        },
+        {
+          "caller": "delete_messages_from",
+          "callee": "_conn",
+          "lineNumber": 145
+        },
+        {
+          "caller": "delete_messages_from",
+          "callee": "conn.execute",
+          "lineNumber": 146
+        },
+        {
+          "caller": "clear_all_conversations",
+          "callee": "_conn",
+          "lineNumber": 159
+        },
+        {
+          "caller": "clear_all_conversations",
+          "callee": "conn.execute(\"SELECT COUNT(*) FROM conversations\").fetchone",
+          "lineNumber": 160
+        },
+        {
+          "caller": "clear_all_conversations",
+          "callee": "conn.execute",
+          "lineNumber": 160
+        },
+        {
+          "caller": "clear_all_conversations",
+          "callee": "conn.execute",
+          "lineNumber": 161
+        },
+        {
+          "caller": "mark_memory_extracted",
+          "callee": "_conn",
+          "lineNumber": 166
+        },
+        {
+          "caller": "mark_memory_extracted",
+          "callee": "conn.execute",
+          "lineNumber": 167
+        },
+        {
+          "caller": "mark_memory_extracted",
+          "callee": "_now",
+          "lineNumber": 168
+        },
+        {
+          "caller": "add_message",
+          "callee": "uuid.uuid4",
+          "lineNumber": 177
+        },
+        {
+          "caller": "add_message",
+          "callee": "_now",
+          "lineNumber": 178
+        },
+        {
+          "caller": "add_message",
+          "callee": "_conn",
+          "lineNumber": 179
+        },
+        {
+          "caller": "add_message",
+          "callee": "conn.execute",
+          "lineNumber": 180
+        },
+        {
+          "caller": "add_message",
+          "callee": "json.dumps",
+          "lineNumber": 182
+        },
+        {
+          "caller": "add_message",
+          "callee": "conn.execute",
+          "lineNumber": 184
+        },
+        {
+          "caller": "get_messages",
+          "callee": "_conn",
+          "lineNumber": 189
+        },
+        {
+          "caller": "get_messages",
+          "callee": "conn.execute(\r\n            \"SELECT * FROM messages WHERE conv_id=? ORDER BY ts\", (conv_id,)\r\n        ).fetchall",
+          "lineNumber": 190
+        },
+        {
+          "caller": "get_messages",
+          "callee": "conn.execute",
+          "lineNumber": 190
+        },
+        {
+          "caller": "get_messages",
+          "callee": "dict",
+          "lineNumber": 195
+        },
+        {
+          "caller": "get_messages",
+          "callee": "json.loads",
+          "lineNumber": 196
+        },
+        {
+          "caller": "get_messages",
+          "callee": "out.append",
+          "lineNumber": 197
+        },
+        {
+          "caller": "message_count",
+          "callee": "_conn",
+          "lineNumber": 202
+        },
+        {
+          "caller": "message_count",
+          "callee": "conn.execute(\"SELECT COUNT(*) FROM messages WHERE conv_id=?\", (conv_id,)).fetchone",
+          "lineNumber": 203
+        },
+        {
+          "caller": "message_count",
+          "callee": "conn.execute",
+          "lineNumber": 203
+        },
+        {
+          "caller": "add_memory",
+          "callee": "uuid.uuid4",
+          "lineNumber": 210
+        },
+        {
+          "caller": "add_memory",
+          "callee": "_now",
+          "lineNumber": 211
+        },
+        {
+          "caller": "add_memory",
+          "callee": "_conn",
+          "lineNumber": 212
+        },
+        {
+          "caller": "add_memory",
+          "callee": "conn.execute",
+          "lineNumber": 213
+        },
+        {
+          "caller": "list_memories",
+          "callee": "_conn",
+          "lineNumber": 226
+        },
+        {
+          "caller": "list_memories",
+          "callee": "dict",
+          "lineNumber": 227
+        },
+        {
+          "caller": "list_memories",
+          "callee": "conn.execute(q).fetchall",
+          "lineNumber": 227
+        },
+        {
+          "caller": "list_memories",
+          "callee": "conn.execute",
+          "lineNumber": 227
+        },
+        {
+          "caller": "touch_memories",
+          "callee": "_now",
+          "lineNumber": 233
+        },
+        {
+          "caller": "touch_memories",
+          "callee": "_conn",
+          "lineNumber": 234
+        },
+        {
+          "caller": "touch_memories",
+          "callee": "conn.executemany",
+          "lineNumber": 235
+        },
+        {
+          "caller": "update_memory",
+          "callee": "fields.items",
+          "lineNumber": 243
+        },
+        {
+          "caller": "update_memory",
+          "callee": "\", \".join",
+          "lineNumber": 246
+        },
+        {
+          "caller": "update_memory",
+          "callee": "_conn",
+          "lineNumber": 247
+        },
+        {
+          "caller": "update_memory",
+          "callee": "conn.execute",
+          "lineNumber": 248
+        },
+        {
+          "caller": "update_memory",
+          "callee": "sets.values",
+          "lineNumber": 248
+        },
+        {
+          "caller": "delete_memory",
+          "callee": "_conn",
+          "lineNumber": 252
+        },
+        {
+          "caller": "delete_memory",
+          "callee": "conn.execute",
+          "lineNumber": 253
+        },
+        {
+          "caller": "decay_memories",
+          "callee": "_conn",
+          "lineNumber": 258
+        },
+        {
+          "caller": "decay_memories",
+          "callee": "conn.execute",
+          "lineNumber": 259
+        },
+        {
+          "caller": "set_feedback",
+          "callee": "_conn",
+          "lineNumber": 270
+        },
+        {
+          "caller": "set_feedback",
+          "callee": "conn.execute",
+          "lineNumber": 271
+        },
+        {
+          "caller": "set_feedback",
+          "callee": "_now",
+          "lineNumber": 274
+        },
+        {
+          "caller": "get_feedback",
+          "callee": "_conn",
+          "lineNumber": 279
+        },
+        {
+          "caller": "get_feedback",
+          "callee": "conn.execute(\r\n            \"SELECT f.message_id, f.rating FROM feedback f \"\r\n            \"JOIN messages m ON m.id = f.message_id WHERE m.conv_id=?\",\r\n            (conv_id,),\r\n        ).fetchall",
+          "lineNumber": 280
+        },
+        {
+          "caller": "get_feedback",
+          "callee": "conn.execute",
+          "lineNumber": 280
+        },
+        {
+          "caller": "recent_feedback_samples",
+          "callee": "_conn",
+          "lineNumber": 290
+        },
+        {
+          "caller": "recent_feedback_samples",
+          "callee": "conn.execute(\r\n            \"SELECT m.content, f.rating FROM feedback f \"\r\n            \"JOIN messages m ON m.id = f.message_id ORDER BY f.ts DESC LIMIT ?\",\r\n            (limit,),\r\n        ).fetchall",
+          "lineNumber": 291
+        },
+        {
+          "caller": "recent_feedback_samples",
+          "callee": "conn.execute",
+          "lineNumber": 291
+        },
+        {
+          "caller": "recent_feedback_samples",
+          "callee": "dict",
+          "lineNumber": 296
+        },
+        {
+          "caller": "kv_get",
+          "callee": "_conn",
+          "lineNumber": 302
+        },
+        {
+          "caller": "kv_get",
+          "callee": "conn.execute(\"SELECT value FROM kv WHERE key=?\", (key,)).fetchone",
+          "lineNumber": 303
+        },
+        {
+          "caller": "kv_get",
+          "callee": "conn.execute",
+          "lineNumber": 303
+        },
+        {
+          "caller": "kv_set",
+          "callee": "_conn",
+          "lineNumber": 308
+        },
+        {
+          "caller": "kv_set",
+          "callee": "conn.execute",
+          "lineNumber": 309
+        },
+        {
+          "caller": "kv_set",
+          "callee": "_now",
+          "lineNumber": 312
+        },
+        {
+          "caller": "list_presets",
+          "callee": "_conn",
+          "lineNumber": 321
+        },
+        {
+          "caller": "list_presets",
+          "callee": "dict",
+          "lineNumber": 322
+        },
+        {
+          "caller": "list_presets",
+          "callee": "conn.execute(\r\n            \"SELECT * FROM presets ORDER BY builtin DESC, name\"\r\n        ).fetchall",
+          "lineNumber": 322
+        },
+        {
+          "caller": "list_presets",
+          "callee": "conn.execute",
+          "lineNumber": 322
+        },
+        {
+          "caller": "save_preset",
+          "callee": "uuid.uuid4",
+          "lineNumber": 329
+        },
+        {
+          "caller": "save_preset",
+          "callee": "_conn",
+          "lineNumber": 330
+        },
+        {
+          "caller": "save_preset",
+          "callee": "conn.execute",
+          "lineNumber": 331
+        },
+        {
+          "caller": "save_preset",
+          "callee": "name.strip",
+          "lineNumber": 336
+        },
+        {
+          "caller": "save_preset",
+          "callee": "_now",
+          "lineNumber": 336
+        },
+        {
+          "caller": "delete_preset",
+          "callee": "_conn",
+          "lineNumber": 342
+        },
+        {
+          "caller": "delete_preset",
+          "callee": "conn.execute",
+          "lineNumber": 343
+        },
+        {
+          "caller": "get_preset_by_name",
+          "callee": "_conn",
+          "lineNumber": 347
+        },
+        {
+          "caller": "get_preset_by_name",
+          "callee": "conn.execute(\"SELECT * FROM presets WHERE name=?\", (name,)).fetchone",
+          "lineNumber": 348
+        },
+        {
+          "caller": "get_preset_by_name",
+          "callee": "conn.execute",
+          "lineNumber": 348
+        },
+        {
+          "caller": "get_preset_by_name",
+          "callee": "dict",
+          "lineNumber": 349
+        },
+        {
+          "caller": "export_conversation_markdown",
+          "callee": "get_conversation",
+          "lineNumber": 355
+        },
+        {
+          "caller": "export_conversation_markdown",
+          "callee": "get_messages",
+          "lineNumber": 359
+        },
+        {
+          "caller": "export_conversation_markdown",
+          "callee": "\"\\n\".join",
+          "lineNumber": 362
+        },
+        {
+          "caller": "import_jsonl",
+          "callee": "data.splitlines",
+          "lineNumber": 368
+        },
+        {
+          "caller": "import_jsonl",
+          "callee": "line.strip",
+          "lineNumber": 369
+        },
+        {
+          "caller": "import_jsonl",
+          "callee": "json.loads",
+          "lineNumber": 373
+        },
+        {
+          "caller": "import_jsonl",
+          "callee": "create_conversation",
+          "lineNumber": 374
+        },
+        {
+          "caller": "import_jsonl",
+          "callee": "obj.get",
+          "lineNumber": 374
+        },
+        {
+          "caller": "import_jsonl",
+          "callee": "rename_conversation",
+          "lineNumber": 375
+        },
+        {
+          "caller": "import_jsonl",
+          "callee": "obj.get",
+          "lineNumber": 375
+        },
+        {
+          "caller": "import_jsonl",
+          "callee": "obj.get",
+          "lineNumber": 376
+        },
+        {
+          "caller": "import_jsonl",
+          "callee": "m.get",
+          "lineNumber": 377
+        },
+        {
+          "caller": "import_jsonl",
+          "callee": "m.get",
+          "lineNumber": 377
+        },
+        {
+          "caller": "import_jsonl",
+          "callee": "add_message",
+          "lineNumber": 378
+        },
+        {
+          "caller": "wipe_everything",
+          "callee": "_conn",
+          "lineNumber": 387
+        },
+        {
+          "caller": "wipe_everything",
+          "callee": "conn.execute",
+          "lineNumber": 389
+        },
+        {
+          "caller": "export_jsonl",
+          "callee": "list_conversations",
+          "lineNumber": 395
+        },
+        {
+          "caller": "export_jsonl",
+          "callee": "get_messages",
+          "lineNumber": 397
+        },
+        {
+          "caller": "export_jsonl",
+          "callee": "lines.append",
+          "lineNumber": 399
+        },
+        {
+          "caller": "export_jsonl",
+          "callee": "json.dumps",
+          "lineNumber": 400
+        },
+        {
+          "caller": "export_jsonl",
+          "callee": "\"\\n\".join",
+          "lineNumber": 405
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 35,
+        "functionCount": 35,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/config.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 61,
+      "nonEmptyLines": 44,
+      "classes": [
+        {
+          "name": "AppConfig",
+          "startLine": 10,
+          "endLine": 57,
+          "methods": [
+            "db_path",
+            "chroma_dir",
+            "uploads_dir",
+            "ensure_dirs"
+          ],
+          "properties": [
+            "ollama_host",
+            "data_dir",
+            "temperature",
+            "keep_alive",
+            "request_timeout",
+            "show_cloud_models",
+            "memory_enabled",
+            "cross_chat_references",
+            "chunk_chars",
+            "chunk_overlap_chars",
+            "doc_context_budget_chars",
+            "rag_top_k",
+            "cross_chat_top_k",
+            "cross_chat_min_similarity",
+            "memory_max_injected",
+            "memory_decay_days",
+            "profile_refresh_every"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "AppConfig",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ensure_dirs",
+          "callee": "p.mkdir",
+          "lineNumber": 57
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/files.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 153,
+      "nonEmptyLines": 128,
+      "functions": [
+        {
+          "name": "_ext",
+          "startLine": 33,
+          "endLine": 34,
+          "params": [
+            "filename"
+          ]
+        },
+        {
+          "name": "parse_upload",
+          "startLine": 37,
+          "endLine": 58,
+          "params": [
+            "filename",
+            "raw"
+          ]
+        },
+        {
+          "name": "_parse_pdf",
+          "startLine": 61,
+          "endLine": 71,
+          "params": [
+            "raw"
+          ]
+        },
+        {
+          "name": "_parse_docx",
+          "startLine": 74,
+          "endLine": 82,
+          "params": [
+            "raw"
+          ]
+        },
+        {
+          "name": "_parse_excel",
+          "startLine": 85,
+          "endLine": 93,
+          "params": [
+            "raw",
+            "ext"
+          ]
+        },
+        {
+          "name": "_parse_legacy_doc",
+          "startLine": 96,
+          "endLine": 128,
+          "params": [
+            "raw"
+          ]
+        },
+        {
+          "name": "chunk_text",
+          "startLine": 131,
+          "endLine": 153,
+          "params": [
+            "text",
+            "chunk_chars",
+            "overlap_chars"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Attachment",
+          "startLine": 25,
+          "endLine": 30,
+          "methods": [],
+          "properties": [
+            "name",
+            "kind",
+            "text",
+            "image_bytes",
+            "mime"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Attachment",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "_ext",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "parse_upload",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "_parse_pdf",
+          "line": 61,
+          "isDefault": false
+        },
+        {
+          "name": "_parse_docx",
+          "line": 74,
+          "isDefault": false
+        },
+        {
+          "name": "_parse_excel",
+          "line": 85,
+          "isDefault": false
+        },
+        {
+          "name": "_parse_legacy_doc",
+          "line": 96,
+          "isDefault": false
+        },
+        {
+          "name": "chunk_text",
+          "line": 131,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_ext",
+          "callee": "filename.rsplit(\".\", 1)[-1].lower",
+          "lineNumber": 34
+        },
+        {
+          "caller": "_ext",
+          "callee": "filename.rsplit",
+          "lineNumber": 34
+        },
+        {
+          "caller": "parse_upload",
+          "callee": "_ext",
+          "lineNumber": 39
+        },
+        {
+          "caller": "parse_upload",
+          "callee": "Attachment",
+          "lineNumber": 41
+        },
+        {
+          "caller": "parse_upload",
+          "callee": "MIME_BY_EXT.get",
+          "lineNumber": 43
+        },
+        {
+          "caller": "parse_upload",
+          "callee": "Attachment",
+          "lineNumber": 46
+        },
+        {
+          "caller": "parse_upload",
+          "callee": "_parse_pdf",
+          "lineNumber": 46
+        },
+        {
+          "caller": "parse_upload",
+          "callee": "Attachment",
+          "lineNumber": 48
+        },
+        {
+          "caller": "parse_upload",
+          "callee": "_parse_docx",
+          "lineNumber": 48
+        },
+        {
+          "caller": "parse_upload",
+          "callee": "Attachment",
+          "lineNumber": 50
+        },
+        {
+          "caller": "parse_upload",
+          "callee": "_parse_legacy_doc",
+          "lineNumber": 50
+        },
+        {
+          "caller": "parse_upload",
+          "callee": "Attachment",
+          "lineNumber": 52
+        },
+        {
+          "caller": "parse_upload",
+          "callee": "_parse_excel",
+          "lineNumber": 52
+        },
+        {
+          "caller": "parse_upload",
+          "callee": "raw.decode",
+          "lineNumber": 55
+        },
+        {
+          "caller": "parse_upload",
+          "callee": "Attachment",
+          "lineNumber": 58
+        },
+        {
+          "caller": "_parse_pdf",
+          "callee": "PdfReader",
+          "lineNumber": 64
+        },
+        {
+          "caller": "_parse_pdf",
+          "callee": "io.BytesIO",
+          "lineNumber": 64
+        },
+        {
+          "caller": "_parse_pdf",
+          "callee": "enumerate",
+          "lineNumber": 66
+        },
+        {
+          "caller": "_parse_pdf",
+          "callee": "pages.append",
+          "lineNumber": 68
+        },
+        {
+          "caller": "_parse_pdf",
+          "callee": "page.extract_text",
+          "lineNumber": 68
+        },
+        {
+          "caller": "_parse_pdf",
+          "callee": "logger.warning",
+          "lineNumber": 70
+        },
+        {
+          "caller": "_parse_pdf",
+          "callee": "\"\\n\\n\".join(pages).strip",
+          "lineNumber": 71
+        },
+        {
+          "caller": "_parse_pdf",
+          "callee": "\"\\n\\n\".join",
+          "lineNumber": 71
+        },
+        {
+          "caller": "_parse_docx",
+          "callee": "docx.Document",
+          "lineNumber": 77
+        },
+        {
+          "caller": "_parse_docx",
+          "callee": "io.BytesIO",
+          "lineNumber": 77
+        },
+        {
+          "caller": "_parse_docx",
+          "callee": "p.text.strip",
+          "lineNumber": 78
+        },
+        {
+          "caller": "_parse_docx",
+          "callee": "parts.append",
+          "lineNumber": 81
+        },
+        {
+          "caller": "_parse_docx",
+          "callee": "\" | \".join",
+          "lineNumber": 81
+        },
+        {
+          "caller": "_parse_docx",
+          "callee": "cell.text.strip",
+          "lineNumber": 81
+        },
+        {
+          "caller": "_parse_docx",
+          "callee": "\"\\n\".join(parts).strip",
+          "lineNumber": 82
+        },
+        {
+          "caller": "_parse_docx",
+          "callee": "\"\\n\".join",
+          "lineNumber": 82
+        },
+        {
+          "caller": "_parse_excel",
+          "callee": "pd.read_excel",
+          "lineNumber": 89
+        },
+        {
+          "caller": "_parse_excel",
+          "callee": "io.BytesIO",
+          "lineNumber": 89
+        },
+        {
+          "caller": "_parse_excel",
+          "callee": "sheets.items",
+          "lineNumber": 91
+        },
+        {
+          "caller": "_parse_excel",
+          "callee": "parts.append",
+          "lineNumber": 92
+        },
+        {
+          "caller": "_parse_excel",
+          "callee": "df.to_csv",
+          "lineNumber": 92
+        },
+        {
+          "caller": "_parse_excel",
+          "callee": "\"\\n\\n\".join(parts).strip",
+          "lineNumber": 93
+        },
+        {
+          "caller": "_parse_excel",
+          "callee": "\"\\n\\n\".join",
+          "lineNumber": 93
+        },
+        {
+          "caller": "_parse_legacy_doc",
+          "callee": "tempfile.TemporaryDirectory",
+          "lineNumber": 102
+        },
+        {
+          "caller": "_parse_legacy_doc",
+          "callee": "open",
+          "lineNumber": 104
+        },
+        {
+          "caller": "_parse_legacy_doc",
+          "callee": "f.write",
+          "lineNumber": 105
+        },
+        {
+          "caller": "_parse_legacy_doc",
+          "callee": "shutil.which",
+          "lineNumber": 106
+        },
+        {
+          "caller": "_parse_legacy_doc",
+          "callee": "subprocess.run",
+          "lineNumber": 108
+        },
+        {
+          "caller": "_parse_legacy_doc",
+          "callee": "out.stdout.strip",
+          "lineNumber": 111
+        },
+        {
+          "caller": "_parse_legacy_doc",
+          "callee": "out.stdout.strip",
+          "lineNumber": 112
+        },
+        {
+          "caller": "_parse_legacy_doc",
+          "callee": "logger.warning",
+          "lineNumber": 114
+        },
+        {
+          "caller": "_parse_legacy_doc",
+          "callee": "shutil.which",
+          "lineNumber": 115
+        },
+        {
+          "caller": "_parse_legacy_doc",
+          "callee": "subprocess.run",
+          "lineNumber": 117
+        },
+        {
+          "caller": "_parse_legacy_doc",
+          "callee": "Path(txt).exists",
+          "lineNumber": 123
+        },
+        {
+          "caller": "_parse_legacy_doc",
+          "callee": "Path",
+          "lineNumber": 123
+        },
+        {
+          "caller": "_parse_legacy_doc",
+          "callee": "Path(txt).read_text(errors=\"replace\").strip",
+          "lineNumber": 124
+        },
+        {
+          "caller": "_parse_legacy_doc",
+          "callee": "Path(txt).read_text",
+          "lineNumber": 124
+        },
+        {
+          "caller": "_parse_legacy_doc",
+          "callee": "Path",
+          "lineNumber": 124
+        },
+        {
+          "caller": "_parse_legacy_doc",
+          "callee": "logger.warning",
+          "lineNumber": 126
+        },
+        {
+          "caller": "_parse_legacy_doc",
+          "callee": "logger.warning",
+          "lineNumber": 127
+        },
+        {
+          "caller": "chunk_text",
+          "callee": "len",
+          "lineNumber": 133
+        },
+        {
+          "caller": "chunk_text",
+          "callee": "text.strip",
+          "lineNumber": 134
+        },
+        {
+          "caller": "chunk_text",
+          "callee": "len",
+          "lineNumber": 137
+        },
+        {
+          "caller": "chunk_text",
+          "callee": "min",
+          "lineNumber": 138
+        },
+        {
+          "caller": "chunk_text",
+          "callee": "len",
+          "lineNumber": 138
+        },
+        {
+          "caller": "chunk_text",
+          "callee": "len",
+          "lineNumber": 139
+        },
+        {
+          "caller": "chunk_text",
+          "callee": "window.rfind",
+          "lineNumber": 143
+        },
+        {
+          "caller": "chunk_text",
+          "callee": "len",
+          "lineNumber": 145
+        },
+        {
+          "caller": "chunk_text",
+          "callee": "text[start:end].strip",
+          "lineNumber": 147
+        },
+        {
+          "caller": "chunk_text",
+          "callee": "chunks.append",
+          "lineNumber": 149
+        },
+        {
+          "caller": "chunk_text",
+          "callee": "len",
+          "lineNumber": 150
+        },
+        {
+          "caller": "chunk_text",
+          "callee": "max",
+          "lineNumber": 152
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 7,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/jobs.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 414,
+      "nonEmptyLines": 363,
+      "functions": [
+        {
+          "name": "stop",
+          "startLine": 57,
+          "endLine": 64,
+          "params": [
+            "conv_id"
+          ]
+        },
+        {
+          "name": "get",
+          "startLine": 67,
+          "endLine": 71,
+          "params": [
+            "conv_id"
+          ]
+        },
+        {
+          "name": "is_running",
+          "startLine": 74,
+          "endLine": 76,
+          "params": [
+            "conv_id"
+          ]
+        },
+        {
+          "name": "running_conversations",
+          "startLine": 79,
+          "endLine": 81,
+          "params": []
+        },
+        {
+          "name": "clear",
+          "startLine": 84,
+          "endLine": 86,
+          "params": [
+            "conv_id"
+          ]
+        },
+        {
+          "name": "start",
+          "startLine": 89,
+          "endLine": 126,
+          "params": [
+            "conv_id",
+            "provider",
+            "model_name",
+            "is_vision",
+            "user_text",
+            "raw_files",
+            "history",
+            "custom_system",
+            "temperature",
+            "embed_model",
+            "helper_model",
+            "vision_fallback",
+            "memory_on",
+            "crosschat_on",
+            "is_first_turn",
+            "web_search"
+          ]
+        },
+        {
+          "name": "run_ephemeral",
+          "startLine": 129,
+          "endLine": 165,
+          "params": [
+            "key",
+            "provider",
+            "model_name",
+            "user_text",
+            "system",
+            "temperature"
+          ]
+        },
+        {
+          "name": "_tokens_per_sec",
+          "startLine": 168,
+          "endLine": 173,
+          "params": [
+            "stats",
+            "secs"
+          ]
+        },
+        {
+          "name": "_stream",
+          "startLine": 176,
+          "endLine": 189,
+          "params": [
+            "provider",
+            "model_name",
+            "messages",
+            "temperature",
+            "stats"
+          ]
+        },
+        {
+          "name": "_web_search",
+          "startLine": 192,
+          "endLine": 207,
+          "params": [
+            "query",
+            "max_results"
+          ]
+        },
+        {
+          "name": "_process_attachments",
+          "startLine": 210,
+          "endLine": 248,
+          "params": [
+            "job",
+            "raw_files",
+            "is_vision",
+            "vision_fallback",
+            "embed_model"
+          ]
+        },
+        {
+          "name": "_run",
+          "startLine": 251,
+          "endLine": 367,
+          "params": [
+            "job",
+            "provider",
+            "model_name",
+            "is_vision",
+            "user_text",
+            "raw_files",
+            "history",
+            "custom_system",
+            "temperature",
+            "embed_model",
+            "helper_model",
+            "vision_fallback",
+            "memory_on",
+            "crosschat_on",
+            "is_first_turn",
+            "web_search"
+          ]
+        },
+        {
+          "name": "_friendly_error",
+          "startLine": 370,
+          "endLine": 384,
+          "params": [
+            "raw"
+          ]
+        },
+        {
+          "name": "_autotitle",
+          "startLine": 387,
+          "endLine": 399,
+          "params": [
+            "conv_id",
+            "first_user",
+            "first_assistant",
+            "helper_model"
+          ]
+        },
+        {
+          "name": "_maybe_extract",
+          "startLine": 402,
+          "endLine": 414,
+          "params": [
+            "conv_id",
+            "helper_model",
+            "embed_model"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Job",
+          "startLine": 35,
+          "endLine": 50,
+          "methods": [
+            "elapsed"
+          ],
+          "properties": [
+            "conv_id",
+            "model_name",
+            "status",
+            "phase",
+            "text",
+            "error",
+            "references",
+            "notes",
+            "cancelled",
+            "start_ts"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Job",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "stop",
+          "line": 57,
+          "isDefault": false
+        },
+        {
+          "name": "get",
+          "line": 67,
+          "isDefault": false
+        },
+        {
+          "name": "is_running",
+          "line": 74,
+          "isDefault": false
+        },
+        {
+          "name": "running_conversations",
+          "line": 79,
+          "isDefault": false
+        },
+        {
+          "name": "clear",
+          "line": 84,
+          "isDefault": false
+        },
+        {
+          "name": "start",
+          "line": 89,
+          "isDefault": false
+        },
+        {
+          "name": "run_ephemeral",
+          "line": 129,
+          "isDefault": false
+        },
+        {
+          "name": "_tokens_per_sec",
+          "line": 168,
+          "isDefault": false
+        },
+        {
+          "name": "_stream",
+          "line": 176,
+          "isDefault": false
+        },
+        {
+          "name": "_web_search",
+          "line": 192,
+          "isDefault": false
+        },
+        {
+          "name": "_process_attachments",
+          "line": 210,
+          "isDefault": false
+        },
+        {
+          "name": "_run",
+          "line": 251,
+          "isDefault": false
+        },
+        {
+          "name": "_friendly_error",
+          "line": 370,
+          "isDefault": false
+        },
+        {
+          "name": "_autotitle",
+          "line": 387,
+          "isDefault": false
+        },
+        {
+          "name": "_maybe_extract",
+          "line": 402,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "elapsed",
+          "callee": "time.monotonic",
+          "lineNumber": 50
+        },
+        {
+          "caller": "stop",
+          "callee": "_jobs.get",
+          "lineNumber": 61
+        },
+        {
+          "caller": "get",
+          "callee": "_jobs.get",
+          "lineNumber": 71
+        },
+        {
+          "caller": "is_running",
+          "callee": "get",
+          "lineNumber": 75
+        },
+        {
+          "caller": "is_running",
+          "callee": "bool",
+          "lineNumber": 76
+        },
+        {
+          "caller": "running_conversations",
+          "callee": "_jobs.items",
+          "lineNumber": 81
+        },
+        {
+          "caller": "clear",
+          "callee": "_jobs.pop",
+          "lineNumber": 86
+        },
+        {
+          "caller": "start",
+          "callee": "Job",
+          "lineNumber": 113
+        },
+        {
+          "caller": "start",
+          "callee": "threading.Thread",
+          "lineNumber": 116
+        },
+        {
+          "caller": "start",
+          "callee": "thread.start",
+          "lineNumber": 125
+        },
+        {
+          "caller": "run_ephemeral",
+          "callee": "Job",
+          "lineNumber": 135
+        },
+        {
+          "caller": "_worker",
+          "callee": "messages.append",
+          "lineNumber": 143
+        },
+        {
+          "caller": "_worker",
+          "callee": "messages.append",
+          "lineNumber": 144
+        },
+        {
+          "caller": "_worker",
+          "callee": "time.monotonic",
+          "lineNumber": 147
+        },
+        {
+          "caller": "_worker",
+          "callee": "_stream",
+          "lineNumber": 148
+        },
+        {
+          "caller": "_worker",
+          "callee": "parts.append",
+          "lineNumber": 151
+        },
+        {
+          "caller": "_worker",
+          "callee": "\"\".join",
+          "lineNumber": 153
+        },
+        {
+          "caller": "_worker",
+          "callee": "time.monotonic",
+          "lineNumber": 154
+        },
+        {
+          "caller": "_worker",
+          "callee": "_tokens_per_sec",
+          "lineNumber": 155
+        },
+        {
+          "caller": "_worker",
+          "callee": "_friendly_error",
+          "lineNumber": 161
+        },
+        {
+          "caller": "_worker",
+          "callee": "str",
+          "lineNumber": 161
+        },
+        {
+          "caller": "run_ephemeral",
+          "callee": "threading.Thread(target=_worker, daemon=True).start",
+          "lineNumber": 164
+        },
+        {
+          "caller": "run_ephemeral",
+          "callee": "threading.Thread",
+          "lineNumber": 164
+        },
+        {
+          "caller": "_tokens_per_sec",
+          "callee": "stats.get",
+          "lineNumber": 169
+        },
+        {
+          "caller": "_tokens_per_sec",
+          "callee": "stats.get",
+          "lineNumber": 169
+        },
+        {
+          "caller": "_tokens_per_sec",
+          "callee": "stats.get",
+          "lineNumber": 171
+        },
+        {
+          "caller": "_stream",
+          "callee": "m.get",
+          "lineNumber": 185
+        },
+        {
+          "caller": "_stream",
+          "callee": "ollama_stream",
+          "lineNumber": 187
+        },
+        {
+          "caller": "_stream",
+          "callee": "providers.stream_chat",
+          "lineNumber": 189
+        },
+        {
+          "caller": "_web_search",
+          "callee": "DDGS().text",
+          "lineNumber": 199
+        },
+        {
+          "caller": "_web_search",
+          "callee": "DDGS",
+          "lineNumber": 199
+        },
+        {
+          "caller": "_web_search",
+          "callee": "r.get",
+          "lineNumber": 201
+        },
+        {
+          "caller": "_web_search",
+          "callee": "r.get",
+          "lineNumber": 201
+        },
+        {
+          "caller": "_web_search",
+          "callee": "r.get",
+          "lineNumber": 201
+        },
+        {
+          "caller": "_web_search",
+          "callee": "r.get",
+          "lineNumber": 203
+        },
+        {
+          "caller": "_web_search",
+          "callee": "logger.warning",
+          "lineNumber": 206
+        },
+        {
+          "caller": "_process_attachments",
+          "callee": "parse_upload",
+          "lineNumber": 221
+        },
+        {
+          "caller": "_process_attachments",
+          "callee": "images.append",
+          "lineNumber": 224
+        },
+        {
+          "caller": "_process_attachments",
+          "callee": "job.notes.append",
+          "lineNumber": 226
+        },
+        {
+          "caller": "_process_attachments",
+          "callee": "describe_image",
+          "lineNumber": 227
+        },
+        {
+          "caller": "_process_attachments",
+          "callee": "context_parts.append",
+          "lineNumber": 228
+        },
+        {
+          "caller": "_process_attachments",
+          "callee": "context_parts.append",
+          "lineNumber": 232
+        },
+        {
+          "caller": "_process_attachments",
+          "callee": "att.text.strip",
+          "lineNumber": 234
+        },
+        {
+          "caller": "_process_attachments",
+          "callee": "context_parts.append",
+          "lineNumber": 235
+        },
+        {
+          "caller": "_process_attachments",
+          "callee": "len",
+          "lineNumber": 237
+        },
+        {
+          "caller": "_process_attachments",
+          "callee": "context_parts.append",
+          "lineNumber": 238
+        },
+        {
+          "caller": "_process_attachments",
+          "callee": "job.notes.append",
+          "lineNumber": 240
+        },
+        {
+          "caller": "_process_attachments",
+          "callee": "chunk_text",
+          "lineNumber": 241
+        },
+        {
+          "caller": "_process_attachments",
+          "callee": "rag.index_doc_chunks",
+          "lineNumber": 242
+        },
+        {
+          "caller": "_process_attachments",
+          "callee": "context_parts.append",
+          "lineNumber": 244
+        },
+        {
+          "caller": "_process_attachments",
+          "callee": "\"\\n\\n\".join",
+          "lineNumber": 248
+        },
+        {
+          "caller": "_run",
+          "callee": "_process_attachments",
+          "lineNumber": 271
+        },
+        {
+          "caller": "_run",
+          "callee": "job.notes.append",
+          "lineNumber": 278
+        },
+        {
+          "caller": "_run",
+          "callee": "_web_search",
+          "lineNumber": 279
+        },
+        {
+          "caller": "_run",
+          "callee": "enumerate",
+          "lineNumber": 283
+        },
+        {
+          "caller": "_run",
+          "callee": "\"\\n\".join",
+          "lineNumber": 288
+        },
+        {
+          "caller": "_run",
+          "callee": "build_messages",
+          "lineNumber": 292
+        },
+        {
+          "caller": "_run",
+          "callee": "messages.append",
+          "lineNumber": 305
+        },
+        {
+          "caller": "_run",
+          "callee": "time.monotonic",
+          "lineNumber": 315
+        },
+        {
+          "caller": "_run",
+          "callee": "_stream",
+          "lineNumber": 316
+        },
+        {
+          "caller": "_run",
+          "callee": "logger.info",
+          "lineNumber": 318
+        },
+        {
+          "caller": "_run",
+          "callee": "parts.append",
+          "lineNumber": 320
+        },
+        {
+          "caller": "_run",
+          "callee": "\"\".join",
+          "lineNumber": 322
+        },
+        {
+          "caller": "_run",
+          "callee": "\"\".join(parts).strip",
+          "lineNumber": 325
+        },
+        {
+          "caller": "_run",
+          "callee": "\"\".join",
+          "lineNumber": 325
+        },
+        {
+          "caller": "_run",
+          "callee": "time.monotonic",
+          "lineNumber": 326
+        },
+        {
+          "caller": "_run",
+          "callee": "meta.extend",
+          "lineNumber": 329
+        },
+        {
+          "caller": "_run",
+          "callee": "_tokens_per_sec",
+          "lineNumber": 330
+        },
+        {
+          "caller": "_run",
+          "callee": "meta.append",
+          "lineNumber": 331
+        },
+        {
+          "caller": "_run",
+          "callee": "round",
+          "lineNumber": 333
+        },
+        {
+          "caller": "_run",
+          "callee": "stats.get",
+          "lineNumber": 334
+        },
+        {
+          "caller": "_run",
+          "callee": "round",
+          "lineNumber": 335
+        },
+        {
+          "caller": "_run",
+          "callee": "chat_store.add_message",
+          "lineNumber": 337
+        },
+        {
+          "caller": "_run",
+          "callee": "logger.exception",
+          "lineNumber": 346
+        },
+        {
+          "caller": "_run",
+          "callee": "_friendly_error",
+          "lineNumber": 347
+        },
+        {
+          "caller": "_run",
+          "callee": "str",
+          "lineNumber": 347
+        },
+        {
+          "caller": "_run",
+          "callee": "chat_store.add_message",
+          "lineNumber": 351
+        },
+        {
+          "caller": "_run",
+          "callee": "logger.exception",
+          "lineNumber": 353
+        },
+        {
+          "caller": "_run",
+          "callee": "_autotitle",
+          "lineNumber": 361
+        },
+        {
+          "caller": "_run",
+          "callee": "after_turn_indexing",
+          "lineNumber": 363
+        },
+        {
+          "caller": "_run",
+          "callee": "_maybe_extract",
+          "lineNumber": 365
+        },
+        {
+          "caller": "_run",
+          "callee": "logger.exception",
+          "lineNumber": 367
+        },
+        {
+          "caller": "_friendly_error",
+          "callee": "raw.lower",
+          "lineNumber": 372
+        },
+        {
+          "caller": "_autotitle",
+          "callee": "ollama_generate",
+          "lineNumber": 389
+        },
+        {
+          "caller": "_autotitle",
+          "callee": "chat_store.rename_conversation",
+          "lineNumber": 397
+        },
+        {
+          "caller": "_autotitle",
+          "callee": "title.strip().strip",
+          "lineNumber": 397
+        },
+        {
+          "caller": "_autotitle",
+          "callee": "title.strip",
+          "lineNumber": 397
+        },
+        {
+          "caller": "_autotitle",
+          "callee": "logger.warning",
+          "lineNumber": 399
+        },
+        {
+          "caller": "_maybe_extract",
+          "callee": "chat_store.get_conversation",
+          "lineNumber": 403
+        },
+        {
+          "caller": "_maybe_extract",
+          "callee": "chat_store.message_count",
+          "lineNumber": 406
+        },
+        {
+          "caller": "_maybe_extract",
+          "callee": "memory.extract_memories",
+          "lineNumber": 412
+        },
+        {
+          "caller": "_maybe_extract",
+          "callee": "note_conversation_done",
+          "lineNumber": 413
+        },
+        {
+          "caller": "_maybe_extract",
+          "callee": "rebuild_profile",
+          "lineNumber": 414
+        }
+      ],
+      "metrics": {
+        "importCount": 5,
+        "exportCount": 16,
+        "functionCount": 15,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/memory.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 96,
+      "nonEmptyLines": 82,
+      "functions": [
+        {
+          "name": "extract_memories",
+          "startLine": 27,
+          "endLine": 59,
+          "params": [
+            "conv_id",
+            "helper_model",
+            "embed_model"
+          ]
+        },
+        {
+          "name": "relevant_memories",
+          "startLine": 62,
+          "endLine": 74,
+          "params": [
+            "query",
+            "embed_model"
+          ]
+        },
+        {
+          "name": "run_decay",
+          "startLine": 77,
+          "endLine": 78,
+          "params": []
+        },
+        {
+          "name": "_parse_json_list",
+          "startLine": 81,
+          "endLine": 96,
+          "params": [
+            "raw"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "extract_memories",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "relevant_memories",
+          "line": 62,
+          "isDefault": false
+        },
+        {
+          "name": "run_decay",
+          "line": 77,
+          "isDefault": false
+        },
+        {
+          "name": "_parse_json_list",
+          "line": 81,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "extract_memories",
+          "callee": "chat_store.get_messages",
+          "lineNumber": 29
+        },
+        {
+          "caller": "extract_memories",
+          "callee": "\"\\n\".join",
+          "lineNumber": 33
+        },
+        {
+          "caller": "extract_memories",
+          "callee": "m['role'].upper",
+          "lineNumber": 34
+        },
+        {
+          "caller": "extract_memories",
+          "callee": "generate",
+          "lineNumber": 37
+        },
+        {
+          "caller": "extract_memories",
+          "callee": "_parse_json_list",
+          "lineNumber": 38
+        },
+        {
+          "caller": "extract_memories",
+          "callee": "logger.warning",
+          "lineNumber": 40
+        },
+        {
+          "caller": "extract_memories",
+          "callee": "str(fact.get(\"content\", \"\")).strip",
+          "lineNumber": 45
+        },
+        {
+          "caller": "extract_memories",
+          "callee": "str",
+          "lineNumber": 45
+        },
+        {
+          "caller": "extract_memories",
+          "callee": "fact.get",
+          "lineNumber": 45
+        },
+        {
+          "caller": "extract_memories",
+          "callee": "str(fact.get(\"category\", \"fact\")).strip",
+          "lineNumber": 46
+        },
+        {
+          "caller": "extract_memories",
+          "callee": "str",
+          "lineNumber": 46
+        },
+        {
+          "caller": "extract_memories",
+          "callee": "fact.get",
+          "lineNumber": 46
+        },
+        {
+          "caller": "extract_memories",
+          "callee": "len",
+          "lineNumber": 47
+        },
+        {
+          "caller": "extract_memories",
+          "callee": "rag.similar_memory",
+          "lineNumber": 49
+        },
+        {
+          "caller": "extract_memories",
+          "callee": "chat_store.touch_memories",
+          "lineNumber": 51
+        },
+        {
+          "caller": "extract_memories",
+          "callee": "chat_store.add_memory",
+          "lineNumber": 53
+        },
+        {
+          "caller": "extract_memories",
+          "callee": "rag.index_memory",
+          "lineNumber": 54
+        },
+        {
+          "caller": "extract_memories",
+          "callee": "chat_store.mark_memory_extracted",
+          "lineNumber": 56
+        },
+        {
+          "caller": "extract_memories",
+          "callee": "logger.info",
+          "lineNumber": 58
+        },
+        {
+          "caller": "relevant_memories",
+          "callee": "chat_store.list_memories",
+          "lineNumber": 64
+        },
+        {
+          "caller": "relevant_memories",
+          "callee": "all_active.values",
+          "lineNumber": 67
+        },
+        {
+          "caller": "relevant_memories",
+          "callee": "rag.search_memories",
+          "lineNumber": 68
+        },
+        {
+          "caller": "relevant_memories",
+          "callee": "chosen.setdefault",
+          "lineNumber": 71
+        },
+        {
+          "caller": "relevant_memories",
+          "callee": "list",
+          "lineNumber": 72
+        },
+        {
+          "caller": "relevant_memories",
+          "callee": "chosen.values",
+          "lineNumber": 72
+        },
+        {
+          "caller": "relevant_memories",
+          "callee": "chat_store.touch_memories",
+          "lineNumber": 73
+        },
+        {
+          "caller": "run_decay",
+          "callee": "chat_store.decay_memories",
+          "lineNumber": 78
+        },
+        {
+          "caller": "_parse_json_list",
+          "callee": "raw.strip",
+          "lineNumber": 83
+        },
+        {
+          "caller": "_parse_json_list",
+          "callee": "re.sub(r\"^```(?:json)?|```$\", \"\", raw, flags=re.MULTILINE).strip",
+          "lineNumber": 84
+        },
+        {
+          "caller": "_parse_json_list",
+          "callee": "re.sub",
+          "lineNumber": 84
+        },
+        {
+          "caller": "_parse_json_list",
+          "callee": "re.search",
+          "lineNumber": 86
+        },
+        {
+          "caller": "_parse_json_list",
+          "callee": "json.loads",
+          "lineNumber": 90
+        },
+        {
+          "caller": "_parse_json_list",
+          "callee": "match.group",
+          "lineNumber": 90
+        },
+        {
+          "caller": "_parse_json_list",
+          "callee": "isinstance",
+          "lineNumber": 93
+        },
+        {
+          "caller": "_parse_json_list",
+          "callee": "isinstance",
+          "lineNumber": 95
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/model_labels.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 64,
+      "nonEmptyLines": 53,
+      "functions": [
+        {
+          "name": "_size_tag",
+          "startLine": 27,
+          "endLine": 37,
+          "params": [
+            "m"
+          ]
+        },
+        {
+          "name": "hint_for",
+          "startLine": 40,
+          "endLine": 58,
+          "params": [
+            "m"
+          ]
+        },
+        {
+          "name": "dropdown_label",
+          "startLine": 61,
+          "endLine": 64,
+          "params": [
+            "m"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "_size_tag",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "hint_for",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "dropdown_label",
+          "line": 61,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "hint_for",
+          "callee": "m.name.lower",
+          "lineNumber": 43
+        },
+        {
+          "caller": "hint_for",
+          "callee": "re.search",
+          "lineNumber": 45
+        },
+        {
+          "caller": "hint_for",
+          "callee": "tags.append",
+          "lineNumber": 46
+        },
+        {
+          "caller": "hint_for",
+          "callee": "tags.append",
+          "lineNumber": 49
+        },
+        {
+          "caller": "hint_for",
+          "callee": "tags.append",
+          "lineNumber": 51
+        },
+        {
+          "caller": "hint_for",
+          "callee": "tags.append",
+          "lineNumber": 53
+        },
+        {
+          "caller": "hint_for",
+          "callee": "tags.append",
+          "lineNumber": 55
+        },
+        {
+          "caller": "hint_for",
+          "callee": "\", \".join",
+          "lineNumber": 57
+        },
+        {
+          "caller": "hint_for",
+          "callee": "dict.fromkeys",
+          "lineNumber": 57
+        },
+        {
+          "caller": "hint_for",
+          "callee": "_size_tag",
+          "lineNumber": 58
+        },
+        {
+          "caller": "dropdown_label",
+          "callee": "hint_for",
+          "lineNumber": 64
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/ollama_client.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 249,
+      "nonEmptyLines": 204,
+      "functions": [
+        {
+          "name": "_client",
+          "startLine": 21,
+          "endLine": 41,
+          "params": []
+        },
+        {
+          "name": "list_models",
+          "startLine": 73,
+          "endLine": 111,
+          "params": []
+        },
+        {
+          "name": "chat_models",
+          "startLine": 114,
+          "endLine": 120,
+          "params": [
+            "models",
+            "include_cloud"
+          ]
+        },
+        {
+          "name": "embedding_model",
+          "startLine": 123,
+          "endLine": 126,
+          "params": [
+            "models"
+          ]
+        },
+        {
+          "name": "vision_fallback_model",
+          "startLine": 129,
+          "endLine": 139,
+          "params": [
+            "models"
+          ]
+        },
+        {
+          "name": "smallest_text_model",
+          "startLine": 145,
+          "endLine": 159,
+          "params": [
+            "models"
+          ]
+        },
+        {
+          "name": "stream_chat",
+          "startLine": 162,
+          "endLine": 186,
+          "params": [
+            "model",
+            "messages",
+            "temperature",
+            "stats"
+          ]
+        },
+        {
+          "name": "running_models",
+          "startLine": 189,
+          "endLine": 202,
+          "params": []
+        },
+        {
+          "name": "generate",
+          "startLine": 205,
+          "endLine": 217,
+          "params": [
+            "model",
+            "prompt",
+            "system",
+            "temperature"
+          ]
+        },
+        {
+          "name": "describe_image",
+          "startLine": 220,
+          "endLine": 235,
+          "params": [
+            "model",
+            "image_bytes",
+            "hint"
+          ]
+        },
+        {
+          "name": "embed_texts",
+          "startLine": 238,
+          "endLine": 241,
+          "params": [
+            "model",
+            "texts"
+          ]
+        },
+        {
+          "name": "ollama_alive",
+          "startLine": 244,
+          "endLine": 249,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "ModelInfo",
+          "startLine": 45,
+          "endLine": 70,
+          "methods": [
+            "size_gb",
+            "is_vision",
+            "is_embedding",
+            "is_thinking"
+          ],
+          "properties": [
+            "name",
+            "size_bytes",
+            "capabilities",
+            "parameter_size",
+            "families",
+            "context_length",
+            "is_cloud"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "_client",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "ModelInfo",
+          "line": 44,
+          "isDefault": false
+        },
+        {
+          "name": "list_models",
+          "line": 73,
+          "isDefault": false
+        },
+        {
+          "name": "chat_models",
+          "line": 114,
+          "isDefault": false
+        },
+        {
+          "name": "embedding_model",
+          "line": 123,
+          "isDefault": false
+        },
+        {
+          "name": "vision_fallback_model",
+          "line": 129,
+          "isDefault": false
+        },
+        {
+          "name": "smallest_text_model",
+          "line": 145,
+          "isDefault": false
+        },
+        {
+          "name": "stream_chat",
+          "line": 162,
+          "isDefault": false
+        },
+        {
+          "name": "running_models",
+          "line": 189,
+          "isDefault": false
+        },
+        {
+          "name": "generate",
+          "line": 205,
+          "isDefault": false
+        },
+        {
+          "name": "describe_image",
+          "line": 220,
+          "isDefault": false
+        },
+        {
+          "name": "embed_texts",
+          "line": 238,
+          "isDefault": false
+        },
+        {
+          "name": "ollama_alive",
+          "line": 244,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_client",
+          "callee": "providers.get_ollama_host",
+          "lineNumber": 30
+        },
+        {
+          "caller": "_client",
+          "callee": "providers.get_ollama_key",
+          "lineNumber": 31
+        },
+        {
+          "caller": "_client",
+          "callee": "_client_cache.get",
+          "lineNumber": 33
+        },
+        {
+          "caller": "_client",
+          "callee": "_client_cache.clear",
+          "lineNumber": 35
+        },
+        {
+          "caller": "_client",
+          "callee": "ollama.Client",
+          "lineNumber": 39
+        },
+        {
+          "caller": "list_models",
+          "callee": "_client().list",
+          "lineNumber": 81
+        },
+        {
+          "caller": "list_models",
+          "callee": "_client",
+          "lineNumber": 81
+        },
+        {
+          "caller": "list_models",
+          "callee": "resp.get",
+          "lineNumber": 82
+        },
+        {
+          "caller": "list_models",
+          "callee": "dict",
+          "lineNumber": 83
+        },
+        {
+          "caller": "list_models",
+          "callee": "isinstance",
+          "lineNumber": 83
+        },
+        {
+          "caller": "list_models",
+          "callee": "raw.get",
+          "lineNumber": 84
+        },
+        {
+          "caller": "list_models",
+          "callee": "raw.get",
+          "lineNumber": 84
+        },
+        {
+          "caller": "list_models",
+          "callee": "raw.get",
+          "lineNumber": 85
+        },
+        {
+          "caller": "list_models",
+          "callee": "hasattr",
+          "lineNumber": 86
+        },
+        {
+          "caller": "list_models",
+          "callee": "details.model_dump",
+          "lineNumber": 87
+        },
+        {
+          "caller": "list_models",
+          "callee": "list",
+          "lineNumber": 88
+        },
+        {
+          "caller": "list_models",
+          "callee": "raw.get",
+          "lineNumber": 88
+        },
+        {
+          "caller": "list_models",
+          "callee": "details.get",
+          "lineNumber": 89
+        },
+        {
+          "caller": "list_models",
+          "callee": "_client().show",
+          "lineNumber": 92
+        },
+        {
+          "caller": "list_models",
+          "callee": "_client",
+          "lineNumber": 92
+        },
+        {
+          "caller": "list_models",
+          "callee": "list",
+          "lineNumber": 93
+        },
+        {
+          "caller": "list_models",
+          "callee": "getattr",
+          "lineNumber": 93
+        },
+        {
+          "caller": "list_models",
+          "callee": "getattr",
+          "lineNumber": 94
+        },
+        {
+          "caller": "list_models",
+          "callee": "model_info.items",
+          "lineNumber": 95
+        },
+        {
+          "caller": "list_models",
+          "callee": "key.endswith",
+          "lineNumber": 96
+        },
+        {
+          "caller": "list_models",
+          "callee": "logger.warning",
+          "lineNumber": 99
+        },
+        {
+          "caller": "list_models",
+          "callee": "models.append",
+          "lineNumber": 100
+        },
+        {
+          "caller": "list_models",
+          "callee": "ModelInfo",
+          "lineNumber": 101
+        },
+        {
+          "caller": "list_models",
+          "callee": "raw.get",
+          "lineNumber": 103
+        },
+        {
+          "caller": "list_models",
+          "callee": "details.get",
+          "lineNumber": 105
+        },
+        {
+          "caller": "list_models",
+          "callee": "list",
+          "lineNumber": 106
+        },
+        {
+          "caller": "list_models",
+          "callee": "details.get",
+          "lineNumber": 106
+        },
+        {
+          "caller": "list_models",
+          "callee": "bool",
+          "lineNumber": 108
+        },
+        {
+          "caller": "list_models",
+          "callee": "raw.get",
+          "lineNumber": 108
+        },
+        {
+          "caller": "list_models",
+          "callee": "name.endswith",
+          "lineNumber": 108
+        },
+        {
+          "caller": "list_models",
+          "callee": "name.endswith",
+          "lineNumber": 108
+        },
+        {
+          "caller": "chat_models",
+          "callee": "sorted",
+          "lineNumber": 120
+        },
+        {
+          "caller": "embedding_model",
+          "callee": "min",
+          "lineNumber": 126
+        },
+        {
+          "caller": "vision_fallback_model",
+          "callee": "min",
+          "lineNumber": 137
+        },
+        {
+          "caller": "vision_fallback_model",
+          "callee": "m.name.lower",
+          "lineNumber": 138
+        },
+        {
+          "caller": "vision_fallback_model",
+          "callee": "min",
+          "lineNumber": 139
+        },
+        {
+          "caller": "smallest_text_model",
+          "callee": "any",
+          "lineNumber": 154
+        },
+        {
+          "caller": "smallest_text_model",
+          "callee": "m.name.lower",
+          "lineNumber": 154
+        },
+        {
+          "caller": "smallest_text_model",
+          "callee": "min",
+          "lineNumber": 159
+        },
+        {
+          "caller": "stream_chat",
+          "callee": "_client().chat",
+          "lineNumber": 173
+        },
+        {
+          "caller": "stream_chat",
+          "callee": "_client",
+          "lineNumber": 173
+        },
+        {
+          "caller": "stream_chat",
+          "callee": "chunk.get(\"message\", {}).get",
+          "lineNumber": 181
+        },
+        {
+          "caller": "stream_chat",
+          "callee": "chunk.get",
+          "lineNumber": 181
+        },
+        {
+          "caller": "stream_chat",
+          "callee": "chunk.get",
+          "lineNumber": 184
+        },
+        {
+          "caller": "stream_chat",
+          "callee": "chunk.get",
+          "lineNumber": 185
+        },
+        {
+          "caller": "stream_chat",
+          "callee": "chunk.get",
+          "lineNumber": 186
+        },
+        {
+          "caller": "running_models",
+          "callee": "_client().ps",
+          "lineNumber": 192
+        },
+        {
+          "caller": "running_models",
+          "callee": "_client",
+          "lineNumber": 192
+        },
+        {
+          "caller": "running_models",
+          "callee": "resp.get",
+          "lineNumber": 194
+        },
+        {
+          "caller": "running_models",
+          "callee": "dict",
+          "lineNumber": 195
+        },
+        {
+          "caller": "running_models",
+          "callee": "isinstance",
+          "lineNumber": 195
+        },
+        {
+          "caller": "running_models",
+          "callee": "out.append",
+          "lineNumber": 196
+        },
+        {
+          "caller": "running_models",
+          "callee": "raw.get",
+          "lineNumber": 197
+        },
+        {
+          "caller": "running_models",
+          "callee": "raw.get",
+          "lineNumber": 197
+        },
+        {
+          "caller": "running_models",
+          "callee": "raw.get",
+          "lineNumber": 198
+        },
+        {
+          "caller": "running_models",
+          "callee": "raw.get",
+          "lineNumber": 198
+        },
+        {
+          "caller": "generate",
+          "callee": "messages.append",
+          "lineNumber": 209
+        },
+        {
+          "caller": "generate",
+          "callee": "messages.append",
+          "lineNumber": 210
+        },
+        {
+          "caller": "generate",
+          "callee": "_client().chat",
+          "lineNumber": 211
+        },
+        {
+          "caller": "generate",
+          "callee": "_client",
+          "lineNumber": 211
+        },
+        {
+          "caller": "generate",
+          "callee": "resp[\"message\"][\"content\"].strip",
+          "lineNumber": 217
+        },
+        {
+          "caller": "describe_image",
+          "callee": "_client().chat",
+          "lineNumber": 229
+        },
+        {
+          "caller": "describe_image",
+          "callee": "_client",
+          "lineNumber": 229
+        },
+        {
+          "caller": "describe_image",
+          "callee": "resp[\"message\"][\"content\"].strip",
+          "lineNumber": 235
+        },
+        {
+          "caller": "embed_texts",
+          "callee": "_client().embed",
+          "lineNumber": 240
+        },
+        {
+          "caller": "embed_texts",
+          "callee": "_client",
+          "lineNumber": 240
+        },
+        {
+          "caller": "embed_texts",
+          "callee": "list",
+          "lineNumber": 241
+        },
+        {
+          "caller": "ollama_alive",
+          "callee": "_client().list",
+          "lineNumber": 246
+        },
+        {
+          "caller": "ollama_alive",
+          "callee": "_client",
+          "lineNumber": 246
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 13,
+        "functionCount": 12,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/orchestrator.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 92,
+      "nonEmptyLines": 76,
+      "functions": [
+        {
+          "name": "build_messages",
+          "startLine": 17,
+          "endLine": 80,
+          "params": [
+            "conv_id",
+            "user_text",
+            "embed_model",
+            "history",
+            "attachment_context",
+            "custom_system",
+            "memory_enabled",
+            "cross_chat_enabled"
+          ]
+        },
+        {
+          "name": "after_turn_indexing",
+          "startLine": 83,
+          "endLine": 92,
+          "params": [
+            "conv_id",
+            "embed_model",
+            "user_text",
+            "assistant_text"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "build_messages",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "after_turn_indexing",
+          "line": 83,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "build_messages",
+          "callee": "custom_system.strip",
+          "lineNumber": 34
+        },
+        {
+          "caller": "build_messages",
+          "callee": "get_profile",
+          "lineNumber": 37
+        },
+        {
+          "caller": "build_messages",
+          "callee": "sections.append",
+          "lineNumber": 39
+        },
+        {
+          "caller": "build_messages",
+          "callee": "memory.relevant_memories",
+          "lineNumber": 42
+        },
+        {
+          "caller": "build_messages",
+          "callee": "\"\\n\".join",
+          "lineNumber": 44
+        },
+        {
+          "caller": "build_messages",
+          "callee": "sections.append",
+          "lineNumber": 45
+        },
+        {
+          "caller": "build_messages",
+          "callee": "rag.search_history",
+          "lineNumber": 48
+        },
+        {
+          "caller": "build_messages",
+          "callee": "chat_store.get_conversation",
+          "lineNumber": 58
+        },
+        {
+          "caller": "build_messages",
+          "callee": "h.get",
+          "lineNumber": 58
+        },
+        {
+          "caller": "build_messages",
+          "callee": "\"\\n\".join",
+          "lineNumber": 61
+        },
+        {
+          "caller": "build_messages",
+          "callee": "sections.append",
+          "lineNumber": 62
+        },
+        {
+          "caller": "build_messages",
+          "callee": "sorted",
+          "lineNumber": 63
+        },
+        {
+          "caller": "build_messages",
+          "callee": "rag.conv_has_docs",
+          "lineNumber": 65
+        },
+        {
+          "caller": "build_messages",
+          "callee": "rag.search_docs",
+          "lineNumber": 66
+        },
+        {
+          "caller": "build_messages",
+          "callee": "\"\\n\\n\".join",
+          "lineNumber": 68
+        },
+        {
+          "caller": "build_messages",
+          "callee": "sections.append",
+          "lineNumber": 69
+        },
+        {
+          "caller": "build_messages",
+          "callee": "sections.append",
+          "lineNumber": 72
+        },
+        {
+          "caller": "build_messages",
+          "callee": "\"\\n\\n\".join",
+          "lineNumber": 74
+        },
+        {
+          "caller": "build_messages",
+          "callee": "m.get",
+          "lineNumber": 77
+        },
+        {
+          "caller": "build_messages",
+          "callee": "messages.append",
+          "lineNumber": 79
+        },
+        {
+          "caller": "after_turn_indexing",
+          "callee": "chat_store.get_conversation",
+          "lineNumber": 89
+        },
+        {
+          "caller": "after_turn_indexing",
+          "callee": "rag.index_history_turn",
+          "lineNumber": 91
+        },
+        {
+          "caller": "after_turn_indexing",
+          "callee": "rag.index_history_turn",
+          "lineNumber": 92
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/personalization.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 66,
+      "nonEmptyLines": 54,
+      "functions": [
+        {
+          "name": "get_profile",
+          "startLine": 24,
+          "endLine": 25,
+          "params": []
+        },
+        {
+          "name": "note_conversation_done",
+          "startLine": 28,
+          "endLine": 35,
+          "params": []
+        },
+        {
+          "name": "rebuild_profile",
+          "startLine": 38,
+          "endLine": 66,
+          "params": [
+            "helper_model"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "get_profile",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "note_conversation_done",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "rebuild_profile",
+          "line": 38,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "get_profile",
+          "callee": "chat_store.kv_get",
+          "lineNumber": 25
+        },
+        {
+          "caller": "note_conversation_done",
+          "callee": "int",
+          "lineNumber": 30
+        },
+        {
+          "caller": "note_conversation_done",
+          "callee": "chat_store.kv_get",
+          "lineNumber": 30
+        },
+        {
+          "caller": "note_conversation_done",
+          "callee": "chat_store.kv_set",
+          "lineNumber": 32
+        },
+        {
+          "caller": "note_conversation_done",
+          "callee": "chat_store.kv_set",
+          "lineNumber": 34
+        },
+        {
+          "caller": "note_conversation_done",
+          "callee": "str",
+          "lineNumber": 34
+        },
+        {
+          "caller": "rebuild_profile",
+          "callee": "chat_store.list_conversations",
+          "lineNumber": 40
+        },
+        {
+          "caller": "rebuild_profile",
+          "callee": "chat_store.get_messages",
+          "lineNumber": 43
+        },
+        {
+          "caller": "rebuild_profile",
+          "callee": "snippets.append",
+          "lineNumber": 45
+        },
+        {
+          "caller": "rebuild_profile",
+          "callee": "len",
+          "lineNumber": 46
+        },
+        {
+          "caller": "rebuild_profile",
+          "callee": "len",
+          "lineNumber": 48
+        },
+        {
+          "caller": "rebuild_profile",
+          "callee": "chat_store.recent_feedback_samples",
+          "lineNumber": 50
+        },
+        {
+          "caller": "rebuild_profile",
+          "callee": "\"\\n\".join",
+          "lineNumber": 51
+        },
+        {
+          "caller": "rebuild_profile",
+          "callee": "get_profile",
+          "lineNumber": 52
+        },
+        {
+          "caller": "rebuild_profile",
+          "callee": "\"\\n\".join",
+          "lineNumber": 56
+        },
+        {
+          "caller": "rebuild_profile",
+          "callee": "generate",
+          "lineNumber": 60
+        },
+        {
+          "caller": "rebuild_profile",
+          "callee": "chat_store.kv_set",
+          "lineNumber": 61
+        },
+        {
+          "caller": "rebuild_profile",
+          "callee": "logger.info",
+          "lineNumber": 62
+        },
+        {
+          "caller": "rebuild_profile",
+          "callee": "len",
+          "lineNumber": 62
+        },
+        {
+          "caller": "rebuild_profile",
+          "callee": "logger.warning",
+          "lineNumber": 65
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/providers.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 442,
+      "nonEmptyLines": 362,
+      "functions": [
+        {
+          "name": "_get_secret",
+          "startLine": 132,
+          "endLine": 134,
+          "params": [
+            "name"
+          ]
+        },
+        {
+          "name": "_set_secret",
+          "startLine": 137,
+          "endLine": 142,
+          "params": [
+            "name",
+            "value"
+          ]
+        },
+        {
+          "name": "get_api_key",
+          "startLine": 145,
+          "endLine": 146,
+          "params": [
+            "provider"
+          ]
+        },
+        {
+          "name": "key_source",
+          "startLine": 149,
+          "endLine": 155,
+          "params": [
+            "provider"
+          ]
+        },
+        {
+          "name": "set_api_key",
+          "startLine": 158,
+          "endLine": 159,
+          "params": [
+            "provider",
+            "key"
+          ]
+        },
+        {
+          "name": "remove_api_key",
+          "startLine": 162,
+          "endLine": 163,
+          "params": [
+            "provider"
+          ]
+        },
+        {
+          "name": "configured_providers",
+          "startLine": 166,
+          "endLine": 167,
+          "params": []
+        },
+        {
+          "name": "clear_all_secrets",
+          "startLine": 170,
+          "endLine": 173,
+          "params": []
+        },
+        {
+          "name": "get_ollama_host",
+          "startLine": 180,
+          "endLine": 181,
+          "params": []
+        },
+        {
+          "name": "get_ollama_key",
+          "startLine": 184,
+          "endLine": 185,
+          "params": []
+        },
+        {
+          "name": "ollama_key_source",
+          "startLine": 188,
+          "endLine": 193,
+          "params": []
+        },
+        {
+          "name": "set_ollama_config",
+          "startLine": 196,
+          "endLine": 198,
+          "params": [
+            "host",
+            "api_key"
+          ]
+        },
+        {
+          "name": "reset_ollama_config",
+          "startLine": 201,
+          "endLine": 203,
+          "params": []
+        },
+        {
+          "name": "_excluded",
+          "startLine": 208,
+          "endLine": 210,
+          "params": [
+            "provider",
+            "model_id"
+          ]
+        },
+        {
+          "name": "_vision_by_pattern",
+          "startLine": 213,
+          "endLine": 215,
+          "params": [
+            "provider",
+            "model_id"
+          ]
+        },
+        {
+          "name": "list_provider_models",
+          "startLine": 218,
+          "endLine": 227,
+          "params": [
+            "provider"
+          ]
+        },
+        {
+          "name": "_list_anthropic",
+          "startLine": 230,
+          "endLine": 237,
+          "params": [
+            "api_key"
+          ]
+        },
+        {
+          "name": "_list_openrouter",
+          "startLine": 240,
+          "endLine": 260,
+          "params": [
+            "api_key"
+          ]
+        },
+        {
+          "name": "_list_openai_compat",
+          "startLine": 263,
+          "endLine": 274,
+          "params": [
+            "provider",
+            "api_key"
+          ]
+        },
+        {
+          "name": "test_connection",
+          "startLine": 277,
+          "endLine": 282,
+          "params": [
+            "provider"
+          ]
+        },
+        {
+          "name": "stream_chat",
+          "startLine": 287,
+          "endLine": 306,
+          "params": [
+            "provider",
+            "model",
+            "messages",
+            "temperature",
+            "stats"
+          ]
+        },
+        {
+          "name": "_stream_anthropic",
+          "startLine": 309,
+          "endLine": 350,
+          "params": [
+            "api_key",
+            "model",
+            "messages",
+            "stats"
+          ]
+        },
+        {
+          "name": "_stream_openai_compat",
+          "startLine": 353,
+          "endLine": 395,
+          "params": [
+            "provider",
+            "api_key",
+            "model",
+            "messages",
+            "temperature",
+            "stats"
+          ]
+        },
+        {
+          "name": "openrouter_auth_url",
+          "startLine": 403,
+          "endLine": 420,
+          "params": [
+            "callback_url"
+          ]
+        },
+        {
+          "name": "openrouter_exchange_code",
+          "startLine": 423,
+          "endLine": 442,
+          "params": [
+            "code"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ApiModel",
+          "startLine": 86,
+          "endLine": 113,
+          "methods": [
+            "key",
+            "hint",
+            "dropdown_label"
+          ],
+          "properties": [
+            "provider",
+            "id",
+            "is_vision",
+            "context_length",
+            "extra"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ApiModel",
+          "line": 85,
+          "isDefault": false
+        },
+        {
+          "name": "_get_secret",
+          "line": 132,
+          "isDefault": false
+        },
+        {
+          "name": "_set_secret",
+          "line": 137,
+          "isDefault": false
+        },
+        {
+          "name": "get_api_key",
+          "line": 145,
+          "isDefault": false
+        },
+        {
+          "name": "key_source",
+          "line": 149,
+          "isDefault": false
+        },
+        {
+          "name": "set_api_key",
+          "line": 158,
+          "isDefault": false
+        },
+        {
+          "name": "remove_api_key",
+          "line": 162,
+          "isDefault": false
+        },
+        {
+          "name": "configured_providers",
+          "line": 166,
+          "isDefault": false
+        },
+        {
+          "name": "clear_all_secrets",
+          "line": 170,
+          "isDefault": false
+        },
+        {
+          "name": "get_ollama_host",
+          "line": 180,
+          "isDefault": false
+        },
+        {
+          "name": "get_ollama_key",
+          "line": 184,
+          "isDefault": false
+        },
+        {
+          "name": "ollama_key_source",
+          "line": 188,
+          "isDefault": false
+        },
+        {
+          "name": "set_ollama_config",
+          "line": 196,
+          "isDefault": false
+        },
+        {
+          "name": "reset_ollama_config",
+          "line": 201,
+          "isDefault": false
+        },
+        {
+          "name": "_excluded",
+          "line": 208,
+          "isDefault": false
+        },
+        {
+          "name": "_vision_by_pattern",
+          "line": 213,
+          "isDefault": false
+        },
+        {
+          "name": "list_provider_models",
+          "line": 218,
+          "isDefault": false
+        },
+        {
+          "name": "_list_anthropic",
+          "line": 230,
+          "isDefault": false
+        },
+        {
+          "name": "_list_openrouter",
+          "line": 240,
+          "isDefault": false
+        },
+        {
+          "name": "_list_openai_compat",
+          "line": 263,
+          "isDefault": false
+        },
+        {
+          "name": "test_connection",
+          "line": 277,
+          "isDefault": false
+        },
+        {
+          "name": "stream_chat",
+          "line": 287,
+          "isDefault": false
+        },
+        {
+          "name": "_stream_anthropic",
+          "line": 309,
+          "isDefault": false
+        },
+        {
+          "name": "_stream_openai_compat",
+          "line": 353,
+          "isDefault": false
+        },
+        {
+          "name": "openrouter_auth_url",
+          "line": 403,
+          "isDefault": false
+        },
+        {
+          "name": "openrouter_exchange_code",
+          "line": 423,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "hint",
+          "callee": "self.id.lower",
+          "lineNumber": 100
+        },
+        {
+          "caller": "hint",
+          "callee": "re.search",
+          "lineNumber": 102
+        },
+        {
+          "caller": "hint",
+          "callee": "tags.append",
+          "lineNumber": 103
+        },
+        {
+          "caller": "hint",
+          "callee": "tags.append",
+          "lineNumber": 106
+        },
+        {
+          "caller": "hint",
+          "callee": "tags.append",
+          "lineNumber": 108
+        },
+        {
+          "caller": "hint",
+          "callee": "\", \".join",
+          "lineNumber": 109
+        },
+        {
+          "caller": "_get_secret",
+          "callee": "_secrets.get",
+          "lineNumber": 134
+        },
+        {
+          "caller": "_set_secret",
+          "callee": "_secrets.pop",
+          "lineNumber": 142
+        },
+        {
+          "caller": "get_api_key",
+          "callee": "_get_secret",
+          "lineNumber": 146
+        },
+        {
+          "caller": "get_api_key",
+          "callee": "os.environ.get",
+          "lineNumber": 146
+        },
+        {
+          "caller": "key_source",
+          "callee": "_get_secret",
+          "lineNumber": 151
+        },
+        {
+          "caller": "key_source",
+          "callee": "os.environ.get",
+          "lineNumber": 153
+        },
+        {
+          "caller": "set_api_key",
+          "callee": "_set_secret",
+          "lineNumber": 159
+        },
+        {
+          "caller": "set_api_key",
+          "callee": "(key or \"\").strip",
+          "lineNumber": 159
+        },
+        {
+          "caller": "remove_api_key",
+          "callee": "_set_secret",
+          "lineNumber": 163
+        },
+        {
+          "caller": "configured_providers",
+          "callee": "get_api_key",
+          "lineNumber": 167
+        },
+        {
+          "caller": "clear_all_secrets",
+          "callee": "_secrets.clear",
+          "lineNumber": 173
+        },
+        {
+          "caller": "get_ollama_host",
+          "callee": "_get_secret",
+          "lineNumber": 181
+        },
+        {
+          "caller": "get_ollama_host",
+          "callee": "os.environ.get",
+          "lineNumber": 181
+        },
+        {
+          "caller": "get_ollama_key",
+          "callee": "_get_secret",
+          "lineNumber": 185
+        },
+        {
+          "caller": "get_ollama_key",
+          "callee": "os.environ.get",
+          "lineNumber": 185
+        },
+        {
+          "caller": "ollama_key_source",
+          "callee": "_get_secret",
+          "lineNumber": 189
+        },
+        {
+          "caller": "ollama_key_source",
+          "callee": "os.environ.get",
+          "lineNumber": 191
+        },
+        {
+          "caller": "set_ollama_config",
+          "callee": "_set_secret",
+          "lineNumber": 197
+        },
+        {
+          "caller": "set_ollama_config",
+          "callee": "(host or \"\").strip",
+          "lineNumber": 197
+        },
+        {
+          "caller": "set_ollama_config",
+          "callee": "_set_secret",
+          "lineNumber": 198
+        },
+        {
+          "caller": "set_ollama_config",
+          "callee": "(api_key or \"\").strip",
+          "lineNumber": 198
+        },
+        {
+          "caller": "reset_ollama_config",
+          "callee": "_set_secret",
+          "lineNumber": 202
+        },
+        {
+          "caller": "reset_ollama_config",
+          "callee": "_set_secret",
+          "lineNumber": 203
+        },
+        {
+          "caller": "_excluded",
+          "callee": "model_id.lower",
+          "lineNumber": 209
+        },
+        {
+          "caller": "_excluded",
+          "callee": "any",
+          "lineNumber": 210
+        },
+        {
+          "caller": "_excluded",
+          "callee": "re.search",
+          "lineNumber": 210
+        },
+        {
+          "caller": "_vision_by_pattern",
+          "callee": "model_id.lower",
+          "lineNumber": 214
+        },
+        {
+          "caller": "_vision_by_pattern",
+          "callee": "any",
+          "lineNumber": 215
+        },
+        {
+          "caller": "_vision_by_pattern",
+          "callee": "re.search",
+          "lineNumber": 215
+        },
+        {
+          "caller": "list_provider_models",
+          "callee": "get_api_key",
+          "lineNumber": 220
+        },
+        {
+          "caller": "list_provider_models",
+          "callee": "_list_anthropic",
+          "lineNumber": 224
+        },
+        {
+          "caller": "list_provider_models",
+          "callee": "_list_openrouter",
+          "lineNumber": 226
+        },
+        {
+          "caller": "list_provider_models",
+          "callee": "_list_openai_compat",
+          "lineNumber": 227
+        },
+        {
+          "caller": "_list_anthropic",
+          "callee": "anthropic.Anthropic",
+          "lineNumber": 233
+        },
+        {
+          "caller": "_list_anthropic",
+          "callee": "client.models.list",
+          "lineNumber": 235
+        },
+        {
+          "caller": "_list_anthropic",
+          "callee": "models.append",
+          "lineNumber": 236
+        },
+        {
+          "caller": "_list_anthropic",
+          "callee": "ApiModel",
+          "lineNumber": 236
+        },
+        {
+          "caller": "_list_openrouter",
+          "callee": "httpx.get",
+          "lineNumber": 242
+        },
+        {
+          "caller": "_list_openrouter",
+          "callee": "resp.raise_for_status",
+          "lineNumber": 247
+        },
+        {
+          "caller": "_list_openrouter",
+          "callee": "resp.json().get",
+          "lineNumber": 249
+        },
+        {
+          "caller": "_list_openrouter",
+          "callee": "resp.json",
+          "lineNumber": 249
+        },
+        {
+          "caller": "_list_openrouter",
+          "callee": "m.get",
+          "lineNumber": 250
+        },
+        {
+          "caller": "_list_openrouter",
+          "callee": "arch.get",
+          "lineNumber": 251
+        },
+        {
+          "caller": "_list_openrouter",
+          "callee": "models.append",
+          "lineNumber": 252
+        },
+        {
+          "caller": "_list_openrouter",
+          "callee": "ApiModel",
+          "lineNumber": 253
+        },
+        {
+          "caller": "_list_openrouter",
+          "callee": "m.get",
+          "lineNumber": 257
+        },
+        {
+          "caller": "_list_openrouter",
+          "callee": "sorted",
+          "lineNumber": 260
+        },
+        {
+          "caller": "_list_openai_compat",
+          "callee": "OpenAI",
+          "lineNumber": 266
+        },
+        {
+          "caller": "_list_openai_compat",
+          "callee": "client.models.list",
+          "lineNumber": 268
+        },
+        {
+          "caller": "_list_openai_compat",
+          "callee": "_excluded",
+          "lineNumber": 269
+        },
+        {
+          "caller": "_list_openai_compat",
+          "callee": "models.append",
+          "lineNumber": 271
+        },
+        {
+          "caller": "_list_openai_compat",
+          "callee": "ApiModel",
+          "lineNumber": 272
+        },
+        {
+          "caller": "_list_openai_compat",
+          "callee": "_vision_by_pattern",
+          "lineNumber": 272
+        },
+        {
+          "caller": "_list_openai_compat",
+          "callee": "sorted",
+          "lineNumber": 274
+        },
+        {
+          "caller": "test_connection",
+          "callee": "list_provider_models",
+          "lineNumber": 279
+        },
+        {
+          "caller": "test_connection",
+          "callee": "len",
+          "lineNumber": 280
+        },
+        {
+          "caller": "test_connection",
+          "callee": "str",
+          "lineNumber": 282
+        },
+        {
+          "caller": "stream_chat",
+          "callee": "get_api_key",
+          "lineNumber": 300
+        },
+        {
+          "caller": "stream_chat",
+          "callee": "RuntimeError",
+          "lineNumber": 302
+        },
+        {
+          "caller": "stream_chat",
+          "callee": "_stream_anthropic",
+          "lineNumber": 304
+        },
+        {
+          "caller": "stream_chat",
+          "callee": "_stream_openai_compat",
+          "lineNumber": 306
+        },
+        {
+          "caller": "_stream_anthropic",
+          "callee": "anthropic.Anthropic",
+          "lineNumber": 314
+        },
+        {
+          "caller": "_stream_anthropic",
+          "callee": "m.get",
+          "lineNumber": 321
+        },
+        {
+          "caller": "_stream_anthropic",
+          "callee": "base64.standard_b64encode(img).decode",
+          "lineNumber": 329
+        },
+        {
+          "caller": "_stream_anthropic",
+          "callee": "base64.standard_b64encode",
+          "lineNumber": 329
+        },
+        {
+          "caller": "_stream_anthropic",
+          "callee": "content.append",
+          "lineNumber": 334
+        },
+        {
+          "caller": "_stream_anthropic",
+          "callee": "converted.append",
+          "lineNumber": 335
+        },
+        {
+          "caller": "_stream_anthropic",
+          "callee": "converted.append",
+          "lineNumber": 337
+        },
+        {
+          "caller": "_stream_anthropic",
+          "callee": "client.messages.stream",
+          "lineNumber": 338
+        },
+        {
+          "caller": "_stream_anthropic",
+          "callee": "stream.get_final_message",
+          "lineNumber": 347
+        },
+        {
+          "caller": "_stream_openai_compat",
+          "callee": "OpenAI",
+          "lineNumber": 366
+        },
+        {
+          "caller": "_stream_openai_compat",
+          "callee": "m.get",
+          "lineNumber": 369
+        },
+        {
+          "caller": "_stream_openai_compat",
+          "callee": "base64.standard_b64encode(img).decode",
+          "lineNumber": 373
+        },
+        {
+          "caller": "_stream_openai_compat",
+          "callee": "base64.standard_b64encode",
+          "lineNumber": 373
+        },
+        {
+          "caller": "_stream_openai_compat",
+          "callee": "content.append",
+          "lineNumber": 374
+        },
+        {
+          "caller": "_stream_openai_compat",
+          "callee": "converted.append",
+          "lineNumber": 377
+        },
+        {
+          "caller": "_stream_openai_compat",
+          "callee": "converted.append",
+          "lineNumber": 379
+        },
+        {
+          "caller": "_stream_openai_compat",
+          "callee": "client.chat.completions.create",
+          "lineNumber": 383
+        },
+        {
+          "caller": "_stream_openai_compat",
+          "callee": "getattr",
+          "lineNumber": 394
+        },
+        {
+          "caller": "openrouter_auth_url",
+          "callee": "secrets.token_urlsafe",
+          "lineNumber": 412
+        },
+        {
+          "caller": "openrouter_auth_url",
+          "callee": "_set_secret",
+          "lineNumber": 413
+        },
+        {
+          "caller": "openrouter_auth_url",
+          "callee": "hashlib.sha256(verifier.encode()).digest",
+          "lineNumber": 414
+        },
+        {
+          "caller": "openrouter_auth_url",
+          "callee": "hashlib.sha256",
+          "lineNumber": 414
+        },
+        {
+          "caller": "openrouter_auth_url",
+          "callee": "verifier.encode",
+          "lineNumber": 414
+        },
+        {
+          "caller": "openrouter_auth_url",
+          "callee": "base64.urlsafe_b64encode(digest).rstrip(b\"=\").decode",
+          "lineNumber": 415
+        },
+        {
+          "caller": "openrouter_auth_url",
+          "callee": "base64.urlsafe_b64encode(digest).rstrip",
+          "lineNumber": 415
+        },
+        {
+          "caller": "openrouter_auth_url",
+          "callee": "base64.urlsafe_b64encode",
+          "lineNumber": 415
+        },
+        {
+          "caller": "openrouter_exchange_code",
+          "callee": "_get_secret",
+          "lineNumber": 425
+        },
+        {
+          "caller": "openrouter_exchange_code",
+          "callee": "httpx.post",
+          "lineNumber": 429
+        },
+        {
+          "caller": "openrouter_exchange_code",
+          "callee": "resp.raise_for_status",
+          "lineNumber": 434
+        },
+        {
+          "caller": "openrouter_exchange_code",
+          "callee": "resp.json().get",
+          "lineNumber": 435
+        },
+        {
+          "caller": "openrouter_exchange_code",
+          "callee": "resp.json",
+          "lineNumber": 435
+        },
+        {
+          "caller": "openrouter_exchange_code",
+          "callee": "set_api_key",
+          "lineNumber": 437
+        },
+        {
+          "caller": "openrouter_exchange_code",
+          "callee": "_set_secret",
+          "lineNumber": 438
+        },
+        {
+          "caller": "openrouter_exchange_code",
+          "callee": "logger.warning",
+          "lineNumber": 441
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 26,
+        "functionCount": 25,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/rag.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 175,
+      "nonEmptyLines": 133,
+      "functions": [
+        {
+          "name": "_collection",
+          "startLine": 21,
+          "endLine": 22,
+          "params": [
+            "name"
+          ]
+        },
+        {
+          "name": "_embed",
+          "startLine": 25,
+          "endLine": 26,
+          "params": [
+            "embed_model",
+            "texts"
+          ]
+        },
+        {
+          "name": "index_doc_chunks",
+          "startLine": 31,
+          "endLine": 43,
+          "params": [
+            "embed_model",
+            "conv_id",
+            "doc_name",
+            "chunks"
+          ]
+        },
+        {
+          "name": "search_docs",
+          "startLine": 46,
+          "endLine": 55,
+          "params": [
+            "embed_model",
+            "conv_id",
+            "query",
+            "top_k"
+          ]
+        },
+        {
+          "name": "conv_has_docs",
+          "startLine": 58,
+          "endLine": 60,
+          "params": [
+            "conv_id"
+          ]
+        },
+        {
+          "name": "index_history_turn",
+          "startLine": 65,
+          "endLine": 76,
+          "params": [
+            "embed_model",
+            "conv_id",
+            "conv_title",
+            "role",
+            "content"
+          ]
+        },
+        {
+          "name": "search_history",
+          "startLine": 79,
+          "endLine": 91,
+          "params": [
+            "embed_model",
+            "exclude_conv",
+            "query",
+            "top_k",
+            "min_similarity"
+          ]
+        },
+        {
+          "name": "delete_conv_vectors",
+          "startLine": 94,
+          "endLine": 99,
+          "params": [
+            "conv_id"
+          ]
+        },
+        {
+          "name": "clear_all_chat_vectors",
+          "startLine": 102,
+          "endLine": 108,
+          "params": []
+        },
+        {
+          "name": "clear_all_vectors",
+          "startLine": 111,
+          "endLine": 117,
+          "params": []
+        },
+        {
+          "name": "search_history_all",
+          "startLine": 120,
+          "endLine": 126,
+          "params": [
+            "embed_model",
+            "query",
+            "top_k"
+          ]
+        },
+        {
+          "name": "index_memory",
+          "startLine": 131,
+          "endLine": 134,
+          "params": [
+            "embed_model",
+            "mem_id",
+            "content"
+          ]
+        },
+        {
+          "name": "similar_memory",
+          "startLine": 137,
+          "endLine": 146,
+          "params": [
+            "embed_model",
+            "content",
+            "threshold"
+          ]
+        },
+        {
+          "name": "search_memories",
+          "startLine": 149,
+          "endLine": 154,
+          "params": [
+            "embed_model",
+            "query",
+            "top_k"
+          ]
+        },
+        {
+          "name": "delete_memory_vector",
+          "startLine": 157,
+          "endLine": 161,
+          "params": [
+            "mem_id"
+          ]
+        },
+        {
+          "name": "_flatten",
+          "startLine": 166,
+          "endLine": 175,
+          "params": [
+            "res"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "_collection",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "_embed",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "index_doc_chunks",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "search_docs",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "conv_has_docs",
+          "line": 58,
+          "isDefault": false
+        },
+        {
+          "name": "index_history_turn",
+          "line": 65,
+          "isDefault": false
+        },
+        {
+          "name": "search_history",
+          "line": 79,
+          "isDefault": false
+        },
+        {
+          "name": "delete_conv_vectors",
+          "line": 94,
+          "isDefault": false
+        },
+        {
+          "name": "clear_all_chat_vectors",
+          "line": 102,
+          "isDefault": false
+        },
+        {
+          "name": "clear_all_vectors",
+          "line": 111,
+          "isDefault": false
+        },
+        {
+          "name": "search_history_all",
+          "line": 120,
+          "isDefault": false
+        },
+        {
+          "name": "index_memory",
+          "line": 131,
+          "isDefault": false
+        },
+        {
+          "name": "similar_memory",
+          "line": 137,
+          "isDefault": false
+        },
+        {
+          "name": "search_memories",
+          "line": 149,
+          "isDefault": false
+        },
+        {
+          "name": "delete_memory_vector",
+          "line": 157,
+          "isDefault": false
+        },
+        {
+          "name": "_flatten",
+          "line": 166,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_collection",
+          "callee": "_chroma.get_or_create_collection",
+          "lineNumber": 22
+        },
+        {
+          "caller": "_embed",
+          "callee": "embed_texts",
+          "lineNumber": 26
+        },
+        {
+          "caller": "index_doc_chunks",
+          "callee": "_collection",
+          "lineNumber": 34
+        },
+        {
+          "caller": "index_doc_chunks",
+          "callee": "_embed",
+          "lineNumber": 35
+        },
+        {
+          "caller": "index_doc_chunks",
+          "callee": "col.add",
+          "lineNumber": 36
+        },
+        {
+          "caller": "index_doc_chunks",
+          "callee": "uuid.uuid4",
+          "lineNumber": 37
+        },
+        {
+          "caller": "index_doc_chunks",
+          "callee": "logger.info",
+          "lineNumber": 42
+        },
+        {
+          "caller": "index_doc_chunks",
+          "callee": "len",
+          "lineNumber": 42
+        },
+        {
+          "caller": "index_doc_chunks",
+          "callee": "len",
+          "lineNumber": 43
+        },
+        {
+          "caller": "search_docs",
+          "callee": "_collection",
+          "lineNumber": 47
+        },
+        {
+          "caller": "search_docs",
+          "callee": "col.count",
+          "lineNumber": 48
+        },
+        {
+          "caller": "search_docs",
+          "callee": "col.query",
+          "lineNumber": 50
+        },
+        {
+          "caller": "search_docs",
+          "callee": "_embed",
+          "lineNumber": 51
+        },
+        {
+          "caller": "search_docs",
+          "callee": "_flatten",
+          "lineNumber": 55
+        },
+        {
+          "caller": "conv_has_docs",
+          "callee": "_collection",
+          "lineNumber": 59
+        },
+        {
+          "caller": "conv_has_docs",
+          "callee": "len",
+          "lineNumber": 60
+        },
+        {
+          "caller": "conv_has_docs",
+          "callee": "col.get",
+          "lineNumber": 60
+        },
+        {
+          "caller": "index_history_turn",
+          "callee": "len",
+          "lineNumber": 68
+        },
+        {
+          "caller": "index_history_turn",
+          "callee": "content.strip",
+          "lineNumber": 68
+        },
+        {
+          "caller": "index_history_turn",
+          "callee": "_collection",
+          "lineNumber": 70
+        },
+        {
+          "caller": "index_history_turn",
+          "callee": "col.add",
+          "lineNumber": 71
+        },
+        {
+          "caller": "index_history_turn",
+          "callee": "uuid.uuid4",
+          "lineNumber": 72
+        },
+        {
+          "caller": "index_history_turn",
+          "callee": "_embed",
+          "lineNumber": 73
+        },
+        {
+          "caller": "search_history",
+          "callee": "_collection",
+          "lineNumber": 82
+        },
+        {
+          "caller": "search_history",
+          "callee": "col.count",
+          "lineNumber": 83
+        },
+        {
+          "caller": "search_history",
+          "callee": "col.query",
+          "lineNumber": 85
+        },
+        {
+          "caller": "search_history",
+          "callee": "_embed",
+          "lineNumber": 86
+        },
+        {
+          "caller": "search_history",
+          "callee": "_flatten",
+          "lineNumber": 90
+        },
+        {
+          "caller": "delete_conv_vectors",
+          "callee": "_collection(name).delete",
+          "lineNumber": 97
+        },
+        {
+          "caller": "delete_conv_vectors",
+          "callee": "_collection",
+          "lineNumber": 97
+        },
+        {
+          "caller": "delete_conv_vectors",
+          "callee": "logger.warning",
+          "lineNumber": 99
+        },
+        {
+          "caller": "clear_all_chat_vectors",
+          "callee": "_chroma.delete_collection",
+          "lineNumber": 106
+        },
+        {
+          "caller": "clear_all_chat_vectors",
+          "callee": "logger.warning",
+          "lineNumber": 108
+        },
+        {
+          "caller": "clear_all_vectors",
+          "callee": "_chroma.delete_collection",
+          "lineNumber": 115
+        },
+        {
+          "caller": "clear_all_vectors",
+          "callee": "logger.warning",
+          "lineNumber": 117
+        },
+        {
+          "caller": "search_history_all",
+          "callee": "_collection",
+          "lineNumber": 122
+        },
+        {
+          "caller": "search_history_all",
+          "callee": "col.count",
+          "lineNumber": 123
+        },
+        {
+          "caller": "search_history_all",
+          "callee": "col.query",
+          "lineNumber": 125
+        },
+        {
+          "caller": "search_history_all",
+          "callee": "_embed",
+          "lineNumber": 125
+        },
+        {
+          "caller": "search_history_all",
+          "callee": "_flatten",
+          "lineNumber": 126
+        },
+        {
+          "caller": "index_memory",
+          "callee": "_collection(MEMORY_COLLECTION).add",
+          "lineNumber": 132
+        },
+        {
+          "caller": "index_memory",
+          "callee": "_collection",
+          "lineNumber": 132
+        },
+        {
+          "caller": "index_memory",
+          "callee": "_embed",
+          "lineNumber": 133
+        },
+        {
+          "caller": "similar_memory",
+          "callee": "_collection",
+          "lineNumber": 139
+        },
+        {
+          "caller": "similar_memory",
+          "callee": "col.count",
+          "lineNumber": 140
+        },
+        {
+          "caller": "similar_memory",
+          "callee": "col.query",
+          "lineNumber": 142
+        },
+        {
+          "caller": "similar_memory",
+          "callee": "_embed",
+          "lineNumber": 142
+        },
+        {
+          "caller": "similar_memory",
+          "callee": "_flatten",
+          "lineNumber": 143
+        },
+        {
+          "caller": "search_memories",
+          "callee": "_collection",
+          "lineNumber": 150
+        },
+        {
+          "caller": "search_memories",
+          "callee": "col.count",
+          "lineNumber": 151
+        },
+        {
+          "caller": "search_memories",
+          "callee": "col.query",
+          "lineNumber": 153
+        },
+        {
+          "caller": "search_memories",
+          "callee": "_embed",
+          "lineNumber": 153
+        },
+        {
+          "caller": "search_memories",
+          "callee": "_flatten",
+          "lineNumber": 154
+        },
+        {
+          "caller": "delete_memory_vector",
+          "callee": "_collection(MEMORY_COLLECTION).delete",
+          "lineNumber": 159
+        },
+        {
+          "caller": "delete_memory_vector",
+          "callee": "_collection",
+          "lineNumber": 159
+        },
+        {
+          "caller": "delete_memory_vector",
+          "callee": "logger.warning",
+          "lineNumber": 161
+        },
+        {
+          "caller": "_flatten",
+          "callee": "res.get",
+          "lineNumber": 169
+        },
+        {
+          "caller": "_flatten",
+          "callee": "res.get",
+          "lineNumber": 170
+        },
+        {
+          "caller": "_flatten",
+          "callee": "res.get",
+          "lineNumber": 171
+        },
+        {
+          "caller": "_flatten",
+          "callee": "len",
+          "lineNumber": 171
+        },
+        {
+          "caller": "_flatten",
+          "callee": "res.get",
+          "lineNumber": 172
+        },
+        {
+          "caller": "_flatten",
+          "callee": "len",
+          "lineNumber": 172
+        },
+        {
+          "caller": "_flatten",
+          "callee": "zip",
+          "lineNumber": 173
+        },
+        {
+          "caller": "_flatten",
+          "callee": "out.append",
+          "lineNumber": 174
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 16,
+        "functionCount": 16,
+        "classCount": 0
+      }
+    }
+  ]
+}

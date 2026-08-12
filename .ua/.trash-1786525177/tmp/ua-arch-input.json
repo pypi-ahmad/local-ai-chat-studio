@@ -1,0 +1,2779 @@
+{
+  "fileNodes": [
+    {
+      "id": "file:frontend/src/App.test.tsx",
+      "type": "file",
+      "name": "App.test.tsx",
+      "filePath": "frontend/src/App.test.tsx",
+      "summary": "Verifies the studio shell exposes its workspace navigation, three-pane chat view, and provider management page.",
+      "tags": [
+        "test",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/App.tsx",
+      "type": "file",
+      "name": "App.tsx",
+      "filePath": "frontend/src/App.tsx",
+      "summary": "Implements the interactive local AI studio shell with navigation, chat, provider management, and placeholder workspace pages.",
+      "tags": [
+        "entry-point",
+        "component",
+        "workspace",
+        "react",
+        "tested"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/components/ui/avatar.tsx",
+      "type": "file",
+      "name": "avatar.tsx",
+      "filePath": "frontend/src/components/ui/avatar.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/components/ui/badge.tsx",
+      "type": "file",
+      "name": "badge.tsx",
+      "filePath": "frontend/src/components/ui/badge.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/button.tsx",
+      "type": "file",
+      "name": "button.tsx",
+      "filePath": "frontend/src/components/ui/button.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/components/ui/card.tsx",
+      "type": "file",
+      "name": "card.tsx",
+      "filePath": "frontend/src/components/ui/card.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/components/ui/dialog.tsx",
+      "type": "file",
+      "name": "dialog.tsx",
+      "filePath": "frontend/src/components/ui/dialog.tsx",
+      "summary": "Provides composable overlay primitives with styled content, headers, footers, and accessibility controls.",
+      "tags": [
+        "component",
+        "overlay",
+        "dialog",
+        "react"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "type": "file",
+      "name": "dropdown-menu.tsx",
+      "filePath": "frontend/src/components/ui/dropdown-menu.tsx",
+      "summary": "Provides composable, styled dropdown-menu primitives including nested, checkbox, and radio items.",
+      "tags": [
+        "component",
+        "menu",
+        "overlay",
+        "react"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:frontend/src/components/ui/field.tsx",
+      "type": "file",
+      "name": "field.tsx",
+      "filePath": "frontend/src/components/ui/field.tsx",
+      "summary": "Provides composable form-field layout, label, description, separator, and validation-message primitives.",
+      "tags": [
+        "component",
+        "form",
+        "validation",
+        "react"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:frontend/src/components/ui/input.tsx",
+      "type": "file",
+      "name": "input.tsx",
+      "filePath": "frontend/src/components/ui/input.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/label.tsx",
+      "type": "file",
+      "name": "label.tsx",
+      "filePath": "frontend/src/components/ui/label.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/scroll-area.tsx",
+      "type": "file",
+      "name": "scroll-area.tsx",
+      "filePath": "frontend/src/components/ui/scroll-area.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/select.tsx",
+      "type": "file",
+      "name": "select.tsx",
+      "filePath": "frontend/src/components/ui/select.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/components/ui/separator.tsx",
+      "type": "file",
+      "name": "separator.tsx",
+      "filePath": "frontend/src/components/ui/separator.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/sheet.tsx",
+      "type": "file",
+      "name": "sheet.tsx",
+      "filePath": "frontend/src/components/ui/sheet.tsx",
+      "summary": "Provides composable overlay primitives with styled content, headers, footers, and accessibility controls.",
+      "tags": [
+        "component",
+        "overlay",
+        "dialog",
+        "react"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/components/ui/sidebar.tsx",
+      "type": "file",
+      "name": "sidebar.tsx",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "summary": "Provides the responsive sidebar context, controls, and composable navigation primitives for the frontend.",
+      "tags": [
+        "component",
+        "sidebar",
+        "responsive",
+        "react"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:frontend/src/components/ui/skeleton.tsx",
+      "type": "file",
+      "name": "skeleton.tsx",
+      "filePath": "frontend/src/components/ui/skeleton.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/switch.tsx",
+      "type": "file",
+      "name": "switch.tsx",
+      "filePath": "frontend/src/components/ui/switch.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/table.tsx",
+      "type": "file",
+      "name": "table.tsx",
+      "filePath": "frontend/src/components/ui/table.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/components/ui/tabs.tsx",
+      "type": "file",
+      "name": "tabs.tsx",
+      "filePath": "frontend/src/components/ui/tabs.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/components/ui/textarea.tsx",
+      "type": "file",
+      "name": "textarea.tsx",
+      "filePath": "frontend/src/components/ui/textarea.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/tooltip.tsx",
+      "type": "file",
+      "name": "tooltip.tsx",
+      "filePath": "frontend/src/components/ui/tooltip.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/hooks/use-mobile.ts",
+      "type": "file",
+      "name": "use-mobile.ts",
+      "filePath": "frontend/src/hooks/use-mobile.ts",
+      "summary": "Provides a React hook that tracks the mobile breakpoint through browser media-query events.",
+      "tags": [
+        "hook",
+        "responsive",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/lib/utils.ts",
+      "type": "file",
+      "name": "utils.ts",
+      "filePath": "frontend/src/lib/utils.ts",
+      "summary": "Provides the shared class-name merger used by frontend UI components.",
+      "tags": [
+        "utility",
+        "styling",
+        "tailwind"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:app.py",
+      "type": "file",
+      "name": "app.py",
+      "filePath": "app.py",
+      "summary": "Streamlit workspace entry point that manages conversations, model selection, live generation, presets, and health status.",
+      "tags": [
+        "entry-point",
+        "streamlit",
+        "chat-interface",
+        "orchestration"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:pages/1_Memory.py",
+      "type": "file",
+      "name": "1_Memory.py",
+      "filePath": "pages/1_Memory.py",
+      "summary": "Streamlit page for inspecting, editing, and managing persistent user memories.",
+      "tags": [
+        "streamlit",
+        "memory",
+        "settings",
+        "user-interface"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:pages/2_Settings.py",
+      "type": "file",
+      "name": "2_Settings.py",
+      "filePath": "pages/2_Settings.py",
+      "summary": "Streamlit settings page for configuring local storage, model providers, and workspace options.",
+      "tags": [
+        "streamlit",
+        "configuration",
+        "providers",
+        "user-interface"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:pages/4_Compare.py",
+      "type": "file",
+      "name": "4_Compare.py",
+      "filePath": "pages/4_Compare.py",
+      "summary": "Streamlit page that runs and presents side-by-side model comparison results.",
+      "tags": [
+        "streamlit",
+        "model-comparison",
+        "providers",
+        "user-interface"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/catalog.py",
+      "type": "file",
+      "name": "catalog.py",
+      "filePath": "src/catalog.py",
+      "summary": "Builds and orders the unified catalog of local and optional cloud language models.",
+      "tags": [
+        "model-catalog",
+        "selection",
+        "utility",
+        "data-model"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/chat_store.py",
+      "type": "file",
+      "name": "chat_store.py",
+      "filePath": "src/chat_store.py",
+      "summary": "Provides the SQLite persistence layer for conversations, messages, memories, feedback, presets, and exports.",
+      "tags": [
+        "sqlite",
+        "persistence",
+        "chat-history",
+        "data-access"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:src/config.py",
+      "type": "file",
+      "name": "config.py",
+      "filePath": "src/config.py",
+      "summary": "Defines application paths and creates local directories used for database, vector store, and uploads.",
+      "tags": [
+        "configuration",
+        "paths",
+        "storage",
+        "data-model"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/files.py",
+      "type": "file",
+      "name": "files.py",
+      "filePath": "src/files.py",
+      "summary": "Parses uploaded documents and splits extracted text into retrieval-ready chunks.",
+      "tags": [
+        "file-processing",
+        "document-parsing",
+        "chunking",
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/jobs.py",
+      "type": "file",
+      "name": "jobs.py",
+      "filePath": "src/jobs.py",
+      "summary": "Coordinates background streaming chat jobs, attachments, web search, indexing, and post-turn maintenance.",
+      "tags": [
+        "background-jobs",
+        "streaming",
+        "orchestration",
+        "chat-service"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:src/memory.py",
+      "type": "file",
+      "name": "memory.py",
+      "filePath": "src/memory.py",
+      "summary": "Extracts durable user memories from conversations and retrieves relevant memories for prompts.",
+      "tags": [
+        "memory",
+        "personalization",
+        "retrieval",
+        "ai-service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/model_labels.py",
+      "type": "file",
+      "name": "model_labels.py",
+      "filePath": "src/model_labels.py",
+      "summary": "Formats model names with capability and size hints for user-facing selection controls.",
+      "tags": [
+        "model-catalog",
+        "formatting",
+        "utility",
+        "user-interface"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/ollama_client.py",
+      "type": "file",
+      "name": "ollama_client.py",
+      "filePath": "src/ollama_client.py",
+      "summary": "Wraps the local Ollama API for model discovery, generation, streaming, image description, and embeddings.",
+      "tags": [
+        "ollama",
+        "ai-client",
+        "streaming",
+        "embeddings"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:src/orchestrator.py",
+      "type": "file",
+      "name": "orchestrator.py",
+      "filePath": "src/orchestrator.py",
+      "summary": "Assembles prompt messages from profile, memories, retrieval context, history, and attachments.",
+      "tags": [
+        "prompting",
+        "orchestration",
+        "retrieval",
+        "chat-service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/personalization.py",
+      "type": "file",
+      "name": "personalization.py",
+      "filePath": "src/personalization.py",
+      "summary": "Maintains a compact user profile derived from conversations and feedback.",
+      "tags": [
+        "personalization",
+        "memory",
+        "profile",
+        "ai-service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/providers.py",
+      "type": "file",
+      "name": "providers.py",
+      "filePath": "src/providers.py",
+      "summary": "Manages BYOK provider credentials, remote model discovery, streaming chat, and OpenRouter authorization.",
+      "tags": [
+        "providers",
+        "byok",
+        "credentials",
+        "streaming"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:src/rag.py",
+      "type": "file",
+      "name": "rag.py",
+      "filePath": "src/rag.py",
+      "summary": "Stores and queries document, chat-history, and memory vectors in ChromaDB.",
+      "tags": [
+        "rag",
+        "chromadb",
+        "embeddings",
+        "retrieval"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/app/cli.py",
+      "type": "file",
+      "name": "cli.py",
+      "filePath": "backend/app/cli.py",
+      "summary": "Provides the Uvicorn command-line entry point for serving the FastAPI application.",
+      "tags": [
+        "entry-point",
+        "cli",
+        "api-server"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/app/contracts.py",
+      "type": "file",
+      "name": "contracts.py",
+      "filePath": "backend/app/contracts.py",
+      "summary": "Defines Pydantic request, response, provider, and run contracts shared across the backend API.",
+      "tags": [
+        "data-model",
+        "validation",
+        "api-contracts",
+        "type-definition",
+        "tested"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/app/main.py",
+      "type": "file",
+      "name": "main.py",
+      "filePath": "backend/app/main.py",
+      "summary": "Builds the FastAPI application with conversation, credential, provider, OAuth, and streaming run endpoints.",
+      "tags": [
+        "entry-point",
+        "api-handler",
+        "fastapi",
+        "streaming"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:backend/app/providers.py",
+      "type": "file",
+      "name": "providers.py",
+      "filePath": "backend/app/providers.py",
+      "summary": "Implements a common streaming adapter interface and registry for Ollama and optional hosted AI providers.",
+      "tags": [
+        "service",
+        "provider-adapter",
+        "streaming",
+        "model-catalog",
+        "tested"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:backend/app/runs.py",
+      "type": "file",
+      "name": "runs.py",
+      "filePath": "backend/app/runs.py",
+      "summary": "Coordinates asynchronous model runs, lifecycle events, cancellation, provider streaming, and persistence.",
+      "tags": [
+        "service",
+        "run-management",
+        "streaming",
+        "concurrency"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/app/sessions.py",
+      "type": "file",
+      "name": "sessions.py",
+      "filePath": "backend/app/sessions.py",
+      "summary": "Stores session-scoped provider credentials in memory and falls back to configured environment variables.",
+      "tags": [
+        "service",
+        "session-management",
+        "credentials",
+        "configuration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/app/store.py",
+      "type": "file",
+      "name": "store.py",
+      "filePath": "backend/app/store.py",
+      "summary": "Persists conversations and ordered messages in a SQLite database and maps rows to API contracts.",
+      "tags": [
+        "service",
+        "database",
+        "persistence",
+        "sqlite"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/generate_api_types.py",
+      "type": "file",
+      "name": "generate_api_types.py",
+      "filePath": "scripts/generate_api_types.py",
+      "summary": "Exports the FastAPI OpenAPI schema to JSON for frontend type generation.",
+      "tags": [
+        "script",
+        "api-schema",
+        "code-generation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/test_provider_adapters.py",
+      "type": "file",
+      "name": "test_provider_adapters.py",
+      "filePath": "tests/test_provider_adapters.py",
+      "summary": "Tests provider registry coverage, concurrent discovery failure isolation, and normalized message compatibility.",
+      "tags": [
+        "test",
+        "provider-adapter",
+        "concurrency",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "pipeline:.github/workflows/ci.yml",
+      "type": "pipeline",
+      "name": "ci.yml",
+      "filePath": ".github/workflows/ci.yml",
+      "summary": "GitHub Actions CI workflow that validates the Python backend with pytest and Ruff, and installs, lints, tests, and builds the React frontend on pushes and pull requests.",
+      "tags": [
+        "ci-cd",
+        "testing",
+        "python",
+        "frontend",
+        "build-system"
+      ],
+      "complexity": "simple",
+      "languageNotes": "The workflow uses YAML jobs with isolated Python/uv and Node/npm toolchains, including dependency caching."
+    },
+    {
+      "id": "document:CHANGELOG.md",
+      "type": "document",
+      "name": "CHANGELOG.md",
+      "filePath": "CHANGELOG.md",
+      "summary": "Records released and unreleased changes, including the FastAPI v2 backend, React workspace, provider adapters, and streaming-run fixes in version 0.2.0.",
+      "tags": [
+        "documentation",
+        "changelog",
+        "release-notes",
+        "versioning"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:CODE_OF_CONDUCT.md",
+      "type": "document",
+      "name": "CODE_OF_CONDUCT.md",
+      "filePath": "CODE_OF_CONDUCT.md",
+      "summary": "Defines expected community behavior, enforcement authority, and reporting guidance for project discussions and contributions.",
+      "tags": [
+        "documentation",
+        "community",
+        "governance",
+        "conduct"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:CODE_TUTORIAL.md",
+      "type": "document",
+      "name": "CODE_TUTORIAL.md",
+      "filePath": "CODE_TUTORIAL.md",
+      "summary": "Provides a module-by-module tutorial of the legacy Streamlit and v2 FastAPI plus React architectures, including message-flow traces and extension guidance.",
+      "tags": [
+        "documentation",
+        "tutorial",
+        "architecture",
+        "fastapi",
+        "streamlit"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:CONTRIBUTING.md",
+      "type": "document",
+      "name": "CONTRIBUTING.md",
+      "filePath": "CONTRIBUTING.md",
+      "summary": "Explains contribution setup, project conventions, required checks, API type regeneration, and pull-request expectations for both application stacks.",
+      "tags": [
+        "documentation",
+        "development",
+        "contributing",
+        "testing",
+        "ci-cd"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:DATASET.md",
+      "type": "document",
+      "name": "DATASET.md",
+      "filePath": "DATASET.md",
+      "summary": "Clarifies that the application does not rely on a fixed public dataset and instead works with user-provided documents and data.",
+      "tags": [
+        "documentation",
+        "datasets",
+        "user-data"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "Project entry-point documentation covering local-first AI chat capabilities, installation, configuration, privacy boundaries, architecture, and contribution links.",
+      "tags": [
+        "documentation",
+        "entry-point",
+        "overview",
+        "setup",
+        "architecture"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:SECURITY.md",
+      "type": "document",
+      "name": "SECURITY.md",
+      "filePath": "SECURITY.md",
+      "summary": "Defines the local-first security model, including session-only provider keys, local data storage, network-exposure cautions, prompt-injection risk, and private vulnerability reporting.",
+      "tags": [
+        "documentation",
+        "security",
+        "privacy",
+        "vulnerability-reporting"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:USER_GUIDE.md",
+      "type": "document",
+      "name": "USER_GUIDE.md",
+      "filePath": "USER_GUIDE.md",
+      "summary": "Offers a plain-language setup guide and feature walkthrough for chat, providers, memory, model comparison, retrieval, data controls, and troubleshooting.",
+      "tags": [
+        "documentation",
+        "user-guide",
+        "setup",
+        "features",
+        "troubleshooting"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "type": "document",
+      "name": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "filePath": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "summary": "Serves as a comprehensive study handbook covering AI concepts, repository architecture, module maps, end-to-end traces, contributor recipes, testing, and debugging.",
+      "tags": [
+        "documentation",
+        "tutorial",
+        "architecture",
+        "contributing",
+        "reference"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "config:pyproject.toml",
+      "type": "config",
+      "name": "pyproject.toml",
+      "filePath": "pyproject.toml",
+      "summary": "Defines the Python package metadata, runtime and development dependencies, Hatch build settings, uv packaging behavior, and the chat-studio CLI entry point.",
+      "tags": [
+        "configuration",
+        "python",
+        "dependencies",
+        "build-system",
+        "entry-point"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Uses PEP 621 project metadata with Hatchling as the build backend and uv dependency groups."
+    },
+    {
+      "id": "config:frontend/.oxlintrc.json",
+      "type": "config",
+      "name": ".oxlintrc.json",
+      "filePath": "frontend/.oxlintrc.json",
+      "summary": "Configures Oxlint with React, TypeScript, and Oxc plugins, enforcing hook rules and warning on non-component exports.",
+      "tags": [
+        "configuration",
+        "linting",
+        "react",
+        "typescript"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:frontend/README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "frontend/README.md",
+      "summary": "Documents the Vite React and TypeScript starter setup, its available React plugins, and options for enabling type-aware Oxlint rules.",
+      "tags": [
+        "documentation",
+        "frontend",
+        "vite",
+        "typescript"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:frontend/components.json",
+      "type": "config",
+      "name": "components.json",
+      "filePath": "frontend/components.json",
+      "summary": "Defines shadcn/ui generation settings, Tailwind CSS integration, icon library, and import aliases for frontend components and utilities.",
+      "tags": [
+        "configuration",
+        "component-library",
+        "tailwind",
+        "path-aliases"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/index.html",
+      "type": "file",
+      "name": "index.html",
+      "filePath": "frontend/index.html",
+      "summary": "Provides the Vite HTML shell, viewport metadata, application title, and root element that loads the React entry module.",
+      "tags": [
+        "entry-point",
+        "frontend",
+        "html",
+        "vite"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:frontend/package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "frontend/package.json",
+      "summary": "Defines the frontend's Vite, TypeScript, linting, testing, and API-type generation scripts together with runtime and development dependencies.",
+      "tags": [
+        "configuration",
+        "build-system",
+        "frontend",
+        "dependencies",
+        "testing"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:frontend/tsconfig.app.json",
+      "type": "config",
+      "name": "tsconfig.app.json",
+      "filePath": "frontend/tsconfig.app.json",
+      "summary": "Configures strict, no-emit TypeScript compilation for the React source directory using bundler resolution and the @ path alias.",
+      "tags": [
+        "configuration",
+        "typescript",
+        "react",
+        "path-aliases"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Uses TypeScript's bundler module resolution and React's automatic JSX runtime."
+    },
+    {
+      "id": "config:frontend/tsconfig.json",
+      "type": "config",
+      "name": "tsconfig.json",
+      "filePath": "frontend/tsconfig.json",
+      "summary": "Acts as the frontend TypeScript solution configuration, referencing separate application and Node-oriented compiler projects while sharing the @ alias.",
+      "tags": [
+        "configuration",
+        "typescript",
+        "build-system",
+        "path-aliases"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Uses TypeScript project references to split browser and tooling compilation."
+    },
+    {
+      "id": "config:frontend/tsconfig.node.json",
+      "type": "config",
+      "name": "tsconfig.node.json",
+      "filePath": "frontend/tsconfig.node.json",
+      "summary": "Configures strict, no-emit Node-oriented TypeScript checking for the Vite configuration using NodeNext modules.",
+      "tags": [
+        "configuration",
+        "typescript",
+        "nodejs",
+        "build-system"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Uses NodeNext modules to type-check Vite tooling against Node APIs."
+    },
+    {
+      "id": "document:.github/ISSUE_TEMPLATE/bug_report.md",
+      "type": "document",
+      "name": "bug_report.md",
+      "filePath": ".github/ISSUE_TEMPLATE/bug_report.md",
+      "summary": "GitHub issue template that collects reproducible bug reports for the project.",
+      "tags": [
+        "documentation",
+        "issue-template",
+        "bug-report"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:.github/ISSUE_TEMPLATE/feature_request.md",
+      "type": "document",
+      "name": "feature_request.md",
+      "filePath": ".github/ISSUE_TEMPLATE/feature_request.md",
+      "summary": "GitHub issue template for proposing and describing requested features.",
+      "tags": [
+        "documentation",
+        "issue-template",
+        "feature-request"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:.github/pull_request_template.md",
+      "type": "document",
+      "name": "pull_request_template.md",
+      "filePath": ".github/pull_request_template.md",
+      "summary": "Pull request template covering changes, validation, and contributor checklist items.",
+      "tags": [
+        "documentation",
+        "pull-request",
+        "development"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.python-version",
+      "type": "file",
+      "name": ".python-version",
+      "filePath": ".python-version",
+      "summary": "Pins the repository's intended Python interpreter version to 3.12.",
+      "tags": [
+        "python",
+        "runtime",
+        "version-pin"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.streamlit/config.toml",
+      "type": "config",
+      "name": "config.toml",
+      "filePath": ".streamlit/config.toml",
+      "summary": "Configures the Streamlit application's theme, client, browser, and server behavior.",
+      "tags": [
+        "configuration",
+        "streamlit",
+        "theme",
+        "runtime"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.ua/.understandignore",
+      "type": "file",
+      "name": ".understandignore",
+      "filePath": ".ua/.understandignore",
+      "summary": "Provides optional ignore-pattern guidance for excluding generated, dependency, runtime, and test files from codebase analysis.",
+      "tags": [
+        "configuration",
+        "analysis",
+        "ignore-rules"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:.ua/config.json",
+      "type": "config",
+      "name": "config.json",
+      "filePath": ".ua/config.json",
+      "summary": "Stores Understand Anything analysis configuration, including the output language.",
+      "tags": [
+        "configuration",
+        "analysis",
+        "tooling"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "backend/__init__.py",
+      "summary": "Marks the backend directory as a Python package.",
+      "tags": [
+        "python",
+        "package",
+        "entry-point"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/app/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "backend/app/__init__.py",
+      "summary": "Marks the FastAPI application directory as a Python package.",
+      "tags": [
+        "python",
+        "package",
+        "entry-point"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:docs/site/index.html",
+      "type": "file",
+      "name": "index.html",
+      "filePath": "docs/site/index.html",
+      "summary": "Single-page documentation viewer that fetches repository Markdown files, renders them with marked, and supports hash-based navigation.",
+      "tags": [
+        "documentation",
+        "html",
+        "client-side",
+        "navigation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:docs/tutorial/index.html",
+      "type": "file",
+      "name": "index.html",
+      "filePath": "docs/tutorial/index.html",
+      "summary": "Offline systems field manual presenting the project's two application tracks, setup, architecture, and operational guidance.",
+      "tags": [
+        "documentation",
+        "html",
+        "tutorial",
+        "architecture"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:docs/tutorial/tutorial.css",
+      "type": "file",
+      "name": "tutorial.css",
+      "filePath": "docs/tutorial/tutorial.css",
+      "summary": "Styles the offline tutorial field manual.",
+      "tags": [
+        "css",
+        "documentation",
+        "styling"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:docs/tutorial/tutorial.js",
+      "type": "file",
+      "name": "tutorial.js",
+      "filePath": "docs/tutorial/tutorial.js",
+      "summary": "Adds client-side progress, search, filtering, and tab interactions to the tutorial field manual.",
+      "tags": [
+        "javascript",
+        "documentation",
+        "client-side",
+        "interaction"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/App.css",
+      "type": "file",
+      "name": "App.css",
+      "filePath": "frontend/src/App.css",
+      "summary": "Defines application-specific styling for the React workspace shell.",
+      "tags": [
+        "css",
+        "frontend",
+        "styling"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/ErrorBoundary.tsx",
+      "type": "file",
+      "name": "ErrorBoundary.tsx",
+      "filePath": "frontend/src/ErrorBoundary.tsx",
+      "summary": "Provides a React error boundary that logs rendering failures and displays fallback UI.",
+      "tags": [
+        "react",
+        "error-handling",
+        "component",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/api/client.ts",
+      "type": "file",
+      "name": "client.ts",
+      "filePath": "frontend/src/api/client.ts",
+      "summary": "Implements a typed frontend API client that sends requests to the local FastAPI service and decodes JSON responses.",
+      "tags": [
+        "typescript",
+        "api-client",
+        "http",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/api/schema.ts",
+      "type": "file",
+      "name": "schema.ts",
+      "filePath": "frontend/src/api/schema.ts",
+      "summary": "Generated TypeScript declarations for the FastAPI OpenAPI schema, including API paths, payloads, and response types.",
+      "tags": [
+        "typescript",
+        "api-schema",
+        "type-definition",
+        "generated"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:frontend/src/index.css",
+      "type": "file",
+      "name": "index.css",
+      "filePath": "frontend/src/index.css",
+      "summary": "Defines global CSS styling for the React frontend.",
+      "tags": [
+        "css",
+        "frontend",
+        "styling"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/main.tsx",
+      "type": "file",
+      "name": "main.tsx",
+      "filePath": "frontend/src/main.tsx",
+      "summary": "Bootstraps the React application, loads global styles, and wraps the App component in strict mode and an error boundary.",
+      "tags": [
+        "typescript",
+        "react",
+        "entry-point",
+        "error-handling"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/test/setup.ts",
+      "type": "file",
+      "name": "setup.ts",
+      "filePath": "frontend/src/test/setup.ts",
+      "summary": "Initializes shared test-environment behavior for frontend Vitest tests.",
+      "tags": [
+        "typescript",
+        "test",
+        "vitest",
+        "setup"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/vite.config.ts",
+      "type": "file",
+      "name": "vite.config.ts",
+      "filePath": "frontend/vite.config.ts",
+      "summary": "Configures Vite, React, Tailwind, path aliases, loopback API proxying, and the Vitest environment.",
+      "tags": [
+        "typescript",
+        "configuration",
+        "vite",
+        "build-system",
+        "testing"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/vitest.config.ts",
+      "type": "file",
+      "name": "vitest.config.ts",
+      "filePath": "frontend/vitest.config.ts",
+      "summary": "Configures the Vitest React test environment and frontend path alias.",
+      "tags": [
+        "typescript",
+        "configuration",
+        "vitest",
+        "testing"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:pages/3_Providers.py",
+      "type": "file",
+      "name": "3_Providers.py",
+      "filePath": "pages/3_Providers.py",
+      "summary": "Streamlit provider-management page for session-only BYOK credentials, OpenRouter login, connection tests, and local or cloud Ollama endpoint settings.",
+      "tags": [
+        "python",
+        "streamlit",
+        "providers",
+        "byok",
+        "security"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:tasks/plan.md",
+      "type": "document",
+      "name": "plan.md",
+      "filePath": "tasks/plan.md",
+      "summary": "Implementation plan for a multipage htmx documentation site, covering architecture decisions, tasks, risks, and open questions.",
+      "tags": [
+        "documentation",
+        "planning",
+        "architecture",
+        "htmx"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:tasks/todo.md",
+      "type": "document",
+      "name": "todo.md",
+      "filePath": "tasks/todo.md",
+      "summary": "Tracks completed phases, deviations, and outstanding work for the multipage htmx documentation site.",
+      "tags": [
+        "documentation",
+        "planning",
+        "task-tracking"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/conftest.py",
+      "type": "file",
+      "name": "conftest.py",
+      "filePath": "tests/conftest.py",
+      "summary": "Defines the shared pytest TestClient fixture that starts an in-memory FastAPI application for API contract tests.",
+      "tags": [
+        "test",
+        "pytest",
+        "fixture",
+        "api-testing"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/test_api_contract.py",
+      "type": "file",
+      "name": "test_api_contract.py",
+      "filePath": "tests/test_api_contract.py",
+      "summary": "Exercises the public FastAPI contract for health checks, conversations, session-scoped provider credentials, streamed runs, and OpenRouter PKCE authorization.",
+      "tags": [
+        "test",
+        "api-testing",
+        "contract-testing",
+        "fastapi"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "importEdges": [
+    {
+      "source": "file:frontend/src/App.test.tsx",
+      "target": "file:frontend/src/App.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/badge.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/button.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/card.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/input.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/scroll-area.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/separator.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/textarea.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/tooltip.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/avatar.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/badge.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/button.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "file:frontend/src/components/ui/button.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/field.tsx",
+      "target": "file:frontend/src/components/ui/label.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/field.tsx",
+      "target": "file:frontend/src/components/ui/separator.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/field.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/input.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/label.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/scroll-area.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/select.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/separator.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "file:frontend/src/components/ui/button.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/components/ui/button.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/components/ui/input.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/components/ui/separator.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/components/ui/sheet.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/components/ui/skeleton.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/components/ui/tooltip.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/hooks/use-mobile.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/skeleton.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/switch.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/table.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/tabs.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/textarea.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/tooltip.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:src/catalog.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:src/files.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:src/personalization.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:pages/1_Memory.py",
+      "target": "file:src/personalization.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:pages/2_Settings.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:pages/4_Compare.py",
+      "target": "file:src/catalog.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:pages/4_Compare.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:pages/4_Compare.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "file:src/model_labels.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/files.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/orchestrator.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/personalization.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/model_labels.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/orchestrator.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/personalization.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/personalization.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/cli.py",
+      "target": "file:backend/app/main.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/runs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/sessions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/sessions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/store.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/generate_api_types.py",
+      "target": "file:backend/app/main.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/api/client.ts",
+      "target": "file:frontend/src/api/schema.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/main.tsx",
+      "target": "file:frontend/src/App.css",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/main.tsx",
+      "target": "file:frontend/src/App.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/main.tsx",
+      "target": "file:frontend/src/ErrorBoundary.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/main.tsx",
+      "target": "file:frontend/src/index.css",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ],
+  "allEdges": [
+    {
+      "source": "file:frontend/src/App.test.tsx",
+      "target": "file:frontend/src/App.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/badge.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/button.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/card.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/input.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/scroll-area.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/separator.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/textarea.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/tooltip.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/avatar.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/badge.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/button.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "file:frontend/src/components/ui/button.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/dialog.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/App.test.tsx",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:frontend/src/components/ui/field.tsx",
+      "target": "file:frontend/src/components/ui/label.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/field.tsx",
+      "target": "file:frontend/src/components/ui/separator.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/field.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/input.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/label.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/scroll-area.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/select.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/separator.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "file:frontend/src/components/ui/button.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/components/ui/button.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/components/ui/input.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/components/ui/separator.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/components/ui/sheet.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/components/ui/skeleton.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/components/ui/tooltip.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/hooks/use-mobile.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/skeleton.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/switch.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/table.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/tabs.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/textarea.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/tooltip.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:src/catalog.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:src/files.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:src/personalization.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:pages/1_Memory.py",
+      "target": "file:src/personalization.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:pages/2_Settings.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:pages/4_Compare.py",
+      "target": "file:src/catalog.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:pages/4_Compare.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:pages/4_Compare.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "file:src/model_labels.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/files.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/orchestrator.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/personalization.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/model_labels.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/orchestrator.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/personalization.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/personalization.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/cli.py",
+      "target": "file:backend/app/main.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/runs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/sessions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/sessions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/store.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/generate_api_types.py",
+      "target": "file:backend/app/main.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "file:tests/test_provider_adapters.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "file:tests/test_provider_adapters.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:backend/app/main.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:backend/app/runs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:src/jobs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:app.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CONTRIBUTING.md",
+      "target": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CONTRIBUTING.md",
+      "target": "document:SECURITY.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CONTRIBUTING.md",
+      "target": "pipeline:.github/workflows/ci.yml",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:backend/app/cli.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:app.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:USER_GUIDE.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:CONTRIBUTING.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:SECURITY.md",
+      "target": "file:src/providers.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:SECURITY.md",
+      "target": "file:src/orchestrator.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:SECURITY.md",
+      "target": "file:src/jobs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:USER_GUIDE.md",
+      "target": "file:backend/app/cli.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:USER_GUIDE.md",
+      "target": "file:app.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:backend/app/main.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:backend/app/contracts.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:src/jobs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:app.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:pyproject.toml",
+      "target": "file:backend/app/cli.py",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/.oxlintrc.json",
+      "target": "file:frontend/src/App.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:frontend/README.md",
+      "target": "file:frontend/src/main.tsx",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:frontend/components.json",
+      "target": "file:frontend/src/components/ui/button.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:frontend/index.html",
+      "target": "file:frontend/src/main.tsx",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/package.json",
+      "target": "file:frontend/src/main.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/tsconfig.app.json",
+      "target": "file:frontend/src/App.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/tsconfig.json",
+      "target": "file:frontend/src/main.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/tsconfig.node.json",
+      "target": "file:frontend/vite.config.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:frontend/src/api/client.ts",
+      "target": "file:frontend/src/api/schema.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/main.tsx",
+      "target": "file:frontend/src/App.css",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/main.tsx",
+      "target": "file:frontend/src/App.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/main.tsx",
+      "target": "file:frontend/src/ErrorBoundary.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/main.tsx",
+      "target": "file:frontend/src/index.css",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "fixedSectionOk": true,
+  "nodesRecovered": 0,
+  "edgesRestored": 0,
+  "crossBatchEdgesAdded": 0,
+  "typesRemapped": 0,
+  "complexityRemapped": 0,
+  "notes": [
+    "The merge report contained no unresolved node, type, complexity, or dangling-edge items.",
+    "All 84 import-map relationships already have matching forward imports edges between their file nodes.",
+    "The assembled graph has 290 nodes and 495 edges with only recognized node types and normalized complexity values."
+  ]
+}

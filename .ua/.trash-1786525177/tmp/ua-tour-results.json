@@ -1,0 +1,2524 @@
+{
+  "scriptCompleted": true,
+  "entryPointCandidates": [
+    {
+      "id": "document:README.md",
+      "score": 5,
+      "name": "README.md",
+      "summary": "Project entry-point documentation covering local-first AI chat capabilities, installation, configuration, privacy boundaries, architecture, and contribution links.",
+      "type": "document"
+    },
+    {
+      "id": "file:app.py",
+      "score": 5,
+      "name": "app.py",
+      "summary": "Streamlit workspace entry point that manages conversations, model selection, live generation, presets, and health status.",
+      "type": "file"
+    },
+    {
+      "id": "file:backend/app/main.py",
+      "score": 4,
+      "name": "main.py",
+      "summary": "Builds the FastAPI application with conversation, credential, provider, OAuth, and streaming run endpoints.",
+      "type": "file"
+    },
+    {
+      "id": "file:pages/4_Compare.py",
+      "score": 3,
+      "name": "4_Compare.py",
+      "summary": "Streamlit page that runs and presents side-by-side model comparison results.",
+      "type": "file"
+    },
+    {
+      "id": "file:src/catalog.py",
+      "score": 3,
+      "name": "catalog.py",
+      "summary": "Builds and orders the unified catalog of local and optional cloud language models.",
+      "type": "file"
+    }
+  ],
+  "fanInRanking": [
+    {
+      "id": "file:frontend/src/lib/utils.ts",
+      "fanIn": 20,
+      "name": "utils.ts"
+    },
+    {
+      "id": "file:src/config.py",
+      "fanIn": 11,
+      "name": "config.py"
+    },
+    {
+      "id": "file:src/ollama_client.py",
+      "fanIn": 8,
+      "name": "ollama_client.py"
+    },
+    {
+      "id": "file:backend/app/contracts.py",
+      "fanIn": 6,
+      "name": "contracts.py"
+    },
+    {
+      "id": "file:frontend/src/components/ui/button.tsx",
+      "fanIn": 5,
+      "name": "button.tsx"
+    },
+    {
+      "id": "function:backend/app/providers.py:build_provider_registry",
+      "fanIn": 5,
+      "name": "build_provider_registry"
+    },
+    {
+      "id": "file:app.py",
+      "fanIn": 4,
+      "name": "app.py"
+    },
+    {
+      "id": "file:backend/app/main.py",
+      "fanIn": 4,
+      "name": "main.py"
+    },
+    {
+      "id": "file:frontend/src/App.tsx",
+      "fanIn": 4,
+      "name": "App.tsx"
+    },
+    {
+      "id": "file:frontend/src/main.tsx",
+      "fanIn": 4,
+      "name": "main.tsx"
+    },
+    {
+      "id": "function:src/catalog.py:normalize_model_key",
+      "fanIn": 4,
+      "name": "normalize_model_key"
+    },
+    {
+      "id": "function:src/ollama_client.py:generate",
+      "fanIn": 4,
+      "name": "generate"
+    },
+    {
+      "id": "function:src/ollama_client.py:list_models",
+      "fanIn": 4,
+      "name": "list_models"
+    },
+    {
+      "id": "function:src/personalization.py:note_conversation_done",
+      "fanIn": 4,
+      "name": "note_conversation_done"
+    },
+    {
+      "id": "function:src/personalization.py:rebuild_profile",
+      "fanIn": 4,
+      "name": "rebuild_profile"
+    },
+    {
+      "id": "file:backend/app/cli.py",
+      "fanIn": 3,
+      "name": "cli.py"
+    },
+    {
+      "id": "file:backend/app/providers.py",
+      "fanIn": 3,
+      "name": "providers.py"
+    },
+    {
+      "id": "file:frontend/src/components/ui/separator.tsx",
+      "fanIn": 3,
+      "name": "separator.tsx"
+    },
+    {
+      "id": "file:src/jobs.py",
+      "fanIn": 3,
+      "name": "jobs.py"
+    },
+    {
+      "id": "file:src/personalization.py",
+      "fanIn": 3,
+      "name": "personalization.py"
+    }
+  ],
+  "fanOutRanking": [
+    {
+      "id": "file:src/chat_store.py",
+      "fanOut": 71,
+      "name": "chat_store.py"
+    },
+    {
+      "id": "file:frontend/src/components/ui/sidebar.tsx",
+      "fanOut": 56,
+      "name": "sidebar.tsx"
+    },
+    {
+      "id": "file:src/providers.py",
+      "fanOut": 53,
+      "name": "providers.py"
+    },
+    {
+      "id": "file:src/jobs.py",
+      "fanOut": 37,
+      "name": "jobs.py"
+    },
+    {
+      "id": "file:src/rag.py",
+      "fanOut": 34,
+      "name": "rag.py"
+    },
+    {
+      "id": "file:app.py",
+      "fanOut": 33,
+      "name": "app.py"
+    },
+    {
+      "id": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "fanOut": 31,
+      "name": "dropdown-menu.tsx"
+    },
+    {
+      "id": "file:backend/app/contracts.py",
+      "fanOut": 27,
+      "name": "contracts.py"
+    },
+    {
+      "id": "file:src/ollama_client.py",
+      "fanOut": 27,
+      "name": "ollama_client.py"
+    },
+    {
+      "id": "file:frontend/src/components/ui/field.tsx",
+      "fanOut": 23,
+      "name": "field.tsx"
+    },
+    {
+      "id": "file:frontend/src/components/ui/dialog.tsx",
+      "fanOut": 22,
+      "name": "dialog.tsx"
+    },
+    {
+      "id": "file:frontend/src/components/ui/select.tsx",
+      "fanOut": 19,
+      "name": "select.tsx"
+    },
+    {
+      "id": "file:frontend/src/components/ui/sheet.tsx",
+      "fanOut": 19,
+      "name": "sheet.tsx"
+    },
+    {
+      "id": "file:frontend/src/components/ui/table.tsx",
+      "fanOut": 17,
+      "name": "table.tsx"
+    },
+    {
+      "id": "file:backend/app/providers.py",
+      "fanOut": 16,
+      "name": "providers.py"
+    },
+    {
+      "id": "file:src/files.py",
+      "fanOut": 16,
+      "name": "files.py"
+    },
+    {
+      "id": "file:frontend/src/App.tsx",
+      "fanOut": 15,
+      "name": "App.tsx"
+    },
+    {
+      "id": "file:frontend/src/components/ui/card.tsx",
+      "fanOut": 15,
+      "name": "card.tsx"
+    },
+    {
+      "id": "file:src/catalog.py",
+      "fanOut": 14,
+      "name": "catalog.py"
+    },
+    {
+      "id": "file:frontend/src/components/ui/avatar.tsx",
+      "fanOut": 13,
+      "name": "avatar.tsx"
+    }
+  ],
+  "bfsTraversal": {
+    "startNode": "file:app.py",
+    "order": [
+      "file:app.py",
+      "file:src/catalog.py",
+      "file:src/config.py",
+      "file:src/files.py",
+      "file:src/ollama_client.py",
+      "file:src/personalization.py",
+      "file:src/model_labels.py"
+    ],
+    "depthMap": {
+      "file:app.py": 0,
+      "file:src/catalog.py": 1,
+      "file:src/config.py": 1,
+      "file:src/files.py": 1,
+      "file:src/ollama_client.py": 1,
+      "file:src/personalization.py": 1,
+      "file:src/model_labels.py": 2
+    },
+    "byDepth": {
+      "0": [
+        "file:app.py"
+      ],
+      "1": [
+        "file:src/catalog.py",
+        "file:src/config.py",
+        "file:src/files.py",
+        "file:src/ollama_client.py",
+        "file:src/personalization.py"
+      ],
+      "2": [
+        "file:src/model_labels.py"
+      ]
+    }
+  },
+  "nonCodeFiles": {
+    "documentation": [
+      {
+        "id": "document:CHANGELOG.md",
+        "name": "CHANGELOG.md",
+        "type": "document",
+        "summary": "Records released and unreleased changes, including the FastAPI v2 backend, React workspace, provider adapters, and streaming-run fixes in version 0.2.0."
+      },
+      {
+        "id": "document:CODE_OF_CONDUCT.md",
+        "name": "CODE_OF_CONDUCT.md",
+        "type": "document",
+        "summary": "Defines expected community behavior, enforcement authority, and reporting guidance for project discussions and contributions."
+      },
+      {
+        "id": "document:CODE_TUTORIAL.md",
+        "name": "CODE_TUTORIAL.md",
+        "type": "document",
+        "summary": "Provides a module-by-module tutorial of the legacy Streamlit and v2 FastAPI plus React architectures, including message-flow traces and extension guidance."
+      },
+      {
+        "id": "document:CONTRIBUTING.md",
+        "name": "CONTRIBUTING.md",
+        "type": "document",
+        "summary": "Explains contribution setup, project conventions, required checks, API type regeneration, and pull-request expectations for both application stacks."
+      },
+      {
+        "id": "document:DATASET.md",
+        "name": "DATASET.md",
+        "type": "document",
+        "summary": "Clarifies that the application does not rely on a fixed public dataset and instead works with user-provided documents and data."
+      },
+      {
+        "id": "document:README.md",
+        "name": "README.md",
+        "type": "document",
+        "summary": "Project entry-point documentation covering local-first AI chat capabilities, installation, configuration, privacy boundaries, architecture, and contribution links."
+      },
+      {
+        "id": "document:SECURITY.md",
+        "name": "SECURITY.md",
+        "type": "document",
+        "summary": "Defines the local-first security model, including session-only provider keys, local data storage, network-exposure cautions, prompt-injection risk, and private vulnerability reporting."
+      },
+      {
+        "id": "document:USER_GUIDE.md",
+        "name": "USER_GUIDE.md",
+        "type": "document",
+        "summary": "Offers a plain-language setup guide and feature walkthrough for chat, providers, memory, model comparison, retrieval, data controls, and troubleshooting."
+      },
+      {
+        "id": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+        "name": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
+        "type": "document",
+        "summary": "Serves as a comprehensive study handbook covering AI concepts, repository architecture, module maps, end-to-end traces, contributor recipes, testing, and debugging."
+      },
+      {
+        "id": "document:frontend/README.md",
+        "name": "README.md",
+        "type": "document",
+        "summary": "Documents the Vite React and TypeScript starter setup, its available React plugins, and options for enabling type-aware Oxlint rules."
+      },
+      {
+        "id": "document:.github/ISSUE_TEMPLATE/bug_report.md",
+        "name": "bug_report.md",
+        "type": "document",
+        "summary": "GitHub issue template that collects reproducible bug reports for the project."
+      },
+      {
+        "id": "document:.github/ISSUE_TEMPLATE/feature_request.md",
+        "name": "feature_request.md",
+        "type": "document",
+        "summary": "GitHub issue template for proposing and describing requested features."
+      },
+      {
+        "id": "document:.github/pull_request_template.md",
+        "name": "pull_request_template.md",
+        "type": "document",
+        "summary": "Pull request template covering changes, validation, and contributor checklist items."
+      },
+      {
+        "id": "document:tasks/plan.md",
+        "name": "plan.md",
+        "type": "document",
+        "summary": "Implementation plan for a multipage htmx documentation site, covering architecture decisions, tasks, risks, and open questions."
+      },
+      {
+        "id": "document:tasks/todo.md",
+        "name": "todo.md",
+        "type": "document",
+        "summary": "Tracks completed phases, deviations, and outstanding work for the multipage htmx documentation site."
+      }
+    ],
+    "infrastructure": [
+      {
+        "id": "pipeline:.github/workflows/ci.yml",
+        "name": "ci.yml",
+        "type": "pipeline",
+        "summary": "GitHub Actions CI workflow that validates the Python backend with pytest and Ruff, and installs, lints, tests, and builds the React frontend on pushes and pull requests."
+      }
+    ],
+    "data": [],
+    "config": [
+      {
+        "id": "config:pyproject.toml",
+        "name": "pyproject.toml",
+        "type": "config",
+        "summary": "Defines the Python package metadata, runtime and development dependencies, Hatch build settings, uv packaging behavior, and the chat-studio CLI entry point."
+      },
+      {
+        "id": "config:frontend/.oxlintrc.json",
+        "name": ".oxlintrc.json",
+        "type": "config",
+        "summary": "Configures Oxlint with React, TypeScript, and Oxc plugins, enforcing hook rules and warning on non-component exports."
+      },
+      {
+        "id": "config:frontend/components.json",
+        "name": "components.json",
+        "type": "config",
+        "summary": "Defines shadcn/ui generation settings, Tailwind CSS integration, icon library, and import aliases for frontend components and utilities."
+      },
+      {
+        "id": "config:frontend/package.json",
+        "name": "package.json",
+        "type": "config",
+        "summary": "Defines the frontend's Vite, TypeScript, linting, testing, and API-type generation scripts together with runtime and development dependencies."
+      },
+      {
+        "id": "config:frontend/tsconfig.app.json",
+        "name": "tsconfig.app.json",
+        "type": "config",
+        "summary": "Configures strict, no-emit TypeScript compilation for the React source directory using bundler resolution and the @ path alias."
+      },
+      {
+        "id": "config:frontend/tsconfig.json",
+        "name": "tsconfig.json",
+        "type": "config",
+        "summary": "Acts as the frontend TypeScript solution configuration, referencing separate application and Node-oriented compiler projects while sharing the @ alias."
+      },
+      {
+        "id": "config:frontend/tsconfig.node.json",
+        "name": "tsconfig.node.json",
+        "type": "config",
+        "summary": "Configures strict, no-emit Node-oriented TypeScript checking for the Vite configuration using NodeNext modules."
+      },
+      {
+        "id": "config:.streamlit/config.toml",
+        "name": "config.toml",
+        "type": "config",
+        "summary": "Configures the Streamlit application's theme, client, browser, and server behavior."
+      },
+      {
+        "id": "config:.ua/config.json",
+        "name": "config.json",
+        "type": "config",
+        "summary": "Stores Understand Anything analysis configuration, including the output language."
+      }
+    ]
+  },
+  "clusters": [],
+  "layers": {
+    "count": 9,
+    "list": [
+      {
+        "id": "layer:ui",
+        "name": "User Interface",
+        "description": "React and Streamlit workspace surfaces for chat, provider management, memory, settings, and model comparison."
+      },
+      {
+        "id": "layer:api",
+        "name": "API Layer",
+        "description": "FastAPI application entry points and HTTP endpoint composition for the local AI workspace."
+      },
+      {
+        "id": "layer:service",
+        "name": "AI Services",
+        "description": "Provider adapters, streaming orchestration, retrieval, personalization, and frontend API access that implement the studio workflows."
+      },
+      {
+        "id": "layer:data",
+        "name": "Data Layer",
+        "description": "SQLite conversation persistence and local storage path management for the application tracks."
+      },
+      {
+        "id": "layer:types",
+        "name": "Contract Types",
+        "description": "Pydantic backend contracts and generated TypeScript OpenAPI declarations shared across the API boundary."
+      },
+      {
+        "id": "layer:test",
+        "name": "Test Layer",
+        "description": "Frontend Vitest and backend pytest checks plus their shared test setup."
+      },
+      {
+        "id": "layer:config",
+        "name": "Configuration",
+        "description": "Build, runtime, linting, Streamlit, and analysis settings for the Python and React application tracks."
+      },
+      {
+        "id": "layer:documentation",
+        "name": "Documentation",
+        "description": "Project guides, contribution materials, issue templates, and the bundled documentation viewer and tutorial."
+      },
+      {
+        "id": "layer:ci-cd",
+        "name": "CI/CD",
+        "description": "GitHub Actions automation that validates both the Python backend and React frontend."
+      }
+    ]
+  },
+  "nodeSummaryIndex": {
+    "file:frontend/src/App.test.tsx": {
+      "name": "App.test.tsx",
+      "type": "file",
+      "summary": "Verifies the studio shell exposes its workspace navigation, three-pane chat view, and provider management page."
+    },
+    "file:frontend/src/App.tsx": {
+      "name": "App.tsx",
+      "type": "file",
+      "summary": "Implements the interactive local AI studio shell with navigation, chat, provider management, and placeholder workspace pages."
+    },
+    "function:frontend/src/App.tsx:Navigation": {
+      "name": "Navigation",
+      "type": "function",
+      "summary": "Renders the primary workspace navigation and reports page selections to the application shell."
+    },
+    "function:frontend/src/App.tsx:ConversationHistory": {
+      "name": "ConversationHistory",
+      "type": "function",
+      "summary": "Renders the chat-history pane with a conversation search field and local-first status."
+    },
+    "function:frontend/src/App.tsx:ChatWorkspace": {
+      "name": "ChatWorkspace",
+      "type": "function",
+      "summary": "Renders the chat workspace, including prompt editing, suggestions, and composer controls."
+    },
+    "function:frontend/src/App.tsx:ProvidersPage": {
+      "name": "ProvidersPage",
+      "type": "function",
+      "summary": "Renders the configured provider catalog and its connection states."
+    },
+    "function:frontend/src/App.tsx:GenericPage": {
+      "name": "GenericPage",
+      "type": "function",
+      "summary": "Displays placeholder content for non-chat workspace pages."
+    },
+    "function:frontend/src/App.tsx:App": {
+      "name": "App",
+      "type": "function",
+      "summary": "Selects the active workspace and composes the navigation with its page content."
+    },
+    "file:frontend/src/components/ui/avatar.tsx": {
+      "name": "avatar.tsx",
+      "type": "file",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace."
+    },
+    "function:frontend/src/components/ui/avatar.tsx:Avatar": {
+      "name": "Avatar",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/avatar.tsx:AvatarImage": {
+      "name": "AvatarImage",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/avatar.tsx:AvatarFallback": {
+      "name": "AvatarFallback",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/avatar.tsx:AvatarBadge": {
+      "name": "AvatarBadge",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/avatar.tsx:AvatarGroup": {
+      "name": "AvatarGroup",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/avatar.tsx:AvatarGroupCount": {
+      "name": "AvatarGroupCount",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "file:frontend/src/components/ui/badge.tsx": {
+      "name": "badge.tsx",
+      "type": "file",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace."
+    },
+    "function:frontend/src/components/ui/badge.tsx:Badge": {
+      "name": "Badge",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "file:frontend/src/components/ui/button.tsx": {
+      "name": "button.tsx",
+      "type": "file",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace."
+    },
+    "function:frontend/src/components/ui/button.tsx:Button": {
+      "name": "Button",
+      "type": "function",
+      "summary": "Renders a styled interactive item for the related UI primitive."
+    },
+    "file:frontend/src/components/ui/card.tsx": {
+      "name": "card.tsx",
+      "type": "file",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace."
+    },
+    "function:frontend/src/components/ui/card.tsx:Card": {
+      "name": "Card",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/card.tsx:CardHeader": {
+      "name": "CardHeader",
+      "type": "function",
+      "summary": "Renders a styled structural section for the related UI component."
+    },
+    "function:frontend/src/components/ui/card.tsx:CardTitle": {
+      "name": "CardTitle",
+      "type": "function",
+      "summary": "Renders styled descriptive text for the related UI component."
+    },
+    "function:frontend/src/components/ui/card.tsx:CardDescription": {
+      "name": "CardDescription",
+      "type": "function",
+      "summary": "Renders styled descriptive text for the related UI component."
+    },
+    "function:frontend/src/components/ui/card.tsx:CardAction": {
+      "name": "CardAction",
+      "type": "function",
+      "summary": "Renders a styled interactive item for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/card.tsx:CardContent": {
+      "name": "CardContent",
+      "type": "function",
+      "summary": "Renders the styled content region for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/card.tsx:CardFooter": {
+      "name": "CardFooter",
+      "type": "function",
+      "summary": "Renders a styled structural section for the related UI component."
+    },
+    "file:frontend/src/components/ui/dialog.tsx": {
+      "name": "dialog.tsx",
+      "type": "file",
+      "summary": "Provides composable overlay primitives with styled content, headers, footers, and accessibility controls."
+    },
+    "function:frontend/src/components/ui/dialog.tsx:Dialog": {
+      "name": "Dialog",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/dialog.tsx:DialogTrigger": {
+      "name": "DialogTrigger",
+      "type": "function",
+      "summary": "Renders an interactive trigger for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/dialog.tsx:DialogPortal": {
+      "name": "DialogPortal",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/dialog.tsx:DialogClose": {
+      "name": "DialogClose",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/dialog.tsx:DialogOverlay": {
+      "name": "DialogOverlay",
+      "type": "function",
+      "summary": "Renders the backdrop layer for the related overlay component."
+    },
+    "function:frontend/src/components/ui/dialog.tsx:DialogContent": {
+      "name": "DialogContent",
+      "type": "function",
+      "summary": "Renders the styled content region for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/dialog.tsx:DialogHeader": {
+      "name": "DialogHeader",
+      "type": "function",
+      "summary": "Renders a styled structural section for the related UI component."
+    },
+    "function:frontend/src/components/ui/dialog.tsx:DialogFooter": {
+      "name": "DialogFooter",
+      "type": "function",
+      "summary": "Renders a styled structural section for the related UI component."
+    },
+    "function:frontend/src/components/ui/dialog.tsx:DialogTitle": {
+      "name": "DialogTitle",
+      "type": "function",
+      "summary": "Renders styled descriptive text for the related UI component."
+    },
+    "function:frontend/src/components/ui/dialog.tsx:DialogDescription": {
+      "name": "DialogDescription",
+      "type": "function",
+      "summary": "Renders styled descriptive text for the related UI component."
+    },
+    "file:frontend/src/components/ui/dropdown-menu.tsx": {
+      "name": "dropdown-menu.tsx",
+      "type": "file",
+      "summary": "Provides composable, styled dropdown-menu primitives including nested, checkbox, and radio items."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenu": {
+      "name": "DropdownMenu",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuPortal": {
+      "name": "DropdownMenuPortal",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuTrigger": {
+      "name": "DropdownMenuTrigger",
+      "type": "function",
+      "summary": "Renders an interactive trigger for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuContent": {
+      "name": "DropdownMenuContent",
+      "type": "function",
+      "summary": "Renders the styled content region for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuGroup": {
+      "name": "DropdownMenuGroup",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuLabel": {
+      "name": "DropdownMenuLabel",
+      "type": "function",
+      "summary": "Renders styled descriptive text for the related UI component."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuItem": {
+      "name": "DropdownMenuItem",
+      "type": "function",
+      "summary": "Renders a styled interactive item for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuSub": {
+      "name": "DropdownMenuSub",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuSubTrigger": {
+      "name": "DropdownMenuSubTrigger",
+      "type": "function",
+      "summary": "Renders an interactive trigger for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuSubContent": {
+      "name": "DropdownMenuSubContent",
+      "type": "function",
+      "summary": "Renders the styled content region for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuCheckboxItem": {
+      "name": "DropdownMenuCheckboxItem",
+      "type": "function",
+      "summary": "Renders a styled interactive item for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuRadioGroup": {
+      "name": "DropdownMenuRadioGroup",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuRadioItem": {
+      "name": "DropdownMenuRadioItem",
+      "type": "function",
+      "summary": "Renders a styled interactive item for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuSeparator": {
+      "name": "DropdownMenuSeparator",
+      "type": "function",
+      "summary": "Renders a styled visual separator for the related UI component."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuShortcut": {
+      "name": "DropdownMenuShortcut",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "file:frontend/src/components/ui/field.tsx": {
+      "name": "field.tsx",
+      "type": "file",
+      "summary": "Provides composable form-field layout, label, description, separator, and validation-message primitives."
+    },
+    "function:frontend/src/components/ui/field.tsx:FieldSet": {
+      "name": "FieldSet",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/field.tsx:FieldLegend": {
+      "name": "FieldLegend",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/field.tsx:FieldGroup": {
+      "name": "FieldGroup",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/field.tsx:Field": {
+      "name": "Field",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/field.tsx:FieldContent": {
+      "name": "FieldContent",
+      "type": "function",
+      "summary": "Renders the styled content region for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/field.tsx:FieldLabel": {
+      "name": "FieldLabel",
+      "type": "function",
+      "summary": "Renders styled descriptive text for the related UI component."
+    },
+    "function:frontend/src/components/ui/field.tsx:FieldTitle": {
+      "name": "FieldTitle",
+      "type": "function",
+      "summary": "Renders styled descriptive text for the related UI component."
+    },
+    "function:frontend/src/components/ui/field.tsx:FieldDescription": {
+      "name": "FieldDescription",
+      "type": "function",
+      "summary": "Renders styled descriptive text for the related UI component."
+    },
+    "function:frontend/src/components/ui/field.tsx:FieldSeparator": {
+      "name": "FieldSeparator",
+      "type": "function",
+      "summary": "Renders a styled visual separator for the related UI component."
+    },
+    "function:frontend/src/components/ui/field.tsx:FieldError": {
+      "name": "FieldError",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "file:frontend/src/components/ui/input.tsx": {
+      "name": "input.tsx",
+      "type": "file",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace."
+    },
+    "function:frontend/src/components/ui/input.tsx:Input": {
+      "name": "Input",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "file:frontend/src/components/ui/label.tsx": {
+      "name": "label.tsx",
+      "type": "file",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace."
+    },
+    "function:frontend/src/components/ui/label.tsx:Label": {
+      "name": "Label",
+      "type": "function",
+      "summary": "Renders styled descriptive text for the related UI component."
+    },
+    "file:frontend/src/components/ui/scroll-area.tsx": {
+      "name": "scroll-area.tsx",
+      "type": "file",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace."
+    },
+    "function:frontend/src/components/ui/scroll-area.tsx:ScrollArea": {
+      "name": "ScrollArea",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/scroll-area.tsx:ScrollBar": {
+      "name": "ScrollBar",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "file:frontend/src/components/ui/select.tsx": {
+      "name": "select.tsx",
+      "type": "file",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace."
+    },
+    "function:frontend/src/components/ui/select.tsx:SelectGroup": {
+      "name": "SelectGroup",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/select.tsx:SelectValue": {
+      "name": "SelectValue",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/select.tsx:SelectTrigger": {
+      "name": "SelectTrigger",
+      "type": "function",
+      "summary": "Renders an interactive trigger for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/select.tsx:SelectContent": {
+      "name": "SelectContent",
+      "type": "function",
+      "summary": "Renders the styled content region for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/select.tsx:SelectLabel": {
+      "name": "SelectLabel",
+      "type": "function",
+      "summary": "Renders styled descriptive text for the related UI component."
+    },
+    "function:frontend/src/components/ui/select.tsx:SelectItem": {
+      "name": "SelectItem",
+      "type": "function",
+      "summary": "Renders a styled interactive item for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/select.tsx:SelectSeparator": {
+      "name": "SelectSeparator",
+      "type": "function",
+      "summary": "Renders a styled visual separator for the related UI component."
+    },
+    "function:frontend/src/components/ui/select.tsx:SelectScrollUpButton": {
+      "name": "SelectScrollUpButton",
+      "type": "function",
+      "summary": "Renders a styled interactive item for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/select.tsx:SelectScrollDownButton": {
+      "name": "SelectScrollDownButton",
+      "type": "function",
+      "summary": "Renders a styled interactive item for the related UI primitive."
+    },
+    "file:frontend/src/components/ui/separator.tsx": {
+      "name": "separator.tsx",
+      "type": "file",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace."
+    },
+    "function:frontend/src/components/ui/separator.tsx:Separator": {
+      "name": "Separator",
+      "type": "function",
+      "summary": "Renders a styled visual separator for the related UI component."
+    },
+    "file:frontend/src/components/ui/sheet.tsx": {
+      "name": "sheet.tsx",
+      "type": "file",
+      "summary": "Provides composable overlay primitives with styled content, headers, footers, and accessibility controls."
+    },
+    "function:frontend/src/components/ui/sheet.tsx:Sheet": {
+      "name": "Sheet",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/sheet.tsx:SheetTrigger": {
+      "name": "SheetTrigger",
+      "type": "function",
+      "summary": "Renders an interactive trigger for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/sheet.tsx:SheetClose": {
+      "name": "SheetClose",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/sheet.tsx:SheetOverlay": {
+      "name": "SheetOverlay",
+      "type": "function",
+      "summary": "Renders the backdrop layer for the related overlay component."
+    },
+    "function:frontend/src/components/ui/sheet.tsx:SheetContent": {
+      "name": "SheetContent",
+      "type": "function",
+      "summary": "Renders the styled content region for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/sheet.tsx:SheetHeader": {
+      "name": "SheetHeader",
+      "type": "function",
+      "summary": "Renders a styled structural section for the related UI component."
+    },
+    "function:frontend/src/components/ui/sheet.tsx:SheetFooter": {
+      "name": "SheetFooter",
+      "type": "function",
+      "summary": "Renders a styled structural section for the related UI component."
+    },
+    "function:frontend/src/components/ui/sheet.tsx:SheetTitle": {
+      "name": "SheetTitle",
+      "type": "function",
+      "summary": "Renders styled descriptive text for the related UI component."
+    },
+    "function:frontend/src/components/ui/sheet.tsx:SheetDescription": {
+      "name": "SheetDescription",
+      "type": "function",
+      "summary": "Renders styled descriptive text for the related UI component."
+    },
+    "file:frontend/src/components/ui/sidebar.tsx": {
+      "name": "sidebar.tsx",
+      "type": "file",
+      "summary": "Provides the responsive sidebar context, controls, and composable navigation primitives for the frontend."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:useSidebar": {
+      "name": "useSidebar",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarProvider": {
+      "name": "SidebarProvider",
+      "type": "function",
+      "summary": "Provides the context or root primitive required by the related UI component."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:Sidebar": {
+      "name": "Sidebar",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarTrigger": {
+      "name": "SidebarTrigger",
+      "type": "function",
+      "summary": "Renders an interactive trigger for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarRail": {
+      "name": "SidebarRail",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarInset": {
+      "name": "SidebarInset",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarInput": {
+      "name": "SidebarInput",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarHeader": {
+      "name": "SidebarHeader",
+      "type": "function",
+      "summary": "Renders a styled structural section for the related UI component."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarFooter": {
+      "name": "SidebarFooter",
+      "type": "function",
+      "summary": "Renders a styled structural section for the related UI component."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarSeparator": {
+      "name": "SidebarSeparator",
+      "type": "function",
+      "summary": "Renders a styled visual separator for the related UI component."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarContent": {
+      "name": "SidebarContent",
+      "type": "function",
+      "summary": "Renders the styled content region for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarGroup": {
+      "name": "SidebarGroup",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarGroupLabel": {
+      "name": "SidebarGroupLabel",
+      "type": "function",
+      "summary": "Renders styled descriptive text for the related UI component."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarGroupAction": {
+      "name": "SidebarGroupAction",
+      "type": "function",
+      "summary": "Renders a styled interactive item for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarGroupContent": {
+      "name": "SidebarGroupContent",
+      "type": "function",
+      "summary": "Renders the styled content region for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarMenu": {
+      "name": "SidebarMenu",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuItem": {
+      "name": "SidebarMenuItem",
+      "type": "function",
+      "summary": "Renders a styled interactive item for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuButton": {
+      "name": "SidebarMenuButton",
+      "type": "function",
+      "summary": "Renders a styled interactive item for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuAction": {
+      "name": "SidebarMenuAction",
+      "type": "function",
+      "summary": "Renders a styled interactive item for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuBadge": {
+      "name": "SidebarMenuBadge",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuSkeleton": {
+      "name": "SidebarMenuSkeleton",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuSub": {
+      "name": "SidebarMenuSub",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuSubItem": {
+      "name": "SidebarMenuSubItem",
+      "type": "function",
+      "summary": "Renders a styled interactive item for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuSubButton": {
+      "name": "SidebarMenuSubButton",
+      "type": "function",
+      "summary": "Renders a styled interactive item for the related UI primitive."
+    },
+    "file:frontend/src/components/ui/skeleton.tsx": {
+      "name": "skeleton.tsx",
+      "type": "file",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace."
+    },
+    "function:frontend/src/components/ui/skeleton.tsx:Skeleton": {
+      "name": "Skeleton",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "file:frontend/src/components/ui/switch.tsx": {
+      "name": "switch.tsx",
+      "type": "file",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace."
+    },
+    "function:frontend/src/components/ui/switch.tsx:Switch": {
+      "name": "Switch",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "file:frontend/src/components/ui/table.tsx": {
+      "name": "table.tsx",
+      "type": "file",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace."
+    },
+    "function:frontend/src/components/ui/table.tsx:Table": {
+      "name": "Table",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/table.tsx:TableHeader": {
+      "name": "TableHeader",
+      "type": "function",
+      "summary": "Renders a styled structural section for the related UI component."
+    },
+    "function:frontend/src/components/ui/table.tsx:TableBody": {
+      "name": "TableBody",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/table.tsx:TableFooter": {
+      "name": "TableFooter",
+      "type": "function",
+      "summary": "Renders a styled structural section for the related UI component."
+    },
+    "function:frontend/src/components/ui/table.tsx:TableRow": {
+      "name": "TableRow",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/table.tsx:TableHead": {
+      "name": "TableHead",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/table.tsx:TableCell": {
+      "name": "TableCell",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/table.tsx:TableCaption": {
+      "name": "TableCaption",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "file:frontend/src/components/ui/tabs.tsx": {
+      "name": "tabs.tsx",
+      "type": "file",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace."
+    },
+    "function:frontend/src/components/ui/tabs.tsx:Tabs": {
+      "name": "Tabs",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/tabs.tsx:TabsList": {
+      "name": "TabsList",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/tabs.tsx:TabsTrigger": {
+      "name": "TabsTrigger",
+      "type": "function",
+      "summary": "Renders an interactive trigger for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/tabs.tsx:TabsContent": {
+      "name": "TabsContent",
+      "type": "function",
+      "summary": "Renders the styled content region for the related UI primitive."
+    },
+    "file:frontend/src/components/ui/textarea.tsx": {
+      "name": "textarea.tsx",
+      "type": "file",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace."
+    },
+    "function:frontend/src/components/ui/textarea.tsx:Textarea": {
+      "name": "Textarea",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "file:frontend/src/components/ui/tooltip.tsx": {
+      "name": "tooltip.tsx",
+      "type": "file",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace."
+    },
+    "function:frontend/src/components/ui/tooltip.tsx:TooltipProvider": {
+      "name": "TooltipProvider",
+      "type": "function",
+      "summary": "Provides the context or root primitive required by the related UI component."
+    },
+    "function:frontend/src/components/ui/tooltip.tsx:Tooltip": {
+      "name": "Tooltip",
+      "type": "function",
+      "summary": "Renders a composable styled primitive for the application UI."
+    },
+    "function:frontend/src/components/ui/tooltip.tsx:TooltipTrigger": {
+      "name": "TooltipTrigger",
+      "type": "function",
+      "summary": "Renders an interactive trigger for the related UI primitive."
+    },
+    "function:frontend/src/components/ui/tooltip.tsx:TooltipContent": {
+      "name": "TooltipContent",
+      "type": "function",
+      "summary": "Renders the styled content region for the related UI primitive."
+    },
+    "file:frontend/src/hooks/use-mobile.ts": {
+      "name": "use-mobile.ts",
+      "type": "file",
+      "summary": "Provides a React hook that tracks the mobile breakpoint through browser media-query events."
+    },
+    "function:frontend/src/hooks/use-mobile.ts:useIsMobile": {
+      "name": "useIsMobile",
+      "type": "function",
+      "summary": "Tracks a media-query breakpoint and returns whether the viewport is mobile-sized."
+    },
+    "file:frontend/src/lib/utils.ts": {
+      "name": "utils.ts",
+      "type": "file",
+      "summary": "Provides the shared class-name merger used by frontend UI components."
+    },
+    "function:frontend/src/lib/utils.ts:cn": {
+      "name": "cn",
+      "type": "function",
+      "summary": "Merges conditional class names and resolves conflicting Tailwind utility classes."
+    },
+    "file:app.py": {
+      "name": "app.py",
+      "type": "file",
+      "summary": "Streamlit workspace entry point that manages conversations, model selection, live generation, presets, and health status."
+    },
+    "function:app.py:cached_models": {
+      "name": "cached_models",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through cached models."
+    },
+    "function:app.py:cached_provider_models": {
+      "name": "cached_provider_models",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through cached provider models."
+    },
+    "function:app.py:get_state": {
+      "name": "get_state",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through get state."
+    },
+    "function:app.py:switch_conversation": {
+      "name": "switch_conversation",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through switch conversation."
+    },
+    "function:app.py:_maybe_extract_memories": {
+      "name": "_maybe_extract_memories",
+      "type": "function",
+      "summary": "Internal helper that supports this module’s workflow through maybe extract memories."
+    },
+    "function:app.py:_feedback_widget": {
+      "name": "_feedback_widget",
+      "type": "function",
+      "summary": "Internal helper that supports this module’s workflow through feedback widget."
+    },
+    "function:app.py:start_generation": {
+      "name": "start_generation",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through start generation."
+    },
+    "function:app.py:send_user_message": {
+      "name": "send_user_message",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through send user message."
+    },
+    "function:app.py:regenerate_last": {
+      "name": "regenerate_last",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through regenerate last."
+    },
+    "function:app.py:seed_builtin_presets": {
+      "name": "seed_builtin_presets",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through seed builtin presets."
+    },
+    "function:app.py:apply_preset": {
+      "name": "apply_preset",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through apply preset."
+    },
+    "function:app.py:date_bucket": {
+      "name": "date_bucket",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through date bucket."
+    },
+    "function:app.py:render_live_generation": {
+      "name": "render_live_generation",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through render live generation."
+    },
+    "function:app.py:render_health": {
+      "name": "render_health",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through render health."
+    },
+    "file:pages/1_Memory.py": {
+      "name": "1_Memory.py",
+      "type": "file",
+      "summary": "Streamlit page for inspecting, editing, and managing persistent user memories."
+    },
+    "file:pages/2_Settings.py": {
+      "name": "2_Settings.py",
+      "type": "file",
+      "summary": "Streamlit settings page for configuring local storage, model providers, and workspace options."
+    },
+    "file:pages/4_Compare.py": {
+      "name": "4_Compare.py",
+      "type": "file",
+      "summary": "Streamlit page that runs and presents side-by-side model comparison results."
+    },
+    "function:pages/4_Compare.py:_models": {
+      "name": "_models",
+      "type": "function",
+      "summary": "Internal helper that supports this module’s workflow through models."
+    },
+    "function:pages/4_Compare.py:_provider_models": {
+      "name": "_provider_models",
+      "type": "function",
+      "summary": "Internal helper that supports this module’s workflow through provider models."
+    },
+    "function:pages/4_Compare.py:_label": {
+      "name": "_label",
+      "type": "function",
+      "summary": "Internal helper that supports this module’s workflow through label."
+    },
+    "function:pages/4_Compare.py:render_compare": {
+      "name": "render_compare",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through render compare."
+    },
+    "file:src/catalog.py": {
+      "name": "catalog.py",
+      "type": "file",
+      "summary": "Builds and orders the unified catalog of local and optional cloud language models."
+    },
+    "class:src/catalog.py:SelectedModel": {
+      "name": "SelectedModel",
+      "type": "class",
+      "summary": "Represents SelectedModel data and behavior used by src/catalog.py."
+    },
+    "function:src/catalog.py:normalize_model_key": {
+      "name": "normalize_model_key",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through normalize model key."
+    },
+    "function:src/catalog.py:build_model_catalog": {
+      "name": "build_model_catalog",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through build model catalog."
+    },
+    "function:src/catalog.py:ordered_keys": {
+      "name": "ordered_keys",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through ordered keys."
+    },
+    "function:src/catalog.py:present_groups": {
+      "name": "present_groups",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through present groups."
+    },
+    "function:src/catalog.py:best_coding_model": {
+      "name": "best_coding_model",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through best coding model."
+    },
+    "file:src/chat_store.py": {
+      "name": "chat_store.py",
+      "type": "file",
+      "summary": "Provides the SQLite persistence layer for conversations, messages, memories, feedback, presets, and exports."
+    },
+    "function:src/chat_store.py:_now": {
+      "name": "_now",
+      "type": "function",
+      "summary": "Internal helper that supports chat workspace persistence through now."
+    },
+    "function:src/chat_store.py:_conn": {
+      "name": "_conn",
+      "type": "function",
+      "summary": "Internal helper that supports chat workspace persistence through conn."
+    },
+    "function:src/chat_store.py:init_db": {
+      "name": "init_db",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through init db."
+    },
+    "function:src/chat_store.py:create_conversation": {
+      "name": "create_conversation",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through create conversation."
+    },
+    "function:src/chat_store.py:list_conversations": {
+      "name": "list_conversations",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through list conversations."
+    },
+    "function:src/chat_store.py:get_conversation": {
+      "name": "get_conversation",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through get conversation."
+    },
+    "function:src/chat_store.py:rename_conversation": {
+      "name": "rename_conversation",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through rename conversation."
+    },
+    "function:src/chat_store.py:delete_conversation": {
+      "name": "delete_conversation",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through delete conversation."
+    },
+    "function:src/chat_store.py:set_pinned": {
+      "name": "set_pinned",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through set pinned."
+    },
+    "function:src/chat_store.py:search_conversations": {
+      "name": "search_conversations",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through search conversations."
+    },
+    "function:src/chat_store.py:delete_messages_from": {
+      "name": "delete_messages_from",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through delete messages from."
+    },
+    "function:src/chat_store.py:clear_all_conversations": {
+      "name": "clear_all_conversations",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through clear all conversations."
+    },
+    "function:src/chat_store.py:mark_memory_extracted": {
+      "name": "mark_memory_extracted",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through mark memory extracted."
+    },
+    "function:src/chat_store.py:add_message": {
+      "name": "add_message",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through add message."
+    },
+    "function:src/chat_store.py:get_messages": {
+      "name": "get_messages",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through get messages."
+    },
+    "function:src/chat_store.py:message_count": {
+      "name": "message_count",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through message count."
+    },
+    "function:src/chat_store.py:add_memory": {
+      "name": "add_memory",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through add memory."
+    },
+    "function:src/chat_store.py:list_memories": {
+      "name": "list_memories",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through list memories."
+    },
+    "function:src/chat_store.py:touch_memories": {
+      "name": "touch_memories",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through touch memories."
+    },
+    "function:src/chat_store.py:update_memory": {
+      "name": "update_memory",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through update memory."
+    },
+    "function:src/chat_store.py:delete_memory": {
+      "name": "delete_memory",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through delete memory."
+    },
+    "function:src/chat_store.py:decay_memories": {
+      "name": "decay_memories",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through decay memories."
+    },
+    "function:src/chat_store.py:set_feedback": {
+      "name": "set_feedback",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through set feedback."
+    },
+    "function:src/chat_store.py:get_feedback": {
+      "name": "get_feedback",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through get feedback."
+    },
+    "function:src/chat_store.py:recent_feedback_samples": {
+      "name": "recent_feedback_samples",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through recent feedback samples."
+    },
+    "function:src/chat_store.py:kv_get": {
+      "name": "kv_get",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through kv get."
+    },
+    "function:src/chat_store.py:kv_set": {
+      "name": "kv_set",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through kv set."
+    },
+    "function:src/chat_store.py:list_presets": {
+      "name": "list_presets",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through list presets."
+    },
+    "function:src/chat_store.py:save_preset": {
+      "name": "save_preset",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through save preset."
+    },
+    "function:src/chat_store.py:delete_preset": {
+      "name": "delete_preset",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through delete preset."
+    },
+    "function:src/chat_store.py:get_preset_by_name": {
+      "name": "get_preset_by_name",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through get preset by name."
+    },
+    "function:src/chat_store.py:export_conversation_markdown": {
+      "name": "export_conversation_markdown",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through export conversation markdown."
+    },
+    "function:src/chat_store.py:import_jsonl": {
+      "name": "import_jsonl",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through import jsonl."
+    },
+    "function:src/chat_store.py:wipe_everything": {
+      "name": "wipe_everything",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through wipe everything."
+    },
+    "function:src/chat_store.py:export_jsonl": {
+      "name": "export_jsonl",
+      "type": "function",
+      "summary": "Provides an operation that supports chat workspace persistence through export jsonl."
+    },
+    "file:src/config.py": {
+      "name": "config.py",
+      "type": "file",
+      "summary": "Defines application paths and creates local directories used for database, vector store, and uploads."
+    },
+    "class:src/config.py:AppConfig": {
+      "name": "AppConfig",
+      "type": "class",
+      "summary": "Represents AppConfig data and behavior used by src/config.py."
+    },
+    "file:src/files.py": {
+      "name": "files.py",
+      "type": "file",
+      "summary": "Parses uploaded documents and splits extracted text into retrieval-ready chunks."
+    },
+    "class:src/files.py:Attachment": {
+      "name": "Attachment",
+      "type": "class",
+      "summary": "Represents Attachment data and behavior used by src/files.py."
+    },
+    "function:src/files.py:_ext": {
+      "name": "_ext",
+      "type": "function",
+      "summary": "Internal helper that supports this module’s workflow through ext."
+    },
+    "function:src/files.py:parse_upload": {
+      "name": "parse_upload",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through parse upload."
+    },
+    "function:src/files.py:_parse_pdf": {
+      "name": "_parse_pdf",
+      "type": "function",
+      "summary": "Internal helper that supports this module’s workflow through parse pdf."
+    },
+    "function:src/files.py:_parse_docx": {
+      "name": "_parse_docx",
+      "type": "function",
+      "summary": "Internal helper that supports this module’s workflow through parse docx."
+    },
+    "function:src/files.py:_parse_excel": {
+      "name": "_parse_excel",
+      "type": "function",
+      "summary": "Internal helper that supports this module’s workflow through parse excel."
+    },
+    "function:src/files.py:_parse_legacy_doc": {
+      "name": "_parse_legacy_doc",
+      "type": "function",
+      "summary": "Internal helper that supports this module’s workflow through parse legacy doc."
+    },
+    "function:src/files.py:chunk_text": {
+      "name": "chunk_text",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through chunk text."
+    },
+    "file:src/jobs.py": {
+      "name": "jobs.py",
+      "type": "file",
+      "summary": "Coordinates background streaming chat jobs, attachments, web search, indexing, and post-turn maintenance."
+    },
+    "class:src/jobs.py:Job": {
+      "name": "Job",
+      "type": "class",
+      "summary": "Represents Job data and behavior used by src/jobs.py."
+    },
+    "function:src/jobs.py:stop": {
+      "name": "stop",
+      "type": "function",
+      "summary": "Provides an operation that supports background chat execution through stop."
+    },
+    "function:src/jobs.py:get": {
+      "name": "get",
+      "type": "function",
+      "summary": "Provides an operation that supports background chat execution through get."
+    },
+    "function:src/jobs.py:is_running": {
+      "name": "is_running",
+      "type": "function",
+      "summary": "Provides an operation that supports background chat execution through is running."
+    },
+    "function:src/jobs.py:running_conversations": {
+      "name": "running_conversations",
+      "type": "function",
+      "summary": "Provides an operation that supports background chat execution through running conversations."
+    },
+    "function:src/jobs.py:clear": {
+      "name": "clear",
+      "type": "function",
+      "summary": "Provides an operation that supports background chat execution through clear."
+    },
+    "function:src/jobs.py:start": {
+      "name": "start",
+      "type": "function",
+      "summary": "Provides an operation that supports background chat execution through start."
+    },
+    "function:src/jobs.py:run_ephemeral": {
+      "name": "run_ephemeral",
+      "type": "function",
+      "summary": "Provides an operation that supports background chat execution through run ephemeral."
+    },
+    "function:src/jobs.py:_tokens_per_sec": {
+      "name": "_tokens_per_sec",
+      "type": "function",
+      "summary": "Internal helper that supports background chat execution through tokens per sec."
+    },
+    "function:src/jobs.py:_stream": {
+      "name": "_stream",
+      "type": "function",
+      "summary": "Internal helper that supports background chat execution through stream."
+    },
+    "function:src/jobs.py:_web_search": {
+      "name": "_web_search",
+      "type": "function",
+      "summary": "Internal helper that supports background chat execution through web search."
+    },
+    "function:src/jobs.py:_process_attachments": {
+      "name": "_process_attachments",
+      "type": "function",
+      "summary": "Internal helper that supports background chat execution through process attachments."
+    },
+    "function:src/jobs.py:_run": {
+      "name": "_run",
+      "type": "function",
+      "summary": "Internal helper that supports background chat execution through run."
+    },
+    "function:src/jobs.py:_friendly_error": {
+      "name": "_friendly_error",
+      "type": "function",
+      "summary": "Internal helper that supports background chat execution through friendly error."
+    },
+    "function:src/jobs.py:_autotitle": {
+      "name": "_autotitle",
+      "type": "function",
+      "summary": "Internal helper that supports background chat execution through autotitle."
+    },
+    "function:src/jobs.py:_maybe_extract": {
+      "name": "_maybe_extract",
+      "type": "function",
+      "summary": "Internal helper that supports background chat execution through maybe extract."
+    },
+    "file:src/memory.py": {
+      "name": "memory.py",
+      "type": "file",
+      "summary": "Extracts durable user memories from conversations and retrieves relevant memories for prompts."
+    },
+    "function:src/memory.py:extract_memories": {
+      "name": "extract_memories",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through extract memories."
+    },
+    "function:src/memory.py:relevant_memories": {
+      "name": "relevant_memories",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through relevant memories."
+    },
+    "function:src/memory.py:run_decay": {
+      "name": "run_decay",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through run decay."
+    },
+    "function:src/memory.py:_parse_json_list": {
+      "name": "_parse_json_list",
+      "type": "function",
+      "summary": "Internal helper that supports this module’s workflow through parse json list."
+    },
+    "file:src/model_labels.py": {
+      "name": "model_labels.py",
+      "type": "file",
+      "summary": "Formats model names with capability and size hints for user-facing selection controls."
+    },
+    "function:src/model_labels.py:_size_tag": {
+      "name": "_size_tag",
+      "type": "function",
+      "summary": "Internal helper that supports this module’s workflow through size tag."
+    },
+    "function:src/model_labels.py:hint_for": {
+      "name": "hint_for",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through hint for."
+    },
+    "function:src/model_labels.py:dropdown_label": {
+      "name": "dropdown_label",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through dropdown label."
+    },
+    "file:src/ollama_client.py": {
+      "name": "ollama_client.py",
+      "type": "file",
+      "summary": "Wraps the local Ollama API for model discovery, generation, streaming, image description, and embeddings."
+    },
+    "class:src/ollama_client.py:ModelInfo": {
+      "name": "ModelInfo",
+      "type": "class",
+      "summary": "Represents ModelInfo data and behavior used by src/ollama_client.py."
+    },
+    "function:src/ollama_client.py:_client": {
+      "name": "_client",
+      "type": "function",
+      "summary": "Internal helper that supports this module’s workflow through client."
+    },
+    "function:src/ollama_client.py:list_models": {
+      "name": "list_models",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through list models."
+    },
+    "function:src/ollama_client.py:chat_models": {
+      "name": "chat_models",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through chat models."
+    },
+    "function:src/ollama_client.py:embedding_model": {
+      "name": "embedding_model",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through embedding model."
+    },
+    "function:src/ollama_client.py:vision_fallback_model": {
+      "name": "vision_fallback_model",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through vision fallback model."
+    },
+    "function:src/ollama_client.py:smallest_text_model": {
+      "name": "smallest_text_model",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through smallest text model."
+    },
+    "function:src/ollama_client.py:stream_chat": {
+      "name": "stream_chat",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through stream chat."
+    },
+    "function:src/ollama_client.py:running_models": {
+      "name": "running_models",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through running models."
+    },
+    "function:src/ollama_client.py:generate": {
+      "name": "generate",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through generate."
+    },
+    "function:src/ollama_client.py:describe_image": {
+      "name": "describe_image",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through describe image."
+    },
+    "function:src/ollama_client.py:embed_texts": {
+      "name": "embed_texts",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through embed texts."
+    },
+    "function:src/ollama_client.py:ollama_alive": {
+      "name": "ollama_alive",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through ollama alive."
+    },
+    "file:src/orchestrator.py": {
+      "name": "orchestrator.py",
+      "type": "file",
+      "summary": "Assembles prompt messages from profile, memories, retrieval context, history, and attachments."
+    },
+    "function:src/orchestrator.py:build_messages": {
+      "name": "build_messages",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through build messages."
+    },
+    "function:src/orchestrator.py:after_turn_indexing": {
+      "name": "after_turn_indexing",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through after turn indexing."
+    },
+    "file:src/personalization.py": {
+      "name": "personalization.py",
+      "type": "file",
+      "summary": "Maintains a compact user profile derived from conversations and feedback."
+    },
+    "function:src/personalization.py:get_profile": {
+      "name": "get_profile",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through get profile."
+    },
+    "function:src/personalization.py:note_conversation_done": {
+      "name": "note_conversation_done",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through note conversation done."
+    },
+    "function:src/personalization.py:rebuild_profile": {
+      "name": "rebuild_profile",
+      "type": "function",
+      "summary": "Provides an operation that supports this module’s workflow through rebuild profile."
+    },
+    "file:src/providers.py": {
+      "name": "providers.py",
+      "type": "file",
+      "summary": "Manages BYOK provider credentials, remote model discovery, streaming chat, and OpenRouter authorization."
+    },
+    "class:src/providers.py:ApiModel": {
+      "name": "ApiModel",
+      "type": "class",
+      "summary": "Represents ApiModel data and behavior used by src/providers.py."
+    },
+    "function:src/providers.py:_get_secret": {
+      "name": "_get_secret",
+      "type": "function",
+      "summary": "Internal helper that supports provider integration through get secret."
+    },
+    "function:src/providers.py:_set_secret": {
+      "name": "_set_secret",
+      "type": "function",
+      "summary": "Internal helper that supports provider integration through set secret."
+    },
+    "function:src/providers.py:get_api_key": {
+      "name": "get_api_key",
+      "type": "function",
+      "summary": "Provides an operation that supports provider integration through get api key."
+    },
+    "function:src/providers.py:key_source": {
+      "name": "key_source",
+      "type": "function",
+      "summary": "Provides an operation that supports provider integration through key source."
+    },
+    "function:src/providers.py:set_api_key": {
+      "name": "set_api_key",
+      "type": "function",
+      "summary": "Provides an operation that supports provider integration through set api key."
+    },
+    "function:src/providers.py:remove_api_key": {
+      "name": "remove_api_key",
+      "type": "function",
+      "summary": "Provides an operation that supports provider integration through remove api key."
+    },
+    "function:src/providers.py:configured_providers": {
+      "name": "configured_providers",
+      "type": "function",
+      "summary": "Provides an operation that supports provider integration through configured providers."
+    },
+    "function:src/providers.py:clear_all_secrets": {
+      "name": "clear_all_secrets",
+      "type": "function",
+      "summary": "Provides an operation that supports provider integration through clear all secrets."
+    },
+    "function:src/providers.py:get_ollama_host": {
+      "name": "get_ollama_host",
+      "type": "function",
+      "summary": "Provides an operation that supports provider integration through get ollama host."
+    },
+    "function:src/providers.py:get_ollama_key": {
+      "name": "get_ollama_key",
+      "type": "function",
+      "summary": "Provides an operation that supports provider integration through get ollama key."
+    },
+    "function:src/providers.py:ollama_key_source": {
+      "name": "ollama_key_source",
+      "type": "function",
+      "summary": "Provides an operation that supports provider integration through ollama key source."
+    },
+    "function:src/providers.py:set_ollama_config": {
+      "name": "set_ollama_config",
+      "type": "function",
+      "summary": "Provides an operation that supports provider integration through set ollama config."
+    },
+    "function:src/providers.py:reset_ollama_config": {
+      "name": "reset_ollama_config",
+      "type": "function",
+      "summary": "Provides an operation that supports provider integration through reset ollama config."
+    },
+    "function:src/providers.py:_excluded": {
+      "name": "_excluded",
+      "type": "function",
+      "summary": "Internal helper that supports provider integration through excluded."
+    },
+    "function:src/providers.py:_vision_by_pattern": {
+      "name": "_vision_by_pattern",
+      "type": "function",
+      "summary": "Internal helper that supports provider integration through vision by pattern."
+    },
+    "function:src/providers.py:list_provider_models": {
+      "name": "list_provider_models",
+      "type": "function",
+      "summary": "Provides an operation that supports provider integration through list provider models."
+    },
+    "function:src/providers.py:_list_anthropic": {
+      "name": "_list_anthropic",
+      "type": "function",
+      "summary": "Internal helper that supports provider integration through list anthropic."
+    },
+    "function:src/providers.py:_list_openrouter": {
+      "name": "_list_openrouter",
+      "type": "function",
+      "summary": "Internal helper that supports provider integration through list openrouter."
+    },
+    "function:src/providers.py:_list_openai_compat": {
+      "name": "_list_openai_compat",
+      "type": "function",
+      "summary": "Internal helper that supports provider integration through list openai compat."
+    },
+    "function:src/providers.py:test_connection": {
+      "name": "test_connection",
+      "type": "function",
+      "summary": "Provides an operation that supports provider integration through test connection."
+    },
+    "function:src/providers.py:stream_chat": {
+      "name": "stream_chat",
+      "type": "function",
+      "summary": "Provides an operation that supports provider integration through stream chat."
+    },
+    "function:src/providers.py:_stream_anthropic": {
+      "name": "_stream_anthropic",
+      "type": "function",
+      "summary": "Internal helper that supports provider integration through stream anthropic."
+    },
+    "function:src/providers.py:_stream_openai_compat": {
+      "name": "_stream_openai_compat",
+      "type": "function",
+      "summary": "Internal helper that supports provider integration through stream openai compat."
+    },
+    "function:src/providers.py:openrouter_auth_url": {
+      "name": "openrouter_auth_url",
+      "type": "function",
+      "summary": "Provides an operation that supports provider integration through openrouter auth url."
+    },
+    "function:src/providers.py:openrouter_exchange_code": {
+      "name": "openrouter_exchange_code",
+      "type": "function",
+      "summary": "Provides an operation that supports provider integration through openrouter exchange code."
+    },
+    "file:src/rag.py": {
+      "name": "rag.py",
+      "type": "file",
+      "summary": "Stores and queries document, chat-history, and memory vectors in ChromaDB."
+    },
+    "function:src/rag.py:_collection": {
+      "name": "_collection",
+      "type": "function",
+      "summary": "Internal helper that supports retrieval and vector storage through collection."
+    },
+    "function:src/rag.py:_embed": {
+      "name": "_embed",
+      "type": "function",
+      "summary": "Internal helper that supports retrieval and vector storage through embed."
+    },
+    "function:src/rag.py:index_doc_chunks": {
+      "name": "index_doc_chunks",
+      "type": "function",
+      "summary": "Provides an operation that supports retrieval and vector storage through index doc chunks."
+    },
+    "function:src/rag.py:search_docs": {
+      "name": "search_docs",
+      "type": "function",
+      "summary": "Provides an operation that supports retrieval and vector storage through search docs."
+    },
+    "function:src/rag.py:conv_has_docs": {
+      "name": "conv_has_docs",
+      "type": "function",
+      "summary": "Provides an operation that supports retrieval and vector storage through conv has docs."
+    },
+    "function:src/rag.py:index_history_turn": {
+      "name": "index_history_turn",
+      "type": "function",
+      "summary": "Provides an operation that supports retrieval and vector storage through index history turn."
+    },
+    "function:src/rag.py:search_history": {
+      "name": "search_history",
+      "type": "function",
+      "summary": "Provides an operation that supports retrieval and vector storage through search history."
+    },
+    "function:src/rag.py:delete_conv_vectors": {
+      "name": "delete_conv_vectors",
+      "type": "function",
+      "summary": "Provides an operation that supports retrieval and vector storage through delete conv vectors."
+    },
+    "function:src/rag.py:clear_all_chat_vectors": {
+      "name": "clear_all_chat_vectors",
+      "type": "function",
+      "summary": "Provides an operation that supports retrieval and vector storage through clear all chat vectors."
+    },
+    "function:src/rag.py:clear_all_vectors": {
+      "name": "clear_all_vectors",
+      "type": "function",
+      "summary": "Provides an operation that supports retrieval and vector storage through clear all vectors."
+    },
+    "function:src/rag.py:search_history_all": {
+      "name": "search_history_all",
+      "type": "function",
+      "summary": "Provides an operation that supports retrieval and vector storage through search history all."
+    },
+    "function:src/rag.py:index_memory": {
+      "name": "index_memory",
+      "type": "function",
+      "summary": "Provides an operation that supports retrieval and vector storage through index memory."
+    },
+    "function:src/rag.py:similar_memory": {
+      "name": "similar_memory",
+      "type": "function",
+      "summary": "Provides an operation that supports retrieval and vector storage through similar memory."
+    },
+    "function:src/rag.py:search_memories": {
+      "name": "search_memories",
+      "type": "function",
+      "summary": "Provides an operation that supports retrieval and vector storage through search memories."
+    },
+    "function:src/rag.py:delete_memory_vector": {
+      "name": "delete_memory_vector",
+      "type": "function",
+      "summary": "Provides an operation that supports retrieval and vector storage through delete memory vector."
+    },
+    "function:src/rag.py:_flatten": {
+      "name": "_flatten",
+      "type": "function",
+      "summary": "Internal helper that supports retrieval and vector storage through flatten."
+    },
+    "file:backend/app/cli.py": {
+      "name": "cli.py",
+      "type": "file",
+      "summary": "Provides the Uvicorn command-line entry point for serving the FastAPI application."
+    },
+    "function:backend/app/cli.py:main": {
+      "name": "main",
+      "type": "function",
+      "summary": "Starts Uvicorn with the configured FastAPI application factory."
+    },
+    "file:backend/app/contracts.py": {
+      "name": "contracts.py",
+      "type": "file",
+      "summary": "Defines Pydantic request, response, provider, and run contracts shared across the backend API."
+    },
+    "class:backend/app/contracts.py:MessageCreate": {
+      "name": "MessageCreate",
+      "type": "class",
+      "summary": "Validates the role and non-empty content for a newly submitted chat message."
+    },
+    "class:backend/app/contracts.py:Message": {
+      "name": "Message",
+      "type": "class",
+      "summary": "Represents a persisted chat message with its identifier, position, and creation timestamp."
+    },
+    "class:backend/app/contracts.py:ConversationCreate": {
+      "name": "ConversationCreate",
+      "type": "class",
+      "summary": "Validates the title used to create a conversation."
+    },
+    "class:backend/app/contracts.py:Conversation": {
+      "name": "Conversation",
+      "type": "class",
+      "summary": "Represents a conversation and its ordered collection of messages."
+    },
+    "class:backend/app/contracts.py:CredentialInput": {
+      "name": "CredentialInput",
+      "type": "class",
+      "summary": "Validates provider credentials and rejects values that are empty after trimming."
+    },
+    "class:backend/app/contracts.py:OAuthCodeInput": {
+      "name": "OAuthCodeInput",
+      "type": "class",
+      "summary": "Validates an OAuth authorization code supplied by a provider callback flow."
+    },
+    "class:backend/app/contracts.py:ChatMessage": {
+      "name": "ChatMessage",
+      "type": "class",
+      "summary": "Normalizes a role and content pair sent to model-provider adapters."
+    },
+    "class:backend/app/contracts.py:ModelDescriptor": {
+      "name": "ModelDescriptor",
+      "type": "class",
+      "summary": "Describes an available model, including its provider, capabilities, and optional metadata."
+    },
+    "class:backend/app/contracts.py:ProviderDiscovery": {
+      "name": "ProviderDiscovery",
+      "type": "class",
+      "summary": "Carries a provider's discovered models or the error encountered during discovery."
+    },
+    "class:backend/app/contracts.py:RunCreate": {
+      "name": "RunCreate",
+      "type": "class",
+      "summary": "Validates a request to begin a model run with messages and generation settings."
+    },
+    "class:backend/app/contracts.py:RunStatus": {
+      "name": "RunStatus",
+      "type": "class",
+      "summary": "Enumerates the lifecycle states of an asynchronous model run."
+    },
+    "class:backend/app/contracts.py:RunSnapshot": {
+      "name": "RunSnapshot",
+      "type": "class",
+      "summary": "Captures the current status, output, error, and timestamps for a model run."
+    },
+    "class:backend/app/contracts.py:RunEvent": {
+      "name": "RunEvent",
+      "type": "class",
+      "summary": "Represents a timestamped event emitted while a model run is processed."
+    },
+    "file:backend/app/main.py": {
+      "name": "main.py",
+      "type": "file",
+      "summary": "Builds the FastAPI application with conversation, credential, provider, OAuth, and streaming run endpoints."
+    },
+    "function:backend/app/main.py:create_app": {
+      "name": "create_app",
+      "type": "function",
+      "summary": "Constructs the API application, wires storage and provider services, and registers middleware and HTTP routes."
+    },
+    "file:backend/app/providers.py": {
+      "name": "providers.py",
+      "type": "file",
+      "summary": "Implements a common streaming adapter interface and registry for Ollama and optional hosted AI providers."
+    },
+    "class:backend/app/providers.py:ProviderAdapter": {
+      "name": "ProviderAdapter",
+      "type": "class",
+      "summary": "Defines the abstract interface for listing models and streaming completions from a provider."
+    },
+    "class:backend/app/providers.py:OpenAICompatibleAdapter": {
+      "name": "OpenAICompatibleAdapter",
+      "type": "class",
+      "summary": "Streams chat completions and lists models through OpenAI-compatible APIs."
+    },
+    "class:backend/app/providers.py:OllamaAdapter": {
+      "name": "OllamaAdapter",
+      "type": "class",
+      "summary": "Connects to an Ollama server to discover local models and stream chat output."
+    },
+    "class:backend/app/providers.py:AnthropicAdapter": {
+      "name": "AnthropicAdapter",
+      "type": "class",
+      "summary": "Adapts Anthropic model discovery and message streaming to the common provider interface."
+    },
+    "class:backend/app/providers.py:GeminiAdapter": {
+      "name": "GeminiAdapter",
+      "type": "class",
+      "summary": "Adapts Google Gemini model discovery and content streaming to the common provider interface."
+    },
+    "class:backend/app/providers.py:ProviderRegistry": {
+      "name": "ProviderRegistry",
+      "type": "class",
+      "summary": "Indexes provider adapters and concurrently discovers models while isolating per-provider failures."
+    },
+    "function:backend/app/providers.py:build_provider_registry": {
+      "name": "build_provider_registry",
+      "type": "function",
+      "summary": "Builds the configured set of local and hosted provider adapters."
+    },
+    "file:backend/app/runs.py": {
+      "name": "runs.py",
+      "type": "file",
+      "summary": "Coordinates asynchronous model runs, lifecycle events, cancellation, provider streaming, and persistence."
+    },
+    "class:backend/app/runs.py:RunState": {
+      "name": "RunState",
+      "type": "class",
+      "summary": "Holds mutable state, emitted events, and synchronization primitives for one run."
+    },
+    "class:backend/app/runs.py:RunManager": {
+      "name": "RunManager",
+      "type": "class",
+      "summary": "Creates, executes, cancels, and streams asynchronous provider runs while recording results in storage."
+    },
+    "file:backend/app/sessions.py": {
+      "name": "sessions.py",
+      "type": "file",
+      "summary": "Stores session-scoped provider credentials in memory and falls back to configured environment variables."
+    },
+    "class:backend/app/sessions.py:SessionVault": {
+      "name": "SessionVault",
+      "type": "class",
+      "summary": "Provides thread-safe per-session credential storage with environment-backed fallback lookup."
+    },
+    "file:backend/app/store.py": {
+      "name": "store.py",
+      "type": "file",
+      "summary": "Persists conversations and ordered messages in a SQLite database and maps rows to API contracts."
+    },
+    "class:backend/app/store.py:Store": {
+      "name": "Store",
+      "type": "class",
+      "summary": "Initializes SQLite schema and provides synchronized CRUD operations for conversations and messages."
+    },
+    "file:scripts/generate_api_types.py": {
+      "name": "generate_api_types.py",
+      "type": "file",
+      "summary": "Exports the FastAPI OpenAPI schema to JSON for frontend type generation."
+    },
+    "file:tests/test_provider_adapters.py": {
+      "name": "test_provider_adapters.py",
+      "type": "file",
+      "summary": "Tests provider registry coverage, concurrent discovery failure isolation, and normalized message compatibility."
+    },
+    "function:tests/test_provider_adapters.py:test_registry_contains_all_phase_one_providers": {
+      "name": "test_registry_contains_all_phase_one_providers",
+      "type": "function",
+      "summary": "Verifies that the registry includes every expected first-phase provider."
+    },
+    "function:tests/test_provider_adapters.py:test_model_discovery_is_concurrent_and_degrades_per_provider": {
+      "name": "test_model_discovery_is_concurrent_and_degrades_per_provider",
+      "type": "function",
+      "summary": "Verifies concurrent model discovery preserves successful results when another provider fails."
+    },
+    "function:tests/test_provider_adapters.py:test_echo_like_adapter_contract_accepts_normalized_messages": {
+      "name": "test_echo_like_adapter_contract_accepts_normalized_messages",
+      "type": "function",
+      "summary": "Verifies an adapter accepts the normalized chat-message contract."
+    },
+    "pipeline:.github/workflows/ci.yml": {
+      "name": "ci.yml",
+      "type": "pipeline",
+      "summary": "GitHub Actions CI workflow that validates the Python backend with pytest and Ruff, and installs, lints, tests, and builds the React frontend on pushes and pull requests."
+    },
+    "document:CHANGELOG.md": {
+      "name": "CHANGELOG.md",
+      "type": "document",
+      "summary": "Records released and unreleased changes, including the FastAPI v2 backend, React workspace, provider adapters, and streaming-run fixes in version 0.2.0."
+    },
+    "document:CODE_OF_CONDUCT.md": {
+      "name": "CODE_OF_CONDUCT.md",
+      "type": "document",
+      "summary": "Defines expected community behavior, enforcement authority, and reporting guidance for project discussions and contributions."
+    },
+    "document:CODE_TUTORIAL.md": {
+      "name": "CODE_TUTORIAL.md",
+      "type": "document",
+      "summary": "Provides a module-by-module tutorial of the legacy Streamlit and v2 FastAPI plus React architectures, including message-flow traces and extension guidance."
+    },
+    "document:CONTRIBUTING.md": {
+      "name": "CONTRIBUTING.md",
+      "type": "document",
+      "summary": "Explains contribution setup, project conventions, required checks, API type regeneration, and pull-request expectations for both application stacks."
+    },
+    "document:DATASET.md": {
+      "name": "DATASET.md",
+      "type": "document",
+      "summary": "Clarifies that the application does not rely on a fixed public dataset and instead works with user-provided documents and data."
+    },
+    "document:README.md": {
+      "name": "README.md",
+      "type": "document",
+      "summary": "Project entry-point documentation covering local-first AI chat capabilities, installation, configuration, privacy boundaries, architecture, and contribution links."
+    },
+    "document:SECURITY.md": {
+      "name": "SECURITY.md",
+      "type": "document",
+      "summary": "Defines the local-first security model, including session-only provider keys, local data storage, network-exposure cautions, prompt-injection risk, and private vulnerability reporting."
+    },
+    "document:USER_GUIDE.md": {
+      "name": "USER_GUIDE.md",
+      "type": "document",
+      "summary": "Offers a plain-language setup guide and feature walkthrough for chat, providers, memory, model comparison, retrieval, data controls, and troubleshooting."
+    },
+    "document:ZERO_TO_HERO_STUDY_HANDBOOK.md": {
+      "name": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "type": "document",
+      "summary": "Serves as a comprehensive study handbook covering AI concepts, repository architecture, module maps, end-to-end traces, contributor recipes, testing, and debugging."
+    },
+    "config:pyproject.toml": {
+      "name": "pyproject.toml",
+      "type": "config",
+      "summary": "Defines the Python package metadata, runtime and development dependencies, Hatch build settings, uv packaging behavior, and the chat-studio CLI entry point."
+    },
+    "config:frontend/.oxlintrc.json": {
+      "name": ".oxlintrc.json",
+      "type": "config",
+      "summary": "Configures Oxlint with React, TypeScript, and Oxc plugins, enforcing hook rules and warning on non-component exports."
+    },
+    "document:frontend/README.md": {
+      "name": "README.md",
+      "type": "document",
+      "summary": "Documents the Vite React and TypeScript starter setup, its available React plugins, and options for enabling type-aware Oxlint rules."
+    },
+    "config:frontend/components.json": {
+      "name": "components.json",
+      "type": "config",
+      "summary": "Defines shadcn/ui generation settings, Tailwind CSS integration, icon library, and import aliases for frontend components and utilities."
+    },
+    "file:frontend/index.html": {
+      "name": "index.html",
+      "type": "file",
+      "summary": "Provides the Vite HTML shell, viewport metadata, application title, and root element that loads the React entry module."
+    },
+    "config:frontend/package.json": {
+      "name": "package.json",
+      "type": "config",
+      "summary": "Defines the frontend's Vite, TypeScript, linting, testing, and API-type generation scripts together with runtime and development dependencies."
+    },
+    "config:frontend/tsconfig.app.json": {
+      "name": "tsconfig.app.json",
+      "type": "config",
+      "summary": "Configures strict, no-emit TypeScript compilation for the React source directory using bundler resolution and the @ path alias."
+    },
+    "config:frontend/tsconfig.json": {
+      "name": "tsconfig.json",
+      "type": "config",
+      "summary": "Acts as the frontend TypeScript solution configuration, referencing separate application and Node-oriented compiler projects while sharing the @ alias."
+    },
+    "config:frontend/tsconfig.node.json": {
+      "name": "tsconfig.node.json",
+      "type": "config",
+      "summary": "Configures strict, no-emit Node-oriented TypeScript checking for the Vite configuration using NodeNext modules."
+    },
+    "document:.github/ISSUE_TEMPLATE/bug_report.md": {
+      "name": "bug_report.md",
+      "type": "document",
+      "summary": "GitHub issue template that collects reproducible bug reports for the project."
+    },
+    "document:.github/ISSUE_TEMPLATE/feature_request.md": {
+      "name": "feature_request.md",
+      "type": "document",
+      "summary": "GitHub issue template for proposing and describing requested features."
+    },
+    "document:.github/pull_request_template.md": {
+      "name": "pull_request_template.md",
+      "type": "document",
+      "summary": "Pull request template covering changes, validation, and contributor checklist items."
+    },
+    "file:.python-version": {
+      "name": ".python-version",
+      "type": "file",
+      "summary": "Pins the repository's intended Python interpreter version to 3.12."
+    },
+    "config:.streamlit/config.toml": {
+      "name": "config.toml",
+      "type": "config",
+      "summary": "Configures the Streamlit application's theme, client, browser, and server behavior."
+    },
+    "file:.ua/.understandignore": {
+      "name": ".understandignore",
+      "type": "file",
+      "summary": "Provides optional ignore-pattern guidance for excluding generated, dependency, runtime, and test files from codebase analysis."
+    },
+    "config:.ua/config.json": {
+      "name": "config.json",
+      "type": "config",
+      "summary": "Stores Understand Anything analysis configuration, including the output language."
+    },
+    "file:backend/__init__.py": {
+      "name": "__init__.py",
+      "type": "file",
+      "summary": "Marks the backend directory as a Python package."
+    },
+    "file:backend/app/__init__.py": {
+      "name": "__init__.py",
+      "type": "file",
+      "summary": "Marks the FastAPI application directory as a Python package."
+    },
+    "file:docs/site/index.html": {
+      "name": "index.html",
+      "type": "file",
+      "summary": "Single-page documentation viewer that fetches repository Markdown files, renders them with marked, and supports hash-based navigation."
+    },
+    "file:docs/tutorial/index.html": {
+      "name": "index.html",
+      "type": "file",
+      "summary": "Offline systems field manual presenting the project's two application tracks, setup, architecture, and operational guidance."
+    },
+    "file:docs/tutorial/tutorial.css": {
+      "name": "tutorial.css",
+      "type": "file",
+      "summary": "Styles the offline tutorial field manual."
+    },
+    "file:docs/tutorial/tutorial.js": {
+      "name": "tutorial.js",
+      "type": "file",
+      "summary": "Adds client-side progress, search, filtering, and tab interactions to the tutorial field manual."
+    },
+    "file:frontend/src/App.css": {
+      "name": "App.css",
+      "type": "file",
+      "summary": "Defines application-specific styling for the React workspace shell."
+    },
+    "file:frontend/src/ErrorBoundary.tsx": {
+      "name": "ErrorBoundary.tsx",
+      "type": "file",
+      "summary": "Provides a React error boundary that logs rendering failures and displays fallback UI."
+    },
+    "class:frontend/src/ErrorBoundary.tsx:ErrorBoundary": {
+      "name": "ErrorBoundary",
+      "type": "class",
+      "summary": "React error boundary that derives fallback state, logs caught errors, and renders children or recovery UI."
+    },
+    "file:frontend/src/api/client.ts": {
+      "name": "client.ts",
+      "type": "file",
+      "summary": "Implements a typed frontend API client that sends requests to the local FastAPI service and decodes JSON responses."
+    },
+    "file:frontend/src/api/schema.ts": {
+      "name": "schema.ts",
+      "type": "file",
+      "summary": "Generated TypeScript declarations for the FastAPI OpenAPI schema, including API paths, payloads, and response types."
+    },
+    "file:frontend/src/index.css": {
+      "name": "index.css",
+      "type": "file",
+      "summary": "Defines global CSS styling for the React frontend."
+    },
+    "file:frontend/src/main.tsx": {
+      "name": "main.tsx",
+      "type": "file",
+      "summary": "Bootstraps the React application, loads global styles, and wraps the App component in strict mode and an error boundary."
+    },
+    "file:frontend/src/test/setup.ts": {
+      "name": "setup.ts",
+      "type": "file",
+      "summary": "Initializes shared test-environment behavior for frontend Vitest tests."
+    },
+    "file:frontend/vite.config.ts": {
+      "name": "vite.config.ts",
+      "type": "file",
+      "summary": "Configures Vite, React, Tailwind, path aliases, loopback API proxying, and the Vitest environment."
+    },
+    "file:frontend/vitest.config.ts": {
+      "name": "vitest.config.ts",
+      "type": "file",
+      "summary": "Configures the Vitest React test environment and frontend path alias."
+    },
+    "file:pages/3_Providers.py": {
+      "name": "3_Providers.py",
+      "type": "file",
+      "summary": "Streamlit provider-management page for session-only BYOK credentials, OpenRouter login, connection tests, and local or cloud Ollama endpoint settings."
+    },
+    "document:tasks/plan.md": {
+      "name": "plan.md",
+      "type": "document",
+      "summary": "Implementation plan for a multipage htmx documentation site, covering architecture decisions, tasks, risks, and open questions."
+    },
+    "document:tasks/todo.md": {
+      "name": "todo.md",
+      "type": "document",
+      "summary": "Tracks completed phases, deviations, and outstanding work for the multipage htmx documentation site."
+    },
+    "file:tests/conftest.py": {
+      "name": "conftest.py",
+      "type": "file",
+      "summary": "Defines the shared pytest TestClient fixture that starts an in-memory FastAPI application for API contract tests."
+    },
+    "function:tests/conftest.py:client": {
+      "name": "client",
+      "type": "function",
+      "summary": "Creates and yields an in-memory FastAPI TestClient for each test that requests the fixture."
+    },
+    "file:tests/test_api_contract.py": {
+      "name": "test_api_contract.py",
+      "type": "file",
+      "summary": "Exercises the public FastAPI contract for health checks, conversations, session-scoped provider credentials, streamed runs, and OpenRouter PKCE authorization."
+    },
+    "function:tests/test_api_contract.py:test_health_and_session_cookie": {
+      "name": "test_health_and_session_cookie",
+      "type": "function",
+      "summary": "Verifies that the health endpoint reports the current API version and initializes a browser session cookie."
+    },
+    "function:tests/test_api_contract.py:test_conversation_crud_preserves_message_order": {
+      "name": "test_conversation_crud_preserves_message_order",
+      "type": "function",
+      "summary": "Creates a conversation, adds user and assistant messages, and checks that the detail response preserves insertion order."
+    },
+    "function:tests/test_api_contract.py:test_provider_secret_is_scoped_to_browser_session": {
+      "name": "test_provider_secret_is_scoped_to_browser_session",
+      "type": "function",
+      "summary": "Confirms provider credentials are available only to the browser session that supplied them."
+    },
+    "function:tests/test_api_contract.py:test_run_stream_contract_retains_completed_output": {
+      "name": "test_run_stream_contract_retains_completed_output",
+      "type": "function",
+      "summary": "Checks the run creation and event stream contract, then verifies the completed snapshot retains the streamed output."
+    },
+    "function:tests/test_api_contract.py:test_openrouter_auth_uses_session_pkce_and_current_callback_origin": {
+      "name": "test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+      "type": "function",
+      "summary": "Validates that OpenRouter authorization uses PKCE and a callback URL derived from the active request origin."
+    }
+  },
+  "totalNodes": 406,
+  "totalEdges": 761
+}

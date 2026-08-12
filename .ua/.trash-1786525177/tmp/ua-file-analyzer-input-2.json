@@ -1,0 +1,27 @@
+{
+  "projectRoot": "D:\\AI\\Github\\local-ai-chat-studio",
+  "batchFiles": [
+    {"path":"app.py","language":"python","sizeLines":577,"fileCategory":"code"},
+    {"path":"pages/1_Memory.py","language":"python","sizeLines":70,"fileCategory":"code"},
+    {"path":"pages/2_Settings.py","language":"python","sizeLines":146,"fileCategory":"code"},
+    {"path":"pages/4_Compare.py","language":"python","sizeLines":106,"fileCategory":"code"},
+    {"path":"src/catalog.py","language":"python","sizeLines":108,"fileCategory":"code"},
+    {"path":"src/chat_store.py","language":"python","sizeLines":405,"fileCategory":"code"},
+    {"path":"src/config.py","language":"python","sizeLines":61,"fileCategory":"code"},
+    {"path":"src/files.py","language":"python","sizeLines":153,"fileCategory":"code"},
+    {"path":"src/jobs.py","language":"python","sizeLines":414,"fileCategory":"code"},
+    {"path":"src/memory.py","language":"python","sizeLines":96,"fileCategory":"code"},
+    {"path":"src/model_labels.py","language":"python","sizeLines":64,"fileCategory":"code"},
+    {"path":"src/ollama_client.py","language":"python","sizeLines":249,"fileCategory":"code"},
+    {"path":"src/orchestrator.py","language":"python","sizeLines":92,"fileCategory":"code"},
+    {"path":"src/personalization.py","language":"python","sizeLines":66,"fileCategory":"code"},
+    {"path":"src/providers.py","language":"python","sizeLines":442,"fileCategory":"code"},
+    {"path":"src/rag.py","language":"python","sizeLines":175,"fileCategory":"code"}
+  ],
+  "batchImportData": {
+    "app.py":["src/catalog.py","src/config.py","src/files.py","src/ollama_client.py","src/personalization.py"],
+    "pages/1_Memory.py":["src/personalization.py"], "pages/2_Settings.py":["src/config.py"], "pages/4_Compare.py":["src/catalog.py","src/config.py","src/ollama_client.py"],
+    "src/catalog.py":["src/model_labels.py","src/ollama_client.py"], "src/chat_store.py":["src/config.py"], "src/config.py":[], "src/files.py":[],
+    "src/jobs.py":["src/config.py","src/files.py","src/ollama_client.py","src/orchestrator.py","src/personalization.py"], "src/memory.py":["src/config.py","src/ollama_client.py"], "src/model_labels.py":["src/ollama_client.py"], "src/ollama_client.py":["src/config.py"], "src/orchestrator.py":["src/config.py"], "src/personalization.py":["src/config.py","src/ollama_client.py"], "src/providers.py":["src/config.py"], "src/rag.py":["src/config.py","src/ollama_client.py"]
+  }
+}

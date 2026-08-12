@@ -1,0 +1,168 @@
+{
+  "nodes": [
+    {
+      "id": "file:tests/conftest.py",
+      "type": "file",
+      "name": "conftest.py",
+      "filePath": "tests/conftest.py",
+      "summary": "Defines the shared pytest TestClient fixture that starts an in-memory FastAPI application for API contract tests.",
+      "tags": ["test", "pytest", "fixture", "api-testing"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/conftest.py:client",
+      "type": "function",
+      "name": "client",
+      "filePath": "tests/conftest.py",
+      "lineRange": [8, 12],
+      "summary": "Creates and yields an in-memory FastAPI TestClient for each test that requests the fixture.",
+      "tags": ["test", "pytest", "fixture", "test-client"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/test_api_contract.py",
+      "type": "file",
+      "name": "test_api_contract.py",
+      "filePath": "tests/test_api_contract.py",
+      "summary": "Exercises the public FastAPI contract for health checks, conversations, session-scoped provider credentials, streamed runs, and OpenRouter PKCE authorization.",
+      "tags": ["test", "api-testing", "contract-testing", "fastapi"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/test_api_contract.py:test_health_and_session_cookie",
+      "type": "function",
+      "name": "test_health_and_session_cookie",
+      "filePath": "tests/test_api_contract.py",
+      "lineRange": [9, 14],
+      "summary": "Verifies that the health endpoint reports the current API version and initializes a browser session cookie.",
+      "tags": ["test", "health-check", "session", "api-contract"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_api_contract.py:test_conversation_crud_preserves_message_order",
+      "type": "function",
+      "name": "test_conversation_crud_preserves_message_order",
+      "filePath": "tests/test_api_contract.py",
+      "lineRange": [17, 36],
+      "summary": "Creates a conversation, adds user and assistant messages, and checks that the detail response preserves insertion order.",
+      "tags": ["test", "conversation", "crud", "api-contract"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/test_api_contract.py:test_provider_secret_is_scoped_to_browser_session",
+      "type": "function",
+      "name": "test_provider_secret_is_scoped_to_browser_session",
+      "filePath": "tests/test_api_contract.py",
+      "lineRange": [39, 48],
+      "summary": "Confirms provider credentials are available only to the browser session that supplied them.",
+      "tags": ["test", "provider", "session", "security"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_api_contract.py:test_run_stream_contract_retains_completed_output",
+      "type": "function",
+      "name": "test_run_stream_contract_retains_completed_output",
+      "filePath": "tests/test_api_contract.py",
+      "lineRange": [51, 75],
+      "summary": "Checks the run creation and event stream contract, then verifies the completed snapshot retains the streamed output.",
+      "tags": ["test", "streaming", "runs", "api-contract"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/test_api_contract.py:test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+      "type": "function",
+      "name": "test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+      "filePath": "tests/test_api_contract.py",
+      "lineRange": [78, 90],
+      "summary": "Validates that OpenRouter authorization uses PKCE and a callback URL derived from the active request origin.",
+      "tags": ["test", "openrouter", "pkce", "authentication"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:tests/conftest.py",
+      "target": "function:tests/conftest.py:client",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/conftest.py",
+      "target": "function:tests/conftest.py:client",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_health_and_session_cookie",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_health_and_session_cookie",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_conversation_crud_preserves_message_order",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_conversation_crud_preserves_message_order",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_provider_secret_is_scoped_to_browser_session",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_provider_secret_is_scoped_to_browser_session",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_run_stream_contract_retains_completed_output",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_run_stream_contract_retains_completed_output",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

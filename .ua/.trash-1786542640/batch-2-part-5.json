@@ -1,0 +1,557 @@
+{
+  "nodes": [
+    {
+      "id": "file:tests/test_workspace_features.py",
+      "type": "file",
+      "name": "test_workspace_features.py",
+      "filePath": "tests/test_workspace_features.py",
+      "summary": "Exercises workspace, memory, provenance, replay, attachment, privacy, and data-control API workflows end to end.",
+      "tags": [
+        "test",
+        "api",
+        "integration"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:_conversation",
+      "type": "function",
+      "name": "_conversation",
+      "summary": "Verifies conversation through the public application contract.",
+      "tags": [
+        "test",
+        "api",
+        "contract"
+      ],
+      "complexity": "simple",
+      "lineRange": [
+        14,
+        17
+      ]
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:_complete_echo_run",
+      "type": "function",
+      "name": "_complete_echo_run",
+      "summary": "Verifies complete_echo_run through the public application contract.",
+      "tags": [
+        "test",
+        "api",
+        "contract"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        20,
+        47
+      ]
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_run_is_owned_by_browser_session",
+      "type": "function",
+      "name": "test_run_is_owned_by_browser_session",
+      "summary": "Verifies run_is_owned_by_browser_session through the public application contract.",
+      "tags": [
+        "test",
+        "api",
+        "contract"
+      ],
+      "complexity": "simple",
+      "lineRange": [
+        50,
+        56
+      ]
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_cloud_preflight_warns_about_secrets_and_excludes_private_context",
+      "type": "function",
+      "name": "test_cloud_preflight_warns_about_secrets_and_excludes_private_context",
+      "summary": "Verifies cloud_preflight_warns_about_secrets_and_excludes_private_context through the public application contract.",
+      "tags": [
+        "test",
+        "api",
+        "contract"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        59,
+        83
+      ]
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_turn_persists_messages_context_and_replay_bundle",
+      "type": "function",
+      "name": "test_turn_persists_messages_context_and_replay_bundle",
+      "summary": "Verifies turn_persists_messages_context_and_replay_bundle through the public application contract.",
+      "tags": [
+        "test",
+        "api",
+        "contract"
+      ],
+      "complexity": "simple",
+      "lineRange": [
+        86,
+        98
+      ]
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_branch_backpack_focus_and_provider_policy",
+      "type": "function",
+      "name": "test_branch_backpack_focus_and_provider_policy",
+      "summary": "Verifies branch_backpack_focus_and_provider_policy through the public application contract.",
+      "tags": [
+        "test",
+        "api",
+        "contract"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        101,
+        154
+      ]
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_memory_preset_upload_activity_and_replay",
+      "type": "function",
+      "name": "test_memory_preset_upload_activity_and_replay",
+      "summary": "Verifies memory_preset_upload_activity_and_replay through the public application contract.",
+      "tags": [
+        "test",
+        "api",
+        "contract"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        157,
+        203
+      ]
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_store_accepts_the_legacy_seven_column_preset_table",
+      "type": "function",
+      "name": "test_store_accepts_the_legacy_seven_column_preset_table",
+      "summary": "Verifies store_accepts_the_legacy_seven_column_preset_table through the public application contract.",
+      "tags": [
+        "test",
+        "api",
+        "contract"
+      ],
+      "complexity": "simple",
+      "lineRange": [
+        206,
+        223
+      ]
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_memory_lifecycle_feedback_and_data_controls",
+      "type": "function",
+      "name": "test_memory_lifecycle_feedback_and_data_controls",
+      "summary": "Verifies memory_lifecycle_feedback_and_data_controls through the public application contract.",
+      "tags": [
+        "test",
+        "api",
+        "contract"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        226,
+        276
+      ]
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_llm_memory_extraction_requires_cloud_confirmation_and_saves_provenance",
+      "type": "function",
+      "name": "test_llm_memory_extraction_requires_cloud_confirmation_and_saves_provenance",
+      "summary": "Verifies llm_memory_extraction_requires_cloud_confirmation_and_saves_provenance through the public application contract.",
+      "tags": [
+        "test",
+        "api",
+        "contract"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        279,
+        334
+      ]
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_redacted_replay_bundle_hides_private_context",
+      "type": "function",
+      "name": "test_redacted_replay_bundle_hides_private_context",
+      "summary": "Verifies redacted_replay_bundle_hides_private_context through the public application contract.",
+      "tags": [
+        "test",
+        "api",
+        "contract"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        337,
+        365
+      ]
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_workspace_resource_lifecycle_and_provider_simulator",
+      "type": "function",
+      "name": "test_workspace_resource_lifecycle_and_provider_simulator",
+      "summary": "Verifies workspace_resource_lifecycle_and_provider_simulator through the public application contract.",
+      "tags": [
+        "test",
+        "api",
+        "contract"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        368,
+        411
+      ]
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_web_sources_are_provenanced_and_replayed_without_a_second_search",
+      "type": "function",
+      "name": "test_web_sources_are_provenanced_and_replayed_without_a_second_search",
+      "summary": "Verifies web_sources_are_provenanced_and_replayed_without_a_second_search through the public application contract.",
+      "tags": [
+        "test",
+        "api",
+        "contract"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        414,
+        461
+      ]
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_cross_chat_retrieval_has_provenance_and_can_be_excluded",
+      "type": "function",
+      "name": "test_cross_chat_retrieval_has_provenance_and_can_be_excluded",
+      "summary": "Verifies cross_chat_retrieval_has_provenance_and_can_be_excluded through the public application contract.",
+      "tags": [
+        "test",
+        "api",
+        "contract"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        464,
+        498
+      ]
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_image_attachment_is_available_to_full_replay_but_not_redacted_share",
+      "type": "function",
+      "name": "test_image_attachment_is_available_to_full_replay_but_not_redacted_share",
+      "summary": "Verifies image_attachment_is_available_to_full_replay_but_not_redacted_share through the public application contract.",
+      "tags": [
+        "test",
+        "api",
+        "contract"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        501,
+        545
+      ]
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_context_budget_prunes_sources_and_private_text_can_be_sanitized",
+      "type": "function",
+      "name": "test_context_budget_prunes_sources_and_private_text_can_be_sanitized",
+      "summary": "Verifies context_budget_prunes_sources_and_private_text_can_be_sanitized through the public application contract.",
+      "tags": [
+        "test",
+        "api",
+        "contract"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        548,
+        576
+      ]
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_profile_runtime_health_and_opt_in_v2_import",
+      "type": "function",
+      "name": "test_profile_runtime_health_and_opt_in_v2_import",
+      "summary": "Verifies profile_runtime_health_and_opt_in_v2_import through the public application contract.",
+      "tags": [
+        "test",
+        "api",
+        "contract"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        579,
+        624
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:_conversation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:_conversation",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:_complete_echo_run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:_complete_echo_run",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_run_is_owned_by_browser_session",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_run_is_owned_by_browser_session",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_cloud_preflight_warns_about_secrets_and_excludes_private_context",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_cloud_preflight_warns_about_secrets_and_excludes_private_context",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_turn_persists_messages_context_and_replay_bundle",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_turn_persists_messages_context_and_replay_bundle",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_branch_backpack_focus_and_provider_policy",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_branch_backpack_focus_and_provider_policy",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_memory_preset_upload_activity_and_replay",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_memory_preset_upload_activity_and_replay",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_store_accepts_the_legacy_seven_column_preset_table",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_store_accepts_the_legacy_seven_column_preset_table",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_memory_lifecycle_feedback_and_data_controls",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_memory_lifecycle_feedback_and_data_controls",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_llm_memory_extraction_requires_cloud_confirmation_and_saves_provenance",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_llm_memory_extraction_requires_cloud_confirmation_and_saves_provenance",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_redacted_replay_bundle_hides_private_context",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_redacted_replay_bundle_hides_private_context",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_workspace_resource_lifecycle_and_provider_simulator",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_workspace_resource_lifecycle_and_provider_simulator",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_web_sources_are_provenanced_and_replayed_without_a_second_search",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_web_sources_are_provenanced_and_replayed_without_a_second_search",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_cross_chat_retrieval_has_provenance_and_can_be_excluded",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_cross_chat_retrieval_has_provenance_and_can_be_excluded",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_image_attachment_is_available_to_full_replay_but_not_redacted_share",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_image_attachment_is_available_to_full_replay_but_not_redacted_share",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_context_budget_prunes_sources_and_private_text_can_be_sanitized",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_context_budget_prunes_sources_and_private_text_can_be_sanitized",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_profile_runtime_health_and_opt_in_v2_import",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_profile_runtime_health_and_opt_in_v2_import",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "file:backend/app/main.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "file:backend/app/store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+[
+  {
+    "id": "layer:ui",
+    "name": "User Interface",
+    "description": "The React single-page client, its reusable interface components, styles, and browser entry point.",
+    "nodeIds": [
+      "file:frontend/src/App.tsx",
+      "file:frontend/src/ErrorBoundary.tsx",
+      "file:frontend/src/components/ui/badge.tsx",
+      "file:frontend/src/components/ui/button.tsx",
+      "file:frontend/src/components/ui/card.tsx",
+      "file:frontend/src/components/ui/input.tsx",
+      "file:frontend/src/components/ui/scroll-area.tsx",
+      "file:frontend/src/components/ui/separator.tsx",
+      "file:frontend/src/components/ui/textarea.tsx",
+      "file:frontend/src/components/ui/tooltip.tsx",
+      "file:frontend/src/lib/utils.ts",
+      "file:frontend/src/main.tsx",
+      "file:frontend/index.html",
+      "file:frontend/src/App.css",
+      "file:frontend/src/index.css"
+    ]
+  },
+  {
+    "id": "layer:api",
+    "name": "API Layer",
+    "description": "FastAPI startup and command entry points that expose the local AI workspace over HTTP.",
+    "nodeIds": [
+      "file:backend/app/cli.py",
+      "file:backend/app/main.py",
+      "file:backend/__init__.py",
+      "file:backend/app/__init__.py"
+    ]
+  },
+  {
+    "id": "layer:service",
+    "name": "AI Services",
+    "description": "Provider integration, chat orchestration, file handling, retrieval, session workflows, and workspace logic.",
+    "nodeIds": [
+      "file:frontend/src/api/client.ts",
+      "file:backend/app/memory.py",
+      "file:backend/app/providers.py",
+      "file:backend/app/runs.py",
+      "file:backend/app/sessions.py",
+      "file:backend/app/workspace.py",
+      "file:scripts/generate_api_types.py",
+      "file:src/files.py",
+      "file:src/catalog.py",
+      "file:src/jobs.py",
+      "file:src/memory.py",
+      "file:src/model_labels.py",
+      "file:src/ollama_client.py",
+      "file:src/orchestrator.py",
+      "file:src/personalization.py",
+      "file:src/providers.py",
+      "file:src/rag.py"
+    ]
+  },
+  {
+    "id": "layer:data",
+    "name": "Data Layer",
+    "description": "SQLite-backed conversation persistence and application storage configuration.",
+    "nodeIds": [
+      "file:backend/app/store.py",
+      "file:src/chat_store.py",
+      "file:src/config.py"
+    ]
+  },
+  {
+    "id": "layer:types",
+    "name": "Contract Types",
+    "description": "Pydantic API contracts and generated TypeScript definitions shared across the API boundary.",
+    "nodeIds": [
+      "file:frontend/src/api/schema.ts",
+      "file:backend/app/contracts.py"
+    ]
+  },
+  {
+    "id": "layer:test",
+    "name": "Test Layer",
+    "description": "Pytest and Vitest coverage plus their shared test setup.",
+    "nodeIds": [
+      "file:frontend/src/App.test.tsx",
+      "file:tests/test_provider_adapters.py",
+      "file:tests/test_workspace_features.py",
+      "file:frontend/src/test/setup.ts",
+      "file:tests/conftest.py",
+      "file:tests/test_api_contract.py"
+    ]
+  },
+  {
+    "id": "layer:config",
+    "name": "Configuration",
+    "description": "Python and frontend manifests, compiler, lint, build, and runtime configuration.",
+    "nodeIds": [
+      "config:pyproject.toml",
+      "config:frontend/.oxlintrc.json",
+      "config:frontend/components.json",
+      "config:frontend/package.json",
+      "config:frontend/tsconfig.app.json",
+      "config:frontend/tsconfig.json",
+      "config:frontend/tsconfig.node.json",
+      "file:.python-version",
+      "file:frontend/vite.config.ts",
+      "file:frontend/vitest.config.ts"
+    ]
+  },
+  {
+    "id": "layer:documentation",
+    "name": "Documentation",
+    "description": "Project guides, contribution materials, issue templates, and the standalone handbook and documentation pages.",
+    "nodeIds": [
+      "document:CHANGELOG.md",
+      "document:CODE_OF_CONDUCT.md",
+      "document:CODE_TUTORIAL.md",
+      "document:CONTRIBUTING.md",
+      "document:DATASET.md",
+      "document:README.md",
+      "document:SECURITY.md",
+      "document:USER_GUIDE.md",
+      "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "document:docs/codebase/ARCHITECTURE.md",
+      "document:docs/codebase/CONCERNS.md",
+      "document:docs/codebase/CONVENTIONS.md",
+      "document:docs/codebase/INTEGRATIONS.md",
+      "document:docs/codebase/STACK.md",
+      "document:docs/codebase/STRUCTURE.md",
+      "document:docs/codebase/TESTING.md",
+      "document:frontend/README.md",
+      "document:.github/ISSUE_TEMPLATE/bug_report.md",
+      "document:.github/ISSUE_TEMPLATE/feature_request.md",
+      "document:.github/pull_request_template.md",
+      "file:docs/site/index.html",
+      "file:docs/tutorial/index.html",
+      "document:tasks/plan.md",
+      "document:tasks/todo.md"
+    ]
+  },
+  {
+    "id": "layer:ci-cd",
+    "name": "CI/CD",
+    "description": "GitHub Actions automation that checks the backend and frontend.",
+    "nodeIds": [
+      "pipeline:.github/workflows/ci.yml"
+    ]
+  },
+  {
+    "id": "layer:operations",
+    "name": "Project Operations",
+    "description": "The Windows launcher and maintenance tooling that support local development and distribution.",
+    "nodeIds": [
+      "file:Launch Chat Studio.cmd",
+      "file:.graphifyignore"
+    ]
+  }
+]

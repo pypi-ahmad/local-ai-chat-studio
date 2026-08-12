@@ -1,0 +1,1978 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 9,
+  "filesSkipped": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 9,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 9,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "backend/app/cli.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 11,
+      "functions": [
+        {
+          "name": "main",
+          "startLine": 8,
+          "endLine": 15,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "main",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "main",
+          "callee": "uvicorn.run",
+          "lineNumber": 9
+        },
+        {
+          "caller": "main",
+          "callee": "create_app",
+          "lineNumber": 10
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "backend/app/contracts.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 104,
+      "nonEmptyLines": 73,
+      "functions": [
+        {
+          "name": "utc_now",
+          "startLine": 10,
+          "endLine": 11,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "MessageCreate",
+          "startLine": 14,
+          "endLine": 16,
+          "methods": [],
+          "properties": [
+            "role",
+            "content"
+          ]
+        },
+        {
+          "name": "Message",
+          "startLine": 19,
+          "endLine": 22,
+          "methods": [],
+          "properties": [
+            "id",
+            "position",
+            "created_at"
+          ]
+        },
+        {
+          "name": "ConversationCreate",
+          "startLine": 25,
+          "endLine": 26,
+          "methods": [],
+          "properties": [
+            "title"
+          ]
+        },
+        {
+          "name": "Conversation",
+          "startLine": 29,
+          "endLine": 34,
+          "methods": [],
+          "properties": [
+            "id",
+            "title",
+            "created_at",
+            "updated_at",
+            "messages"
+          ]
+        },
+        {
+          "name": "CredentialInput",
+          "startLine": 37,
+          "endLine": 46,
+          "methods": [
+            "_not_blank"
+          ],
+          "properties": [
+            "api_key"
+          ]
+        },
+        {
+          "name": "OAuthCodeInput",
+          "startLine": 49,
+          "endLine": 50,
+          "methods": [],
+          "properties": [
+            "code"
+          ]
+        },
+        {
+          "name": "ChatMessage",
+          "startLine": 53,
+          "endLine": 55,
+          "methods": [],
+          "properties": [
+            "role",
+            "content"
+          ]
+        },
+        {
+          "name": "ModelDescriptor",
+          "startLine": 58,
+          "endLine": 63,
+          "methods": [],
+          "properties": [
+            "provider",
+            "id",
+            "label",
+            "context_length",
+            "capabilities"
+          ]
+        },
+        {
+          "name": "ProviderDiscovery",
+          "startLine": 66,
+          "endLine": 69,
+          "methods": [],
+          "properties": [
+            "provider",
+            "models",
+            "error"
+          ]
+        },
+        {
+          "name": "RunCreate",
+          "startLine": 72,
+          "endLine": 77,
+          "methods": [],
+          "properties": [
+            "provider",
+            "model",
+            "messages",
+            "temperature",
+            "conversation_id"
+          ]
+        },
+        {
+          "name": "RunStatus",
+          "startLine": 80,
+          "endLine": 85,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "RunSnapshot",
+          "startLine": 88,
+          "endLine": 97,
+          "methods": [],
+          "properties": [
+            "id",
+            "status",
+            "provider",
+            "model",
+            "output",
+            "error",
+            "created_at",
+            "started_at",
+            "completed_at"
+          ]
+        },
+        {
+          "name": "RunEvent",
+          "startLine": 100,
+          "endLine": 104,
+          "methods": [],
+          "properties": [
+            "type",
+            "run_id",
+            "data",
+            "timestamp"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "utc_now",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "MessageCreate",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "Message",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "ConversationCreate",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "Conversation",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "CredentialInput",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "OAuthCodeInput",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "ChatMessage",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "ModelDescriptor",
+          "line": 58,
+          "isDefault": false
+        },
+        {
+          "name": "ProviderDiscovery",
+          "line": 66,
+          "isDefault": false
+        },
+        {
+          "name": "RunCreate",
+          "line": 72,
+          "isDefault": false
+        },
+        {
+          "name": "RunStatus",
+          "line": 80,
+          "isDefault": false
+        },
+        {
+          "name": "RunSnapshot",
+          "line": 88,
+          "isDefault": false
+        },
+        {
+          "name": "RunEvent",
+          "line": 100,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "utc_now",
+          "callee": "datetime.now(UTC).isoformat",
+          "lineNumber": 11
+        },
+        {
+          "caller": "utc_now",
+          "callee": "datetime.now",
+          "lineNumber": 11
+        },
+        {
+          "caller": "_not_blank",
+          "callee": "value.strip",
+          "lineNumber": 43
+        },
+        {
+          "caller": "_not_blank",
+          "callee": "ValueError",
+          "lineNumber": 45
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 14,
+        "functionCount": 1,
+        "classCount": 13
+      }
+    },
+    {
+      "path": "backend/app/main.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 232,
+      "nonEmptyLines": 201,
+      "functions": [
+        {
+          "name": "create_app",
+          "startLine": 36,
+          "endLine": 232,
+          "params": [
+            "database_url",
+            "provider_registry"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "create_app",
+          "line": 36,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "create_app",
+          "callee": "Path",
+          "lineNumber": 40
+        },
+        {
+          "caller": "create_app",
+          "callee": "os.getenv",
+          "lineNumber": 40
+        },
+        {
+          "caller": "create_app",
+          "callee": "Store",
+          "lineNumber": 41
+        },
+        {
+          "caller": "create_app",
+          "callee": "str",
+          "lineNumber": 41
+        },
+        {
+          "caller": "create_app",
+          "callee": "SessionVault",
+          "lineNumber": 42
+        },
+        {
+          "caller": "create_app",
+          "callee": "ProviderRegistry",
+          "lineNumber": 45
+        },
+        {
+          "caller": "create_app",
+          "callee": "build_provider_registry",
+          "lineNumber": 45
+        },
+        {
+          "caller": "create_app",
+          "callee": "set",
+          "lineNumber": 49
+        },
+        {
+          "caller": "create_app",
+          "callee": "set",
+          "lineNumber": 49
+        },
+        {
+          "caller": "create_app",
+          "callee": "RuntimeError",
+          "lineNumber": 51
+        },
+        {
+          "caller": "create_app",
+          "callee": "sorted",
+          "lineNumber": 51
+        },
+        {
+          "caller": "create_app",
+          "callee": "RunManager",
+          "lineNumber": 52
+        },
+        {
+          "caller": "lifespan",
+          "callee": "store.connection.close",
+          "lineNumber": 57
+        },
+        {
+          "caller": "create_app",
+          "callee": "FastAPI",
+          "lineNumber": 59
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.middleware",
+          "lineNumber": 63
+        },
+        {
+          "caller": "security_headers",
+          "callee": "call_next",
+          "lineNumber": 65
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.middleware",
+          "lineNumber": 71
+        },
+        {
+          "caller": "session_cookie",
+          "callee": "request.cookies.get",
+          "lineNumber": 73
+        },
+        {
+          "caller": "session_cookie",
+          "callee": "vault.new_id",
+          "lineNumber": 73
+        },
+        {
+          "caller": "session_cookie",
+          "callee": "call_next",
+          "lineNumber": 75
+        },
+        {
+          "caller": "session_cookie",
+          "callee": "response.set_cookie",
+          "lineNumber": 77
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 82
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 86
+        },
+        {
+          "caller": "create_conversation",
+          "callee": "store.create_conversation",
+          "lineNumber": 88
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 90
+        },
+        {
+          "caller": "list_conversations",
+          "callee": "store.list_conversations",
+          "lineNumber": 92
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 94
+        },
+        {
+          "caller": "get_conversation",
+          "callee": "store.get_conversation",
+          "lineNumber": 97
+        },
+        {
+          "caller": "get_conversation",
+          "callee": "HTTPException",
+          "lineNumber": 99
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 101
+        },
+        {
+          "caller": "add_message",
+          "callee": "store.add_message",
+          "lineNumber": 108
+        },
+        {
+          "caller": "add_message",
+          "callee": "HTTPException",
+          "lineNumber": 110
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 112
+        },
+        {
+          "caller": "providers",
+          "callee": "vault.source",
+          "lineNumber": 119
+        },
+        {
+          "caller": "providers",
+          "callee": "registry.adapters.items",
+          "lineNumber": 121
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 125
+        },
+        {
+          "caller": "provider_models",
+          "callee": "registry.discover_models",
+          "lineNumber": 127
+        },
+        {
+          "caller": "provider_models",
+          "callee": "vault.get",
+          "lineNumber": 128
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 131
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "time.monotonic",
+          "lineNumber": 133
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "list",
+          "lineNumber": 134
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "oauth_verifiers.items",
+          "lineNumber": 134
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "oauth_verifiers.pop",
+          "lineNumber": 136
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "secrets.token_urlsafe",
+          "lineNumber": 137
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "base64.urlsafe_b64encode(\n            hashlib.sha256(verifier.encode()).digest()\n        ).rstrip(b\"=\").decode",
+          "lineNumber": 138
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "base64.urlsafe_b64encode(\n            hashlib.sha256(verifier.encode()).digest()\n        ).rstrip",
+          "lineNumber": 138
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "base64.urlsafe_b64encode",
+          "lineNumber": 138
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "hashlib.sha256(verifier.encode()).digest",
+          "lineNumber": 139
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "hashlib.sha256",
+          "lineNumber": 139
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "verifier.encode",
+          "lineNumber": 139
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "str(request.base_url).rstrip",
+          "lineNumber": 142
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "str",
+          "lineNumber": 142
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "urlencode",
+          "lineNumber": 143
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 152
+        },
+        {
+          "caller": "complete_openrouter_auth",
+          "callee": "exchange_openrouter_code",
+          "lineNumber": 154
+        },
+        {
+          "caller": "complete_openrouter_auth",
+          "callee": "Response",
+          "lineNumber": 155
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 157
+        },
+        {
+          "caller": "openrouter_auth_callback",
+          "callee": "exchange_openrouter_code",
+          "lineNumber": 159
+        },
+        {
+          "caller": "openrouter_auth_callback",
+          "callee": "RedirectResponse",
+          "lineNumber": 160
+        },
+        {
+          "caller": "exchange_openrouter_code",
+          "callee": "oauth_verifiers.pop",
+          "lineNumber": 163
+        },
+        {
+          "caller": "exchange_openrouter_code",
+          "callee": "HTTPException",
+          "lineNumber": 165
+        },
+        {
+          "caller": "exchange_openrouter_code",
+          "callee": "httpx.AsyncClient",
+          "lineNumber": 167
+        },
+        {
+          "caller": "exchange_openrouter_code",
+          "callee": "client.post",
+          "lineNumber": 168
+        },
+        {
+          "caller": "exchange_openrouter_code",
+          "callee": "HTTPException",
+          "lineNumber": 177
+        },
+        {
+          "caller": "exchange_openrouter_code",
+          "callee": "response.json().get",
+          "lineNumber": 178
+        },
+        {
+          "caller": "exchange_openrouter_code",
+          "callee": "response.json",
+          "lineNumber": 178
+        },
+        {
+          "caller": "exchange_openrouter_code",
+          "callee": "HTTPException",
+          "lineNumber": 180
+        },
+        {
+          "caller": "exchange_openrouter_code",
+          "callee": "vault.set",
+          "lineNumber": 181
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.put",
+          "lineNumber": 183
+        },
+        {
+          "caller": "set_credential",
+          "callee": "HTTPException",
+          "lineNumber": 186
+        },
+        {
+          "caller": "set_credential",
+          "callee": "vault.set",
+          "lineNumber": 187
+        },
+        {
+          "caller": "set_credential",
+          "callee": "Response",
+          "lineNumber": 188
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.delete",
+          "lineNumber": 190
+        },
+        {
+          "caller": "remove_credential",
+          "callee": "HTTPException",
+          "lineNumber": 193
+        },
+        {
+          "caller": "remove_credential",
+          "callee": "vault.remove",
+          "lineNumber": 194
+        },
+        {
+          "caller": "remove_credential",
+          "callee": "Response",
+          "lineNumber": 195
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 197
+        },
+        {
+          "caller": "create_run",
+          "callee": "runs.create",
+          "lineNumber": 199
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 201
+        },
+        {
+          "caller": "get_run",
+          "callee": "runs.get",
+          "lineNumber": 204
+        },
+        {
+          "caller": "get_run",
+          "callee": "HTTPException",
+          "lineNumber": 206
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 208
+        },
+        {
+          "caller": "run_events",
+          "callee": "runs.get",
+          "lineNumber": 211
+        },
+        {
+          "caller": "run_events",
+          "callee": "HTTPException",
+          "lineNumber": 213
+        },
+        {
+          "caller": "stream",
+          "callee": "runs.events",
+          "lineNumber": 216
+        },
+        {
+          "caller": "stream",
+          "callee": "json.dumps",
+          "lineNumber": 217
+        },
+        {
+          "caller": "stream",
+          "callee": "event.model_dump",
+          "lineNumber": 217
+        },
+        {
+          "caller": "run_events",
+          "callee": "StreamingResponse",
+          "lineNumber": 219
+        },
+        {
+          "caller": "run_events",
+          "callee": "stream",
+          "lineNumber": 219
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.delete",
+          "lineNumber": 221
+        },
+        {
+          "caller": "cancel_run",
+          "callee": "runs.cancel",
+          "lineNumber": 224
+        },
+        {
+          "caller": "cancel_run",
+          "callee": "HTTPException",
+          "lineNumber": 226
+        },
+        {
+          "caller": "create_app",
+          "callee": "Path",
+          "lineNumber": 228
+        },
+        {
+          "caller": "create_app",
+          "callee": "frontend_dist.is_dir",
+          "lineNumber": 229
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.mount",
+          "lineNumber": 230
+        },
+        {
+          "caller": "create_app",
+          "callee": "StaticFiles",
+          "lineNumber": 230
+        }
+      ],
+      "metrics": {
+        "importCount": 5,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "backend/app/providers.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 221,
+      "nonEmptyLines": 184,
+      "functions": [
+        {
+          "name": "build_provider_registry",
+          "startLine": 206,
+          "endLine": 221,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "ProviderAdapter",
+          "startLine": 12,
+          "endLine": 28,
+          "methods": [
+            "list_models",
+            "stream"
+          ],
+          "properties": [
+            "id",
+            "label"
+          ]
+        },
+        {
+          "name": "OpenAICompatibleAdapter",
+          "startLine": 31,
+          "endLine": 65,
+          "methods": [
+            "__init__",
+            "_client",
+            "list_models",
+            "stream"
+          ],
+          "properties": []
+        },
+        {
+          "name": "OllamaAdapter",
+          "startLine": 68,
+          "endLine": 108,
+          "methods": [
+            "_client",
+            "list_models",
+            "stream"
+          ],
+          "properties": []
+        },
+        {
+          "name": "AnthropicAdapter",
+          "startLine": 111,
+          "endLine": 141,
+          "methods": [
+            "list_models",
+            "stream"
+          ],
+          "properties": []
+        },
+        {
+          "name": "GeminiAdapter",
+          "startLine": 144,
+          "endLine": 179,
+          "methods": [
+            "_client",
+            "list_models",
+            "stream"
+          ],
+          "properties": []
+        },
+        {
+          "name": "ProviderRegistry",
+          "startLine": 182,
+          "endLine": 203,
+          "methods": [
+            "__init__",
+            "__getitem__",
+            "discover_models"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "ProviderAdapter",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "OpenAICompatibleAdapter",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "OllamaAdapter",
+          "line": 68,
+          "isDefault": false
+        },
+        {
+          "name": "AnthropicAdapter",
+          "line": 111,
+          "isDefault": false
+        },
+        {
+          "name": "GeminiAdapter",
+          "line": 144,
+          "isDefault": false
+        },
+        {
+          "name": "ProviderRegistry",
+          "line": 182,
+          "isDefault": false
+        },
+        {
+          "name": "build_provider_registry",
+          "line": 206,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_client",
+          "callee": "AsyncOpenAI",
+          "lineNumber": 38
+        },
+        {
+          "caller": "list_models",
+          "callee": "self._client(api_key).models.list",
+          "lineNumber": 41
+        },
+        {
+          "caller": "list_models",
+          "callee": "self._client",
+          "lineNumber": 41
+        },
+        {
+          "caller": "list_models",
+          "callee": "sorted",
+          "lineNumber": 42
+        },
+        {
+          "caller": "list_models",
+          "callee": "ModelDescriptor",
+          "lineNumber": 43
+        },
+        {
+          "caller": "stream",
+          "callee": "self._client(api_key).chat.completions.create",
+          "lineNumber": 54
+        },
+        {
+          "caller": "stream",
+          "callee": "self._client",
+          "lineNumber": 54
+        },
+        {
+          "caller": "stream",
+          "callee": "message.model_dump",
+          "lineNumber": 56
+        },
+        {
+          "caller": "_client",
+          "callee": "AsyncClient",
+          "lineNumber": 76
+        },
+        {
+          "caller": "_client",
+          "callee": "os.getenv",
+          "lineNumber": 76
+        },
+        {
+          "caller": "list_models",
+          "callee": "self._client(api_key).list",
+          "lineNumber": 79
+        },
+        {
+          "caller": "list_models",
+          "callee": "self._client",
+          "lineNumber": 79
+        },
+        {
+          "caller": "list_models",
+          "callee": "hasattr",
+          "lineNumber": 80
+        },
+        {
+          "caller": "list_models",
+          "callee": "response.get",
+          "lineNumber": 80
+        },
+        {
+          "caller": "list_models",
+          "callee": "ModelDescriptor",
+          "lineNumber": 82
+        },
+        {
+          "caller": "list_models",
+          "callee": "getattr",
+          "lineNumber": 82
+        },
+        {
+          "caller": "stream",
+          "callee": "self._client(api_key).chat",
+          "lineNumber": 93
+        },
+        {
+          "caller": "stream",
+          "callee": "self._client",
+          "lineNumber": 93
+        },
+        {
+          "caller": "stream",
+          "callee": "message.model_dump",
+          "lineNumber": 95
+        },
+        {
+          "caller": "stream",
+          "callee": "hasattr",
+          "lineNumber": 101
+        },
+        {
+          "caller": "stream",
+          "callee": "hasattr",
+          "lineNumber": 102
+        },
+        {
+          "caller": "stream",
+          "callee": "message.get",
+          "lineNumber": 102
+        },
+        {
+          "caller": "stream",
+          "callee": "response.aclose",
+          "lineNumber": 108
+        },
+        {
+          "caller": "list_models",
+          "callee": "AsyncAnthropic(api_key=api_key).models.list",
+          "lineNumber": 117
+        },
+        {
+          "caller": "list_models",
+          "callee": "AsyncAnthropic",
+          "lineNumber": 117
+        },
+        {
+          "caller": "list_models",
+          "callee": "ModelDescriptor",
+          "lineNumber": 118
+        },
+        {
+          "caller": "stream",
+          "callee": "\"\\n\\n\".join",
+          "lineNumber": 129
+        },
+        {
+          "caller": "stream",
+          "callee": "message.model_dump",
+          "lineNumber": 130
+        },
+        {
+          "caller": "stream",
+          "callee": "AsyncAnthropic(api_key=api_key).messages.stream",
+          "lineNumber": 139
+        },
+        {
+          "caller": "stream",
+          "callee": "AsyncAnthropic",
+          "lineNumber": 139
+        },
+        {
+          "caller": "_client",
+          "callee": "genai.Client",
+          "lineNumber": 151
+        },
+        {
+          "caller": "list_models",
+          "callee": "self._client(api_key).aio.models.list",
+          "lineNumber": 154
+        },
+        {
+          "caller": "list_models",
+          "callee": "self._client",
+          "lineNumber": 154
+        },
+        {
+          "caller": "list_models",
+          "callee": "ModelDescriptor",
+          "lineNumber": 156
+        },
+        {
+          "caller": "list_models",
+          "callee": "item.name.removeprefix",
+          "lineNumber": 156
+        },
+        {
+          "caller": "stream",
+          "callee": "\"\\n\\n\".join",
+          "lineNumber": 168
+        },
+        {
+          "caller": "stream",
+          "callee": "self._client(api_key).aio.models.generate_content_stream",
+          "lineNumber": 169
+        },
+        {
+          "caller": "stream",
+          "callee": "self._client",
+          "lineNumber": 169
+        },
+        {
+          "caller": "stream",
+          "callee": "response.aclose",
+          "lineNumber": 179
+        },
+        {
+          "caller": "discover",
+          "callee": "ProviderDiscovery",
+          "lineNumber": 194
+        },
+        {
+          "caller": "discover",
+          "callee": "adapter.list_models",
+          "lineNumber": 195
+        },
+        {
+          "caller": "discover",
+          "callee": "credential",
+          "lineNumber": 195
+        },
+        {
+          "caller": "discover",
+          "callee": "ProviderDiscovery",
+          "lineNumber": 198
+        },
+        {
+          "caller": "discover",
+          "callee": "str",
+          "lineNumber": 198
+        },
+        {
+          "caller": "discover_models",
+          "callee": "asyncio.gather",
+          "lineNumber": 200
+        },
+        {
+          "caller": "discover_models",
+          "callee": "discover",
+          "lineNumber": 201
+        },
+        {
+          "caller": "discover_models",
+          "callee": "self.adapters.items",
+          "lineNumber": 201
+        },
+        {
+          "caller": "build_provider_registry",
+          "callee": "OllamaAdapter",
+          "lineNumber": 208
+        },
+        {
+          "caller": "build_provider_registry",
+          "callee": "OpenAICompatibleAdapter",
+          "lineNumber": 209
+        },
+        {
+          "caller": "build_provider_registry",
+          "callee": "AnthropicAdapter",
+          "lineNumber": 210
+        },
+        {
+          "caller": "build_provider_registry",
+          "callee": "GeminiAdapter",
+          "lineNumber": 211
+        },
+        {
+          "caller": "build_provider_registry",
+          "callee": "OpenAICompatibleAdapter",
+          "lineNumber": 212
+        },
+        {
+          "caller": "build_provider_registry",
+          "callee": "OpenAICompatibleAdapter",
+          "lineNumber": 215
+        },
+        {
+          "caller": "build_provider_registry",
+          "callee": "OpenAICompatibleAdapter",
+          "lineNumber": 216
+        },
+        {
+          "caller": "build_provider_registry",
+          "callee": "os.getenv",
+          "lineNumber": 219
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 7,
+        "functionCount": 1,
+        "classCount": 6
+      }
+    },
+    {
+      "path": "backend/app/runs.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 143,
+      "nonEmptyLines": 129,
+      "classes": [
+        {
+          "name": "RunState",
+          "startLine": 16,
+          "endLine": 20,
+          "methods": [],
+          "properties": [
+            "snapshot",
+            "events",
+            "changed",
+            "cancel"
+          ]
+        },
+        {
+          "name": "RunManager",
+          "startLine": 23,
+          "endLine": 143,
+          "methods": [
+            "__init__",
+            "create",
+            "get",
+            "cancel",
+            "events",
+            "_execute",
+            "_echo",
+            "_emit",
+            "_state"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "RunState",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "RunManager",
+          "line": 23,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "threading.RLock",
+          "lineNumber": 26
+        },
+        {
+          "caller": "__init__",
+          "callee": "set",
+          "lineNumber": 30
+        },
+        {
+          "caller": "create",
+          "callee": "str",
+          "lineNumber": 33
+        },
+        {
+          "caller": "create",
+          "callee": "uuid.uuid4",
+          "lineNumber": 33
+        },
+        {
+          "caller": "create",
+          "callee": "RunSnapshot",
+          "lineNumber": 34
+        },
+        {
+          "caller": "create",
+          "callee": "utc_now",
+          "lineNumber": 39
+        },
+        {
+          "caller": "create",
+          "callee": "RunState",
+          "lineNumber": 41
+        },
+        {
+          "caller": "create",
+          "callee": "asyncio.create_task",
+          "lineNumber": 46
+        },
+        {
+          "caller": "create",
+          "callee": "self._execute",
+          "lineNumber": 46
+        },
+        {
+          "caller": "create",
+          "callee": "self._tasks.add",
+          "lineNumber": 47
+        },
+        {
+          "caller": "create",
+          "callee": "task.add_done_callback",
+          "lineNumber": 48
+        },
+        {
+          "caller": "get",
+          "callee": "self._state",
+          "lineNumber": 52
+        },
+        {
+          "caller": "get",
+          "callee": "state.snapshot.model_copy",
+          "lineNumber": 54
+        },
+        {
+          "caller": "cancel",
+          "callee": "self._state",
+          "lineNumber": 57
+        },
+        {
+          "caller": "cancel",
+          "callee": "state.cancel.set",
+          "lineNumber": 58
+        },
+        {
+          "caller": "cancel",
+          "callee": "state.snapshot.model_copy",
+          "lineNumber": 60
+        },
+        {
+          "caller": "events",
+          "callee": "self._state",
+          "lineNumber": 63
+        },
+        {
+          "caller": "events",
+          "callee": "len",
+          "lineNumber": 66
+        },
+        {
+          "caller": "events",
+          "callee": "state.changed.clear",
+          "lineNumber": 72
+        },
+        {
+          "caller": "events",
+          "callee": "state.changed.wait",
+          "lineNumber": 73
+        },
+        {
+          "caller": "_execute",
+          "callee": "utc_now",
+          "lineNumber": 78
+        },
+        {
+          "caller": "_execute",
+          "callee": "self._emit",
+          "lineNumber": 79
+        },
+        {
+          "caller": "_execute",
+          "callee": "self._echo",
+          "lineNumber": 83
+        },
+        {
+          "caller": "_execute",
+          "callee": "ValueError",
+          "lineNumber": 88
+        },
+        {
+          "caller": "_execute",
+          "callee": "adapter.stream",
+          "lineNumber": 89
+        },
+        {
+          "caller": "_execute",
+          "callee": "self._vault.get",
+          "lineNumber": 90
+        },
+        {
+          "caller": "_execute",
+          "callee": "state.cancel.is_set",
+          "lineNumber": 96
+        },
+        {
+          "caller": "_execute",
+          "callee": "utc_now",
+          "lineNumber": 99
+        },
+        {
+          "caller": "_execute",
+          "callee": "self._emit",
+          "lineNumber": 100
+        },
+        {
+          "caller": "_execute",
+          "callee": "self._emit",
+          "lineNumber": 104
+        },
+        {
+          "caller": "_execute",
+          "callee": "asyncio.sleep",
+          "lineNumber": 105
+        },
+        {
+          "caller": "_execute",
+          "callee": "utc_now",
+          "lineNumber": 108
+        },
+        {
+          "caller": "_execute",
+          "callee": "self._store.add_message",
+          "lineNumber": 111
+        },
+        {
+          "caller": "_execute",
+          "callee": "self._emit",
+          "lineNumber": 116
+        },
+        {
+          "caller": "_execute",
+          "callee": "str",
+          "lineNumber": 120
+        },
+        {
+          "caller": "_execute",
+          "callee": "utc_now",
+          "lineNumber": 121
+        },
+        {
+          "caller": "_execute",
+          "callee": "self._emit",
+          "lineNumber": 122
+        },
+        {
+          "caller": "_execute",
+          "callee": "str",
+          "lineNumber": 122
+        },
+        {
+          "caller": "_execute",
+          "callee": "stream.aclose",
+          "lineNumber": 125
+        },
+        {
+          "caller": "_echo",
+          "callee": "enumerate",
+          "lineNumber": 129
+        },
+        {
+          "caller": "_echo",
+          "callee": "content.split",
+          "lineNumber": 129
+        },
+        {
+          "caller": "_echo",
+          "callee": "asyncio.sleep",
+          "lineNumber": 131
+        },
+        {
+          "caller": "_emit",
+          "callee": "state.events.append",
+          "lineNumber": 135
+        },
+        {
+          "caller": "_emit",
+          "callee": "RunEvent",
+          "lineNumber": 135
+        },
+        {
+          "caller": "_emit",
+          "callee": "state.changed.set",
+          "lineNumber": 136
+        },
+        {
+          "caller": "_state",
+          "callee": "self._runs.get",
+          "lineNumber": 140
+        },
+        {
+          "caller": "_state",
+          "callee": "KeyError",
+          "lineNumber": 142
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "backend/app/sessions.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 45,
+      "nonEmptyLines": 35,
+      "classes": [
+        {
+          "name": "SessionVault",
+          "startLine": 19,
+          "endLine": 45,
+          "methods": [
+            "__init__",
+            "new_id",
+            "set",
+            "remove",
+            "get",
+            "source"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "SessionVault",
+          "line": 19,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "threading.RLock",
+          "lineNumber": 22
+        },
+        {
+          "caller": "new_id",
+          "callee": "uuid.uuid4",
+          "lineNumber": 26
+        },
+        {
+          "caller": "set",
+          "callee": "self._values.setdefault",
+          "lineNumber": 30
+        },
+        {
+          "caller": "remove",
+          "callee": "self._values.get(session_id, {}).pop",
+          "lineNumber": 34
+        },
+        {
+          "caller": "remove",
+          "callee": "self._values.get",
+          "lineNumber": 34
+        },
+        {
+          "caller": "get",
+          "callee": "self._values.get(session_id, {}).get",
+          "lineNumber": 38
+        },
+        {
+          "caller": "get",
+          "callee": "self._values.get",
+          "lineNumber": 38
+        },
+        {
+          "caller": "get",
+          "callee": "os.getenv",
+          "lineNumber": 39
+        },
+        {
+          "caller": "source",
+          "callee": "self._values.get(session_id, {}).get",
+          "lineNumber": 43
+        },
+        {
+          "caller": "source",
+          "callee": "self._values.get",
+          "lineNumber": 43
+        },
+        {
+          "caller": "source",
+          "callee": "os.getenv",
+          "lineNumber": 45
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/app/store.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 105,
+      "nonEmptyLines": 94,
+      "classes": [
+        {
+          "name": "Store",
+          "startLine": 43,
+          "endLine": 105,
+          "methods": [
+            "__init__",
+            "create_conversation",
+            "list_conversations",
+            "get_conversation",
+            "add_message",
+            "_conversation"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "Store",
+          "line": 43,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "Path(database_url).parent.mkdir",
+          "lineNumber": 46
+        },
+        {
+          "caller": "__init__",
+          "callee": "Path",
+          "lineNumber": 46
+        },
+        {
+          "caller": "__init__",
+          "callee": "sqlite3.connect",
+          "lineNumber": 47
+        },
+        {
+          "caller": "__init__",
+          "callee": "threading.RLock",
+          "lineNumber": 49
+        },
+        {
+          "caller": "__init__",
+          "callee": "self.connection.executescript",
+          "lineNumber": 51
+        },
+        {
+          "caller": "create_conversation",
+          "callee": "str",
+          "lineNumber": 54
+        },
+        {
+          "caller": "create_conversation",
+          "callee": "uuid.uuid4",
+          "lineNumber": 54
+        },
+        {
+          "caller": "create_conversation",
+          "callee": "utc_now",
+          "lineNumber": 54
+        },
+        {
+          "caller": "create_conversation",
+          "callee": "self.connection.execute",
+          "lineNumber": 56
+        },
+        {
+          "caller": "create_conversation",
+          "callee": "self.get_conversation",
+          "lineNumber": 60
+        },
+        {
+          "caller": "list_conversations",
+          "callee": "self.connection.execute(\n                \"SELECT * FROM conversations ORDER BY updated_at DESC\"\n            ).fetchall",
+          "lineNumber": 64
+        },
+        {
+          "caller": "list_conversations",
+          "callee": "self.connection.execute",
+          "lineNumber": 64
+        },
+        {
+          "caller": "list_conversations",
+          "callee": "self._conversation",
+          "lineNumber": 67
+        },
+        {
+          "caller": "get_conversation",
+          "callee": "self.connection.execute(\n                \"SELECT * FROM conversations WHERE id = ?\", (conversation_id,)\n            ).fetchone",
+          "lineNumber": 71
+        },
+        {
+          "caller": "get_conversation",
+          "callee": "self.connection.execute",
+          "lineNumber": 71
+        },
+        {
+          "caller": "get_conversation",
+          "callee": "KeyError",
+          "lineNumber": 75
+        },
+        {
+          "caller": "get_conversation",
+          "callee": "self.connection.execute(\n                \"SELECT * FROM messages WHERE conversation_id = ? ORDER BY position\",\n                (conversation_id,),\n            ).fetchall",
+          "lineNumber": 76
+        },
+        {
+          "caller": "get_conversation",
+          "callee": "self.connection.execute",
+          "lineNumber": 76
+        },
+        {
+          "caller": "get_conversation",
+          "callee": "self._conversation",
+          "lineNumber": 80
+        },
+        {
+          "caller": "get_conversation",
+          "callee": "Message",
+          "lineNumber": 80
+        },
+        {
+          "caller": "get_conversation",
+          "callee": "dict",
+          "lineNumber": 80
+        },
+        {
+          "caller": "add_message",
+          "callee": "str",
+          "lineNumber": 83
+        },
+        {
+          "caller": "add_message",
+          "callee": "uuid.uuid4",
+          "lineNumber": 83
+        },
+        {
+          "caller": "add_message",
+          "callee": "utc_now",
+          "lineNumber": 83
+        },
+        {
+          "caller": "add_message",
+          "callee": "self.connection.execute(\n                \"SELECT 1 FROM conversations WHERE id = ?\", (conversation_id,)\n            ).fetchone",
+          "lineNumber": 85
+        },
+        {
+          "caller": "add_message",
+          "callee": "self.connection.execute",
+          "lineNumber": 85
+        },
+        {
+          "caller": "add_message",
+          "callee": "KeyError",
+          "lineNumber": 89
+        },
+        {
+          "caller": "add_message",
+          "callee": "self.connection.execute(\n                \"SELECT COALESCE(MAX(position), -1) + 1 FROM messages WHERE conversation_id = ?\",\n                (conversation_id,),\n            ).fetchone",
+          "lineNumber": 90
+        },
+        {
+          "caller": "add_message",
+          "callee": "self.connection.execute",
+          "lineNumber": 90
+        },
+        {
+          "caller": "add_message",
+          "callee": "self.connection.execute",
+          "lineNumber": 94
+        },
+        {
+          "caller": "add_message",
+          "callee": "self.connection.execute",
+          "lineNumber": 98
+        },
+        {
+          "caller": "add_message",
+          "callee": "Message",
+          "lineNumber": 101
+        },
+        {
+          "caller": "_conversation",
+          "callee": "Conversation",
+          "lineNumber": 105
+        },
+        {
+          "caller": "_conversation",
+          "callee": "dict",
+          "lineNumber": 105
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "scripts/generate_api_types.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 17,
+      "nonEmptyLines": 11,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "tests/test_provider_adapters.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 50,
+      "nonEmptyLines": 37,
+      "functions": [
+        {
+          "name": "test_registry_contains_all_phase_one_providers",
+          "startLine": 9,
+          "endLine": 18,
+          "params": []
+        },
+        {
+          "name": "test_model_discovery_is_concurrent_and_degrades_per_provider",
+          "startLine": 21,
+          "endLine": 44,
+          "params": []
+        },
+        {
+          "name": "test_echo_like_adapter_contract_accepts_normalized_messages",
+          "startLine": 47,
+          "endLine": 50,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "test_registry_contains_all_phase_one_providers",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "test_model_discovery_is_concurrent_and_degrades_per_provider",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "test_echo_like_adapter_contract_accepts_normalized_messages",
+          "line": 47,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "test_registry_contains_all_phase_one_providers",
+          "callee": "set",
+          "lineNumber": 10
+        },
+        {
+          "caller": "test_registry_contains_all_phase_one_providers",
+          "callee": "build_provider_registry",
+          "lineNumber": 10
+        },
+        {
+          "caller": "list_models",
+          "callee": "asyncio.sleep",
+          "lineNumber": 27
+        },
+        {
+          "caller": "list_models",
+          "callee": "ConnectionError",
+          "lineNumber": 29
+        },
+        {
+          "caller": "list_models",
+          "callee": "ModelDescriptor",
+          "lineNumber": 30
+        },
+        {
+          "caller": "test_model_discovery_is_concurrent_and_degrades_per_provider",
+          "callee": "ProviderRegistry",
+          "lineNumber": 35
+        },
+        {
+          "caller": "test_model_discovery_is_concurrent_and_degrades_per_provider",
+          "callee": "StubAdapter",
+          "lineNumber": 36
+        },
+        {
+          "caller": "test_model_discovery_is_concurrent_and_degrades_per_provider",
+          "callee": "StubAdapter",
+          "lineNumber": 36
+        },
+        {
+          "caller": "test_model_discovery_is_concurrent_and_degrades_per_provider",
+          "callee": "asyncio.run",
+          "lineNumber": 39
+        },
+        {
+          "caller": "test_model_discovery_is_concurrent_and_degrades_per_provider",
+          "callee": "registry.discover_models",
+          "lineNumber": 39
+        },
+        {
+          "caller": "test_echo_like_adapter_contract_accepts_normalized_messages",
+          "callee": "next",
+          "lineNumber": 48
+        },
+        {
+          "caller": "test_echo_like_adapter_contract_accepts_normalized_messages",
+          "callee": "iter",
+          "lineNumber": 48
+        },
+        {
+          "caller": "test_echo_like_adapter_contract_accepts_normalized_messages",
+          "callee": "build_provider_registry().values",
+          "lineNumber": 48
+        },
+        {
+          "caller": "test_echo_like_adapter_contract_accepts_normalized_messages",
+          "callee": "build_provider_registry",
+          "lineNumber": 48
+        },
+        {
+          "caller": "test_echo_like_adapter_contract_accepts_normalized_messages",
+          "callee": "isinstance",
+          "lineNumber": 49
+        },
+        {
+          "caller": "test_echo_like_adapter_contract_accepts_normalized_messages",
+          "callee": "ChatMessage",
+          "lineNumber": 50
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    }
+  ]
+}

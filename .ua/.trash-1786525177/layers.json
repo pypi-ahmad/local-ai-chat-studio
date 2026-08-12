@@ -1,0 +1,160 @@
+[
+  {
+    "id": "layer:ui",
+    "name": "User Interface",
+    "description": "React and Streamlit workspace surfaces for chat, provider management, memory, settings, and model comparison.",
+    "nodeIds": [
+      "file:frontend/src/App.tsx",
+      "file:frontend/src/components/ui/avatar.tsx",
+      "file:frontend/src/components/ui/badge.tsx",
+      "file:frontend/src/components/ui/button.tsx",
+      "file:frontend/src/components/ui/card.tsx",
+      "file:frontend/src/components/ui/dialog.tsx",
+      "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "file:frontend/src/components/ui/field.tsx",
+      "file:frontend/src/components/ui/input.tsx",
+      "file:frontend/src/components/ui/label.tsx",
+      "file:frontend/src/components/ui/scroll-area.tsx",
+      "file:frontend/src/components/ui/select.tsx",
+      "file:frontend/src/components/ui/separator.tsx",
+      "file:frontend/src/components/ui/sheet.tsx",
+      "file:frontend/src/components/ui/sidebar.tsx",
+      "file:frontend/src/components/ui/skeleton.tsx",
+      "file:frontend/src/components/ui/switch.tsx",
+      "file:frontend/src/components/ui/table.tsx",
+      "file:frontend/src/components/ui/tabs.tsx",
+      "file:frontend/src/components/ui/textarea.tsx",
+      "file:frontend/src/components/ui/tooltip.tsx",
+      "file:frontend/src/hooks/use-mobile.ts",
+      "file:frontend/src/lib/utils.ts",
+      "file:app.py",
+      "file:pages/1_Memory.py",
+      "file:pages/2_Settings.py",
+      "file:pages/4_Compare.py",
+      "file:frontend/index.html",
+      "file:frontend/src/App.css",
+      "file:frontend/src/ErrorBoundary.tsx",
+      "file:frontend/src/index.css",
+      "file:frontend/src/main.tsx",
+      "file:pages/3_Providers.py"
+    ]
+  },
+  {
+    "id": "layer:api",
+    "name": "API Layer",
+    "description": "FastAPI application entry points and HTTP endpoint composition for the local AI workspace.",
+    "nodeIds": [
+      "file:backend/app/cli.py",
+      "file:backend/app/main.py",
+      "file:backend/__init__.py",
+      "file:backend/app/__init__.py"
+    ]
+  },
+  {
+    "id": "layer:service",
+    "name": "AI Services",
+    "description": "Provider adapters, streaming orchestration, retrieval, personalization, and frontend API access that implement the studio workflows.",
+    "nodeIds": [
+      "file:src/catalog.py",
+      "file:src/files.py",
+      "file:src/jobs.py",
+      "file:src/memory.py",
+      "file:src/model_labels.py",
+      "file:src/ollama_client.py",
+      "file:src/orchestrator.py",
+      "file:src/personalization.py",
+      "file:src/providers.py",
+      "file:src/rag.py",
+      "file:backend/app/providers.py",
+      "file:backend/app/runs.py",
+      "file:backend/app/sessions.py",
+      "file:scripts/generate_api_types.py",
+      "file:frontend/src/api/client.ts"
+    ]
+  },
+  {
+    "id": "layer:data",
+    "name": "Data Layer",
+    "description": "SQLite conversation persistence and local storage path management for the application tracks.",
+    "nodeIds": [
+      "file:src/chat_store.py",
+      "file:src/config.py",
+      "file:backend/app/store.py"
+    ]
+  },
+  {
+    "id": "layer:types",
+    "name": "Contract Types",
+    "description": "Pydantic backend contracts and generated TypeScript OpenAPI declarations shared across the API boundary.",
+    "nodeIds": [
+      "file:backend/app/contracts.py",
+      "file:frontend/src/api/schema.ts"
+    ]
+  },
+  {
+    "id": "layer:test",
+    "name": "Test Layer",
+    "description": "Frontend Vitest and backend pytest checks plus their shared test setup.",
+    "nodeIds": [
+      "file:frontend/src/App.test.tsx",
+      "file:tests/test_provider_adapters.py",
+      "file:frontend/src/test/setup.ts",
+      "file:tests/conftest.py",
+      "file:tests/test_api_contract.py"
+    ]
+  },
+  {
+    "id": "layer:config",
+    "name": "Configuration",
+    "description": "Build, runtime, linting, Streamlit, and analysis settings for the Python and React application tracks.",
+    "nodeIds": [
+      "config:pyproject.toml",
+      "config:frontend/.oxlintrc.json",
+      "config:frontend/components.json",
+      "config:frontend/package.json",
+      "config:frontend/tsconfig.app.json",
+      "config:frontend/tsconfig.json",
+      "config:frontend/tsconfig.node.json",
+      "file:.python-version",
+      "config:.streamlit/config.toml",
+      "file:.ua/.understandignore",
+      "config:.ua/config.json",
+      "file:frontend/vite.config.ts",
+      "file:frontend/vitest.config.ts"
+    ]
+  },
+  {
+    "id": "layer:documentation",
+    "name": "Documentation",
+    "description": "Project guides, contribution materials, issue templates, and the bundled documentation viewer and tutorial.",
+    "nodeIds": [
+      "document:CHANGELOG.md",
+      "document:CODE_OF_CONDUCT.md",
+      "document:CODE_TUTORIAL.md",
+      "document:CONTRIBUTING.md",
+      "document:DATASET.md",
+      "document:README.md",
+      "document:SECURITY.md",
+      "document:USER_GUIDE.md",
+      "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "document:frontend/README.md",
+      "document:.github/ISSUE_TEMPLATE/bug_report.md",
+      "document:.github/ISSUE_TEMPLATE/feature_request.md",
+      "document:.github/pull_request_template.md",
+      "file:docs/site/index.html",
+      "file:docs/tutorial/index.html",
+      "file:docs/tutorial/tutorial.css",
+      "file:docs/tutorial/tutorial.js",
+      "document:tasks/plan.md",
+      "document:tasks/todo.md"
+    ]
+  },
+  {
+    "id": "layer:ci-cd",
+    "name": "CI/CD",
+    "description": "GitHub Actions automation that validates both the Python backend and React frontend.",
+    "nodeIds": [
+      "pipeline:.github/workflows/ci.yml"
+    ]
+  }
+]

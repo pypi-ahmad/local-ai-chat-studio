@@ -1,0 +1,1575 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/orchestrator.py",
+      "type": "file",
+      "name": "orchestrator.py",
+      "filePath": "src/orchestrator.py",
+      "summary": "Assembles prompt messages from profile, memories, retrieval context, history, and attachments.",
+      "tags": [
+        "prompting",
+        "orchestration",
+        "retrieval",
+        "chat-service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/orchestrator.py:build_messages",
+      "type": "function",
+      "name": "build_messages",
+      "filePath": "src/orchestrator.py",
+      "lineRange": [
+        17,
+        80
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through build messages.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/orchestrator.py:after_turn_indexing",
+      "type": "function",
+      "name": "after_turn_indexing",
+      "filePath": "src/orchestrator.py",
+      "lineRange": [
+        83,
+        92
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through after turn indexing.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/personalization.py",
+      "type": "file",
+      "name": "personalization.py",
+      "filePath": "src/personalization.py",
+      "summary": "Maintains a compact user profile derived from conversations and feedback.",
+      "tags": [
+        "personalization",
+        "memory",
+        "profile",
+        "ai-service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/personalization.py:get_profile",
+      "type": "function",
+      "name": "get_profile",
+      "filePath": "src/personalization.py",
+      "lineRange": [
+        24,
+        25
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through get profile.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/personalization.py:note_conversation_done",
+      "type": "function",
+      "name": "note_conversation_done",
+      "filePath": "src/personalization.py",
+      "lineRange": [
+        28,
+        35
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through note conversation done.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/personalization.py:rebuild_profile",
+      "type": "function",
+      "name": "rebuild_profile",
+      "filePath": "src/personalization.py",
+      "lineRange": [
+        38,
+        66
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through rebuild profile.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/providers.py",
+      "type": "file",
+      "name": "providers.py",
+      "filePath": "src/providers.py",
+      "summary": "Manages BYOK provider credentials, remote model discovery, streaming chat, and OpenRouter authorization.",
+      "tags": [
+        "providers",
+        "byok",
+        "credentials",
+        "streaming"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:src/providers.py:ApiModel",
+      "type": "class",
+      "name": "ApiModel",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        86,
+        113
+      ],
+      "summary": "Represents ApiModel data and behavior used by src/providers.py.",
+      "tags": [
+        "data-model",
+        "class",
+        "application-logic"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:_get_secret",
+      "type": "function",
+      "name": "_get_secret",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        132,
+        134
+      ],
+      "summary": "Internal helper that supports provider integration through get secret.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:_set_secret",
+      "type": "function",
+      "name": "_set_secret",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        137,
+        142
+      ],
+      "summary": "Internal helper that supports provider integration through set secret.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:get_api_key",
+      "type": "function",
+      "name": "get_api_key",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        145,
+        146
+      ],
+      "summary": "Provides an operation that supports provider integration through get api key.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:key_source",
+      "type": "function",
+      "name": "key_source",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        149,
+        155
+      ],
+      "summary": "Provides an operation that supports provider integration through key source.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:set_api_key",
+      "type": "function",
+      "name": "set_api_key",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        158,
+        159
+      ],
+      "summary": "Provides an operation that supports provider integration through set api key.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:remove_api_key",
+      "type": "function",
+      "name": "remove_api_key",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        162,
+        163
+      ],
+      "summary": "Provides an operation that supports provider integration through remove api key.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:configured_providers",
+      "type": "function",
+      "name": "configured_providers",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        166,
+        167
+      ],
+      "summary": "Provides an operation that supports provider integration through configured providers.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:clear_all_secrets",
+      "type": "function",
+      "name": "clear_all_secrets",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        170,
+        173
+      ],
+      "summary": "Provides an operation that supports provider integration through clear all secrets.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:get_ollama_host",
+      "type": "function",
+      "name": "get_ollama_host",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        180,
+        181
+      ],
+      "summary": "Provides an operation that supports provider integration through get ollama host.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:get_ollama_key",
+      "type": "function",
+      "name": "get_ollama_key",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        184,
+        185
+      ],
+      "summary": "Provides an operation that supports provider integration through get ollama key.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:ollama_key_source",
+      "type": "function",
+      "name": "ollama_key_source",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        188,
+        193
+      ],
+      "summary": "Provides an operation that supports provider integration through ollama key source.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:set_ollama_config",
+      "type": "function",
+      "name": "set_ollama_config",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        196,
+        198
+      ],
+      "summary": "Provides an operation that supports provider integration through set ollama config.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:reset_ollama_config",
+      "type": "function",
+      "name": "reset_ollama_config",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        201,
+        203
+      ],
+      "summary": "Provides an operation that supports provider integration through reset ollama config.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:_excluded",
+      "type": "function",
+      "name": "_excluded",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        208,
+        210
+      ],
+      "summary": "Internal helper that supports provider integration through excluded.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:_vision_by_pattern",
+      "type": "function",
+      "name": "_vision_by_pattern",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        213,
+        215
+      ],
+      "summary": "Internal helper that supports provider integration through vision by pattern.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:list_provider_models",
+      "type": "function",
+      "name": "list_provider_models",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        218,
+        227
+      ],
+      "summary": "Provides an operation that supports provider integration through list provider models.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:_list_anthropic",
+      "type": "function",
+      "name": "_list_anthropic",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        230,
+        237
+      ],
+      "summary": "Internal helper that supports provider integration through list anthropic.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:_list_openrouter",
+      "type": "function",
+      "name": "_list_openrouter",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        240,
+        260
+      ],
+      "summary": "Internal helper that supports provider integration through list openrouter.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:_list_openai_compat",
+      "type": "function",
+      "name": "_list_openai_compat",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        263,
+        274
+      ],
+      "summary": "Internal helper that supports provider integration through list openai compat.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:test_connection",
+      "type": "function",
+      "name": "test_connection",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        277,
+        282
+      ],
+      "summary": "Provides an operation that supports provider integration through test connection.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:stream_chat",
+      "type": "function",
+      "name": "stream_chat",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        287,
+        306
+      ],
+      "summary": "Provides an operation that supports provider integration through stream chat.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:_stream_anthropic",
+      "type": "function",
+      "name": "_stream_anthropic",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        309,
+        350
+      ],
+      "summary": "Internal helper that supports provider integration through stream anthropic.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:_stream_openai_compat",
+      "type": "function",
+      "name": "_stream_openai_compat",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        353,
+        395
+      ],
+      "summary": "Internal helper that supports provider integration through stream openai compat.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:openrouter_auth_url",
+      "type": "function",
+      "name": "openrouter_auth_url",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        403,
+        420
+      ],
+      "summary": "Provides an operation that supports provider integration through openrouter auth url.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/providers.py:openrouter_exchange_code",
+      "type": "function",
+      "name": "openrouter_exchange_code",
+      "filePath": "src/providers.py",
+      "lineRange": [
+        423,
+        442
+      ],
+      "summary": "Provides an operation that supports provider integration through openrouter exchange code.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/rag.py",
+      "type": "file",
+      "name": "rag.py",
+      "filePath": "src/rag.py",
+      "summary": "Stores and queries document, chat-history, and memory vectors in ChromaDB.",
+      "tags": [
+        "rag",
+        "chromadb",
+        "embeddings",
+        "retrieval"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/rag.py:_collection",
+      "type": "function",
+      "name": "_collection",
+      "filePath": "src/rag.py",
+      "lineRange": [
+        21,
+        22
+      ],
+      "summary": "Internal helper that supports retrieval and vector storage through collection.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/rag.py:_embed",
+      "type": "function",
+      "name": "_embed",
+      "filePath": "src/rag.py",
+      "lineRange": [
+        25,
+        26
+      ],
+      "summary": "Internal helper that supports retrieval and vector storage through embed.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/rag.py:index_doc_chunks",
+      "type": "function",
+      "name": "index_doc_chunks",
+      "filePath": "src/rag.py",
+      "lineRange": [
+        31,
+        43
+      ],
+      "summary": "Provides an operation that supports retrieval and vector storage through index doc chunks.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/rag.py:search_docs",
+      "type": "function",
+      "name": "search_docs",
+      "filePath": "src/rag.py",
+      "lineRange": [
+        46,
+        55
+      ],
+      "summary": "Provides an operation that supports retrieval and vector storage through search docs.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/rag.py:conv_has_docs",
+      "type": "function",
+      "name": "conv_has_docs",
+      "filePath": "src/rag.py",
+      "lineRange": [
+        58,
+        60
+      ],
+      "summary": "Provides an operation that supports retrieval and vector storage through conv has docs.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/rag.py:index_history_turn",
+      "type": "function",
+      "name": "index_history_turn",
+      "filePath": "src/rag.py",
+      "lineRange": [
+        65,
+        76
+      ],
+      "summary": "Provides an operation that supports retrieval and vector storage through index history turn.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/rag.py:search_history",
+      "type": "function",
+      "name": "search_history",
+      "filePath": "src/rag.py",
+      "lineRange": [
+        79,
+        91
+      ],
+      "summary": "Provides an operation that supports retrieval and vector storage through search history.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/rag.py:delete_conv_vectors",
+      "type": "function",
+      "name": "delete_conv_vectors",
+      "filePath": "src/rag.py",
+      "lineRange": [
+        94,
+        99
+      ],
+      "summary": "Provides an operation that supports retrieval and vector storage through delete conv vectors.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/rag.py:clear_all_chat_vectors",
+      "type": "function",
+      "name": "clear_all_chat_vectors",
+      "filePath": "src/rag.py",
+      "lineRange": [
+        102,
+        108
+      ],
+      "summary": "Provides an operation that supports retrieval and vector storage through clear all chat vectors.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/rag.py:clear_all_vectors",
+      "type": "function",
+      "name": "clear_all_vectors",
+      "filePath": "src/rag.py",
+      "lineRange": [
+        111,
+        117
+      ],
+      "summary": "Provides an operation that supports retrieval and vector storage through clear all vectors.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/rag.py:search_history_all",
+      "type": "function",
+      "name": "search_history_all",
+      "filePath": "src/rag.py",
+      "lineRange": [
+        120,
+        126
+      ],
+      "summary": "Provides an operation that supports retrieval and vector storage through search history all.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/rag.py:index_memory",
+      "type": "function",
+      "name": "index_memory",
+      "filePath": "src/rag.py",
+      "lineRange": [
+        131,
+        134
+      ],
+      "summary": "Provides an operation that supports retrieval and vector storage through index memory.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/rag.py:similar_memory",
+      "type": "function",
+      "name": "similar_memory",
+      "filePath": "src/rag.py",
+      "lineRange": [
+        137,
+        146
+      ],
+      "summary": "Provides an operation that supports retrieval and vector storage through similar memory.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/rag.py:search_memories",
+      "type": "function",
+      "name": "search_memories",
+      "filePath": "src/rag.py",
+      "lineRange": [
+        149,
+        154
+      ],
+      "summary": "Provides an operation that supports retrieval and vector storage through search memories.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/rag.py:delete_memory_vector",
+      "type": "function",
+      "name": "delete_memory_vector",
+      "filePath": "src/rag.py",
+      "lineRange": [
+        157,
+        161
+      ],
+      "summary": "Provides an operation that supports retrieval and vector storage through delete memory vector.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/rag.py:_flatten",
+      "type": "function",
+      "name": "_flatten",
+      "filePath": "src/rag.py",
+      "lineRange": [
+        166,
+        175
+      ],
+      "summary": "Internal helper that supports retrieval and vector storage through flatten.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/orchestrator.py",
+      "target": "function:src/orchestrator.py:build_messages",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/orchestrator.py",
+      "target": "function:src/orchestrator.py:build_messages",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/orchestrator.py",
+      "target": "function:src/orchestrator.py:after_turn_indexing",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/orchestrator.py",
+      "target": "function:src/orchestrator.py:after_turn_indexing",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/personalization.py",
+      "target": "function:src/personalization.py:get_profile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/personalization.py",
+      "target": "function:src/personalization.py:get_profile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/personalization.py",
+      "target": "function:src/personalization.py:note_conversation_done",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/personalization.py",
+      "target": "function:src/personalization.py:note_conversation_done",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/personalization.py",
+      "target": "function:src/personalization.py:rebuild_profile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/personalization.py",
+      "target": "function:src/personalization.py:rebuild_profile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "class:src/providers.py:ApiModel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "class:src/providers.py:ApiModel",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_get_secret",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_get_secret",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_set_secret",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_set_secret",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:get_api_key",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:get_api_key",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:key_source",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:key_source",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:set_api_key",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:set_api_key",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:remove_api_key",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:remove_api_key",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:configured_providers",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:configured_providers",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:clear_all_secrets",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:clear_all_secrets",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:get_ollama_host",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:get_ollama_host",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:get_ollama_key",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:get_ollama_key",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:ollama_key_source",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:ollama_key_source",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:set_ollama_config",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:set_ollama_config",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:reset_ollama_config",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:reset_ollama_config",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_excluded",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_excluded",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_vision_by_pattern",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_vision_by_pattern",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:list_provider_models",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:list_provider_models",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_list_anthropic",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_list_anthropic",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_list_openrouter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_list_openrouter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_list_openai_compat",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_list_openai_compat",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:test_connection",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:test_connection",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:stream_chat",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:stream_chat",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_stream_anthropic",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_stream_anthropic",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_stream_openai_compat",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:_stream_openai_compat",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:openrouter_auth_url",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:openrouter_auth_url",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:openrouter_exchange_code",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "function:src/providers.py:openrouter_exchange_code",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:_collection",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:_collection",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:_embed",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:_embed",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:index_doc_chunks",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:index_doc_chunks",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:search_docs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:search_docs",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:conv_has_docs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:conv_has_docs",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:index_history_turn",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:index_history_turn",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:search_history",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:search_history",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:delete_conv_vectors",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:delete_conv_vectors",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:clear_all_chat_vectors",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:clear_all_chat_vectors",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:clear_all_vectors",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:clear_all_vectors",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:search_history_all",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:search_history_all",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:index_memory",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:index_memory",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:similar_memory",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:similar_memory",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:search_memories",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:search_memories",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:delete_memory_vector",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:delete_memory_vector",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:_flatten",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "function:src/rag.py:_flatten",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/orchestrator.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/personalization.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/personalization.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "function:src/personalization.py:rebuild_profile",
+      "target": "function:src/ollama_client.py:generate",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/rag.py:_embed",
+      "target": "function:src/ollama_client.py:embed_texts",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

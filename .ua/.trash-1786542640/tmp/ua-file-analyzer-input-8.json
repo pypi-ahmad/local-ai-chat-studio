@@ -1,0 +1,26 @@
+{
+  "projectRoot": "D:\\AI\\Github\\local-ai-chat-studio",
+  "batchFiles": [
+    {"path": ".github/ISSUE_TEMPLATE/bug_report.md", "language": "markdown", "sizeLines": 27, "fileCategory": "docs"},
+    {"path": ".github/ISSUE_TEMPLATE/feature_request.md", "language": "markdown", "sizeLines": 18, "fileCategory": "docs"},
+    {"path": ".github/pull_request_template.md", "language": "markdown", "sizeLines": 22, "fileCategory": "docs"},
+    {"path": ".graphifyignore", "language": "unknown", "sizeLines": 7, "fileCategory": "code"},
+    {"path": ".python-version", "language": "unknown", "sizeLines": 1, "fileCategory": "code"},
+    {"path": "backend/__init__.py", "language": "python", "sizeLines": 1, "fileCategory": "code"},
+    {"path": "backend/app/__init__.py", "language": "python", "sizeLines": 1, "fileCategory": "code"},
+    {"path": "docs/site/index.html", "language": "html", "sizeLines": 148, "fileCategory": "markup"},
+    {"path": "docs/tutorial/index.html", "language": "html", "sizeLines": 752, "fileCategory": "markup"},
+    {"path": "frontend/src/App.css", "language": "css", "sizeLines": 32, "fileCategory": "markup"},
+    {"path": "frontend/src/index.css", "language": "css", "sizeLines": 1, "fileCategory": "markup"},
+    {"path": "frontend/src/test/setup.ts", "language": "typescript", "sizeLines": 5, "fileCategory": "code"},
+    {"path": "frontend/vite.config.ts", "language": "typescript", "sizeLines": 20, "fileCategory": "code"},
+    {"path": "frontend/vitest.config.ts", "language": "typescript", "sizeLines": 12, "fileCategory": "code"},
+    {"path": "tasks/plan.md", "language": "markdown", "sizeLines": 160, "fileCategory": "docs"},
+    {"path": "tasks/todo.md", "language": "markdown", "sizeLines": 31, "fileCategory": "docs"},
+    {"path": "tests/conftest.py", "language": "python", "sizeLines": 12, "fileCategory": "code"},
+    {"path": "tests/test_api_contract.py", "language": "python", "sizeLines": 113, "fileCategory": "code"}
+  ],
+  "batchImportData": {
+    ".github/ISSUE_TEMPLATE/bug_report.md": [], ".github/ISSUE_TEMPLATE/feature_request.md": [], ".github/pull_request_template.md": [], ".graphifyignore": [], ".python-version": [], "backend/__init__.py": [], "backend/app/__init__.py": [], "docs/site/index.html": [], "docs/tutorial/index.html": [], "frontend/src/App.css": [], "frontend/src/index.css": [], "frontend/src/test/setup.ts": [], "frontend/vite.config.ts": [], "frontend/vitest.config.ts": [], "tasks/plan.md": [], "tasks/todo.md": [], "tests/conftest.py": [], "tests/test_api_contract.py": []
+  }
+}

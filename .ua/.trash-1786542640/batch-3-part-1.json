@@ -1,0 +1,905 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/catalog.py",
+      "type": "file",
+      "name": "catalog.py",
+      "filePath": "src/catalog.py",
+      "summary": "catalog.py implements a backend capability.",
+      "tags": [
+        "backend",
+        "python",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/catalog.py:build_model_catalog",
+      "type": "function",
+      "name": "build_model_catalog",
+      "filePath": "src/catalog.py",
+      "lineRange": [
+        46,
+        82
+      ],
+      "summary": "build_model_catalog implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/chat_store.py",
+      "type": "file",
+      "name": "chat_store.py",
+      "filePath": "src/chat_store.py",
+      "summary": "chat_store.py implements a backend capability.",
+      "tags": [
+        "backend",
+        "python",
+        "service"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src/chat_store.py:search_conversations",
+      "type": "function",
+      "name": "search_conversations",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        129,
+        140
+      ],
+      "summary": "search_conversations implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:clear_all_conversations",
+      "type": "function",
+      "name": "clear_all_conversations",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        152,
+        162
+      ],
+      "summary": "clear_all_conversations implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:add_message",
+      "type": "function",
+      "name": "add_message",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        174,
+        185
+      ],
+      "summary": "add_message implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:get_messages",
+      "type": "function",
+      "name": "get_messages",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        188,
+        198
+      ],
+      "summary": "get_messages implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:add_memory",
+      "type": "function",
+      "name": "add_memory",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        209,
+        218
+      ],
+      "summary": "add_memory implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:save_preset",
+      "type": "function",
+      "name": "save_preset",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        327,
+        338
+      ],
+      "summary": "save_preset implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:import_jsonl",
+      "type": "function",
+      "name": "import_jsonl",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        365,
+        382
+      ],
+      "summary": "import_jsonl implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:export_jsonl",
+      "type": "function",
+      "name": "export_jsonl",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        392,
+        405
+      ],
+      "summary": "export_jsonl implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/config.py",
+      "type": "file",
+      "name": "config.py",
+      "filePath": "src/config.py",
+      "summary": "config.py implements a backend capability.",
+      "tags": [
+        "backend",
+        "python",
+        "service"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:src/config.py:AppConfig",
+      "type": "class",
+      "name": "AppConfig",
+      "filePath": "src/config.py",
+      "lineRange": [
+        10,
+        57
+      ],
+      "summary": "AppConfig provides structured backend state.",
+      "tags": [
+        "backend",
+        "python",
+        "data-model"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/jobs.py",
+      "type": "file",
+      "name": "jobs.py",
+      "filePath": "src/jobs.py",
+      "summary": "jobs.py implements a backend capability.",
+      "tags": [
+        "backend",
+        "python",
+        "service"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src/jobs.py:start",
+      "type": "function",
+      "name": "start",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        89,
+        126
+      ],
+      "summary": "start implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:run_ephemeral",
+      "type": "function",
+      "name": "run_ephemeral",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        129,
+        165
+      ],
+      "summary": "run_ephemeral implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:_stream",
+      "type": "function",
+      "name": "_stream",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        176,
+        189
+      ],
+      "summary": "_stream implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:_web_search",
+      "type": "function",
+      "name": "_web_search",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        192,
+        207
+      ],
+      "summary": "_web_search implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:_process_attachments",
+      "type": "function",
+      "name": "_process_attachments",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        210,
+        248
+      ],
+      "summary": "_process_attachments implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:_run",
+      "type": "function",
+      "name": "_run",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        251,
+        367
+      ],
+      "summary": "_run implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/jobs.py:_friendly_error",
+      "type": "function",
+      "name": "_friendly_error",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        370,
+        384
+      ],
+      "summary": "_friendly_error implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:_autotitle",
+      "type": "function",
+      "name": "_autotitle",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        387,
+        399
+      ],
+      "summary": "_autotitle implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:_maybe_extract",
+      "type": "function",
+      "name": "_maybe_extract",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        402,
+        414
+      ],
+      "summary": "_maybe_extract implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/memory.py",
+      "type": "file",
+      "name": "memory.py",
+      "filePath": "src/memory.py",
+      "summary": "memory.py implements a backend capability.",
+      "tags": [
+        "backend",
+        "python",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/memory.py:extract_memories",
+      "type": "function",
+      "name": "extract_memories",
+      "filePath": "src/memory.py",
+      "lineRange": [
+        27,
+        59
+      ],
+      "summary": "extract_memories implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/memory.py:relevant_memories",
+      "type": "function",
+      "name": "relevant_memories",
+      "filePath": "src/memory.py",
+      "lineRange": [
+        62,
+        74
+      ],
+      "summary": "relevant_memories implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/memory.py:_parse_json_list",
+      "type": "function",
+      "name": "_parse_json_list",
+      "filePath": "src/memory.py",
+      "lineRange": [
+        81,
+        96
+      ],
+      "summary": "_parse_json_list implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/model_labels.py",
+      "type": "file",
+      "name": "model_labels.py",
+      "filePath": "src/model_labels.py",
+      "summary": "model_labels.py implements a backend capability.",
+      "tags": [
+        "backend",
+        "python",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/model_labels.py:_size_tag",
+      "type": "function",
+      "name": "_size_tag",
+      "filePath": "src/model_labels.py",
+      "lineRange": [
+        27,
+        37
+      ],
+      "summary": "_size_tag implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/model_labels.py:hint_for",
+      "type": "function",
+      "name": "hint_for",
+      "filePath": "src/model_labels.py",
+      "lineRange": [
+        40,
+        58
+      ],
+      "summary": "hint_for implements a focused backend operation.",
+      "tags": [
+        "backend",
+        "python",
+        "operation"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/catalog.py",
+      "target": "function:src/catalog.py:build_model_catalog",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "function:src/catalog.py:build_model_catalog",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:search_conversations",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:search_conversations",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:clear_all_conversations",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:clear_all_conversations",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:add_message",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:add_message",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:get_messages",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:get_messages",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:add_memory",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:add_memory",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:save_preset",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:save_preset",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:import_jsonl",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:import_jsonl",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:export_jsonl",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:export_jsonl",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/config.py",
+      "target": "class:src/config.py:AppConfig",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/config.py",
+      "target": "class:src/config.py:AppConfig",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:start",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:start",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:run_ephemeral",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:run_ephemeral",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_stream",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_stream",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_web_search",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_web_search",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_process_attachments",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_process_attachments",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_run",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_friendly_error",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_friendly_error",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_autotitle",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_autotitle",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_maybe_extract",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_maybe_extract",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "function:src/memory.py:extract_memories",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "function:src/memory.py:extract_memories",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "function:src/memory.py:relevant_memories",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "function:src/memory.py:relevant_memories",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "function:src/memory.py:_parse_json_list",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "function:src/memory.py:_parse_json_list",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/model_labels.py",
+      "target": "function:src/model_labels.py:_size_tag",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/model_labels.py",
+      "target": "function:src/model_labels.py:_size_tag",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/model_labels.py",
+      "target": "function:src/model_labels.py:hint_for",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/model_labels.py",
+      "target": "function:src/model_labels.py:hint_for",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/model_labels.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "file:src/model_labels.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/files.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/orchestrator.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/personalization.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

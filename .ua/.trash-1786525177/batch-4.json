@@ -1,0 +1,15 @@
+{
+  "nodes": [
+    {
+      "id": "pipeline:.github/workflows/ci.yml",
+      "type": "pipeline",
+      "name": "ci.yml",
+      "filePath": ".github/workflows/ci.yml",
+      "summary": "GitHub Actions CI workflow that validates the Python backend with pytest and Ruff, and installs, lints, tests, and builds the React frontend on pushes and pull requests.",
+      "tags": ["ci-cd", "testing", "python", "frontend", "build-system"],
+      "complexity": "simple",
+      "languageNotes": "The workflow uses YAML jobs with isolated Python/uv and Node/npm toolchains, including dependency caching."
+    }
+  ],
+  "edges": []
+}

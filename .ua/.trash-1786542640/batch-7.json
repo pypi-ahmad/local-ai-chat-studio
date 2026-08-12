@@ -1,0 +1,145 @@
+{
+  "nodes": [
+    {
+      "id": "config:frontend/.oxlintrc.json",
+      "type": "config",
+      "filePath": "frontend/.oxlintrc.json",
+      "name": ".oxlintrc.json",
+      "summary": "Configures the Oxlint plugins and rules used by the frontend workspace.",
+      "tags": [
+        "configuration",
+        "linting",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:frontend/README.md",
+      "type": "document",
+      "filePath": "frontend/README.md",
+      "name": "README.md",
+      "summary": "Provides the brief starter documentation for the React frontend workspace.",
+      "tags": [
+        "documentation",
+        "frontend",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:frontend/components.json",
+      "type": "config",
+      "filePath": "frontend/components.json",
+      "name": "components.json",
+      "summary": "Configures the UI component generator, style preset, Tailwind settings, and import aliases.",
+      "tags": [
+        "configuration",
+        "ui",
+        "tailwind"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/index.html",
+      "type": "file",
+      "filePath": "frontend/index.html",
+      "name": "index.html",
+      "summary": "Provides the browser HTML shell and root element that loads the React application entry point.",
+      "tags": [
+        "entry-point",
+        "frontend",
+        "html"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:frontend/package.json",
+      "type": "config",
+      "filePath": "frontend/package.json",
+      "name": "package.json",
+      "summary": "Defines frontend scripts, production dependencies, and development tooling for the Vite React workspace.",
+      "tags": [
+        "configuration",
+        "frontend",
+        "build-system"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:frontend/tsconfig.app.json",
+      "type": "config",
+      "filePath": "frontend/tsconfig.app.json",
+      "name": "tsconfig.app.json",
+      "summary": "Configures TypeScript compilation rules for browser application source files.",
+      "tags": [
+        "configuration",
+        "typescript",
+        "frontend"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:frontend/tsconfig.json",
+      "type": "config",
+      "filePath": "frontend/tsconfig.json",
+      "name": "tsconfig.json",
+      "summary": "Provides the root TypeScript project references and shared compiler settings.",
+      "tags": [
+        "configuration",
+        "typescript",
+        "build-system"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:frontend/tsconfig.node.json",
+      "type": "config",
+      "filePath": "frontend/tsconfig.node.json",
+      "name": "tsconfig.node.json",
+      "summary": "Configures TypeScript compilation for Node-based Vite and test configuration files.",
+      "tags": [
+        "configuration",
+        "typescript",
+        "build-system"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "config:frontend/components.json",
+      "target": "file:frontend/src/App.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/package.json",
+      "target": "file:frontend/src/main.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/tsconfig.app.json",
+      "target": "file:frontend/src/App.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/tsconfig.json",
+      "target": "file:frontend/vite.config.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/tsconfig.node.json",
+      "target": "file:frontend/vite.config.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    }
+  ]
+}

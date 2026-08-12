@@ -1,0 +1,74 @@
+[
+  {
+    "order": 1,
+    "title": "Project Overview",
+    "description": "Start with the README to understand the studio's local-first purpose, supported AI providers, memory features, and the documented setup paths. It gives the vocabulary for the rest of the tour and points to the main runtime and verification workflows.",
+    "nodeIds": ["document:README.md"]
+  },
+  {
+    "order": 2,
+    "title": "Launch and Configuration",
+    "description": "The Windows launcher provides the simplest route into the application by preparing portable tooling, dependencies, the frontend build, and the local server. The Python manifest then defines the backend package, its console command, and the dependency and tooling baseline that the launcher relies on.",
+    "nodeIds": ["file:Launch Chat Studio.cmd", "config:pyproject.toml"],
+    "languageLesson": "A project manifest is the reproducibility boundary: it records the runtime dependencies and developer tools that must agree across machines."
+  },
+  {
+    "order": 3,
+    "title": "Browser Application",
+    "description": "The React entry point mounts the error-protected browser application and loads shared styles. App.tsx is the high-level user interface coordinator, so it is the best place to see how chat, settings, providers, files, and workspace actions are presented together.",
+    "nodeIds": ["file:frontend/src/main.tsx", "file:frontend/src/App.tsx", "file:frontend/src/ErrorBoundary.tsx"],
+    "languageLesson": "React applications commonly separate bootstrapping from the root component: the entry file mounts the tree, while the root component owns the screen-level composition."
+  },
+  {
+    "order": 4,
+    "title": "Frontend API Boundary",
+    "description": "The browser client isolates HTTP requests from visual components, while the generated schema keeps frontend data shapes aligned with the backend contract. This boundary lets the interface evolve independently while preserving a clear path to the local API described next.",
+    "nodeIds": ["file:frontend/src/api/client.ts", "file:frontend/src/api/schema.ts", "config:frontend/package.json"],
+    "languageLesson": "TypeScript schema definitions make API data explicit at compile time, reducing mismatches between UI state and server responses."
+  },
+  {
+    "order": 5,
+    "title": "FastAPI Application",
+    "description": "The FastAPI main module creates the local HTTP application and exposes the conversation, run, provider, memory, file, and workspace surfaces. It is the backend entry point for the browser client, and its direct dependencies form the core service map for the next steps.",
+    "nodeIds": ["file:backend/app/main.py", "file:backend/app/cli.py"]
+  },
+  {
+    "order": 6,
+    "title": "Shared API Contracts",
+    "description": "The contract module defines the Pydantic shapes crossing the API boundary, making it one of the most reused parts of the backend graph. Read it before the services because these models give a consistent vocabulary for conversations, providers, runs, memory, and workspace responses.",
+    "nodeIds": ["file:backend/app/contracts.py"],
+    "languageLesson": "Pydantic models combine Python type annotations with runtime validation, which makes request and response contracts executable as well as documented."
+  },
+  {
+    "order": 7,
+    "title": "Providers and Runs",
+    "description": "Provider integration normalizes model discovery and streaming across supported services, while the run service manages the chat execution lifecycle. Together they convert a user request from the API layer into streamed model output without forcing the interface to know provider-specific details.",
+    "nodeIds": ["file:backend/app/providers.py", "file:backend/app/runs.py", "file:src/ollama_client.py"]
+  },
+  {
+    "order": 8,
+    "title": "Workspace and Files",
+    "description": "Workspace features organize the local AI session around persistent context, while the file service handles user-supplied material that can enrich a request. This is where the product shifts from a simple chat window toward a practical local workbench.",
+    "nodeIds": ["file:backend/app/workspace.py", "file:src/files.py", "file:backend/app/sessions.py"]
+  },
+  {
+    "order": 9,
+    "title": "Memory and Storage",
+    "description": "The memory service handles useful long-term context, and the store module provides SQLite-backed persistence for conversations and application state. Configuration connects these data capabilities to the rest of the service layer, making local state durable without requiring a remote database.",
+    "nodeIds": ["file:backend/app/memory.py", "file:backend/app/store.py", "file:src/config.py"],
+    "languageLesson": "SQLite is an embedded relational database: the application stores structured state in a local file, which keeps installation simple while retaining transactional persistence."
+  },
+  {
+    "order": 10,
+    "title": "Architecture Reference",
+    "description": "The architecture guide connects the browser-to-FastAPI flow with context preflight, persisted runs, memory curation, provider boundaries, and the localhost-first model. Read it after the core code stops to consolidate the relationships you have just encountered into one system view.",
+    "nodeIds": ["document:docs/codebase/ARCHITECTURE.md"]
+  },
+  {
+    "order": 11,
+    "title": "Quality and Delivery",
+    "description": "The test suites exercise the API contract and workspace behavior, while the CI workflow repeats backend and frontend checks automatically. This final stop shows how changes to the application are guarded before they are shared or deployed.",
+    "nodeIds": ["file:tests/test_api_contract.py", "file:tests/test_workspace_features.py", "pipeline:.github/workflows/ci.yml"],
+    "languageLesson": "Continuous integration turns the local verification commands into a repeatable gate: each change is checked in a clean environment rather than relying only on one developer machine."
+  }
+]

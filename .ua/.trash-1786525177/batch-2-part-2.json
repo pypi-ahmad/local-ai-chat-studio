@@ -1,0 +1,1611 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/config.py",
+      "type": "file",
+      "name": "config.py",
+      "filePath": "src/config.py",
+      "summary": "Defines application paths and creates local directories used for database, vector store, and uploads.",
+      "tags": [
+        "configuration",
+        "paths",
+        "storage",
+        "data-model"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:src/config.py:AppConfig",
+      "type": "class",
+      "name": "AppConfig",
+      "filePath": "src/config.py",
+      "lineRange": [
+        10,
+        57
+      ],
+      "summary": "Represents AppConfig data and behavior used by src/config.py.",
+      "tags": [
+        "data-model",
+        "class",
+        "application-logic"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/files.py",
+      "type": "file",
+      "name": "files.py",
+      "filePath": "src/files.py",
+      "summary": "Parses uploaded documents and splits extracted text into retrieval-ready chunks.",
+      "tags": [
+        "file-processing",
+        "document-parsing",
+        "chunking",
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:src/files.py:Attachment",
+      "type": "class",
+      "name": "Attachment",
+      "filePath": "src/files.py",
+      "lineRange": [
+        25,
+        30
+      ],
+      "summary": "Represents Attachment data and behavior used by src/files.py.",
+      "tags": [
+        "data-model",
+        "class",
+        "application-logic"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/files.py:_ext",
+      "type": "function",
+      "name": "_ext",
+      "filePath": "src/files.py",
+      "lineRange": [
+        33,
+        34
+      ],
+      "summary": "Internal helper that supports this module’s workflow through ext.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/files.py:parse_upload",
+      "type": "function",
+      "name": "parse_upload",
+      "filePath": "src/files.py",
+      "lineRange": [
+        37,
+        58
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through parse upload.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/files.py:_parse_pdf",
+      "type": "function",
+      "name": "_parse_pdf",
+      "filePath": "src/files.py",
+      "lineRange": [
+        61,
+        71
+      ],
+      "summary": "Internal helper that supports this module’s workflow through parse pdf.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/files.py:_parse_docx",
+      "type": "function",
+      "name": "_parse_docx",
+      "filePath": "src/files.py",
+      "lineRange": [
+        74,
+        82
+      ],
+      "summary": "Internal helper that supports this module’s workflow through parse docx.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/files.py:_parse_excel",
+      "type": "function",
+      "name": "_parse_excel",
+      "filePath": "src/files.py",
+      "lineRange": [
+        85,
+        93
+      ],
+      "summary": "Internal helper that supports this module’s workflow through parse excel.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/files.py:_parse_legacy_doc",
+      "type": "function",
+      "name": "_parse_legacy_doc",
+      "filePath": "src/files.py",
+      "lineRange": [
+        96,
+        128
+      ],
+      "summary": "Internal helper that supports this module’s workflow through parse legacy doc.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/files.py:chunk_text",
+      "type": "function",
+      "name": "chunk_text",
+      "filePath": "src/files.py",
+      "lineRange": [
+        131,
+        153
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through chunk text.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/jobs.py",
+      "type": "file",
+      "name": "jobs.py",
+      "filePath": "src/jobs.py",
+      "summary": "Coordinates background streaming chat jobs, attachments, web search, indexing, and post-turn maintenance.",
+      "tags": [
+        "background-jobs",
+        "streaming",
+        "orchestration",
+        "chat-service"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:src/jobs.py:Job",
+      "type": "class",
+      "name": "Job",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        35,
+        50
+      ],
+      "summary": "Represents Job data and behavior used by src/jobs.py.",
+      "tags": [
+        "data-model",
+        "class",
+        "application-logic"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:stop",
+      "type": "function",
+      "name": "stop",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        57,
+        64
+      ],
+      "summary": "Provides an operation that supports background chat execution through stop.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:get",
+      "type": "function",
+      "name": "get",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        67,
+        71
+      ],
+      "summary": "Provides an operation that supports background chat execution through get.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:is_running",
+      "type": "function",
+      "name": "is_running",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        74,
+        76
+      ],
+      "summary": "Provides an operation that supports background chat execution through is running.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:running_conversations",
+      "type": "function",
+      "name": "running_conversations",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        79,
+        81
+      ],
+      "summary": "Provides an operation that supports background chat execution through running conversations.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:clear",
+      "type": "function",
+      "name": "clear",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        84,
+        86
+      ],
+      "summary": "Provides an operation that supports background chat execution through clear.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:start",
+      "type": "function",
+      "name": "start",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        89,
+        126
+      ],
+      "summary": "Provides an operation that supports background chat execution through start.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:run_ephemeral",
+      "type": "function",
+      "name": "run_ephemeral",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        129,
+        165
+      ],
+      "summary": "Provides an operation that supports background chat execution through run ephemeral.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:_tokens_per_sec",
+      "type": "function",
+      "name": "_tokens_per_sec",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        168,
+        173
+      ],
+      "summary": "Internal helper that supports background chat execution through tokens per sec.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:_stream",
+      "type": "function",
+      "name": "_stream",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        176,
+        189
+      ],
+      "summary": "Internal helper that supports background chat execution through stream.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:_web_search",
+      "type": "function",
+      "name": "_web_search",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        192,
+        207
+      ],
+      "summary": "Internal helper that supports background chat execution through web search.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:_process_attachments",
+      "type": "function",
+      "name": "_process_attachments",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        210,
+        248
+      ],
+      "summary": "Internal helper that supports background chat execution through process attachments.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:_run",
+      "type": "function",
+      "name": "_run",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        251,
+        367
+      ],
+      "summary": "Internal helper that supports background chat execution through run.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/jobs.py:_friendly_error",
+      "type": "function",
+      "name": "_friendly_error",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        370,
+        384
+      ],
+      "summary": "Internal helper that supports background chat execution through friendly error.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:_autotitle",
+      "type": "function",
+      "name": "_autotitle",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        387,
+        399
+      ],
+      "summary": "Internal helper that supports background chat execution through autotitle.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:_maybe_extract",
+      "type": "function",
+      "name": "_maybe_extract",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        402,
+        414
+      ],
+      "summary": "Internal helper that supports background chat execution through maybe extract.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/memory.py",
+      "type": "file",
+      "name": "memory.py",
+      "filePath": "src/memory.py",
+      "summary": "Extracts durable user memories from conversations and retrieves relevant memories for prompts.",
+      "tags": [
+        "memory",
+        "personalization",
+        "retrieval",
+        "ai-service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/memory.py:extract_memories",
+      "type": "function",
+      "name": "extract_memories",
+      "filePath": "src/memory.py",
+      "lineRange": [
+        27,
+        59
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through extract memories.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/memory.py:relevant_memories",
+      "type": "function",
+      "name": "relevant_memories",
+      "filePath": "src/memory.py",
+      "lineRange": [
+        62,
+        74
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through relevant memories.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/memory.py:run_decay",
+      "type": "function",
+      "name": "run_decay",
+      "filePath": "src/memory.py",
+      "lineRange": [
+        77,
+        78
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through run decay.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/memory.py:_parse_json_list",
+      "type": "function",
+      "name": "_parse_json_list",
+      "filePath": "src/memory.py",
+      "lineRange": [
+        81,
+        96
+      ],
+      "summary": "Internal helper that supports this module’s workflow through parse json list.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/model_labels.py",
+      "type": "file",
+      "name": "model_labels.py",
+      "filePath": "src/model_labels.py",
+      "summary": "Formats model names with capability and size hints for user-facing selection controls.",
+      "tags": [
+        "model-catalog",
+        "formatting",
+        "utility",
+        "user-interface"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/model_labels.py:_size_tag",
+      "type": "function",
+      "name": "_size_tag",
+      "filePath": "src/model_labels.py",
+      "lineRange": [
+        27,
+        37
+      ],
+      "summary": "Internal helper that supports this module’s workflow through size tag.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/model_labels.py:hint_for",
+      "type": "function",
+      "name": "hint_for",
+      "filePath": "src/model_labels.py",
+      "lineRange": [
+        40,
+        58
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through hint for.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/model_labels.py:dropdown_label",
+      "type": "function",
+      "name": "dropdown_label",
+      "filePath": "src/model_labels.py",
+      "lineRange": [
+        61,
+        64
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through dropdown label.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/ollama_client.py",
+      "type": "file",
+      "name": "ollama_client.py",
+      "filePath": "src/ollama_client.py",
+      "summary": "Wraps the local Ollama API for model discovery, generation, streaming, image description, and embeddings.",
+      "tags": [
+        "ollama",
+        "ai-client",
+        "streaming",
+        "embeddings"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:src/ollama_client.py:ModelInfo",
+      "type": "class",
+      "name": "ModelInfo",
+      "filePath": "src/ollama_client.py",
+      "lineRange": [
+        45,
+        70
+      ],
+      "summary": "Represents ModelInfo data and behavior used by src/ollama_client.py.",
+      "tags": [
+        "data-model",
+        "class",
+        "application-logic"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ollama_client.py:_client",
+      "type": "function",
+      "name": "_client",
+      "filePath": "src/ollama_client.py",
+      "lineRange": [
+        21,
+        41
+      ],
+      "summary": "Internal helper that supports this module’s workflow through client.",
+      "tags": [
+        "internal-helper",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ollama_client.py:list_models",
+      "type": "function",
+      "name": "list_models",
+      "filePath": "src/ollama_client.py",
+      "lineRange": [
+        73,
+        111
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through list models.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ollama_client.py:chat_models",
+      "type": "function",
+      "name": "chat_models",
+      "filePath": "src/ollama_client.py",
+      "lineRange": [
+        114,
+        120
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through chat models.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ollama_client.py:embedding_model",
+      "type": "function",
+      "name": "embedding_model",
+      "filePath": "src/ollama_client.py",
+      "lineRange": [
+        123,
+        126
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through embedding model.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ollama_client.py:vision_fallback_model",
+      "type": "function",
+      "name": "vision_fallback_model",
+      "filePath": "src/ollama_client.py",
+      "lineRange": [
+        129,
+        139
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through vision fallback model.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ollama_client.py:smallest_text_model",
+      "type": "function",
+      "name": "smallest_text_model",
+      "filePath": "src/ollama_client.py",
+      "lineRange": [
+        145,
+        159
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through smallest text model.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ollama_client.py:stream_chat",
+      "type": "function",
+      "name": "stream_chat",
+      "filePath": "src/ollama_client.py",
+      "lineRange": [
+        162,
+        186
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through stream chat.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ollama_client.py:running_models",
+      "type": "function",
+      "name": "running_models",
+      "filePath": "src/ollama_client.py",
+      "lineRange": [
+        189,
+        202
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through running models.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ollama_client.py:generate",
+      "type": "function",
+      "name": "generate",
+      "filePath": "src/ollama_client.py",
+      "lineRange": [
+        205,
+        217
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through generate.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ollama_client.py:describe_image",
+      "type": "function",
+      "name": "describe_image",
+      "filePath": "src/ollama_client.py",
+      "lineRange": [
+        220,
+        235
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through describe image.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ollama_client.py:embed_texts",
+      "type": "function",
+      "name": "embed_texts",
+      "filePath": "src/ollama_client.py",
+      "lineRange": [
+        238,
+        241
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through embed texts.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ollama_client.py:ollama_alive",
+      "type": "function",
+      "name": "ollama_alive",
+      "filePath": "src/ollama_client.py",
+      "lineRange": [
+        244,
+        249
+      ],
+      "summary": "Provides an operation that supports this module’s workflow through ollama alive.",
+      "tags": [
+        "service-operation",
+        "application-logic",
+        "python"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/config.py",
+      "target": "class:src/config.py:AppConfig",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/config.py",
+      "target": "class:src/config.py:AppConfig",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/files.py",
+      "target": "class:src/files.py:Attachment",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/files.py",
+      "target": "class:src/files.py:Attachment",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/files.py",
+      "target": "function:src/files.py:_ext",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/files.py",
+      "target": "function:src/files.py:_ext",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/files.py",
+      "target": "function:src/files.py:parse_upload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/files.py",
+      "target": "function:src/files.py:parse_upload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/files.py",
+      "target": "function:src/files.py:_parse_pdf",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/files.py",
+      "target": "function:src/files.py:_parse_pdf",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/files.py",
+      "target": "function:src/files.py:_parse_docx",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/files.py",
+      "target": "function:src/files.py:_parse_docx",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/files.py",
+      "target": "function:src/files.py:_parse_excel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/files.py",
+      "target": "function:src/files.py:_parse_excel",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/files.py",
+      "target": "function:src/files.py:_parse_legacy_doc",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/files.py",
+      "target": "function:src/files.py:_parse_legacy_doc",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/files.py",
+      "target": "function:src/files.py:chunk_text",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/files.py",
+      "target": "function:src/files.py:chunk_text",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "class:src/jobs.py:Job",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "class:src/jobs.py:Job",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:stop",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:stop",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:get",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:get",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:is_running",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:is_running",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:running_conversations",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:running_conversations",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:clear",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:clear",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:start",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:start",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:run_ephemeral",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:run_ephemeral",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_tokens_per_sec",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_tokens_per_sec",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_stream",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_stream",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_web_search",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_web_search",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_process_attachments",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_process_attachments",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_run",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_friendly_error",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_friendly_error",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_autotitle",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_autotitle",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_maybe_extract",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_maybe_extract",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "function:src/memory.py:extract_memories",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "function:src/memory.py:extract_memories",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "function:src/memory.py:relevant_memories",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "function:src/memory.py:relevant_memories",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "function:src/memory.py:run_decay",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "function:src/memory.py:run_decay",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "function:src/memory.py:_parse_json_list",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "function:src/memory.py:_parse_json_list",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/model_labels.py",
+      "target": "function:src/model_labels.py:_size_tag",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/model_labels.py",
+      "target": "function:src/model_labels.py:_size_tag",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/model_labels.py",
+      "target": "function:src/model_labels.py:hint_for",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/model_labels.py",
+      "target": "function:src/model_labels.py:hint_for",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/model_labels.py",
+      "target": "function:src/model_labels.py:dropdown_label",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/model_labels.py",
+      "target": "function:src/model_labels.py:dropdown_label",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "class:src/ollama_client.py:ModelInfo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "class:src/ollama_client.py:ModelInfo",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:_client",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:_client",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:list_models",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:list_models",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:chat_models",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:chat_models",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:embedding_model",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:embedding_model",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:vision_fallback_model",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:vision_fallback_model",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:smallest_text_model",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:smallest_text_model",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:stream_chat",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:stream_chat",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:running_models",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:running_models",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:generate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:generate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:describe_image",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:describe_image",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:embed_texts",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:embed_texts",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:ollama_alive",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "function:src/ollama_client.py:ollama_alive",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/files.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/orchestrator.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/personalization.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/model_labels.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "function:src/jobs.py:_stream",
+      "target": "function:src/ollama_client.py:stream_chat",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/jobs.py:_process_attachments",
+      "target": "function:src/files.py:parse_upload",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/jobs.py:_process_attachments",
+      "target": "function:src/ollama_client.py:describe_image",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/jobs.py:_process_attachments",
+      "target": "function:src/files.py:chunk_text",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/jobs.py:_run",
+      "target": "function:src/orchestrator.py:build_messages",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/jobs.py:_run",
+      "target": "function:src/orchestrator.py:after_turn_indexing",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/jobs.py:_maybe_extract",
+      "target": "function:src/personalization.py:note_conversation_done",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/jobs.py:_maybe_extract",
+      "target": "function:src/personalization.py:rebuild_profile",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/memory.py:extract_memories",
+      "target": "function:src/ollama_client.py:generate",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

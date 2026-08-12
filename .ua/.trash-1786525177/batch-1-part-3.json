@@ -1,0 +1,803 @@
+{
+  "nodes": [
+    {
+      "id": "file:frontend/src/components/ui/skeleton.tsx",
+      "type": "file",
+      "name": "skeleton.tsx",
+      "filePath": "frontend/src/components/ui/skeleton.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/skeleton.tsx:Skeleton",
+      "type": "function",
+      "name": "Skeleton",
+      "filePath": "frontend/src/components/ui/skeleton.tsx",
+      "lineRange": [
+        3,
+        11
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/switch.tsx",
+      "type": "file",
+      "name": "switch.tsx",
+      "filePath": "frontend/src/components/ui/switch.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/switch.tsx:Switch",
+      "type": "function",
+      "name": "Switch",
+      "filePath": "frontend/src/components/ui/switch.tsx",
+      "lineRange": [
+        5,
+        28
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/table.tsx",
+      "type": "file",
+      "name": "table.tsx",
+      "filePath": "frontend/src/components/ui/table.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/components/ui/table.tsx:Table",
+      "type": "function",
+      "name": "Table",
+      "filePath": "frontend/src/components/ui/table.tsx",
+      "lineRange": [
+        5,
+        18
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/table.tsx:TableHeader",
+      "type": "function",
+      "name": "TableHeader",
+      "filePath": "frontend/src/components/ui/table.tsx",
+      "lineRange": [
+        20,
+        28
+      ],
+      "summary": "Renders a styled structural section for the related UI component.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/table.tsx:TableBody",
+      "type": "function",
+      "name": "TableBody",
+      "filePath": "frontend/src/components/ui/table.tsx",
+      "lineRange": [
+        30,
+        38
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/table.tsx:TableFooter",
+      "type": "function",
+      "name": "TableFooter",
+      "filePath": "frontend/src/components/ui/table.tsx",
+      "lineRange": [
+        40,
+        51
+      ],
+      "summary": "Renders a styled structural section for the related UI component.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/table.tsx:TableRow",
+      "type": "function",
+      "name": "TableRow",
+      "filePath": "frontend/src/components/ui/table.tsx",
+      "lineRange": [
+        53,
+        64
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/table.tsx:TableHead",
+      "type": "function",
+      "name": "TableHead",
+      "filePath": "frontend/src/components/ui/table.tsx",
+      "lineRange": [
+        66,
+        77
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/table.tsx:TableCell",
+      "type": "function",
+      "name": "TableCell",
+      "filePath": "frontend/src/components/ui/table.tsx",
+      "lineRange": [
+        79,
+        90
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/table.tsx:TableCaption",
+      "type": "function",
+      "name": "TableCaption",
+      "filePath": "frontend/src/components/ui/table.tsx",
+      "lineRange": [
+        92,
+        103
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/tabs.tsx",
+      "type": "file",
+      "name": "tabs.tsx",
+      "filePath": "frontend/src/components/ui/tabs.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/components/ui/tabs.tsx:Tabs",
+      "type": "function",
+      "name": "Tabs",
+      "filePath": "frontend/src/components/ui/tabs.tsx",
+      "lineRange": [
+        6,
+        22
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/tabs.tsx:TabsList",
+      "type": "function",
+      "name": "TabsList",
+      "filePath": "frontend/src/components/ui/tabs.tsx",
+      "lineRange": [
+        39,
+        52
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/tabs.tsx:TabsTrigger",
+      "type": "function",
+      "name": "TabsTrigger",
+      "filePath": "frontend/src/components/ui/tabs.tsx",
+      "lineRange": [
+        54,
+        68
+      ],
+      "summary": "Renders an interactive trigger for the related UI primitive.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/tabs.tsx:TabsContent",
+      "type": "function",
+      "name": "TabsContent",
+      "filePath": "frontend/src/components/ui/tabs.tsx",
+      "lineRange": [
+        70,
+        78
+      ],
+      "summary": "Renders the styled content region for the related UI primitive.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/textarea.tsx",
+      "type": "file",
+      "name": "textarea.tsx",
+      "filePath": "frontend/src/components/ui/textarea.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/textarea.tsx:Textarea",
+      "type": "function",
+      "name": "Textarea",
+      "filePath": "frontend/src/components/ui/textarea.tsx",
+      "lineRange": [
+        5,
+        16
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/tooltip.tsx",
+      "type": "file",
+      "name": "tooltip.tsx",
+      "filePath": "frontend/src/components/ui/tooltip.tsx",
+      "summary": "Provides a reusable React UI primitive used by the frontend workspace.",
+      "tags": [
+        "component",
+        "react",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/components/ui/tooltip.tsx:TooltipProvider",
+      "type": "function",
+      "name": "TooltipProvider",
+      "filePath": "frontend/src/components/ui/tooltip.tsx",
+      "lineRange": [
+        7,
+        18
+      ],
+      "summary": "Provides the context or root primitive required by the related UI component.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/tooltip.tsx:Tooltip",
+      "type": "function",
+      "name": "Tooltip",
+      "filePath": "frontend/src/components/ui/tooltip.tsx",
+      "lineRange": [
+        20,
+        22
+      ],
+      "summary": "Renders a composable styled primitive for the application UI.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/tooltip.tsx:TooltipTrigger",
+      "type": "function",
+      "name": "TooltipTrigger",
+      "filePath": "frontend/src/components/ui/tooltip.tsx",
+      "lineRange": [
+        24,
+        26
+      ],
+      "summary": "Renders an interactive trigger for the related UI primitive.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/tooltip.tsx:TooltipContent",
+      "type": "function",
+      "name": "TooltipContent",
+      "filePath": "frontend/src/components/ui/tooltip.tsx",
+      "lineRange": [
+        28,
+        64
+      ],
+      "summary": "Renders the styled content region for the related UI primitive.",
+      "tags": [
+        "component",
+        "ui",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/hooks/use-mobile.ts",
+      "type": "file",
+      "name": "use-mobile.ts",
+      "filePath": "frontend/src/hooks/use-mobile.ts",
+      "summary": "Provides a React hook that tracks the mobile breakpoint through browser media-query events.",
+      "tags": [
+        "hook",
+        "responsive",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/hooks/use-mobile.ts:useIsMobile",
+      "type": "function",
+      "name": "useIsMobile",
+      "filePath": "frontend/src/hooks/use-mobile.ts",
+      "lineRange": [
+        5,
+        19
+      ],
+      "summary": "Tracks a media-query breakpoint and returns whether the viewport is mobile-sized.",
+      "tags": [
+        "hook",
+        "responsive",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/lib/utils.ts",
+      "type": "file",
+      "name": "utils.ts",
+      "filePath": "frontend/src/lib/utils.ts",
+      "summary": "Provides the shared class-name merger used by frontend UI components.",
+      "tags": [
+        "utility",
+        "styling",
+        "tailwind"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/lib/utils.ts:cn",
+      "type": "function",
+      "name": "cn",
+      "filePath": "frontend/src/lib/utils.ts",
+      "lineRange": [
+        4,
+        6
+      ],
+      "summary": "Merges conditional class names and resolves conflicting Tailwind utility classes.",
+      "tags": [
+        "utility",
+        "styling",
+        "tailwind"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:frontend/src/components/ui/skeleton.tsx",
+      "target": "function:frontend/src/components/ui/skeleton.tsx:Skeleton",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/skeleton.tsx",
+      "target": "function:frontend/src/components/ui/skeleton.tsx:Skeleton",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/switch.tsx",
+      "target": "function:frontend/src/components/ui/switch.tsx:Switch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/switch.tsx",
+      "target": "function:frontend/src/components/ui/switch.tsx:Switch",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/table.tsx",
+      "target": "function:frontend/src/components/ui/table.tsx:Table",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/table.tsx",
+      "target": "function:frontend/src/components/ui/table.tsx:Table",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/table.tsx",
+      "target": "function:frontend/src/components/ui/table.tsx:TableHeader",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/table.tsx",
+      "target": "function:frontend/src/components/ui/table.tsx:TableHeader",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/table.tsx",
+      "target": "function:frontend/src/components/ui/table.tsx:TableBody",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/table.tsx",
+      "target": "function:frontend/src/components/ui/table.tsx:TableBody",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/table.tsx",
+      "target": "function:frontend/src/components/ui/table.tsx:TableFooter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/table.tsx",
+      "target": "function:frontend/src/components/ui/table.tsx:TableFooter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/table.tsx",
+      "target": "function:frontend/src/components/ui/table.tsx:TableRow",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/table.tsx",
+      "target": "function:frontend/src/components/ui/table.tsx:TableRow",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/table.tsx",
+      "target": "function:frontend/src/components/ui/table.tsx:TableHead",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/table.tsx",
+      "target": "function:frontend/src/components/ui/table.tsx:TableHead",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/table.tsx",
+      "target": "function:frontend/src/components/ui/table.tsx:TableCell",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/table.tsx",
+      "target": "function:frontend/src/components/ui/table.tsx:TableCell",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/table.tsx",
+      "target": "function:frontend/src/components/ui/table.tsx:TableCaption",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/table.tsx",
+      "target": "function:frontend/src/components/ui/table.tsx:TableCaption",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/tabs.tsx",
+      "target": "function:frontend/src/components/ui/tabs.tsx:Tabs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/tabs.tsx",
+      "target": "function:frontend/src/components/ui/tabs.tsx:Tabs",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/tabs.tsx",
+      "target": "function:frontend/src/components/ui/tabs.tsx:TabsList",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/tabs.tsx",
+      "target": "function:frontend/src/components/ui/tabs.tsx:TabsList",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/tabs.tsx",
+      "target": "function:frontend/src/components/ui/tabs.tsx:TabsTrigger",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/tabs.tsx",
+      "target": "function:frontend/src/components/ui/tabs.tsx:TabsTrigger",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/tabs.tsx",
+      "target": "function:frontend/src/components/ui/tabs.tsx:TabsContent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/tabs.tsx",
+      "target": "function:frontend/src/components/ui/tabs.tsx:TabsContent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/textarea.tsx",
+      "target": "function:frontend/src/components/ui/textarea.tsx:Textarea",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/textarea.tsx",
+      "target": "function:frontend/src/components/ui/textarea.tsx:Textarea",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/tooltip.tsx",
+      "target": "function:frontend/src/components/ui/tooltip.tsx:TooltipProvider",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/tooltip.tsx",
+      "target": "function:frontend/src/components/ui/tooltip.tsx:TooltipProvider",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/tooltip.tsx",
+      "target": "function:frontend/src/components/ui/tooltip.tsx:Tooltip",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/tooltip.tsx",
+      "target": "function:frontend/src/components/ui/tooltip.tsx:Tooltip",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/tooltip.tsx",
+      "target": "function:frontend/src/components/ui/tooltip.tsx:TooltipTrigger",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/tooltip.tsx",
+      "target": "function:frontend/src/components/ui/tooltip.tsx:TooltipTrigger",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/tooltip.tsx",
+      "target": "function:frontend/src/components/ui/tooltip.tsx:TooltipContent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/tooltip.tsx",
+      "target": "function:frontend/src/components/ui/tooltip.tsx:TooltipContent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/hooks/use-mobile.ts",
+      "target": "function:frontend/src/hooks/use-mobile.ts:useIsMobile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/hooks/use-mobile.ts",
+      "target": "function:frontend/src/hooks/use-mobile.ts:useIsMobile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/lib/utils.ts",
+      "target": "function:frontend/src/lib/utils.ts:cn",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/lib/utils.ts",
+      "target": "function:frontend/src/lib/utils.ts:cn",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/skeleton.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/switch.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/table.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/tabs.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/textarea.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/tooltip.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

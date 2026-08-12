@@ -1,0 +1,2271 @@
+{
+  "fileNodes": [
+    {
+      "id": "file:frontend/src/App.test.tsx",
+      "type": "file",
+      "name": "App.test.tsx",
+      "filePath": "frontend/src/App.test.tsx",
+      "summary": "Exercises the main React application flow with mocked streaming responses and browser APIs.",
+      "tags": [
+        "test",
+        "frontend",
+        "react"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/App.tsx",
+      "type": "file",
+      "name": "App.tsx",
+      "filePath": "frontend/src/App.tsx",
+      "summary": "Implements the single-page chat studio interface, including conversations, streaming runs, provider setup, memories, files, and workspace views.",
+      "tags": [
+        "frontend",
+        "react",
+        "chat-interface",
+        "tested"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:frontend/src/ErrorBoundary.tsx",
+      "type": "file",
+      "name": "ErrorBoundary.tsx",
+      "filePath": "frontend/src/ErrorBoundary.tsx",
+      "summary": "Provides a React error boundary that logs rendering failures and shows a recovery interface.",
+      "tags": [
+        "frontend",
+        "react",
+        "error-handling"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/api/client.ts",
+      "type": "file",
+      "name": "client.ts",
+      "filePath": "frontend/src/api/client.ts",
+      "summary": "Provides the typed browser client for the backend API, including JSON requests and streamed run events.",
+      "tags": [
+        "api-client",
+        "frontend",
+        "streaming"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/api/schema.ts",
+      "type": "file",
+      "name": "schema.ts",
+      "filePath": "frontend/src/api/schema.ts",
+      "summary": "Contains generated TypeScript types and endpoint definitions that describe the backend API contract.",
+      "tags": [
+        "api-schema",
+        "type-definition",
+        "generated"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:frontend/src/components/ui/badge.tsx",
+      "type": "file",
+      "name": "badge.tsx",
+      "filePath": "frontend/src/components/ui/badge.tsx",
+      "summary": "Defines a styled badge primitive with reusable variant classes for status labels.",
+      "tags": [
+        "component",
+        "ui",
+        "styling"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/components/ui/button.tsx",
+      "type": "file",
+      "name": "button.tsx",
+      "filePath": "frontend/src/components/ui/button.tsx",
+      "summary": "Defines a styled button primitive with size and variant options.",
+      "tags": [
+        "component",
+        "ui",
+        "styling"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/components/ui/card.tsx",
+      "type": "file",
+      "name": "card.tsx",
+      "filePath": "frontend/src/components/ui/card.tsx",
+      "summary": "Exports composable card layout primitives used to structure application panels.",
+      "tags": [
+        "component",
+        "ui",
+        "layout"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/components/ui/input.tsx",
+      "type": "file",
+      "name": "input.tsx",
+      "filePath": "frontend/src/components/ui/input.tsx",
+      "summary": "Defines the reusable styled text input control.",
+      "tags": [
+        "component",
+        "ui",
+        "form-control"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/scroll-area.tsx",
+      "type": "file",
+      "name": "scroll-area.tsx",
+      "filePath": "frontend/src/components/ui/scroll-area.tsx",
+      "summary": "Exports scroll-area and scrollbar primitives for scrollable panels.",
+      "tags": [
+        "component",
+        "ui",
+        "accessibility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/components/ui/separator.tsx",
+      "type": "file",
+      "name": "separator.tsx",
+      "filePath": "frontend/src/components/ui/separator.tsx",
+      "summary": "Defines a reusable horizontal or vertical visual separator.",
+      "tags": [
+        "component",
+        "ui",
+        "layout"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/textarea.tsx",
+      "type": "file",
+      "name": "textarea.tsx",
+      "filePath": "frontend/src/components/ui/textarea.tsx",
+      "summary": "Defines the reusable styled multiline text input control.",
+      "tags": [
+        "component",
+        "ui",
+        "form-control"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/tooltip.tsx",
+      "type": "file",
+      "name": "tooltip.tsx",
+      "filePath": "frontend/src/components/ui/tooltip.tsx",
+      "summary": "Exports tooltip primitives with configurable positioning and presentation.",
+      "tags": [
+        "component",
+        "ui",
+        "accessibility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/lib/utils.ts",
+      "type": "file",
+      "name": "utils.ts",
+      "filePath": "frontend/src/lib/utils.ts",
+      "summary": "Provides the shared class-name composition helper used by UI primitives.",
+      "tags": [
+        "utility",
+        "styling",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/main.tsx",
+      "type": "file",
+      "name": "main.tsx",
+      "filePath": "frontend/src/main.tsx",
+      "summary": "Bootstraps the React application, imports global styles, and mounts the error-protected app root.",
+      "tags": [
+        "entry-point",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/app/cli.py",
+      "type": "file",
+      "name": "cli.py",
+      "filePath": "backend/app/cli.py",
+      "summary": "Provides the command-line entry point that starts the FastAPI application with Uvicorn.",
+      "tags": [
+        "backend",
+        "api",
+        "python"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/app/contracts.py",
+      "type": "file",
+      "name": "contracts.py",
+      "filePath": "backend/app/contracts.py",
+      "summary": "Defines Pydantic request and response contracts for chat, providers, memory, workspace, replay, and data-management APIs.",
+      "tags": [
+        "backend",
+        "api",
+        "python",
+        "tested"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:backend/app/main.py",
+      "type": "file",
+      "name": "main.py",
+      "filePath": "backend/app/main.py",
+      "summary": "Builds the FastAPI application and its HTTP API for conversations, runs, providers, memory, files, and workspace features.",
+      "tags": [
+        "backend",
+        "api",
+        "python",
+        "tested"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:backend/app/memory.py",
+      "type": "file",
+      "name": "memory.py",
+      "filePath": "backend/app/memory.py",
+      "summary": "Uses a selected LLM to extract, consolidate, validate, and categorize useful long-term memories from conversation history.",
+      "tags": [
+        "backend",
+        "api",
+        "python"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/app/providers.py",
+      "type": "file",
+      "name": "providers.py",
+      "filePath": "backend/app/providers.py",
+      "summary": "Implements normalized provider adapters and the registry for local Ollama, cloud models, OpenAI-compatible APIs, and OpenCode.",
+      "tags": [
+        "backend",
+        "api",
+        "python",
+        "tested"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:backend/app/runs.py",
+      "type": "file",
+      "name": "runs.py",
+      "filePath": "backend/app/runs.py",
+      "summary": "Coordinates asynchronous model runs, their state transitions, event streams, cancellation, and persisted results.",
+      "tags": [
+        "backend",
+        "api",
+        "python"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/app/sessions.py",
+      "type": "file",
+      "name": "sessions.py",
+      "filePath": "backend/app/sessions.py",
+      "summary": "Stores browser-session identifiers and provider credentials while resolving Anthropic workload-identity configuration.",
+      "tags": [
+        "backend",
+        "api",
+        "python"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/app/store.py",
+      "type": "file",
+      "name": "store.py",
+      "filePath": "backend/app/store.py",
+      "summary": "Provides the SQLite persistence layer for conversations, messages, credentials, memory, runs, uploads, and workspace resources.",
+      "tags": [
+        "backend",
+        "api",
+        "python",
+        "tested"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:backend/app/workspace.py",
+      "type": "file",
+      "name": "workspace.py",
+      "filePath": "backend/app/workspace.py",
+      "summary": "Plans safe context assembly from memories, retrieval, uploads, backpacks, and web sources for an individual turn.",
+      "tags": [
+        "backend",
+        "api",
+        "python"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/generate_api_types.py",
+      "type": "file",
+      "name": "generate_api_types.py",
+      "filePath": "scripts/generate_api_types.py",
+      "summary": "Generates the frontend TypeScript API schema from the FastAPI OpenAPI document.",
+      "tags": [
+        "automation",
+        "api-schema",
+        "code-generation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/files.py",
+      "type": "file",
+      "name": "files.py",
+      "filePath": "src/files.py",
+      "summary": "Parses uploaded files into safe text previews and chunks them for contextual retrieval.",
+      "tags": [
+        "backend",
+        "api",
+        "python"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/test_provider_adapters.py",
+      "type": "file",
+      "name": "test_provider_adapters.py",
+      "filePath": "tests/test_provider_adapters.py",
+      "summary": "Covers normalized provider discovery, Ollama variants, and OpenCode bridge safety behavior.",
+      "tags": [
+        "test",
+        "api",
+        "integration"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/test_workspace_features.py",
+      "type": "file",
+      "name": "test_workspace_features.py",
+      "filePath": "tests/test_workspace_features.py",
+      "summary": "Exercises workspace, memory, provenance, replay, attachment, privacy, and data-control API workflows end to end.",
+      "tags": [
+        "test",
+        "api",
+        "integration"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:src/catalog.py",
+      "type": "file",
+      "name": "catalog.py",
+      "filePath": "src/catalog.py",
+      "summary": "catalog.py implements a backend capability.",
+      "tags": [
+        "backend",
+        "python",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/chat_store.py",
+      "type": "file",
+      "name": "chat_store.py",
+      "filePath": "src/chat_store.py",
+      "summary": "chat_store.py implements a backend capability.",
+      "tags": [
+        "backend",
+        "python",
+        "service"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:src/config.py",
+      "type": "file",
+      "name": "config.py",
+      "filePath": "src/config.py",
+      "summary": "config.py implements a backend capability.",
+      "tags": [
+        "backend",
+        "python",
+        "service"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/jobs.py",
+      "type": "file",
+      "name": "jobs.py",
+      "filePath": "src/jobs.py",
+      "summary": "jobs.py implements a backend capability.",
+      "tags": [
+        "backend",
+        "python",
+        "service"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:src/memory.py",
+      "type": "file",
+      "name": "memory.py",
+      "filePath": "src/memory.py",
+      "summary": "memory.py implements a backend capability.",
+      "tags": [
+        "backend",
+        "python",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/model_labels.py",
+      "type": "file",
+      "name": "model_labels.py",
+      "filePath": "src/model_labels.py",
+      "summary": "model_labels.py implements a backend capability.",
+      "tags": [
+        "backend",
+        "python",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/ollama_client.py",
+      "type": "file",
+      "name": "ollama_client.py",
+      "filePath": "src/ollama_client.py",
+      "summary": "ollama_client.py implements a backend capability.",
+      "tags": [
+        "backend",
+        "python",
+        "service"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:src/orchestrator.py",
+      "type": "file",
+      "name": "orchestrator.py",
+      "filePath": "src/orchestrator.py",
+      "summary": "orchestrator.py implements a backend capability.",
+      "tags": [
+        "backend",
+        "python",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/personalization.py",
+      "type": "file",
+      "name": "personalization.py",
+      "filePath": "src/personalization.py",
+      "summary": "personalization.py implements a backend capability.",
+      "tags": [
+        "backend",
+        "python",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/providers.py",
+      "type": "file",
+      "name": "providers.py",
+      "filePath": "src/providers.py",
+      "summary": "providers.py implements a backend capability.",
+      "tags": [
+        "backend",
+        "python",
+        "service"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:src/rag.py",
+      "type": "file",
+      "name": "rag.py",
+      "filePath": "src/rag.py",
+      "summary": "rag.py implements a backend capability.",
+      "tags": [
+        "backend",
+        "python",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "pipeline:.github/workflows/ci.yml",
+      "type": "pipeline",
+      "name": "ci.yml",
+      "filePath": ".github/workflows/ci.yml",
+      "summary": "GitHub Actions workflow that validates the backend with uv, pytest, and Ruff, and validates the frontend with npm linting, tests, and a production build.",
+      "tags": [
+        "ci-cd",
+        "testing",
+        "quality-checks",
+        "github-actions"
+      ],
+      "complexity": "simple",
+      "languageNotes": "The workflow uses separate Ubuntu jobs with cached uv and npm dependencies for repeatable Python and Node.js checks."
+    },
+    {
+      "id": "document:CHANGELOG.md",
+      "type": "document",
+      "name": "CHANGELOG.md",
+      "filePath": "CHANGELOG.md",
+      "summary": "Records unreleased and versioned changes to Local AI Chat Studio.",
+      "tags": [
+        "documentation",
+        "release-notes",
+        "project-history"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:CODE_OF_CONDUCT.md",
+      "type": "document",
+      "name": "CODE_OF_CONDUCT.md",
+      "filePath": "CODE_OF_CONDUCT.md",
+      "summary": "Defines expected community behavior and the enforcement process for contributors.",
+      "tags": [
+        "documentation",
+        "community",
+        "governance"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:CODE_TUTORIAL.md",
+      "type": "document",
+      "name": "CODE_TUTORIAL.md",
+      "filePath": "CODE_TUTORIAL.md",
+      "summary": "Provides a long-form zero-to-hero technical tutorial explaining both the legacy and current application stacks.",
+      "tags": [
+        "documentation",
+        "tutorial",
+        "architecture"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:CONTRIBUTING.md",
+      "type": "document",
+      "name": "CONTRIBUTING.md",
+      "filePath": "CONTRIBUTING.md",
+      "summary": "Explains development setup, style expectations, verification commands, and pull-request guidance.",
+      "tags": [
+        "documentation",
+        "development",
+        "contributing"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:DATASET.md",
+      "type": "document",
+      "name": "DATASET.md",
+      "filePath": "DATASET.md",
+      "summary": "Reserved documentation page for project datasets.",
+      "tags": [
+        "documentation",
+        "data",
+        "placeholder"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:Launch Chat Studio.cmd",
+      "type": "file",
+      "name": "Launch Chat Studio.cmd",
+      "filePath": "Launch Chat Studio.cmd",
+      "summary": "Provides a double-click Windows launcher that bootstraps portable tooling, installs dependencies, builds the frontend, and starts the application.",
+      "tags": [
+        "entry-point",
+        "windows",
+        "bootstrap"
+      ],
+      "complexity": "complex",
+      "languageNotes": "A batch wrapper executes an embedded PowerShell payload so one double-click can manage portable runtime setup and launch."
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "Introduces the local-first chat studio, its provider and memory features, installation paths, architecture, and verification commands.",
+      "tags": [
+        "documentation",
+        "entry-point",
+        "overview"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:SECURITY.md",
+      "type": "document",
+      "name": "SECURITY.md",
+      "filePath": "SECURITY.md",
+      "summary": "Defines the project security policy, supported scope, and private vulnerability-reporting path.",
+      "tags": [
+        "documentation",
+        "security",
+        "governance"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:USER_GUIDE.md",
+      "type": "document",
+      "name": "USER_GUIDE.md",
+      "filePath": "USER_GUIDE.md",
+      "summary": "Explains how to start the studio and use chat, context, providers, library, and settings workflows.",
+      "tags": [
+        "documentation",
+        "user-guide",
+        "workflows"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "type": "document",
+      "name": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "filePath": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "summary": "Provides a comprehensive learning handbook covering product concepts, setup, architecture, workflows, and repository code paths.",
+      "tags": [
+        "documentation",
+        "tutorial",
+        "architecture"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "config:pyproject.toml",
+      "type": "config",
+      "name": "pyproject.toml",
+      "filePath": "pyproject.toml",
+      "summary": "Defines the Python package metadata, runtime dependencies, console command, build backend, and development tool settings.",
+      "tags": [
+        "configuration",
+        "python",
+        "build-system"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:docs/codebase/ARCHITECTURE.md",
+      "type": "document",
+      "name": "ARCHITECTURE.md",
+      "filePath": "docs/codebase/ARCHITECTURE.md",
+      "summary": "Describes the React-to-FastAPI architecture, context-preflight flow, persisted runs, memory curation, provider boundaries, and localhost-first deployment model.",
+      "tags": [
+        "documentation",
+        "architecture",
+        "backend",
+        "data-flow"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:docs/codebase/CONCERNS.md",
+      "type": "document",
+      "name": "CONCERNS.md",
+      "filePath": "docs/codebase/CONCERNS.md",
+      "summary": "Records deployment constraints, security boundaries, provider and retrieval tradeoffs, plus the high-blast-radius files that need focused tests.",
+      "tags": [
+        "documentation",
+        "security",
+        "operations",
+        "architecture"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:docs/codebase/CONVENTIONS.md",
+      "type": "document",
+      "name": "CONVENTIONS.md",
+      "filePath": "docs/codebase/CONVENTIONS.md",
+      "summary": "Defines Python and React naming, API-contract evolution, error handling, credential safety, and the project verification commands.",
+      "tags": [
+        "documentation",
+        "conventions",
+        "security",
+        "testing"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:docs/codebase/INTEGRATIONS.md",
+      "type": "document",
+      "name": "INTEGRATIONS.md",
+      "filePath": "docs/codebase/INTEGRATIONS.md",
+      "summary": "Catalogs local and cloud model integrations, OpenCode OAuth bridging, attachment handling, memory persistence, and credential boundaries.",
+      "tags": [
+        "documentation",
+        "integrations",
+        "providers",
+        "security"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:docs/codebase/STACK.md",
+      "type": "document",
+      "name": "STACK.md",
+      "filePath": "docs/codebase/STACK.md",
+      "summary": "Lists the backend, frontend, persistence, inference, search, file-processing, and development-tooling stack with key commands.",
+      "tags": [
+        "documentation",
+        "technology-stack",
+        "tooling",
+        "configuration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:docs/codebase/STRUCTURE.md",
+      "type": "document",
+      "name": "STRUCTURE.md",
+      "filePath": "docs/codebase/STRUCTURE.md",
+      "summary": "Maps repository paths to their responsibilities and explains startup, static serving, and the retained shared modules.",
+      "tags": [
+        "documentation",
+        "project-structure",
+        "architecture",
+        "entry-point"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:docs/codebase/TESTING.md",
+      "type": "document",
+      "name": "TESTING.md",
+      "filePath": "docs/codebase/TESTING.md",
+      "summary": "Documents backend and frontend test commands, test seams, coverage scope, and manual smoke-test gaps for external integrations.",
+      "tags": [
+        "documentation",
+        "testing",
+        "quality-assurance",
+        "tooling"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:frontend/.oxlintrc.json",
+      "type": "config",
+      "filePath": "frontend/.oxlintrc.json",
+      "name": ".oxlintrc.json",
+      "summary": "Configures the Oxlint plugins and rules used by the frontend workspace.",
+      "tags": [
+        "configuration",
+        "linting",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:frontend/README.md",
+      "type": "document",
+      "filePath": "frontend/README.md",
+      "name": "README.md",
+      "summary": "Provides the brief starter documentation for the React frontend workspace.",
+      "tags": [
+        "documentation",
+        "frontend",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:frontend/components.json",
+      "type": "config",
+      "filePath": "frontend/components.json",
+      "name": "components.json",
+      "summary": "Configures the UI component generator, style preset, Tailwind settings, and import aliases.",
+      "tags": [
+        "configuration",
+        "ui",
+        "tailwind"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/index.html",
+      "type": "file",
+      "filePath": "frontend/index.html",
+      "name": "index.html",
+      "summary": "Provides the browser HTML shell and root element that loads the React application entry point.",
+      "tags": [
+        "entry-point",
+        "frontend",
+        "html"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:frontend/package.json",
+      "type": "config",
+      "filePath": "frontend/package.json",
+      "name": "package.json",
+      "summary": "Defines frontend scripts, production dependencies, and development tooling for the Vite React workspace.",
+      "tags": [
+        "configuration",
+        "frontend",
+        "build-system"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:frontend/tsconfig.app.json",
+      "type": "config",
+      "filePath": "frontend/tsconfig.app.json",
+      "name": "tsconfig.app.json",
+      "summary": "Configures TypeScript compilation rules for browser application source files.",
+      "tags": [
+        "configuration",
+        "typescript",
+        "frontend"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:frontend/tsconfig.json",
+      "type": "config",
+      "filePath": "frontend/tsconfig.json",
+      "name": "tsconfig.json",
+      "summary": "Provides the root TypeScript project references and shared compiler settings.",
+      "tags": [
+        "configuration",
+        "typescript",
+        "build-system"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:frontend/tsconfig.node.json",
+      "type": "config",
+      "filePath": "frontend/tsconfig.node.json",
+      "name": "tsconfig.node.json",
+      "summary": "Configures TypeScript compilation for Node-based Vite and test configuration files.",
+      "tags": [
+        "configuration",
+        "typescript",
+        "build-system"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:.github/ISSUE_TEMPLATE/bug_report.md",
+      "type": "document",
+      "name": "bug_report.md",
+      "filePath": ".github/ISSUE_TEMPLATE/bug_report.md",
+      "summary": "GitHub issue template that captures reproducible defects, runtime environment details, logs, and the selected model.",
+      "tags": [
+        "documentation",
+        "issue-template",
+        "bug-report",
+        "support"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:.github/ISSUE_TEMPLATE/feature_request.md",
+      "type": "document",
+      "name": "feature_request.md",
+      "filePath": ".github/ISSUE_TEMPLATE/feature_request.md",
+      "summary": "GitHub issue template for describing a requested capability, its use case, alternatives, and supporting context.",
+      "tags": [
+        "documentation",
+        "issue-template",
+        "feature-request",
+        "product-feedback"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:.github/pull_request_template.md",
+      "type": "document",
+      "name": "pull_request_template.md",
+      "filePath": ".github/pull_request_template.md",
+      "summary": "Pull request template that records change intent, end-to-end testing, and contribution-quality checks.",
+      "tags": [
+        "documentation",
+        "pull-request",
+        "development",
+        "quality-checks"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.graphifyignore",
+      "type": "file",
+      "name": ".graphifyignore",
+      "filePath": ".graphifyignore",
+      "summary": "Ignore rules that scope Graphify analysis to relevant repository content.",
+      "tags": [
+        "tooling",
+        "configuration",
+        "code-analysis"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.python-version",
+      "type": "file",
+      "name": ".python-version",
+      "filePath": ".python-version",
+      "summary": "Pins the Python version expected by the project's uv-managed environment.",
+      "tags": [
+        "python",
+        "tooling",
+        "runtime"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "backend/__init__.py",
+      "summary": "Marks the backend directory as a Python package.",
+      "tags": [
+        "python",
+        "package",
+        "backend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/app/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "backend/app/__init__.py",
+      "summary": "Marks the FastAPI application directory as a Python package.",
+      "tags": [
+        "python",
+        "package",
+        "backend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:docs/site/index.html",
+      "type": "file",
+      "name": "index.html",
+      "filePath": "docs/site/index.html",
+      "summary": "Static documentation shell that fetches curated Markdown files, renders them in the browser, and supports hash-based navigation.",
+      "tags": [
+        "documentation",
+        "static-site",
+        "markdown",
+        "client-side"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:docs/tutorial/index.html",
+      "type": "file",
+      "name": "index.html",
+      "filePath": "docs/tutorial/index.html",
+      "summary": "Standalone offline zero-to-hero handbook that explains the product, user workflows, business value, and implementation architecture.",
+      "tags": [
+        "documentation",
+        "tutorial",
+        "handbook",
+        "static-site"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:frontend/src/App.css",
+      "type": "file",
+      "name": "App.css",
+      "filePath": "frontend/src/App.css",
+      "summary": "Component-level stylesheet for the frontend application shell.",
+      "tags": [
+        "frontend",
+        "styles",
+        "component",
+        "css"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/index.css",
+      "type": "file",
+      "name": "index.css",
+      "filePath": "frontend/src/index.css",
+      "summary": "Global frontend stylesheet entry point.",
+      "tags": [
+        "frontend",
+        "styles",
+        "global",
+        "css"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/test/setup.ts",
+      "type": "file",
+      "name": "setup.ts",
+      "filePath": "frontend/src/test/setup.ts",
+      "summary": "Vitest setup module that installs DOM assertions and cleans up React test renders after each test.",
+      "tags": [
+        "frontend",
+        "test",
+        "vitest",
+        "test-setup"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/vite.config.ts",
+      "type": "file",
+      "name": "vite.config.ts",
+      "filePath": "frontend/vite.config.ts",
+      "summary": "Vite configuration for the React frontend, Tailwind integration, local API proxy, aliases, and jsdom tests.",
+      "tags": [
+        "frontend",
+        "vite",
+        "configuration",
+        "build-system"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/vitest.config.ts",
+      "type": "file",
+      "name": "vitest.config.ts",
+      "filePath": "frontend/vitest.config.ts",
+      "summary": "Vitest configuration that enables React transforms, the source alias, jsdom, and the shared test setup file.",
+      "tags": [
+        "frontend",
+        "vitest",
+        "configuration",
+        "testing"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:tasks/plan.md",
+      "type": "document",
+      "name": "plan.md",
+      "filePath": "tasks/plan.md",
+      "summary": "Implementation plan for the static htmx documentation site, including architecture decisions, acceptance criteria, and verification steps.",
+      "tags": [
+        "documentation",
+        "implementation-plan",
+        "static-site",
+        "project-management"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:tasks/todo.md",
+      "type": "document",
+      "name": "todo.md",
+      "filePath": "tasks/todo.md",
+      "summary": "Completion checklist for the documentation-site plan, including verified milestones and deviations found during implementation.",
+      "tags": [
+        "documentation",
+        "todo",
+        "project-management",
+        "verification"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/conftest.py",
+      "type": "file",
+      "name": "conftest.py",
+      "filePath": "tests/conftest.py",
+      "summary": "Pytest fixtures that provide an in-memory FastAPI test client for API contract tests.",
+      "tags": [
+        "test",
+        "pytest",
+        "fixture",
+        "api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/test_api_contract.py",
+      "type": "file",
+      "name": "test_api_contract.py",
+      "filePath": "tests/test_api_contract.py",
+      "summary": "API contract tests covering health checks, conversation persistence, provider credential isolation, run streaming, and OpenRouter PKCE authentication.",
+      "tags": [
+        "test",
+        "pytest",
+        "api-contract",
+        "backend"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "importEdges": [
+    {
+      "source": "file:frontend/src/App.test.tsx",
+      "target": "file:frontend/src/App.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/api/client.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/badge.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/button.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/card.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/input.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/scroll-area.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/textarea.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/tooltip.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/api/client.ts",
+      "target": "file:frontend/src/api/schema.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/badge.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/button.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/input.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/scroll-area.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/separator.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/textarea.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/tooltip.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/main.tsx",
+      "target": "file:frontend/src/App.css",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/main.tsx",
+      "target": "file:frontend/src/App.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/main.tsx",
+      "target": "file:frontend/src/ErrorBoundary.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/main.tsx",
+      "target": "file:frontend/src/index.css",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/cli.py",
+      "target": "file:backend/app/main.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/memory.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/runs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/sessions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/workspace.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:src/files.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "file:src/files.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/sessions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/store.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "file:backend/app/store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/generate_api_types.py",
+      "target": "file:backend/app/main.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "file:backend/app/main.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "file:backend/app/store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/model_labels.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "file:src/model_labels.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/files.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/orchestrator.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/personalization.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/personalization.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/personalization.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/orchestrator.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ],
+  "allEdges": [
+    {
+      "source": "file:frontend/src/App.test.tsx",
+      "target": "file:frontend/src/App.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/api/client.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/badge.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/button.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/card.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/input.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/scroll-area.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/textarea.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/components/ui/tooltip.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/api/client.ts",
+      "target": "file:frontend/src/api/schema.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/badge.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/button.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/card.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/input.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/scroll-area.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/separator.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/textarea.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/tooltip.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/main.tsx",
+      "target": "file:frontend/src/App.css",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/main.tsx",
+      "target": "file:frontend/src/App.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/main.tsx",
+      "target": "file:frontend/src/ErrorBoundary.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/main.tsx",
+      "target": "file:frontend/src/index.css",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/cli.py",
+      "target": "file:backend/app/main.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/memory.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/runs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/sessions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/workspace.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:src/files.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "file:tests/test_provider_adapters.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "file:tests/test_workspace_features.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:tests/test_workspace_features.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "file:src/files.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/sessions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "file:tests/test_provider_adapters.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "file:tests/test_workspace_features.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:backend/app/store.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "file:backend/app/store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/store.py",
+      "target": "file:tests/test_workspace_features.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/generate_api_types.py",
+      "target": "file:backend/app/main.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "file:backend/app/main.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "file:backend/app/store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/model_labels.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "file:src/model_labels.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/files.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/orchestrator.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/personalization.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/personalization.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/personalization.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/providers.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/orchestrator.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/ollama_client.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/rag.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "pipeline:.github/workflows/ci.yml",
+      "target": "file:tests/test_api_contract.py",
+      "type": "triggers",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "pipeline:.github/workflows/ci.yml",
+      "target": "file:tests/test_provider_adapters.py",
+      "type": "triggers",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "pipeline:.github/workflows/ci.yml",
+      "target": "file:tests/test_workspace_features.py",
+      "type": "triggers",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:docs/codebase/ARCHITECTURE.md",
+      "target": "file:backend/app/main.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/ARCHITECTURE.md",
+      "target": "file:backend/app/workspace.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/CONCERNS.md",
+      "target": "file:backend/app/store.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/CONVENTIONS.md",
+      "target": "file:backend/app/contracts.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/INTEGRATIONS.md",
+      "target": "file:backend/app/providers.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/INTEGRATIONS.md",
+      "target": "file:backend/app/memory.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STACK.md",
+      "target": "config:pyproject.toml",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STRUCTURE.md",
+      "target": "file:backend/app/cli.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/TESTING.md",
+      "target": "file:tests/test_workspace_features.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:frontend/components.json",
+      "target": "file:frontend/src/App.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/package.json",
+      "target": "file:frontend/src/main.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/tsconfig.app.json",
+      "target": "file:frontend/src/App.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/tsconfig.json",
+      "target": "file:frontend/vite.config.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/tsconfig.node.json",
+      "target": "file:frontend/vite.config.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:tasks/plan.md",
+      "target": "file:docs/site/index.html",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:tasks/todo.md",
+      "target": "document:tasks/plan.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:tests/test_api_contract.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:frontend/src/App.tsx",
+      "target": "file:frontend/src/App.test.tsx",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5,
+      "description": "Path-based pairing (deterministic)"
+    }
+  ]
+}

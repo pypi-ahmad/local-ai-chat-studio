@@ -1,0 +1,25 @@
+{
+  "projectRoot": "D:\\AI\\Github\\local-ai-chat-studio",
+  "batchFiles": [
+    {"path": "backend/app/cli.py", "language": "python", "sizeLines": 15, "fileCategory": "code"},
+    {"path": "backend/app/contracts.py", "language": "python", "sizeLines": 104, "fileCategory": "code"},
+    {"path": "backend/app/main.py", "language": "python", "sizeLines": 232, "fileCategory": "code"},
+    {"path": "backend/app/providers.py", "language": "python", "sizeLines": 221, "fileCategory": "code"},
+    {"path": "backend/app/runs.py", "language": "python", "sizeLines": 143, "fileCategory": "code"},
+    {"path": "backend/app/sessions.py", "language": "python", "sizeLines": 45, "fileCategory": "code"},
+    {"path": "backend/app/store.py", "language": "python", "sizeLines": 105, "fileCategory": "code"},
+    {"path": "scripts/generate_api_types.py", "language": "python", "sizeLines": 17, "fileCategory": "code"},
+    {"path": "tests/test_provider_adapters.py", "language": "python", "sizeLines": 50, "fileCategory": "code"}
+  ],
+  "batchImportData": {
+    "backend/app/cli.py": ["backend/app/main.py"],
+    "backend/app/contracts.py": [],
+    "backend/app/main.py": ["backend/app/contracts.py", "backend/app/providers.py", "backend/app/runs.py", "backend/app/sessions.py", "backend/app/store.py"],
+    "backend/app/providers.py": ["backend/app/contracts.py"],
+    "backend/app/runs.py": ["backend/app/contracts.py", "backend/app/providers.py", "backend/app/sessions.py", "backend/app/store.py"],
+    "backend/app/sessions.py": [],
+    "backend/app/store.py": ["backend/app/contracts.py"],
+    "scripts/generate_api_types.py": ["backend/app/main.py"],
+    "tests/test_provider_adapters.py": ["backend/app/contracts.py", "backend/app/providers.py"]
+  }
+}

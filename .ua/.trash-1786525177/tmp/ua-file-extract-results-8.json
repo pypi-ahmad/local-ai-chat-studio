@@ -1,0 +1,297 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 2,
+  "filesSkipped": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 2,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 2,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "tests/conftest.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 8,
+      "functions": [
+        {
+          "name": "client",
+          "startLine": 8,
+          "endLine": 12,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "client",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "client",
+          "callee": "TestClient",
+          "lineNumber": 11
+        },
+        {
+          "caller": "client",
+          "callee": "create_app",
+          "lineNumber": 11
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "tests/test_api_contract.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 90,
+      "nonEmptyLines": 71,
+      "functions": [
+        {
+          "name": "test_health_and_session_cookie",
+          "startLine": 9,
+          "endLine": 14,
+          "params": [
+            "client"
+          ]
+        },
+        {
+          "name": "test_conversation_crud_preserves_message_order",
+          "startLine": 17,
+          "endLine": 36,
+          "params": [
+            "client"
+          ]
+        },
+        {
+          "name": "test_provider_secret_is_scoped_to_browser_session",
+          "startLine": 39,
+          "endLine": 48,
+          "params": [
+            "client"
+          ]
+        },
+        {
+          "name": "test_run_stream_contract_retains_completed_output",
+          "startLine": 51,
+          "endLine": 75,
+          "params": [
+            "client"
+          ]
+        },
+        {
+          "name": "test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+          "startLine": 78,
+          "endLine": 90,
+          "params": [
+            "client"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "test_health_and_session_cookie",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "test_conversation_crud_preserves_message_order",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "test_provider_secret_is_scoped_to_browser_session",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "test_run_stream_contract_retains_completed_output",
+          "line": 51,
+          "isDefault": false
+        },
+        {
+          "name": "test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+          "line": 78,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "test_health_and_session_cookie",
+          "callee": "client.get",
+          "lineNumber": 10
+        },
+        {
+          "caller": "test_health_and_session_cookie",
+          "callee": "response.json",
+          "lineNumber": 13
+        },
+        {
+          "caller": "test_health_and_session_cookie",
+          "callee": "response.cookies.get",
+          "lineNumber": 14
+        },
+        {
+          "caller": "test_conversation_crud_preserves_message_order",
+          "callee": "client.post",
+          "lineNumber": 18
+        },
+        {
+          "caller": "test_conversation_crud_preserves_message_order",
+          "callee": "created.json",
+          "lineNumber": 20
+        },
+        {
+          "caller": "test_conversation_crud_preserves_message_order",
+          "callee": "client.post",
+          "lineNumber": 22
+        },
+        {
+          "caller": "test_conversation_crud_preserves_message_order",
+          "callee": "client.post",
+          "lineNumber": 26
+        },
+        {
+          "caller": "test_conversation_crud_preserves_message_order",
+          "callee": "client.get",
+          "lineNumber": 32
+        },
+        {
+          "caller": "test_conversation_crud_preserves_message_order",
+          "callee": "detail.json",
+          "lineNumber": 33
+        },
+        {
+          "caller": "test_provider_secret_is_scoped_to_browser_session",
+          "callee": "client.put",
+          "lineNumber": 40
+        },
+        {
+          "caller": "test_provider_secret_is_scoped_to_browser_session",
+          "callee": "client.get(\"/api/v1/providers\").json",
+          "lineNumber": 44
+        },
+        {
+          "caller": "test_provider_secret_is_scoped_to_browser_session",
+          "callee": "client.get",
+          "lineNumber": 44
+        },
+        {
+          "caller": "test_provider_secret_is_scoped_to_browser_session",
+          "callee": "TestClient",
+          "lineNumber": 46
+        },
+        {
+          "caller": "test_provider_secret_is_scoped_to_browser_session",
+          "callee": "isolated.get(\"/api/v1/providers\").json",
+          "lineNumber": 47
+        },
+        {
+          "caller": "test_provider_secret_is_scoped_to_browser_session",
+          "callee": "isolated.get",
+          "lineNumber": 47
+        },
+        {
+          "caller": "test_provider_secret_is_scoped_to_browser_session",
+          "callee": "next",
+          "lineNumber": 48
+        },
+        {
+          "caller": "test_run_stream_contract_retains_completed_output",
+          "callee": "client.post",
+          "lineNumber": 52
+        },
+        {
+          "caller": "test_run_stream_contract_retains_completed_output",
+          "callee": "created.json",
+          "lineNumber": 61
+        },
+        {
+          "caller": "test_run_stream_contract_retains_completed_output",
+          "callee": "client.stream",
+          "lineNumber": 63
+        },
+        {
+          "caller": "test_run_stream_contract_retains_completed_output",
+          "callee": "json.loads",
+          "lineNumber": 65
+        },
+        {
+          "caller": "test_run_stream_contract_retains_completed_output",
+          "callee": "line.removeprefix",
+          "lineNumber": 65
+        },
+        {
+          "caller": "test_run_stream_contract_retains_completed_output",
+          "callee": "stream.iter_lines",
+          "lineNumber": 66
+        },
+        {
+          "caller": "test_run_stream_contract_retains_completed_output",
+          "callee": "line.startswith",
+          "lineNumber": 67
+        },
+        {
+          "caller": "test_run_stream_contract_retains_completed_output",
+          "callee": "any",
+          "lineNumber": 71
+        },
+        {
+          "caller": "test_run_stream_contract_retains_completed_output",
+          "callee": "client.get(f\"/api/v1/runs/{run_id}\").json",
+          "lineNumber": 73
+        },
+        {
+          "caller": "test_run_stream_contract_retains_completed_output",
+          "callee": "client.get",
+          "lineNumber": 73
+        },
+        {
+          "caller": "test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+          "callee": "client.post",
+          "lineNumber": 79
+        },
+        {
+          "caller": "test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+          "callee": "response.json",
+          "lineNumber": 82
+        },
+        {
+          "caller": "test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+          "callee": "urlparse",
+          "lineNumber": 83
+        },
+        {
+          "caller": "test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+          "callee": "parse_qs",
+          "lineNumber": 84
+        },
+        {
+          "caller": "test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+          "callee": "len",
+          "lineNumber": 90
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    }
+  ]
+}

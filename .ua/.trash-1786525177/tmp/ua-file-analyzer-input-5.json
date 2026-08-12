@@ -1,0 +1,27 @@
+{
+  "projectRoot": "D:\\AI\\Github\\local-ai-chat-studio",
+  "batchFiles": [
+    {"path": "CHANGELOG.md", "language": "markdown", "sizeLines": 38, "fileCategory": "docs"},
+    {"path": "CODE_OF_CONDUCT.md", "language": "markdown", "sizeLines": 21, "fileCategory": "docs"},
+    {"path": "CODE_TUTORIAL.md", "language": "markdown", "sizeLines": 901, "fileCategory": "docs"},
+    {"path": "CONTRIBUTING.md", "language": "markdown", "sizeLines": 80, "fileCategory": "docs"},
+    {"path": "DATASET.md", "language": "markdown", "sizeLines": 3, "fileCategory": "docs"},
+    {"path": "README.md", "language": "markdown", "sizeLines": 287, "fileCategory": "docs"},
+    {"path": "SECURITY.md", "language": "markdown", "sizeLines": 35, "fileCategory": "docs"},
+    {"path": "USER_GUIDE.md", "language": "markdown", "sizeLines": 356, "fileCategory": "docs"},
+    {"path": "ZERO_TO_HERO_STUDY_HANDBOOK.md", "language": "markdown", "sizeLines": 564, "fileCategory": "docs"},
+    {"path": "pyproject.toml", "language": "toml", "sizeLines": 46, "fileCategory": "config"}
+  ],
+  "batchImportData": {
+    "CHANGELOG.md": [],
+    "CODE_OF_CONDUCT.md": [],
+    "CODE_TUTORIAL.md": [],
+    "CONTRIBUTING.md": [],
+    "DATASET.md": [],
+    "README.md": [],
+    "SECURITY.md": [],
+    "USER_GUIDE.md": [],
+    "ZERO_TO_HERO_STUDY_HANDBOOK.md": [],
+    "pyproject.toml": []
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "issues": [],
+  "warnings": [
+    "Node 'document:CHANGELOG.md' has no edges (orphan)",
+    "Node 'document:CODE_OF_CONDUCT.md' has no edges (orphan)",
+    "Node 'document:CODE_TUTORIAL.md' has no edges (orphan)",
+    "Node 'document:CONTRIBUTING.md' has no edges (orphan)",
+    "Node 'document:DATASET.md' has no edges (orphan)",
+    "Node 'document:README.md' has no edges (orphan)",
+    "Node 'document:SECURITY.md' has no edges (orphan)",
+    "Node 'document:USER_GUIDE.md' has no edges (orphan)",
+    "Node 'document:ZERO_TO_HERO_STUDY_HANDBOOK.md' has no edges (orphan)",
+    "Node 'config:frontend/.oxlintrc.json' has no edges (orphan)",
+    "Node 'document:frontend/README.md' has no edges (orphan)",
+    "Node 'file:frontend/index.html' has no edges (orphan)",
+    "Node 'document:.github/ISSUE_TEMPLATE/bug_report.md' has no edges (orphan)",
+    "Node 'document:.github/ISSUE_TEMPLATE/feature_request.md' has no edges (orphan)",
+    "Node 'document:.github/pull_request_template.md' has no edges (orphan)",
+    "Node 'file:.graphifyignore' has no edges (orphan)",
+    "Node 'file:.python-version' has no edges (orphan)",
+    "Node 'file:backend/__init__.py' has no edges (orphan)",
+    "Node 'file:backend/app/__init__.py' has no edges (orphan)",
+    "Node 'file:docs/tutorial/index.html' has no edges (orphan)",
+    "Node 'file:frontend/src/test/setup.ts' has no edges (orphan)",
+    "Node 'file:frontend/vitest.config.ts' has no edges (orphan)"
+  ],
+  "stats": {
+    "totalNodes": 290,
+    "totalEdges": 495,
+    "totalLayers": 10,
+    "tourSteps": 11,
+    "nodeTypes": {
+      "file": 54,
+      "function": 137,
+      "class": 69,
+      "pipeline": 1,
+      "document": 22,
+      "config": 7
+    },
+    "edgeTypes": {
+      "imports": 68,
+      "contains": 206,
+      "exports": 194,
+      "tested_by": 8,
+      "triggers": 3,
+      "documents": 10,
+      "configures": 5,
+      "related": 1
+    }
+  }
+}

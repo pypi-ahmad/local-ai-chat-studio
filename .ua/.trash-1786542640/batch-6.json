@@ -1,0 +1,22 @@
+{
+  "nodes": [
+    {"id":"document:docs/codebase/ARCHITECTURE.md","type":"document","name":"ARCHITECTURE.md","filePath":"docs/codebase/ARCHITECTURE.md","summary":"Describes the React-to-FastAPI architecture, context-preflight flow, persisted runs, memory curation, provider boundaries, and localhost-first deployment model.","tags":["documentation","architecture","backend","data-flow"],"complexity":"simple"},
+    {"id":"document:docs/codebase/CONCERNS.md","type":"document","name":"CONCERNS.md","filePath":"docs/codebase/CONCERNS.md","summary":"Records deployment constraints, security boundaries, provider and retrieval tradeoffs, plus the high-blast-radius files that need focused tests.","tags":["documentation","security","operations","architecture"],"complexity":"simple"},
+    {"id":"document:docs/codebase/CONVENTIONS.md","type":"document","name":"CONVENTIONS.md","filePath":"docs/codebase/CONVENTIONS.md","summary":"Defines Python and React naming, API-contract evolution, error handling, credential safety, and the project verification commands.","tags":["documentation","conventions","security","testing"],"complexity":"simple"},
+    {"id":"document:docs/codebase/INTEGRATIONS.md","type":"document","name":"INTEGRATIONS.md","filePath":"docs/codebase/INTEGRATIONS.md","summary":"Catalogs local and cloud model integrations, OpenCode OAuth bridging, attachment handling, memory persistence, and credential boundaries.","tags":["documentation","integrations","providers","security"],"complexity":"simple"},
+    {"id":"document:docs/codebase/STACK.md","type":"document","name":"STACK.md","filePath":"docs/codebase/STACK.md","summary":"Lists the backend, frontend, persistence, inference, search, file-processing, and development-tooling stack with key commands.","tags":["documentation","technology-stack","tooling","configuration"],"complexity":"simple"},
+    {"id":"document:docs/codebase/STRUCTURE.md","type":"document","name":"STRUCTURE.md","filePath":"docs/codebase/STRUCTURE.md","summary":"Maps repository paths to their responsibilities and explains startup, static serving, and the retained shared modules.","tags":["documentation","project-structure","architecture","entry-point"],"complexity":"simple"},
+    {"id":"document:docs/codebase/TESTING.md","type":"document","name":"TESTING.md","filePath":"docs/codebase/TESTING.md","summary":"Documents backend and frontend test commands, test seams, coverage scope, and manual smoke-test gaps for external integrations.","tags":["documentation","testing","quality-assurance","tooling"],"complexity":"simple"}
+  ],
+  "edges": [
+    {"source":"document:docs/codebase/ARCHITECTURE.md","target":"file:backend/app/main.py","type":"documents","direction":"forward","weight":0.5},
+    {"source":"document:docs/codebase/ARCHITECTURE.md","target":"file:backend/app/workspace.py","type":"documents","direction":"forward","weight":0.5},
+    {"source":"document:docs/codebase/CONCERNS.md","target":"file:backend/app/store.py","type":"documents","direction":"forward","weight":0.5},
+    {"source":"document:docs/codebase/CONVENTIONS.md","target":"file:backend/app/contracts.py","type":"documents","direction":"forward","weight":0.5},
+    {"source":"document:docs/codebase/INTEGRATIONS.md","target":"file:backend/app/providers.py","type":"documents","direction":"forward","weight":0.5},
+    {"source":"document:docs/codebase/INTEGRATIONS.md","target":"file:backend/app/memory.py","type":"documents","direction":"forward","weight":0.5},
+    {"source":"document:docs/codebase/STACK.md","target":"config:pyproject.toml","type":"documents","direction":"forward","weight":0.5},
+    {"source":"document:docs/codebase/STRUCTURE.md","target":"file:backend/app/cli.py","type":"documents","direction":"forward","weight":0.5},
+    {"source":"document:docs/codebase/TESTING.md","target":"file:tests/test_workspace_features.py","type":"documents","direction":"forward","weight":0.5}
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "projectRoot": "D:\\AI\\Github\\local-ai-chat-studio",
+  "batchFiles": [
+    {
+      "path": "tests/conftest.py",
+      "language": "python",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tests/test_api_contract.py",
+      "language": "python",
+      "sizeLines": 90,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "tests/conftest.py": [],
+    "tests/test_api_contract.py": []
+  }
+}

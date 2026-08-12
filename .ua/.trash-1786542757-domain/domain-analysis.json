@@ -1,0 +1,434 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "local-ai-chat-studio",
+    "languages": ["batch", "css", "html", "json", "markdown", "python", "toml", "typescript", "yaml"],
+    "frameworks": ["FastAPI", "Pydantic", "Pytest", "Uvicorn"],
+    "description": "A local-first AI chat studio that lets users run conversations through local or bring-your-own cloud AI providers while retaining local workspace context, memories, and conversation data.",
+    "analyzedAt": "2026-08-12T14:05:00.000Z",
+    "gitCommitHash": "a799b25bc435e75b6c35643e12a1f1782e5b9568"
+  },
+  "nodes": [
+    {
+      "id": "domain:conversation-execution",
+      "type": "domain",
+      "name": "Conversation Execution",
+      "summary": "This domain turns a user chat request into a managed, streamed AI response. It coordinates run state, cancellation, output persistence, and the browser-facing conversation experience.",
+      "tags": ["chat", "runs", "streaming"],
+      "complexity": "complex",
+      "domainMeta": {
+        "entities": ["conversation", "message", "run", "run event"],
+        "businessRules": ["A run has explicit state transitions and can be cancelled.", "Completed output is persisted for later conversation use."],
+        "crossDomainInteractions": ["Uses the provider registry to generate output.", "Uses workspace context before a run is assembled.", "Stores conversation and run records in SQLite."]
+      }
+    },
+    {
+      "id": "domain:provider-access",
+      "type": "domain",
+      "name": "Provider Access",
+      "summary": "This domain gives a user a common way to discover and use local Ollama, cloud, OpenAI-compatible, and OpenCode models. It keeps provider-specific behavior behind normalized adapters and session-scoped credential handling.",
+      "tags": ["providers", "models", "credentials"],
+      "complexity": "complex",
+      "domainMeta": {
+        "entities": ["provider adapter", "provider registry", "model descriptor", "credential"],
+        "businessRules": ["Provider adapters expose a normalized interface to the chat workflow.", "Provider credentials are held with browser-session state rather than being part of durable chat data."],
+        "crossDomainInteractions": ["Supplies model discovery and generation to conversation execution.", "Supports LLM-backed memory extraction when a selected provider is available."]
+      }
+    },
+    {
+      "id": "domain:workspace-context",
+      "type": "domain",
+      "name": "Workspace Context",
+      "summary": "This domain builds the context available to an individual user turn from uploads, retrieval, memories, backpacks, and web sources. It applies safety review and token budgeting before passing approved material to a model.",
+      "tags": ["workspace", "context", "retrieval"],
+      "complexity": "complex",
+      "domainMeta": {
+        "entities": ["context plan", "context source", "upload", "attachment", "backpack"],
+        "businessRules": ["Only eligible sources are assembled into a context plan.", "Context is safety-reviewed and bounded by a token budget before model messages are built."],
+        "crossDomainInteractions": ["Provides approved prompt context to conversation execution.", "Retrieves relevant long-term memories.", "Persists uploads and workspace resources through the data layer."]
+      }
+    },
+    {
+      "id": "domain:memory-personalization",
+      "type": "domain",
+      "name": "Memory Personalization",
+      "summary": "This domain extracts concise, user-relevant facts from conversation history and manages them as long-term memories. LLM selection, consolidation, validation, categorization, and provenance prevent raw chat history from becoming unbounded memory.",
+      "tags": ["memory", "personalization", "provenance"],
+      "complexity": "moderate",
+      "domainMeta": {
+        "entities": ["memory", "memory candidate", "extraction outcome", "provenance"],
+        "businessRules": ["Only useful and user-relevant memory candidates are retained.", "Saved memories include provenance from the source conversation."],
+        "crossDomainInteractions": ["Draws on provider access for LLM-backed extraction.", "Supplies relevant memories to workspace context.", "Uses SQLite persistence for durable memory records."]
+      }
+    },
+    {
+      "id": "domain:conversation-data-management",
+      "type": "domain",
+      "name": "Conversation Data Management",
+      "summary": "This domain owns durable local records for conversations, messages, runs, uploads, workspace resources, and replay-related data. It gives the studio a local-first history and supports data-management APIs around those records.",
+      "tags": ["sqlite", "conversations", "replay"],
+      "complexity": "complex",
+      "domainMeta": {
+        "entities": ["SQLite store", "conversation", "message", "upload", "replay bundle"],
+        "businessRules": ["Local structured state is persisted through the SQLite store.", "Conversation history and run results must remain available to related workspace and replay features."],
+        "crossDomainInteractions": ["Persists conversation execution results.", "Stores memory, uploads, and workspace resources used by other domains."]
+      }
+    },
+    {
+      "id": "flow:execute-chat-run",
+      "type": "flow",
+      "name": "Execute Chat Run",
+      "summary": "Starts and manages a streamed model response for a conversation turn, then retains the resulting state and output.",
+      "tags": ["chat", "run", "streaming"],
+      "complexity": "complex",
+      "domainMeta": {"entryPoint": "FastAPI conversation and run API", "entryType": "http"}
+    },
+    {
+      "id": "flow:configure-provider-access",
+      "type": "flow",
+      "name": "Configure Provider Access",
+      "summary": "Lets a browser session prepare provider access through supported credentials or provider-specific connection methods before chat execution.",
+      "tags": ["provider", "credentials", "session"],
+      "complexity": "moderate",
+      "domainMeta": {"entryPoint": "FastAPI provider API", "entryType": "http"}
+    },
+    {
+      "id": "flow:discover-available-models",
+      "type": "flow",
+      "name": "Discover Available Models",
+      "summary": "Lists models from the configured provider adapters in a common descriptor shape that the chat interface can present to a user.",
+      "tags": ["provider", "models", "discovery"],
+      "complexity": "moderate",
+      "domainMeta": {"entryPoint": "FastAPI provider discovery API", "entryType": "http"}
+    },
+    {
+      "id": "flow:assemble-turn-context",
+      "type": "flow",
+      "name": "Assemble Turn Context",
+      "summary": "Plans and assembles safety-reviewed, budgeted source material for a single chat turn before model messages are produced.",
+      "tags": ["workspace", "context", "safety"],
+      "complexity": "complex",
+      "domainMeta": {"entryPoint": "FastAPI workspace and turn API", "entryType": "http"}
+    },
+    {
+      "id": "flow:process-uploaded-file",
+      "type": "flow",
+      "name": "Process Uploaded File",
+      "summary": "Validates an uploaded file, creates a safe textual representation, chunks it for retrieval, and makes it available as workspace context.",
+      "tags": ["uploads", "files", "retrieval"],
+      "complexity": "moderate",
+      "domainMeta": {"entryPoint": "FastAPI file API", "entryType": "http"}
+    },
+    {
+      "id": "flow:curate-long-term-memory",
+      "type": "flow",
+      "name": "Curate Long-Term Memory",
+      "summary": "Uses a selected LLM to identify, consolidate, validate, categorize, and record useful memory candidates from a conversation history.",
+      "tags": ["memory", "llm", "provenance"],
+      "complexity": "moderate",
+      "domainMeta": {"entryPoint": "FastAPI memory extraction API", "entryType": "http"}
+    },
+    {
+      "id": "flow:manage-local-conversation-data",
+      "type": "flow",
+      "name": "Manage Local Conversation Data",
+      "summary": "Creates, updates, and retrieves local conversation records and the associated messages, runs, uploads, and workspace resources needed by the studio.",
+      "tags": ["conversations", "sqlite", "data-management"],
+      "complexity": "complex",
+      "domainMeta": {"entryPoint": "FastAPI conversation and data-management APIs", "entryType": "http"}
+    },
+    {
+      "id": "step:execute-chat-run:accept-turn-request",
+      "type": "step",
+      "name": "Accept Turn Request",
+      "summary": "The FastAPI application accepts the chat or run request using the shared Pydantic contracts.",
+      "tags": ["api", "chat", "validation"],
+      "complexity": "moderate",
+      "filePath": "backend/app/main.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:execute-chat-run:build-approved-messages",
+      "type": "step",
+      "name": "Build Approved Messages",
+      "summary": "The workspace service assembles the user turn with its approved context plan into model messages.",
+      "tags": ["workspace", "messages", "context"],
+      "complexity": "complex",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:execute-chat-run:stream-provider-output",
+      "type": "step",
+      "name": "Stream Provider Output",
+      "summary": "The run manager coordinates asynchronous model output and emits lifecycle events to the browser client.",
+      "tags": ["runs", "streaming", "provider"],
+      "complexity": "complex",
+      "filePath": "backend/app/runs.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:execute-chat-run:persist-run-result",
+      "type": "step",
+      "name": "Persist Run Result",
+      "summary": "The application retains completed run output and state in the local persistence layer for conversation history.",
+      "tags": ["runs", "persistence", "history"],
+      "complexity": "moderate",
+      "filePath": "backend/app/store.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:configure-provider-access:receive-provider-input",
+      "type": "step",
+      "name": "Receive Provider Input",
+      "summary": "The API accepts credential, OAuth, or related provider input using shared request contracts.",
+      "tags": ["provider", "api", "credentials"],
+      "complexity": "moderate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:configure-provider-access:scope-session-credentials",
+      "type": "step",
+      "name": "Scope Session Credentials",
+      "summary": "Browser-session state holds provider credentials and resolves configured workload-identity information.",
+      "tags": ["session", "credentials", "provider"],
+      "complexity": "moderate",
+      "filePath": "backend/app/sessions.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:configure-provider-access:build-provider-registry",
+      "type": "step",
+      "name": "Build Provider Registry",
+      "summary": "The provider service creates the configured registry of local and cloud adapters.",
+      "tags": ["provider", "registry", "adapters"],
+      "complexity": "moderate",
+      "filePath": "backend/app/providers.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:discover-available-models:query-adapter-catalogs",
+      "type": "step",
+      "name": "Query Adapter Catalogs",
+      "summary": "Normalized provider adapters query their available local or cloud model catalogs.",
+      "tags": ["provider", "models", "adapters"],
+      "complexity": "complex",
+      "filePath": "backend/app/providers.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:discover-available-models:normalize-model-descriptors",
+      "type": "step",
+      "name": "Normalize Model Descriptors",
+      "summary": "The backend represents discovered models in the common API contract used across provider types.",
+      "tags": ["models", "contracts", "api"],
+      "complexity": "moderate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:discover-available-models:present-models-in-browser",
+      "type": "step",
+      "name": "Present Models in Browser",
+      "summary": "The typed browser client retrieves provider data for the chat interface to present during model selection.",
+      "tags": ["frontend", "models", "api-client"],
+      "complexity": "moderate",
+      "filePath": "frontend/src/api/client.ts",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:assemble-turn-context:collect-eligible-sources",
+      "type": "step",
+      "name": "Collect Eligible Sources",
+      "summary": "The workspace service gathers eligible memories, retrieval material, uploads, backpacks, and web sources for the turn.",
+      "tags": ["workspace", "sources", "retrieval"],
+      "complexity": "complex",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:assemble-turn-context:review-source-safety",
+      "type": "step",
+      "name": "Review Source Safety",
+      "summary": "Text sources are scanned and sanitized before they can be included in the planned context.",
+      "tags": ["safety", "workspace", "sanitization"],
+      "complexity": "moderate",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:assemble-turn-context:apply-context-budget",
+      "type": "step",
+      "name": "Apply Context Budget",
+      "summary": "The context planner estimates tokens and keeps the approved material within the configured turn budget.",
+      "tags": ["context", "tokens", "budget"],
+      "complexity": "complex",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:assemble-turn-context:assemble-model-messages",
+      "type": "step",
+      "name": "Assemble Model Messages",
+      "summary": "The approved context plan and the user turn are turned into the model message list.",
+      "tags": ["messages", "workspace", "chat"],
+      "complexity": "complex",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:process-uploaded-file:validate-upload",
+      "type": "step",
+      "name": "Validate Upload",
+      "summary": "The file service validates the uploaded file before it becomes eligible for storage or contextual use.",
+      "tags": ["uploads", "validation", "files"],
+      "complexity": "moderate",
+      "filePath": "src/files.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:process-uploaded-file:extract-safe-text",
+      "type": "step",
+      "name": "Extract Safe Text",
+      "summary": "The file service parses supported file content into a safe text representation for storage.",
+      "tags": ["uploads", "parsing", "text"],
+      "complexity": "moderate",
+      "filePath": "src/files.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:process-uploaded-file:chunk-for-retrieval",
+      "type": "step",
+      "name": "Chunk for Retrieval",
+      "summary": "Extracted text is split into bounded chunks that can be used by contextual retrieval.",
+      "tags": ["uploads", "retrieval", "chunking"],
+      "complexity": "moderate",
+      "filePath": "src/files.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:process-uploaded-file:store-workspace-resource",
+      "type": "step",
+      "name": "Store Workspace Resource",
+      "summary": "The persistence layer stores uploads and workspace resources so the context planner can use them later.",
+      "tags": ["uploads", "workspace", "persistence"],
+      "complexity": "complex",
+      "filePath": "backend/app/store.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:curate-long-term-memory:select-memory-candidates",
+      "type": "step",
+      "name": "Select Memory Candidates",
+      "summary": "A selected LLM identifies concise, user-relevant facts in conversation history as memory candidates.",
+      "tags": ["memory", "llm", "selection"],
+      "complexity": "moderate",
+      "filePath": "backend/app/memory.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:curate-long-term-memory:consolidate-and-validate",
+      "type": "step",
+      "name": "Consolidate and Validate",
+      "summary": "The memory service consolidates candidate facts, validates them, and assigns categories before storage.",
+      "tags": ["memory", "validation", "categorization"],
+      "complexity": "moderate",
+      "filePath": "backend/app/memory.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:curate-long-term-memory:record-memory-provenance",
+      "type": "step",
+      "name": "Record Memory Provenance",
+      "summary": "The extraction outcome records the conversation provenance associated with retained memories.",
+      "tags": ["memory", "provenance", "history"],
+      "complexity": "moderate",
+      "filePath": "backend/app/memory.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:curate-long-term-memory:persist-curated-memory",
+      "type": "step",
+      "name": "Persist Curated Memory",
+      "summary": "The SQLite store retains curated memory records for later workspace retrieval.",
+      "tags": ["memory", "sqlite", "persistence"],
+      "complexity": "moderate",
+      "filePath": "backend/app/store.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:manage-local-conversation-data:validate-data-request",
+      "type": "step",
+      "name": "Validate Data Request",
+      "summary": "The API contracts define validated request and response shapes for conversations, replay, and data-management operations.",
+      "tags": ["data-management", "contracts", "validation"],
+      "complexity": "complex",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:manage-local-conversation-data:write-local-records",
+      "type": "step",
+      "name": "Write Local Records",
+      "summary": "The SQLite store writes conversation, message, run, upload, and workspace resource records.",
+      "tags": ["sqlite", "conversations", "persistence"],
+      "complexity": "complex",
+      "filePath": "backend/app/store.py",
+      "lineRange": [0, 0]
+    },
+    {
+      "id": "step:manage-local-conversation-data:retrieve-history",
+      "type": "step",
+      "name": "Retrieve History",
+      "summary": "The application retrieves stored conversation data to support continued chat, workspace context, and replay-related features.",
+      "tags": ["conversations", "history", "replay"],
+      "complexity": "complex",
+      "filePath": "backend/app/store.py",
+      "lineRange": [0, 0]
+    }
+  ],
+  "edges": [
+    {"source":"domain:conversation-execution","target":"flow:execute-chat-run","type":"contains_flow","direction":"forward","weight":1.0},
+    {"source":"domain:provider-access","target":"flow:configure-provider-access","type":"contains_flow","direction":"forward","weight":1.0},
+    {"source":"domain:provider-access","target":"flow:discover-available-models","type":"contains_flow","direction":"forward","weight":1.0},
+    {"source":"domain:workspace-context","target":"flow:assemble-turn-context","type":"contains_flow","direction":"forward","weight":1.0},
+    {"source":"domain:workspace-context","target":"flow:process-uploaded-file","type":"contains_flow","direction":"forward","weight":1.0},
+    {"source":"domain:memory-personalization","target":"flow:curate-long-term-memory","type":"contains_flow","direction":"forward","weight":1.0},
+    {"source":"domain:conversation-data-management","target":"flow:manage-local-conversation-data","type":"contains_flow","direction":"forward","weight":1.0},
+    {"source":"flow:execute-chat-run","target":"step:execute-chat-run:accept-turn-request","type":"flow_step","direction":"forward","weight":0.1},
+    {"source":"flow:execute-chat-run","target":"step:execute-chat-run:build-approved-messages","type":"flow_step","direction":"forward","weight":0.2},
+    {"source":"flow:execute-chat-run","target":"step:execute-chat-run:stream-provider-output","type":"flow_step","direction":"forward","weight":0.3},
+    {"source":"flow:execute-chat-run","target":"step:execute-chat-run:persist-run-result","type":"flow_step","direction":"forward","weight":0.4},
+    {"source":"flow:configure-provider-access","target":"step:configure-provider-access:receive-provider-input","type":"flow_step","direction":"forward","weight":0.1},
+    {"source":"flow:configure-provider-access","target":"step:configure-provider-access:scope-session-credentials","type":"flow_step","direction":"forward","weight":0.2},
+    {"source":"flow:configure-provider-access","target":"step:configure-provider-access:build-provider-registry","type":"flow_step","direction":"forward","weight":0.3},
+    {"source":"flow:discover-available-models","target":"step:discover-available-models:query-adapter-catalogs","type":"flow_step","direction":"forward","weight":0.1},
+    {"source":"flow:discover-available-models","target":"step:discover-available-models:normalize-model-descriptors","type":"flow_step","direction":"forward","weight":0.2},
+    {"source":"flow:discover-available-models","target":"step:discover-available-models:present-models-in-browser","type":"flow_step","direction":"forward","weight":0.3},
+    {"source":"flow:assemble-turn-context","target":"step:assemble-turn-context:collect-eligible-sources","type":"flow_step","direction":"forward","weight":0.1},
+    {"source":"flow:assemble-turn-context","target":"step:assemble-turn-context:review-source-safety","type":"flow_step","direction":"forward","weight":0.2},
+    {"source":"flow:assemble-turn-context","target":"step:assemble-turn-context:apply-context-budget","type":"flow_step","direction":"forward","weight":0.3},
+    {"source":"flow:assemble-turn-context","target":"step:assemble-turn-context:assemble-model-messages","type":"flow_step","direction":"forward","weight":0.4},
+    {"source":"flow:process-uploaded-file","target":"step:process-uploaded-file:validate-upload","type":"flow_step","direction":"forward","weight":0.1},
+    {"source":"flow:process-uploaded-file","target":"step:process-uploaded-file:extract-safe-text","type":"flow_step","direction":"forward","weight":0.2},
+    {"source":"flow:process-uploaded-file","target":"step:process-uploaded-file:chunk-for-retrieval","type":"flow_step","direction":"forward","weight":0.3},
+    {"source":"flow:process-uploaded-file","target":"step:process-uploaded-file:store-workspace-resource","type":"flow_step","direction":"forward","weight":0.4},
+    {"source":"flow:curate-long-term-memory","target":"step:curate-long-term-memory:select-memory-candidates","type":"flow_step","direction":"forward","weight":0.1},
+    {"source":"flow:curate-long-term-memory","target":"step:curate-long-term-memory:consolidate-and-validate","type":"flow_step","direction":"forward","weight":0.2},
+    {"source":"flow:curate-long-term-memory","target":"step:curate-long-term-memory:record-memory-provenance","type":"flow_step","direction":"forward","weight":0.3},
+    {"source":"flow:curate-long-term-memory","target":"step:curate-long-term-memory:persist-curated-memory","type":"flow_step","direction":"forward","weight":0.4},
+    {"source":"flow:manage-local-conversation-data","target":"step:manage-local-conversation-data:validate-data-request","type":"flow_step","direction":"forward","weight":0.1},
+    {"source":"flow:manage-local-conversation-data","target":"step:manage-local-conversation-data:write-local-records","type":"flow_step","direction":"forward","weight":0.2},
+    {"source":"flow:manage-local-conversation-data","target":"step:manage-local-conversation-data:retrieve-history","type":"flow_step","direction":"forward","weight":0.3},
+    {"source":"domain:conversation-execution","target":"domain:provider-access","type":"cross_domain","direction":"forward","description":"Conversation runs use normalized provider adapters for model generation and streaming.","weight":0.6},
+    {"source":"domain:workspace-context","target":"domain:conversation-execution","type":"cross_domain","direction":"forward","description":"Workspace context supplies the approved model messages used by a chat run.","weight":0.6},
+    {"source":"domain:memory-personalization","target":"domain:workspace-context","type":"cross_domain","direction":"forward","description":"Relevant curated memories are one of the eligible context sources for a turn.","weight":0.6},
+    {"source":"domain:memory-personalization","target":"domain:provider-access","type":"cross_domain","direction":"forward","description":"Memory extraction uses a selected LLM through the provider integration boundary.","weight":0.6},
+    {"source":"domain:conversation-execution","target":"domain:conversation-data-management","type":"cross_domain","direction":"forward","description":"Chat runs and their outputs are persisted as local conversation data.","weight":0.6},
+    {"source":"domain:workspace-context","target":"domain:conversation-data-management","type":"cross_domain","direction":"forward","description":"Uploads and workspace resources are stored locally for later context planning.","weight":0.6},
+    {"source":"domain:memory-personalization","target":"domain:conversation-data-management","type":"cross_domain","direction":"forward","description":"Curated memories and their provenance are retained in the local store.","weight":0.6}
+  ],
+  "layers": [],
+  "tour": []
+}
