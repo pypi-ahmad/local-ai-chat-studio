@@ -2,22 +2,29 @@
 
 ## Scope
 
-Local AI Chat Studio is a **local-first** app: it has no server component of ours,
-no telemetry, and no accounts. The security-relevant surfaces are:
+Local AI Chat Studio is a **local-first** FastAPI and React workspace: it has
+no hosted service of ours, no telemetry, and no account layer. The
+security-relevant surfaces are:
 
-- **API keys** — held in process memory only for the session, never written to
-  disk or logs, sent only to the provider they belong to (`src/providers.py`).
-- **Local data** — chats, memories, and vectors in `data/` (SQLite + ChromaDB),
-  protected by your OS file permissions.
-- **Network exposure** — the app ships with no authentication. Do not expose it
-  beyond `localhost` on untrusted networks.
-- **Prompt injection** — web search results and uploaded documents are inserted
-  into the model's context unsanitized (`src/orchestrator.py`, `src/jobs.py`).
-  A malicious page or file could contain text designed to steer the assistant's
-  reply. Since replies only ever render as plain text/Markdown (no `eval`,
-  `innerHTML`, or shell execution of model output), the ceiling of this is
-  misleading assistant output, not code execution — but treat any instruction
-  that appears to originate from retrieved content, not you, with suspicion.
+- **API keys and OAuth tokens** — browser-entered credentials are held in the
+  server's in-memory session vault, never written to SQLite, exports, or logs,
+  and sent only to the selected provider. Environment variables are optional
+  local fallback credentials and must be protected by the operating system.
+- **Local data** — chats, curated memories, uploads, and optional retrieval
+  data live under `data/` by default (`app.db`, `chroma`, and uploads). They are
+  protected by your OS file permissions and can be exported, imported, or wiped
+  from the product.
+- **Network exposure** — the launcher binds to `127.0.0.1` and the app ships
+  without a user-account layer. Do not expose it beyond localhost on an
+  untrusted network.
+- **Untrusted context** — uploaded documents, pasted text, retrieval results,
+  and web evidence can contain prompt-injection attempts or sensitive text. The
+  workspace provides warnings, quarantine, provenance, and redaction controls,
+  but you should still treat instructions originating in that content as
+  untrusted.
+- **Local bridges** — OpenCode subscription flows use a loopback-only local
+  server. Keep its optional credentials private and do not change the bridge to
+  a public endpoint.
 
 ## Reporting a vulnerability
 

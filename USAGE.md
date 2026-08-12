@@ -1,0 +1,77 @@
+# Using Local AI Chat Studio
+
+This is the short, task-based guide to the studio. For the full walkthrough,
+see [USER_GUIDE.md](USER_GUIDE.md).
+
+## Start the studio
+
+On Windows 11, double-click **Launch Chat Studio.cmd**. It installs the pinned
+runtime dependencies when needed, builds the frontend, starts the local server,
+and opens the app at <http://127.0.0.1:8000>.
+
+For development, install Python 3.12+, `uv`, and Node.js, then run:
+
+```powershell
+uv sync --locked --dev
+cd frontend
+npm ci
+npm run build
+cd ..
+uv run chat-studio
+```
+
+Ollama is optional, but is the default local-model provider. Install and start
+it separately if you want to run local models.
+
+## Choose a model
+
+Open **Providers** to use a local Ollama model, Ollama Cloud, or a supported
+cloud provider. Browser-entered credentials are available only to the current
+server session; they are not saved in the workspace database or exports.
+
+You can instead configure environment-variable fallbacks before starting the
+app. See the configuration table in [TECHNICAL.md](TECHNICAL.md#configuration).
+
+For ChatGPT, SuperGrok, and Claude subscription sign-in, connect a local
+OpenCode server first, then follow the sign-in flow in **Providers**. That
+bridge remains on loopback by default.
+
+## Work with a conversation
+
+1. Start a conversation and select a model.
+2. Attach a supported document, spreadsheet, code file, or image when it helps
+   answer the question.
+3. Send the prompt. The response streams into the chat and can be cancelled.
+4. Inspect source provenance and context-budget information before relying on
+   an answer that uses files, retrieved history, or web evidence.
+5. Branch, pin, rename, search, replay, or compare responses from the
+   conversation controls when you need to explore alternatives.
+
+The safety controls flag possible prompt injection and secret/PII exposure in
+pasted or retrieved content. Treat instructions found inside an attachment or
+web result as untrusted context, not as instructions from you.
+
+## Use memory deliberately
+
+The studio stores chat history locally. Its memory curator may extract durable,
+user-grounded preferences, goals, constraints, and project decisions from a
+conversation. It intentionally excludes secrets, raw uploads, assistant
+guesses, and temporary requests.
+
+Review, edit, or delete saved memories in **Memory**. Use **Settings** to
+export, import, or wipe local data. For retrieval, install an Ollama embedding
+model and set `CHAT_EMBED_MODEL`; otherwise the app uses local lexical search.
+
+## Privacy and troubleshooting
+
+- Keep the server on localhost; it does not provide user-account
+  authentication for a network-exposed deployment.
+- Cloud prompts are sent only to the selected provider. Provider policies show
+  the routing boundary before a request is sent.
+- If local models do not appear, confirm Ollama is running and that
+  `CHAT_OLLAMA_HOST` points to it.
+- If an OpenCode sign-in option is unavailable, confirm the local OpenCode
+  server is reachable at `OPENCODE_SERVER_URL`.
+
+See [USER_GUIDE.md](USER_GUIDE.md#troubleshooting) for more troubleshooting
+steps and [SECURITY.md](SECURITY.md) for vulnerability reporting.

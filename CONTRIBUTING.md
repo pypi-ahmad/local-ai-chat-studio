@@ -1,9 +1,10 @@
 # Contributing to Local AI Chat Studio
 
 Contributions are welcome — PRs, issues, and ideas are all appreciated. This
-guide covers the mechanics of contributing. Start with the current architecture map in
-[`docs/codebase/`](docs/codebase/); the longer handbook and code tutorial retain some
-clearly marked historical Streamlit material.
+guide covers the mechanics of contributing. Start with
+[TECHNICAL.md](TECHNICAL.md) and the current architecture map in
+[`docs/codebase/`](docs/codebase/); the longer handbook and code tutorial retain
+some clearly marked historical Streamlit material.
 
 ## Before you start
 
@@ -16,8 +17,8 @@ clearly marked historical Streamlit material.
 
 ## Setup
 
-Follow [USER_GUIDE.md §2](USER_GUIDE.md#2-clone-set-up-and-run-it) to get the
-app running locally. For backend + frontend development together:
+Follow [USAGE.md](USAGE.md) to get the app running locally. For backend +
+frontend development together:
 
 ```bash
 uv sync --locked --dev
@@ -32,6 +33,8 @@ cd frontend && npm ci && cd ..
   (shadcn-style primitives) for new UI components; `frontend/.oxlintrc.json`
   is the linter config.
 - Keep changes focused — a bug fix shouldn't also refactor unrelated code.
+- Update the relevant English documentation when user-visible behavior,
+  configuration, security boundaries, or API contracts change.
 
 ## Running checks before you open a PR
 

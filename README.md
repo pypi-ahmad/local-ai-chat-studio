@@ -65,6 +65,7 @@ Common environment variables:
 | `CHAT_OLLAMA_HOST` | Ollama endpoint; defaults to `http://localhost:11434` |
 | `CHAT_EMBED_MODEL` | Ollama embedding model used with Chroma |
 | `OLLAMA_API_KEY`, `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, `OPENROUTER_API_KEY`, `XAI_API_KEY` | Read-only credential fallbacks |
+| `OMNIROUTE_BASE_URL`, `OMNIROUTE_API_KEY` | Compatible gateway endpoint and credential fallback |
 | `OPENCODE_ZEN_API_KEY`, `OPENCODE_GO_API_KEY` | OpenCode inference API fallbacks |
 | `OPENCODE_SERVER_URL` | Local OpenCode server; defaults to `http://127.0.0.1:4096` |
 | `OPENCODE_SERVER_USERNAME`, `OPENCODE_SERVER_PASSWORD` | Optional OpenCode server basic authentication |
@@ -94,10 +95,15 @@ npm test
 npm run build
 ```
 
-See [USER_GUIDE.md](USER_GUIDE.md) for product workflows and
-[the offline Zero-to-Hero handbook](docs/tutorial/index.html) for guided user,
-technical, and product tours. Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a
-pull request.
+## Documentation
+
+- [USAGE.md](USAGE.md) — quick task-based user guide
+- [USER_GUIDE.md](USER_GUIDE.md) — complete product workflows
+- [TECHNICAL.md](TECHNICAL.md) — concise developer architecture and configuration guide
+- [CODE_TUTORIAL.md](CODE_TUTORIAL.md) and [the offline Zero-to-Hero handbook](docs/tutorial/index.html) — deeper guided tours
+- [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) — contribution expectations
+- [SECURITY.md](SECURITY.md) — security model and private vulnerability reporting
+- [CHANGELOG.md](CHANGELOG.md) — release history
 
 ## Security
 

@@ -9,7 +9,13 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Added concise top-level usage and technical entrypoints for users and
+  contributors.
+
 ### Changed
+
+- Refreshed contributor, conduct, security, and README navigation guidance for
+  the current local FastAPI and React workspace.
 
 ### Fixed
 
