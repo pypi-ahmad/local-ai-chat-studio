@@ -50,10 +50,12 @@ export interface paths {
         get: operations["get_conversation_api_v1_conversations__conversation_id__get"];
         put?: never;
         post?: never;
-        delete?: never;
+        /** Delete Conversation */
+        delete: operations["delete_conversation_api_v1_conversations__conversation_id__delete"];
         options?: never;
         head?: never;
-        patch?: never;
+        /** Update Conversation */
+        patch: operations["update_conversation_api_v1_conversations__conversation_id__patch"];
         trace?: never;
     };
     "/api/v1/conversations/{conversation_id}/messages": {
@@ -67,6 +69,57 @@ export interface paths {
         put?: never;
         /** Add Message */
         post: operations["add_message_api_v1_conversations__conversation_id__messages_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/conversations/{conversation_id}/branch": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Branch Conversation */
+        post: operations["branch_conversation_api_v1_conversations__conversation_id__branch_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/conversations/{conversation_id}/turns/preflight": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Preflight Turn */
+        post: operations["preflight_turn_api_v1_conversations__conversation_id__turns_preflight_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/conversations/{conversation_id}/turns": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Turn */
+        post: operations["create_turn_api_v1_conversations__conversation_id__turns_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -176,6 +229,129 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/providers/{provider}/policy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Provider Policy */
+        get: operations["get_provider_policy_api_v1_providers__provider__policy_get"];
+        /** Set Provider Policy */
+        put: operations["set_provider_policy_api_v1_providers__provider__policy_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/backpacks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Backpacks */
+        get: operations["list_backpacks_api_v1_backpacks_get"];
+        put?: never;
+        /** Create Backpack */
+        post: operations["create_backpack_api_v1_backpacks_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/focus-sessions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Focus */
+        post: operations["create_focus_api_v1_focus_sessions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/memories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Memories */
+        get: operations["list_memories_api_v1_memories_get"];
+        put?: never;
+        /** Create Memory */
+        post: operations["create_memory_api_v1_memories_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/presets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Presets */
+        get: operations["list_presets_api_v1_presets_get"];
+        put?: never;
+        /** Create Preset */
+        post: operations["create_preset_api_v1_presets_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/uploads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Upload */
+        post: operations["create_upload_api_v1_uploads_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/conversations/{conversation_id}/uploads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Uploads */
+        get: operations["list_uploads_api_v1_conversations__conversation_id__uploads_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/runs": {
         parameters: {
             query?: never;
@@ -228,10 +404,120 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/runs/{run_id}/bundle": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Run Bundle */
+        get: operations["run_bundle_api_v1_runs__run_id__bundle_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/activity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Activity */
+        get: operations["activity_api_v1_activity_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/runs/{run_id}/replay": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Replay Run */
+        post: operations["replay_run_api_v1_runs__run_id__replay_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/runs/{left_id}/diff/{right_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Diff Runs */
+        get: operations["diff_runs_api_v1_runs__left_id__diff__right_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** Backpack */
+        Backpack: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+            /** Created At */
+            created_at: string;
+            /** Updated At */
+            updated_at: string;
+            /**
+             * Items
+             * @default []
+             */
+            items: components["schemas"]["BackpackItem"][];
+        };
+        /** BackpackCreate */
+        BackpackCreate: {
+            /** Name */
+            name: string;
+            /**
+             * Items
+             * @default []
+             */
+            items: components["schemas"]["BackpackItemInput"][];
+        };
+        /** BackpackItem */
+        BackpackItem: {
+            /** Title */
+            title: string;
+            /** Content */
+            content: string;
+            /** Id */
+            id: string;
+        };
+        /** BackpackItemInput */
+        BackpackItemInput: {
+            /** Title */
+            title: string;
+            /** Content */
+            content: string;
+        };
         /** ChatMessage */
         ChatMessage: {
             /**
@@ -241,6 +527,75 @@ export interface components {
             role: "system" | "user" | "assistant" | "tool";
             /** Content */
             content: string;
+        };
+        /** ContextPlan */
+        ContextPlan: {
+            /** Plan Hash */
+            plan_hash: string;
+            /** Estimated Tokens */
+            estimated_tokens: number;
+            /** Budget Tokens */
+            budget_tokens: number;
+            /** Sections */
+            sections: components["schemas"]["ContextSection"][];
+            /**
+             * Sources
+             * @default []
+             */
+            sources: components["schemas"]["ContextSource"][];
+            /**
+             * Findings
+             * @default []
+             */
+            findings: components["schemas"]["SafetyFinding"][];
+            /**
+             * Requires Confirmation
+             * @default false
+             */
+            requires_confirmation: boolean;
+        };
+        /** ContextSection */
+        ContextSection: {
+            /** Kind */
+            kind: string;
+            /**
+             * Estimated Tokens
+             * @default 0
+             */
+            estimated_tokens: number;
+            /**
+             * Included
+             * @default true
+             */
+            included: boolean;
+            /** Reason */
+            reason?: string | null;
+        };
+        /** ContextSource */
+        ContextSource: {
+            /** Id */
+            id: string;
+            /** Kind */
+            kind: string;
+            /** Title */
+            title: string;
+            /** Preview */
+            preview: string;
+            /** Estimated Tokens */
+            estimated_tokens: number;
+            /**
+             * Included
+             * @default true
+             */
+            included: boolean;
+            /** Score */
+            score?: number | null;
+            /**
+             * Trust
+             * @default trusted
+             * @enum {string}
+             */
+            trust: "trusted" | "suspicious" | "quarantined";
         };
         /** Conversation */
         Conversation: {
@@ -253,10 +608,30 @@ export interface components {
             /** Updated At */
             updated_at: string;
             /**
+             * Model
+             * @default unknown
+             */
+            model: string;
+            /**
+             * Pinned
+             * @default false
+             */
+            pinned: boolean;
+            /**
              * Messages
              * @default []
              */
             messages: components["schemas"]["Message"][];
+        };
+        /** ConversationBranch */
+        ConversationBranch: {
+            /** Message Id */
+            message_id: string;
+            /**
+             * Title
+             * @default Branch
+             */
+            title: string;
         };
         /** ConversationCreate */
         ConversationCreate: {
@@ -266,15 +641,114 @@ export interface components {
              */
             title: string;
         };
+        /** ConversationUpdate */
+        ConversationUpdate: {
+            /** Title */
+            title?: string | null;
+            /** Pinned */
+            pinned?: boolean | null;
+        };
         /** CredentialInput */
         CredentialInput: {
             /** Api Key */
             api_key: string;
         };
+        /** FocusCreate */
+        FocusCreate: {
+            /** Conversation Id */
+            conversation_id: string;
+            /** Objective */
+            objective: string;
+            /** Success Criteria */
+            success_criteria: string;
+            /**
+             * Constraints
+             * @default []
+             */
+            constraints: string[];
+            /** Turn Limit */
+            turn_limit?: number | null;
+        };
+        /** FocusSession */
+        FocusSession: {
+            /** Conversation Id */
+            conversation_id: string;
+            /** Objective */
+            objective: string;
+            /** Success Criteria */
+            success_criteria: string;
+            /**
+             * Constraints
+             * @default []
+             */
+            constraints: string[];
+            /** Turn Limit */
+            turn_limit?: number | null;
+            /** Id */
+            id: string;
+            /**
+             * Status
+             * @default active
+             * @enum {string}
+             */
+            status: "active" | "completed" | "abandoned";
+            /** Created At */
+            created_at: string;
+            /** Completed At */
+            completed_at?: string | null;
+        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /** Memory */
+        Memory: {
+            /** Content */
+            content: string;
+            /**
+             * Category
+             * @default fact
+             */
+            category: string;
+            /** Source Conversation Id */
+            source_conversation_id?: string | null;
+            /** Id */
+            id: string;
+            /**
+             * Status
+             * @default active
+             * @enum {string}
+             */
+            status: "active" | "quarantined" | "archived";
+            /**
+             * Pinned
+             * @default false
+             */
+            pinned: boolean;
+            /** Created At */
+            created_at: string;
+            /** Last Used At */
+            last_used_at: string;
+            /**
+             * Use Count
+             * @default 0
+             */
+            use_count: number;
+            /** Quarantine Reason */
+            quarantine_reason?: string | null;
+        };
+        /** MemoryCreate */
+        MemoryCreate: {
+            /** Content */
+            content: string;
+            /**
+             * Category
+             * @default fact
+             */
+            category: string;
+            /** Source Conversation Id */
+            source_conversation_id?: string | null;
         };
         /** Message */
         Message: {
@@ -291,6 +765,15 @@ export interface components {
             position: number;
             /** Created At */
             created_at: string;
+            /** Run Id */
+            run_id?: string | null;
+            /**
+             * Metadata
+             * @default {}
+             */
+            metadata: {
+                [key: string]: unknown;
+            };
         };
         /** MessageCreate */
         MessageCreate: {
@@ -306,6 +789,102 @@ export interface components {
         OAuthCodeInput: {
             /** Code */
             code: string;
+        };
+        /** Preset */
+        Preset: {
+            /** Name */
+            name: string;
+            /**
+             * System Prompt
+             * @default
+             */
+            system_prompt: string;
+            /**
+             * Model Key
+             * @default
+             */
+            model_key: string;
+            /**
+             * Temperature
+             * @default 0.7
+             */
+            temperature: number;
+            /** Id */
+            id: string;
+        };
+        /** PresetCreate */
+        PresetCreate: {
+            /** Name */
+            name: string;
+            /**
+             * System Prompt
+             * @default
+             */
+            system_prompt: string;
+            /**
+             * Model Key
+             * @default
+             */
+            model_key: string;
+            /**
+             * Temperature
+             * @default 0.7
+             */
+            temperature: number;
+        };
+        /** ProviderPolicy */
+        ProviderPolicy: {
+            /**
+             * Allow Memory
+             * @default false
+             */
+            allow_memory: boolean;
+            /**
+             * Allow Retrieval
+             * @default false
+             */
+            allow_retrieval: boolean;
+            /**
+             * Allow Attachments
+             * @default false
+             */
+            allow_attachments: boolean;
+            /**
+             * Allow Web
+             * @default false
+             */
+            allow_web: boolean;
+            /**
+             * Allow Backpacks
+             * @default false
+             */
+            allow_backpacks: boolean;
+        };
+        /** ReplayBundle */
+        ReplayBundle: {
+            /**
+             * Version
+             * @default 1
+             * @constant
+             */
+            version: 1;
+            run: components["schemas"]["RunSnapshot"];
+            /** Messages */
+            messages: components["schemas"]["ChatMessage"][];
+            context?: components["schemas"]["ContextPlan"] | null;
+            /** Integrity */
+            integrity: {
+                [key: string]: string;
+            };
+        };
+        /** ReplayCreate */
+        ReplayCreate: {
+            /** Provider */
+            provider: string;
+            /** Model */
+            model: string;
+            /** Temperature */
+            temperature?: number | null;
         };
         /** RunCreate */
         RunCreate: {
@@ -345,12 +924,183 @@ export interface components {
             started_at?: string | null;
             /** Completed At */
             completed_at?: string | null;
+            /** Conversation Id */
+            conversation_id?: string | null;
+            /**
+             * Metrics
+             * @default {}
+             */
+            metrics: {
+                [key: string]: unknown;
+            };
+            /** Receipt Hash */
+            receipt_hash?: string | null;
         };
         /**
          * RunStatus
          * @enum {string}
          */
         RunStatus: "queued" | "running" | "completed" | "cancelled" | "failed";
+        /** SafetyFinding */
+        SafetyFinding: {
+            /** Id */
+            id: string;
+            /**
+             * Category
+             * @enum {string}
+             */
+            category: "secret" | "pii" | "prompt_injection";
+            /**
+             * Severity
+             * @enum {string}
+             */
+            severity: "low" | "medium" | "high";
+            /** Preview */
+            preview: string;
+            /** Message */
+            message: string;
+        };
+        /** TurnCreate */
+        TurnCreate: {
+            /** Provider */
+            provider: string;
+            /** Model */
+            model: string;
+            /** Content */
+            content: string;
+            /**
+             * Temperature
+             * @default 0.7
+             */
+            temperature: number;
+            /**
+             * Include Memory
+             * @default true
+             */
+            include_memory: boolean;
+            /**
+             * Include Retrieval
+             * @default true
+             */
+            include_retrieval: boolean;
+            /**
+             * Include Attachments
+             * @default true
+             */
+            include_attachments: boolean;
+            /**
+             * Include Web
+             * @default false
+             */
+            include_web: boolean;
+            /**
+             * Include Backpack
+             * @default true
+             */
+            include_backpack: boolean;
+            /** Backpack Id */
+            backpack_id?: string | null;
+            /**
+             * Context Limit
+             * @default 8192
+             */
+            context_limit: number;
+            /** Plan Hash */
+            plan_hash: string;
+            /**
+             * Confirmed Finding Ids
+             * @default []
+             */
+            confirmed_finding_ids: string[];
+            /**
+             * Excluded Source Ids
+             * @default []
+             */
+            excluded_source_ids: string[];
+        };
+        /** TurnPreflight */
+        TurnPreflight: {
+            /** Provider */
+            provider: string;
+            /** Model */
+            model: string;
+            /** Content */
+            content: string;
+            /**
+             * Temperature
+             * @default 0.7
+             */
+            temperature: number;
+            /**
+             * Include Memory
+             * @default true
+             */
+            include_memory: boolean;
+            /**
+             * Include Retrieval
+             * @default true
+             */
+            include_retrieval: boolean;
+            /**
+             * Include Attachments
+             * @default true
+             */
+            include_attachments: boolean;
+            /**
+             * Include Web
+             * @default false
+             */
+            include_web: boolean;
+            /**
+             * Include Backpack
+             * @default true
+             */
+            include_backpack: boolean;
+            /** Backpack Id */
+            backpack_id?: string | null;
+            /**
+             * Context Limit
+             * @default 8192
+             */
+            context_limit: number;
+        };
+        /** Upload */
+        Upload: {
+            /** Id */
+            id: string;
+            /** Conversation Id */
+            conversation_id: string;
+            /** Filename */
+            filename: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "document" | "image";
+            /**
+             * Mime
+             * @default
+             */
+            mime: string;
+            /** Size */
+            size: number;
+            /**
+             * Text Preview
+             * @default
+             */
+            text_preview: string;
+            /** Created At */
+            created_at: string;
+        };
+        /** UploadCreate */
+        UploadCreate: {
+            /** Conversation Id */
+            conversation_id: string;
+            /** Filename */
+            filename: string;
+            /** Content Base64 */
+            content_base64: string;
+        };
         /** ValidationError */
         ValidationError: {
             /** Location */
@@ -397,7 +1147,9 @@ export interface operations {
     };
     list_conversations_api_v1_conversations_get: {
         parameters: {
-            query?: never;
+            query?: {
+                query?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -411,6 +1163,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Conversation"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -479,6 +1240,70 @@ export interface operations {
             };
         };
     };
+    delete_conversation_api_v1_conversations__conversation_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_conversation_api_v1_conversations__conversation_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConversationUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Conversation"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     add_message_api_v1_conversations__conversation_id__messages_post: {
         parameters: {
             query?: never;
@@ -501,6 +1326,111 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Message"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    branch_conversation_api_v1_conversations__conversation_id__branch_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConversationBranch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Conversation"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    preflight_turn_api_v1_conversations__conversation_id__turns_preflight_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TurnPreflight"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ContextPlan"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_turn_api_v1_conversations__conversation_id__turns_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TurnCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RunSnapshot"];
                 };
             };
             /** @description Validation Error */
@@ -704,6 +1634,328 @@ export interface operations {
             };
         };
     };
+    get_provider_policy_api_v1_providers__provider__policy_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                provider: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProviderPolicy"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_provider_policy_api_v1_providers__provider__policy_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                provider: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProviderPolicy"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProviderPolicy"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_backpacks_api_v1_backpacks_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Backpack"][];
+                };
+            };
+        };
+    };
+    create_backpack_api_v1_backpacks_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BackpackCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Backpack"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_focus_api_v1_focus_sessions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FocusCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FocusSession"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_memories_api_v1_memories_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Memory"][];
+                };
+            };
+        };
+    };
+    create_memory_api_v1_memories_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MemoryCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Memory"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_presets_api_v1_presets_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Preset"][];
+                };
+            };
+        };
+    };
+    create_preset_api_v1_presets_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PresetCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Preset"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_upload_api_v1_uploads_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UploadCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Upload"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_uploads_api_v1_conversations__conversation_id__uploads_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Upload"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     create_run_api_v1_runs_post: {
         parameters: {
             query?: never;
@@ -817,6 +2069,126 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    run_bundle_api_v1_runs__run_id__bundle_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                run_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReplayBundle"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    activity_api_v1_activity_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RunSnapshot"][];
+                };
+            };
+        };
+    };
+    replay_run_api_v1_runs__run_id__replay_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                run_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReplayCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RunSnapshot"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    diff_runs_api_v1_runs__left_id__diff__right_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                left_id: string;
+                right_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
                 };
             };
             /** @description Validation Error */
