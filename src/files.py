@@ -10,14 +10,30 @@ from loguru import logger
 IMAGE_TYPES = {"png", "jpg", "jpeg", "webp", "gif", "bmp"}
 EXCEL_TYPES = {"xlsx", "xlsm", "xls"}
 DOC_TYPES = {
-    "pdf", "txt", "md", "csv", "tsv", "docx", "doc", "json", "py", "log",
-    "yaml", "yml", "toml", "html",
+    "pdf",
+    "txt",
+    "md",
+    "csv",
+    "tsv",
+    "docx",
+    "doc",
+    "json",
+    "py",
+    "log",
+    "yaml",
+    "yml",
+    "toml",
+    "html",
 } | EXCEL_TYPES
 ACCEPTED_TYPES = sorted(IMAGE_TYPES | DOC_TYPES)
 
 MIME_BY_EXT = {
-    "png": "image/png", "jpg": "image/jpeg", "jpeg": "image/jpeg",
-    "webp": "image/webp", "gif": "image/gif", "bmp": "image/bmp",
+    "png": "image/png",
+    "jpg": "image/jpeg",
+    "jpeg": "image/jpeg",
+    "webp": "image/webp",
+    "gif": "image/gif",
+    "bmp": "image/bmp",
 }
 
 
@@ -38,11 +54,23 @@ def parse_upload(filename: str, raw: bytes) -> Attachment:
     """Convert an uploaded file into an Attachment (text extracted for docs)."""
     ext = _ext(filename)
     if ext in IMAGE_TYPES:
+        from PIL import Image
+
+        with Image.open(io.BytesIO(raw)) as image:
+            image.verify()
+            detected = (image.format or "").lower()
+        expected = "jpeg" if ext in {"jpg", "jpeg"} else ext
+        if detected != expected:
+            raise ValueError("Image content does not match its extension")
         return Attachment(
-            name=filename, kind="image", image_bytes=raw,
-            mime=MIME_BY_EXT.get(ext, "image/png"),
+            name=filename,
+            kind="image",
+            image_bytes=raw,
+            mime=MIME_BY_EXT[ext],
         )
     if ext == "pdf":
+        if not raw.startswith(b"%PDF-"):
+            raise ValueError("Invalid PDF signature")
         return Attachment(name=filename, kind="document", text=_parse_pdf(raw))
     if ext == "docx":
         return Attachment(name=filename, kind="document", text=_parse_docx(raw))
@@ -115,11 +143,21 @@ def _parse_legacy_doc(raw: bytes) -> str:
         if shutil.which("soffice"):
             try:
                 subprocess.run(
-                    ["soffice", "--headless", "--convert-to", "txt", "--outdir", tmp, path],
-                    capture_output=True, timeout=60,
+                    [
+                        "soffice",
+                        "--headless",
+                        "--convert-to",
+                        "txt",
+                        "--outdir",
+                        tmp,
+                        path,
+                    ],
+                    capture_output=True,
+                    timeout=60,
                 )
                 txt = f"{tmp}/file.txt"
                 from pathlib import Path
+
                 if Path(txt).exists():
                     return Path(txt).read_text(errors="replace").strip()
             except Exception as exc:

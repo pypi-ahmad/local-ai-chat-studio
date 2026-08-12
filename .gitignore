@@ -23,6 +23,7 @@ __pycache__/
 .uv_cache/
 **/.uv-cache/
 **/.uv_cache/
+.runtime/
 
 .hf_cache/
 hf_cache/

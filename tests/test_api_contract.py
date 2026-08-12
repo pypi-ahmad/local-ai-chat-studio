@@ -41,11 +41,32 @@ def test_provider_secret_is_scoped_to_browser_session(client: TestClient) -> Non
         "/api/v1/providers/openai/credential", json={"api_key": "sk-test"}
     )
     assert connected.status_code == 204
-    assert client.get("/api/v1/providers").json()["providers"][1]["key_source"] == "session"
+    providers = client.get("/api/v1/providers").json()["providers"]
+    assert (
+        next(item for item in providers if item["id"] == "openai")["key_source"]
+        == "session"
+    )
 
     isolated = TestClient(client.app)
     providers = isolated.get("/api/v1/providers").json()["providers"]
-    assert next(item for item in providers if item["id"] == "openai")["key_source"] != "session"
+    assert (
+        next(item for item in providers if item["id"] == "openai")["key_source"]
+        != "session"
+    )
+
+
+def test_anthropic_reports_workload_identity_source(
+    client: TestClient, monkeypatch
+) -> None:
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch.setenv("ANTHROPIC_PROFILE", "test-profile")
+
+    providers = client.get("/api/v1/providers").json()["providers"]
+
+    assert (
+        next(item for item in providers if item["id"] == "anthropic")["key_source"]
+        == "wif"
+    )
 
 
 def test_run_stream_contract_retains_completed_output(client: TestClient) -> None:
@@ -75,7 +96,9 @@ def test_run_stream_contract_retains_completed_output(client: TestClient) -> Non
     assert snapshot["output"] == "hello"
 
 
-def test_openrouter_auth_uses_session_pkce_and_current_callback_origin(client: TestClient) -> None:
+def test_openrouter_auth_uses_session_pkce_and_current_callback_origin(
+    client: TestClient,
+) -> None:
     response = client.post("/api/v1/providers/openrouter/auth/start")
 
     assert response.status_code == 200

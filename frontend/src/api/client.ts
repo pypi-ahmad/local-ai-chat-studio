@@ -15,7 +15,16 @@ export type Preset = components['schemas']['Preset']
 export type Upload = components['schemas']['Upload']
 export type ReplayBundle = components['schemas']['ReplayBundle']
 
-export type ProviderSummary = { id: string; label: string; key_source: string | null }
+export type ProviderSummary = {
+  id: string
+  label: string
+  key_source: string | null
+  auth_modes: string[]
+  connected: boolean
+  health: string
+}
+export type OpenCodeAuthMethod = { type: 'oauth'; label: string; method: number }
+export type OpenCodeAuthStart = { url: string; method: 'auto' | 'code'; instructions: string }
 export type ModelSummary = {
   provider: string
   id: string
@@ -116,6 +125,15 @@ export const api = {
     request<void>(`/providers/${provider}/credential`, { method: 'PUT', body: JSON.stringify({ api_key: apiKey }) }),
   removeCredential: (provider: string) => request<void>(`/providers/${provider}/credential`, { method: 'DELETE' }),
   startOpenRouterAuth: () => request<{ authorization_url: string }>('/providers/openrouter/auth/start', { method: 'POST' }),
+  openCodeAuthMethods: () => request<Record<string, OpenCodeAuthMethod[]>>('/providers/opencode-bridge/auth/methods'),
+  startOpenCodeAuth: (provider: string, method: number) =>
+    request<OpenCodeAuthStart>(`/providers/opencode-bridge/auth/${provider}/start`, {
+      method: 'POST', body: JSON.stringify({ method }),
+    }),
+  completeOpenCodeAuth: (provider: string, method: number, code?: string) =>
+    request<{ connected: boolean }>(`/providers/opencode-bridge/auth/${provider}/complete`, {
+      method: 'POST', body: JSON.stringify({ method, code }),
+    }),
   providerPolicy: (provider: string) => request<ProviderPolicy>(`/providers/${provider}/policy`),
   setProviderPolicy: (provider: string, policy: ProviderPolicy) =>
     request<ProviderPolicy>(`/providers/${provider}/policy`, { method: 'PUT', body: JSON.stringify(policy) }),
@@ -125,6 +143,10 @@ export const api = {
   updateMemory: (id: string, payload: { status?: Memory['status']; pinned?: boolean; content?: string; category?: string }) =>
     request<Memory>(`/memories/${id}`, { method: 'PATCH', body: JSON.stringify(payload) }),
   deleteMemory: (id: string) => request<void>(`/memories/${id}`, { method: 'DELETE' }),
+  extractMemories: (conversationId: string, payload: { provider: string; model: string; cloud_confirmed: boolean }) =>
+    request<{ saved: number; quarantined: number; discarded: number }>(`/conversations/${conversationId}/memories/extract`, {
+      method: 'POST', body: JSON.stringify(payload),
+    }),
   presets: () => request<Preset[]>('/presets'),
   createPreset: (payload: Omit<Preset, 'id'>) =>
     request<Preset>('/presets', { method: 'POST', body: JSON.stringify(payload) }),

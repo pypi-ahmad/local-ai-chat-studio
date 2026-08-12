@@ -59,6 +59,14 @@ class OAuthCodeInput(BaseModel):
     code: str = Field(min_length=1)
 
 
+class OpenCodeOAuthStart(BaseModel):
+    method: int = Field(default=0, ge=0)
+
+
+class OpenCodeOAuthComplete(OpenCodeOAuthStart):
+    code: str | None = None
+
+
 class ImageInput(BaseModel):
     mime: Literal["image/png", "image/jpeg", "image/webp", "image/gif", "image/bmp"]
     data_base64: str = Field(max_length=14_000_000)
@@ -172,6 +180,7 @@ class TurnPreflight(BaseModel):
     include_attachments: bool = True
     include_web: bool = False
     include_backpack: bool = True
+    attachment_ids: list[str] = Field(default_factory=list, max_length=20)
     backpack_id: str | None = None
     context_limit: int = Field(default=8192, ge=512, le=2_000_000)
 
@@ -265,6 +274,10 @@ class Memory(MemoryCreate):
     last_used_at: str
     use_count: int = 0
     quarantine_reason: str | None = None
+    source_message_ids: list[str] = Field(default_factory=list)
+    selection_reason: str | None = None
+    extractor_provider: str | None = None
+    extractor_model: str | None = None
 
 
 class MemoryUpdate(BaseModel):
@@ -272,6 +285,18 @@ class MemoryUpdate(BaseModel):
     category: str | None = Field(default=None, min_length=1, max_length=50)
     status: Literal["active", "quarantined", "archived"] | None = None
     pinned: bool | None = None
+
+
+class MemoryExtractionRequest(BaseModel):
+    provider: str
+    model: str
+    cloud_confirmed: bool = False
+
+
+class MemoryExtractionResult(BaseModel):
+    saved: int = 0
+    quarantined: int = 0
+    discarded: int = 0
 
 
 class PresetCreate(BaseModel):

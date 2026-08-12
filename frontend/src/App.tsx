@@ -46,6 +46,7 @@ import {
   type Conversation,
   type Memory,
   type ModelSummary,
+  type OpenCodeAuthMethod,
   type Preset,
   type ProviderPolicy,
   type ProviderSummary,
@@ -190,6 +191,11 @@ function ChatWorkspace({
   onSanitize,
   onCancel,
   onUpload,
+  uploads,
+  attachmentIds,
+  onAttachment,
+  onSaveMemories,
+  savingMemories,
   onBranch,
   onFeedback,
 }: {
@@ -207,6 +213,11 @@ function ChatWorkspace({
   onSanitize: () => Promise<void>
   onCancel: () => Promise<void>
   onUpload: (file: File) => Promise<void>
+  uploads: Upload[]
+  attachmentIds: Set<string>
+  onAttachment: (id: string) => void
+  onSaveMemories: () => Promise<void>
+  savingMemories: boolean
   onBranch: (messageId: string) => Promise<void>
   onFeedback: (messageId: string, rating: -1 | 1) => Promise<void>
 }) {
@@ -221,7 +232,7 @@ function ChatWorkspace({
     <main aria-label="Chat workspace" className="workspace">
       <header className="workspace-header">
         <div><p className="eyebrow">Conversation</p><h2>{conversation?.title ?? 'New conversation'}</h2></div>
-        <ModelPicker models={models} onChange={onModel} value={selectedModel} />
+        <div className="action-row"><Button disabled={!conversation?.messages.length || savingMemories || !selectedModel} onClick={onSaveMemories} variant="outline"><Brain /> {savingMemories ? 'Saving…' : 'Save memories & close'}</Button><ModelPicker models={models} onChange={onModel} value={selectedModel} /></div>
       </header>
       <ContextRail plan={plan} />
       <ScrollArea className="message-area">
@@ -272,6 +283,7 @@ function ChatWorkspace({
           <span>Enter to send · Shift+Enter for newline</span>
           {running ? <Button aria-label="Stop generation" onClick={onCancel} size="icon" variant="destructive"><Square /></Button> : <Button aria-label="Send message" disabled={!prompt.trim() || !selectedModel} onClick={submit} size="icon"><Send /></Button>}
         </div>
+        {uploads.length > 0 && <div className="action-row" aria-label="Conversation attachments">{uploads.map((upload) => <label key={upload.id}><input checked={attachmentIds.has(upload.id)} onChange={() => onAttachment(upload.id)} type="checkbox" /> {upload.filename}</label>)}</div>}
       </div>
     </main>
   )
@@ -328,13 +340,26 @@ function ProviderCard({ provider, onChanged }: { provider: ProviderSummary; onCh
   const [key, setKey] = useState('')
   const [policy, setPolicy] = useState<ProviderPolicy>(defaultPolicy)
   const [simulation, setSimulation] = useState('')
+  const [oauthMethods, setOauthMethods] = useState<Record<string, OpenCodeAuthMethod[]>>({})
   useEffect(() => { void api.providerPolicy(provider.id).then(setPolicy).catch(() => setPolicy(defaultPolicy)) }, [provider.id])
+  useEffect(() => {
+    if (provider.id === 'opencode-bridge') void api.openCodeAuthMethods().then(setOauthMethods).catch(() => setOauthMethods({}))
+  }, [provider.id])
   const toggle = async (field: keyof ProviderPolicy) => {
     const next = { ...policy, [field]: !policy[field] }
     setPolicy(next)
     await api.setProviderPolicy(provider.id, next)
   }
-  return <Card><CardHeader><div className="provider-title"><div className="provider-icon">{provider.label[0]}</div><div><CardTitle>{provider.label}</CardTitle><CardDescription>{provider.key_source ? `Connected from ${provider.key_source}` : 'Prompt-only cloud policy'}</CardDescription></div></div></CardHeader><CardContent className="form-stack"><div className="action-row"><Input aria-label={`${provider.label} API key`} onChange={(event) => setKey(event.target.value)} placeholder="Session API key" type="password" value={key} /><Button disabled={!key.trim()} onClick={async () => { await api.setCredential(provider.id, key); setKey(''); await onChanged() }}>Connect</Button>{provider.key_source && <Button onClick={async () => { await api.removeCredential(provider.id); await onChanged() }} variant="outline">Forget</Button>}</div>{provider.id === 'openrouter' && <Button onClick={async () => { const auth = await api.startOpenRouterAuth(); window.location.assign(auth.authorization_url) }} variant="outline">Sign in with OpenRouter</Button>}<div className="policy-grid">{Object.keys(policy).map((field) => <label key={field}><input checked={policy[field as keyof ProviderPolicy]} onChange={() => toggle(field as keyof ProviderPolicy)} type="checkbox" />{field.replace('allow_', '').replace('_', ' ')}</label>)}</div><Button onClick={async () => { const result = await api.simulateProvider(provider.id, 'rate_limit', provider.id === 'ollama' ? undefined : 'ollama'); setSimulation(result.recovered ? 'Fallback path recovered' : 'Failure surfaced safely') }} variant="outline"><Play /> Test failover</Button>{simulation && <small>{simulation}</small>}</CardContent></Card>
+  const connectOauth = async (upstream: string, method: OpenCodeAuthMethod) => {
+    const auth = await api.startOpenCodeAuth(upstream, method.method)
+    window.open(auth.url, '_blank', 'noopener,noreferrer')
+    const code = auth.method === 'code' ? window.prompt(auth.instructions || 'Enter the authorization code') : undefined
+    if (auth.method === 'code' && !code) return
+    await api.completeOpenCodeAuth(upstream, method.method, code || undefined)
+    await onChanged()
+  }
+  const supportedOauth = Object.entries(oauthMethods).filter(([id]) => /openai|chatgpt|anthropic|claude|xai|grok/i.test(id))
+  return <Card><CardHeader><div className="provider-title"><div className="provider-icon">{provider.label[0]}</div><div><CardTitle>{provider.label}</CardTitle><CardDescription>{provider.key_source ? `Connected from ${provider.key_source}` : provider.auth_modes.includes('none') ? 'Local connection · no key required' : 'Prompt-only cloud policy'}</CardDescription></div></div></CardHeader><CardContent className="form-stack">{provider.auth_modes.includes('api_key') && <div className="action-row"><Input aria-label={`${provider.label} API key`} onChange={(event) => setKey(event.target.value)} placeholder="Session API key" type="password" value={key} /><Button disabled={!key.trim()} onClick={async () => { await api.setCredential(provider.id, key); setKey(''); await onChanged() }}>Connect</Button>{provider.key_source && <Button onClick={async () => { await api.removeCredential(provider.id); await onChanged() }} variant="outline">Forget</Button>}</div>}{provider.auth_modes.includes('wif') && <small>Claude WIF is discovered from the backend environment or active Anthropic profile.</small>}{provider.id === 'openrouter' && <Button onClick={async () => { const auth = await api.startOpenRouterAuth(); window.location.assign(auth.authorization_url) }} variant="outline">Sign in with OpenRouter</Button>}{supportedOauth.flatMap(([upstream, methods]) => methods.map((method) => <Button key={`${upstream}-${method.method}`} onClick={() => connectOauth(upstream, method)} variant="outline">Connect {method.label} through OpenCode</Button>))}<div className="policy-grid">{Object.keys(policy).map((field) => <label key={field}><input checked={policy[field as keyof ProviderPolicy]} onChange={() => toggle(field as keyof ProviderPolicy)} type="checkbox" />{field.replace('allow_', '').replace('_', ' ')}</label>)}</div><Button onClick={async () => { const result = await api.simulateProvider(provider.id, 'rate_limit', provider.id === 'ollama-local' ? undefined : 'ollama-local'); setSimulation(result.recovered ? 'Fallback path recovered' : 'Failure surfaced safely') }} variant="outline"><Play /> Test failover</Button>{simulation && <small>{simulation}</small>}</CardContent></Card>
 }
 
 function ProvidersPage({ providers, onChanged }: { providers: ProviderSummary[]; onChanged: () => Promise<void> }) {
@@ -383,12 +408,14 @@ function App() {
   const [presets, setPresets] = useState<Preset[]>([])
   const [backpacks, setBackpacks] = useState<BackpackRecord[]>([])
   const [uploads, setUploads] = useState<Upload[]>([])
+  const [attachmentIds, setAttachmentIds] = useState<Set<string>>(new Set())
   const [plan, setPlan] = useState<ContextPlan | null>(null)
   const [pendingPlan, setPendingPlan] = useState<ContextPlan | null>(null)
   const [pendingPayload, setPendingPayload] = useState<TurnPreflight | null>(null)
   const [liveOutput, setLiveOutput] = useState('')
   const [activeRun, setActiveRun] = useState<string | null>(null)
   const [error, setError] = useState('')
+  const [savingMemories, setSavingMemories] = useState(false)
   const [excludedSources, setExcludedSources] = useState<Set<string>>(new Set())
 
   const refreshProviders = useCallback(async () => {
@@ -419,6 +446,7 @@ function App() {
   }, [refreshConversations, refreshLibrary, refreshProviders])
 
   useEffect(() => {
+    setAttachmentIds(new Set())
     if (!activeId) { setConversation(null); setUploads([]); return }
     void Promise.all([api.conversation(activeId), api.uploads(activeId)])
       .then(([detail, fileItems]) => { setConversation(detail); setUploads(fileItems) })
@@ -439,6 +467,7 @@ function App() {
       confirmed_finding_ids: confirmed,
       excluded_source_ids: [...excludedSources],
     })
+    setAttachmentIds(new Set())
     setActiveRun(run.id)
     await streamRun(run.id, (event) => {
       if (event.type === 'run.delta') setLiveOutput((current) => current + String(event.data.delta ?? ''))
@@ -461,6 +490,7 @@ function App() {
       include_memory: true,
       include_retrieval: true,
       include_attachments: true,
+      attachment_ids: [...attachmentIds],
       include_web: false,
       include_backpack: true,
       context_limit: models.find((item) => item.provider === target.provider && item.id === target.model)?.context_length ?? 8192,
@@ -474,12 +504,28 @@ function App() {
     } catch (cause) { setError(messageOf(cause)) }
   }
 
-  const upload = async (file: File) => {
-    if (!activeId) return
+  const upload = async (file: File, select = false) => {
+    if (!activeId) return undefined
     try {
-      await api.upload(activeId, file.name, await fileAsBase64(file))
+      const uploaded = await api.upload(activeId, file.name, await fileAsBase64(file))
       setUploads(await api.uploads(activeId))
+      if (select) setAttachmentIds((current) => new Set(current).add(uploaded.id))
+      return uploaded
+    } catch (cause) { setError(messageOf(cause)); return undefined }
+  }
+
+  const saveMemoriesAndClose = async () => {
+    if (!activeId || !target.provider || !target.model) return
+    const cloud = target.provider !== 'ollama-local'
+    if (cloud && !window.confirm('Send this entire conversation to the selected provider to curate memory?')) return
+    setSavingMemories(true); setError('')
+    try {
+      const result = await api.extractMemories(activeId, { provider: target.provider, model: target.model, cloud_confirmed: cloud })
+      setMemories(await api.memories())
+      window.alert(`Saved ${result.saved}; quarantined ${result.quarantined}; discarded ${result.discarded}.`)
+      setActiveId(null); setConversation(null); setUploads([]); setAttachmentIds(new Set())
     } catch (cause) { setError(messageOf(cause)) }
+    finally { setSavingMemories(false) }
   }
 
   const createConversation = async () => {
@@ -493,14 +539,14 @@ function App() {
       <div className="app-shell">
         <Navigation connected={connected} onPage={setPage} page={page} />
         {page === 'Chat' && <ConversationHistory activeId={activeId} conversations={conversations} onCreate={createConversation} onDelete={async (id) => { if (!window.confirm('Delete this conversation?')) return; await api.deleteConversation(id); if (activeId === id) setActiveId(null); await refreshConversations() }} onSelect={setActiveId} onUpdate={async (id, payload) => { await api.updateConversation(id, payload); await refreshConversations(); if (activeId === id) setConversation(await api.conversation(id)) }} />}
-        {page === 'Chat' && <ChatWorkspace conversation={conversation} error={error} liveOutput={liveOutput} models={models} onBranch={async (messageId) => { if (!activeId) return; const branch = await api.branchConversation(activeId, messageId); await refreshConversations(); setActiveId(branch.id) }} onCancel={async () => { if (activeRun) await api.cancelRun(activeRun) }} onConfirm={async () => { if (pendingPayload && pendingPlan) await submitTurn(pendingPayload, pendingPlan, pendingPlan.findings.map((item) => item.id)) }} onFeedback={api.setFeedback} onModel={setSelectedModel} onSanitize={async () => { if (!pendingPayload) return; const sanitized = await api.sanitize(pendingPayload.content); setPendingPlan(null); setPendingPayload(null); await send(sanitized.content) }} onSend={send} onUpload={upload} pendingPlan={pendingPlan} plan={plan} running={Boolean(activeRun)} selectedModel={selectedModel} />}
+        {page === 'Chat' && <ChatWorkspace attachmentIds={attachmentIds} conversation={conversation} error={error} liveOutput={liveOutput} models={models} onAttachment={(id) => setAttachmentIds((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} onBranch={async (messageId) => { if (!activeId) return; const branch = await api.branchConversation(activeId, messageId); await refreshConversations(); setActiveId(branch.id) }} onCancel={async () => { if (activeRun) await api.cancelRun(activeRun) }} onConfirm={async () => { if (pendingPayload && pendingPlan) await submitTurn(pendingPayload, pendingPlan, pendingPlan.findings.map((item) => item.id)) }} onFeedback={api.setFeedback} onModel={setSelectedModel} onSanitize={async () => { if (!pendingPayload) return; const sanitized = await api.sanitize(pendingPayload.content); setPendingPlan(null); setPendingPayload(null); await send(sanitized.content) }} onSaveMemories={saveMemoriesAndClose} onSend={send} onUpload={async (file) => { await upload(file, true) }} pendingPlan={pendingPlan} plan={plan} running={Boolean(activeRun)} savingMemories={savingMemories} selectedModel={selectedModel} uploads={uploads} />}
         {page === 'Compare' && <ComparePage models={models} />}
         {page === 'Context' && <ContextPage backpacks={backpacks} onCreate={async (name, title, content) => { await api.createBackpack(name, title, content); setBackpacks(await api.backpacks()) }} plan={plan} />}
         {page === 'Evidence' && <EvidencePage activity={activity} excluded={excludedSources} onToggle={(id) => setExcludedSources((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} plan={plan} />}
         {page === 'Replay' && <ReplayPage activity={activity} models={models} onReplay={async (run) => { const model = models[0]; if (!model) return; const replay = await api.replay(run.id, model.provider, model.id); await streamRun(replay.id, () => {}); setActivity(await api.activity()) }} />}
         {page === 'Focus' && <FocusPage conversationId={activeId} onCreate={async (objective, criteria, constraints) => { if (!activeId) return; await api.createFocus({ conversation_id: activeId, objective, success_criteria: criteria, constraints }); setPage('Chat') }} />}
         {page === 'Providers' && <ProvidersPage onChanged={refreshProviders} providers={providers} />}
-        {page === 'Library' && <LibraryPage conversationId={activeId} memories={memories} onMemory={async (content) => { await api.createMemory(content); setMemories(await api.memories()) }} onMemoryDelete={async (id) => { await api.deleteMemory(id); setMemories(await api.memories()) }} onMemoryUpdate={async (id, payload) => { await api.updateMemory(id, payload); setMemories(await api.memories()) }} onPreset={async (name, prompt) => { await api.createPreset({ name, system_prompt: prompt, model_key: selectedModel, temperature: 0.7 }); setPresets(await api.presets()) }} onPresetDelete={async (id) => { await api.deletePreset(id); setPresets(await api.presets()) }} onUpload={upload} presets={presets} uploads={uploads} />}
+        {page === 'Library' && <LibraryPage conversationId={activeId} memories={memories} onMemory={async (content) => { await api.createMemory(content); setMemories(await api.memories()) }} onMemoryDelete={async (id) => { await api.deleteMemory(id); setMemories(await api.memories()) }} onMemoryUpdate={async (id, payload) => { await api.updateMemory(id, payload); setMemories(await api.memories()) }} onPreset={async (name, prompt) => { await api.createPreset({ name, system_prompt: prompt, model_key: selectedModel, temperature: 0.7 }); setPresets(await api.presets()) }} onPresetDelete={async (id) => { await api.deletePreset(id); setPresets(await api.presets()) }} onUpload={async (file) => { await upload(file) }} presets={presets} uploads={uploads} />}
         {page === 'Settings' && <SettingsPage connected={connected} onRefresh={async () => { await Promise.all([refreshConversations(), refreshLibrary()]) }} />}
       </div>
     </TooltipProvider>

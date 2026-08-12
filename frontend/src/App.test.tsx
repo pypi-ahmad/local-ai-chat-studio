@@ -20,7 +20,16 @@ beforeEach(() => {
       return init?.method === 'POST' ? json(conversation, 201) : json([conversation])
     }
     if (path.endsWith('/conversations/c1')) return json(conversation)
-    if (path.endsWith('/providers')) return json({ providers: [{ id: 'echo', label: 'Echo', key_source: null }] })
+    if (path.endsWith('/providers')) return json({ providers: [
+      { id: 'echo', label: 'Echo', key_source: null, auth_modes: ['none'], connected: true, health: 'ready' },
+      { id: 'opencode-bridge', label: 'OpenCode', key_source: null, auth_modes: ['oauth'], connected: true, health: 'ready' },
+    ] })
+    if (path.endsWith('/providers/opencode-bridge/auth/methods')) {
+      return json({ anthropic: [{ type: 'oauth', label: 'Claude Pro/Max', method: 0 }] })
+    }
+    if (/\/providers\/[^/]+\/policy$/.test(path)) {
+      return json({ allow_memory: false, allow_retrieval: false, allow_attachments: false, allow_web: false, allow_backpack: false })
+    }
     if (path.endsWith('/providers/models')) {
       return json({ echo: { provider: 'echo', models: [{ provider: 'echo', id: 'deterministic', label: 'Deterministic' }] } })
     }
@@ -78,5 +87,12 @@ describe('studio workspace', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Send message' }))
 
     await waitFor(() => expect(screen.getByText('hello back')).toBeInTheDocument())
+  })
+
+  it('offers Claude subscription sign-in through OpenCode', async () => {
+    render(<App />)
+    fireEvent.click(screen.getByRole('button', { name: 'Providers' }))
+
+    expect(await screen.findByRole('button', { name: 'Connect Claude Pro/Max through OpenCode' })).toBeInTheDocument()
   })
 })

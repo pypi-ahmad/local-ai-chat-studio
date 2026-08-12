@@ -212,6 +212,74 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/providers/opencode-bridge/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Opencode Status */
+        get: operations["opencode_status_api_v1_providers_opencode_bridge_status_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/providers/opencode-bridge/auth/methods": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Opencode Auth Methods */
+        get: operations["opencode_auth_methods_api_v1_providers_opencode_bridge_auth_methods_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/providers/opencode-bridge/auth/{upstream}/start": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Start Opencode Auth */
+        post: operations["start_opencode_auth_api_v1_providers_opencode_bridge_auth__upstream__start_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/providers/opencode-bridge/auth/{upstream}/complete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Complete Opencode Auth */
+        post: operations["complete_opencode_auth_api_v1_providers_opencode_bridge_auth__upstream__complete_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/providers/openrouter/auth/start": {
         parameters: {
             query?: never;
@@ -399,6 +467,23 @@ export interface paths {
         put?: never;
         /** Create Memory */
         post: operations["create_memory_api_v1_memories_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/conversations/{conversation_id}/memories/extract": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Extract Conversation Memories */
+        post: operations["extract_conversation_memories_api_v1_conversations__conversation_id__memories_extract_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1033,6 +1118,14 @@ export interface components {
             use_count: number;
             /** Quarantine Reason */
             quarantine_reason?: string | null;
+            /** Source Message Ids */
+            source_message_ids?: string[];
+            /** Selection Reason */
+            selection_reason?: string | null;
+            /** Extractor Provider */
+            extractor_provider?: string | null;
+            /** Extractor Model */
+            extractor_model?: string | null;
         };
         /** MemoryCreate */
         MemoryCreate: {
@@ -1045,6 +1138,36 @@ export interface components {
             category: string;
             /** Source Conversation Id */
             source_conversation_id?: string | null;
+        };
+        /** MemoryExtractionRequest */
+        MemoryExtractionRequest: {
+            /** Provider */
+            provider: string;
+            /** Model */
+            model: string;
+            /**
+             * Cloud Confirmed
+             * @default false
+             */
+            cloud_confirmed: boolean;
+        };
+        /** MemoryExtractionResult */
+        MemoryExtractionResult: {
+            /**
+             * Saved
+             * @default 0
+             */
+            saved: number;
+            /**
+             * Quarantined
+             * @default 0
+             */
+            quarantined: number;
+            /**
+             * Discarded
+             * @default 0
+             */
+            discarded: number;
         };
         /** MemoryUpdate */
         MemoryUpdate: {
@@ -1096,6 +1219,24 @@ export interface components {
         OAuthCodeInput: {
             /** Code */
             code: string;
+        };
+        /** OpenCodeOAuthComplete */
+        OpenCodeOAuthComplete: {
+            /**
+             * Method
+             * @default 0
+             */
+            method: number;
+            /** Code */
+            code?: string | null;
+        };
+        /** OpenCodeOAuthStart */
+        OpenCodeOAuthStart: {
+            /**
+             * Method
+             * @default 0
+             */
+            method: number;
         };
         /** Preset */
         Preset: {
@@ -1328,6 +1469,8 @@ export interface components {
              * @default true
              */
             include_backpack: boolean;
+            /** Attachment Ids */
+            attachment_ids?: string[];
             /** Backpack Id */
             backpack_id?: string | null;
             /**
@@ -1386,6 +1529,8 @@ export interface components {
              * @default true
              */
             include_backpack: boolean;
+            /** Attachment Ids */
+            attachment_ids?: string[];
             /** Backpack Id */
             backpack_id?: string | null;
             /**
@@ -1917,7 +2062,7 @@ export interface operations {
                 content: {
                     "application/json": {
                         [key: string]: {
-                            [key: string]: string | null;
+                            [key: string]: unknown;
                         }[];
                     };
                 };
@@ -1940,6 +2085,126 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+        };
+    };
+    opencode_status_api_v1_providers_opencode_bridge_status_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    opencode_auth_methods_api_v1_providers_opencode_bridge_auth_methods_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: {
+                            [key: string]: unknown;
+                        }[];
+                    };
+                };
+            };
+        };
+    };
+    start_opencode_auth_api_v1_providers_opencode_bridge_auth__upstream__start_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                upstream: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OpenCodeOAuthStart"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: string;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    complete_opencode_auth_api_v1_providers_opencode_bridge_auth__upstream__complete_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                upstream: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OpenCodeOAuthComplete"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: boolean;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -2449,6 +2714,41 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Memory"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    extract_conversation_memories_api_v1_conversations__conversation_id__memories_extract_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MemoryExtractionRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MemoryExtractionResult"];
                 };
             };
             /** @description Validation Error */

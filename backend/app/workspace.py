@@ -30,8 +30,14 @@ PII_PATTERNS = (
     re.compile(r"(?<!\d)(?:\+?\d[\d .()-]{8,}\d)(?!\d)"),
 )
 INJECTION_PATTERNS = (
-    re.compile(r"\bignore (?:all |any )?(?:previous|prior|system) instructions?\b", re.IGNORECASE),
-    re.compile(r"\b(?:reveal|print|return) (?:the )?(?:system prompt|secret|api key)\b", re.IGNORECASE),
+    re.compile(
+        r"\bignore (?:all |any )?(?:previous|prior|system) instructions?\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\b(?:reveal|print|return) (?:the )?(?:system prompt|secret|api key)\b",
+        re.IGNORECASE,
+    ),
     re.compile(r"\bact as (?:the )?system\b", re.IGNORECASE),
 )
 logger = logging.getLogger(__name__)
@@ -67,12 +73,43 @@ def retrieve_context(
             from src.rag import search_docs, search_history
 
             hits = search_docs(embed_model, conversation_id, query, top_k)
-            hits.extend(search_history(embed_model, conversation_id, query, top_k, 0.35))
+            hits.extend(
+                search_history(embed_model, conversation_id, query, top_k, 0.35)
+            )
             if hits:
                 return hits[:top_k]
         except Exception as exc:
             logger.warning("Vector retrieval failed: %s", exc)
     return store.search_related_messages(query, conversation_id, top_k)
+
+
+def relevant_memories(store: Store, query: str, top_k: int = 8):
+    active = [item for item in store.list_memories() if item.status == "active"]
+    pinned = [item for item in active if item.pinned]
+    by_id = {item.id: item for item in active}
+    ranked = []
+    embed_model = os.getenv("CHAT_EMBED_MODEL")
+    if embed_model:
+        try:
+            from src.rag import search_memories
+
+            ranked = [
+                by_id[hit["id"]]
+                for hit in search_memories(embed_model, query, top_k)
+                if hit.get("id") in by_id
+            ]
+        except Exception as exc:
+            logger.warning("Memory retrieval failed: %s", exc)
+    if not ranked:
+        terms = set(re.findall(r"[a-z0-9]+", query.lower()))
+        ranked = sorted(
+            active,
+            key=lambda item: len(
+                terms & set(re.findall(r"[a-z0-9]+", item.content.lower()))
+            ),
+            reverse=True,
+        )[:top_k]
+    return pinned + [item for item in ranked if not item.pinned][:top_k]
 
 
 def estimate_tokens(text: str) -> int:
@@ -127,21 +164,42 @@ def build_context_plan(
     web_results: list[dict[str, str]] | None = None,
 ) -> ContextPlan:
     conversation = store.get_conversation(conversation_id)
-    local = payload.provider in {"echo", "ollama", "omniroute"}
+    local = payload.provider in {"echo", "ollama-local", "omniroute"}
     policy = store.get_policy(payload.provider)
     history_allowed = local or policy.allow_retrieval
     memory_allowed = payload.include_memory and (local or policy.allow_memory)
     retrieval_allowed = payload.include_retrieval and (local or policy.allow_retrieval)
-    attachment_allowed = payload.include_attachments and (local or policy.allow_attachments)
+    attachment_allowed = payload.include_attachments and (
+        local or policy.allow_attachments
+    )
     web_allowed = payload.include_web and (local or policy.allow_web)
     backpack_allowed = payload.include_backpack and (local or policy.allow_backpacks)
 
     history_text = "\n".join(item.content for item in conversation.messages[-20:])
-    memories = [item for item in store.list_memories() if item.status == "active"] if memory_allowed else []
-    uploads = store.upload_texts(conversation_id) if attachment_allowed else []
-    upload_records = store.list_uploads(conversation_id) if attachment_allowed else []
+    memories = relevant_memories(store, payload.content) if memory_allowed else []
+    selected_uploads = set(payload.attachment_ids)
+    uploads = (
+        [
+            item
+            for item in store.upload_texts(conversation_id)
+            if item[0] in selected_uploads
+        ]
+        if attachment_allowed
+        else []
+    )
+    upload_records = (
+        [
+            item
+            for item in store.list_uploads(conversation_id)
+            if item.id in selected_uploads
+        ]
+        if attachment_allowed
+        else []
+    )
     retrieval_hits = (
-        retrieve_context(store, conversation_id, payload.content) if retrieval_allowed else []
+        retrieve_context(store, conversation_id, payload.content)
+        if retrieval_allowed
+        else []
     )
     memory_text = "\n".join(item.content for item in memories)
     upload_text = "\n".join(content for _, _, content in uploads)
@@ -153,13 +211,17 @@ def build_context_plan(
             kind="history",
             estimated_tokens=estimate_tokens(history_text),
             included=history_allowed,
-            reason=None if history_allowed else "Provider policy defaults to prompt only",
+            reason=None
+            if history_allowed
+            else "Provider policy defaults to prompt only",
         ),
         ContextSection(
             kind="memory",
             estimated_tokens=estimate_tokens(memory_text),
             included=memory_allowed,
-            reason=None if memory_allowed else "Disabled by provider policy or run settings",
+            reason=None
+            if memory_allowed
+            else "Disabled by provider policy or run settings",
         ),
         ContextSection(
             kind="retrieval",
@@ -168,24 +230,32 @@ def build_context_plan(
                 for item in retrieval_hits
             ),
             included=retrieval_allowed,
-            reason=None if retrieval_allowed else "Disabled by provider policy or run settings",
+            reason=None
+            if retrieval_allowed
+            else "Disabled by provider policy or run settings",
         ),
         ContextSection(
             kind="attachments",
             estimated_tokens=estimate_tokens(upload_text),
             included=attachment_allowed,
-            reason=None if attachment_allowed else "Disabled by provider policy or run settings",
+            reason=None
+            if attachment_allowed
+            else "Disabled by provider policy or run settings",
         ),
         ContextSection(
             kind="web",
             estimated_tokens=estimate_tokens(web_text),
             included=web_allowed,
-            reason=None if web_allowed else "Disabled by provider policy or run settings",
+            reason=None
+            if web_allowed
+            else "Disabled by provider policy or run settings",
         ),
         ContextSection(
             kind="backpack",
             included=backpack_allowed,
-            reason=None if backpack_allowed else "Disabled by provider policy or run settings",
+            reason=None
+            if backpack_allowed
+            else "Disabled by provider policy or run settings",
         ),
         ContextSection(kind="user", estimated_tokens=estimate_tokens(payload.content)),
     ]
@@ -265,13 +335,17 @@ def build_context_plan(
     findings = scan_text(payload.content)
     for source in sources:
         source_findings = [
-            item for item in scan_text(source.preview) if item.category == "prompt_injection"
+            item
+            for item in scan_text(source.preview)
+            if item.category == "prompt_injection"
         ]
         if source_findings:
             source.trust = "suspicious"
             source.included = False
             for item in source_findings:
-                item.id = hashlib.sha256(f"{source.id}:{item.id}".encode()).hexdigest()[:12]
+                item.id = hashlib.sha256(f"{source.id}:{item.id}".encode()).hexdigest()[
+                    :12
+                ]
             findings.extend(source_findings)
     section_by_kind = {section.kind: section for section in sections}
     section_kind = {"attachment": "attachments"}
@@ -284,8 +358,17 @@ def build_context_plan(
                 0, section.estimated_tokens - source.estimated_tokens
             )
     budget = max(1, int(payload.context_limit * 0.8))
-    estimated = sum(section.estimated_tokens for section in sections if section.included)
-    prune_order = {"history": 0, "retrieval": 1, "web": 2, "memory": 3, "attachment": 4, "backpack": 5}
+    estimated = sum(
+        section.estimated_tokens for section in sections if section.included
+    )
+    prune_order = {
+        "history": 0,
+        "retrieval": 1,
+        "web": 2,
+        "memory": 3,
+        "attachment": 4,
+        "backpack": 5,
+    }
     for source in sorted(
         sources,
         key=lambda item: (prune_order.get(item.kind, 99), item.score or 0),
@@ -350,7 +433,8 @@ def assemble_messages(
         items = [item for item in backpack.items if item.id in approved_sources]
         if items:
             system_parts.append(
-                "Context backpack:\n" + "\n".join(f"- {item.title}: {item.content}" for item in items)
+                "Context backpack:\n"
+                + "\n".join(f"- {item.title}: {item.content}" for item in items)
             )
     if included.get("memory"):
         memories = [
@@ -365,12 +449,16 @@ def assemble_messages(
             )
     if included.get("attachments"):
         uploads = [
-            item for item in store.upload_texts(conversation_id) if item[0] in approved_sources
+            item
+            for item in store.upload_texts(conversation_id)
+            if item[0] in approved_sources
         ]
         if uploads:
             system_parts.append(
                 "Uploaded documents:\n"
-                + "\n\n".join(f"[{filename}]\n{content}" for _, filename, content in uploads)
+                + "\n\n".join(
+                    f"[{filename}]\n{content}" for _, filename, content in uploads
+                )
             )
     if included.get("retrieval"):
         retrieved = [
@@ -384,7 +472,9 @@ def assemble_messages(
         if retrieved:
             system_parts.append(
                 "Related prior context:\n"
-                + "\n\n".join(f"[{source.title}]\n{source.preview}" for source in retrieved)
+                + "\n\n".join(
+                    f"[{source.title}]\n{source.preview}" for source in retrieved
+                )
             )
     if included.get("web") and web_results:
         approved_ids = {

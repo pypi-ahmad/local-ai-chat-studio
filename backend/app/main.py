@@ -6,6 +6,7 @@ import binascii
 import difflib
 import hashlib
 import json
+import logging
 import os
 import secrets
 import time
@@ -36,10 +37,14 @@ from backend.app.contracts import (
     FocusUpdate,
     Memory,
     MemoryCreate,
+    MemoryExtractionRequest,
+    MemoryExtractionResult,
     MemoryUpdate,
     Message,
     MessageCreate,
     OAuthCodeInput,
+    OpenCodeOAuthComplete,
+    OpenCodeOAuthStart,
     Preset,
     PresetCreate,
     Profile,
@@ -57,8 +62,13 @@ from backend.app.contracts import (
     V2ImportRequest,
     WipeRequest,
 )
+from backend.app.memory import extract_memories
 from backend.app.runs import RunManager
-from backend.app.providers import ProviderRegistry, build_provider_registry
+from backend.app.providers import (
+    OpenCodeBridgeAdapter,
+    ProviderRegistry,
+    build_provider_registry,
+)
 from backend.app.sessions import PROVIDER_ENV, SessionVault
 from backend.app.store import Store
 from backend.app.workspace import (
@@ -70,6 +80,9 @@ from backend.app.workspace import (
 )
 from src.files import ACCEPTED_TYPES, parse_upload
 from src.ollama_client import ollama_alive, running_models
+
+
+logger = logging.getLogger(__name__)
 
 
 def create_app(
@@ -89,16 +102,26 @@ def create_app(
     # provider that's otherwise live — fail fast at startup, not on first request.
     missing_env = set(registry.adapters) - set(PROVIDER_ENV)
     if missing_env:
-        raise RuntimeError(f"Providers missing from PROVIDER_ENV: {sorted(missing_env)}")
+        raise RuntimeError(
+            f"Providers missing from PROVIDER_ENV: {sorted(missing_env)}"
+        )
     runs = RunManager(registry, vault, store)
     web_by_plan: dict[str, list[dict[str, str]]] = {}
 
-    async def context_plan(
-        conversation_id: str, payload: TurnPreflight
-    ) -> ContextPlan:
+    async def context_plan(conversation_id: str, payload: TurnPreflight) -> ContextPlan:
+        if payload.attachment_ids:
+            uploads = {item.id: item for item in store.list_uploads(conversation_id)}
+            if missing := set(payload.attachment_ids) - uploads.keys():
+                raise KeyError(next(iter(missing)))
+            if any(uploads[item].kind == "image" for item in payload.attachment_ids):
+                if registry.supports_images(payload.provider, payload.model) is False:
+                    raise HTTPException(
+                        422, "Selected model does not support image input"
+                    )
         provisional = build_context_plan(store, conversation_id, payload)
         web_enabled = any(
-            section.kind == "web" and section.included for section in provisional.sections
+            section.kind == "web" and section.included
+            for section in provisional.sections
         )
         results = (
             await asyncio.to_thread(search_web, payload.content) if web_enabled else []
@@ -108,6 +131,19 @@ def create_app(
             web_by_plan.pop(next(iter(web_by_plan)))
         web_by_plan[plan.plan_hash] = results
         return plan
+
+    def sync_memory_index(memory: Memory) -> None:
+        embed_model = os.getenv("CHAT_EMBED_MODEL")
+        if not embed_model:
+            return
+        try:
+            from src.rag import delete_memory_vector, index_memory
+
+            delete_memory_vector(memory.id)
+            if memory.status == "active":
+                index_memory(embed_model, memory.id, memory.content)
+        except Exception as exc:
+            logger.warning("Memory index update failed: %s", type(exc).__name__)
 
     @asynccontextmanager
     async def lifespan(_: FastAPI):
@@ -224,11 +260,15 @@ def create_app(
         "/api/v1/conversations/{conversation_id}/turns/preflight",
         response_model=ContextPlan,
     )
-    async def preflight_turn(conversation_id: str, payload: TurnPreflight) -> ContextPlan:
+    async def preflight_turn(
+        conversation_id: str, payload: TurnPreflight
+    ) -> ContextPlan:
         try:
             return await context_plan(conversation_id, payload)
         except KeyError as exc:
-            raise HTTPException(404, "Conversation or context backpack not found") from exc
+            raise HTTPException(
+                404, "Conversation or context backpack not found"
+            ) from exc
 
     @app.post(
         "/api/v1/conversations/{conversation_id}/turns",
@@ -247,10 +287,19 @@ def create_app(
             else:
                 plan = build_context_plan(store, conversation_id, base, cached_web)
             if plan.plan_hash != payload.plan_hash:
-                raise HTTPException(409, detail={"message": "Context changed", "plan": plan.model_dump()})
+                raise HTTPException(
+                    409,
+                    detail={"message": "Context changed", "plan": plan.model_dump()},
+                )
             required = {finding.id for finding in plan.findings}
             if not required.issubset(payload.confirmed_finding_ids):
-                raise HTTPException(409, detail={"message": "Confirmation required", "plan": plan.model_dump()})
+                raise HTTPException(
+                    409,
+                    detail={
+                        "message": "Confirmation required",
+                        "plan": plan.model_dump(),
+                    },
+                )
             messages = assemble_messages(
                 store,
                 conversation_id,
@@ -259,9 +308,16 @@ def create_app(
                 set(payload.excluded_source_ids),
                 cached_web,
             )
-            store.add_message(conversation_id, "user", payload.content)
+            store.add_message(
+                conversation_id,
+                "user",
+                payload.content,
+                metadata={"attachment_ids": payload.attachment_ids},
+            )
         except KeyError as exc:
-            raise HTTPException(404, "Conversation or context backpack not found") from exc
+            raise HTTPException(
+                404, "Conversation or context backpack not found"
+            ) from exc
         run = RunCreate(
             provider=payload.provider,
             model=payload.model,
@@ -272,13 +328,24 @@ def create_app(
         return runs.create(run, request.state.session_id, plan.model_dump())
 
     @app.get("/api/v1/providers")
-    def providers(request: Request) -> dict[str, list[dict[str, str | None]]]:
+    def providers(request: Request) -> dict[str, list[dict[str, object]]]:
         return {
             "providers": [
                 {
                     "id": provider_id,
                     "label": adapter.label,
                     "key_source": vault.source(request.state.session_id, provider_id),
+                    "auth_modes": list(adapter.auth_modes),
+                    "connected": bool(
+                        vault.source(request.state.session_id, provider_id)
+                        or "none" in adapter.auth_modes
+                    ),
+                    "health": "ready"
+                    if (
+                        vault.source(request.state.session_id, provider_id)
+                        or "none" in adapter.auth_modes
+                    )
+                    else "not_configured",
                 }
                 for provider_id, adapter in registry.adapters.items()
             ]
@@ -290,6 +357,67 @@ def create_app(
             lambda provider: vault.get(request.state.session_id, provider)
         )
 
+    def opencode_bridge() -> OpenCodeBridgeAdapter:
+        adapter = registry.adapters.get("opencode-bridge")
+        if not isinstance(adapter, OpenCodeBridgeAdapter):
+            raise HTTPException(404, "OpenCode bridge is not configured")
+        return adapter
+
+    @app.get("/api/v1/providers/opencode-bridge/status")
+    async def opencode_status() -> dict[str, object]:
+        try:
+            return {"connected": True, **await opencode_bridge().health()}
+        except Exception as exc:
+            logger.info("OpenCode bridge unavailable: %s", type(exc).__name__)
+            return {"connected": False}
+
+    @app.get("/api/v1/providers/opencode-bridge/auth/methods")
+    async def opencode_auth_methods() -> dict[str, list[dict[str, object]]]:
+        try:
+            methods = await opencode_bridge().oauth_methods()
+        except Exception as exc:
+            raise HTTPException(502, "OpenCode bridge is unavailable") from exc
+        return {
+            provider: [
+                {**method, "method": index}
+                for index, method in enumerate(provider_methods)
+                if method.get("type") == "oauth"
+            ]
+            for provider, provider_methods in methods.items()
+            if any(method.get("type") == "oauth" for method in provider_methods)
+        }
+
+    @app.post("/api/v1/providers/opencode-bridge/auth/{upstream}/start")
+    async def start_opencode_auth(
+        upstream: str, payload: OpenCodeOAuthStart
+    ) -> dict[str, str]:
+        methods = await opencode_auth_methods()
+        if not any(
+            item["method"] == payload.method for item in methods.get(upstream, [])
+        ):
+            raise HTTPException(404, "OpenCode OAuth method not found")
+        try:
+            return await opencode_bridge().oauth_authorize(upstream, payload.method)
+        except Exception as exc:
+            raise HTTPException(502, "OpenCode OAuth authorization failed") from exc
+
+    @app.post("/api/v1/providers/opencode-bridge/auth/{upstream}/complete")
+    async def complete_opencode_auth(
+        upstream: str, payload: OpenCodeOAuthComplete
+    ) -> dict[str, bool]:
+        methods = await opencode_auth_methods()
+        if not any(
+            item["method"] == payload.method for item in methods.get(upstream, [])
+        ):
+            raise HTTPException(404, "OpenCode OAuth method not found")
+        try:
+            connected = await opencode_bridge().oauth_complete(
+                upstream, payload.method, payload.code
+            )
+        except Exception as exc:
+            raise HTTPException(502, "OpenCode OAuth callback failed") from exc
+        return {"connected": connected}
+
     @app.post("/api/v1/providers/openrouter/auth/start")
     def start_openrouter_auth(request: Request) -> dict[str, str]:
         now = time.monotonic()
@@ -297,11 +425,16 @@ def create_app(
             if now - started_at > OAUTH_VERIFIER_TTL:
                 oauth_verifiers.pop(sid, None)
         verifier = secrets.token_urlsafe(64)
-        challenge = base64.urlsafe_b64encode(
-            hashlib.sha256(verifier.encode()).digest()
-        ).rstrip(b"=").decode()
+        challenge = (
+            base64.urlsafe_b64encode(hashlib.sha256(verifier.encode()).digest())
+            .rstrip(b"=")
+            .decode()
+        )
         oauth_verifiers[request.state.session_id] = (verifier, now)
-        callback_url = str(request.base_url).rstrip("/") + "/api/v1/providers/openrouter/auth/callback"
+        callback_url = (
+            str(request.base_url).rstrip("/")
+            + "/api/v1/providers/openrouter/auth/callback"
+        )
         query = urlencode(
             {
                 "callback_url": callback_url,
@@ -309,10 +442,15 @@ def create_app(
                 "code_challenge_method": "S256",
             }
         )
-        return {"authorization_url": f"https://openrouter.ai/auth?{query}", "callback_url": callback_url}
+        return {
+            "authorization_url": f"https://openrouter.ai/auth?{query}",
+            "callback_url": callback_url,
+        }
 
     @app.post("/api/v1/providers/openrouter/auth/complete", status_code=204)
-    async def complete_openrouter_auth(payload: OAuthCodeInput, request: Request) -> Response:
+    async def complete_openrouter_auth(
+        payload: OAuthCodeInput, request: Request
+    ) -> Response:
         await exchange_openrouter_code(payload.code, request.state.session_id)
         return Response(status_code=204)
 
@@ -343,28 +481,33 @@ def create_app(
         vault.set(session_id, "openrouter", key)
 
     @app.put("/api/v1/providers/{provider}/credential", status_code=204)
-    def set_credential(provider: str, payload: CredentialInput, request: Request) -> Response:
-        if provider not in PROVIDER_ENV:
+    def set_credential(
+        provider: str, payload: CredentialInput, request: Request
+    ) -> Response:
+        adapter = registry.adapters.get(provider)
+        if adapter is None:
             raise HTTPException(404, "Provider not found")
+        if "api_key" not in adapter.auth_modes:
+            raise HTTPException(400, "Provider does not accept API keys")
         vault.set(request.state.session_id, provider, payload.api_key)
         return Response(status_code=status.HTTP_204_NO_CONTENT)
 
     @app.delete("/api/v1/providers/{provider}/credential", status_code=204)
     def remove_credential(provider: str, request: Request) -> Response:
-        if provider not in PROVIDER_ENV:
+        if provider not in registry.adapters:
             raise HTTPException(404, "Provider not found")
         vault.remove(request.state.session_id, provider)
         return Response(status_code=status.HTTP_204_NO_CONTENT)
 
     @app.get("/api/v1/providers/{provider}/policy", response_model=ProviderPolicy)
     def get_provider_policy(provider: str) -> ProviderPolicy:
-        if provider not in PROVIDER_ENV:
+        if provider not in registry.adapters:
             raise HTTPException(404, "Provider not found")
         return store.get_policy(provider)
 
     @app.put("/api/v1/providers/{provider}/policy", response_model=ProviderPolicy)
     def set_provider_policy(provider: str, payload: ProviderPolicy) -> ProviderPolicy:
-        if provider not in PROVIDER_ENV:
+        if provider not in registry.adapters:
             raise HTTPException(404, "Provider not found")
         return store.set_policy(provider, payload)
 
@@ -372,10 +515,10 @@ def create_app(
     def simulate_provider(
         provider: str, payload: ProviderSimulationInput
     ) -> dict[str, object]:
-        if provider not in PROVIDER_ENV:
+        if provider not in registry.adapters:
             raise HTTPException(404, "Provider not found")
         fallback = payload.fallback_provider
-        if fallback is not None and fallback not in PROVIDER_ENV:
+        if fallback is not None and fallback not in registry.adapters:
             raise HTTPException(404, "Fallback provider not found")
         labels = {
             "auth": "Authentication rejected",
@@ -451,21 +594,87 @@ def create_app(
 
     @app.post("/api/v1/memories", response_model=Memory, status_code=201)
     def create_memory(payload: MemoryCreate) -> Memory:
-        findings = [item for item in scan_text(payload.content) if item.category == "prompt_injection"]
-        return store.create_memory(
+        findings = [
+            item
+            for item in scan_text(payload.content)
+            if item.category == "prompt_injection"
+        ]
+        memory = store.create_memory(
             payload.content,
             payload.category,
             payload.source_conversation_id,
             status="quarantined" if findings else "active",
             quarantine_reason=findings[0].message if findings else None,
         )
+        sync_memory_index(memory)
+        return memory
+
+    @app.post(
+        "/api/v1/conversations/{conversation_id}/memories/extract",
+        response_model=MemoryExtractionResult,
+    )
+    async def extract_conversation_memories(
+        conversation_id: str,
+        payload: MemoryExtractionRequest,
+        request: Request,
+    ) -> MemoryExtractionResult:
+        adapter = registry.adapters.get(payload.provider)
+        if adapter is None:
+            raise HTTPException(404, "Provider not found")
+        if payload.provider != "ollama-local" and not payload.cloud_confirmed:
+            raise HTTPException(
+                409, "Confirm sending the full conversation to this provider"
+            )
+        try:
+            conversation = store.get_conversation(conversation_id)
+            outcome = await extract_memories(
+                conversation,
+                adapter,
+                vault.get(request.state.session_id, payload.provider),
+                payload.model,
+                [item.content for item in store.list_memories()],
+            )
+        except KeyError as exc:
+            raise HTTPException(404, "Conversation not found") from exc
+        except ValueError as exc:
+            raise HTTPException(502, str(exc)) from exc
+        safe_candidates = []
+        discarded = outcome.discarded
+        for candidate in outcome.candidates:
+            findings = scan_text(candidate["content"])
+            if any(item.category in {"secret", "pii"} for item in findings):
+                discarded += 1
+                continue
+            if injection := next(
+                (item for item in findings if item.category == "prompt_injection"), None
+            ):
+                candidate["status"] = "quarantined"
+                candidate["quarantine_reason"] = injection.message
+            safe_candidates.append(candidate)
+        memories = store.create_memories_batch(
+            conversation_id,
+            safe_candidates,
+            payload.provider,
+            payload.model,
+        )
+        for memory in memories:
+            sync_memory_index(memory)
+        return MemoryExtractionResult(
+            saved=sum(item.status == "active" for item in memories),
+            quarantined=sum(item.status == "quarantined" for item in memories),
+            discarded=discarded,
+        )
 
     @app.patch("/api/v1/memories/{memory_id}", response_model=Memory)
     def update_memory(memory_id: str, payload: MemoryUpdate) -> Memory:
         try:
-            return store.update_memory(memory_id, **payload.model_dump(exclude_unset=True))
+            memory = store.update_memory(
+                memory_id, **payload.model_dump(exclude_unset=True)
+            )
         except KeyError as exc:
             raise HTTPException(404, "Memory not found") from exc
+        sync_memory_index(memory)
+        return memory
 
     @app.delete("/api/v1/memories/{memory_id}", status_code=204)
     def delete_memory(memory_id: str) -> Response:
@@ -473,6 +682,13 @@ def create_app(
             store.delete_memory(memory_id)
         except KeyError as exc:
             raise HTTPException(404, "Memory not found") from exc
+        if os.getenv("CHAT_EMBED_MODEL"):
+            try:
+                from src.rag import delete_memory_vector
+
+                delete_memory_vector(memory_id)
+            except Exception as exc:
+                logger.warning("Memory index delete failed: %s", type(exc).__name__)
         return Response(status_code=204)
 
     @app.get("/api/v1/presets", response_model=list[Preset])
@@ -574,7 +790,9 @@ def create_app(
         except Exception as exc:
             raise HTTPException(422, "File could not be parsed") from exc
 
-    @app.get("/api/v1/conversations/{conversation_id}/uploads", response_model=list[Upload])
+    @app.get(
+        "/api/v1/conversations/{conversation_id}/uploads", response_model=list[Upload]
+    )
     def list_uploads(conversation_id: str) -> list[Upload]:
         return store.list_uploads(conversation_id)
 
@@ -610,9 +828,7 @@ def create_app(
             raise HTTPException(404, "Run not found") from exc
 
     @app.get("/api/v1/runs/{run_id}/bundle", response_model=ReplayBundle)
-    def run_bundle(
-        run_id: str, request: Request, mode: str = "full"
-    ) -> ReplayBundle:
+    def run_bundle(run_id: str, request: Request, mode: str = "full") -> ReplayBundle:
         if mode not in {"full", "redacted"}:
             raise HTTPException(422, "Bundle mode must be full or redacted")
         try:
@@ -645,7 +861,9 @@ def create_app(
     def activity(request: Request) -> list[RunSnapshot]:
         return store.list_runs(request.state.session_id)
 
-    @app.post("/api/v1/runs/{run_id}/replay", response_model=RunSnapshot, status_code=202)
+    @app.post(
+        "/api/v1/runs/{run_id}/replay", response_model=RunSnapshot, status_code=202
+    )
     async def replay_run(
         run_id: str, payload: ReplayCreate, request: Request
     ) -> RunSnapshot:

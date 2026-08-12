@@ -5,7 +5,9 @@ import sqlite3
 
 from fastapi.testclient import TestClient
 
-from backend.app.contracts import PresetCreate
+from backend.app.contracts import ModelDescriptor, PresetCreate
+from backend.app.main import create_app
+from backend.app.providers import ProviderAdapter, ProviderRegistry
 from backend.app.store import Store
 
 
@@ -15,7 +17,9 @@ def _conversation(client: TestClient) -> str:
     return response.json()["id"]
 
 
-def _complete_echo_run(client: TestClient, conversation_id: str, content: str = "hello") -> str:
+def _complete_echo_run(
+    client: TestClient, conversation_id: str, content: str = "hello"
+) -> str:
     preflight = client.post(
         f"/api/v1/conversations/{conversation_id}/turns/preflight",
         json={"provider": "echo", "model": "deterministic", "content": content},
@@ -71,7 +75,9 @@ def test_cloud_preflight_warns_about_secrets_and_excludes_private_context(
     plan = response.json()
     assert plan["requires_confirmation"] is True
     assert {finding["category"] for finding in plan["findings"]} == {"secret"}
-    assert all("1234567890abcdef" not in finding["preview"] for finding in plan["findings"])
+    assert all(
+        "1234567890abcdef" not in finding["preview"] for finding in plan["findings"]
+    )
     sections = {section["kind"]: section for section in plan["sections"]}
     assert sections["memory"]["included"] is False
     assert sections["history"]["included"] is False
@@ -107,11 +113,17 @@ def test_branch_backpack_focus_and_provider_policy(client: TestClient) -> None:
         f"/api/v1/conversations/{conversation_id}/branch",
         json={"message_id": message["id"], "title": "Branch"},
     )
-    assert [item["content"] for item in branch.json()["messages"]] == ["first", "second"]
+    assert [item["content"] for item in branch.json()["messages"]] == [
+        "first",
+        "second",
+    ]
 
     backpack = client.post(
         "/api/v1/backpacks",
-        json={"name": "Project facts", "items": [{"title": "Constraint", "content": "Local only"}]},
+        json={
+            "name": "Project facts",
+            "items": [{"title": "Constraint", "content": "Local only"}],
+        },
     )
     assert backpack.status_code == 201
     assert backpack.json()["items"][0]["content"] == "Local only"
@@ -130,7 +142,13 @@ def test_branch_backpack_focus_and_provider_policy(client: TestClient) -> None:
 
     policy = client.put(
         "/api/v1/providers/openai/policy",
-        json={"allow_memory": True, "allow_retrieval": False, "allow_attachments": False, "allow_web": False, "allow_backpacks": False},
+        json={
+            "allow_memory": True,
+            "allow_retrieval": False,
+            "allow_attachments": False,
+            "allow_web": False,
+            "allow_backpacks": False,
+        },
     )
     assert policy.status_code == 200
     assert policy.json()["allow_memory"] is True
@@ -224,7 +242,6 @@ def test_memory_lifecycle_feedback_and_data_controls(client: TestClient) -> None
     assert approved.status_code == 200
     assert approved.json()["pinned"] is True
     assert approved.json()["quarantine_reason"] is None
-
     feedback = client.put(
         f"/api/v1/messages/{message['id']}/feedback", json={"rating": 1}
     )
@@ -245,15 +262,76 @@ def test_memory_lifecycle_feedback_and_data_controls(client: TestClient) -> None
     assert wiped.status_code == 204
     assert client.get("/api/v1/conversations").json() == []
     assert client.get("/api/v1/memories").json() == []
-    assert next(
-        item
-        for item in client.get("/api/v1/providers").json()["providers"]
-        if item["id"] == "openai"
-    )["key_source"] != "session"
+    assert (
+        next(
+            item
+            for item in client.get("/api/v1/providers").json()["providers"]
+            if item["id"] == "openai"
+        )["key_source"]
+        != "session"
+    )
 
     imported = client.post("/api/v1/data/import", json={"jsonl": exported})
     assert imported.json()["imported"] == 1
     assert client.get("/api/v1/conversations").json()[0]["title"] == "Workspace"
+
+
+def test_llm_memory_extraction_requires_cloud_confirmation_and_saves_provenance() -> (
+    None
+):
+    class MemoryAdapter(ProviderAdapter):
+        id, label = "openai", "Memory stub"
+        source_id = ""
+
+        async def list_models(self, _api_key):
+            return [ModelDescriptor(provider=self.id, id="memory-model")]
+
+        async def stream(self, *_args, **_kwargs):
+            yield json.dumps(
+                {
+                    "memories": [
+                        {
+                            "content": "The user prefers concise answers.",
+                            "category": "preference",
+                            "source_message_ids": [self.source_id],
+                            "disposition": "active",
+                            "reason": "Stable preference stated by the user.",
+                        }
+                    ]
+                }
+            )
+
+    adapter = MemoryAdapter()
+    registry = ProviderRegistry({"openai": adapter})
+    with TestClient(
+        create_app(database_url=":memory:", provider_registry=registry)
+    ) as local:
+        conversation_id = _conversation(local)
+        message = local.post(
+            f"/api/v1/conversations/{conversation_id}/messages",
+            json={"role": "user", "content": "Please keep every answer concise."},
+        ).json()
+        adapter.source_id = message["id"]
+
+        denied = local.post(
+            f"/api/v1/conversations/{conversation_id}/memories/extract",
+            json={"provider": "openai", "model": "memory-model"},
+        )
+        assert denied.status_code == 409
+
+        extracted = local.post(
+            f"/api/v1/conversations/{conversation_id}/memories/extract",
+            json={
+                "provider": "openai",
+                "model": "memory-model",
+                "cloud_confirmed": True,
+            },
+        )
+        assert extracted.json() == {"saved": 1, "quarantined": 0, "discarded": 0}
+        memory = local.get("/api/v1/memories").json()[0]
+        assert memory["source_message_ids"] == [message["id"]]
+        assert memory["extractor_provider"] == "openai"
+        assert memory["extractor_model"] == "memory-model"
 
 
 def test_redacted_replay_bundle_hides_private_context(client: TestClient) -> None:
@@ -282,14 +360,14 @@ def test_redacted_replay_bundle_hides_private_context(client: TestClient) -> Non
     ).json()
     with client.stream("GET", f"/api/v1/runs/{secret_run['id']}/events") as stream:
         list(stream.iter_lines())
-    shared = client.get(
-        f"/api/v1/runs/{secret_run['id']}/bundle?mode=redacted"
-    ).json()
+    shared = client.get(f"/api/v1/runs/{secret_run['id']}/bundle?mode=redacted").json()
     assert "1234567890abcdef" not in shared["run"]["output"]
     assert "1234567890abcdef" not in shared["messages"][0]["content"]
 
 
-def test_workspace_resource_lifecycle_and_provider_simulator(client: TestClient) -> None:
+def test_workspace_resource_lifecycle_and_provider_simulator(
+    client: TestClient,
+) -> None:
     conversation_id = _conversation(client)
     backpack = client.post(
         "/api/v1/backpacks",
@@ -319,7 +397,7 @@ def test_workspace_resource_lifecycle_and_provider_simulator(client: TestClient)
 
     simulation = client.post(
         "/api/v1/providers/openai/simulate",
-        json={"scenario": "rate_limit", "fallback_provider": "ollama"},
+        json={"scenario": "rate_limit", "fallback_provider": "ollama-local"},
     )
     assert simulation.status_code == 200
     assert simulation.json()["recovered"] is True
@@ -362,7 +440,9 @@ def test_web_sources_are_provenanced_and_replayed_without_a_second_search(
                 "include_web": True,
             },
         ).json()
-        web_source = next(item for item in preflight["sources"] if item["kind"] == "web")
+        web_source = next(
+            item for item in preflight["sources"] if item["kind"] == "web"
+        )
         assert web_source["url"] == "https://example.test/source"
 
         created = client.post(
@@ -381,11 +461,16 @@ def test_web_sources_are_provenanced_and_replayed_without_a_second_search(
     assert "Verified context" in bundle["messages"][0]["content"]
 
 
-def test_cross_chat_retrieval_has_provenance_and_can_be_excluded(client: TestClient) -> None:
+def test_cross_chat_retrieval_has_provenance_and_can_be_excluded(
+    client: TestClient,
+) -> None:
     old_conversation = _conversation(client)
     client.post(
         f"/api/v1/conversations/{old_conversation}/messages",
-        json={"role": "user", "content": "Project Juniper deploys on the green cluster"},
+        json={
+            "role": "user",
+            "content": "Project Juniper deploys on the green cluster",
+        },
     )
     conversation_id = _conversation(client)
     payload = {
@@ -403,7 +488,11 @@ def test_cross_chat_retrieval_has_provenance_and_can_be_excluded(client: TestCli
 
     created = client.post(
         f"/api/v1/conversations/{conversation_id}/turns",
-        json={**payload, "plan_hash": plan["plan_hash"], "excluded_source_ids": [source["id"]]},
+        json={
+            **payload,
+            "plan_hash": plan["plan_hash"],
+            "excluded_source_ids": [source["id"]],
+        },
     )
     bundle = client.get(f"/api/v1/runs/{created.json()['id']}/bundle").json()
     assert "green cluster" not in bundle["messages"][0]["content"]
@@ -419,15 +508,27 @@ def test_image_attachment_is_available_to_full_replay_but_not_redacted_share(
         json={
             "conversation_id": conversation_id,
             "filename": "pixel.png",
-            "content_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M/wHwAF/gL+XxYvWQAAAABJRU5ErkJggg==",
+            "content_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGNgYGBgAAAABQABpfZFQAAAAABJRU5ErkJggg==",
         },
     )
     assert uploaded.status_code == 201
+    unselected = client.post(
+        f"/api/v1/conversations/{conversation_id}/turns/preflight",
+        json={
+            "provider": "echo",
+            "model": "deterministic",
+            "content": "Do not attach anything",
+            "include_attachments": True,
+        },
+    ).json()
+    assert all(source["title"] != "pixel.png" for source in unselected["sources"])
+
     payload = {
         "provider": "echo",
         "model": "deterministic",
         "content": "Describe the image",
         "include_attachments": True,
+        "attachment_ids": [uploaded.json()["id"]],
     }
     plan = client.post(
         f"/api/v1/conversations/{conversation_id}/turns/preflight", json=payload
@@ -496,7 +597,9 @@ def test_profile_runtime_health_and_opt_in_v2_import(tmp_path, monkeypatch) -> N
     with TestClient(
         create_app(database_url=str(tmp_path / "app.db"), v2_database_url=str(source))
     ) as client:
-        profile = client.put("/api/v1/profile", json={"content": "Prefer terse answers"})
+        profile = client.put(
+            "/api/v1/profile", json={"content": "Prefer terse answers"}
+        )
         assert profile.json()["content"] == "Prefer terse answers"
         assert client.get("/api/v1/profile").json() == profile.json()
         health = client.get("/api/v1/runtime/health").json()
@@ -508,8 +611,14 @@ def test_profile_runtime_health_and_opt_in_v2_import(tmp_path, monkeypatch) -> N
             "/api/v1/data/import-v2", json={"confirmation": "IMPORT_V2"}
         )
         assert imported.json()["imported"] == 1
-        assert client.get("/api/v1/conversations/old").json()["messages"][0]["content"] == "preserved"
-        assert client.post(
-            "/api/v1/data/import-v2", json={"confirmation": "IMPORT_V2"}
-        ).json()["imported"] == 0
+        assert (
+            client.get("/api/v1/conversations/old").json()["messages"][0]["content"]
+            == "preserved"
+        )
+        assert (
+            client.post(
+                "/api/v1/data/import-v2", json={"confirmation": "IMPORT_V2"}
+            ).json()["imported"]
+            == 0
+        )
     assert list(tmp_path.glob("app.db.pre-v2-import-*.bak"))

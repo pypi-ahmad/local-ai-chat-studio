@@ -115,7 +115,11 @@ CREATE TABLE IF NOT EXISTS memories (
     pinned INTEGER NOT NULL DEFAULT 0,
     active INTEGER NOT NULL DEFAULT 1,
     status TEXT NOT NULL DEFAULT 'active',
-    quarantine_reason TEXT
+    quarantine_reason TEXT,
+    source_message_ids_json TEXT NOT NULL DEFAULT '[]',
+    selection_reason TEXT,
+    extractor_provider TEXT,
+    extractor_model TEXT
 );
 CREATE TABLE IF NOT EXISTS presets (
     id TEXT PRIMARY KEY,
@@ -164,7 +168,9 @@ class Store:
         self.lock = threading.RLock()
         with self.connection:
             self.connection.executescript(SCHEMA)
-            self._ensure_column("conversations", "model", "TEXT NOT NULL DEFAULT 'unknown'")
+            self._ensure_column(
+                "conversations", "model", "TEXT NOT NULL DEFAULT 'unknown'"
+            )
             self._ensure_column("conversations", "pinned", "INTEGER NOT NULL DEFAULT 0")
             self._ensure_column("conversations", "memory_extracted_at", "TEXT")
             self._ensure_column("messages", "attachments_json", "TEXT")
@@ -172,13 +178,22 @@ class Store:
             self._ensure_column("messages", "run_id", "TEXT")
             self._ensure_column("memories", "status", "TEXT NOT NULL DEFAULT 'active'")
             self._ensure_column("memories", "quarantine_reason", "TEXT")
+            self._ensure_column(
+                "memories", "source_message_ids_json", "TEXT NOT NULL DEFAULT '[]'"
+            )
+            self._ensure_column("memories", "selection_reason", "TEXT")
+            self._ensure_column("memories", "extractor_provider", "TEXT")
+            self._ensure_column("memories", "extractor_model", "TEXT")
 
     def _ensure_column(self, table: str, column: str, definition: str) -> None:
         columns = {
-            row["name"] for row in self.connection.execute(f"PRAGMA table_info({table})")
+            row["name"]
+            for row in self.connection.execute(f"PRAGMA table_info({table})")
         }
         if column not in columns:
-            self.connection.execute(f"ALTER TABLE {table} ADD COLUMN {column} {definition}")
+            self.connection.execute(
+                f"ALTER TABLE {table} ADD COLUMN {column} {definition}"
+            )
 
     def create_conversation(self, title: str, model: str = "unknown") -> Conversation:
         conversation_id, now = str(uuid.uuid4()), utc_now()
@@ -210,7 +225,9 @@ class Store:
     def search_related_messages(
         self, query: str, exclude_conversation_id: str, limit: int = 5
     ) -> list[dict[str, Any]]:
-        terms = {term for term in re.findall(r"[a-z0-9]+", query.lower()) if len(term) > 2}
+        terms = {
+            term for term in re.findall(r"[a-z0-9]+", query.lower()) if len(term) > 2
+        }
         if not terms:
             return []
         with self.lock:
@@ -243,7 +260,11 @@ class Store:
         return self._conversation(row, self._messages(messages))
 
     def update_conversation(
-        self, conversation_id: str, *, title: str | None = None, pinned: bool | None = None
+        self,
+        conversation_id: str,
+        *,
+        title: str | None = None,
+        pinned: bool | None = None,
     ) -> Conversation:
         self.get_conversation(conversation_id)
         fields: list[str] = []
@@ -298,10 +319,12 @@ class Store:
                 ),
             )
             self.connection.execute(
-                "UPDATE conversations SET updated_at = ? WHERE id = ?", (now, conversation_id)
+                "UPDATE conversations SET updated_at = ? WHERE id = ?",
+                (now, conversation_id),
             )
             position = self.connection.execute(
-                "SELECT COUNT(*) - 1 FROM messages WHERE conv_id = ?", (conversation_id,)
+                "SELECT COUNT(*) - 1 FROM messages WHERE conv_id = ?",
+                (conversation_id,),
             ).fetchone()[0]
         return Message(
             id=message_id,
@@ -320,7 +343,9 @@ class Store:
         target = self.create_conversation(title, source.model)
         found = False
         for message in source.messages:
-            self.add_message(target.id, message.role, message.content, metadata=message.metadata)
+            self.add_message(
+                target.id, message.role, message.content, metadata=message.metadata
+            )
             if message.id == message_id:
                 found = True
                 break
@@ -385,13 +410,20 @@ class Store:
             ).fetchone()[0]
             self.connection.execute(
                 "INSERT INTO run_events VALUES (?, ?, ?, ?, ?)",
-                (event.run_id, position, event.type, json.dumps(event.data), event.timestamp),
+                (
+                    event.run_id,
+                    position,
+                    event.type,
+                    json.dumps(event.data),
+                    event.timestamp,
+                ),
             )
 
     def get_run_record(self, run_id: str, session_id: str) -> sqlite3.Row:
         with self.lock:
             row = self.connection.execute(
-                "SELECT * FROM runs WHERE id = ? AND session_id = ?", (run_id, session_id)
+                "SELECT * FROM runs WHERE id = ? AND session_id = ?",
+                (run_id, session_id),
             ).fetchone()
         if row is None:
             raise KeyError(run_id)
@@ -424,7 +456,8 @@ class Store:
     def get_policy(self, provider: str) -> ProviderPolicy:
         with self.lock:
             row = self.connection.execute(
-                "SELECT policy_json FROM provider_policies WHERE provider = ?", (provider,)
+                "SELECT policy_json FROM provider_policies WHERE provider = ?",
+                (provider,),
             ).fetchone()
         return ProviderPolicy(**json.loads(row[0])) if row else ProviderPolicy()
 
@@ -448,7 +481,13 @@ class Store:
             for position, item in enumerate(payload.items):
                 self.connection.execute(
                     "INSERT INTO backpack_items VALUES (?, ?, ?, ?, ?)",
-                    (str(uuid.uuid4()), backpack_id, position, item.title, item.content),
+                    (
+                        str(uuid.uuid4()),
+                        backpack_id,
+                        position,
+                        item.title,
+                        item.content,
+                    ),
                 )
         return self.get_backpack(backpack_id)
 
@@ -465,12 +504,22 @@ class Store:
             ).fetchall()
         return Backpack(
             **dict(row),
-            items=[BackpackItem(id=item["id"], title=item["title"], content=item["content"]) for item in items],
+            items=[
+                BackpackItem(
+                    id=item["id"], title=item["title"], content=item["content"]
+                )
+                for item in items
+            ],
         )
 
     def list_backpacks(self) -> list[Backpack]:
         with self.lock:
-            ids = [row[0] for row in self.connection.execute("SELECT id FROM backpacks ORDER BY updated_at DESC")]
+            ids = [
+                row[0]
+                for row in self.connection.execute(
+                    "SELECT id FROM backpacks ORDER BY updated_at DESC"
+                )
+            ]
         return [self.get_backpack(item) for item in ids]
 
     def update_backpack(self, backpack_id: str, payload: BackpackCreate) -> Backpack:
@@ -486,7 +535,13 @@ class Store:
             for position, item in enumerate(payload.items):
                 self.connection.execute(
                     "INSERT INTO backpack_items VALUES (?, ?, ?, ?, ?)",
-                    (str(uuid.uuid4()), backpack_id, position, item.title, item.content),
+                    (
+                        str(uuid.uuid4()),
+                        backpack_id,
+                        position,
+                        item.title,
+                        item.content,
+                    ),
                 )
         return self.get_backpack(backpack_id)
 
@@ -516,7 +571,9 @@ class Store:
                     now,
                 ),
             )
-        return FocusSession(id=focus_id, status="active", created_at=now, **payload.model_dump())
+        return FocusSession(
+            id=focus_id, status="active", created_at=now, **payload.model_dump()
+        )
 
     def active_focus(self, conversation_id: str) -> FocusSession | None:
         with self.lock:
@@ -589,13 +646,18 @@ class Store:
         *,
         status: str = "active",
         quarantine_reason: str | None = None,
+        source_message_ids: list[str] | None = None,
+        selection_reason: str | None = None,
+        extractor_provider: str | None = None,
+        extractor_model: str | None = None,
     ) -> Memory:
         memory_id, now = str(uuid.uuid4()), utc_now()
         with self.lock, self.connection:
             self.connection.execute(
                 "INSERT INTO memories "
-                "(id, content, category, source_conv, created_at, last_used_at, status, quarantine_reason) "
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                "(id, content, category, source_conv, created_at, last_used_at, status, "
+                "quarantine_reason, source_message_ids_json, selection_reason, "
+                "extractor_provider, extractor_model) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 (
                     memory_id,
                     content,
@@ -605,6 +667,10 @@ class Store:
                     now,
                     status,
                     quarantine_reason,
+                    json.dumps(source_message_ids or []),
+                    selection_reason,
+                    extractor_provider,
+                    extractor_model,
                 ),
             )
         return self.get_memory(memory_id)
@@ -630,13 +696,60 @@ class Store:
             pinned=bool(row["pinned"]),
             status=status,
             quarantine_reason=row["quarantine_reason"],
+            source_message_ids=json.loads(row["source_message_ids_json"] or "[]"),
+            selection_reason=row["selection_reason"],
+            extractor_provider=row["extractor_provider"],
+            extractor_model=row["extractor_model"],
         )
+
+    def create_memories_batch(
+        self,
+        conversation_id: str,
+        candidates: list[dict[str, Any]],
+        provider: str,
+        model: str,
+    ) -> list[Memory]:
+        self.get_conversation(conversation_id)
+        ids: list[str] = []
+        now = utc_now()
+        with self.lock, self.connection:
+            for candidate in candidates:
+                memory_id = str(uuid.uuid4())
+                ids.append(memory_id)
+                self.connection.execute(
+                    "INSERT INTO memories "
+                    "(id, content, category, source_conv, created_at, last_used_at, status, "
+                    "quarantine_reason, source_message_ids_json, selection_reason, "
+                    "extractor_provider, extractor_model) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                    (
+                        memory_id,
+                        candidate["content"],
+                        candidate["category"],
+                        conversation_id,
+                        now,
+                        now,
+                        candidate["status"],
+                        candidate.get("quarantine_reason"),
+                        json.dumps(candidate.get("source_message_ids", [])),
+                        candidate.get("selection_reason"),
+                        provider,
+                        model,
+                    ),
+                )
+            self.connection.execute(
+                "UPDATE conversations SET memory_extracted_at = ? WHERE id = ?",
+                (now, conversation_id),
+            )
+        return [self.get_memory(memory_id) for memory_id in ids]
 
     def list_memories(self) -> list[Memory]:
         with self.lock:
-            ids = [row[0] for row in self.connection.execute(
-                "SELECT id FROM memories ORDER BY pinned DESC, last_used_at DESC"
-            )]
+            ids = [
+                row[0]
+                for row in self.connection.execute(
+                    "SELECT id FROM memories ORDER BY pinned DESC, last_used_at DESC"
+                )
+            ]
         return [self.get_memory(item) for item in ids]
 
     def update_memory(
@@ -675,7 +788,9 @@ class Store:
 
     def delete_memory(self, memory_id: str) -> None:
         with self.lock, self.connection:
-            cursor = self.connection.execute("DELETE FROM memories WHERE id = ?", (memory_id,))
+            cursor = self.connection.execute(
+                "DELETE FROM memories WHERE id = ?", (memory_id,)
+            )
         if cursor.rowcount == 0:
             raise KeyError(memory_id)
 
@@ -707,7 +822,9 @@ class Store:
 
     def delete_preset(self, preset_id: str) -> None:
         with self.lock, self.connection:
-            cursor = self.connection.execute("DELETE FROM presets WHERE id = ?", (preset_id,))
+            cursor = self.connection.execute(
+                "DELETE FROM presets WHERE id = ?", (preset_id,)
+            )
         if cursor.rowcount == 0:
             raise KeyError(preset_id)
 
@@ -782,7 +899,9 @@ class Store:
                         and isinstance(message.get("content"), str)
                         and message["content"]
                     ):
-                        self.add_message(conversation.id, message["role"], message["content"])
+                        self.add_message(
+                            conversation.id, message["role"], message["content"]
+                        )
                 imported += 1
             except (json.JSONDecodeError, AttributeError, TypeError):
                 continue
@@ -824,7 +943,8 @@ class Store:
         migration_version = 2001
         with self.lock:
             applied = self.connection.execute(
-                "SELECT 1 FROM schema_migrations WHERE version = ?", (migration_version,)
+                "SELECT 1 FROM schema_migrations WHERE version = ?",
+                (migration_version,),
             ).fetchone()
         if applied:
             return 0
@@ -833,7 +953,9 @@ class Store:
             raise FileNotFoundError(source)
         if self.database_url != ":memory:":
             target = Path(self.database_url)
-            backup = target.with_name(f"{target.name}.pre-v2-import-{uuid.uuid4().hex[:8]}.bak")
+            backup = target.with_name(
+                f"{target.name}.pre-v2-import-{uuid.uuid4().hex[:8]}.bak"
+            )
             with sqlite3.connect(backup) as backup_connection, self.lock:
                 self.connection.backup(backup_connection)
         imported = 0
@@ -866,13 +988,18 @@ class Store:
                     if table not in tables:
                         continue
                     source_columns = [
-                        row[1] for row in previous.execute(f"PRAGMA table_info({table})")
+                        row[1]
+                        for row in previous.execute(f"PRAGMA table_info({table})")
                     ]
                     target_columns = {
                         row["name"]
-                        for row in self.connection.execute(f"PRAGMA table_info({table})")
+                        for row in self.connection.execute(
+                            f"PRAGMA table_info({table})"
+                        )
                     }
-                    columns = [column for column in source_columns if column in target_columns]
+                    columns = [
+                        column for column in source_columns if column in target_columns
+                    ]
                     if not columns:
                         continue
                     names = ", ".join(columns)
