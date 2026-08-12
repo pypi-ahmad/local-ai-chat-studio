@@ -1,132 +1,752 @@
 <!doctype html>
-<html lang="en" data-js="off">
+<html lang="en" data-js="off" data-audience="explorer">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Offline systems field manual for Local AI Chat Studio v0.2.0.">
-<title>Local AI Chat Studio — Systems Field Manual</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23184E77'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='sans-serif' font-size='24' font-weight='700' fill='white'%3ELA%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="tutorial.css">
-<style>.layout>*,main,.chapters{min-width:0}@media(max-width:900px){.layout{grid-template-columns:minmax(0,1fr)}.chapters ol{width:100%;max-width:100%}}@media print{details>*:not(summary){display:block!important}}</style>
-<script>document.documentElement.dataset.js='on'</script><script src="tutorial.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Offline zero-to-hero handbook, user manual, business guide, and code atlas for Local AI Chat Studio.">
+  <meta name="color-scheme" content="dark">
+  <title>Local AI Chat Studio — Zero to Hero</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%2312161e'/%3E%3Cpath d='M15 22h34M15 32h22M15 42h28' stroke='%235ee0a0' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --space: #0a0c10;
+      --panel: #12161e;
+      --panel-2: #171d27;
+      --ink: #e7e9ee;
+      --soft: #a6afbd;
+      --muted: #778194;
+      --rule: #2a3240;
+      --cobalt: #7faeff;
+      --mint: #5ee0a0;
+      --amber: #f2be64;
+      --danger: #f08a96;
+      --display: Bahnschrift, "Arial Narrow", "Segoe UI", sans-serif;
+      --body: "Segoe UI", Aptos, system-ui, sans-serif;
+      --mono: "Cascadia Code", Consolas, monospace;
+      --measure: 76ch;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 82% -10%, #243853 0, transparent 26rem),
+        linear-gradient(90deg, #0a0c10 0, #0d1016 48%, #0a0c10 100%);
+      font: 16px/1.68 var(--body);
+    }
+    a { color: var(--cobalt); text-underline-offset: .2em; }
+    button, input { font: inherit; }
+    button { color: inherit; }
+    code, pre, .utility { font-family: var(--mono); }
+    code { color: #b9d4ff; font-size: .9em; }
+    pre {
+      margin: 1rem 0;
+      padding: 1rem 1.1rem;
+      overflow: auto;
+      color: #dfe8f3;
+      background: #090b0f;
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      line-height: 1.55;
+    }
+    h1, h2, h3, h4 { font-family: var(--display); line-height: 1.08; }
+    h1 { margin: .2rem 0 .8rem; font-size: clamp(3rem, 8vw, 7.8rem); letter-spacing: -.055em; }
+    h2 { margin: .35rem 0 1.2rem; font-size: clamp(2rem, 5vw, 4.2rem); letter-spacing: -.035em; }
+    h3 { margin: 1.6rem 0 .6rem; font-size: 1.35rem; }
+    h4 { margin: 1.2rem 0 .4rem; color: var(--cobalt); }
+    p { margin: .65rem 0 1rem; }
+    ul, ol { padding-left: 1.35rem; }
+    li + li { margin-top: .35rem; }
+    .skip {
+      position: fixed; z-index: 100; left: 1rem; top: -5rem;
+      padding: .65rem 1rem; color: var(--space); background: var(--mint);
+    }
+    .skip:focus { top: 1rem; }
+    .progress { position: fixed; z-index: 90; inset: 0 0 auto; height: 3px; background: #202631; }
+    .progress span { display: block; width: 0; height: 100%; background: linear-gradient(90deg, var(--cobalt), var(--mint)); }
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      align-content: center;
+      grid-template-columns: minmax(0, 1.25fr) minmax(290px, .75fr);
+      gap: clamp(2rem, 7vw, 7rem);
+      max-width: 1440px;
+      margin: auto;
+      padding: 5rem clamp(1.2rem, 5vw, 5rem) 3rem;
+    }
+    .hero-copy { align-self: center; }
+    .kicker, .chapter-label, .eyebrow {
+      margin: 0;
+      color: var(--mint);
+      font: 700 .72rem/1.4 var(--mono);
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    .hero-deck { max-width: 58ch; color: var(--soft); font-size: clamp(1.05rem, 2vw, 1.3rem); }
+    .thesis { color: var(--ink); }
+    .hero-panel {
+      align-self: center;
+      padding: 1.2rem;
+      background: #12161ee8;
+      border: 1px solid #344054;
+      border-radius: 22px;
+      box-shadow: 0 28px 90px #0009;
+    }
+    .packet-mini { display: grid; gap: .65rem; }
+    .packet-mini div {
+      display: grid; grid-template-columns: 2.2rem 1fr auto; gap: .7rem; align-items: center;
+      padding: .72rem; border: 1px solid var(--rule); border-radius: 11px; background: #0d1117;
+    }
+    .packet-mini b { display: grid; place-items: center; width: 2.2rem; aspect-ratio: 1; border-radius: 50%; color: var(--space); background: var(--mint); font: 800 .72rem var(--mono); }
+    .packet-mini strong, .packet-mini small { display: block; }
+    .packet-mini small { color: var(--muted); }
+    .packet-mini em { color: var(--cobalt); font: normal .68rem var(--mono); }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.4rem; }
+    .chip { padding: .28rem .55rem; border: 1px solid var(--rule); border-radius: 999px; color: var(--soft); font: .7rem var(--mono); }
+    .audience-bar {
+      position: sticky; z-index: 50; top: 3px;
+      display: flex; align-items: center; justify-content: center; gap: .5rem; flex-wrap: wrap;
+      padding: .7rem 1rem; background: #0a0c10e8; border-block: 1px solid var(--rule); backdrop-filter: blur(16px);
+    }
+    .audience-bar span { color: var(--muted); margin-right: .3rem; font: .7rem var(--mono); text-transform: uppercase; }
+    .audience-bar button, .scenario-switch button, .tabs button, .filter-button {
+      padding: .48rem .78rem; cursor: pointer; background: var(--panel); border: 1px solid var(--rule); border-radius: 8px;
+    }
+    .audience-bar button[aria-pressed="true"], .scenario-switch button[aria-pressed="true"], .tabs button[aria-selected="true"] {
+      color: var(--space); background: var(--mint); border-color: var(--mint); font-weight: 700;
+    }
+    .layout {
+      display: grid; grid-template-columns: 270px minmax(0, 920px); gap: clamp(2rem, 6vw, 6rem);
+      max-width: 1320px; margin: auto; padding: 2rem clamp(1rem, 4vw, 3rem) 6rem;
+    }
+    .toc { position: sticky; top: 66px; align-self: start; max-height: calc(100vh - 82px); overflow: auto; padding-right: .8rem; }
+    .search-box { display: flex; margin: .4rem 0; }
+    .search-box input { width: 100%; min-width: 0; padding: .55rem .65rem; color: var(--ink); background: #0d1117; border: 1px solid var(--rule); border-radius: 8px 0 0 8px; }
+    .search-box button { border: 1px solid var(--rule); border-left: 0; border-radius: 0 8px 8px 0; background: var(--panel); cursor: pointer; }
+    #search-count { display: block; min-height: 1.4rem; color: var(--muted); font: .68rem var(--mono); }
+    .toc ol { list-style: none; padding: 0; margin: .8rem 0; border-top: 1px solid var(--rule); }
+    .toc li { margin: 0; border-bottom: 1px solid var(--rule); }
+    .toc a { display: grid; grid-template-columns: 2rem 1fr; gap: .4rem; padding: .52rem .4rem; color: var(--muted); text-decoration: none; font: .72rem var(--mono); }
+    .toc a:hover, .toc a[aria-current="location"] { color: var(--mint); background: #5ee0a00c; }
+    .toc a b { color: #4f5b6b; }
+    main { min-width: 0; }
+    .chapter { padding: 5rem 0; border-bottom: 1px solid var(--rule); }
+    .chapter[hidden] { display: none; }
+    .chapter-intro { max-width: var(--measure); color: var(--soft); font-size: 1.08rem; }
+    .lens-note {
+      display: none; margin: 1.2rem 0; padding: 1rem 1.1rem; border-left: 4px solid var(--cobalt); background: #151c28;
+    }
+    .lens-note strong { display: block; margin-bottom: .25rem; color: var(--cobalt); font: .72rem var(--mono); text-transform: uppercase; letter-spacing: .08em; }
+    [data-audience="explorer"] .lens-note[data-for="explorer"],
+    [data-audience="engineer"] .lens-note[data-for="engineer"],
+    [data-audience="business"] .lens-note[data-for="business"] { display: block; }
+    [data-js="off"] .lens-note { display: block; }
+    .grid-2, .grid-3, .module-grid, .value-grid { display: grid; gap: 1rem; margin: 1.4rem 0; }
+    .grid-2, .module-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3, .value-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card, details {
+      padding: 1rem 1.1rem; background: #12161ed9; border: 1px solid var(--rule); border-radius: 12px;
+    }
+    .card h3, .card h4 { margin-top: .2rem; }
+    .card p:last-child { margin-bottom: 0; }
+    .card .eyebrow { color: var(--cobalt); }
+    .metric { font: 800 2rem/1 var(--display); color: var(--mint); }
+    details { margin: .65rem 0; }
+    summary { cursor: pointer; color: var(--cobalt); font: 700 1rem var(--display); }
+    details[open] summary { margin-bottom: .65rem; }
+    .callout { margin: 1.4rem 0; padding: 1rem 1.1rem; color: var(--soft); background: #211b11; border: 1px solid #6b542a; border-radius: 11px; }
+    .callout strong { color: var(--amber); }
+    .danger { background: #241317; border-color: #60333a; }
+    .danger strong { color: var(--danger); }
+    .path { display: inline-block; padding: .15rem .42rem; border-radius: 5px; color: #a9c9ff; background: #1a2330; font: .78rem var(--mono); }
+    .tabs { margin: 1.2rem 0; }
+    .tabs [role="tablist"] { display: flex; gap: .45rem; }
+    .tab-panel { position: relative; }
+    .copy { position: absolute; z-index: 2; right: .55rem; top: .55rem; padding: .32rem .55rem; color: var(--mint); background: #0a0c10; border: 1px solid #35654f; border-radius: 6px; cursor: pointer; font: .68rem var(--mono); }
+    .table-wrap { overflow: auto; margin: 1.2rem 0; border: 1px solid var(--rule); border-radius: 12px; }
+    table { width: 100%; border-collapse: collapse; background: #10141b; }
+    th, td { padding: .75rem .8rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--rule); }
+    th { color: var(--cobalt); font: 700 .68rem var(--mono); text-transform: uppercase; letter-spacing: .07em; }
+    tr:last-child td { border-bottom: 0; }
+    .flow-lab { margin: 1.5rem 0; padding: 1.1rem; background: #0e1219; border: 1px solid #344154; border-radius: 18px; }
+    .flow-head { display: flex; align-items: end; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .scenario-switch { display: flex; gap: .4rem; flex-wrap: wrap; }
+    .packet-rail { position: relative; display: grid; grid-template-columns: repeat(6, minmax(110px, 1fr)); gap: .8rem; margin-top: 1.5rem; overflow-x: auto; padding: .35rem .1rem .8rem; }
+    .packet-rail::before { content: ""; position: absolute; top: 1.18rem; left: 3%; right: 3%; height: 2px; background: linear-gradient(90deg, var(--cobalt), var(--mint)); }
+    .packet-step { position: relative; min-width: 110px; padding-top: 2.8rem; }
+    .packet-step b { position: absolute; z-index: 1; top: 0; display: grid; place-items: center; width: 2.35rem; aspect-ratio: 1; color: var(--space); background: var(--mint); border: 4px solid #0e1219; border-radius: 50%; font: 800 .68rem var(--mono); }
+    .packet-step h3 { margin: 0 0 .3rem; font-size: .95rem; }
+    .packet-step p { margin: 0; color: var(--soft); font-size: .77rem; }
+    .packet-step small { display: block; margin-top: .35rem; color: var(--muted); font-size: .68rem; }
+    .diagram { margin: 1.3rem 0; padding: 1rem; background: #0c1016; border: 1px solid var(--rule); border-radius: 16px; overflow: auto; }
+    .diagram svg { display: block; min-width: 680px; width: 100%; height: auto; }
+    .diagram .box { fill: #151c26; stroke: #3a4658; }
+    .diagram .hot { fill: #16261f; stroke: #4e9c77; }
+    .diagram text { fill: #e7e9ee; font-family: var(--body); font-size: 13px; }
+    .diagram .minor { fill: #8e99a9; font-size: 11px; }
+    .diagram .line { stroke: #7faeff; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+    .module-grid article { padding: 1rem; border-top: 3px solid var(--cobalt); background: #12161e; }
+    .module-grid article:nth-child(3n+2) { border-top-color: var(--mint); }
+    .module-grid article:nth-child(3n) { border-top-color: var(--amber); }
+    .module-grid h3 { margin: 0 0 .4rem; font-size: 1.02rem; }
+    .module-grid p { margin: 0; color: var(--soft); font-size: .86rem; }
+    .timeline { counter-reset: step; list-style: none; padding: 0; }
+    .timeline li { counter-increment: step; position: relative; margin: 0; padding: .85rem 0 .85rem 3.4rem; border-bottom: 1px solid var(--rule); }
+    .timeline li::before { content: counter(step, decimal-leading-zero); position: absolute; left: 0; color: var(--mint); font: .75rem var(--mono); }
+    .evidence { color: var(--muted); font-size: .78rem; }
+    .evidence code { color: #93bffb; }
+    .glossary { display: grid; grid-template-columns: 150px 1fr; }
+    .glossary dt, .glossary dd { margin: 0; padding: .6rem; border-bottom: 1px solid var(--rule); }
+    .glossary dt { color: var(--cobalt); font-weight: 700; }
+    .empty { text-align: center; padding: 4rem 1rem; color: var(--muted); }
+    .match { box-shadow: inset 3px 0 var(--amber); }
+    footer { padding: 2rem 0 0; color: var(--muted); font: .72rem var(--mono); }
+    :focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+    @media (max-width: 980px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 7rem; }
+      .hero-panel { max-width: 650px; }
+      .layout { grid-template-columns: 1fr; gap: 0; }
+      .toc { position: static; max-height: none; padding: 1rem 0; }
+      .toc ol { display: flex; overflow-x: auto; }
+      .toc li { flex: 0 0 auto; border-right: 1px solid var(--rule); }
+      .toc a { grid-template-columns: auto 1fr; min-width: 150px; }
+    }
+    @media (max-width: 700px) {
+      body { font-size: 15px; }
+      .hero { padding-inline: 1rem; }
+      .audience-bar { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; }
+      .audience-bar span { display: none; }
+      .grid-2, .grid-3, .module-grid, .value-grid { grid-template-columns: 1fr; }
+      .packet-rail { grid-template-columns: repeat(6, 150px); }
+      .glossary { grid-template-columns: 1fr; }
+      .glossary dd { padding-top: 0; }
+      .chapter { padding: 3.5rem 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+    @media print {
+      :root { --space: #fff; --panel: #fff; --panel-2: #fff; --ink: #111; --soft: #333; --muted: #555; --rule: #bbb; --cobalt: #174f88; --mint: #176c48; --amber: #875800; }
+      body { background: #fff; font-size: 10pt; }
+      .progress, .audience-bar, .toc, .copy, .scenario-switch, .search-box { display: none !important; }
+      .hero { min-height: 0; display: block; padding: 0 0 2rem; }
+      .hero-panel { box-shadow: none; margin-top: 1rem; }
+      .layout { display: block; max-width: none; padding: 0; }
+      .chapter { padding: 1.2rem 0; break-inside: avoid; }
+      .chapter[hidden], .lens-note { display: block !important; }
+      h1 { font-size: 38pt; } h2 { font-size: 24pt; }
+      .packet-rail { grid-template-columns: repeat(3, 1fr); overflow: visible; }
+      .packet-rail::before { display: none; }
+      details > *:not(summary) { display: block !important; }
+      summary { list-style: none; }
+      pre { white-space: pre-wrap; color: #111; background: #f3f3f3; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+  <script>document.documentElement.dataset.js = 'on';</script>
 </head>
 <body>
-<a class="skip" href="#main">Skip to field manual</a><div class="progress" aria-hidden="true"><span id="progress"></span></div>
-<header class="masthead"><div class="mark" aria-hidden="true">LA</div><div><p class="kicker">HISTORICAL SYSTEMS FIELD MANUAL · 2026-07-23</p><h1>Local AI Chat Studio</h1><p>Archived notes from the former two-application parity migration.</p></div><div class="rev">REV <strong>v0.2.0</strong><small>archive</small></div></header>
-<aside><strong>Historical archive:</strong> this manual describes the repository before the FastAPI + React cutover. Use the root <a href="../../README.md">README</a> and <a href="../../USER_GUIDE.md">user guide</a> for the current single-application workflow.</aside>
-<div class="layout">
-<nav class="chapters" aria-label="Chapters">
-<label for="search">Search this manual</label><div class="search"><input id="search" type="search" placeholder="SSE, memory, runs…"><button id="clear" type="button">Clear</button></div><output id="count" aria-live="polite"></output>
-<ol>
-<li><a href="#orientation">01 Orientation</a></li><li><a href="#foundations">02 Foundations</a></li><li><a href="#status">03 Status board</a></li><li><a href="#setup">04 Setup</a></li><li><a href="#map">05 Repository map</a></li><li><a href="#flow">06 Request flow</a></li><li><a href="#v2">07 v2 backend</a></li><li><a href="#react">08 React gaps</a></li><li><a href="#legacy">09 Legacy engine</a></li><li><a href="#privacy">10 Privacy</a></li><li><a href="#labs">11 Extension labs</a></li><li><a href="#debug">12 Tests & debugging</a></li><li><a href="#atlas">13 Module atlas</a></li><li><a href="#exercises">14 Exercises</a></li><li><a href="#sources">15 Sources</a></li>
-</ol></nav>
-<main id="main" tabindex="-1">
-<section id="orientation" class="chapter searchable"><p class="label">CHAPTER 01 · SITUATION REPORT</p><h2>Start with the product boundary</h2><p class="callout"><strong>The safest mental model:</strong> two applications in one repository during a parity migration—not one UI with two equivalent implementations.</p>
-<p>The legacy Streamlit path is currently the complete local end-user app. V2 is not yet end to end, and neither stack is production deployment-ready as shipped because authentication and hardened network controls are absent.</p>
-<div class="tracks"><article><span class="tag v2">v2</span><h3>FastAPI + React</h3><p>The API persists conversations, discovers providers, and streams runs. The React workspace is a polished shell not yet wired to those contracts.</p></article><article><span class="tag legacy">legacy</span><h3>Streamlit + src/</h3><p>The mature path contains chat, files, RAG, memory, assistants, personalization, and comparison in a separate runtime and store.</p></article></div>
-<figure><img src="../screenshot-chat.png" alt="Legacy Streamlit chat workspace showing a conversation, navigation, and local model controls."><figcaption>Field evidence A — legacy chat workspace</figcaption></figure></section>
+  <a class="skip" href="#main">Skip to handbook</a>
+  <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
 
-<section id="foundations" class="chapter searchable"><p class="label">CHAPTER 02 · THEORY KIT</p><h2>Concepts the code assumes</h2><div class="definitions">
-<details><summary>LLM, tokens, context, temperature</summary><p>An LLM predicts the next token. Instructions, history, retrieved documents, and output share a finite context budget. Temperature changes sampling variability, not truth; v2 accepts 0–2 and defaults to 0.7.</p></details>
-<details><summary>Embeddings and cosine similarity</summary><p>Embeddings map meaning to vectors. Similar direction suggests semantic similarity. Legacy Chroma distance becomes <code>similarity = 1 - distance</code>.</p><pre><code>cosine(a,b) = (a · b) / (||a|| ||b||)</code></pre></details>
-<details><summary>RAG and vector databases</summary><p>RAG indexes source chunks, retrieves relevant evidence, and adds bounded results to a request. It neither trains the model nor guarantees correctness.</p></details>
-<details><summary>REST, SSE, and PKCE</summary><p>REST models HTTP resources. SSE is a one-way server-to-browser event stream. PKCE binds an authorization code to a one-time verifier.</p></details>
-<details><summary>Persistence and concurrency</summary><p>SQLite survives restart; v2 runs and credentials do not. Locks protect critical sections, not workflows across multiple processes.</p></details></div></section>
+  <header class="hero" id="top">
+    <div class="hero-copy">
+      <p class="kicker">Local AI Chat Studio · Current system handbook</p>
+      <h1>From first chat<br>to full mental model.</h1>
+      <p class="hero-deck thesis">One offline field guide for using the product, understanding the code, and deciding where it fits.</p>
+      <p class="hero-deck">Start with the lens that matches your job. The shared system stays the same; the annotations change.</p>
+      <div class="hero-meta" aria-label="Handbook qualities">
+        <span class="chip">Works from file://</span><span class="chip">No CDN</span><span class="chip">Keyboard friendly</span><span class="chip">Print ready</span><span class="chip">Verified 2026-08-12</span>
+      </div>
+    </div>
+    <aside class="hero-panel" aria-label="Context packet preview">
+      <p class="eyebrow">A turn is a controlled packet</p>
+      <div class="packet-mini">
+        <div><b>01</b><span><strong>Your request</strong><small>Prompt and selected files</small></span><em>local</em></div>
+        <div><b>02</b><span><strong>Context plan</strong><small>Budget, sources, safety</small></span><em>inspect</em></div>
+        <div><b>03</b><span><strong>Provider stream</strong><small>Local or approved cloud</small></span><em>SSE</em></div>
+        <div><b>04</b><span><strong>Evidence trail</strong><small>Run, receipt, provenance</small></span><em>SQLite</em></div>
+      </div>
+    </aside>
+  </header>
 
-<section id="status" class="chapter searchable"><p class="label">CHAPTER 03 · CAPABILITY LEDGER</p><h2>Honest status board</h2>
-<div class="filters" aria-label="Status filters"><button class="active" data-filter="all" aria-pressed="true">All</button><button data-filter="v2" aria-pressed="false">v2</button><button data-filter="legacy" aria-pressed="false">Legacy</button><button data-filter="shared" aria-pressed="false">Shared</button><button data-filter="gap" aria-pressed="false">Gap</button></div>
-<div class="table"><table><thead><tr><th>Capability</th><th>Status</th><th>Operational truth</th></tr></thead><tbody>
-<tr data-status="v2"><td>Conversations/messages</td><td><span class="tag v2">v2</span></td><td>Working REST routes backed by <code>data/v2/studio.db</code>.</td></tr>
-<tr data-status="v2"><td>Providers and streaming</td><td><span class="tag v2">v2</span></td><td>Seven adapters, concurrent discovery, in-memory runs, cancellation, replayable SSE.</td></tr>
-<tr data-status="v2 gap"><td>React workspace</td><td><span class="tag v2">v2</span> <span class="tag gap">gap</span></td><td>Navigation and demos exist; conversations and runs are not connected.</td></tr>
-<tr data-status="legacy"><td>Files, RAG, memory</td><td><span class="tag legacy">legacy</span></td><td>Implemented in Streamlit and <code>src/</code>; absent from v2 contracts.</td></tr>
-<tr data-status="legacy"><td>Assistants/comparison</td><td><span class="tag legacy">legacy</span></td><td>Implemented in legacy; v2 screens are placeholders.</td></tr>
-<tr data-status="gap"><td>Shared persistence</td><td><span class="tag gap">gap</span></td><td>Different schemas and locations; no migration or synchronization.</td></tr>
-<tr data-status="gap"><td>Durable v2 runs</td><td><span class="tag gap">gap</span></td><td>A runs table exists, but <code>RunManager</code> uses memory only.</td></tr>
-<tr data-status="shared gap"><td>Authentication</td><td><span class="tag gap">gap</span></td><td>The session cookie scopes keys; it does not authenticate users.</td></tr>
-</tbody></table></div></section>
+  <div class="audience-bar" aria-label="Choose an audience lens">
+    <span>Read as</span>
+    <button type="button" data-audience-button="explorer" aria-pressed="true">GitHub Explorer</button>
+    <button type="button" data-audience-button="engineer" aria-pressed="false">Engineer</button>
+    <button type="button" data-audience-button="business" aria-pressed="false">Product &amp; Operations</button>
+  </div>
 
-<section id="setup" class="chapter searchable"><p class="label">CHAPTER 04 · BRING-UP PROCEDURE</p><h2>Install and run both stacks</h2><p>Prerequisites: Python 3.12+, <code>uv</code>, Node/npm, and Ollama. Pull <code>embeddinggemma</code> for legacy memory and RAG.</p>
-<div class="tabs"><div role="tablist" aria-label="Operating system commands"><button role="tab" id="win-tab" aria-controls="win" aria-selected="true">Windows PowerShell</button><button role="tab" id="posix-tab" aria-controls="posix" aria-selected="false" tabindex="-1">POSIX shell</button></div>
-<div id="win" role="tabpanel" aria-labelledby="win-tab"><button class="copy" type="button">Copy</button><pre><code>git clone https://github.com/pypi-ahmad/local-ai-chat-studio.git
+  <div class="layout">
+    <nav class="toc" aria-label="Handbook chapters">
+      <label class="eyebrow" for="search">Search the handbook</label>
+      <div class="search-box"><input id="search" type="search" placeholder="memory, OAuth, replay…"><button id="clear-search" type="button">Clear</button></div>
+      <output id="search-count" aria-live="polite"></output>
+      <ol>
+        <li><a href="#orientation"><b>01</b><span>Start here</span></a></li>
+        <li><a href="#product"><b>02</b><span>Product boundary</span></a></li>
+        <li><a href="#foundations"><b>03</b><span>Foundations</span></a></li>
+        <li><a href="#setup"><b>04</b><span>Install and run</span></a></li>
+        <li><a href="#manual"><b>05</b><span>User manual</span></a></li>
+        <li><a href="#providers"><b>06</b><span>Providers &amp; auth</span></a></li>
+        <li><a href="#trust"><b>07</b><span>Data &amp; trust</span></a></li>
+        <li><a href="#business"><b>08</b><span>Business guide</span></a></li>
+        <li><a href="#architecture"><b>09</b><span>Architecture</span></a></li>
+        <li><a href="#code"><b>10</b><span>Code atlas</span></a></li>
+        <li><a href="#deep-dives"><b>11</b><span>Deep dives</span></a></li>
+        <li><a href="#contribute"><b>12</b><span>Build &amp; test</span></a></li>
+        <li><a href="#reference"><b>13</b><span>Reference</span></a></li>
+      </ol>
+    </nav>
+
+    <main id="main" tabindex="-1">
+      <section class="chapter searchable" id="orientation">
+        <p class="chapter-label">01 · Choose your route</p>
+        <h2>The same product, three useful questions.</h2>
+        <p class="chapter-intro">Local AI Chat Studio is a localhost-first workspace for talking to local and cloud models while controlling what context leaves your machine.</p>
+        <div class="grid-3">
+          <article class="card"><p class="eyebrow">GitHub Explorer</p><h3>How do I run and use it?</h3><p>Follow setup, complete a first chat, attach a file, compare models, and learn the privacy defaults.</p></article>
+          <article class="card"><p class="eyebrow">Engineer</p><h3>How does a turn work?</h3><p>Trace contracts through context preflight, provider streaming, SQLite persistence, and the React client.</p></article>
+          <article class="card"><p class="eyebrow">Product &amp; Operations</p><h3>Where does it fit?</h3><p>Evaluate user value, provider choices, data boundaries, operating costs, and current deployment limits.</p></article>
+        </div>
+        <div class="lens-note" data-for="explorer"><strong>Your shortest path</strong>Read chapters 02–07, then use troubleshooting in chapter 13. You do not need to understand Python or React first.</div>
+        <div class="lens-note" data-for="engineer"><strong>Your shortest path</strong>Skim the product boundary, then focus on chapters 09–12. Each deep dive names its source-of-truth modules.</div>
+        <div class="lens-note" data-for="business"><strong>Your shortest path</strong>Read chapters 02, 07, and 08. Chapter 09 gives enough architecture to validate operational claims without becoming a code tour.</div>
+        <div class="callout"><strong>Current-state rule:</strong> this handbook documents the unified FastAPI + React application. The former Streamlit/v2 parity migration is historical and is not the operating model.</div>
+      </section>
+
+      <section class="chapter searchable" id="product">
+        <p class="chapter-label">02 · Product boundary</p>
+        <h2>A private context workbench, not just a chat box.</h2>
+        <p class="chapter-intro">The studio combines conversation, provider choice, evidence inspection, replay, reusable context, and memory in one local workspace.</p>
+        <div class="value-grid">
+          <article class="card"><span class="metric">1</span><h3>Workspace</h3><p>Chats, files, memories, presets, run records, receipts, policies, and profile data share one canonical SQLite store.</p></article>
+          <article class="card"><span class="metric">11</span><h3>Provider paths</h3><p>Local Ollama plus cloud, compatible, OpenRouter, and OpenCode routes use one normalized streaming interface.</p></article>
+          <article class="card"><span class="metric">5</span><h3>Context gates</h3><p>Memory, retrieval, attachments, web, and backpacks are separately permitted for each remote provider.</p></article>
+        </div>
+        <h3>What it does well</h3>
+        <ul>
+          <li>Streams local or cloud model answers and lets you cancel an active run.</li>
+          <li>Preflights every conversational turn with a context budget, safety findings, sources, and confirmation requirements.</li>
+          <li>Supports files and provider-native images, with explicit selection per turn.</li>
+          <li>Branches conversations, compares models, replays runs, diffs answers, and exports full or redacted bundles.</li>
+          <li>Curates durable memory from a whole chat through a selected LLM, retaining source-message provenance.</li>
+        </ul>
+        <h3>What it is not</h3>
+        <ul>
+          <li>It is not a hosted multi-user service and has no user-account authentication layer.</li>
+          <li>A session cookie scopes browser credentials and run access; it is not identity or encryption.</li>
+          <li>“Local-first” does not mean every request stays local. Cloud providers, optional web search, and remote memory extraction transmit selected data.</li>
+          <li>The single-process design is appropriate for a trusted localhost, not horizontal scaling.</li>
+        </ul>
+        <p class="evidence">Evidence: <code>backend/app/main.py</code>, <code>backend/app/store.py</code>, <code>backend/app/providers.py</code>, <code>frontend/src/App.tsx</code>.</p>
+      </section>
+
+      <section class="chapter searchable" id="foundations">
+        <p class="chapter-label">03 · Zero-to-hero foundations</p>
+        <h2>The concepts the interface assumes.</h2>
+        <details open><summary>LLM, model, token, and context window</summary><p>A large language model predicts text from the input it receives. A provider hosts or exposes models. Tokens are the units counted against a context window. Instructions, recent history, retrieved evidence, files, memories, and generated output all compete for that finite space.</p></details>
+        <details><summary>Temperature and reproducibility</summary><p>Temperature controls sampling variation, not factual accuracy. Replaying the same request helps compare behavior, but remote models and nondeterministic sampling can still differ. The replay bundle preserves the request and context used by the studio.</p></details>
+        <details><summary>Embeddings, vector search, and RAG</summary><p>An embedding maps text to a vector. Similar vectors suggest related meaning. Retrieval-augmented generation (RAG) searches stored chunks and places the best evidence into the current request. It does not train the model or guarantee truth.</p></details>
+        <details><summary>Memory versus conversation history</summary><p>History is the ordered transcript. Memory is a curated set of durable facts, preferences, goals, constraints, decisions, and project context that can be reused across chats. This app stores memory in SQLite; Chroma is an optional search index.</p></details>
+        <details><summary>REST, SSE, PKCE, and OAuth</summary><p>REST routes create and read resources. Server-Sent Events (SSE) carry one-way run updates from server to browser. PKCE protects an authorization-code exchange. OAuth lets a provider authorize access without putting an account password into this app.</p></details>
+        <details><summary>Local-first and data boundaries</summary><p>Local-first means the application and canonical data run on your machine. It does not override your provider choice. The preflight plan and per-provider policy make remote transmission visible and controllable.</p></details>
+        <div class="lens-note" data-for="explorer"><strong>Plain-language model</strong>Your prompt is a parcel. Context sources are optional inserts. Preflight shows the packing list before a remote courier receives it.</div>
+        <div class="lens-note" data-for="engineer"><strong>Technical model</strong><code>TurnPreflight</code> becomes a hash-bound <code>ContextPlan</code>; <code>assemble_messages()</code> then materializes only included, permitted, non-excluded sources.</div>
+        <div class="lens-note" data-for="business"><strong>Operating model</strong>Local inference exchanges cloud spend for local hardware and support. Cloud inference broadens model choice but introduces variable cost and data-processing dependencies.</div>
+      </section>
+
+      <section class="chapter searchable" id="setup">
+        <p class="chapter-label">04 · Bring-up procedure</p>
+        <h2>Install once. Start locally.</h2>
+        <p class="chapter-intro">Requirements: Python 3.12+, <code>uv</code>, Node.js/npm, and optionally Ollama for local models.</p>
+        <div class="callout"><strong>Windows one-click path:</strong> double-click <code>Launch Chat Studio.cmd</code> in the repository root. It provisions portable runtimes under <code>.runtime</code>, installs locked dependencies, builds when needed, opens the browser after health succeeds, and keeps server logs visible. Ollama remains optional.</div>
+        <div class="tabs">
+          <div role="tablist" aria-label="Operating system commands">
+            <button id="windows-tab" role="tab" aria-selected="true" aria-controls="windows-panel">Windows PowerShell</button>
+            <button id="posix-tab" role="tab" aria-selected="false" aria-controls="posix-panel" tabindex="-1">POSIX shell</button>
+          </div>
+          <div class="tab-panel" id="windows-panel" role="tabpanel" aria-labelledby="windows-tab"><button class="copy" type="button">Copy</button><pre><code>git clone https://github.com/pypi-ahmad/local-ai-chat-studio.git
 Set-Location local-ai-chat-studio
 uv sync --locked --dev
 Set-Location frontend
 npm ci
 npm run build
 Set-Location ..
-uv run chat-studio
-
-# Legacy app (run separately)
-ollama pull embeddinggemma
-uv run streamlit run app.py</code></pre></div>
-<div id="posix" role="tabpanel" aria-labelledby="posix-tab" hidden><button class="copy" type="button">Copy</button><pre><code>git clone https://github.com/pypi-ahmad/local-ai-chat-studio.git
+uv run chat-studio</code></pre></div>
+          <div class="tab-panel" id="posix-panel" role="tabpanel" aria-labelledby="posix-tab" hidden><button class="copy" type="button">Copy</button><pre><code>git clone https://github.com/pypi-ahmad/local-ai-chat-studio.git
 cd local-ai-chat-studio
 uv sync --locked --dev
 cd frontend
 npm ci
 npm run build
 cd ..
-uv run chat-studio
+uv run chat-studio</code></pre></div>
+        </div>
+        <ol class="timeline">
+          <li>Open <code>http://127.0.0.1:8000</code>. Keep the server on localhost.</li>
+          <li>For local inference, install Ollama, run <code>ollama serve</code>, and pull a chat model.</li>
+          <li>Open Providers to connect an optional API key or authorize a reported OAuth method.</li>
+          <li>Create a conversation, choose a discovered model, and send a small test prompt.</li>
+        </ol>
+        <h3>Common environment variables</h3>
+        <div class="table-wrap"><table><thead><tr><th>Variable</th><th>Purpose</th></tr></thead><tbody>
+          <tr><td><code>CHAT_DATA_DIR</code></td><td>Data directory; defaults to <code>data</code>.</td></tr>
+          <tr><td><code>CHAT_OLLAMA_HOST</code></td><td>Local Ollama endpoint; defaults to <code>http://localhost:11434</code>.</td></tr>
+          <tr><td><code>CHAT_EMBED_MODEL</code></td><td>Installed Ollama embedding model for optional Chroma indexing.</td></tr>
+          <tr><td><code>OLLAMA_API_KEY</code></td><td>Ollama Cloud credential fallback.</td></tr>
+          <tr><td><code>OPENAI_API_KEY</code>, <code>ANTHROPIC_API_KEY</code>, <code>GEMINI_API_KEY</code>, <code>OPENROUTER_API_KEY</code>, <code>XAI_API_KEY</code></td><td>Cloud provider credential fallbacks.</td></tr>
+          <tr><td><code>OPENCODE_ZEN_API_KEY</code>, <code>OPENCODE_GO_API_KEY</code></td><td>OpenCode inference credentials.</td></tr>
+          <tr><td><code>OPENCODE_SERVER_URL</code></td><td>Loopback OpenCode server; defaults to <code>http://127.0.0.1:4096</code>.</td></tr>
+        </tbody></table></div>
+        <div class="callout"><strong>Secret rule:</strong> browser-entered keys live in process memory for that browser session. Environment fallbacks are read-only. Neither is written to SQLite.</div>
+      </section>
 
-# Legacy app (run separately)
-ollama pull embeddinggemma
-uv run streamlit run app.py</code></pre></div></div>
-<aside><strong>Local boundary:</strong> open <code>http://127.0.0.1:8000</code>. Keep loopback binding unless authentication, TLS, and deployment controls are reviewed.</aside></section>
+      <section class="chapter searchable" id="manual">
+        <p class="chapter-label">05 · User manual</p>
+        <h2>Operate the workspace with intent.</h2>
+        <div class="grid-2">
+          <article class="card"><p class="eyebrow">Chat</p><h3>Conversations</h3><p>Create, select, rename, pin, search, or delete a conversation. Choose a discovered provider/model before sending. Answers stream live; Stop cancels the active run.</p></article>
+          <article class="card"><p class="eyebrow">Messages</p><h3>Work from any point</h3><p>Copy a message, rate an answer, or branch the conversation at a chosen message to explore a different path without losing the original.</p></article>
+          <article class="card"><p class="eyebrow">Context</p><h3>Inspect before sending</h3><p>The context rail estimates input against a safe budget. Evidence shows sources, origins, trust, token estimates, and URLs. Exclude individual sources before confirmation.</p></article>
+          <article class="card"><p class="eyebrow">Files</p><h3>Select per turn</h3><p>Upload documents or images to the conversation, then check only the items needed for the next message. Uploaded does not mean automatically transmitted.</p></article>
+          <article class="card"><p class="eyebrow">Focus</p><h3>Hold one objective</h3><p>Create a temporary focus contract with an objective, success criteria, and constraints. Use a context backpack for deliberate reusable facts or project rules.</p></article>
+          <article class="card"><p class="eyebrow">Compare &amp; Replay</p><h3>Make differences visible</h3><p>Send one prompt to two models, replay a completed run, diff answers, or export a full local bundle and a redacted share bundle.</p></article>
+        </div>
+        <h3>A first useful workflow</h3>
+        <ol class="timeline">
+          <li>Create a conversation and choose Ollama Local for an entirely local first run.</li>
+          <li>Upload a small document. Select its checkbox beside the composer.</li>
+          <li>Ask a question that can be answered from the document.</li>
+          <li>Review the preflight budget and Evidence source. Confirm only if the plan matches your intent.</li>
+          <li>After the answer, inspect Replay and export a redacted bundle to understand what is safe to share.</li>
+        </ol>
+        <h3>Memory workflow</h3>
+        <p>Choose <strong>Save memories &amp; close</strong> when a conversation contains durable information worth reusing. The selected model reduces the whole chat into short user-grounded points. A remote model requires confirmation before the transcript leaves the machine. Review new memories in Library; approve quarantined items, archive stale items, pin critical context, or delete mistakes.</p>
+        <h3>Settings and recovery</h3>
+        <p>Settings shows server/Ollama health and loaded models, manages the local profile, imports or exports JSONL, imports the old preview database with a backup, and exposes a confirmation-protected panic wipe.</p>
+        <div class="lens-note" data-for="explorer"><strong>Good habit</strong>Use Evidence as your packing list and Replay as your receipt. If either looks surprising, stop before adding more provider access.</div>
+        <div class="lens-note" data-for="engineer"><strong>UI contract</strong>The React client preflights first, submits the returned <code>plan_hash</code>, and streams retained events for the resulting run.</div>
+        <div class="lens-note" data-for="business"><strong>Adoption signal</strong>The product is strongest where users need model choice plus visible context controls—not where a basic hosted chat is sufficient.</div>
+      </section>
 
-<section id="map" class="chapter searchable"><p class="label">CHAPTER 05 · TERRAIN MAP</p><h2>Repository reading order</h2><pre><code>backend/app/          [v2] routes · contracts · store · providers · runs
-frontend/src/         [v2] React shell · typed API layer
-scripts/              [shared] OpenAPI → TypeScript generator
-tests/                [v2] API and provider contracts
-app.py + pages/       [legacy] Streamlit entry and feature screens
-src/                  [legacy] jobs · RAG · memory · persistence
-data/                 runtime data; ignored, not source</code></pre><p><strong>Route:</strong> <code>contracts.py → store.py → sessions.py → providers.py → runs.py → main.py → frontend/src/api → App.tsx</code>; then <code>app.py → jobs.py → orchestrator.py</code>.</p></section>
+      <section class="chapter searchable" id="providers">
+        <p class="chapter-label">06 · Providers and authentication</p>
+        <h2>One model picker, several trust paths.</h2>
+        <div class="table-wrap"><table><thead><tr><th>Path</th><th>Authentication</th><th>Boundary</th></tr></thead><tbody>
+          <tr><td>Ollama Local</td><td>No key</td><td>Local endpoint configured by <code>CHAT_OLLAMA_HOST</code>.</td></tr>
+          <tr><td>Ollama Cloud</td><td>Bearer API key</td><td>Remote; separate from local Ollama.</td></tr>
+          <tr><td>OpenAI, Gemini, xAI, OmniRoute</td><td>Session key or environment fallback</td><td>Remote unless a compatible gateway is explicitly local.</td></tr>
+          <tr><td>Anthropic</td><td>Session key, environment fallback, or workload identity</td><td>Remote.</td></tr>
+          <tr><td>OpenRouter</td><td>Session key, environment fallback, or PKCE sign-in</td><td>Remote routing service.</td></tr>
+          <tr><td>OpenCode Zen / Go</td><td>Session key or environment fallback</td><td>Remote OpenCode inference.</td></tr>
+          <tr><td>OpenCode Bridge</td><td>OAuth methods reported by a local OpenCode server</td><td>The bridge is loopback-only, but connected upstream models remain remote.</td></tr>
+        </tbody></table></div>
+        <h3>Credential precedence</h3>
+        <p>A key entered in the browser wins for that session. Otherwise the provider-specific environment variable is used. Anthropic can additionally discover configured workload identity. Provider catalog failures are isolated so one unavailable service does not erase other model lists.</p>
+        <h3>OpenCode OAuth bridge</h3>
+        <p>Run OpenCode on loopback. The studio queries the server for available OAuth methods and shows only what it reports—such as ChatGPT, Claude, or SuperGrok when supported by that installation. The studio rejects non-loopback bridge URLs. Each generation uses an ephemeral OpenCode session with tools disabled.</p>
+        <div class="callout"><strong>Important distinction:</strong> a local OpenCode process is a bridge, not proof of local inference. Remote context policy still applies to the upstream provider.</div>
+        <p class="evidence">Evidence: <code>backend/app/sessions.py</code>, <code>backend/app/providers.py</code>, provider routes in <code>backend/app/main.py</code>.</p>
+      </section>
 
-<section id="flow" class="chapter searchable signature"><p class="label">CHAPTER 06 · SIGNATURE INSTRUMENT</p><h2>Dual-track request-flow rail</h2><p>Switch tracks to reveal the responsible files, concepts, and parity break.</p>
-<div class="flow-switch"><button class="active" data-flow="v2" aria-pressed="true"><span class="tag v2">v2</span> API run</button><button data-flow="legacy" aria-pressed="false"><span class="tag legacy">legacy</span> Rich turn</button></div>
-<div class="rail" id="rail" aria-live="polite">
-<article><b>01</b><h3>Browser request</h3><p>POST /api/v1/runs</p><small>React integration is still a gap.</small></article>
-<article><b>02</b><h3>Session + validation</h3><p>main.py and contracts.py</p><small>Cookie scopes credential lookup.</small></article>
-<article><b>03</b><h3>Run scheduled</h3><p>runs.py creates async task</p><small>Process memory only.</small></article>
-<article><b>04</b><h3>Provider stream</h3><p>providers.py yields deltas</p><small>Session key beats env fallback.</small></article>
-<article><b>05</b><h3>SSE replay</h3><p>started → delta* → terminal</p><small>Existing events replay first.</small></article>
-<article><b>06</b><h3>Output snapshot</h3><p>GET /runs/{id}</p><small>Gap: not persisted to conversation.</small></article></div>
-<noscript><aside><strong>Legacy static trace:</strong> chat input → <code>app.py</code> persists the user message → <code>src/jobs.py</code> starts a daemon thread → <code>src/orchestrator.py</code> layers profile, memory, RAG, files, and history → Ollama or a cloud provider streams chunks → Streamlit polls <code>Job.text</code> → the response and best-effort enrichments persist.</aside></noscript></section>
+      <section class="chapter searchable" id="trust">
+        <p class="chapter-label">07 · Data and trust</p>
+        <h2>Know what persists, what travels, and what is filtered.</h2>
+        <div class="grid-3">
+          <article class="card"><p class="eyebrow">Persists</p><h3>SQLite</h3><p>Conversations, messages, runs, events, receipts, memories, files metadata, presets, policies, focus sessions, and profile state live in <code>data/app.db</code>.</p></article>
+          <article class="card"><p class="eyebrow">Optional index</p><h3>Chroma</h3><p>When <code>CHAT_EMBED_MODEL</code> is set, document and active-memory vectors live under <code>data/chroma</code>. SQLite remains canonical.</p></article>
+          <article class="card"><p class="eyebrow">Ephemeral</p><h3>Process memory</h3><p>Browser-entered credentials and active async task objects vanish on restart. Run records and events themselves are persisted.</p></article>
+        </div>
+        <h3>Preflight safety</h3>
+        <ul>
+          <li>Remote providers begin with prompt-only access; context classes are enabled per provider policy.</li>
+          <li>Likely secrets or personal information pause a send. You can confirm or redact and preflight again.</li>
+          <li>Retrieved instruction overrides are quarantined rather than silently becoming system instructions.</li>
+          <li>Selected attachment IDs must belong to the active conversation. Models that explicitly lack vision reject image input.</li>
+          <li>Redacted replay exports remove private context and image bytes.</li>
+        </ul>
+        <h3>Memory safety</h3>
+        <p>The LLM proposes atomic memories, then consolidates them against existing items. Only statements tied to actual user-message IDs can be accepted. Secret/PII candidates are discarded; prompt-injection-like candidates are quarantined. Provenance records the source messages, extractor provider/model, and selection reason.</p>
+        <div class="danger callout"><strong>Network warning:</strong> web search sends the query to DuckDuckGo, and cloud memory extraction sends the full conversation to the chosen provider after confirmation.</div>
+      </section>
 
-<section id="v2" class="chapter searchable"><p class="label">CHAPTER 07 · V2 BACKEND</p><h2>Contracts, state, and streaming</h2><div class="modules">
-<article><h3><code>main.py</code></h3><p>Composition root and HTTP routes. API registration precedes the optional static mount.</p></article><article><h3><code>contracts.py</code></h3><p>Pydantic request, response, status, and event types. Never hand-edit generated frontend schemas.</p></article><article><h3><code>store.py</code></h3><p>SQLite conversations/messages ordered under a lock and transaction. The runs table is unused.</p></article><article><h3><code>sessions.py</code></h3><p>Session-memory credentials with environment fallback; no expiry or cleanup.</p></article><article><h3><code>providers.py</code></h3><p>Normalized adapters and isolated concurrent discovery. Gemini flattens normalized messages.</p></article><article><h3><code>runs.py</code></h3><p>Queued/running/terminal lifecycle, replayable events, and cooperative cancellation between chunks.</p></article></div><pre><code>queued → running → completed
-                 ↘ cancelled
-                 ↘ failed</code></pre></section>
+      <section class="chapter searchable" id="business">
+        <p class="chapter-label">08 · Product and operations guide</p>
+        <h2>Evaluate the operating fit, not the demo glow.</h2>
+        <div class="grid-2">
+          <article class="card"><p class="eyebrow">Best-fit teams</p><h3>Knowledge work with mixed sensitivity</h3><p>Developers, analysts, researchers, and small teams that want local models for private work and cloud models for capability—without losing visibility into context.</p></article>
+          <article class="card"><p class="eyebrow">Core differentiation</p><h3>Context accountability</h3><p>The value is not merely “many models.” It is preflight, source exclusion, replay, redaction, provenance, and explicit provider boundaries around those models.</p></article>
+          <article class="card"><p class="eyebrow">Cost drivers</p><h3>Hardware, tokens, and support</h3><p>Local inference needs capable hardware and model operations. Cloud inference adds usage spend. Embedding and storage costs are local but require maintenance and backup.</p></article>
+          <article class="card"><p class="eyebrow">Current maturity</p><h3>Trusted localhost workspace</h3><p>Suitable for individual use and controlled pilots. User authentication, multi-tenancy, centralized policy, audit administration, and horizontal scaling are not shipped.</p></article>
+        </div>
+        <h3>Pilot scorecard</h3>
+        <div class="table-wrap"><table><thead><tr><th>Question</th><th>Good signal</th><th>Stop or redesign when</th></tr></thead><tbody>
+          <tr><td>Do users need both local and cloud models?</td><td>Workloads vary by sensitivity or capability.</td><td>One approved hosted assistant already covers the need.</td></tr>
+          <tr><td>Does context provenance matter?</td><td>Users must explain which files, memories, or searches influenced a result.</td><td>Casual chat is the only workflow.</td></tr>
+          <tr><td>Can it remain on trusted localhost?</td><td>Each pilot user runs a controlled workstation.</td><td>A shared public service is required immediately.</td></tr>
+          <tr><td>Can provider policy be owned?</td><td>A named owner approves models, keys, and context classes.</td><td>Users may connect arbitrary services without governance.</td></tr>
+          <tr><td>Can outputs remain advisory?</td><td>Humans review evidence and make decisions.</td><td>Unattended consequential automation is required.</td></tr>
+        </tbody></table></div>
+        <h3>Recommended pilot</h3>
+        <ol class="timeline">
+          <li>Select one bounded workflow and define a human-reviewed success measure.</li>
+          <li>Start with Ollama Local and a small set of approved documents.</li>
+          <li>Add one cloud provider with prompt-only policy; expand context permissions deliberately.</li>
+          <li>Review evidence, replay bundles, failure cases, latency, and cloud spend weekly.</li>
+          <li>Decide whether the missing multi-user controls require product work before broader adoption.</li>
+        </ol>
+        <div class="lens-note" data-for="business"><strong>Decision summary</strong>Adopt for controlled individual workflows that benefit from context transparency. Do not position the current build as an enterprise collaboration platform.</div>
+      </section>
 
-<section id="react" class="chapter searchable"><p class="label">CHAPTER 08 · REACT RECONNAISSANCE</p><h2>A convincing shell, not a connected client</h2><p><code>App.tsx</code> renders sample history, composer, provider cards, and placeholders. The client only provides <code>createRun</code>, <code>cancelRun</code>, and <code>providers</code>.</p><ul><li>No conversation load/create or message persistence.</li><li>No model discovery or credential integration.</li><li>No SSE parser, delta display, terminal handling, or cancellation UI.</li><li>No files, RAG, memory, compare, or assistants.</li><li>“Backend connected” is not derived from health.</li></ul><p class="callout"><strong>Best first slice:</strong> wire provider status with loading, success, and error states. Full chat requires an explicit orchestration owner.</p></section>
+      <section class="chapter searchable" id="architecture">
+        <p class="chapter-label">09 · Architecture</p>
+        <h2>Trace the packet through the system.</h2>
+        <div class="flow-lab">
+          <div class="flow-head"><div><p class="eyebrow">Signature instrument</p><h3>Context packet rail</h3></div><div class="scenario-switch" aria-label="Choose a system flow">
+            <button type="button" data-scenario="chat" aria-pressed="true">Chat turn</button>
+            <button type="button" data-scenario="memory" aria-pressed="false">Memory curation</button>
+            <button type="button" data-scenario="oauth" aria-pressed="false">OpenCode sign-in</button>
+          </div></div>
+          <div class="packet-rail" id="packet-rail" aria-live="polite"></div>
+          <noscript><ol class="timeline"><li>Write a prompt and select only the files needed for this turn.</li><li>Review the context plan, sources, budget, and safety findings.</li><li>Confirm sensitive context when required.</li><li>The chosen local or cloud provider streams its response.</li><li>SQLite stores the conversation, run, events, and receipt.</li><li>Use Evidence or Replay to inspect what happened.</li></ol></noscript>
+        </div>
+        <div class="diagram" role="img" aria-label="System architecture diagram">
+          <svg viewBox="0 0 900 410" xmlns="http://www.w3.org/2000/svg">
+            <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#7faeff"/></marker></defs>
+            <rect class="box" x="25" y="45" width="170" height="75" rx="12"/><text x="45" y="75">React workspace</text><text class="minor" x="45" y="98">typed API + SSE client</text>
+            <rect class="box" x="265" y="45" width="180" height="75" rx="12"/><text x="285" y="75">FastAPI routes</text><text class="minor" x="285" y="98">session + contracts</text>
+            <rect class="hot" x="515" y="25" width="185" height="95" rx="12"/><text x="535" y="58">Context workspace</text><text class="minor" x="535" y="81">policy · safety · budget</text><text class="minor" x="535" y="99">retrieval · attachments</text>
+            <rect class="box" x="515" y="165" width="185" height="75" rx="12"/><text x="535" y="195">RunManager</text><text class="minor" x="535" y="218">task + retained SSE</text>
+            <rect class="box" x="25" y="285" width="190" height="75" rx="12"/><text x="45" y="315">SQLite · app.db</text><text class="minor" x="45" y="338">canonical workspace state</text>
+            <rect class="box" x="280" y="285" width="165" height="75" rx="12"/><text x="300" y="315">Chroma</text><text class="minor" x="300" y="338">optional vector index</text>
+            <rect class="box" x="760" y="165" width="115" height="75" rx="12"/><text x="780" y="195">Provider</text><text class="minor" x="780" y="218">local / cloud</text>
+            <path class="line" d="M195 82H265"/><path class="line" d="M445 82H515"/><path class="line" d="M608 120V165"/><path class="line" d="M700 202H760"/><path class="line" d="M515 215L215 312"/><path class="line" d="M515 95L445 312"/><path class="line" d="M515 72L215 312"/><path class="line" d="M280 322H215"/>
+          </svg>
+        </div>
+        <h3>Core invariants</h3>
+        <ul>
+          <li>Pydantic contracts are the backend API source of truth; OpenAPI generates frontend TypeScript types.</li>
+          <li>The plan hash binds a user confirmation to the context that was actually reviewed.</li>
+          <li>SQLite is canonical. Chroma accelerates semantic retrieval but can be rebuilt.</li>
+          <li>Provider-specific behavior stops at the adapter boundary; runs consume normalized messages and yield text deltas.</li>
+          <li>The active task registry is process-local, while run snapshots and events are durable.</li>
+        </ul>
+        <div class="lens-note" data-for="explorer"><strong>Mental model</strong>The browser asks, FastAPI checks the packing list, a provider answers, and SQLite keeps the receipt.</div>
+        <div class="lens-note" data-for="engineer"><strong>Composition root</strong><code>create_app()</code> owns one Store, SessionVault, ProviderRegistry, and RunManager; middleware adds the session cookie and security headers.</div>
+        <div class="lens-note" data-for="business"><strong>Scaling implication</strong>The local task and credential state make this intentionally single-process. A shared service would need external identity, session state, events, and policy administration.</div>
+      </section>
 
-<section id="legacy" class="chapter searchable"><p class="label">CHAPTER 09 · LEGACY ENGINE</p><h2>Where rich behavior lives</h2><figure><img src="../screenshot-compare.png" alt="Legacy Streamlit model comparison workspace with two model responses displayed side by side."><figcaption>Field evidence B — parallel ephemeral comparison</figcaption></figure>
-<p><code>app.py</code> persists the user turn, starts a background job, and polls output. <code>jobs.py</code> parses files, retrieves context, streams a provider, persists the answer, then performs best-effort indexing and enrichment.</p>
-<ol class="layers"><li>System instruction</li><li>Personalization profile</li><li>Durable memories</li><li>Cross-chat retrieval</li><li>Conversation document hits</li><li>Attachments, OCR, or web context</li><li>Recent history</li></ol>
-<p>Small documents enter context directly; large documents are chunked into Chroma. Memory stores atomic facts; personalization stores a synthesized profile.</p></section>
+      <section class="chapter searchable" id="code">
+        <p class="chapter-label">10 · Code atlas</p>
+        <h2>Read the repository in dependency order.</h2>
+        <p class="chapter-intro">Start with shapes and storage, then follow one request outward to providers and inward to the UI.</p>
+        <div class="module-grid">
+          <article><h3><code>contracts.py</code></h3><p>Pydantic request, response, event, context, memory, provider, and data-control shapes.</p></article>
+          <article><h3><code>store.py</code></h3><p>SQLite schema, additive compatibility migrations, ordered messages, runs, memories, policies, and exports.</p></article>
+          <article><h3><code>sessions.py</code></h3><p>Thread-safe session credential vault, provider environment mapping, and Anthropic workload-identity detection.</p></article>
+          <article><h3><code>providers.py</code></h3><p>Normalized adapters, model discovery, image formatting, Ollama variants, OpenCode bridge, and registry.</p></article>
+          <article><h3><code>workspace.py</code></h3><p>Retrieval, safety scan, provider policy, context budgeting, plan hashing, and final message assembly.</p></article>
+          <article><h3><code>memory.py</code></h3><p>Whole-chat selection, chunked extraction, consolidation, provenance validation, deduplication, and categorization.</p></article>
+          <article><h3><code>runs.py</code></h3><p>Async lifecycle, cancellation, streaming events, durable updates, assistant-message persistence, and receipts.</p></article>
+          <article><h3><code>main.py</code></h3><p>Composition root, middleware, API routes, OAuth, uploads, memory indexing, data controls, and static serving.</p></article>
+          <article><h3><code>frontend/src/App.tsx</code></h3><p>Workspace navigation, conversations, preflight/confirmation, SSE display, providers, library, compare, replay, and settings.</p></article>
+          <article><h3><code>frontend/src/api/</code></h3><p>Typed fetch/SSE boundary and generated OpenAPI schema. Regenerate types after contract changes.</p></article>
+          <article><h3><code>src/files.py</code></h3><p>Document parsing, image verification, PDF signature checks, content chunking, and optional converters.</p></article>
+          <article><h3><code>src/rag.py</code></h3><p>Chroma document, conversation, and memory indexes backed by Ollama embeddings.</p></article>
+        </div>
+        <h3>Recommended reading path</h3>
+        <pre><code>contracts.py → store.py → sessions.py → providers.py
+             → workspace.py → memory.py → runs.py → main.py
+             → frontend/src/api/client.ts → frontend/src/App.tsx
+             → tests/</code></pre>
+        <p class="evidence">Supporting maps: <code>docs/codebase/ARCHITECTURE.md</code>, <code>STRUCTURE.md</code>, <code>INTEGRATIONS.md</code>, and <code>CONCERNS.md</code>.</p>
+      </section>
 
-<section id="privacy" class="chapter searchable"><p class="label">CHAPTER 10 · SECURITY PERIMETER</p><h2>Local-first is not always local</h2><div class="risks"><article><strong>Persists</strong><p>v2 conversations in <code>data/v2/studio.db</code>; richer legacy state and vectors under <code>data/</code>.</p></article><article><strong>Evaporates</strong><p>v2 runs, events, entered keys, and PKCE verifiers vanish on restart.</p></article><article><strong>Leaves the machine</strong><p>Messages and chosen context sent to a cloud provider.</p></article><article><strong>Does not authenticate</strong><p>The cookie scopes secrets; it is not identity, encryption, or authorization.</p></article></div><aside><strong>Rule:</strong> never expose either app publicly without authentication, TLS, origin controls, and a security review.</aside></section>
+      <section class="chapter searchable" id="deep-dives">
+        <p class="chapter-label">11 · Technical deep dives</p>
+        <h2>The five flows most worth understanding.</h2>
+        <details open><summary>1. Context preflight and confirmation</summary><ol><li>The frontend creates a <code>TurnPreflight</code> with prompt, model, options, and selected attachment IDs.</li><li>The backend validates attachment ownership and known vision support.</li><li><code>build_context_plan()</code> applies provider policy, scans text and sources, estimates tokens, and prunes lower-priority context.</li><li>The returned plan includes a hash, findings, sources, sections, and confirmation flag.</li><li>Submission repeats or reconstructs the plan. A changed hash returns a conflict instead of sending different context.</li></ol></details>
+        <details><summary>2. Streaming and durable runs</summary><ol><li><code>RunManager.create()</code> writes a queued run and starts a strongly referenced async task.</li><li>The adapter yields text deltas. Each event updates the in-memory subscriber state and SQLite record.</li><li>SSE subscribers receive retained events first, then wait for new ones.</li><li>Completion appends the assistant message and a hash-chained receipt. Cancellation closes the provider stream cooperatively.</li></ol></details>
+        <details><summary>3. Files and images</summary><ol><li>Upload bytes are decoded and validated before persistence.</li><li>Documents become local text; large material can be chunked for retrieval.</li><li>Images are verified with Pillow and retain data bytes for provider-native vision input.</li><li>Only IDs selected for the current turn enter its plan, and remote attachment policy can still exclude them.</li></ol></details>
+        <details><summary>4. LLM-curated memory</summary><ol><li>The full transcript is labeled with message IDs and split into bounded chunks.</li><li>The active provider proposes durable user-grounded memories.</li><li>A second model pass consolidates candidates against existing memory.</li><li>Code accepts only valid user source IDs, allowed dispositions, bounded content, and nonduplicates.</li><li>Safety filtering discards secrets/PII, quarantines injection-like text, atomically stores the batch, then optionally syncs active items to Chroma.</li></ol></details>
+        <details><summary>5. Provider and OAuth boundaries</summary><ol><li>The registry discovers provider models concurrently and caches descriptors.</li><li>Session keys override environment fallbacks without persistent secret storage.</li><li>OpenRouter uses a session-bound PKCE verifier with expiry.</li><li>OpenCode calls only an HTTP loopback server, uses reported OAuth methods, disables tools, and deletes its ephemeral upstream session.</li></ol></details>
+      </section>
 
-<section id="labs" class="chapter searchable"><p class="label">CHAPTER 11 · EXTENSION LABS</p><h2>Small contributions with visible contracts</h2>
-<details><summary>Lab A — add a v2 provider</summary><ol><li>Register environment variable and label.</li><li>Implement or correctly reuse an adapter.</li><li>Normalize discovery and deltas.</li><li>Test presence, failure isolation, and credential scope.</li></ol></details>
-<details><summary>Lab B — add an endpoint</summary><ol><li>Define Pydantic contracts.</li><li>Add route and explicit status.</li><li>Test the public contract.</li><li>Regenerate and inspect <code>schema.ts</code>.</li><li>Add typed client and UI test.</li></ol></details>
-<details><summary>Lab C — wire provider status</summary><ol><li>Add loading/success/error state.</li><li>Call <code>api.providers()</code>.</li><li>Render real <code>key_source</code> values.</li><li>Remove only the corresponding demo data and test all outcomes.</li></ol></details>
-<details><summary>Lab D — add a legacy file parser</summary><ol><li>Recognize type and implement bytes-to-text parsing.</li><li>Preserve metadata and errors.</li><li>Test valid, empty, and malformed input.</li><li>Exercise direct-context and chunk/RAG paths.</li></ol></details></section>
-
-<section id="debug" class="chapter searchable"><p class="label">CHAPTER 12 · VERIFICATION</p><h2>Tests and debugging discipline</h2><div class="command"><button class="copy" type="button">Copy</button><pre><code>uv run python -m pytest -q
-uv run ruff check backend tests
+      <section class="chapter searchable" id="contribute">
+        <p class="chapter-label">12 · Build, test, contribute</p>
+        <h2>Extend the narrowest responsible layer.</h2>
+        <div class="grid-2">
+          <article class="card"><p class="eyebrow">Lab A</p><h3>Add a provider</h3><ol><li>Add its session/environment mapping.</li><li>Implement the normalized adapter.</li><li>Register it once.</li><li>Test discovery, streaming, auth metadata, images, and safe failures.</li></ol></article>
+          <article class="card"><p class="eyebrow">Lab B</p><h3>Add an API workflow</h3><ol><li>Define Pydantic contracts.</li><li>Add storage only if state must persist.</li><li>Implement the route and contract tests.</li><li>Regenerate OpenAPI types.</li><li>Add the typed client and UI test.</li></ol></article>
+          <article class="card"><p class="eyebrow">Lab C</p><h3>Add a file type</h3><ol><li>Declare the accepted extension.</li><li>Validate bytes before parsing.</li><li>Return plain text or a verified image.</li><li>Test valid, empty, mismatched, and malformed files.</li></ol></article>
+          <article class="card"><p class="eyebrow">Lab D</p><h3>Add context</h3><ol><li>Give the source provenance and trust metadata.</li><li>Apply provider policy before inclusion.</li><li>Budget and prune it deterministically.</li><li>Bind it to the plan hash and replay bundle.</li></ol></article>
+        </div>
+        <h3>Verification loop</h3>
+        <div class="tab-panel"><button class="copy" type="button">Copy</button><pre><code>uv run ruff check backend src tests
+uv run pytest -q
 Set-Location frontend
+npm run generate:api
 npm run lint
-npm test
+npm test -- --run
 npm run build</code></pre></div>
-<div class="table"><table><thead><tr><th>Symptom</th><th>First checks</th></tr></thead><tbody><tr><td><code>/</code> is 404</td><td>Build <code>frontend/dist</code>; confirm startup directory.</td></tr><tr><td>Run stays queued</td><td>Inspect snapshot/events and provider traceback.</td></tr><tr><td>Cancel is delayed</td><td>Cancellation is checked between chunks.</td></tr><tr><td>Key disappears</td><td>Restart/new cookie loses memory-only keys.</td></tr><tr><td>RAG returns nothing</td><td>Check embedding model, parsing, Chroma, scope, similarity.</td></tr></tbody></table></div><p class="callout">Reproduce → localize → one hypothesis → one changed variable → verify.</p></section>
+        <h3>Testing architecture</h3>
+        <p>Backend tests use FastAPI <code>TestClient</code>, in-memory SQLite, deterministic adapters, and the echo provider. Frontend tests use Vitest, Testing Library, jest-dom, and jsdom. Real providers, OAuth, Ollama hardware behavior, and browser end-to-end flows remain manual smoke tests.</p>
+        <div class="callout"><strong>Contribution rule:</strong> regenerate <code>frontend/src/api/schema.ts</code> after contract changes, preserve unrelated work, and keep provider, run, store, and context edits covered by focused lifecycle tests.</div>
+      </section>
 
-<section id="atlas" class="chapter searchable"><p class="label">CHAPTER 13 · MODULE ATLAS</p><h2>Ownership at a glance</h2><div class="atlas">
-<p><code>backend/app/main.py</code><span class="tag v2">v2</span><span>HTTP, middleware, PKCE</span></p><p><code>backend/app/runs.py</code><span class="tag v2">v2</span><span>Streaming lifecycle</span></p><p><code>frontend/src/App.tsx</code><span class="tag gap">gap</span><span>Mostly static shell</span></p><p><code>scripts/generate_api_types.py</code><span class="tag shared">shared</span><span>OpenAPI conversion</span></p><p><code>app.py</code><span class="tag legacy">legacy</span><span>Streamlit shell</span></p><p><code>src/jobs.py</code><span class="tag legacy">legacy</span><span>Generation pipeline</span></p><p><code>src/rag.py</code><span class="tag legacy">legacy</span><span>Chroma retrieval</span></p><p><code>src/chat_store.py</code><span class="tag legacy">legacy</span><span>Rich domain store</span></p></div></section>
+      <section class="chapter searchable" id="reference">
+        <p class="chapter-label">13 · Troubleshooting and reference</p>
+        <h2>When something fails, start at the boundary.</h2>
+        <div class="table-wrap"><table><thead><tr><th>Symptom</th><th>First checks</th></tr></thead><tbody>
+          <tr><td>No models appear</td><td>Start Ollama or connect the provider credential, then reload discovery. One provider can fail independently.</td></tr>
+          <tr><td>Ollama is offline</td><td>Run <code>ollama serve</code>; verify <code>CHAT_OLLAMA_HOST</code> and the local model catalog.</td></tr>
+          <tr><td>Image rejected</td><td>Confirm the file is a real supported image and the selected model reports vision capability.</td></tr>
+          <tr><td>File not included</td><td>Select its checkbox for this turn and allow attachments in the provider policy.</td></tr>
+          <tr><td>Context changed conflict</td><td>Preflight again; a source, policy, or conversation state changed after review.</td></tr>
+          <tr><td>No vector results</td><td>Install and set <code>CHAT_EMBED_MODEL</code>; otherwise expect lexical fallback where supported.</td></tr>
+          <tr><td>Provider key vanished</td><td>Session keys intentionally disappear after server restart or a new browser session.</td></tr>
+          <tr><td>OpenCode unavailable</td><td>Run its server on loopback; check URL and optional basic-auth environment variables.</td></tr>
+          <tr><td>Old <code>.doc</code> has no text</td><td>Install LibreOffice or <code>antiword</code>.</td></tr>
+        </tbody></table></div>
+        <h3>Glossary</h3>
+        <dl class="glossary">
+          <dt>Adapter</dt><dd>A provider-specific implementation behind the studio’s normalized model and streaming contract.</dd>
+          <dt>Backpack</dt><dd>A deliberate reusable packet of facts or constraints attached to context.</dd>
+          <dt>BYOK</dt><dd>Bring your own key: use a provider credential controlled by the user.</dd>
+          <dt>Context plan</dt><dd>The inspectable, budgeted set of sections, sources, and findings prepared before a turn.</dd>
+          <dt>Embedding</dt><dd>A numeric representation used to search for semantically related text.</dd>
+          <dt>PKCE</dt><dd>A one-time verifier mechanism protecting an OAuth authorization-code exchange.</dd>
+          <dt>Provenance</dt><dd>Metadata showing where context or a memory came from.</dd>
+          <dt>RAG</dt><dd>Retrieval-augmented generation: adding relevant stored evidence to a request.</dd>
+          <dt>SSE</dt><dd>Server-Sent Events, the one-way stream used for run updates.</dd>
+        </dl>
+        <h3>Primary project references</h3>
+        <ul>
+          <li><span class="path">README.md</span> — installation, features, configuration, architecture.</li>
+          <li><span class="path">USER_GUIDE.md</span> — current product workflows and privacy defaults.</li>
+          <li><span class="path">docs/codebase/</span> — architecture, stack, structure, integrations, testing, conventions, and concerns.</li>
+          <li><span class="path">SECURITY.md</span> and <span class="path">CONTRIBUTING.md</span> — reporting and contribution policy.</li>
+        </ul>
+        <footer>Local AI Chat Studio · Zero-to-Hero Handbook · v0.2.0 · implementation verified 2026-08-12 · MIT licensed</footer>
+      </section>
+      <p class="empty" id="no-results" hidden>No chapter matches that search. Try a feature, module, provider, or concept.</p>
+    </main>
+  </div>
 
-<section id="exercises" class="chapter searchable"><p class="label">CHAPTER 14 · QUALIFICATION DRILLS</p><h2>Check your mental model</h2>
-<details><summary>Is Memory available in v2 because the button exists?</summary><p>No. The shell is v2, behavior is legacy, and porting remains a gap.</p></details><details><summary>What survives a v2 restart?</summary><p>SQLite conversations/messages; not runs, events, session keys, or PKCE verifiers.</p></details><details><summary>Why are multiple workers unsafe?</summary><p>Each has a separate in-memory vault and run registry; a cookie does not ensure affinity.</p></details><details><summary>How does streaming differ?</summary><p>v2 uses async tasks and SSE. Legacy uses daemon threads and Streamlit polling.</p></details>
-<h3>Compact glossary</h3><dl><dt>Adapter</dt><dd>Provider-specific normalized implementation.</dd><dt>BYOK</dt><dd>Bring your own cloud credential.</dd><dt>SSE</dt><dd>One-way named HTTP events.</dd><dt>RAG</dt><dd>Retrieve evidence into a current request.</dd><dt>PKCE</dt><dd>Verifier protection for code exchange.</dd><dt>Persistence</dt><dd>State surviving process restart.</dd></dl></section>
+  <script>
+    (() => {
+      'use strict';
+      const root = document.documentElement;
+      const progressBar = document.getElementById('progress-bar');
+      const chapters = [...document.querySelectorAll('.searchable')];
+      const tocLinks = [...document.querySelectorAll('.toc a')];
+      const search = document.getElementById('search');
+      const searchCount = document.getElementById('search-count');
+      const noResults = document.getElementById('no-results');
 
-<section id="sources" class="chapter searchable"><p class="label">CHAPTER 15 · PRIMARY REFERENCES</p><h2>Continue with official sources</h2><ul class="sources"><li><a href="https://fastapi.tiangolo.com/">FastAPI</a></li><li><a href="https://docs.pydantic.dev/latest/">Pydantic</a></li><li><a href="https://docs.python.org/3/library/asyncio.html">Python asyncio</a></li><li><a href="https://www.sqlite.org/docs.html">SQLite</a></li><li><a href="https://react.dev/">React</a></li><li><a href="https://vite.dev/guide/">Vite</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events">MDN: SSE</a></li><li><a href="https://www.rfc-editor.org/rfc/rfc7636">RFC 7636: PKCE</a></li><li><a href="https://docs.ollama.com/">Ollama</a></li><li><a href="https://docs.trychroma.com/">Chroma</a></li><li><a href="https://docs.astral.sh/uv/">uv</a></li><li><a href="https://docs.streamlit.io/">Streamlit</a></li></ul><footer>Field manual v0.2.0 · verified 2026-07-23 · canonical: ZERO_TO_HERO_STUDY_HANDBOOK.md</footer></section>
-<p id="none" class="none" hidden>No chapters match. Try a module, concept, or status.</p>
-</main></div></body></html>
+      const flowCopy = {
+        explorer: {
+          chat: [['Write','Type a prompt','Nothing leaves yet'],['Inspect','Review the packing list','Budget and warnings'],['Confirm','Approve sensitive context','Only when required'],['Generate','The model streams','Stop at any time'],['Store','Save chat and run','SQLite record'],['Review','Inspect evidence or replay','Export redacted']],
+          memory: [['Finish','Choose Save memories & close','Explicit action'],['Confirm','Approve whole-chat sharing','Cloud models only'],['Select','Model proposes useful facts','User-grounded'],['Consolidate','Remove duplicates and noise','Short statements'],['Protect','Discard or quarantine risks','Secrets stay out'],['Reuse','Review in Library','Active memory']],
+          oauth: [['Start','Run OpenCode locally','Loopback only'],['Discover','Studio asks for methods','Only available choices'],['Authorize','Open provider sign-in','No password here'],['Complete','OpenCode stores upstream auth','Server-owned flow'],['Choose','Models appear in picker','provider/model'],['Send','Remote policy still applies','Bridge is not local AI']]
+        },
+        engineer: {
+          chat: [['Preflight','TurnPreflight contract','attachment_ids'],['Plan','build_context_plan()','policy + scan + budget'],['Bind','SHA-256 plan hash','detect drift'],['Run','RunManager task','adapter.stream()'],['Emit','retained SSE + SQLite','run.delta*'],['Complete','message + receipt','hash chain']],
+          memory: [['Load','Conversation + messages','stable IDs'],['Chunk','12k character windows','selection pass'],['Merge','consolidation pass','existing dedupe'],['Validate','user IDs + disposition','bounded content'],['Scan','secret / PII / injection','drop or quarantine'],['Commit','atomic SQLite batch','optional Chroma sync']],
+          oauth: [['Guard','parse loopback URL','HTTP localhost only'],['Methods','GET /provider/auth','preserve method index'],['Start','POST authorize','auto or code'],['Callback','POST callback','upstream-owned token'],['Session','ephemeral OpenCode run','tools disabled'],['Cleanup','abort + delete','errors suppressed']]
+        },
+        business: {
+          chat: [['Intent','User states a task','work starts local'],['Govern','Policy limits context','least disclosure'],['Review','User sees sources and risk','human control'],['Compute','Local or cloud model','cost boundary'],['Record','Run and receipt persist','accountability'],['Learn','Replay and feedback','workflow evidence']],
+          memory: [['Trigger','User chooses to remember','no silent extraction'],['Consent','Remote sharing is explicit','full transcript warning'],['Reduce','LLM keeps durable points','less context noise'],['Trace','Source messages retained','reviewable origin'],['Protect','Sensitive text filtered','quarantine path'],['Apply','Useful context returns','cross-chat value']],
+          oauth: [['Operate','Local bridge dependency','support requirement'],['Offer','Available account methods','dynamic capability'],['Delegate','Provider handles identity','no password custody'],['Connect','Account authorizes access','upstream terms'],['Control','Context policy remains','data governance'],['Monitor','Provider availability/cost','external dependency']]
+        }
+      };
+      let scenario = 'chat';
+
+      function updateProgress() {
+        const available = document.documentElement.scrollHeight - innerHeight;
+        progressBar.style.width = `${available ? Math.min(100, scrollY / available * 100) : 0}%`;
+      }
+
+      function renderRail() {
+        const rail = document.getElementById('packet-rail');
+        rail.innerHTML = flowCopy[root.dataset.audience][scenario].map((step, index) =>
+          `<article class="packet-step"><b>${String(index + 1).padStart(2, '0')}</b><h3>${step[0]}</h3><p>${step[1]}</p><small>${step[2]}</small></article>`
+        ).join('');
+      }
+
+      document.querySelectorAll('[data-audience-button]').forEach(button => button.addEventListener('click', () => {
+        root.dataset.audience = button.dataset.audienceButton;
+        document.querySelectorAll('[data-audience-button]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+        renderRail();
+      }));
+
+      document.querySelectorAll('[data-scenario]').forEach(button => button.addEventListener('click', () => {
+        scenario = button.dataset.scenario;
+        document.querySelectorAll('[data-scenario]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+        renderRail();
+      }));
+
+      function filterChapters() {
+        const query = search.value.trim().toLowerCase();
+        let visible = 0;
+        chapters.forEach(chapter => {
+          const match = !query || chapter.textContent.toLowerCase().includes(query);
+          chapter.hidden = !match;
+          chapter.classList.toggle('match', Boolean(query && match));
+          if (match) visible += 1;
+        });
+        searchCount.textContent = query ? `${visible} chapter${visible === 1 ? '' : 's'} found` : '';
+        noResults.hidden = visible !== 0;
+        updateProgress();
+      }
+      search.addEventListener('input', filterChapters);
+      document.getElementById('clear-search').addEventListener('click', () => { search.value = ''; filterChapters(); search.focus(); });
+
+      const tabs = [...document.querySelectorAll('[role="tab"]')];
+      function activateTab(tab) {
+        tabs.forEach(item => {
+          const active = item === tab;
+          item.setAttribute('aria-selected', String(active));
+          item.tabIndex = active ? 0 : -1;
+          document.getElementById(item.getAttribute('aria-controls')).hidden = !active;
+        });
+      }
+      tabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => activateTab(tab));
+        tab.addEventListener('keydown', event => {
+          if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+          event.preventDefault();
+          const target = event.key === 'Home' ? tabs[0] : event.key === 'End' ? tabs.at(-1) : tabs[(index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length];
+          activateTab(target); target.focus();
+        });
+      });
+
+      document.querySelectorAll('.copy').forEach(button => button.addEventListener('click', async () => {
+        const previous = button.textContent;
+        const value = button.parentElement.querySelector('code').textContent;
+        try { await navigator.clipboard.writeText(value); button.textContent = 'Copied'; }
+        catch { button.textContent = 'Select text'; }
+        setTimeout(() => { button.textContent = previous; }, 1600);
+      }));
+
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(entries => {
+          const active = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+          if (!active) return;
+          tocLinks.forEach(link => link.toggleAttribute('aria-current', link.hash === `#${active.target.id}`));
+        }, { rootMargin: '-15% 0px -72%', threshold: [0, .2, .6] });
+        chapters.forEach(chapter => observer.observe(chapter));
+      }
+
+      addEventListener('scroll', updateProgress, { passive: true });
+      addEventListener('resize', updateProgress);
+      renderRail(); updateProgress();
+    })();
+  </script>
+</body>
+</html>

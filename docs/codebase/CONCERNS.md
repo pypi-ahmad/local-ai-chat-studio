@@ -11,13 +11,21 @@
   history.
 - Chroma retrieval requires `CHAT_EMBED_MODEL`; otherwise the app uses lexical history
   retrieval.
+- Full-chat memory extraction uses the selected LLM. It is deliberately explicit and
+  requires confirmation for every remote provider, including an OpenCode bridge.
+- OpenCode capabilities and upstream OAuth methods depend on the locally running server;
+  the app intentionally does not proxy OpenCode over a remote network address.
 - The documentation site renderer still needs a separate raw-HTML sanitization audit.
 
 ## Protected boundaries
 
 - Run read, event, and cancellation endpoints require the owning browser session.
 - Remote providers default to prompt-only context.
+- Uploads are conversation-scoped and are sent only when selected for that individual
+  turn. Image input is blocked when a model explicitly reports no vision capability.
 - Retrieved instruction overrides are quarantined; secrets and PII pause sends.
+- Memory candidates preserve user-message provenance; secrets/PII are discarded and
+  prompt-injection-like content is quarantined before persistence.
 - Full replay bundles are local artifacts; redacted bundles remove private context and
   image bytes.
 - Provider exceptions are reduced to safe error categories before reaching clients.

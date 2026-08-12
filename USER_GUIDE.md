@@ -2,7 +2,13 @@
 
 ## Start the studio
 
-Build the browser client once, then launch the local server:
+On Windows 11, double-click **Launch Chat Studio.cmd** in the repository root. The
+launcher installs missing portable runtimes and dependencies, builds the browser client
+when needed, starts the server, and opens <http://127.0.0.1:8000>. Its console remains
+open for logs; press Ctrl+C to stop. Run `Launch Chat Studio.cmd --check` from a terminal
+for a non-installing status report.
+
+For manual or development setup, build the browser client once and launch the server:
 
 ```powershell
 cd frontend
@@ -62,14 +68,21 @@ Paste a provider key to keep it in memory for the browser session, or use a matc
 environment variable. Cloud providers begin with prompt-only access. Enable memory,
 retrieval, attachments, web search, or backpacks separately for each provider.
 
+Ollama Local needs no key; Ollama Cloud, OpenCode Zen, and OpenCode Go accept keys.
+Run an OpenCode server on loopback to expose its ChatGPT, SuperGrok, or Claude sign-in
+methods in the Providers page. Anthropic also discovers configured workload identity.
+
 **Test failover** simulates a rate limit and shows whether the configured fallback
 path recovers, without spending tokens or making a provider request.
 
 ### Library
 
-The Library contains memories, assistants, and files. Memories that resemble prompt
-injection start quarantined; review and approve, archive, pin, or delete them. Saved
-assistants retain a system prompt, model preference, and temperature.
+The Library contains memories, assistants, and files. **Save memories & close** asks
+the selected model to reduce the whole chat to durable user facts and preferences,
+stores only supported points in SQLite, and records their source messages. A cloud
+model requires confirmation before the transcript is sent. Memories that resemble
+prompt injection start quarantined; review and approve, archive, pin, or delete them.
+Saved assistants retain a system prompt, model preference, and temperature.
 
 ### Settings and data controls
 

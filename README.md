@@ -1,8 +1,8 @@
 # Local AI Chat Studio
 
 A local-first AI workspace built with FastAPI and React. It connects to Ollama by
-default and supports optional session-scoped keys for OpenAI, Anthropic, Gemini,
-OpenRouter, xAI, and OpenAI-compatible local gateways.
+default and supports optional session-scoped keys for Ollama Cloud, OpenAI,
+Anthropic, Gemini, OpenRouter, xAI, OpenCode Zen/Go, and compatible gateways.
 
 ## What is included
 
@@ -16,6 +16,8 @@ OpenRouter, xAI, and OpenAI-compatible local gateways.
 - PDF, Office, text, spreadsheet, code, and provider-native image inputs
 - Full local replay bundles and redacted bundles safe to share
 - Memory, assistants, personalization profile, runtime/VRAM health, and data controls
+- LLM-curated SQLite memory with source-message provenance and optional Chroma indexing
+- ChatGPT, SuperGrok, and Claude subscription sign-in through a local OpenCode server
 
 Cloud providers start in prompt-only mode. Credentials entered in the browser stay in
 server-process memory for that browser session and are never exported.
@@ -24,6 +26,12 @@ server-process memory for that browser session and are never exported.
 
 Requirements: Python 3.12+, [uv](https://docs.astral.sh/uv/), Node.js, and optionally
 [Ollama](https://ollama.com/) for local models.
+
+On Windows 11, double-click **Launch Chat Studio.cmd**. It installs missing portable
+runtimes and locked dependencies inside the project, builds the frontend when needed,
+starts the server, and opens the browser. Ollama remains optional.
+
+For manual or development setup:
 
 ```powershell
 git clone https://github.com/pypi-ahmad/local-ai-chat-studio.git
@@ -56,7 +64,10 @@ Common environment variables:
 | `CHAT_DATA_DIR` | Data directory; defaults to `data` |
 | `CHAT_OLLAMA_HOST` | Ollama endpoint; defaults to `http://localhost:11434` |
 | `CHAT_EMBED_MODEL` | Ollama embedding model used with Chroma |
-| `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, `OPENROUTER_API_KEY`, `XAI_API_KEY` | Read-only credential fallbacks |
+| `OLLAMA_API_KEY`, `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, `OPENROUTER_API_KEY`, `XAI_API_KEY` | Read-only credential fallbacks |
+| `OPENCODE_ZEN_API_KEY`, `OPENCODE_GO_API_KEY` | OpenCode inference API fallbacks |
+| `OPENCODE_SERVER_URL` | Local OpenCode server; defaults to `http://127.0.0.1:4096` |
+| `OPENCODE_SERVER_USERNAME`, `OPENCODE_SERVER_PASSWORD` | Optional OpenCode server basic authentication |
 
 ## Architecture
 
@@ -84,7 +95,9 @@ npm run build
 ```
 
 See [USER_GUIDE.md](USER_GUIDE.md) for product workflows and
-[CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
+[the offline Zero-to-Hero handbook](docs/tutorial/index.html) for guided user,
+technical, and product tours. Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a
+pull request.
 
 ## Security
 

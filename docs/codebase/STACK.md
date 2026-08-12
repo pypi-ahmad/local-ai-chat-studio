@@ -6,7 +6,8 @@
 | Frontend | React 19, TypeScript, Vite, Tailwind CSS, Base UI |
 | Persistence | stdlib SQLite and ChromaDB |
 | Local inference | Ollama |
-| Cloud inference | OpenAI, Anthropic, Google GenAI, OpenRouter, xAI |
+| Cloud inference | Ollama Cloud, OpenAI, Anthropic, Google GenAI, OpenRouter, xAI, OpenCode Zen/Go |
+| Subscription sign-in | Local OpenCode server bridge for available upstream OAuth methods |
 | Search and files | DDGS, pypdf, python-docx, pandas/openpyxl/xlrd, Pillow |
 | Python tooling | uv, pytest, Ruff |
 | Frontend tooling | npm, Vitest, Testing Library, Oxlint, openapi-typescript |

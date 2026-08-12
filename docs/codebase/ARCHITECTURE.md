@@ -3,7 +3,7 @@
 ```text
 React workspace
   → FastAPI routes and session cookie
-    → context preflight (policy, safety, retrieval, budget)
+    → context preflight (policy, safety, selected attachments, retrieval, budget)
       → RunManager task → provider adapter → retained SSE events
         → SQLite messages/runs/receipts + optional Chroma retrieval
 ```
@@ -21,6 +21,16 @@ hashes.
 
 FastAPI serves `frontend/dist` at `/`. Shared helpers under `src/` provide file parsing,
 Ollama health/embeddings, and the existing `data/chroma` collections.
+
+Memory extraction is separate from normal turn assembly. On an explicit **Save memories
+& close** action, the selected model first extracts candidates from the full chat and
+then consolidates them against existing memories. SQLite commits the accepted batch and
+the conversation extraction timestamp together; active memories are mirrored to Chroma
+only when an embedding model is configured. Provenance stays with the SQLite record.
+
+Provider adapters separate Ollama Local from Ollama Cloud. OpenCode is a loopback-only
+server bridge: it owns upstream OAuth and streaming sessions, while this app continues
+to apply remote-provider context policy before sending chat context to it.
 
 The system is deliberately single-process and localhost-first. Horizontal scaling
 would require external run events and credential/session state.
