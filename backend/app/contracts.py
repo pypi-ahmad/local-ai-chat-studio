@@ -222,6 +222,15 @@ class FocusSession(FocusCreate):
     completed_at: str | None = None
 
 
+class FocusUpdate(BaseModel):
+    status: Literal["completed", "abandoned"]
+
+
+class ProviderSimulationInput(BaseModel):
+    scenario: Literal["auth", "timeout", "rate_limit", "disconnect", "malformed"]
+    fallback_provider: str | None = None
+
+
 class ReplayBundle(BaseModel):
     version: Literal[1] = 1
     run: RunSnapshot

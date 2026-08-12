@@ -448,6 +448,31 @@ class Store:
             ids = [row[0] for row in self.connection.execute("SELECT id FROM backpacks ORDER BY updated_at DESC")]
         return [self.get_backpack(item) for item in ids]
 
+    def update_backpack(self, backpack_id: str, payload: BackpackCreate) -> Backpack:
+        self.get_backpack(backpack_id)
+        with self.lock, self.connection:
+            self.connection.execute(
+                "UPDATE backpacks SET name = ?, updated_at = ? WHERE id = ?",
+                (payload.name, utc_now(), backpack_id),
+            )
+            self.connection.execute(
+                "DELETE FROM backpack_items WHERE backpack_id = ?", (backpack_id,)
+            )
+            for position, item in enumerate(payload.items):
+                self.connection.execute(
+                    "INSERT INTO backpack_items VALUES (?, ?, ?, ?, ?)",
+                    (str(uuid.uuid4()), backpack_id, position, item.title, item.content),
+                )
+        return self.get_backpack(backpack_id)
+
+    def delete_backpack(self, backpack_id: str) -> None:
+        with self.lock, self.connection:
+            cursor = self.connection.execute(
+                "DELETE FROM backpacks WHERE id = ?", (backpack_id,)
+            )
+        if cursor.rowcount == 0:
+            raise KeyError(backpack_id)
+
     def create_focus(self, payload: FocusCreate) -> FocusSession:
         self.get_conversation(payload.conversation_id)
         focus_id, now = str(uuid.uuid4()), utc_now()
@@ -488,6 +513,48 @@ class Store:
             created_at=row["created_at"],
             completed_at=row["completed_at"],
         )
+
+    def get_focus(self, focus_id: str) -> FocusSession:
+        with self.lock:
+            row = self.connection.execute(
+                "SELECT * FROM focus_sessions WHERE id = ?", (focus_id,)
+            ).fetchone()
+        if row is None:
+            raise KeyError(focus_id)
+        return FocusSession(
+            id=row["id"],
+            conversation_id=row["conversation_id"],
+            objective=row["objective"],
+            success_criteria=row["success_criteria"],
+            constraints=json.loads(row["constraints_json"]),
+            turn_limit=row["turn_limit"],
+            status=row["status"],
+            created_at=row["created_at"],
+            completed_at=row["completed_at"],
+        )
+
+    def list_focus(self, conversation_id: str | None = None) -> list[FocusSession]:
+        with self.lock:
+            if conversation_id:
+                rows = self.connection.execute(
+                    "SELECT id FROM focus_sessions WHERE conversation_id = ? "
+                    "ORDER BY created_at DESC",
+                    (conversation_id,),
+                ).fetchall()
+            else:
+                rows = self.connection.execute(
+                    "SELECT id FROM focus_sessions ORDER BY created_at DESC"
+                ).fetchall()
+        return [self.get_focus(row["id"]) for row in rows]
+
+    def update_focus(self, focus_id: str, status: str) -> FocusSession:
+        self.get_focus(focus_id)
+        with self.lock, self.connection:
+            self.connection.execute(
+                "UPDATE focus_sessions SET status = ?, completed_at = ? WHERE id = ?",
+                (status, utc_now(), focus_id),
+            )
+        return self.get_focus(focus_id)
 
     def create_memory(
         self,

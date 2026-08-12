@@ -262,3 +262,47 @@ def test_redacted_replay_bundle_hides_private_context(client: TestClient) -> Non
     assert bundle.status_code == 200
     assert bundle.json()["messages"][-1]["content"] == "public prompt"
     assert bundle.json()["context"] is None
+
+
+def test_workspace_resource_lifecycle_and_provider_simulator(client: TestClient) -> None:
+    conversation_id = _conversation(client)
+    backpack = client.post(
+        "/api/v1/backpacks",
+        json={"name": "Draft", "items": [{"title": "One", "content": "Old"}]},
+    ).json()
+    updated = client.put(
+        f"/api/v1/backpacks/{backpack['id']}",
+        json={"name": "Release", "items": [{"title": "Rule", "content": "Local only"}]},
+    )
+    assert updated.json()["name"] == "Release"
+    assert updated.json()["items"][0]["content"] == "Local only"
+
+    focus = client.post(
+        "/api/v1/focus-sessions",
+        json={
+            "conversation_id": conversation_id,
+            "objective": "Finish",
+            "success_criteria": "Green",
+            "constraints": [],
+        },
+    ).json()
+    completed = client.patch(
+        f"/api/v1/focus-sessions/{focus['id']}", json={"status": "completed"}
+    )
+    assert completed.json()["status"] == "completed"
+    assert completed.json()["completed_at"]
+
+    simulation = client.post(
+        "/api/v1/providers/openai/simulate",
+        json={"scenario": "rate_limit", "fallback_provider": "ollama"},
+    )
+    assert simulation.status_code == 200
+    assert simulation.json()["recovered"] is True
+    assert [event["type"] for event in simulation.json()["events"]] == [
+        "attempt.failed",
+        "fallback.selected",
+        "attempt.succeeded",
+    ]
+
+    assert client.delete(f"/api/v1/backpacks/{backpack['id']}").status_code == 204
+    assert client.get("/api/v1/backpacks").json() == []

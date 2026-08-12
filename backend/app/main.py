@@ -32,6 +32,7 @@ from backend.app.contracts import (
     FeedbackInput,
     FocusCreate,
     FocusSession,
+    FocusUpdate,
     Memory,
     MemoryCreate,
     MemoryUpdate,
@@ -41,6 +42,7 @@ from backend.app.contracts import (
     Preset,
     PresetCreate,
     ProviderPolicy,
+    ProviderSimulationInput,
     ReplayBundle,
     ReplayCreate,
     RunCreate,
@@ -311,6 +313,42 @@ def create_app(
             raise HTTPException(404, "Provider not found")
         return store.set_policy(provider, payload)
 
+    @app.post("/api/v1/providers/{provider}/simulate")
+    def simulate_provider(
+        provider: str, payload: ProviderSimulationInput
+    ) -> dict[str, object]:
+        if provider not in PROVIDER_ENV:
+            raise HTTPException(404, "Provider not found")
+        fallback = payload.fallback_provider
+        if fallback is not None and fallback not in PROVIDER_ENV:
+            raise HTTPException(404, "Fallback provider not found")
+        labels = {
+            "auth": "Authentication rejected",
+            "timeout": "Request timed out",
+            "rate_limit": "Rate limit reached",
+            "disconnect": "Connection interrupted",
+            "malformed": "Malformed provider response",
+        }
+        events: list[dict[str, str]] = [
+            {
+                "type": "attempt.failed",
+                "provider": provider,
+                "message": labels[payload.scenario],
+            }
+        ]
+        if fallback:
+            events.extend(
+                [
+                    {"type": "fallback.selected", "provider": fallback, "message": ""},
+                    {"type": "attempt.succeeded", "provider": fallback, "message": ""},
+                ]
+            )
+        return {
+            "scenario": payload.scenario,
+            "recovered": bool(fallback),
+            "events": events,
+        }
+
     @app.get("/api/v1/backpacks", response_model=list[Backpack])
     def list_backpacks() -> list[Backpack]:
         return store.list_backpacks()
@@ -319,12 +357,38 @@ def create_app(
     def create_backpack(payload: BackpackCreate) -> Backpack:
         return store.create_backpack(payload)
 
+    @app.put("/api/v1/backpacks/{backpack_id}", response_model=Backpack)
+    def update_backpack(backpack_id: str, payload: BackpackCreate) -> Backpack:
+        try:
+            return store.update_backpack(backpack_id, payload)
+        except KeyError as exc:
+            raise HTTPException(404, "Backpack not found") from exc
+
+    @app.delete("/api/v1/backpacks/{backpack_id}", status_code=204)
+    def delete_backpack(backpack_id: str) -> Response:
+        try:
+            store.delete_backpack(backpack_id)
+        except KeyError as exc:
+            raise HTTPException(404, "Backpack not found") from exc
+        return Response(status_code=204)
+
     @app.post("/api/v1/focus-sessions", response_model=FocusSession, status_code=201)
     def create_focus(payload: FocusCreate) -> FocusSession:
         try:
             return store.create_focus(payload)
         except KeyError as exc:
             raise HTTPException(404, "Conversation not found") from exc
+
+    @app.get("/api/v1/focus-sessions", response_model=list[FocusSession])
+    def list_focus(conversation_id: str | None = None) -> list[FocusSession]:
+        return store.list_focus(conversation_id)
+
+    @app.patch("/api/v1/focus-sessions/{focus_id}", response_model=FocusSession)
+    def update_focus(focus_id: str, payload: FocusUpdate) -> FocusSession:
+        try:
+            return store.update_focus(focus_id, payload.status)
+        except KeyError as exc:
+            raise HTTPException(404, "Focus session not found") from exc
 
     @app.get("/api/v1/memories", response_model=list[Memory])
     def list_memories() -> list[Memory]:
