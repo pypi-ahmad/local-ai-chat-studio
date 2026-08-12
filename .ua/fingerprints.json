@@ -1,8 +1,18 @@
 {
   "version": "1.0.0",
-  "gitCommitHash": "a799b25bc435e75b6c35643e12a1f1782e5b9568",
-  "generatedAt": "2026-08-12T13:48:58.007Z",
+  "gitCommitHash": "e867659265b7949353378e2e4b89eeffc3723ad7",
+  "generatedAt": "2026-08-12T16:23:51.171Z",
   "files": {
+    ".code-review-graph/graph.db": {
+      "filePath": ".code-review-graph/graph.db",
+      "contentHash": "f1daf6d24c39327ca88fd1b21379a4905c158dbee0e32bf15a640ad5c58054aa",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 16243,
+      "hasStructuralAnalysis": false
+    },
     ".github/ISSUE_TEMPLATE/bug_report.md": {
       "filePath": ".github/ISSUE_TEMPLATE/bug_report.md",
       "contentHash": "03a51502b240b54314042180e243336eddc7578064f294bd691e8fc693a932b2",
@@ -45,7 +55,7 @@
     },
     ".graphifyignore": {
       "filePath": ".graphifyignore",
-      "contentHash": "addda0d213e52d576ab6b9a56adc25d58eab81366270a54640d856419039a922",
+      "contentHash": "9208e73f66dcdc0d3f9a0d7baa95f71284490bb9b4fda9e6ad3931a17a0ca20a",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -65,27 +75,27 @@
     },
     "CHANGELOG.md": {
       "filePath": "CHANGELOG.md",
-      "contentHash": "1a60cdac261dc13ae873fbc157bd68cc1db5750b83e3dab95b8aff298cb2710f",
+      "contentHash": "1d4bf83dcfb3ac0c097014e3fa848edfc809b9c435bc63244310e3e5b2c45419",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 39,
+      "totalLines": 45,
       "hasStructuralAnalysis": true
     },
     "CODE_OF_CONDUCT.md": {
       "filePath": "CODE_OF_CONDUCT.md",
-      "contentHash": "2621742e483548c091180fda1a7f0ce32a05c2aab47f0e1add975ba52d256436",
+      "contentHash": "e87a73a3cf80d81632ab18b3bb2acbbd6747d439f34c7a7d7c3618bc0fb77ae9",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 22,
+      "totalLines": 29,
       "hasStructuralAnalysis": true
     },
     "CODE_TUTORIAL.md": {
       "filePath": "CODE_TUTORIAL.md",
-      "contentHash": "c77400631a5cf4d399fbcdb2839e1f7bfc20ee620790039e3f8d0145b7bd0adb",
+      "contentHash": "bc867ca47158d6b12930aacabe5f0d057765b6ee93ec57dc3f0ede2e90907c25",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -95,12 +105,12 @@
     },
     "CONTRIBUTING.md": {
       "filePath": "CONTRIBUTING.md",
-      "contentHash": "b2979d6a008cbbf9f6a48a3769c71eba1380d5060f9e972bb55a4b3bf08e14ec",
+      "contentHash": "a243d12fb67fb0784a5eeebb1bafbc67e71ae56ff2f1850e6aa486a2954b9dcc",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 72,
+      "totalLines": 75,
       "hasStructuralAnalysis": true
     },
     "DATASET.md": {
@@ -113,9 +123,19 @@
       "totalLines": 4,
       "hasStructuralAnalysis": true
     },
+    "GRAPH_REPORT.md": {
+      "filePath": "GRAPH_REPORT.md",
+      "contentHash": "1232d9a827c0e6f1374e5df3c1fb96d0640583151509a2a00a0c198d61d814ba",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 371,
+      "hasStructuralAnalysis": true
+    },
     "Launch Chat Studio.cmd": {
       "filePath": "Launch Chat Studio.cmd",
-      "contentHash": "fce14c603b5209c2cca318a5c35152206de4267746860580135f4f7a022d40c6",
+      "contentHash": "6a773c19811d0cbff59206882dd7189e9918cd18c86450aafaa632f2a5a5ed0e",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -125,27 +145,47 @@
     },
     "README.md": {
       "filePath": "README.md",
-      "contentHash": "9f690652a0a9573889d4e2204edbf563569bbda38b60e66259892a45f2538b44",
+      "contentHash": "aa853ba1b99b73187e8384912cc89b5974314b9884da1e6290bbe78e4bb0a5d2",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 108,
+      "totalLines": 114,
       "hasStructuralAnalysis": true
     },
     "SECURITY.md": {
       "filePath": "SECURITY.md",
-      "contentHash": "ebe6199abe675f54635a8b39a8419758df977cf9be7ff5f418586dc150b4c2bd",
+      "contentHash": "96929b891739fdc9d7e3e9029ef15d24f50347e40047d47df97bc071df91f4a8",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 36,
+      "totalLines": 43,
+      "hasStructuralAnalysis": true
+    },
+    "TECHNICAL.md": {
+      "filePath": "TECHNICAL.md",
+      "contentHash": "d9000118e38cd65c881d6e59ae1321858d7d7e27c533935c6790c66f9017f12e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 96,
+      "hasStructuralAnalysis": true
+    },
+    "USAGE.md": {
+      "filePath": "USAGE.md",
+      "contentHash": "7d7cae4f627222f37fe267ff64d816adcc5f043d7b72af7180bfba636d7dc4d5",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 78,
       "hasStructuralAnalysis": true
     },
     "USER_GUIDE.md": {
       "filePath": "USER_GUIDE.md",
-      "contentHash": "952fce15702cb8dbb252d537ce3ef1865a97fea7fd7953501543f1052ddc45a3",
+      "contentHash": "5c0596a534e55822e2df81e4b46b029d8efdea62502e2bff3ebcf70c03738f6c",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -155,7 +195,7 @@
     },
     "ZERO_TO_HERO_STUDY_HANDBOOK.md": {
       "filePath": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
-      "contentHash": "3eab57141ebe51868d9083938f88e6f0e95de0a31d9ade190db5e0a801e2d4ac",
+      "contentHash": "e32ef09a65953e265691035de584ffd379ee22ed145fa66e26166148b01822cd",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -185,14 +225,14 @@
     },
     "backend/app/cli.py": {
       "filePath": "backend/app/cli.py",
-      "contentHash": "adf822ab1c21d1f18e163314268d227ca24c1a0e72874e401464623140612584",
+      "contentHash": "22e4f525cf34268ce7035776a510d50cb3ba44c528c9712b0eb7f597896bcf93",
       "functions": [
         {
           "name": "main",
           "params": [],
           "returnType": "None",
           "exported": true,
-          "lineCount": 8
+          "lineCount": 16
         }
       ],
       "classes": [],
@@ -213,12 +253,12 @@
       "exports": [
         "main"
       ],
-      "totalLines": 16,
+      "totalLines": 24,
       "hasStructuralAnalysis": true
     },
     "backend/app/contracts.py": {
       "filePath": "backend/app/contracts.py",
-      "contentHash": "9c2a3acee43783901ec735c60108bb9830fc9cb6672914be04d63a5e1dd37bb5",
+      "contentHash": "d9c475276004277a3e928a25e1e5a8c34f964d885bf205cdc4c7545ec8a5e0b7",
       "functions": [
         {
           "name": "utc_now",
@@ -898,18 +938,19 @@
     },
     "backend/app/main.py": {
       "filePath": "backend/app/main.py",
-      "contentHash": "1b7b72c80b1fc3db0e11e05054f5cdc81696e8e25cc458736ca4cb2ea01f4993",
+      "contentHash": "6808803f1402449d18cf6e3e6a0e211f2bcf3bed851d5b49988e1a5284d844ff",
       "functions": [
         {
           "name": "create_app",
           "params": [
             "database_url",
             "provider_registry",
-            "v2_database_url"
+            "v2_database_url",
+            "shutdown_callback"
           ],
           "returnType": "FastAPI",
           "exported": true,
-          "lineCount": 822
+          "lineCount": 836
         }
       ],
       "classes": [],
@@ -977,7 +1018,8 @@
         {
           "source": "collections.abc",
           "specifiers": [
-            "AsyncIterator"
+            "AsyncIterator",
+            "Callable"
           ]
         },
         {
@@ -1007,6 +1049,7 @@
         {
           "source": "fastapi",
           "specifiers": [
+            "BackgroundTasks",
             "FastAPI",
             "HTTPException",
             "Request",
@@ -1133,12 +1176,12 @@
       "exports": [
         "create_app"
       ],
-      "totalLines": 910,
+      "totalLines": 924,
       "hasStructuralAnalysis": true
     },
     "backend/app/memory.py": {
       "filePath": "backend/app/memory.py",
-      "contentHash": "3e78f939f295fddcf18063a0498bf29ce6d2d33092f7fd730330395393c90b48",
+      "contentHash": "d913aaecf80ab3a18876723f7a7303c1a1b479b702dc0e5b4ad6844c97cfc5e9",
       "functions": [
         {
           "name": "extract_memories",
@@ -1268,7 +1311,7 @@
     },
     "backend/app/providers.py": {
       "filePath": "backend/app/providers.py",
-      "contentHash": "b0c80bd2c73e261f90d9ce9160fd371a4d144e7060c0c32f9625aacc3c59cd43",
+      "contentHash": "dced4c97db23bd902a6587cd2c41a04696f225cca8b99378c9b3eb815e3dcd59",
       "functions": [
         {
           "name": "build_provider_registry",
@@ -1466,7 +1509,7 @@
     },
     "backend/app/runs.py": {
       "filePath": "backend/app/runs.py",
-      "contentHash": "955a83cc1c88b7f6c5b8bbd0ceeba61ddf9f78c34818213c49182d00d1fc4eae",
+      "contentHash": "35036c95096c5e52a393496026ebf8ef6a0350d4a2d2ab260abfd2f845980c84",
       "functions": [],
       "classes": [
         {
@@ -1493,6 +1536,7 @@
             "get",
             "cancel",
             "clear",
+            "shutdown",
             "events",
             "_execute",
             "_echo",
@@ -1503,7 +1547,7 @@
           ],
           "properties": [],
           "exported": true,
-          "lineCount": 182
+          "lineCount": 187
         }
       ],
       "imports": [
@@ -1589,12 +1633,12 @@
         "RunState",
         "RunManager"
       ],
-      "totalLines": 212,
+      "totalLines": 217,
       "hasStructuralAnalysis": true
     },
     "backend/app/sessions.py": {
       "filePath": "backend/app/sessions.py",
-      "contentHash": "a553e66a7c1a8511a219c3006bb49633f63e04bbafa7d3736a861ada35503d67",
+      "contentHash": "94bf9f5f11a45930ae54b3aa152a052470396701a1d8f990c498969aefe121b9",
       "functions": [
         {
           "name": "_anthropic_wif_configured",
@@ -1650,7 +1694,7 @@
     },
     "backend/app/store.py": {
       "filePath": "backend/app/store.py",
-      "contentHash": "6dd894c158533585f4996891fd5ecf6d476e6c9aac6c888fb249af5048e9e66e",
+      "contentHash": "6cfee3c419f79046d16082b220dd5907692035d812d9e5001c47e60f6053061e",
       "functions": [],
       "classes": [
         {
@@ -1794,7 +1838,7 @@
     },
     "backend/app/workspace.py": {
       "filePath": "backend/app/workspace.py",
-      "contentHash": "05b441a8a39e1d6e06b8fa1011ed0e8325b1e6dd273b6fb14f4ec68410b3a0d9",
+      "contentHash": "ffacebc947c89db481e7dcfe4040eb16d3ff355bb6c3c916343f083dc4599e63",
       "functions": [
         {
           "name": "search_web",
@@ -1964,7 +2008,7 @@
     },
     "docs/codebase/ARCHITECTURE.md": {
       "filePath": "docs/codebase/ARCHITECTURE.md",
-      "contentHash": "3e07794fef413e2d13a6fb362698445043446e1620e98a4dceacf97e0956d10f",
+      "contentHash": "ab9d4296b3ddc1aa3ab257a0c5643965e73344bd5eb61e337d2299ed651b61fb",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -1974,7 +2018,7 @@
     },
     "docs/codebase/CONCERNS.md": {
       "filePath": "docs/codebase/CONCERNS.md",
-      "contentHash": "5e049755f84033f5d07df92cfa627498bf386358bec41a9fa51ddd5aa1e9d7b1",
+      "contentHash": "da282b75295c8ac0b680aa94321a9a87eba8239baf379f55f6cadcfab1ab1970",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -1984,7 +2028,7 @@
     },
     "docs/codebase/CONVENTIONS.md": {
       "filePath": "docs/codebase/CONVENTIONS.md",
-      "contentHash": "603517fcc90bbe4bcd51fe260a5b5f3716d57985cc25ecb6e88fa7a4e60f1c7c",
+      "contentHash": "35c970c82411800f7e72794c9fab3b2e79cd05db34874a0d1b7029a68377454b",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -1994,7 +2038,7 @@
     },
     "docs/codebase/INTEGRATIONS.md": {
       "filePath": "docs/codebase/INTEGRATIONS.md",
-      "contentHash": "e8179cdc75efb385b5a34aa23dab6342ee64be894a0e87518acd9d5a9ced21cd",
+      "contentHash": "9a557f9df378bf1a765f974a84eed9bac9a01b0e16fc2a5bde7bdb74ba8ab259",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -2004,7 +2048,7 @@
     },
     "docs/codebase/STACK.md": {
       "filePath": "docs/codebase/STACK.md",
-      "contentHash": "9cb1ba16295d7f5ebd9b24555ac803fe40078b8b203ee3ee5d6572f4ec1618a2",
+      "contentHash": "a09d1addb1f5a07f56437882d2d9a001f2e20e713034a93d66dee123a51434ef",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -2014,7 +2058,7 @@
     },
     "docs/codebase/STRUCTURE.md": {
       "filePath": "docs/codebase/STRUCTURE.md",
-      "contentHash": "2ebf073bcb3fc17cc72be000b8b3ce4e57ad8036ea8483970c3dd6034b9134f9",
+      "contentHash": "0dd68a3cb8a1aee24e35787f4bcb3243b085eda2d55e66390b69001b84b809dc",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -2024,7 +2068,7 @@
     },
     "docs/codebase/TESTING.md": {
       "filePath": "docs/codebase/TESTING.md",
-      "contentHash": "16958d3da7886eebf85ac8f3fb5d232a6da32c9e9f2e1901d9fbad86288adfc5",
+      "contentHash": "ae271b82e5e935010975177a96d04140c0c52363522ed5801d884d13d15d30d8",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -2044,7 +2088,7 @@
     },
     "docs/tutorial/index.html": {
       "filePath": "docs/tutorial/index.html",
-      "contentHash": "1d9e4be339cb8e4609268b104bae55bb2ccf0c4abcf4bd41e799672691ce31cf",
+      "contentHash": "544ee9d5ddb84887a7df1b173e70b8723c0659805c0d3844c5720725ed60822a",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -2064,7 +2108,7 @@
     },
     "frontend/README.md": {
       "filePath": "frontend/README.md",
-      "contentHash": "a958f531caf6d2e3e22efc4cc90f5c1e8c19fa8d3266a56c9ea77de9b29ae4a2",
+      "contentHash": "0e7edb72011536595c42cf0ffa863873f076a8b7c3f0375e63e822bebd86acd5",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -2084,7 +2128,7 @@
     },
     "frontend/index.html": {
       "filePath": "frontend/index.html",
-      "contentHash": "ec9e6649fb1dd572ed071dc8f0a557d538725ebb213a1f7424e822e937d59fc0",
+      "contentHash": "057e01de60b352b0491aebe5bd375580f1b8290503bd6d167df1113448b19fd1",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -2094,7 +2138,7 @@
     },
     "frontend/package.json": {
       "filePath": "frontend/package.json",
-      "contentHash": "6a56efb011e0a76a2443e61741542753be9702685a9d16fb36c7119678d0e2c0",
+      "contentHash": "c6f9cad38aeb5cdd61fac8d052927adb4cf9c2ce330cf9bd0a6c79673d34c68a",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -2104,7 +2148,7 @@
     },
     "frontend/src/App.css": {
       "filePath": "frontend/src/App.css",
-      "contentHash": "e76a0a7715241f4821db6df9b069fcc17ebe824b76c39f4e8300bc984b43fc70",
+      "contentHash": "9cedc9040584c3a8eab4ddc5e54b8f6fb741ce38eea6d481f56b99a9c70e98e3",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -2114,7 +2158,7 @@
     },
     "frontend/src/App.test.tsx": {
       "filePath": "frontend/src/App.test.tsx",
-      "contentHash": "01f0ceb264cf3f9bb008022345cf3e01cdf27e55dc8dc50155b341d99c819756",
+      "contentHash": "f312e2c79b995d848f5a11459416dbd8ba4484c0c14c606ea2b288558081a395",
       "functions": [
         {
           "name": "json",
@@ -2157,12 +2201,12 @@
         }
       ],
       "exports": [],
-      "totalLines": 99,
+      "totalLines": 115,
       "hasStructuralAnalysis": true
     },
     "frontend/src/App.tsx": {
       "filePath": "frontend/src/App.tsx",
-      "contentHash": "17a966da31453a73134ec0129d13dcd10a78ce6dd0ba6571671c30766fb444c7",
+      "contentHash": "d0e71a8ee420f6d3fcd876bb6dcbebc35cd443f409a5bbcf01e37dd4959235c7",
       "functions": [
         {
           "name": "messageOf",
@@ -2183,7 +2227,7 @@
         {
           "name": "ConversationHistory",
           "params": [
-            "{\n  conversations,\n  activeId,\n  onSelect,\n  onCreate,\n  onUpdate,\n  onDelete,\n}"
+            "{\r\n  conversations,\r\n  activeId,\r\n  onSelect,\r\n  onCreate,\r\n  onUpdate,\r\n  onDelete,\r\n}"
           ],
           "exported": false,
           "lineCount": 42
@@ -2207,7 +2251,7 @@
         {
           "name": "ChatWorkspace",
           "params": [
-            "{\n  conversation,\n  models,\n  selectedModel,\n  onModel,\n  plan,\n  pendingPlan,\n  liveOutput,\n  running,\n  error,\n  onSend,\n  onConfirm,\n  onSanitize,\n  onCancel,\n  onUpload,\n  uploads,\n  attachmentIds,\n  onAttachment,\n  onSaveMemories,\n  savingMemories,\n  onBranch,\n  onFeedback,\n}"
+            "{\r\n  conversation,\r\n  models,\r\n  selectedModel,\r\n  onModel,\r\n  plan,\r\n  pendingPlan,\r\n  liveOutput,\r\n  running,\r\n  error,\r\n  onSend,\r\n  onConfirm,\r\n  onSanitize,\r\n  onCancel,\r\n  onUpload,\r\n  uploads,\r\n  attachmentIds,\r\n  onAttachment,\r\n  onSaveMemories,\r\n  savingMemories,\r\n  onBranch,\r\n  onFeedback,\r\n}"
           ],
           "exported": false,
           "lineCount": 112
@@ -2279,7 +2323,7 @@
         {
           "name": "LibraryPage",
           "params": [
-            "{\n  memories, presets, uploads, conversationId, onMemory, onMemoryUpdate, onMemoryDelete, onPreset, onPresetDelete, onUpload,\n}"
+            "{\r\n  memories, presets, uploads, conversationId, onMemory, onMemoryUpdate, onMemoryDelete, onPreset, onPresetDelete, onUpload,\r\n}"
           ],
           "exported": false,
           "lineCount": 11
@@ -2290,7 +2334,7 @@
             "{ connected, onRefresh }"
           ],
           "exported": false,
-          "lineCount": 8
+          "lineCount": 20
         },
         {
           "name": "fileAsBase64",
@@ -2344,6 +2388,7 @@
             "Paperclip",
             "Play",
             "PlugZap",
+            "Power",
             "RotateCcw",
             "Search",
             "Send",
@@ -2424,7 +2469,7 @@
         }
       ],
       "exports": [],
-      "totalLines": 557,
+      "totalLines": 570,
       "hasStructuralAnalysis": true
     },
     "frontend/src/ErrorBoundary.tsx": {
@@ -2464,7 +2509,7 @@
     },
     "frontend/src/api/client.ts": {
       "filePath": "frontend/src/api/client.ts",
-      "contentHash": "1dec2dc88af93dab9db1b90e6997aa4434fcf7133485f8a39ef2d717c3f4f165",
+      "contentHash": "2ce79204a36fc75132112f993888b9bd32b0eb9eaba88fd3d08483144386df39",
       "functions": [
         {
           "name": "request",
@@ -2524,17 +2569,102 @@
         "streamRun",
         "api"
       ],
-      "totalLines": 194,
+      "totalLines": 197,
       "hasStructuralAnalysis": true
     },
     "frontend/src/api/schema.ts": {
       "filePath": "frontend/src/api/schema.ts",
-      "contentHash": "a88db5f1b62602ef8de71204ce166206e6ce88615f594481fc3d7ffa835412f2",
+      "contentHash": "526ca435c73979820b515176f172ce5702c1a3364c4d5d29b1a5bfa29402c430",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 3444,
+      "totalLines": 3483,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/avatar.tsx": {
+      "filePath": "frontend/src/components/ui/avatar.tsx",
+      "contentHash": "c52c54196ece17beb13f2d5d349c21cea7c53ac06fa062e54e29f9de74acb47c",
+      "functions": [
+        {
+          "name": "Avatar",
+          "params": [
+            "{\r\n  className,\r\n  size = \"default\",\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 19
+        },
+        {
+          "name": "AvatarImage",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "AvatarFallback",
+          "params": [
+            "{\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "AvatarBadge",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "AvatarGroup",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "AvatarGroupCount",
+          "params": [
+            "{\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 15
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "* as React"
+          ]
+        },
+        {
+          "source": "@base-ui/react/avatar",
+          "specifiers": [
+            "AvatarPrimitive"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        }
+      ],
+      "exports": [
+        "Avatar",
+        "AvatarImage",
+        "AvatarFallback",
+        "AvatarGroup",
+        "AvatarGroupCount",
+        "AvatarBadge"
+      ],
+      "totalLines": 110,
       "hasStructuralAnalysis": true
     },
     "frontend/src/components/ui/badge.tsx": {
@@ -2715,6 +2845,446 @@
       "totalLines": 104,
       "hasStructuralAnalysis": true
     },
+    "frontend/src/components/ui/dialog.tsx": {
+      "filePath": "frontend/src/components/ui/dialog.tsx",
+      "contentHash": "753bc1dd92ab5efcd95576db8b0ac838f2cee2f1e00b9ff564d6266e260d94da",
+      "functions": [
+        {
+          "name": "Dialog",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "DialogTrigger",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "DialogPortal",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "DialogClose",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "DialogOverlay",
+          "params": [
+            "{\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "DialogContent",
+          "params": [
+            "{\r\n  className,\r\n  children,\r\n  showCloseButton = true,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 40
+        },
+        {
+          "name": "DialogHeader",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "DialogFooter",
+          "params": [
+            "{\r\n  className,\r\n  showCloseButton = false,\r\n  children,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 26
+        },
+        {
+          "name": "DialogTitle",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "DialogDescription",
+          "params": [
+            "{\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 15
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "* as React"
+          ]
+        },
+        {
+          "source": "@base-ui/react/dialog",
+          "specifiers": [
+            "DialogPrimitive"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        },
+        {
+          "source": "@/components/ui/button",
+          "specifiers": [
+            "Button"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "specifiers": [
+            "XIcon"
+          ]
+        }
+      ],
+      "exports": [
+        "Dialog",
+        "DialogClose",
+        "DialogContent",
+        "DialogDescription",
+        "DialogFooter",
+        "DialogHeader",
+        "DialogOverlay",
+        "DialogPortal",
+        "DialogTitle",
+        "DialogTrigger"
+      ],
+      "totalLines": 159,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/dropdown-menu.tsx": {
+      "filePath": "frontend/src/components/ui/dropdown-menu.tsx",
+      "contentHash": "bfc3bd3a1972c9fab8521ed9de6c6e747c6288cc31b6aeb9b9a0b30861af0a42",
+      "functions": [
+        {
+          "name": "DropdownMenu",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "DropdownMenuPortal",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "DropdownMenuTrigger",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "DropdownMenuContent",
+          "params": [
+            "{\r\n  align = \"start\",\r\n  alignOffset = 0,\r\n  side = \"bottom\",\r\n  sideOffset = 4,\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 30
+        },
+        {
+          "name": "DropdownMenuGroup",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "DropdownMenuLabel",
+          "params": [
+            "{\r\n  className,\r\n  inset,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 19
+        },
+        {
+          "name": "DropdownMenuItem",
+          "params": [
+            "{\r\n  className,\r\n  inset,\r\n  variant = \"default\",\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "DropdownMenuSub",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "DropdownMenuSubTrigger",
+          "params": [
+            "{\r\n  className,\r\n  inset,\r\n  children,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "DropdownMenuSubContent",
+          "params": [
+            "{\r\n  align = \"start\",\r\n  alignOffset = -3,\r\n  side = \"right\",\r\n  sideOffset = 0,\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 20
+        },
+        {
+          "name": "DropdownMenuCheckboxItem",
+          "params": [
+            "{\r\n  className,\r\n  children,\r\n  checked,\r\n  inset,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 33
+        },
+        {
+          "name": "DropdownMenuRadioGroup",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "DropdownMenuRadioItem",
+          "params": [
+            "{\r\n  className,\r\n  children,\r\n  inset,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 31
+        },
+        {
+          "name": "DropdownMenuSeparator",
+          "params": [
+            "{\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "DropdownMenuShortcut",
+          "params": [
+            "{\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 15
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "* as React"
+          ]
+        },
+        {
+          "source": "@base-ui/react/menu",
+          "specifiers": [
+            "MenuPrimitive"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "specifiers": [
+            "ChevronRightIcon",
+            "CheckIcon"
+          ]
+        }
+      ],
+      "exports": [
+        "DropdownMenu",
+        "DropdownMenuPortal",
+        "DropdownMenuTrigger",
+        "DropdownMenuContent",
+        "DropdownMenuGroup",
+        "DropdownMenuLabel",
+        "DropdownMenuItem",
+        "DropdownMenuCheckboxItem",
+        "DropdownMenuRadioGroup",
+        "DropdownMenuRadioItem",
+        "DropdownMenuSeparator",
+        "DropdownMenuShortcut",
+        "DropdownMenuSub",
+        "DropdownMenuSubTrigger",
+        "DropdownMenuSubContent"
+      ],
+      "totalLines": 267,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/field.tsx": {
+      "filePath": "frontend/src/components/ui/field.tsx",
+      "contentHash": "a6515df789b9e8c49780ed2a94f47b60f983647f4014b0a6c15a0d3e6e403930",
+      "functions": [
+        {
+          "name": "FieldSet",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "FieldLegend",
+          "params": [
+            "{\r\n  className,\r\n  variant = \"legend\",\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "FieldGroup",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "Field",
+          "params": [
+            "{\r\n  className,\r\n  orientation = \"vertical\",\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "FieldContent",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "FieldLabel",
+          "params": [
+            "{\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "FieldTitle",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "FieldDescription",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "FieldSeparator",
+          "params": [
+            "{\r\n  children,\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 29
+        },
+        {
+          "name": "FieldError",
+          "params": [
+            "{\r\n  className,\r\n  children,\r\n  errors,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 50
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useMemo"
+          ]
+        },
+        {
+          "source": "class-variance-authority",
+          "specifiers": [
+            "cva",
+            "VariantProps"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        },
+        {
+          "source": "@/components/ui/label",
+          "specifiers": [
+            "Label"
+          ]
+        },
+        {
+          "source": "@/components/ui/separator",
+          "specifiers": [
+            "Separator"
+          ]
+        }
+      ],
+      "exports": [
+        "Field",
+        "FieldLabel",
+        "FieldDescription",
+        "FieldError",
+        "FieldGroup",
+        "FieldLegend",
+        "FieldSeparator",
+        "FieldSet",
+        "FieldContent",
+        "FieldTitle"
+      ],
+      "totalLines": 237,
+      "hasStructuralAnalysis": true
+    },
     "frontend/src/components/ui/input.tsx": {
       "filePath": "frontend/src/components/ui/input.tsx",
       "contentHash": "f7d6ecff9a4d631feeaf401c02bb87e26ddb38131c55d15a43b9290747390847",
@@ -2751,6 +3321,40 @@
       ],
       "exports": [
         "Input"
+      ],
+      "totalLines": 21,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/label.tsx": {
+      "filePath": "frontend/src/components/ui/label.tsx",
+      "contentHash": "9662973c34f20f4a1e13103ae3d558e6a63a33593c98b2821b2fbe8de25b5099",
+      "functions": [
+        {
+          "name": "Label",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "* as React"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        }
+      ],
+      "exports": [
+        "Label"
       ],
       "totalLines": 21,
       "hasStructuralAnalysis": true
@@ -2798,6 +3402,127 @@
       "totalLines": 53,
       "hasStructuralAnalysis": true
     },
+    "frontend/src/components/ui/select.tsx": {
+      "filePath": "frontend/src/components/ui/select.tsx",
+      "contentHash": "63be1491cc58534c41f224d6ff0a3c0fb4a75fb1950cb9ff59fbdcce3f6a94c5",
+      "functions": [
+        {
+          "name": "SelectGroup",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "SelectValue",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "SelectTrigger",
+          "params": [
+            "{\r\n  className,\r\n  size = \"default\",\r\n  children,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 27
+        },
+        {
+          "name": "SelectContent",
+          "params": [
+            "{\r\n  className,\r\n  children,\r\n  side = \"bottom\",\r\n  sideOffset = 4,\r\n  align = \"center\",\r\n  alignOffset = 0,\r\n  alignItemWithTrigger = true,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 38
+        },
+        {
+          "name": "SelectLabel",
+          "params": [
+            "{\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "SelectItem",
+          "params": [
+            "{\r\n  className,\r\n  children,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 27
+        },
+        {
+          "name": "SelectSeparator",
+          "params": [
+            "{\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "SelectScrollUpButton",
+          "params": [
+            "{\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "SelectScrollDownButton",
+          "params": [
+            "{\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 18
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "* as React"
+          ]
+        },
+        {
+          "source": "@base-ui/react/select",
+          "specifiers": [
+            "SelectPrimitive"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "specifiers": [
+            "ChevronDownIcon",
+            "CheckIcon",
+            "ChevronUpIcon"
+          ]
+        }
+      ],
+      "exports": [
+        "Select",
+        "SelectContent",
+        "SelectGroup",
+        "SelectItem",
+        "SelectLabel",
+        "SelectScrollDownButton",
+        "SelectScrollUpButton",
+        "SelectSeparator",
+        "SelectTrigger",
+        "SelectValue"
+      ],
+      "totalLines": 202,
+      "hasStructuralAnalysis": true
+    },
     "frontend/src/components/ui/separator.tsx": {
       "filePath": "frontend/src/components/ui/separator.tsx",
       "contentHash": "75085bd84ff6965e4a356c53a4689799cabf65caa93c0bba064d5a0c6fa78f13",
@@ -2830,6 +3555,677 @@
         "Separator"
       ],
       "totalLines": 26,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/sheet.tsx": {
+      "filePath": "frontend/src/components/ui/sheet.tsx",
+      "contentHash": "4b8cf5ad6e2256bdeb9bb57bc9ed4c1161d53da911e3fe6d69590d9900cf3ed9",
+      "functions": [
+        {
+          "name": "Sheet",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "SheetTrigger",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "SheetClose",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "SheetPortal",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "SheetOverlay",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": false,
+          "lineCount": 12
+        },
+        {
+          "name": "SheetContent",
+          "params": [
+            "{\r\n  className,\r\n  children,\r\n  side = \"right\",\r\n  showCloseButton = true,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 43
+        },
+        {
+          "name": "SheetHeader",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "SheetFooter",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "SheetTitle",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "SheetDescription",
+          "params": [
+            "{\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "* as React"
+          ]
+        },
+        {
+          "source": "@base-ui/react/dialog",
+          "specifiers": [
+            "SheetPrimitive"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        },
+        {
+          "source": "@/components/ui/button",
+          "specifiers": [
+            "Button"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "specifiers": [
+            "XIcon"
+          ]
+        }
+      ],
+      "exports": [
+        "Sheet",
+        "SheetTrigger",
+        "SheetClose",
+        "SheetContent",
+        "SheetHeader",
+        "SheetFooter",
+        "SheetTitle",
+        "SheetDescription"
+      ],
+      "totalLines": 139,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/sidebar.tsx": {
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "contentHash": "933dd8d8db9f9bb3e1dab1b851ab4ab9852a24ce4a9455c7fba7877d09644e3a",
+      "functions": [
+        {
+          "name": "useSidebar",
+          "params": [],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "SidebarProvider",
+          "params": [
+            "{\r\n  defaultOpen = true,\r\n  open: openProp,\r\n  onOpenChange: setOpenProp,\r\n  className,\r\n  style,\r\n  children,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 95
+        },
+        {
+          "name": "Sidebar",
+          "params": [
+            "{\r\n  side = \"left\",\r\n  variant = \"sidebar\",\r\n  collapsible = \"offcanvas\",\r\n  className,\r\n  children,\r\n  dir,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 101
+        },
+        {
+          "name": "SidebarTrigger",
+          "params": [
+            "{\r\n  className,\r\n  onClick,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 25
+        },
+        {
+          "name": "SidebarRail",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 24
+        },
+        {
+          "name": "SidebarInset",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "SidebarInput",
+          "params": [
+            "{\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "SidebarHeader",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "SidebarFooter",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "SidebarSeparator",
+          "params": [
+            "{\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "SidebarContent",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "SidebarGroup",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "SidebarGroupLabel",
+          "params": [
+            "{\r\n  className,\r\n  render,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "SidebarGroupAction",
+          "params": [
+            "{\r\n  className,\r\n  render,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "SidebarGroupContent",
+          "params": [
+            "{\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "SidebarMenu",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "SidebarMenuItem",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "SidebarMenuButton",
+          "params": [
+            "{\r\n  render,\r\n  isActive = false,\r\n  variant = \"default\",\r\n  size = \"default\",\r\n  tooltip,\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 53
+        },
+        {
+          "name": "SidebarMenuAction",
+          "params": [
+            "{\r\n  className,\r\n  render,\r\n  showOnHover = false,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 29
+        },
+        {
+          "name": "SidebarMenuBadge",
+          "params": [
+            "{\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "SidebarMenuSkeleton",
+          "params": [
+            "{\r\n  className,\r\n  showIcon = false,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 37
+        },
+        {
+          "name": "SidebarMenuSub",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "SidebarMenuSubItem",
+          "params": [
+            "{\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "SidebarMenuSubButton",
+          "params": [
+            "{\r\n  render,\r\n  size = \"md\",\r\n  isActive = false,\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 31
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "* as React"
+          ]
+        },
+        {
+          "source": "@base-ui/react/merge-props",
+          "specifiers": [
+            "mergeProps"
+          ]
+        },
+        {
+          "source": "@base-ui/react/use-render",
+          "specifiers": [
+            "useRender"
+          ]
+        },
+        {
+          "source": "class-variance-authority",
+          "specifiers": [
+            "cva",
+            "VariantProps"
+          ]
+        },
+        {
+          "source": "@/hooks/use-mobile",
+          "specifiers": [
+            "useIsMobile"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        },
+        {
+          "source": "@/components/ui/button",
+          "specifiers": [
+            "Button"
+          ]
+        },
+        {
+          "source": "@/components/ui/input",
+          "specifiers": [
+            "Input"
+          ]
+        },
+        {
+          "source": "@/components/ui/separator",
+          "specifiers": [
+            "Separator"
+          ]
+        },
+        {
+          "source": "@/components/ui/sheet",
+          "specifiers": [
+            "Sheet",
+            "SheetContent",
+            "SheetDescription",
+            "SheetHeader",
+            "SheetTitle"
+          ]
+        },
+        {
+          "source": "@/components/ui/skeleton",
+          "specifiers": [
+            "Skeleton"
+          ]
+        },
+        {
+          "source": "@/components/ui/tooltip",
+          "specifiers": [
+            "Tooltip",
+            "TooltipContent",
+            "TooltipTrigger"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "specifiers": [
+            "PanelLeftIcon"
+          ]
+        }
+      ],
+      "exports": [
+        "Sidebar",
+        "SidebarContent",
+        "SidebarFooter",
+        "SidebarGroup",
+        "SidebarGroupAction",
+        "SidebarGroupContent",
+        "SidebarGroupLabel",
+        "SidebarHeader",
+        "SidebarInput",
+        "SidebarInset",
+        "SidebarMenu",
+        "SidebarMenuAction",
+        "SidebarMenuBadge",
+        "SidebarMenuButton",
+        "SidebarMenuItem",
+        "SidebarMenuSkeleton",
+        "SidebarMenuSub",
+        "SidebarMenuSubButton",
+        "SidebarMenuSubItem",
+        "SidebarProvider",
+        "SidebarRail",
+        "SidebarSeparator",
+        "SidebarTrigger",
+        "useSidebar"
+      ],
+      "totalLines": 724,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/skeleton.tsx": {
+      "filePath": "frontend/src/components/ui/skeleton.tsx",
+      "contentHash": "6943aea99efa26e56d3d546bd7f41c8d4336bf56a258519e49248aa063f02ade",
+      "functions": [
+        {
+          "name": "Skeleton",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        }
+      ],
+      "exports": [
+        "Skeleton"
+      ],
+      "totalLines": 14,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/switch.tsx": {
+      "filePath": "frontend/src/components/ui/switch.tsx",
+      "contentHash": "b2136b0e4338b028f14afb23e7dec73dd5bcb9111b0d4d2c706d6d3864802e71",
+      "functions": [
+        {
+          "name": "Switch",
+          "params": [
+            "{\r\n  className,\r\n  size = \"default\",\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 24
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@base-ui/react/switch",
+          "specifiers": [
+            "SwitchPrimitive"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        }
+      ],
+      "exports": [
+        "Switch"
+      ],
+      "totalLines": 31,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/table.tsx": {
+      "filePath": "frontend/src/components/ui/table.tsx",
+      "contentHash": "23218111459398d9468c30b05004177a0320912012d39a5dff0fb13e8e047d54",
+      "functions": [
+        {
+          "name": "Table",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "TableHeader",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "TableBody",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "TableFooter",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "TableRow",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "TableHead",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "TableCell",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "TableCaption",
+          "params": [
+            "{\r\n  className,\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "* as React"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        }
+      ],
+      "exports": [
+        "Table",
+        "TableHeader",
+        "TableBody",
+        "TableFooter",
+        "TableHead",
+        "TableRow",
+        "TableCell",
+        "TableCaption"
+      ],
+      "totalLines": 115,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/tabs.tsx": {
+      "filePath": "frontend/src/components/ui/tabs.tsx",
+      "contentHash": "7dd75c0266270a8ebd1d0e3c3ad17f1051b68417f1b57a8d7dc4ad52209d1749",
+      "functions": [
+        {
+          "name": "Tabs",
+          "params": [
+            "{\r\n  className,\r\n  orientation = \"horizontal\",\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "TabsList",
+          "params": [
+            "{\r\n  className,\r\n  variant = \"default\",\r\n  ...props\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "TabsTrigger",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "TabsContent",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@base-ui/react/tabs",
+          "specifiers": [
+            "TabsPrimitive"
+          ]
+        },
+        {
+          "source": "class-variance-authority",
+          "specifiers": [
+            "cva",
+            "VariantProps"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        }
+      ],
+      "exports": [
+        "Tabs",
+        "TabsList",
+        "TabsTrigger",
+        "TabsContent",
+        "tabsListVariants"
+      ],
+      "totalLines": 81,
       "hasStructuralAnalysis": true
     },
     "frontend/src/components/ui/textarea.tsx": {
@@ -2927,6 +4323,32 @@
       "totalLines": 67,
       "hasStructuralAnalysis": true
     },
+    "frontend/src/hooks/use-mobile.ts": {
+      "filePath": "frontend/src/hooks/use-mobile.ts",
+      "contentHash": "d2377fbad5ad2bdf7fa896a68c36ac8bf4aa74a974b2061f77b41ae58d623001",
+      "functions": [
+        {
+          "name": "useIsMobile",
+          "params": [],
+          "exported": true,
+          "lineCount": 15
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "* as React"
+          ]
+        }
+      ],
+      "exports": [
+        "useIsMobile"
+      ],
+      "totalLines": 20,
+      "hasStructuralAnalysis": true
+    },
     "frontend/src/index.css": {
       "filePath": "frontend/src/index.css",
       "contentHash": "42070e0b45bb201b2b838a52aaaa6e965f964e0b542d97f1fe517fe59c4b75a8",
@@ -2974,7 +4396,7 @@
     },
     "frontend/src/main.tsx": {
       "filePath": "frontend/src/main.tsx",
-      "contentHash": "2ce1b3eb7910133db53f28d63e06a01ff1075eda71a00f34348d34089415532d",
+      "contentHash": "05c5585a5010b532225e9af9c5eab5d2dc283bd23aad0db51b31e320c74587c2",
       "functions": [],
       "classes": [],
       "imports": [
@@ -3138,7 +4560,7 @@
     },
     "pyproject.toml": {
       "filePath": "pyproject.toml",
-      "contentHash": "aa2ad7ee77cd0809c0dad6c64adf2a24cdc7b7370904406b71591873854502ca",
+      "contentHash": "cfb1a7722d4b59bb1dd57eb80dd49193bf13a7fd31e841e041815b5350e005dc",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -3148,7 +4570,7 @@
     },
     "scripts/generate_api_types.py": {
       "filePath": "scripts/generate_api_types.py",
-      "contentHash": "b23bec7f539fe5d8e109df9acfa8255252fbf2da0fc0cbf9fbfa4975231b47d0",
+      "contentHash": "e1ce0323ac98ccc981d725824624f4528000ea6644e164a10b6b1b98d4cae533",
       "functions": [],
       "classes": [],
       "imports": [
@@ -5274,7 +6696,7 @@
     },
     "tests/test_api_contract.py": {
       "filePath": "tests/test_api_contract.py",
-      "contentHash": "9fa6d55a8aeffb639c9050e392746d142a96b6314a998ce74dc5d806461a1f0c",
+      "contentHash": "0d259120664162f6388cf320598b70be704a380ccfe18100e548618582b5dd7f",
       "functions": [
         {
           "name": "test_health_and_session_cookie",
@@ -5284,6 +6706,22 @@
           "returnType": "None",
           "exported": true,
           "lineCount": 6
+        },
+        {
+          "name": "test_managed_server_can_be_stopped_from_the_local_ui",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "test_shutdown_rejects_cross_site_and_unmanaged_requests",
+          "params": [
+            "client"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 9
         },
         {
           "name": "test_conversation_crud_preserves_message_order",
@@ -5348,6 +6786,12 @@
           ]
         },
         {
+          "source": "unittest.mock",
+          "specifiers": [
+            "Mock"
+          ]
+        },
+        {
           "source": "fastapi.testclient",
           "specifiers": [
             "TestClient"
@@ -5356,18 +6800,20 @@
       ],
       "exports": [
         "test_health_and_session_cookie",
+        "test_managed_server_can_be_stopped_from_the_local_ui",
+        "test_shutdown_rejects_cross_site_and_unmanaged_requests",
         "test_conversation_crud_preserves_message_order",
         "test_provider_secret_is_scoped_to_browser_session",
         "test_anthropic_reports_workload_identity_source",
         "test_run_stream_contract_retains_completed_output",
         "test_openrouter_auth_uses_session_pkce_and_current_callback_origin"
       ],
-      "totalLines": 114,
+      "totalLines": 143,
       "hasStructuralAnalysis": true
     },
     "tests/test_provider_adapters.py": {
       "filePath": "tests/test_provider_adapters.py",
-      "contentHash": "a0f1587305c38a6382dd8889112eaa671862d4173a5ce1bbccdf7a6dd1574835",
+      "contentHash": "e0f8295d8742322fd113d68102b76a4a0fdf06f9fcb64ddf5ce7e7fa0f3acbfb",
       "functions": [
         {
           "name": "test_registry_contains_all_phase_one_providers",
@@ -5465,7 +6911,7 @@
     },
     "tests/test_workspace_features.py": {
       "filePath": "tests/test_workspace_features.py",
-      "contentHash": "9458e3ce1c51c497256f606acfd2c934368a821d3ad60ea78e3c0c62c801fb61",
+      "contentHash": "1b8471f0813d4570a0da855c0ef1fcf329510d0d018871e6e0b2fc04003a560d",
       "functions": [
         {
           "name": "_conversation",
@@ -5553,7 +6999,7 @@
         {
           "name": "test_llm_memory_extraction_requires_cloud_confirmation_and_saves_provenance",
           "params": [],
-          "returnType": "(\n    None\n)",
+          "returnType": "(\r\n    None\r\n)",
           "exported": true,
           "lineCount": 56
         },

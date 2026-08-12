@@ -1,9 +1,10 @@
 {
   "name": "local-ai-chat-studio",
-  "description": "A local-first, ChatGPT-style AI chat studio over Ollama with optional BYOK cloud providers, built-in memory, and self-improving personalization.",
+  "description": "A local-first, ChatGPT-style AI chat studio over Ollama with optional BYOK cloud providers, built-in memory, and self-improving personalization. Note: this project has over 100 source files; consider scoping analysis to a subdirectory for faster results.",
   "languages": [
     "batch",
     "css",
+    "db",
     "html",
     "json",
     "markdown",
@@ -15,11 +16,22 @@
   ],
   "frameworks": [
     "FastAPI",
+    "GitHub Actions",
     "Pydantic",
     "Pytest",
-    "Uvicorn"
+    "React",
+    "Tailwind CSS",
+    "Uvicorn",
+    "Vite",
+    "Vitest"
   ],
   "files": [
+    {
+      "path": ".code-review-graph/graph.db",
+      "language": "db",
+      "sizeLines": 16242,
+      "fileCategory": "code"
+    },
     {
       "path": ".github/ISSUE_TEMPLATE/bug_report.md",
       "language": "markdown",
@@ -59,13 +71,13 @@
     {
       "path": "CHANGELOG.md",
       "language": "markdown",
-      "sizeLines": 38,
+      "sizeLines": 44,
       "fileCategory": "docs"
     },
     {
       "path": "CODE_OF_CONDUCT.md",
       "language": "markdown",
-      "sizeLines": 21,
+      "sizeLines": 28,
       "fileCategory": "docs"
     },
     {
@@ -77,13 +89,19 @@
     {
       "path": "CONTRIBUTING.md",
       "language": "markdown",
-      "sizeLines": 71,
+      "sizeLines": 74,
       "fileCategory": "docs"
     },
     {
       "path": "DATASET.md",
       "language": "markdown",
       "sizeLines": 3,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "GRAPH_REPORT.md",
+      "language": "markdown",
+      "sizeLines": 370,
       "fileCategory": "docs"
     },
     {
@@ -95,13 +113,25 @@
     {
       "path": "README.md",
       "language": "markdown",
-      "sizeLines": 107,
+      "sizeLines": 113,
       "fileCategory": "docs"
     },
     {
       "path": "SECURITY.md",
       "language": "markdown",
-      "sizeLines": 35,
+      "sizeLines": 42,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "TECHNICAL.md",
+      "language": "markdown",
+      "sizeLines": 95,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "USAGE.md",
+      "language": "markdown",
+      "sizeLines": 77,
       "fileCategory": "docs"
     },
     {
@@ -131,7 +161,7 @@
     {
       "path": "backend/app/cli.py",
       "language": "python",
-      "sizeLines": 15,
+      "sizeLines": 23,
       "fileCategory": "code"
     },
     {
@@ -143,7 +173,7 @@
     {
       "path": "backend/app/main.py",
       "language": "python",
-      "sizeLines": 909,
+      "sizeLines": 923,
       "fileCategory": "code"
     },
     {
@@ -161,7 +191,7 @@
     {
       "path": "backend/app/runs.py",
       "language": "python",
-      "sizeLines": 211,
+      "sizeLines": 216,
       "fileCategory": "code"
     },
     {
@@ -275,13 +305,13 @@
     {
       "path": "frontend/src/App.test.tsx",
       "language": "typescript",
-      "sizeLines": 98,
+      "sizeLines": 114,
       "fileCategory": "code"
     },
     {
       "path": "frontend/src/App.tsx",
       "language": "typescript",
-      "sizeLines": 556,
+      "sizeLines": 569,
       "fileCategory": "code"
     },
     {
@@ -293,13 +323,19 @@
     {
       "path": "frontend/src/api/client.ts",
       "language": "typescript",
-      "sizeLines": 193,
+      "sizeLines": 196,
       "fileCategory": "code"
     },
     {
       "path": "frontend/src/api/schema.ts",
       "language": "typescript",
-      "sizeLines": 3443,
+      "sizeLines": 3482,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/avatar.tsx",
+      "language": "typescript",
+      "sizeLines": 109,
       "fileCategory": "code"
     },
     {
@@ -321,7 +357,31 @@
       "fileCategory": "code"
     },
     {
+      "path": "frontend/src/components/ui/dialog.tsx",
+      "language": "typescript",
+      "sizeLines": 158,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/dropdown-menu.tsx",
+      "language": "typescript",
+      "sizeLines": 266,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/field.tsx",
+      "language": "typescript",
+      "sizeLines": 236,
+      "fileCategory": "code"
+    },
+    {
       "path": "frontend/src/components/ui/input.tsx",
+      "language": "typescript",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/label.tsx",
       "language": "typescript",
       "sizeLines": 20,
       "fileCategory": "code"
@@ -333,9 +393,51 @@
       "fileCategory": "code"
     },
     {
+      "path": "frontend/src/components/ui/select.tsx",
+      "language": "typescript",
+      "sizeLines": 201,
+      "fileCategory": "code"
+    },
+    {
       "path": "frontend/src/components/ui/separator.tsx",
       "language": "typescript",
       "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/sheet.tsx",
+      "language": "typescript",
+      "sizeLines": 138,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/sidebar.tsx",
+      "language": "typescript",
+      "sizeLines": 723,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/skeleton.tsx",
+      "language": "typescript",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/switch.tsx",
+      "language": "typescript",
+      "sizeLines": 30,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/table.tsx",
+      "language": "typescript",
+      "sizeLines": 114,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/tabs.tsx",
+      "language": "typescript",
+      "sizeLines": 80,
       "fileCategory": "code"
     },
     {
@@ -348,6 +450,12 @@
       "path": "frontend/src/components/ui/tooltip.tsx",
       "language": "typescript",
       "sizeLines": 66,
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/hooks/use-mobile.ts",
+      "language": "typescript",
+      "sizeLines": 19,
       "fileCategory": "code"
     },
     {
@@ -509,7 +617,7 @@
     {
       "path": "tests/test_api_contract.py",
       "language": "python",
-      "sizeLines": 113,
+      "sizeLines": 142,
       "fileCategory": "code"
     },
     {
@@ -525,10 +633,11 @@
       "fileCategory": "code"
     }
   ],
-  "totalFiles": 84,
-  "filteredByIgnore": 171,
+  "totalFiles": 101,
+  "filteredByIgnore": 377,
   "estimatedComplexity": "moderate",
   "importMap": {
+    ".code-review-graph/graph.db": [],
     ".github/ISSUE_TEMPLATE/bug_report.md": [],
     ".github/ISSUE_TEMPLATE/feature_request.md": [],
     ".github/pull_request_template.md": [],
@@ -540,9 +649,12 @@
     "CODE_TUTORIAL.md": [],
     "CONTRIBUTING.md": [],
     "DATASET.md": [],
+    "GRAPH_REPORT.md": [],
     "Launch Chat Studio.cmd": [],
     "README.md": [],
     "SECURITY.md": [],
+    "TECHNICAL.md": [],
+    "USAGE.md": [],
     "USER_GUIDE.md": [],
     "ZERO_TO_HERO_STUDY_HANDBOOK.md": [],
     "backend/__init__.py": [],
@@ -617,6 +729,9 @@
       "frontend/src/api/schema.ts"
     ],
     "frontend/src/api/schema.ts": [],
+    "frontend/src/components/ui/avatar.tsx": [
+      "frontend/src/lib/utils.ts"
+    ],
     "frontend/src/components/ui/badge.tsx": [
       "frontend/src/lib/utils.ts"
     ],
@@ -626,13 +741,57 @@
     "frontend/src/components/ui/card.tsx": [
       "frontend/src/lib/utils.ts"
     ],
+    "frontend/src/components/ui/dialog.tsx": [
+      "frontend/src/components/ui/button.tsx",
+      "frontend/src/lib/utils.ts"
+    ],
+    "frontend/src/components/ui/dropdown-menu.tsx": [
+      "frontend/src/lib/utils.ts"
+    ],
+    "frontend/src/components/ui/field.tsx": [
+      "frontend/src/components/ui/label.tsx",
+      "frontend/src/components/ui/separator.tsx",
+      "frontend/src/lib/utils.ts"
+    ],
     "frontend/src/components/ui/input.tsx": [
+      "frontend/src/lib/utils.ts"
+    ],
+    "frontend/src/components/ui/label.tsx": [
       "frontend/src/lib/utils.ts"
     ],
     "frontend/src/components/ui/scroll-area.tsx": [
       "frontend/src/lib/utils.ts"
     ],
+    "frontend/src/components/ui/select.tsx": [
+      "frontend/src/lib/utils.ts"
+    ],
     "frontend/src/components/ui/separator.tsx": [
+      "frontend/src/lib/utils.ts"
+    ],
+    "frontend/src/components/ui/sheet.tsx": [
+      "frontend/src/components/ui/button.tsx",
+      "frontend/src/lib/utils.ts"
+    ],
+    "frontend/src/components/ui/sidebar.tsx": [
+      "frontend/src/components/ui/button.tsx",
+      "frontend/src/components/ui/input.tsx",
+      "frontend/src/components/ui/separator.tsx",
+      "frontend/src/components/ui/sheet.tsx",
+      "frontend/src/components/ui/skeleton.tsx",
+      "frontend/src/components/ui/tooltip.tsx",
+      "frontend/src/hooks/use-mobile.ts",
+      "frontend/src/lib/utils.ts"
+    ],
+    "frontend/src/components/ui/skeleton.tsx": [
+      "frontend/src/lib/utils.ts"
+    ],
+    "frontend/src/components/ui/switch.tsx": [
+      "frontend/src/lib/utils.ts"
+    ],
+    "frontend/src/components/ui/table.tsx": [
+      "frontend/src/lib/utils.ts"
+    ],
+    "frontend/src/components/ui/tabs.tsx": [
       "frontend/src/lib/utils.ts"
     ],
     "frontend/src/components/ui/textarea.tsx": [
@@ -641,6 +800,7 @@
     "frontend/src/components/ui/tooltip.tsx": [
       "frontend/src/lib/utils.ts"
     ],
+    "frontend/src/hooks/use-mobile.ts": [],
     "frontend/src/index.css": [],
     "frontend/src/lib/utils.ts": [],
     "frontend/src/main.tsx": [
