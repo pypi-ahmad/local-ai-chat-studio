@@ -164,7 +164,7 @@ try {
     try {
         if ($frontendState.NeedsInstall) {
             Write-Step "Installing frontend dependencies"
-            & $Npm ci --no-audit --no-fund
+            & $Npm ci --legacy-peer-deps --no-audit --no-fund
             if ($LASTEXITCODE -ne 0) { throw "Frontend dependency installation failed" }
         }
         if ($frontendState.NeedsBuild) {
