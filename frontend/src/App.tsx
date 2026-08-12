@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import {
   Activity,
   Bot,
@@ -37,7 +37,38 @@ const navigation = [
   ['Settings', Settings],
 ] as const
 
-const providers = ['Ollama', 'OpenAI', 'Anthropic', 'Google Gemini', 'OpenRouter', 'xAI (Grok)', 'OmniRoute']
+const providers = [
+  { name: 'Ollama', description: 'Local runtime', status: 'Available' },
+  { name: 'OpenAI', description: 'Cloud API', status: 'Not connected' },
+  { name: 'Anthropic', description: 'Cloud API', status: 'Not connected' },
+  { name: 'Google Gemini', description: 'Cloud API', status: 'Not connected' },
+  { name: 'OpenRouter', description: 'Cloud API', status: 'Not connected' },
+  { name: 'xAI (Grok)', description: 'Cloud API', status: 'Not connected' },
+  { name: 'OmniRoute', description: 'Local gateway', status: 'Not connected' },
+] as const
+
+const genericPageCopy = {
+  Compare: {
+    eyebrow: 'Parallel model runs',
+    description: 'Send one prompt to two models and compare latency, throughput, and output side by side.',
+  },
+  Assistants: {
+    eyebrow: 'Reusable expertise',
+    description: 'Create focused assistants with a system prompt, preferred model, and generation settings.',
+  },
+  Memory: {
+    eyebrow: 'Your context',
+    description: 'Review, pin, edit, or archive durable facts used to personalize conversations.',
+  },
+  Activity: {
+    eyebrow: 'Run activity',
+    description: 'Inspect sanitized model, token, latency, and error metadata without exposing prompt content.',
+  },
+  Settings: {
+    eyebrow: 'Studio settings',
+    description: 'Manage appearance, generation defaults, local data, imports, and privacy controls.',
+  },
+} as const
 
 function Navigation({ page, onPage }: { page: Page; onPage: (page: Page) => void }) {
   return (
@@ -123,10 +154,10 @@ function ProvidersPage() {
     <main className="page-workspace">
       <div className="page-heading"><div><p className="eyebrow">Connections</p><h2>Providers</h2><p>Bring your own keys. Session credentials are never written to disk.</p></div><Badge>7 adapters</Badge></div>
       <div className="provider-grid">
-        {providers.map((provider, index) => (
-          <Card key={provider}>
-            <CardHeader><div className="provider-title"><div className="provider-icon">{provider[0]}</div><div><CardTitle>{provider}</CardTitle><CardDescription>{index === 0 ? 'Local runtime' : index === 6 ? 'Local gateway' : 'Cloud API'}</CardDescription></div></div></CardHeader>
-            <CardContent><div className="provider-footer"><Badge variant="outline">{index === 0 ? 'Available' : 'Not connected'}</Badge><Button size="sm" variant="outline">Configure</Button></div></CardContent>
+        {providers.map((provider) => (
+          <Card key={provider.name}>
+            <CardHeader><div className="provider-title"><div className="provider-icon">{provider.name[0]}</div><div><CardTitle>{provider.name}</CardTitle><CardDescription>{provider.description}</CardDescription></div></div></CardHeader>
+            <CardContent><div className="provider-footer"><Badge variant="outline">{provider.status}</Badge><Button size="sm" variant="outline">Configure</Button></div></CardContent>
           </Card>
         ))}
       </div>
@@ -134,26 +165,20 @@ function ProvidersPage() {
   )
 }
 
-function GenericPage({ page }: { page: Exclude<Page, 'Chat' | 'Providers'> }) {
-  const copy = {
-    Compare: ['Parallel model runs', 'Send one prompt to two models and compare latency, throughput, and output side by side.'],
-    Assistants: ['Reusable expertise', 'Create focused assistants with a system prompt, preferred model, and generation settings.'],
-    Memory: ['Your context', 'Review, pin, edit, or archive durable facts used to personalize conversations.'],
-    Activity: ['Run activity', 'Inspect sanitized model, token, latency, and error metadata without exposing prompt content.'],
-    Settings: ['Studio settings', 'Manage appearance, generation defaults, local data, imports, and privacy controls.'],
-  }[page]
-  return <main className="page-workspace"><p className="eyebrow">{copy[0]}</p><h2>{page}</h2><p className="page-description">{copy[1]}</p><Card className="empty-card"><CardContent><Sparkles /><h3>{copy[0]}</h3><p>This workspace is connected to the v2 application shell.</p><Button>Get started</Button></CardContent></Card></main>
+function GenericPage({ page }: { page: keyof typeof genericPageCopy }) {
+  const { eyebrow, description } = genericPageCopy[page]
+  return <main className="page-workspace"><p className="eyebrow">{eyebrow}</p><h2>{page}</h2><p className="page-description">{description}</p><Card className="empty-card"><CardContent><Sparkles /><h3>{eyebrow}</h3><p>This workspace is connected to the v2 application shell.</p><Button>Get started</Button></CardContent></Card></main>
+}
+
+function PageContent({ page }: { page: Page }) {
+  if (page === 'Chat') return <><ConversationHistory /><ChatWorkspace /></>
+  if (page === 'Providers') return <ProvidersPage />
+  return <GenericPage page={page} />
 }
 
 function App() {
   const [page, setPage] = useState<Page>('Chat')
-  const content = useMemo(() => {
-    if (page === 'Chat') return <><ConversationHistory /><ChatWorkspace /></>
-    if (page === 'Providers') return <ProvidersPage />
-    return <GenericPage page={page} />
-  }, [page])
-
-  return <TooltipProvider><div className="app-shell"><Navigation onPage={setPage} page={page} />{content}</div></TooltipProvider>
+  return <TooltipProvider><div className="app-shell"><Navigation onPage={setPage} page={page} /><PageContent page={page} /></div></TooltipProvider>
 }
 
 export default App

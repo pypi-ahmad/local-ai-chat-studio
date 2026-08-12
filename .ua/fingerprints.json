@@ -1,0 +1,5938 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "e2008bc4c35733d5e06ecdfe3e5d9dcbc7733adf",
+  "generatedAt": "2026-08-12T08:59:32.320Z",
+  "files": {
+    ".github/ISSUE_TEMPLATE/bug_report.md": {
+      "filePath": ".github/ISSUE_TEMPLATE/bug_report.md",
+      "contentHash": "03a51502b240b54314042180e243336eddc7578064f294bd691e8fc693a932b2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 28,
+      "hasStructuralAnalysis": true
+    },
+    ".github/ISSUE_TEMPLATE/feature_request.md": {
+      "filePath": ".github/ISSUE_TEMPLATE/feature_request.md",
+      "contentHash": "a89cfa5ca03bc5faf53e4a9df63ed935478febc1e40c34e44416e8d74fd6d9dd",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 19,
+      "hasStructuralAnalysis": true
+    },
+    ".github/pull_request_template.md": {
+      "filePath": ".github/pull_request_template.md",
+      "contentHash": "43b8de736fa92080537074ddd8214c6de5c4c2931b9afd29f0c73a7e8aa27145",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 23,
+      "hasStructuralAnalysis": true
+    },
+    ".github/workflows/ci.yml": {
+      "filePath": ".github/workflows/ci.yml",
+      "contentHash": "4e01f61eb39e6b3270964056f5ba7c2339ddc8f94aa510cb5d098f518a3a5fa8",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 36,
+      "hasStructuralAnalysis": true
+    },
+    ".python-version": {
+      "filePath": ".python-version",
+      "contentHash": "8dfda54ba2f66ab3a8ebab460f4338bbeea1fb1e0f85ce06fe3530aa3c64679b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": false
+    },
+    ".streamlit/config.toml": {
+      "filePath": ".streamlit/config.toml",
+      "contentHash": "dc984d745e0f21386140dbd6d9fecf3f1934d6e3de0f510c7b6e38f1c2420971",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 17,
+      "hasStructuralAnalysis": true
+    },
+    ".ua/.understandignore": {
+      "filePath": ".ua/.understandignore",
+      "contentHash": "75d67733fedb524375c99ec057cd13d3c43d281650d148e8d65cbf0e75b92ff1",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 110,
+      "hasStructuralAnalysis": false
+    },
+    ".ua/config.json": {
+      "filePath": ".ua/config.json",
+      "contentHash": "08d37f20ea0af2233ae24f094723759f952381ecb6dd7f2aaa05ef96e95eae6b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 4,
+      "hasStructuralAnalysis": true
+    },
+    "CHANGELOG.md": {
+      "filePath": "CHANGELOG.md",
+      "contentHash": "1a60cdac261dc13ae873fbc157bd68cc1db5750b83e3dab95b8aff298cb2710f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 39,
+      "hasStructuralAnalysis": true
+    },
+    "CODE_OF_CONDUCT.md": {
+      "filePath": "CODE_OF_CONDUCT.md",
+      "contentHash": "2621742e483548c091180fda1a7f0ce32a05c2aab47f0e1add975ba52d256436",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 22,
+      "hasStructuralAnalysis": true
+    },
+    "CODE_TUTORIAL.md": {
+      "filePath": "CODE_TUTORIAL.md",
+      "contentHash": "bcce55f468f907da40abc78ab97515d18eee3b5903dfb3d09cb633745bca9692",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 902,
+      "hasStructuralAnalysis": true
+    },
+    "CONTRIBUTING.md": {
+      "filePath": "CONTRIBUTING.md",
+      "contentHash": "ecab84306306ac679cf9c5b2ff90f6cd965eafbc30a24938e03dd5224fde04f8",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 81,
+      "hasStructuralAnalysis": true
+    },
+    "DATASET.md": {
+      "filePath": "DATASET.md",
+      "contentHash": "88a2fc67fe8d84e5c2aec57553d4853759e2a2233361f05931c8a352a6748c9e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 4,
+      "hasStructuralAnalysis": true
+    },
+    "README.md": {
+      "filePath": "README.md",
+      "contentHash": "05782004a8e472c3f53252394ef16db955da8c54fd7f73f53e17b4ef0413563e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 288,
+      "hasStructuralAnalysis": true
+    },
+    "SECURITY.md": {
+      "filePath": "SECURITY.md",
+      "contentHash": "ebe6199abe675f54635a8b39a8419758df977cf9be7ff5f418586dc150b4c2bd",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 36,
+      "hasStructuralAnalysis": true
+    },
+    "USER_GUIDE.md": {
+      "filePath": "USER_GUIDE.md",
+      "contentHash": "ab9809f16686a53e7e7d35a6a751b285af163562774ab171172ea33d28e23fe3",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 357,
+      "hasStructuralAnalysis": true
+    },
+    "ZERO_TO_HERO_STUDY_HANDBOOK.md": {
+      "filePath": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "contentHash": "1137207dedaf2183fd24acd26c30c2c1d25ec2a0b5f40ad21b0cdd96e7e62932",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 565,
+      "hasStructuralAnalysis": true
+    },
+    "app.py": {
+      "filePath": "app.py",
+      "contentHash": "ac5ed2c70d95b802bcf70573572edd2d41f04b328e0b8164e61b50585e29a6de",
+      "functions": [
+        {
+          "name": "cached_models",
+          "params": [],
+          "returnType": "list[ModelInfo]",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "cached_provider_models",
+          "params": [
+            "provider"
+          ],
+          "returnType": "list[providers.ApiModel]",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "get_state",
+          "params": [
+            "key",
+            "default"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "switch_conversation",
+          "params": [
+            "conv_id",
+            "catalog"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "_maybe_extract_memories",
+          "params": [
+            "conv_id",
+            "force"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "_feedback_widget",
+          "params": [
+            "message_id",
+            "current"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "start_generation",
+          "params": [
+            "conv_id",
+            "user_text",
+            "raw_files",
+            "history",
+            "is_first_turn"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "send_user_message",
+          "params": [
+            "user_text",
+            "raw_files"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 21
+        },
+        {
+          "name": "regenerate_last",
+          "params": [
+            "history_msgs"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "seed_builtin_presets",
+          "params": [
+            "catalog"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "apply_preset",
+          "params": [
+            "name",
+            "catalog"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "date_bucket",
+          "params": [
+            "iso_ts"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "render_live_generation",
+          "params": [
+            "conv_id"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 28
+        },
+        {
+          "name": "render_health",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "time",
+          "specifiers": [
+            "time"
+          ]
+        },
+        {
+          "source": "datetime",
+          "specifiers": [
+            "datetime",
+            "timedelta",
+            "timezone"
+          ]
+        },
+        {
+          "source": "streamlit",
+          "specifiers": [
+            "st"
+          ]
+        },
+        {
+          "source": "loguru",
+          "specifiers": [
+            "logger"
+          ]
+        },
+        {
+          "source": "src",
+          "specifiers": [
+            "chat_store",
+            "jobs",
+            "memory",
+            "providers",
+            "rag"
+          ]
+        },
+        {
+          "source": "src.catalog",
+          "specifiers": [
+            "PROVIDER_BADGES",
+            "best_coding_model",
+            "build_model_catalog",
+            "normalize_model_key",
+            "ordered_keys",
+            "present_groups"
+          ]
+        },
+        {
+          "source": "src.config",
+          "specifiers": [
+            "config"
+          ]
+        },
+        {
+          "source": "src.files",
+          "specifiers": [
+            "ACCEPTED_TYPES",
+            "IMAGE_TYPES"
+          ]
+        },
+        {
+          "source": "src.ollama_client",
+          "specifiers": [
+            "ModelInfo",
+            "embedding_model",
+            "list_models",
+            "ollama_alive",
+            "running_models",
+            "smallest_text_model",
+            "vision_fallback_model"
+          ]
+        },
+        {
+          "source": "src.personalization",
+          "specifiers": [
+            "note_conversation_done",
+            "rebuild_profile"
+          ]
+        }
+      ],
+      "exports": [
+        "cached_models",
+        "cached_provider_models",
+        "get_state",
+        "switch_conversation",
+        "_maybe_extract_memories",
+        "_feedback_widget",
+        "start_generation",
+        "send_user_message",
+        "regenerate_last",
+        "seed_builtin_presets",
+        "apply_preset",
+        "date_bucket",
+        "render_live_generation",
+        "render_health"
+      ],
+      "totalLines": 578,
+      "hasStructuralAnalysis": true
+    },
+    "backend/__init__.py": {
+      "filePath": "backend/__init__.py",
+      "contentHash": "92f2b7b048ba38d18cd08507d2d24a911dea25a74c5c13c52c5061f585898da3",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": true
+    },
+    "backend/app/__init__.py": {
+      "filePath": "backend/app/__init__.py",
+      "contentHash": "45390889d8a4a81a685fa8f8fb38422e5f6ff8840d7df1405f088ab5347ae8e2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": true
+    },
+    "backend/app/cli.py": {
+      "filePath": "backend/app/cli.py",
+      "contentHash": "adf822ab1c21d1f18e163314268d227ca24c1a0e72874e401464623140612584",
+      "functions": [
+        {
+          "name": "main",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "uvicorn",
+          "specifiers": [
+            "uvicorn"
+          ]
+        },
+        {
+          "source": "backend.app.main",
+          "specifiers": [
+            "create_app"
+          ]
+        }
+      ],
+      "exports": [
+        "main"
+      ],
+      "totalLines": 16,
+      "hasStructuralAnalysis": true
+    },
+    "backend/app/contracts.py": {
+      "filePath": "backend/app/contracts.py",
+      "contentHash": "f19687de89b07391719c1fe09a8984366446fe33d0491de2bbdb796e01706a9a",
+      "functions": [
+        {
+          "name": "utc_now",
+          "params": [],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 2
+        }
+      ],
+      "classes": [
+        {
+          "name": "MessageCreate",
+          "methods": [],
+          "properties": [
+            "role",
+            "content"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "Message",
+          "methods": [],
+          "properties": [
+            "id",
+            "position",
+            "created_at"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "ConversationCreate",
+          "methods": [],
+          "properties": [
+            "title"
+          ],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "Conversation",
+          "methods": [],
+          "properties": [
+            "id",
+            "title",
+            "created_at",
+            "updated_at",
+            "messages"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "CredentialInput",
+          "methods": [
+            "_not_blank"
+          ],
+          "properties": [
+            "api_key"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "OAuthCodeInput",
+          "methods": [],
+          "properties": [
+            "code"
+          ],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "ChatMessage",
+          "methods": [],
+          "properties": [
+            "role",
+            "content"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "ModelDescriptor",
+          "methods": [],
+          "properties": [
+            "provider",
+            "id",
+            "label",
+            "context_length",
+            "capabilities"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "ProviderDiscovery",
+          "methods": [],
+          "properties": [
+            "provider",
+            "models",
+            "error"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "RunCreate",
+          "methods": [],
+          "properties": [
+            "provider",
+            "model",
+            "messages",
+            "temperature",
+            "conversation_id"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "RunStatus",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "RunSnapshot",
+          "methods": [],
+          "properties": [
+            "id",
+            "status",
+            "provider",
+            "model",
+            "output",
+            "error",
+            "created_at",
+            "started_at",
+            "completed_at"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "RunEvent",
+          "methods": [],
+          "properties": [
+            "type",
+            "run_id",
+            "data",
+            "timestamp"
+          ],
+          "exported": true,
+          "lineCount": 5
+        }
+      ],
+      "imports": [
+        {
+          "source": "datetime",
+          "specifiers": [
+            "UTC",
+            "datetime"
+          ]
+        },
+        {
+          "source": "enum",
+          "specifiers": [
+            "StrEnum"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "Any",
+            "Literal"
+          ]
+        },
+        {
+          "source": "pydantic",
+          "specifiers": [
+            "BaseModel",
+            "Field",
+            "field_validator"
+          ]
+        }
+      ],
+      "exports": [
+        "utc_now",
+        "MessageCreate",
+        "Message",
+        "ConversationCreate",
+        "Conversation",
+        "CredentialInput",
+        "OAuthCodeInput",
+        "ChatMessage",
+        "ModelDescriptor",
+        "ProviderDiscovery",
+        "RunCreate",
+        "RunStatus",
+        "RunSnapshot",
+        "RunEvent"
+      ],
+      "totalLines": 105,
+      "hasStructuralAnalysis": true
+    },
+    "backend/app/main.py": {
+      "filePath": "backend/app/main.py",
+      "contentHash": "83420c3119b81157746895925f8273bdcd32c741afef85cf010c49247b691406",
+      "functions": [
+        {
+          "name": "create_app",
+          "params": [
+            "database_url",
+            "provider_registry"
+          ],
+          "returnType": "FastAPI",
+          "exported": true,
+          "lineCount": 197
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        },
+        {
+          "source": "time",
+          "specifiers": [
+            "time"
+          ]
+        },
+        {
+          "source": "base64",
+          "specifiers": [
+            "base64"
+          ]
+        },
+        {
+          "source": "hashlib",
+          "specifiers": [
+            "hashlib"
+          ]
+        },
+        {
+          "source": "secrets",
+          "specifiers": [
+            "secrets"
+          ]
+        },
+        {
+          "source": "collections.abc",
+          "specifiers": [
+            "AsyncIterator"
+          ]
+        },
+        {
+          "source": "contextlib",
+          "specifiers": [
+            "asynccontextmanager"
+          ]
+        },
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "urllib.parse",
+          "specifiers": [
+            "urlencode"
+          ]
+        },
+        {
+          "source": "httpx",
+          "specifiers": [
+            "httpx"
+          ]
+        },
+        {
+          "source": "fastapi",
+          "specifiers": [
+            "FastAPI",
+            "HTTPException",
+            "Request",
+            "Response",
+            "status"
+          ]
+        },
+        {
+          "source": "fastapi.responses",
+          "specifiers": [
+            "RedirectResponse",
+            "StreamingResponse"
+          ]
+        },
+        {
+          "source": "fastapi.staticfiles",
+          "specifiers": [
+            "StaticFiles"
+          ]
+        },
+        {
+          "source": "backend.app.contracts",
+          "specifiers": [
+            "Conversation",
+            "ConversationCreate",
+            "CredentialInput",
+            "Message",
+            "MessageCreate",
+            "OAuthCodeInput",
+            "RunCreate",
+            "RunSnapshot"
+          ]
+        },
+        {
+          "source": "backend.app.runs",
+          "specifiers": [
+            "RunManager"
+          ]
+        },
+        {
+          "source": "backend.app.providers",
+          "specifiers": [
+            "ProviderRegistry",
+            "build_provider_registry"
+          ]
+        },
+        {
+          "source": "backend.app.sessions",
+          "specifiers": [
+            "PROVIDER_ENV",
+            "SessionVault"
+          ]
+        },
+        {
+          "source": "backend.app.store",
+          "specifiers": [
+            "Store"
+          ]
+        }
+      ],
+      "exports": [
+        "create_app"
+      ],
+      "totalLines": 233,
+      "hasStructuralAnalysis": true
+    },
+    "backend/app/providers.py": {
+      "filePath": "backend/app/providers.py",
+      "contentHash": "bd804f457d95b8d1cccec992f22c8d6c39c7dad6689d6d56c66c90c1d1615106",
+      "functions": [
+        {
+          "name": "build_provider_registry",
+          "params": [],
+          "returnType": "dict[str, ProviderAdapter]",
+          "exported": true,
+          "lineCount": 16
+        }
+      ],
+      "classes": [
+        {
+          "name": "ProviderAdapter",
+          "methods": [
+            "list_models",
+            "stream"
+          ],
+          "properties": [
+            "id",
+            "label"
+          ],
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "OpenAICompatibleAdapter",
+          "methods": [
+            "__init__",
+            "_client",
+            "list_models",
+            "stream"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 35
+        },
+        {
+          "name": "OllamaAdapter",
+          "methods": [
+            "_client",
+            "list_models",
+            "stream"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 41
+        },
+        {
+          "name": "AnthropicAdapter",
+          "methods": [
+            "list_models",
+            "stream"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 31
+        },
+        {
+          "name": "GeminiAdapter",
+          "methods": [
+            "_client",
+            "list_models",
+            "stream"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 36
+        },
+        {
+          "name": "ProviderRegistry",
+          "methods": [
+            "__init__",
+            "__getitem__",
+            "discover_models"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 22
+        }
+      ],
+      "imports": [
+        {
+          "source": "asyncio",
+          "specifiers": [
+            "asyncio"
+          ]
+        },
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        },
+        {
+          "source": "abc",
+          "specifiers": [
+            "ABC",
+            "abstractmethod"
+          ]
+        },
+        {
+          "source": "collections.abc",
+          "specifiers": [
+            "AsyncIterator",
+            "Callable"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "Any"
+          ]
+        },
+        {
+          "source": "backend.app.contracts",
+          "specifiers": [
+            "ChatMessage",
+            "ModelDescriptor",
+            "ProviderDiscovery"
+          ]
+        }
+      ],
+      "exports": [
+        "ProviderAdapter",
+        "OpenAICompatibleAdapter",
+        "OllamaAdapter",
+        "AnthropicAdapter",
+        "GeminiAdapter",
+        "ProviderRegistry",
+        "build_provider_registry"
+      ],
+      "totalLines": 222,
+      "hasStructuralAnalysis": true
+    },
+    "backend/app/runs.py": {
+      "filePath": "backend/app/runs.py",
+      "contentHash": "66ae3279a7dd2f789f5a2a226716fe47b2e05f8e2e84ea1e0db2531b28b50277",
+      "functions": [],
+      "classes": [
+        {
+          "name": "RunState",
+          "methods": [],
+          "properties": [
+            "snapshot",
+            "events",
+            "changed",
+            "cancel"
+          ],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "RunManager",
+          "methods": [
+            "__init__",
+            "create",
+            "get",
+            "cancel",
+            "events",
+            "_execute",
+            "_echo",
+            "_emit",
+            "_state"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 121
+        }
+      ],
+      "imports": [
+        {
+          "source": "asyncio",
+          "specifiers": [
+            "asyncio"
+          ]
+        },
+        {
+          "source": "threading",
+          "specifiers": [
+            "threading"
+          ]
+        },
+        {
+          "source": "uuid",
+          "specifiers": [
+            "uuid"
+          ]
+        },
+        {
+          "source": "collections.abc",
+          "specifiers": [
+            "AsyncIterator"
+          ]
+        },
+        {
+          "source": "dataclasses",
+          "specifiers": [
+            "dataclass",
+            "field"
+          ]
+        },
+        {
+          "source": "backend.app.contracts",
+          "specifiers": [
+            "RunCreate",
+            "RunEvent",
+            "RunSnapshot",
+            "RunStatus",
+            "utc_now"
+          ]
+        },
+        {
+          "source": "backend.app.providers",
+          "specifiers": [
+            "ProviderRegistry"
+          ]
+        },
+        {
+          "source": "backend.app.sessions",
+          "specifiers": [
+            "SessionVault"
+          ]
+        },
+        {
+          "source": "backend.app.store",
+          "specifiers": [
+            "Store"
+          ]
+        }
+      ],
+      "exports": [
+        "RunState",
+        "RunManager"
+      ],
+      "totalLines": 144,
+      "hasStructuralAnalysis": true
+    },
+    "backend/app/sessions.py": {
+      "filePath": "backend/app/sessions.py",
+      "contentHash": "e20eaf12d2031f6ecb55aeee90adef9a8959fcbd97f1cc07bf94904a76c3bbc0",
+      "functions": [],
+      "classes": [
+        {
+          "name": "SessionVault",
+          "methods": [
+            "__init__",
+            "new_id",
+            "set",
+            "remove",
+            "get",
+            "source"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 27
+        }
+      ],
+      "imports": [
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        },
+        {
+          "source": "threading",
+          "specifiers": [
+            "threading"
+          ]
+        },
+        {
+          "source": "uuid",
+          "specifiers": [
+            "uuid"
+          ]
+        }
+      ],
+      "exports": [
+        "SessionVault"
+      ],
+      "totalLines": 46,
+      "hasStructuralAnalysis": true
+    },
+    "backend/app/store.py": {
+      "filePath": "backend/app/store.py",
+      "contentHash": "545fb9982def71b70d4933e5bcace48013ae9538d774340c8ae7a5358a83d765",
+      "functions": [],
+      "classes": [
+        {
+          "name": "Store",
+          "methods": [
+            "__init__",
+            "create_conversation",
+            "list_conversations",
+            "get_conversation",
+            "add_message",
+            "_conversation"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 63
+        }
+      ],
+      "imports": [
+        {
+          "source": "sqlite3",
+          "specifiers": [
+            "sqlite3"
+          ]
+        },
+        {
+          "source": "threading",
+          "specifiers": [
+            "threading"
+          ]
+        },
+        {
+          "source": "uuid",
+          "specifiers": [
+            "uuid"
+          ]
+        },
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "backend.app.contracts",
+          "specifiers": [
+            "Conversation",
+            "Message",
+            "utc_now"
+          ]
+        }
+      ],
+      "exports": [
+        "Store"
+      ],
+      "totalLines": 106,
+      "hasStructuralAnalysis": true
+    },
+    "docs/site/index.html": {
+      "filePath": "docs/site/index.html",
+      "contentHash": "2997106dffd7260e5bd5dbc5ca8ec77db6f894c6e31e4e90bf6fb999c5be5ef2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 149,
+      "hasStructuralAnalysis": false
+    },
+    "docs/tutorial/index.html": {
+      "filePath": "docs/tutorial/index.html",
+      "contentHash": "d52cca276b16ae19587a0d716e3b1e4724ba087dec09d7b79b2a7c61242a8730",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 132,
+      "hasStructuralAnalysis": false
+    },
+    "docs/tutorial/tutorial.css": {
+      "filePath": "docs/tutorial/tutorial.css",
+      "contentHash": "873eaa9cd2ca932c521870cd12b6c2bfb31e3c76c77b59c1c69f10e3825280d6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": false
+    },
+    "docs/tutorial/tutorial.js": {
+      "filePath": "docs/tutorial/tutorial.js",
+      "contentHash": "6a781ea82b6e1357c25b1e1ee8788d625a14e2d6b0ce600082afe0795c87f250",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/.oxlintrc.json": {
+      "filePath": "frontend/.oxlintrc.json",
+      "contentHash": "b4d344818a1e1bf43997e4744a9153c8eef770c98b58229cd86363dabb85ded4",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 9,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/README.md": {
+      "filePath": "frontend/README.md",
+      "contentHash": "fa8aac78b8be1993010b57f41000a243ecba006f6731513fe4ec91e788bf2517",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 33,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/components.json": {
+      "filePath": "frontend/components.json",
+      "contentHash": "156858e2da20785ac0f1853580c7e34d5b8496f519e8839d2176e85947d4f779",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 26,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/index.html": {
+      "filePath": "frontend/index.html",
+      "contentHash": "ec9e6649fb1dd572ed071dc8f0a557d538725ebb213a1f7424e822e937d59fc0",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 14,
+      "hasStructuralAnalysis": false
+    },
+    "frontend/package.json": {
+      "filePath": "frontend/package.json",
+      "contentHash": "6a56efb011e0a76a2443e61741542753be9702685a9d16fb36c7119678d0e2c0",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 43,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/App.css": {
+      "filePath": "frontend/src/App.css",
+      "contentHash": "5edbb9b6196ed339af90f824d334576e1e6524967c3c3f784fcd58806495f22b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 25,
+      "hasStructuralAnalysis": false
+    },
+    "frontend/src/App.test.tsx": {
+      "filePath": "frontend/src/App.test.tsx",
+      "contentHash": "bac3d6cc4ec45561d670769e254ed49592274b7c15e6195f2bbf259419097891",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@testing-library/react",
+          "specifiers": [
+            "fireEvent",
+            "render",
+            "screen"
+          ]
+        },
+        {
+          "source": "vitest",
+          "specifiers": [
+            "describe",
+            "expect",
+            "it"
+          ]
+        },
+        {
+          "source": "./App",
+          "specifiers": [
+            "App"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 39,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/App.tsx": {
+      "filePath": "frontend/src/App.tsx",
+      "contentHash": "32de857e4026e9e413ac10598797c1c69fd5363d7553d05507f7d5907e3bb189",
+      "functions": [
+        {
+          "name": "Navigation",
+          "params": [
+            "{ page, onPage }"
+          ],
+          "exported": false,
+          "lineCount": 23
+        },
+        {
+          "name": "ConversationHistory",
+          "params": [],
+          "exported": false,
+          "lineCount": 21
+        },
+        {
+          "name": "ChatWorkspace",
+          "params": [],
+          "exported": false,
+          "lineCount": 32
+        },
+        {
+          "name": "ProvidersPage",
+          "params": [],
+          "exported": false,
+          "lineCount": 15
+        },
+        {
+          "name": "GenericPage",
+          "params": [
+            "{ page }"
+          ],
+          "exported": false,
+          "lineCount": 10
+        },
+        {
+          "name": "App",
+          "params": [],
+          "exported": false,
+          "lineCount": 10
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useMemo",
+            "useState"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "specifiers": [
+            "Activity",
+            "Bot",
+            "Brain",
+            "ChevronDown",
+            "CirclePlus",
+            "Command",
+            "GitCompareArrows",
+            "MessageSquare",
+            "Paperclip",
+            "PlugZap",
+            "Search",
+            "Send",
+            "Settings",
+            "Sparkles"
+          ]
+        },
+        {
+          "source": "@/components/ui/badge",
+          "specifiers": [
+            "Badge"
+          ]
+        },
+        {
+          "source": "@/components/ui/button",
+          "specifiers": [
+            "Button"
+          ]
+        },
+        {
+          "source": "@/components/ui/card",
+          "specifiers": [
+            "Card",
+            "CardContent",
+            "CardDescription",
+            "CardHeader",
+            "CardTitle"
+          ]
+        },
+        {
+          "source": "@/components/ui/input",
+          "specifiers": [
+            "Input"
+          ]
+        },
+        {
+          "source": "@/components/ui/scroll-area",
+          "specifiers": [
+            "ScrollArea"
+          ]
+        },
+        {
+          "source": "@/components/ui/separator",
+          "specifiers": [
+            "Separator"
+          ]
+        },
+        {
+          "source": "@/components/ui/textarea",
+          "specifiers": [
+            "Textarea"
+          ]
+        },
+        {
+          "source": "@/components/ui/tooltip",
+          "specifiers": [
+            "TooltipProvider"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 160,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/ErrorBoundary.tsx": {
+      "filePath": "frontend/src/ErrorBoundary.tsx",
+      "contentHash": "748f0a58f8ea5623d77a8cbfba5a2dc31f15e8cbe0107455b20f405fe20305a2",
+      "functions": [],
+      "classes": [
+        {
+          "name": "ErrorBoundary",
+          "methods": [
+            "getDerivedStateFromError",
+            "componentDidCatch",
+            "render"
+          ],
+          "properties": [
+            "state"
+          ],
+          "exported": true,
+          "lineCount": 23
+        }
+      ],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "Component",
+            "ErrorInfo",
+            "ReactNode"
+          ]
+        }
+      ],
+      "exports": [
+        "ErrorBoundary"
+      ],
+      "totalLines": 34,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/api/client.ts": {
+      "filePath": "frontend/src/api/client.ts",
+      "contentHash": "6ba8c8d1b8d2ce03d2cbbf1bb4026d68a832dcc4c477a0cf64509eefd2ce453c",
+      "functions": [
+        {
+          "name": "request",
+          "params": [
+            "path",
+            "init"
+          ],
+          "returnType": "Promise<T>",
+          "exported": false,
+          "lineCount": 9
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "./schema",
+          "specifiers": [
+            "components"
+          ]
+        }
+      ],
+      "exports": [
+        "api"
+      ],
+      "totalLines": 22,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/api/schema.ts": {
+      "filePath": "frontend/src/api/schema.ts",
+      "contentHash": "fa04409867dc866bccf1aa9b7c0df28865f71a5e588e10f7a4fe07e59d83722e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 834,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/avatar.tsx": {
+      "filePath": "frontend/src/components/ui/avatar.tsx",
+      "contentHash": "357b2f9aac0192c071cb2ed65cb6e4c8ec01fa02fc15cf50d889b85731b75666",
+      "functions": [
+        {
+          "name": "Avatar",
+          "params": [
+            "{\n  className,\n  size = \"default\",\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 19
+        },
+        {
+          "name": "AvatarImage",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "AvatarFallback",
+          "params": [
+            "{\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "AvatarBadge",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "AvatarGroup",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "AvatarGroupCount",
+          "params": [
+            "{\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 15
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "* as React"
+          ]
+        },
+        {
+          "source": "@base-ui/react/avatar",
+          "specifiers": [
+            "AvatarPrimitive"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        }
+      ],
+      "exports": [
+        "Avatar",
+        "AvatarImage",
+        "AvatarFallback",
+        "AvatarGroup",
+        "AvatarGroupCount",
+        "AvatarBadge"
+      ],
+      "totalLines": 110,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/badge.tsx": {
+      "filePath": "frontend/src/components/ui/badge.tsx",
+      "contentHash": "968b0403af74a785c9408ca69a677235e49d0c80b2c27fb9858ad421a8778c7d",
+      "functions": [
+        {
+          "name": "Badge",
+          "params": [
+            "{\n  className,\n  variant = \"default\",\n  render,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 21
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@base-ui/react/merge-props",
+          "specifiers": [
+            "mergeProps"
+          ]
+        },
+        {
+          "source": "@base-ui/react/use-render",
+          "specifiers": [
+            "useRender"
+          ]
+        },
+        {
+          "source": "class-variance-authority",
+          "specifiers": [
+            "cva",
+            "VariantProps"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        }
+      ],
+      "exports": [
+        "Badge",
+        "badgeVariants"
+      ],
+      "totalLines": 53,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/button.tsx": {
+      "filePath": "frontend/src/components/ui/button.tsx",
+      "contentHash": "d14549ab3ba7a9d5d1f424c2599233bffa0b317121abf3b6efa2fb902d5e2781",
+      "functions": [
+        {
+          "name": "Button",
+          "params": [
+            "{\n  className,\n  variant = \"default\",\n  size = \"default\",\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 14
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@base-ui/react/button",
+          "specifiers": [
+            "ButtonPrimitive"
+          ]
+        },
+        {
+          "source": "class-variance-authority",
+          "specifiers": [
+            "cva",
+            "VariantProps"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        }
+      ],
+      "exports": [
+        "Button",
+        "buttonVariants"
+      ],
+      "totalLines": 59,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/card.tsx": {
+      "filePath": "frontend/src/components/ui/card.tsx",
+      "contentHash": "55e5845f6f31bcb05e539336a48ced65fce64e02af796e6da40f4aee7bc78e91",
+      "functions": [
+        {
+          "name": "Card",
+          "params": [
+            "{\n  className,\n  size = \"default\",\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "CardHeader",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "CardTitle",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "CardDescription",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "CardAction",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "CardContent",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "CardFooter",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "* as React"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        }
+      ],
+      "exports": [
+        "Card",
+        "CardHeader",
+        "CardFooter",
+        "CardTitle",
+        "CardAction",
+        "CardDescription",
+        "CardContent"
+      ],
+      "totalLines": 104,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/dialog.tsx": {
+      "filePath": "frontend/src/components/ui/dialog.tsx",
+      "contentHash": "ce1e7ea005a38aed0899017ba6486c75bf0af494c42f73ad8ba89cc274161127",
+      "functions": [
+        {
+          "name": "Dialog",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "DialogTrigger",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "DialogPortal",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "DialogClose",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "DialogOverlay",
+          "params": [
+            "{\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "DialogContent",
+          "params": [
+            "{\n  className,\n  children,\n  showCloseButton = true,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 40
+        },
+        {
+          "name": "DialogHeader",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "DialogFooter",
+          "params": [
+            "{\n  className,\n  showCloseButton = false,\n  children,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 26
+        },
+        {
+          "name": "DialogTitle",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "DialogDescription",
+          "params": [
+            "{\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 15
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "* as React"
+          ]
+        },
+        {
+          "source": "@base-ui/react/dialog",
+          "specifiers": [
+            "DialogPrimitive"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        },
+        {
+          "source": "@/components/ui/button",
+          "specifiers": [
+            "Button"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "specifiers": [
+            "XIcon"
+          ]
+        }
+      ],
+      "exports": [
+        "Dialog",
+        "DialogClose",
+        "DialogContent",
+        "DialogDescription",
+        "DialogFooter",
+        "DialogHeader",
+        "DialogOverlay",
+        "DialogPortal",
+        "DialogTitle",
+        "DialogTrigger"
+      ],
+      "totalLines": 159,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/dropdown-menu.tsx": {
+      "filePath": "frontend/src/components/ui/dropdown-menu.tsx",
+      "contentHash": "c143e8692f7b899d55c889d2978e3f1d0aef1bf5a83dffe1590a0640aba60044",
+      "functions": [
+        {
+          "name": "DropdownMenu",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "DropdownMenuPortal",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "DropdownMenuTrigger",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "DropdownMenuContent",
+          "params": [
+            "{\n  align = \"start\",\n  alignOffset = 0,\n  side = \"bottom\",\n  sideOffset = 4,\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 30
+        },
+        {
+          "name": "DropdownMenuGroup",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "DropdownMenuLabel",
+          "params": [
+            "{\n  className,\n  inset,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 19
+        },
+        {
+          "name": "DropdownMenuItem",
+          "params": [
+            "{\n  className,\n  inset,\n  variant = \"default\",\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "DropdownMenuSub",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "DropdownMenuSubTrigger",
+          "params": [
+            "{\n  className,\n  inset,\n  children,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "DropdownMenuSubContent",
+          "params": [
+            "{\n  align = \"start\",\n  alignOffset = -3,\n  side = \"right\",\n  sideOffset = 0,\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 20
+        },
+        {
+          "name": "DropdownMenuCheckboxItem",
+          "params": [
+            "{\n  className,\n  children,\n  checked,\n  inset,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 33
+        },
+        {
+          "name": "DropdownMenuRadioGroup",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "DropdownMenuRadioItem",
+          "params": [
+            "{\n  className,\n  children,\n  inset,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 31
+        },
+        {
+          "name": "DropdownMenuSeparator",
+          "params": [
+            "{\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "DropdownMenuShortcut",
+          "params": [
+            "{\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 15
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "* as React"
+          ]
+        },
+        {
+          "source": "@base-ui/react/menu",
+          "specifiers": [
+            "MenuPrimitive"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "specifiers": [
+            "ChevronRightIcon",
+            "CheckIcon"
+          ]
+        }
+      ],
+      "exports": [
+        "DropdownMenu",
+        "DropdownMenuPortal",
+        "DropdownMenuTrigger",
+        "DropdownMenuContent",
+        "DropdownMenuGroup",
+        "DropdownMenuLabel",
+        "DropdownMenuItem",
+        "DropdownMenuCheckboxItem",
+        "DropdownMenuRadioGroup",
+        "DropdownMenuRadioItem",
+        "DropdownMenuSeparator",
+        "DropdownMenuShortcut",
+        "DropdownMenuSub",
+        "DropdownMenuSubTrigger",
+        "DropdownMenuSubContent"
+      ],
+      "totalLines": 267,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/field.tsx": {
+      "filePath": "frontend/src/components/ui/field.tsx",
+      "contentHash": "8c22c6645b6d894b020c9d6dd93131f4f5f5b14b922b86e24337eafa26cdfe22",
+      "functions": [
+        {
+          "name": "FieldSet",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "FieldLegend",
+          "params": [
+            "{\n  className,\n  variant = \"legend\",\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "FieldGroup",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "Field",
+          "params": [
+            "{\n  className,\n  orientation = \"vertical\",\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "FieldContent",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "FieldLabel",
+          "params": [
+            "{\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "FieldTitle",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "FieldDescription",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "FieldSeparator",
+          "params": [
+            "{\n  children,\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 29
+        },
+        {
+          "name": "FieldError",
+          "params": [
+            "{\n  className,\n  children,\n  errors,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 50
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useMemo"
+          ]
+        },
+        {
+          "source": "class-variance-authority",
+          "specifiers": [
+            "cva",
+            "VariantProps"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        },
+        {
+          "source": "@/components/ui/label",
+          "specifiers": [
+            "Label"
+          ]
+        },
+        {
+          "source": "@/components/ui/separator",
+          "specifiers": [
+            "Separator"
+          ]
+        }
+      ],
+      "exports": [
+        "Field",
+        "FieldLabel",
+        "FieldDescription",
+        "FieldError",
+        "FieldGroup",
+        "FieldLegend",
+        "FieldSeparator",
+        "FieldSet",
+        "FieldContent",
+        "FieldTitle"
+      ],
+      "totalLines": 237,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/input.tsx": {
+      "filePath": "frontend/src/components/ui/input.tsx",
+      "contentHash": "f7d6ecff9a4d631feeaf401c02bb87e26ddb38131c55d15a43b9290747390847",
+      "functions": [
+        {
+          "name": "Input",
+          "params": [
+            "{ className, type, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "* as React"
+          ]
+        },
+        {
+          "source": "@base-ui/react/input",
+          "specifiers": [
+            "InputPrimitive"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        }
+      ],
+      "exports": [
+        "Input"
+      ],
+      "totalLines": 21,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/label.tsx": {
+      "filePath": "frontend/src/components/ui/label.tsx",
+      "contentHash": "7f19b8476658d25ff197c84030e58cd7395059d876a54630e025951e474ebdae",
+      "functions": [
+        {
+          "name": "Label",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "* as React"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        }
+      ],
+      "exports": [
+        "Label"
+      ],
+      "totalLines": 21,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/scroll-area.tsx": {
+      "filePath": "frontend/src/components/ui/scroll-area.tsx",
+      "contentHash": "6412f9ef47c1c652db43a08994f3171cdbc62ef16d760ce20df8c7c361d063d2",
+      "functions": [
+        {
+          "name": "ScrollArea",
+          "params": [
+            "{\n  className,\n  children,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "ScrollBar",
+          "params": [
+            "{\n  className,\n  orientation = \"vertical\",\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 23
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@base-ui/react/scroll-area",
+          "specifiers": [
+            "ScrollAreaPrimitive"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        }
+      ],
+      "exports": [
+        "ScrollArea",
+        "ScrollBar"
+      ],
+      "totalLines": 53,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/select.tsx": {
+      "filePath": "frontend/src/components/ui/select.tsx",
+      "contentHash": "ca3bd1b370ea67b84632d435c22d8270752fa6013c06c365162af265e4a0e87e",
+      "functions": [
+        {
+          "name": "SelectGroup",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "SelectValue",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "SelectTrigger",
+          "params": [
+            "{\n  className,\n  size = \"default\",\n  children,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 27
+        },
+        {
+          "name": "SelectContent",
+          "params": [
+            "{\n  className,\n  children,\n  side = \"bottom\",\n  sideOffset = 4,\n  align = \"center\",\n  alignOffset = 0,\n  alignItemWithTrigger = true,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 38
+        },
+        {
+          "name": "SelectLabel",
+          "params": [
+            "{\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "SelectItem",
+          "params": [
+            "{\n  className,\n  children,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 27
+        },
+        {
+          "name": "SelectSeparator",
+          "params": [
+            "{\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "SelectScrollUpButton",
+          "params": [
+            "{\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "SelectScrollDownButton",
+          "params": [
+            "{\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 18
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "* as React"
+          ]
+        },
+        {
+          "source": "@base-ui/react/select",
+          "specifiers": [
+            "SelectPrimitive"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "specifiers": [
+            "ChevronDownIcon",
+            "CheckIcon",
+            "ChevronUpIcon"
+          ]
+        }
+      ],
+      "exports": [
+        "Select",
+        "SelectContent",
+        "SelectGroup",
+        "SelectItem",
+        "SelectLabel",
+        "SelectScrollDownButton",
+        "SelectScrollUpButton",
+        "SelectSeparator",
+        "SelectTrigger",
+        "SelectValue"
+      ],
+      "totalLines": 202,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/separator.tsx": {
+      "filePath": "frontend/src/components/ui/separator.tsx",
+      "contentHash": "75085bd84ff6965e4a356c53a4689799cabf65caa93c0bba064d5a0c6fa78f13",
+      "functions": [
+        {
+          "name": "Separator",
+          "params": [
+            "{\n  className,\n  orientation = \"horizontal\",\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 17
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@base-ui/react/separator",
+          "specifiers": [
+            "SeparatorPrimitive"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        }
+      ],
+      "exports": [
+        "Separator"
+      ],
+      "totalLines": 26,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/sheet.tsx": {
+      "filePath": "frontend/src/components/ui/sheet.tsx",
+      "contentHash": "346de71c2d7c2a43f857c9abb13fb5e6d4a0a228e87338fce29f6dd42010dd89",
+      "functions": [
+        {
+          "name": "Sheet",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "SheetTrigger",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "SheetClose",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "SheetPortal",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "SheetOverlay",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": false,
+          "lineCount": 12
+        },
+        {
+          "name": "SheetContent",
+          "params": [
+            "{\n  className,\n  children,\n  side = \"right\",\n  showCloseButton = true,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 43
+        },
+        {
+          "name": "SheetHeader",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "SheetFooter",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "SheetTitle",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "SheetDescription",
+          "params": [
+            "{\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "* as React"
+          ]
+        },
+        {
+          "source": "@base-ui/react/dialog",
+          "specifiers": [
+            "SheetPrimitive"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        },
+        {
+          "source": "@/components/ui/button",
+          "specifiers": [
+            "Button"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "specifiers": [
+            "XIcon"
+          ]
+        }
+      ],
+      "exports": [
+        "Sheet",
+        "SheetTrigger",
+        "SheetClose",
+        "SheetContent",
+        "SheetHeader",
+        "SheetFooter",
+        "SheetTitle",
+        "SheetDescription"
+      ],
+      "totalLines": 139,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/sidebar.tsx": {
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "contentHash": "97523c469ce78eab4557018e3f0b4346d836db552786c4716c49bdf2b243f844",
+      "functions": [
+        {
+          "name": "useSidebar",
+          "params": [],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "SidebarProvider",
+          "params": [
+            "{\n  defaultOpen = true,\n  open: openProp,\n  onOpenChange: setOpenProp,\n  className,\n  style,\n  children,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 95
+        },
+        {
+          "name": "Sidebar",
+          "params": [
+            "{\n  side = \"left\",\n  variant = \"sidebar\",\n  collapsible = \"offcanvas\",\n  className,\n  children,\n  dir,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 105
+        },
+        {
+          "name": "SidebarTrigger",
+          "params": [
+            "{\n  className,\n  onClick,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 25
+        },
+        {
+          "name": "SidebarRail",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 24
+        },
+        {
+          "name": "SidebarInset",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "SidebarInput",
+          "params": [
+            "{\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "SidebarHeader",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "SidebarFooter",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "SidebarSeparator",
+          "params": [
+            "{\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "SidebarContent",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "SidebarGroup",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "SidebarGroupLabel",
+          "params": [
+            "{\n  className,\n  render,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "SidebarGroupAction",
+          "params": [
+            "{\n  className,\n  render,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "SidebarGroupContent",
+          "params": [
+            "{\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "SidebarMenu",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "SidebarMenuItem",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "SidebarMenuButton",
+          "params": [
+            "{\n  render,\n  isActive = false,\n  variant = \"default\",\n  size = \"default\",\n  tooltip,\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 53
+        },
+        {
+          "name": "SidebarMenuAction",
+          "params": [
+            "{\n  className,\n  render,\n  showOnHover = false,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 29
+        },
+        {
+          "name": "SidebarMenuBadge",
+          "params": [
+            "{\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "SidebarMenuSkeleton",
+          "params": [
+            "{\n  className,\n  showIcon = false,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 37
+        },
+        {
+          "name": "SidebarMenuSub",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "SidebarMenuSubItem",
+          "params": [
+            "{\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "SidebarMenuSubButton",
+          "params": [
+            "{\n  render,\n  size = \"md\",\n  isActive = false,\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 31
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "* as React"
+          ]
+        },
+        {
+          "source": "@base-ui/react/merge-props",
+          "specifiers": [
+            "mergeProps"
+          ]
+        },
+        {
+          "source": "@base-ui/react/use-render",
+          "specifiers": [
+            "useRender"
+          ]
+        },
+        {
+          "source": "class-variance-authority",
+          "specifiers": [
+            "cva",
+            "VariantProps"
+          ]
+        },
+        {
+          "source": "@/hooks/use-mobile",
+          "specifiers": [
+            "useIsMobile"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        },
+        {
+          "source": "@/components/ui/button",
+          "specifiers": [
+            "Button"
+          ]
+        },
+        {
+          "source": "@/components/ui/input",
+          "specifiers": [
+            "Input"
+          ]
+        },
+        {
+          "source": "@/components/ui/separator",
+          "specifiers": [
+            "Separator"
+          ]
+        },
+        {
+          "source": "@/components/ui/sheet",
+          "specifiers": [
+            "Sheet",
+            "SheetContent",
+            "SheetDescription",
+            "SheetHeader",
+            "SheetTitle"
+          ]
+        },
+        {
+          "source": "@/components/ui/skeleton",
+          "specifiers": [
+            "Skeleton"
+          ]
+        },
+        {
+          "source": "@/components/ui/tooltip",
+          "specifiers": [
+            "Tooltip",
+            "TooltipContent",
+            "TooltipTrigger"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "specifiers": [
+            "PanelLeftIcon"
+          ]
+        }
+      ],
+      "exports": [
+        "Sidebar",
+        "SidebarContent",
+        "SidebarFooter",
+        "SidebarGroup",
+        "SidebarGroupAction",
+        "SidebarGroupContent",
+        "SidebarGroupLabel",
+        "SidebarHeader",
+        "SidebarInput",
+        "SidebarInset",
+        "SidebarMenu",
+        "SidebarMenuAction",
+        "SidebarMenuBadge",
+        "SidebarMenuButton",
+        "SidebarMenuItem",
+        "SidebarMenuSkeleton",
+        "SidebarMenuSub",
+        "SidebarMenuSubButton",
+        "SidebarMenuSubItem",
+        "SidebarProvider",
+        "SidebarRail",
+        "SidebarSeparator",
+        "SidebarTrigger",
+        "useSidebar"
+      ],
+      "totalLines": 728,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/skeleton.tsx": {
+      "filePath": "frontend/src/components/ui/skeleton.tsx",
+      "contentHash": "8110bba70d0cb9fe968c0b7bd092ad12258caef40b028b4a87f402bdab907faf",
+      "functions": [
+        {
+          "name": "Skeleton",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        }
+      ],
+      "exports": [
+        "Skeleton"
+      ],
+      "totalLines": 14,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/switch.tsx": {
+      "filePath": "frontend/src/components/ui/switch.tsx",
+      "contentHash": "5762b1a46dd7739e535bfdefbccc3afe4932023800c74d6160c49fd59f6a1e6b",
+      "functions": [
+        {
+          "name": "Switch",
+          "params": [
+            "{\n  className,\n  size = \"default\",\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 24
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@base-ui/react/switch",
+          "specifiers": [
+            "SwitchPrimitive"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        }
+      ],
+      "exports": [
+        "Switch"
+      ],
+      "totalLines": 31,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/table.tsx": {
+      "filePath": "frontend/src/components/ui/table.tsx",
+      "contentHash": "4e0d5b9f374a6dace8185d510be592c9194b67829d510c466fa8528cc1ee41df",
+      "functions": [
+        {
+          "name": "Table",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "TableHeader",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "TableBody",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "TableFooter",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "TableRow",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "TableHead",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "TableCell",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "TableCaption",
+          "params": [
+            "{\n  className,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "* as React"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        }
+      ],
+      "exports": [
+        "Table",
+        "TableHeader",
+        "TableBody",
+        "TableFooter",
+        "TableHead",
+        "TableRow",
+        "TableCell",
+        "TableCaption"
+      ],
+      "totalLines": 115,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/tabs.tsx": {
+      "filePath": "frontend/src/components/ui/tabs.tsx",
+      "contentHash": "84c1ebcee9c620b4b9543b1fe097307051a68ee7bd2901241a962360337f1191",
+      "functions": [
+        {
+          "name": "Tabs",
+          "params": [
+            "{\n  className,\n  orientation = \"horizontal\",\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "TabsList",
+          "params": [
+            "{\n  className,\n  variant = \"default\",\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "TabsTrigger",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "TabsContent",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@base-ui/react/tabs",
+          "specifiers": [
+            "TabsPrimitive"
+          ]
+        },
+        {
+          "source": "class-variance-authority",
+          "specifiers": [
+            "cva",
+            "VariantProps"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        }
+      ],
+      "exports": [
+        "Tabs",
+        "TabsList",
+        "TabsTrigger",
+        "TabsContent",
+        "tabsListVariants"
+      ],
+      "totalLines": 81,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/textarea.tsx": {
+      "filePath": "frontend/src/components/ui/textarea.tsx",
+      "contentHash": "58b58d84fc54ba5f4ca46937870c619349fd9eccc4d494250ac7bc73a94e05e9",
+      "functions": [
+        {
+          "name": "Textarea",
+          "params": [
+            "{ className, ...props }"
+          ],
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "* as React"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        }
+      ],
+      "exports": [
+        "Textarea"
+      ],
+      "totalLines": 19,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/components/ui/tooltip.tsx": {
+      "filePath": "frontend/src/components/ui/tooltip.tsx",
+      "contentHash": "2cea2294d4947b88d815860f64e0b5e0eb47a59bde47cfd194aac2230c923865",
+      "functions": [
+        {
+          "name": "TooltipProvider",
+          "params": [
+            "{\n  delay = 0,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "Tooltip",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "TooltipTrigger",
+          "params": [
+            "{ ...props }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "TooltipContent",
+          "params": [
+            "{\n  className,\n  side = \"top\",\n  sideOffset = 4,\n  align = \"center\",\n  alignOffset = 0,\n  children,\n  ...props\n}"
+          ],
+          "exported": true,
+          "lineCount": 37
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@base-ui/react/tooltip",
+          "specifiers": [
+            "TooltipPrimitive"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        }
+      ],
+      "exports": [
+        "Tooltip",
+        "TooltipTrigger",
+        "TooltipContent",
+        "TooltipProvider"
+      ],
+      "totalLines": 67,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/hooks/use-mobile.ts": {
+      "filePath": "frontend/src/hooks/use-mobile.ts",
+      "contentHash": "ad0936f84f1df79d3697bfbff9c18f8ad58431c1cbaf2359c6a853b0fcc9f28b",
+      "functions": [
+        {
+          "name": "useIsMobile",
+          "params": [],
+          "exported": true,
+          "lineCount": 15
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "* as React"
+          ]
+        }
+      ],
+      "exports": [
+        "useIsMobile"
+      ],
+      "totalLines": 20,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/index.css": {
+      "filePath": "frontend/src/index.css",
+      "contentHash": "42070e0b45bb201b2b838a52aaaa6e965f964e0b542d97f1fe517fe59c4b75a8",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": false
+    },
+    "frontend/src/lib/utils.ts": {
+      "filePath": "frontend/src/lib/utils.ts",
+      "contentHash": "e46429536f43f5910f5b2b0c50bb2769b510a4558bb4b5d20a3b0a9091dbf7c3",
+      "functions": [
+        {
+          "name": "cn",
+          "params": [
+            "...inputs"
+          ],
+          "exported": true,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "clsx",
+          "specifiers": [
+            "clsx",
+            "ClassValue"
+          ]
+        },
+        {
+          "source": "tailwind-merge",
+          "specifiers": [
+            "twMerge"
+          ]
+        }
+      ],
+      "exports": [
+        "cn"
+      ],
+      "totalLines": 7,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/main.tsx": {
+      "filePath": "frontend/src/main.tsx",
+      "contentHash": "2ce1b3eb7910133db53f28d63e06a01ff1075eda71a00f34348d34089415532d",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "StrictMode"
+          ]
+        },
+        {
+          "source": "react-dom/client",
+          "specifiers": [
+            "createRoot"
+          ]
+        },
+        {
+          "source": "./index.css",
+          "specifiers": []
+        },
+        {
+          "source": "./App.css",
+          "specifiers": []
+        },
+        {
+          "source": "./App.tsx",
+          "specifiers": [
+            "App"
+          ]
+        },
+        {
+          "source": "./ErrorBoundary.tsx",
+          "specifiers": [
+            "ErrorBoundary"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 15,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/test/setup.ts": {
+      "filePath": "frontend/src/test/setup.ts",
+      "contentHash": "e20f6c79ce7842f29f0dd93957e8230a5cbb3b5f6ee691fef96d4f393b964cb3",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@testing-library/jest-dom/vitest",
+          "specifiers": []
+        },
+        {
+          "source": "@testing-library/react",
+          "specifiers": [
+            "cleanup"
+          ]
+        },
+        {
+          "source": "vitest",
+          "specifiers": [
+            "afterEach"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 6,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/tsconfig.app.json": {
+      "filePath": "frontend/tsconfig.app.json",
+      "contentHash": "4b2c25f794cc6e59e5fb6b53234f317fd76d17dcb207ac028661abe66281ac71",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 30,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/tsconfig.json": {
+      "filePath": "frontend/tsconfig.json",
+      "contentHash": "ba4593e52f12a40c6a4e31b95b4924f5c4fc5bb78c5bc62b251de5fec0cc204d",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 13,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/tsconfig.node.json": {
+      "filePath": "frontend/tsconfig.node.json",
+      "contentHash": "d366cc0827139db39c61815f22491bbfda56c654354a42ad7795143d314e45e8",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 24,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/vite.config.ts": {
+      "filePath": "frontend/vite.config.ts",
+      "contentHash": "c59797271e60d4ae833257854c36065d3acf047ab1c6c544bede23e10805e823",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "vitest/config",
+          "specifiers": [
+            "defineConfig"
+          ]
+        },
+        {
+          "source": "@vitejs/plugin-react",
+          "specifiers": [
+            "react"
+          ]
+        },
+        {
+          "source": "@tailwindcss/vite",
+          "specifiers": [
+            "tailwindcss"
+          ]
+        },
+        {
+          "source": "path",
+          "specifiers": [
+            "path"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 21,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/vitest.config.ts": {
+      "filePath": "frontend/vitest.config.ts",
+      "contentHash": "22033103042c70caedda7bdfa234b8f524d16f9eab55776432ed9742cf2bb3fb",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "path",
+          "specifiers": [
+            "path"
+          ]
+        },
+        {
+          "source": "@vitejs/plugin-react",
+          "specifiers": [
+            "react"
+          ]
+        },
+        {
+          "source": "vitest/config",
+          "specifiers": [
+            "defineConfig"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 13,
+      "hasStructuralAnalysis": true
+    },
+    "pages/1_Memory.py": {
+      "filePath": "pages/1_Memory.py",
+      "contentHash": "e296b644f551c3766546873d63227fb4cce28e9c830f83cbc169085694a2c411",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "streamlit",
+          "specifiers": [
+            "st"
+          ]
+        },
+        {
+          "source": "src",
+          "specifiers": [
+            "chat_store",
+            "rag"
+          ]
+        },
+        {
+          "source": "src.personalization",
+          "specifiers": [
+            "get_profile",
+            "rebuild_profile"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 71,
+      "hasStructuralAnalysis": true
+    },
+    "pages/2_Settings.py": {
+      "filePath": "pages/2_Settings.py",
+      "contentHash": "8649c50ef5567908582f58f0b9810ff6107f9bcd7bfcf44cb91901413428549b",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "streamlit",
+          "specifiers": [
+            "st"
+          ]
+        },
+        {
+          "source": "src",
+          "specifiers": [
+            "chat_store",
+            "memory",
+            "providers",
+            "rag"
+          ]
+        },
+        {
+          "source": "src.config",
+          "specifiers": [
+            "config"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 147,
+      "hasStructuralAnalysis": true
+    },
+    "pages/3_Providers.py": {
+      "filePath": "pages/3_Providers.py",
+      "contentHash": "ec633b0ac97551e9599431c92f92c7f09674106a63fa51888bebcecdf3faa19e",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "streamlit",
+          "specifiers": [
+            "st"
+          ]
+        },
+        {
+          "source": "src",
+          "specifiers": [
+            "ollama_client",
+            "providers"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 148,
+      "hasStructuralAnalysis": true
+    },
+    "pages/4_Compare.py": {
+      "filePath": "pages/4_Compare.py",
+      "contentHash": "5b7543d057404b1954a63cfb75729d72a87f859d1ea67a09334ba1ac86a69187",
+      "functions": [
+        {
+          "name": "_models",
+          "params": [],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "_provider_models",
+          "params": [
+            "provider"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "_label",
+          "params": [
+            "k"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "render_compare",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 25
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "streamlit",
+          "specifiers": [
+            "st"
+          ]
+        },
+        {
+          "source": "loguru",
+          "specifiers": [
+            "logger"
+          ]
+        },
+        {
+          "source": "src",
+          "specifiers": [
+            "chat_store",
+            "jobs",
+            "providers"
+          ]
+        },
+        {
+          "source": "src.catalog",
+          "specifiers": [
+            "PROVIDER_BADGES",
+            "build_model_catalog",
+            "ordered_keys"
+          ]
+        },
+        {
+          "source": "src.config",
+          "specifiers": [
+            "config"
+          ]
+        },
+        {
+          "source": "src.ollama_client",
+          "specifiers": [
+            "list_models",
+            "ollama_alive"
+          ]
+        }
+      ],
+      "exports": [
+        "_models",
+        "_provider_models",
+        "_label",
+        "render_compare"
+      ],
+      "totalLines": 107,
+      "hasStructuralAnalysis": true
+    },
+    "pyproject.toml": {
+      "filePath": "pyproject.toml",
+      "contentHash": "2f7312a471abd3a58a44c37dc43ab5746b24f67a98842ee202749cf76681cc32",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 47,
+      "hasStructuralAnalysis": true
+    },
+    "scripts/generate_api_types.py": {
+      "filePath": "scripts/generate_api_types.py",
+      "contentHash": "b23bec7f539fe5d8e109df9acfa8255252fbf2da0fc0cbf9fbfa4975231b47d0",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "backend.app.main",
+          "specifiers": [
+            "create_app"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 18,
+      "hasStructuralAnalysis": true
+    },
+    "src/catalog.py": {
+      "filePath": "src/catalog.py",
+      "contentHash": "3b52afc0e156b0468f44269f033b9efc2f84ce8d2345d1d3a95fa788e545c118",
+      "functions": [
+        {
+          "name": "normalize_model_key",
+          "params": [
+            "value"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "build_model_catalog",
+          "params": [
+            "models",
+            "show_cloud",
+            "provider_models"
+          ],
+          "returnType": "dict[str, SelectedModel]",
+          "exported": true,
+          "lineCount": 37
+        },
+        {
+          "name": "ordered_keys",
+          "params": [
+            "catalog",
+            "group_filter"
+          ],
+          "returnType": "list[str]",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "present_groups",
+          "params": [
+            "catalog"
+          ],
+          "returnType": "list[str]",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "best_coding_model",
+          "params": [
+            "catalog"
+          ],
+          "returnType": "str | None",
+          "exported": true,
+          "lineCount": 9
+        }
+      ],
+      "classes": [
+        {
+          "name": "SelectedModel",
+          "methods": [
+            "badge"
+          ],
+          "properties": [
+            "key",
+            "provider",
+            "name",
+            "hint",
+            "detail",
+            "is_vision",
+            "group",
+            "group_rank",
+            "context_length"
+          ],
+          "exported": true,
+          "lineCount": 16
+        }
+      ],
+      "imports": [
+        {
+          "source": "dataclasses",
+          "specifiers": [
+            "dataclass"
+          ]
+        },
+        {
+          "source": "src",
+          "specifiers": [
+            "providers"
+          ]
+        },
+        {
+          "source": "src.model_labels",
+          "specifiers": [
+            "hint_for"
+          ]
+        },
+        {
+          "source": "src.ollama_client",
+          "specifiers": [
+            "ModelInfo",
+            "chat_models"
+          ]
+        }
+      ],
+      "exports": [
+        "SelectedModel",
+        "normalize_model_key",
+        "build_model_catalog",
+        "ordered_keys",
+        "present_groups",
+        "best_coding_model"
+      ],
+      "totalLines": 109,
+      "hasStructuralAnalysis": true
+    },
+    "src/chat_store.py": {
+      "filePath": "src/chat_store.py",
+      "contentHash": "327a4942a2a199c92dc471b6dad73553c88981a18a848a994d20a39bb3745c39",
+      "functions": [
+        {
+          "name": "_now",
+          "params": [],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "_conn",
+          "params": [],
+          "returnType": "sqlite3.Connection",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "init_db",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "create_conversation",
+          "params": [
+            "model"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "list_conversations",
+          "params": [
+            "limit"
+          ],
+          "returnType": "list[dict[str, Any]]",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "get_conversation",
+          "params": [
+            "conv_id"
+          ],
+          "returnType": "dict[str, Any] | None",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "rename_conversation",
+          "params": [
+            "conv_id",
+            "title"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "delete_conversation",
+          "params": [
+            "conv_id"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "set_pinned",
+          "params": [
+            "conv_id",
+            "pinned"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "search_conversations",
+          "params": [
+            "query",
+            "limit"
+          ],
+          "returnType": "list[str]",
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "delete_messages_from",
+          "params": [
+            "conv_id",
+            "ts"
+          ],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "clear_all_conversations",
+          "params": [],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "mark_memory_extracted",
+          "params": [
+            "conv_id"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "add_message",
+          "params": [
+            "conv_id",
+            "role",
+            "content",
+            "attachments"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "get_messages",
+          "params": [
+            "conv_id"
+          ],
+          "returnType": "list[dict[str, Any]]",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "message_count",
+          "params": [
+            "conv_id"
+          ],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "add_memory",
+          "params": [
+            "content",
+            "category",
+            "source_conv"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "list_memories",
+          "params": [
+            "active_only"
+          ],
+          "returnType": "list[dict[str, Any]]",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "touch_memories",
+          "params": [
+            "mem_ids"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "update_memory",
+          "params": [
+            "mem_id"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "delete_memory",
+          "params": [
+            "mem_id"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "decay_memories",
+          "params": [
+            "max_age_days"
+          ],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "set_feedback",
+          "params": [
+            "message_id",
+            "rating"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "get_feedback",
+          "params": [
+            "conv_id"
+          ],
+          "returnType": "dict[str, int]",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "recent_feedback_samples",
+          "params": [
+            "limit"
+          ],
+          "returnType": "list[dict[str, Any]]",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "kv_get",
+          "params": [
+            "key",
+            "default"
+          ],
+          "returnType": "str | None",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "kv_set",
+          "params": [
+            "key",
+            "value"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "list_presets",
+          "params": [],
+          "returnType": "list[dict[str, Any]]",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "save_preset",
+          "params": [
+            "name",
+            "system_prompt",
+            "model_key",
+            "temperature",
+            "builtin"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "delete_preset",
+          "params": [
+            "preset_id"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "get_preset_by_name",
+          "params": [
+            "name"
+          ],
+          "returnType": "dict[str, Any] | None",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "export_conversation_markdown",
+          "params": [
+            "conv_id"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "import_jsonl",
+          "params": [
+            "data"
+          ],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "wipe_everything",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "export_jsonl",
+          "params": [],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 14
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "sqlite3",
+          "specifiers": [
+            "sqlite3"
+          ]
+        },
+        {
+          "source": "uuid",
+          "specifiers": [
+            "uuid"
+          ]
+        },
+        {
+          "source": "datetime",
+          "specifiers": [
+            "datetime",
+            "timezone"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "Any"
+          ]
+        },
+        {
+          "source": "src.config",
+          "specifiers": [
+            "config"
+          ]
+        }
+      ],
+      "exports": [
+        "_now",
+        "_conn",
+        "init_db",
+        "create_conversation",
+        "list_conversations",
+        "get_conversation",
+        "rename_conversation",
+        "delete_conversation",
+        "set_pinned",
+        "search_conversations",
+        "delete_messages_from",
+        "clear_all_conversations",
+        "mark_memory_extracted",
+        "add_message",
+        "get_messages",
+        "message_count",
+        "add_memory",
+        "list_memories",
+        "touch_memories",
+        "update_memory",
+        "delete_memory",
+        "decay_memories",
+        "set_feedback",
+        "get_feedback",
+        "recent_feedback_samples",
+        "kv_get",
+        "kv_set",
+        "list_presets",
+        "save_preset",
+        "delete_preset",
+        "get_preset_by_name",
+        "export_conversation_markdown",
+        "import_jsonl",
+        "wipe_everything",
+        "export_jsonl"
+      ],
+      "totalLines": 406,
+      "hasStructuralAnalysis": true
+    },
+    "src/config.py": {
+      "filePath": "src/config.py",
+      "contentHash": "38613c5dbd1b8b2ac0e57e088bb7be56da93b529e234fc5585ff67c7adf34fee",
+      "functions": [],
+      "classes": [
+        {
+          "name": "AppConfig",
+          "methods": [
+            "db_path",
+            "chroma_dir",
+            "uploads_dir",
+            "ensure_dirs"
+          ],
+          "properties": [
+            "ollama_host",
+            "data_dir",
+            "temperature",
+            "keep_alive",
+            "request_timeout",
+            "show_cloud_models",
+            "memory_enabled",
+            "cross_chat_references",
+            "chunk_chars",
+            "chunk_overlap_chars",
+            "doc_context_budget_chars",
+            "rag_top_k",
+            "cross_chat_top_k",
+            "cross_chat_min_similarity",
+            "memory_max_injected",
+            "memory_decay_days",
+            "profile_refresh_every"
+          ],
+          "exported": true,
+          "lineCount": 48
+        }
+      ],
+      "imports": [
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "pydantic_settings",
+          "specifiers": [
+            "BaseSettings",
+            "SettingsConfigDict"
+          ]
+        }
+      ],
+      "exports": [
+        "AppConfig"
+      ],
+      "totalLines": 62,
+      "hasStructuralAnalysis": true
+    },
+    "src/files.py": {
+      "filePath": "src/files.py",
+      "contentHash": "686a55c5b868c49020eb2a9c1195272a8b20427463c56cfb592a67174135a564",
+      "functions": [
+        {
+          "name": "_ext",
+          "params": [
+            "filename"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "parse_upload",
+          "params": [
+            "filename",
+            "raw"
+          ],
+          "returnType": "Attachment",
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "_parse_pdf",
+          "params": [
+            "raw"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "_parse_docx",
+          "params": [
+            "raw"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "_parse_excel",
+          "params": [
+            "raw",
+            "ext"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "_parse_legacy_doc",
+          "params": [
+            "raw"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 33
+        },
+        {
+          "name": "chunk_text",
+          "params": [
+            "text",
+            "chunk_chars",
+            "overlap_chars"
+          ],
+          "returnType": "list[str]",
+          "exported": true,
+          "lineCount": 23
+        }
+      ],
+      "classes": [
+        {
+          "name": "Attachment",
+          "methods": [],
+          "properties": [
+            "name",
+            "kind",
+            "text",
+            "image_bytes",
+            "mime"
+          ],
+          "exported": true,
+          "lineCount": 6
+        }
+      ],
+      "imports": [
+        {
+          "source": "io",
+          "specifiers": [
+            "io"
+          ]
+        },
+        {
+          "source": "dataclasses",
+          "specifiers": [
+            "dataclass"
+          ]
+        },
+        {
+          "source": "loguru",
+          "specifiers": [
+            "logger"
+          ]
+        }
+      ],
+      "exports": [
+        "Attachment",
+        "_ext",
+        "parse_upload",
+        "_parse_pdf",
+        "_parse_docx",
+        "_parse_excel",
+        "_parse_legacy_doc",
+        "chunk_text"
+      ],
+      "totalLines": 154,
+      "hasStructuralAnalysis": true
+    },
+    "src/jobs.py": {
+      "filePath": "src/jobs.py",
+      "contentHash": "30011e6c4858d26e89b3741f2d43c16880cc8e492eb49fbf1c4aa592cba4fdda",
+      "functions": [
+        {
+          "name": "stop",
+          "params": [
+            "conv_id"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "get",
+          "params": [
+            "conv_id"
+          ],
+          "returnType": "Job | None",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "is_running",
+          "params": [
+            "conv_id"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "running_conversations",
+          "params": [],
+          "returnType": "set[str]",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "clear",
+          "params": [
+            "conv_id"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "start",
+          "params": [
+            "conv_id",
+            "provider",
+            "model_name",
+            "is_vision",
+            "user_text",
+            "raw_files",
+            "history",
+            "custom_system",
+            "temperature",
+            "embed_model",
+            "helper_model",
+            "vision_fallback",
+            "memory_on",
+            "crosschat_on",
+            "is_first_turn",
+            "web_search"
+          ],
+          "returnType": "Job",
+          "exported": true,
+          "lineCount": 38
+        },
+        {
+          "name": "run_ephemeral",
+          "params": [
+            "key",
+            "provider",
+            "model_name",
+            "user_text",
+            "system",
+            "temperature"
+          ],
+          "returnType": "Job",
+          "exported": true,
+          "lineCount": 37
+        },
+        {
+          "name": "_tokens_per_sec",
+          "params": [
+            "stats",
+            "secs"
+          ],
+          "returnType": "float | None",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "_stream",
+          "params": [
+            "provider",
+            "model_name",
+            "messages",
+            "temperature",
+            "stats"
+          ],
+          "returnType": "Iterator[str]",
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "_web_search",
+          "params": [
+            "query",
+            "max_results"
+          ],
+          "returnType": "list[dict[str, str]]",
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "_process_attachments",
+          "params": [
+            "job",
+            "raw_files",
+            "is_vision",
+            "vision_fallback",
+            "embed_model"
+          ],
+          "returnType": "tuple[str, list[tuple[bytes, str]]]",
+          "exported": true,
+          "lineCount": 39
+        },
+        {
+          "name": "_run",
+          "params": [
+            "job",
+            "provider",
+            "model_name",
+            "is_vision",
+            "user_text",
+            "raw_files",
+            "history",
+            "custom_system",
+            "temperature",
+            "embed_model",
+            "helper_model",
+            "vision_fallback",
+            "memory_on",
+            "crosschat_on",
+            "is_first_turn",
+            "web_search"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 117
+        },
+        {
+          "name": "_friendly_error",
+          "params": [
+            "raw"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "_autotitle",
+          "params": [
+            "conv_id",
+            "first_user",
+            "first_assistant",
+            "helper_model"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "_maybe_extract",
+          "params": [
+            "conv_id",
+            "helper_model",
+            "embed_model"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "classes": [
+        {
+          "name": "Job",
+          "methods": [
+            "elapsed"
+          ],
+          "properties": [
+            "conv_id",
+            "model_name",
+            "status",
+            "phase",
+            "text",
+            "error",
+            "references",
+            "notes",
+            "cancelled",
+            "start_ts"
+          ],
+          "exported": true,
+          "lineCount": 16
+        }
+      ],
+      "imports": [
+        {
+          "source": "threading",
+          "specifiers": [
+            "threading"
+          ]
+        },
+        {
+          "source": "time",
+          "specifiers": [
+            "time"
+          ]
+        },
+        {
+          "source": "dataclasses",
+          "specifiers": [
+            "dataclass",
+            "field"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "Any",
+            "Iterator"
+          ]
+        },
+        {
+          "source": "loguru",
+          "specifiers": [
+            "logger"
+          ]
+        },
+        {
+          "source": "src",
+          "specifiers": [
+            "chat_store",
+            "memory",
+            "providers",
+            "rag"
+          ]
+        },
+        {
+          "source": "src.config",
+          "specifiers": [
+            "config"
+          ]
+        },
+        {
+          "source": "src.files",
+          "specifiers": [
+            "Attachment",
+            "chunk_text",
+            "parse_upload"
+          ]
+        },
+        {
+          "source": "src.ollama_client",
+          "specifiers": [
+            "describe_image"
+          ]
+        },
+        {
+          "source": "src.ollama_client",
+          "specifiers": [
+            "ollama_generate"
+          ]
+        },
+        {
+          "source": "src.ollama_client",
+          "specifiers": [
+            "ollama_stream"
+          ]
+        },
+        {
+          "source": "src.orchestrator",
+          "specifiers": [
+            "after_turn_indexing",
+            "build_messages"
+          ]
+        },
+        {
+          "source": "src.personalization",
+          "specifiers": [
+            "note_conversation_done",
+            "rebuild_profile"
+          ]
+        }
+      ],
+      "exports": [
+        "Job",
+        "stop",
+        "get",
+        "is_running",
+        "running_conversations",
+        "clear",
+        "start",
+        "run_ephemeral",
+        "_tokens_per_sec",
+        "_stream",
+        "_web_search",
+        "_process_attachments",
+        "_run",
+        "_friendly_error",
+        "_autotitle",
+        "_maybe_extract"
+      ],
+      "totalLines": 415,
+      "hasStructuralAnalysis": true
+    },
+    "src/memory.py": {
+      "filePath": "src/memory.py",
+      "contentHash": "9dfd82941ac7f7f08e8aa893c1ff33cc682817757052c9bf7227432f6a1a1357",
+      "functions": [
+        {
+          "name": "extract_memories",
+          "params": [
+            "conv_id",
+            "helper_model",
+            "embed_model"
+          ],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 33
+        },
+        {
+          "name": "relevant_memories",
+          "params": [
+            "query",
+            "embed_model"
+          ],
+          "returnType": "list[dict]",
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "run_decay",
+          "params": [],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "_parse_json_list",
+          "params": [
+            "raw"
+          ],
+          "returnType": "list[dict]",
+          "exported": true,
+          "lineCount": 16
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "re",
+          "specifiers": [
+            "re"
+          ]
+        },
+        {
+          "source": "loguru",
+          "specifiers": [
+            "logger"
+          ]
+        },
+        {
+          "source": "src",
+          "specifiers": [
+            "chat_store",
+            "rag"
+          ]
+        },
+        {
+          "source": "src.config",
+          "specifiers": [
+            "config"
+          ]
+        },
+        {
+          "source": "src.ollama_client",
+          "specifiers": [
+            "generate"
+          ]
+        }
+      ],
+      "exports": [
+        "extract_memories",
+        "relevant_memories",
+        "run_decay",
+        "_parse_json_list"
+      ],
+      "totalLines": 97,
+      "hasStructuralAnalysis": true
+    },
+    "src/model_labels.py": {
+      "filePath": "src/model_labels.py",
+      "contentHash": "5f4940f58ac6264619fd73d9e3e9950d5599ccbfdbc8fc50f8aba8004f5b42f2",
+      "functions": [
+        {
+          "name": "_size_tag",
+          "params": [
+            "m"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "hint_for",
+          "params": [
+            "m"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 19
+        },
+        {
+          "name": "dropdown_label",
+          "params": [
+            "m"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "re",
+          "specifiers": [
+            "re"
+          ]
+        },
+        {
+          "source": "src.ollama_client",
+          "specifiers": [
+            "ModelInfo"
+          ]
+        }
+      ],
+      "exports": [
+        "_size_tag",
+        "hint_for",
+        "dropdown_label"
+      ],
+      "totalLines": 65,
+      "hasStructuralAnalysis": true
+    },
+    "src/ollama_client.py": {
+      "filePath": "src/ollama_client.py",
+      "contentHash": "10a82ed8bbd91b0083ecaff014e85a9297cf03d00f3b609ea1710c2b6bb8b5c1",
+      "functions": [
+        {
+          "name": "_client",
+          "params": [],
+          "returnType": "ollama.Client",
+          "exported": true,
+          "lineCount": 21
+        },
+        {
+          "name": "list_models",
+          "params": [],
+          "returnType": "list[ModelInfo]",
+          "exported": true,
+          "lineCount": 39
+        },
+        {
+          "name": "chat_models",
+          "params": [
+            "models",
+            "include_cloud"
+          ],
+          "returnType": "list[ModelInfo]",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "embedding_model",
+          "params": [
+            "models"
+          ],
+          "returnType": "ModelInfo | None",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "vision_fallback_model",
+          "params": [
+            "models"
+          ],
+          "returnType": "ModelInfo | None",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "smallest_text_model",
+          "params": [
+            "models"
+          ],
+          "returnType": "ModelInfo | None",
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "stream_chat",
+          "params": [
+            "model",
+            "messages",
+            "temperature",
+            "stats"
+          ],
+          "returnType": "Iterator[str]",
+          "exported": true,
+          "lineCount": 25
+        },
+        {
+          "name": "running_models",
+          "params": [],
+          "returnType": "list[dict[str, Any]]",
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "generate",
+          "params": [
+            "model",
+            "prompt",
+            "system",
+            "temperature"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "describe_image",
+          "params": [
+            "model",
+            "image_bytes",
+            "hint"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "embed_texts",
+          "params": [
+            "model",
+            "texts"
+          ],
+          "returnType": "list[list[float]]",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "ollama_alive",
+          "params": [],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 6
+        }
+      ],
+      "classes": [
+        {
+          "name": "ModelInfo",
+          "methods": [
+            "size_gb",
+            "is_vision",
+            "is_embedding",
+            "is_thinking"
+          ],
+          "properties": [
+            "name",
+            "size_bytes",
+            "capabilities",
+            "parameter_size",
+            "families",
+            "context_length",
+            "is_cloud"
+          ],
+          "exported": true,
+          "lineCount": 26
+        }
+      ],
+      "imports": [
+        {
+          "source": "dataclasses",
+          "specifiers": [
+            "dataclass",
+            "field"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "Any",
+            "Iterator"
+          ]
+        },
+        {
+          "source": "ollama",
+          "specifiers": [
+            "ollama"
+          ]
+        },
+        {
+          "source": "loguru",
+          "specifiers": [
+            "logger"
+          ]
+        },
+        {
+          "source": "src.config",
+          "specifiers": [
+            "config"
+          ]
+        }
+      ],
+      "exports": [
+        "_client",
+        "ModelInfo",
+        "list_models",
+        "chat_models",
+        "embedding_model",
+        "vision_fallback_model",
+        "smallest_text_model",
+        "stream_chat",
+        "running_models",
+        "generate",
+        "describe_image",
+        "embed_texts",
+        "ollama_alive"
+      ],
+      "totalLines": 250,
+      "hasStructuralAnalysis": true
+    },
+    "src/orchestrator.py": {
+      "filePath": "src/orchestrator.py",
+      "contentHash": "4900ba8efe9253117e2f212fcf939e2202a3cf4655db1b83a2b9a005768206b8",
+      "functions": [
+        {
+          "name": "build_messages",
+          "params": [
+            "conv_id",
+            "user_text",
+            "embed_model",
+            "history",
+            "attachment_context",
+            "custom_system",
+            "memory_enabled",
+            "cross_chat_enabled"
+          ],
+          "returnType": "tuple[list[dict[str, Any]], list[str]]",
+          "exported": true,
+          "lineCount": 64
+        },
+        {
+          "name": "after_turn_indexing",
+          "params": [
+            "conv_id",
+            "embed_model",
+            "user_text",
+            "assistant_text"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 10
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "typing",
+          "specifiers": [
+            "Any"
+          ]
+        },
+        {
+          "source": "src",
+          "specifiers": [
+            "chat_store",
+            "memory",
+            "rag"
+          ]
+        },
+        {
+          "source": "src.config",
+          "specifiers": [
+            "config"
+          ]
+        }
+      ],
+      "exports": [
+        "build_messages",
+        "after_turn_indexing"
+      ],
+      "totalLines": 93,
+      "hasStructuralAnalysis": true
+    },
+    "src/personalization.py": {
+      "filePath": "src/personalization.py",
+      "contentHash": "599bccc8f0c8ce5c804429d8eaf25374ce3dc93b863445a3d77b6c1db4e73195",
+      "functions": [
+        {
+          "name": "get_profile",
+          "params": [],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "note_conversation_done",
+          "params": [],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "rebuild_profile",
+          "params": [
+            "helper_model"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 29
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "loguru",
+          "specifiers": [
+            "logger"
+          ]
+        },
+        {
+          "source": "src",
+          "specifiers": [
+            "chat_store"
+          ]
+        },
+        {
+          "source": "src.config",
+          "specifiers": [
+            "config"
+          ]
+        },
+        {
+          "source": "src.ollama_client",
+          "specifiers": [
+            "generate"
+          ]
+        }
+      ],
+      "exports": [
+        "get_profile",
+        "note_conversation_done",
+        "rebuild_profile"
+      ],
+      "totalLines": 67,
+      "hasStructuralAnalysis": true
+    },
+    "src/providers.py": {
+      "filePath": "src/providers.py",
+      "contentHash": "2b4609a5e69cd8139385ab7c19fe70cd2b642c3e2a4e48e4236bdbd64ff05b77",
+      "functions": [
+        {
+          "name": "_get_secret",
+          "params": [
+            "name"
+          ],
+          "returnType": "str | None",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "_set_secret",
+          "params": [
+            "name",
+            "value"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "get_api_key",
+          "params": [
+            "provider"
+          ],
+          "returnType": "str | None",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "key_source",
+          "params": [
+            "provider"
+          ],
+          "returnType": "str | None",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "set_api_key",
+          "params": [
+            "provider",
+            "key"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "remove_api_key",
+          "params": [
+            "provider"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "configured_providers",
+          "params": [],
+          "returnType": "list[str]",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "clear_all_secrets",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "get_ollama_host",
+          "params": [],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "get_ollama_key",
+          "params": [],
+          "returnType": "str | None",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "ollama_key_source",
+          "params": [],
+          "returnType": "str | None",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "set_ollama_config",
+          "params": [
+            "host",
+            "api_key"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "reset_ollama_config",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "_excluded",
+          "params": [
+            "provider",
+            "model_id"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "_vision_by_pattern",
+          "params": [
+            "provider",
+            "model_id"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "list_provider_models",
+          "params": [
+            "provider"
+          ],
+          "returnType": "list[ApiModel]",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "_list_anthropic",
+          "params": [
+            "api_key"
+          ],
+          "returnType": "list[ApiModel]",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "_list_openrouter",
+          "params": [
+            "api_key"
+          ],
+          "returnType": "list[ApiModel]",
+          "exported": true,
+          "lineCount": 21
+        },
+        {
+          "name": "_list_openai_compat",
+          "params": [
+            "provider",
+            "api_key"
+          ],
+          "returnType": "list[ApiModel]",
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "test_connection",
+          "params": [
+            "provider"
+          ],
+          "returnType": "tuple[bool, str]",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "stream_chat",
+          "params": [
+            "provider",
+            "model",
+            "messages",
+            "temperature",
+            "stats"
+          ],
+          "returnType": "Iterator[str]",
+          "exported": true,
+          "lineCount": 20
+        },
+        {
+          "name": "_stream_anthropic",
+          "params": [
+            "api_key",
+            "model",
+            "messages",
+            "stats"
+          ],
+          "returnType": "Iterator[str]",
+          "exported": true,
+          "lineCount": 42
+        },
+        {
+          "name": "_stream_openai_compat",
+          "params": [
+            "provider",
+            "api_key",
+            "model",
+            "messages",
+            "temperature",
+            "stats"
+          ],
+          "returnType": "Iterator[str]",
+          "exported": true,
+          "lineCount": 43
+        },
+        {
+          "name": "openrouter_auth_url",
+          "params": [
+            "callback_url"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "openrouter_exchange_code",
+          "params": [
+            "code"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 20
+        }
+      ],
+      "classes": [
+        {
+          "name": "ApiModel",
+          "methods": [
+            "key",
+            "hint",
+            "dropdown_label"
+          ],
+          "properties": [
+            "provider",
+            "id",
+            "is_vision",
+            "context_length",
+            "extra"
+          ],
+          "exported": true,
+          "lineCount": 28
+        }
+      ],
+      "imports": [
+        {
+          "source": "base64",
+          "specifiers": [
+            "base64"
+          ]
+        },
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        },
+        {
+          "source": "re",
+          "specifiers": [
+            "re"
+          ]
+        },
+        {
+          "source": "threading",
+          "specifiers": [
+            "threading"
+          ]
+        },
+        {
+          "source": "dataclasses",
+          "specifiers": [
+            "dataclass",
+            "field"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "Any",
+            "Iterator"
+          ]
+        },
+        {
+          "source": "httpx",
+          "specifiers": [
+            "httpx"
+          ]
+        },
+        {
+          "source": "loguru",
+          "specifiers": [
+            "logger"
+          ]
+        },
+        {
+          "source": "src.config",
+          "specifiers": [
+            "config"
+          ]
+        }
+      ],
+      "exports": [
+        "ApiModel",
+        "_get_secret",
+        "_set_secret",
+        "get_api_key",
+        "key_source",
+        "set_api_key",
+        "remove_api_key",
+        "configured_providers",
+        "clear_all_secrets",
+        "get_ollama_host",
+        "get_ollama_key",
+        "ollama_key_source",
+        "set_ollama_config",
+        "reset_ollama_config",
+        "_excluded",
+        "_vision_by_pattern",
+        "list_provider_models",
+        "_list_anthropic",
+        "_list_openrouter",
+        "_list_openai_compat",
+        "test_connection",
+        "stream_chat",
+        "_stream_anthropic",
+        "_stream_openai_compat",
+        "openrouter_auth_url",
+        "openrouter_exchange_code"
+      ],
+      "totalLines": 443,
+      "hasStructuralAnalysis": true
+    },
+    "src/rag.py": {
+      "filePath": "src/rag.py",
+      "contentHash": "5a7e00a5790b0e02a58b13cc8c87103776e3cdb2ceec16575579b2fd9588884a",
+      "functions": [
+        {
+          "name": "_collection",
+          "params": [
+            "name"
+          ],
+          "returnType": "chromadb.Collection",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "_embed",
+          "params": [
+            "embed_model",
+            "texts"
+          ],
+          "returnType": "list[list[float]]",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "index_doc_chunks",
+          "params": [
+            "embed_model",
+            "conv_id",
+            "doc_name",
+            "chunks"
+          ],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "search_docs",
+          "params": [
+            "embed_model",
+            "conv_id",
+            "query",
+            "top_k"
+          ],
+          "returnType": "list[dict[str, Any]]",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "conv_has_docs",
+          "params": [
+            "conv_id"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "index_history_turn",
+          "params": [
+            "embed_model",
+            "conv_id",
+            "conv_title",
+            "role",
+            "content"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "search_history",
+          "params": [
+            "embed_model",
+            "exclude_conv",
+            "query",
+            "top_k",
+            "min_similarity"
+          ],
+          "returnType": "list[dict[str, Any]]",
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "delete_conv_vectors",
+          "params": [
+            "conv_id"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "clear_all_chat_vectors",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "clear_all_vectors",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "search_history_all",
+          "params": [
+            "embed_model",
+            "query",
+            "top_k"
+          ],
+          "returnType": "list[dict[str, Any]]",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "index_memory",
+          "params": [
+            "embed_model",
+            "mem_id",
+            "content"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "similar_memory",
+          "params": [
+            "embed_model",
+            "content",
+            "threshold"
+          ],
+          "returnType": "str | None",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "search_memories",
+          "params": [
+            "embed_model",
+            "query",
+            "top_k"
+          ],
+          "returnType": "list[dict[str, Any]]",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "delete_memory_vector",
+          "params": [
+            "mem_id"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "_flatten",
+          "params": [
+            "res"
+          ],
+          "returnType": "list[dict[str, Any]]",
+          "exported": true,
+          "lineCount": 10
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "uuid",
+          "specifiers": [
+            "uuid"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "Any"
+          ]
+        },
+        {
+          "source": "chromadb",
+          "specifiers": [
+            "chromadb"
+          ]
+        },
+        {
+          "source": "loguru",
+          "specifiers": [
+            "logger"
+          ]
+        },
+        {
+          "source": "src.config",
+          "specifiers": [
+            "config"
+          ]
+        },
+        {
+          "source": "src.ollama_client",
+          "specifiers": [
+            "embed_texts"
+          ]
+        }
+      ],
+      "exports": [
+        "_collection",
+        "_embed",
+        "index_doc_chunks",
+        "search_docs",
+        "conv_has_docs",
+        "index_history_turn",
+        "search_history",
+        "delete_conv_vectors",
+        "clear_all_chat_vectors",
+        "clear_all_vectors",
+        "search_history_all",
+        "index_memory",
+        "similar_memory",
+        "search_memories",
+        "delete_memory_vector",
+        "_flatten"
+      ],
+      "totalLines": 176,
+      "hasStructuralAnalysis": true
+    },
+    "tasks/plan.md": {
+      "filePath": "tasks/plan.md",
+      "contentHash": "86b6abb8dab0cbca65e708453b261b98cc5d8098f803ae9111c503bd022583aa",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 161,
+      "hasStructuralAnalysis": true
+    },
+    "tasks/todo.md": {
+      "filePath": "tasks/todo.md",
+      "contentHash": "dd01df3d7105de07515f9602bb9010466fd02dc3d0b36086dc15c4cd5b970093",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 32,
+      "hasStructuralAnalysis": true
+    },
+    "tests/conftest.py": {
+      "filePath": "tests/conftest.py",
+      "contentHash": "83a53e2cc36ec21ca10a1e52730f516eb9eae683e0eace5e086e7d702099c145",
+      "functions": [
+        {
+          "name": "client",
+          "params": [],
+          "returnType": "TestClient",
+          "exported": true,
+          "lineCount": 5
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "pytest",
+          "specifiers": [
+            "pytest"
+          ]
+        },
+        {
+          "source": "fastapi.testclient",
+          "specifiers": [
+            "TestClient"
+          ]
+        }
+      ],
+      "exports": [
+        "client"
+      ],
+      "totalLines": 13,
+      "hasStructuralAnalysis": true
+    },
+    "tests/test_api_contract.py": {
+      "filePath": "tests/test_api_contract.py",
+      "contentHash": "4511a64fbb03bc5f9384b9437a5bdb94a997fcf8cccb05a85e9194f99e1981d6",
+      "functions": [
+        {
+          "name": "test_health_and_session_cookie",
+          "params": [
+            "client"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "test_conversation_crud_preserves_message_order",
+          "params": [
+            "client"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 20
+        },
+        {
+          "name": "test_provider_secret_is_scoped_to_browser_session",
+          "params": [
+            "client"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "test_run_stream_contract_retains_completed_output",
+          "params": [
+            "client"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 25
+        },
+        {
+          "name": "test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+          "params": [
+            "client"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "urllib.parse",
+          "specifiers": [
+            "parse_qs",
+            "urlparse"
+          ]
+        },
+        {
+          "source": "fastapi.testclient",
+          "specifiers": [
+            "TestClient"
+          ]
+        }
+      ],
+      "exports": [
+        "test_health_and_session_cookie",
+        "test_conversation_crud_preserves_message_order",
+        "test_provider_secret_is_scoped_to_browser_session",
+        "test_run_stream_contract_retains_completed_output",
+        "test_openrouter_auth_uses_session_pkce_and_current_callback_origin"
+      ],
+      "totalLines": 91,
+      "hasStructuralAnalysis": true
+    },
+    "tests/test_provider_adapters.py": {
+      "filePath": "tests/test_provider_adapters.py",
+      "contentHash": "838d64bc1b000a79499668600b38bd9d4381e4c6bdeb5175b0f736175f7213ad",
+      "functions": [
+        {
+          "name": "test_registry_contains_all_phase_one_providers",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "test_model_discovery_is_concurrent_and_degrades_per_provider",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 24
+        },
+        {
+          "name": "test_echo_like_adapter_contract_accepts_normalized_messages",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "asyncio",
+          "specifiers": [
+            "asyncio"
+          ]
+        },
+        {
+          "source": "backend.app.contracts",
+          "specifiers": [
+            "ChatMessage",
+            "ModelDescriptor"
+          ]
+        },
+        {
+          "source": "backend.app.providers",
+          "specifiers": [
+            "ProviderAdapter",
+            "ProviderRegistry",
+            "build_provider_registry"
+          ]
+        }
+      ],
+      "exports": [
+        "test_registry_contains_all_phase_one_providers",
+        "test_model_discovery_is_concurrent_and_degrades_per_provider",
+        "test_echo_like_adapter_contract_accepts_normalized_messages"
+      ],
+      "totalLines": 51,
+      "hasStructuralAnalysis": true
+    }
+  }
+}

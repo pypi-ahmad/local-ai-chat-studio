@@ -1,0 +1,181 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "local-ai-chat-studio",
+    "languages": ["css", "html", "javascript", "json", "markdown", "python", "toml", "typescript", "unknown", "yaml"],
+    "frameworks": ["FastAPI", "Pydantic", "Pytest", "React", "Uvicorn"],
+    "description": "A local-first AI chat studio that supports Ollama and optional bring-your-own-key providers, persistent conversations, retrieval, and personalized context.",
+    "analyzedAt": "2026-08-12T00:00:00.000Z",
+    "gitCommitHash": "e2008bc4c35733d5e06ecdfe3e5d9dcbc7733adf"
+  },
+  "nodes": [
+    {
+      "id": "domain:conversation-management",
+      "type": "domain",
+      "name": "Conversation Management",
+      "summary": "Manages local conversation records, their ordered messages, and the active workspace conversation. It also supports conversation search, presets, and export through SQLite-backed persistence.",
+      "tags": ["conversations", "messages", "persistence", "sqlite"],
+      "complexity": "moderate",
+      "domainMeta": {
+        "entities": ["conversation", "message", "preset", "export"],
+        "businessRules": ["Conversation messages retain an order.", "Conversation records and messages are persisted locally in SQLite."],
+        "crossDomainInteractions": ["Supplies conversation messages to AI response generation.", "Provides conversation history from which memory and personalization can be derived."]
+      }
+    },
+    {
+      "id": "domain:ai-response-generation",
+      "type": "domain",
+      "name": "AI Response Generation",
+      "summary": "Coordinates asynchronous model runs, including lifecycle state, emitted events, cancellation, provider streaming, and persistence. It exposes the API-backed path for generating chat responses.",
+      "tags": ["chat", "model-runs", "streaming", "run-management"],
+      "complexity": "complex",
+      "domainMeta": {
+        "entities": ["run", "run-state", "run-event", "chat-message", "run-snapshot"],
+        "businessRules": ["A run has explicit lifecycle states.", "Run events and results are recorded while provider output is streamed."],
+        "crossDomainInteractions": ["Uses provider adapters to stream model output.", "Records generated results against persisted conversation data.", "Can be augmented by retrieval and personalized context in the Streamlit workspace."]
+      }
+    },
+    {
+      "id": "domain:provider-access",
+      "type": "domain",
+      "name": "Provider Access",
+      "summary": "Configures local and hosted AI provider adapters, session-scoped credentials, and model discovery. It presents a common interface for Ollama and optional hosted providers while isolating discovery failures by provider.",
+      "tags": ["providers", "credentials", "model-catalog", "byok"],
+      "complexity": "complex",
+      "domainMeta": {
+        "entities": ["provider", "provider-adapter", "credential", "session", "model-descriptor"],
+        "businessRules": ["Credential values must not be empty after trimming.", "Credentials are session-scoped with environment-backed fallback lookup.", "Per-provider discovery errors are represented separately from successful discoveries."],
+        "crossDomainInteractions": ["Provides discovered models and streaming adapters to AI response generation.", "Makes provider connection state available to workspace provider management."]
+      }
+    },
+    {
+      "id": "domain:knowledge-and-personalization",
+      "type": "domain",
+      "name": "Knowledge and Personalization",
+      "summary": "Turns uploaded documents, chat history, and durable memories into locally managed retrieval context. It extracts user memories and maintains vector-backed semantic recall alongside SQLite persistence.",
+      "tags": ["retrieval", "documents", "memory", "personalization"],
+      "complexity": "complex",
+      "domainMeta": {
+        "entities": ["attachment", "document-chunk", "memory", "embedding", "user-profile"],
+        "businessRules": ["Uploaded text is chunked before it is indexed for retrieval.", "Memories can be extracted from conversations, persisted, indexed, and decayed."],
+        "crossDomainInteractions": ["Uses conversation content as a source for memory extraction.", "Provides retrieved document and memory context to the chat workspace and generation workflow."]
+      }
+    },
+    {
+      "id": "flow:conversation-lifecycle",
+      "type": "flow",
+      "name": "Conversation Lifecycle",
+      "summary": "Establishes local conversation storage, creates or selects a conversation, and retrieves its ordered messages for the workspace.",
+      "tags": ["conversations", "sqlite", "streamlit"],
+      "complexity": "moderate",
+      "domainMeta": {"entryPoint": "Streamlit workspace", "entryType": "manual"}
+    },
+    {
+      "id": "flow:conversation-export",
+      "type": "flow",
+      "name": "Conversation Export",
+      "summary": "Collects a persisted conversation and its messages, then produces a portable conversation export.",
+      "tags": ["conversations", "export", "persistence"],
+      "complexity": "simple",
+      "domainMeta": {"entryPoint": "Streamlit workspace", "entryType": "manual"}
+    },
+    {
+      "id": "flow:stream-chat-run",
+      "type": "flow",
+      "name": "Stream Chat Run",
+      "summary": "Validates a model-run request and manages its asynchronous execution, events, provider stream, and stored result.",
+      "tags": ["chat", "streaming", "run-management", "fastapi"],
+      "complexity": "complex",
+      "domainMeta": {"entryPoint": "FastAPI application", "entryType": "http"}
+    },
+    {
+      "id": "flow:provider-configuration-and-discovery",
+      "type": "flow",
+      "name": "Provider Configuration and Discovery",
+      "summary": "Builds the configured provider set, accepts session credentials, and discovers the models available through each provider.",
+      "tags": ["providers", "credentials", "model-discovery", "fastapi"],
+      "complexity": "complex",
+      "domainMeta": {"entryPoint": "FastAPI application", "entryType": "http"}
+    },
+    {
+      "id": "flow:document-retrieval-indexing",
+      "type": "flow",
+      "name": "Document Retrieval Indexing",
+      "summary": "Parses an uploaded document, splits its text into chunks, indexes the chunks, and makes matching content searchable.",
+      "tags": ["documents", "retrieval", "embeddings", "chromadb"],
+      "complexity": "moderate",
+      "domainMeta": {"entryPoint": "Streamlit workspace", "entryType": "manual"}
+    },
+    {
+      "id": "flow:memory-extraction-and-recall",
+      "type": "flow",
+      "name": "Memory Extraction and Recall",
+      "summary": "Extracts memories from conversation activity, persists and indexes them, then retrieves relevant memories for later context.",
+      "tags": ["memory", "personalization", "retrieval", "chat-history"],
+      "complexity": "complex",
+      "domainMeta": {"entryPoint": "Streamlit workspace", "entryType": "manual"}
+    },
+    {"id": "step:conversation-lifecycle:initialize-local-storage", "type": "step", "name": "Initialize Local Storage", "summary": "Initializes the SQLite database used by chat workspace persistence.", "tags": ["sqlite", "persistence"], "complexity": "simple", "filePath": "src/chat_store.py", "lineRange": [76, 82]},
+    {"id": "step:conversation-lifecycle:create-conversation", "type": "step", "name": "Create Conversation", "summary": "Creates a persisted conversation record for the workspace.", "tags": ["conversation", "persistence"], "complexity": "simple", "filePath": "src/chat_store.py", "lineRange": [87, 95]},
+    {"id": "step:conversation-lifecycle:switch-active-conversation", "type": "step", "name": "Switch Active Conversation", "summary": "Changes the conversation selected by the Streamlit workspace.", "tags": ["conversation", "streamlit"], "complexity": "simple", "filePath": "app.py", "lineRange": [116, 130]},
+    {"id": "step:conversation-lifecycle:load-ordered-messages", "type": "step", "name": "Load Ordered Messages", "summary": "Retrieves the persisted messages for the selected conversation.", "tags": ["messages", "persistence"], "complexity": "simple", "filePath": "src/chat_store.py", "lineRange": [188, 198]},
+    {"id": "step:conversation-export:load-conversation", "type": "step", "name": "Load Conversation", "summary": "Retrieves the conversation record selected for export.", "tags": ["conversation", "persistence"], "complexity": "simple", "filePath": "src/chat_store.py", "lineRange": [106, 109]},
+    {"id": "step:conversation-export:load-conversation-messages", "type": "step", "name": "Load Conversation Messages", "summary": "Reads the persisted messages that belong to the conversation export.", "tags": ["messages", "persistence"], "complexity": "simple", "filePath": "src/chat_store.py", "lineRange": [188, 198]},
+    {"id": "step:conversation-export:render-markdown-export", "type": "step", "name": "Render Markdown Export", "summary": "Exports a conversation in Markdown format.", "tags": ["export", "markdown", "conversation"], "complexity": "simple", "filePath": "src/chat_store.py", "lineRange": [354, 362]},
+    {"id": "step:stream-chat-run:validate-run-request", "type": "step", "name": "Validate Run Request", "summary": "Validates the messages and generation settings used to begin a model run.", "tags": ["validation", "run-management", "api-contract"], "complexity": "simple", "filePath": "backend/app/contracts.py", "lineRange": [72, 77]},
+    {"id": "step:stream-chat-run:create-run-state", "type": "step", "name": "Create Run State", "summary": "Holds mutable run state, emitted events, and synchronization primitives for one run.", "tags": ["run-management", "concurrency", "event-stream"], "complexity": "moderate", "filePath": "backend/app/runs.py", "lineRange": [16, 20]},
+    {"id": "step:stream-chat-run:execute-provider-stream", "type": "step", "name": "Execute Provider Stream", "summary": "Creates and executes an asynchronous provider run while supporting streaming and cancellation.", "tags": ["streaming", "providers", "run-management"], "complexity": "complex", "filePath": "backend/app/runs.py", "lineRange": [23, 143]},
+    {"id": "step:stream-chat-run:record-run-result", "type": "step", "name": "Record Run Result", "summary": "Records streamed run results in storage as part of run management.", "tags": ["persistence", "run-management", "streaming"], "complexity": "moderate", "filePath": "backend/app/runs.py", "lineRange": [23, 143]},
+    {"id": "step:provider-configuration-and-discovery:build-provider-registry", "type": "step", "name": "Build Provider Registry", "summary": "Builds the configured collection of local and hosted provider adapters.", "tags": ["providers", "provider-registry", "configuration"], "complexity": "moderate", "filePath": "backend/app/providers.py", "lineRange": [206, 221]},
+    {"id": "step:provider-configuration-and-discovery:validate-provider-credential", "type": "step", "name": "Validate Provider Credential", "summary": "Rejects a provider credential when it is empty after trimming.", "tags": ["credentials", "validation", "api-contract"], "complexity": "simple", "filePath": "backend/app/contracts.py", "lineRange": [37, 46]},
+    {"id": "step:provider-configuration-and-discovery:store-session-credential", "type": "step", "name": "Store Session Credential", "summary": "Maintains thread-safe provider credentials for an individual session with environment-backed fallback lookup.", "tags": ["credentials", "session-management", "security"], "complexity": "moderate", "filePath": "backend/app/sessions.py", "lineRange": [19, 45]},
+    {"id": "step:provider-configuration-and-discovery:discover-provider-models", "type": "step", "name": "Discover Provider Models", "summary": "Indexes adapters and concurrently discovers models while isolating provider-specific failures.", "tags": ["model-catalog", "providers", "concurrency"], "complexity": "complex", "filePath": "backend/app/providers.py", "lineRange": [182, 203]},
+    {"id": "step:document-retrieval-indexing:parse-upload", "type": "step", "name": "Parse Upload", "summary": "Parses an uploaded attachment into text suitable for downstream processing.", "tags": ["documents", "upload", "parsing"], "complexity": "moderate", "filePath": "src/files.py", "lineRange": [37, 58]},
+    {"id": "step:document-retrieval-indexing:chunk-document-text", "type": "step", "name": "Chunk Document Text", "summary": "Splits parsed document text into retrieval-ready chunks.", "tags": ["documents", "chunking", "retrieval"], "complexity": "moderate", "filePath": "src/files.py", "lineRange": [131, 153]},
+    {"id": "step:document-retrieval-indexing:index-document-chunks", "type": "step", "name": "Index Document Chunks", "summary": "Stores document chunks in the vector retrieval layer.", "tags": ["documents", "embeddings", "chromadb"], "complexity": "moderate", "filePath": "src/rag.py", "lineRange": [31, 43]},
+    {"id": "step:document-retrieval-indexing:search-indexed-documents", "type": "step", "name": "Search Indexed Documents", "summary": "Queries indexed document vectors for relevant document content.", "tags": ["documents", "retrieval", "search"], "complexity": "moderate", "filePath": "src/rag.py", "lineRange": [46, 55]},
+    {"id": "step:memory-extraction-and-recall:check-memory-extraction", "type": "step", "name": "Check Memory Extraction", "summary": "Coordinates whether memories should be extracted during the chat workspace workflow.", "tags": ["memory", "chat", "streamlit"], "complexity": "moderate", "filePath": "app.py", "lineRange": [133, 149]},
+    {"id": "step:memory-extraction-and-recall:extract-memories", "type": "step", "name": "Extract Memories", "summary": "Derives memories from conversation content for persistent personalization.", "tags": ["memory", "personalization", "chat-history"], "complexity": "complex", "filePath": "src/memory.py", "lineRange": [27, 59]},
+    {"id": "step:memory-extraction-and-recall:persist-memory", "type": "step", "name": "Persist Memory", "summary": "Adds a memory record to the chat workspace persistence layer.", "tags": ["memory", "persistence", "sqlite"], "complexity": "simple", "filePath": "src/chat_store.py", "lineRange": [209, 218]},
+    {"id": "step:memory-extraction-and-recall:index-memory", "type": "step", "name": "Index Memory", "summary": "Indexes a memory in the vector retrieval store.", "tags": ["memory", "embeddings", "retrieval"], "complexity": "moderate", "filePath": "src/rag.py", "lineRange": [131, 134]},
+    {"id": "step:memory-extraction-and-recall:retrieve-relevant-memories", "type": "step", "name": "Retrieve Relevant Memories", "summary": "Selects memories relevant to the current conversation context.", "tags": ["memory", "retrieval", "personalization"], "complexity": "moderate", "filePath": "src/memory.py", "lineRange": [62, 74]}
+  ],
+  "edges": [
+    {"source": "domain:conversation-management", "target": "flow:conversation-lifecycle", "type": "contains_flow", "direction": "forward", "weight": 1.0},
+    {"source": "domain:conversation-management", "target": "flow:conversation-export", "type": "contains_flow", "direction": "forward", "weight": 1.0},
+    {"source": "domain:ai-response-generation", "target": "flow:stream-chat-run", "type": "contains_flow", "direction": "forward", "weight": 1.0},
+    {"source": "domain:provider-access", "target": "flow:provider-configuration-and-discovery", "type": "contains_flow", "direction": "forward", "weight": 1.0},
+    {"source": "domain:knowledge-and-personalization", "target": "flow:document-retrieval-indexing", "type": "contains_flow", "direction": "forward", "weight": 1.0},
+    {"source": "domain:knowledge-and-personalization", "target": "flow:memory-extraction-and-recall", "type": "contains_flow", "direction": "forward", "weight": 1.0},
+    {"source": "flow:conversation-lifecycle", "target": "step:conversation-lifecycle:initialize-local-storage", "type": "flow_step", "direction": "forward", "weight": 0.1},
+    {"source": "flow:conversation-lifecycle", "target": "step:conversation-lifecycle:create-conversation", "type": "flow_step", "direction": "forward", "weight": 0.2},
+    {"source": "flow:conversation-lifecycle", "target": "step:conversation-lifecycle:switch-active-conversation", "type": "flow_step", "direction": "forward", "weight": 0.3},
+    {"source": "flow:conversation-lifecycle", "target": "step:conversation-lifecycle:load-ordered-messages", "type": "flow_step", "direction": "forward", "weight": 0.4},
+    {"source": "flow:conversation-export", "target": "step:conversation-export:load-conversation", "type": "flow_step", "direction": "forward", "weight": 0.1},
+    {"source": "flow:conversation-export", "target": "step:conversation-export:load-conversation-messages", "type": "flow_step", "direction": "forward", "weight": 0.2},
+    {"source": "flow:conversation-export", "target": "step:conversation-export:render-markdown-export", "type": "flow_step", "direction": "forward", "weight": 0.3},
+    {"source": "flow:stream-chat-run", "target": "step:stream-chat-run:validate-run-request", "type": "flow_step", "direction": "forward", "weight": 0.1},
+    {"source": "flow:stream-chat-run", "target": "step:stream-chat-run:create-run-state", "type": "flow_step", "direction": "forward", "weight": 0.2},
+    {"source": "flow:stream-chat-run", "target": "step:stream-chat-run:execute-provider-stream", "type": "flow_step", "direction": "forward", "weight": 0.3},
+    {"source": "flow:stream-chat-run", "target": "step:stream-chat-run:record-run-result", "type": "flow_step", "direction": "forward", "weight": 0.4},
+    {"source": "flow:provider-configuration-and-discovery", "target": "step:provider-configuration-and-discovery:build-provider-registry", "type": "flow_step", "direction": "forward", "weight": 0.1},
+    {"source": "flow:provider-configuration-and-discovery", "target": "step:provider-configuration-and-discovery:validate-provider-credential", "type": "flow_step", "direction": "forward", "weight": 0.2},
+    {"source": "flow:provider-configuration-and-discovery", "target": "step:provider-configuration-and-discovery:store-session-credential", "type": "flow_step", "direction": "forward", "weight": 0.3},
+    {"source": "flow:provider-configuration-and-discovery", "target": "step:provider-configuration-and-discovery:discover-provider-models", "type": "flow_step", "direction": "forward", "weight": 0.4},
+    {"source": "flow:document-retrieval-indexing", "target": "step:document-retrieval-indexing:parse-upload", "type": "flow_step", "direction": "forward", "weight": 0.1},
+    {"source": "flow:document-retrieval-indexing", "target": "step:document-retrieval-indexing:chunk-document-text", "type": "flow_step", "direction": "forward", "weight": 0.2},
+    {"source": "flow:document-retrieval-indexing", "target": "step:document-retrieval-indexing:index-document-chunks", "type": "flow_step", "direction": "forward", "weight": 0.3},
+    {"source": "flow:document-retrieval-indexing", "target": "step:document-retrieval-indexing:search-indexed-documents", "type": "flow_step", "direction": "forward", "weight": 0.4},
+    {"source": "flow:memory-extraction-and-recall", "target": "step:memory-extraction-and-recall:check-memory-extraction", "type": "flow_step", "direction": "forward", "weight": 0.1},
+    {"source": "flow:memory-extraction-and-recall", "target": "step:memory-extraction-and-recall:extract-memories", "type": "flow_step", "direction": "forward", "weight": 0.2},
+    {"source": "flow:memory-extraction-and-recall", "target": "step:memory-extraction-and-recall:persist-memory", "type": "flow_step", "direction": "forward", "weight": 0.3},
+    {"source": "flow:memory-extraction-and-recall", "target": "step:memory-extraction-and-recall:index-memory", "type": "flow_step", "direction": "forward", "weight": 0.4},
+    {"source": "flow:memory-extraction-and-recall", "target": "step:memory-extraction-and-recall:retrieve-relevant-memories", "type": "flow_step", "direction": "forward", "weight": 0.5},
+    {"source": "domain:conversation-management", "target": "domain:ai-response-generation", "type": "cross_domain", "direction": "forward", "description": "Persisted conversation messages provide the chat context used to create model runs.", "weight": 0.6},
+    {"source": "domain:provider-access", "target": "domain:ai-response-generation", "type": "cross_domain", "direction": "forward", "description": "Provider adapters and discovered models enable model-run streaming.", "weight": 0.6},
+    {"source": "domain:conversation-management", "target": "domain:knowledge-and-personalization", "type": "cross_domain", "direction": "forward", "description": "Conversation activity supplies the source material for memory extraction and chat-history recall.", "weight": 0.6},
+    {"source": "domain:knowledge-and-personalization", "target": "domain:ai-response-generation", "type": "cross_domain", "direction": "forward", "description": "Retrieved documents and memories augment the chat workspace context used for generation.", "weight": 0.6}
+  ],
+  "layers": [],
+  "tour": []
+}

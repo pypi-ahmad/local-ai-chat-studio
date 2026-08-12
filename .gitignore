@@ -53,7 +53,7 @@ _embed_cache/
 # <<< Codex Local Ignore (env/venv/cache/artifacts) <<<
 
 .codex/
-.codegraph/
-graphify-out/
+.claude/
+.agents/
 /openapi.json
 .playwright-mcp/
