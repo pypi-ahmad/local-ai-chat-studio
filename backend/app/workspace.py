@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import logging
 import math
+import os
 import re
 
 from backend.app.contracts import (
@@ -31,6 +33,45 @@ INJECTION_PATTERNS = (
     re.compile(r"\b(?:reveal|print|return) (?:the )?(?:system prompt|secret|api key)\b", re.IGNORECASE),
     re.compile(r"\bact as (?:the )?system\b", re.IGNORECASE),
 )
+logger = logging.getLogger(__name__)
+
+
+def search_web(query: str, max_results: int = 5) -> list[dict[str, str]]:
+    """Search the public web without credentials; provider failures yield no context."""
+    try:
+        from ddgs import DDGS
+
+        results = DDGS().text(query, max_results=max_results) or []
+        return [
+            {
+                "title": str(result.get("title", "")),
+                "url": str(result.get("href", "")),
+                "snippet": str(result.get("body", "")),
+            }
+            for result in results
+            if result.get("href")
+        ]
+    except Exception as exc:
+        logger.warning("Web search failed: %s", exc)
+        return []
+
+
+def retrieve_context(
+    store: Store, conversation_id: str, query: str, top_k: int = 5
+) -> list[dict[str, object]]:
+    """Use the canonical Chroma index when configured, with a SQLite lexical fallback."""
+    embed_model = os.getenv("CHAT_EMBED_MODEL")
+    if embed_model:
+        try:
+            from src.rag import search_docs, search_history
+
+            hits = search_docs(embed_model, conversation_id, query, top_k)
+            hits.extend(search_history(embed_model, conversation_id, query, top_k, 0.35))
+            if hits:
+                return hits[:top_k]
+        except Exception as exc:
+            logger.warning("Vector retrieval failed: %s", exc)
+    return store.search_related_messages(query, conversation_id, top_k)
 
 
 def estimate_tokens(text: str) -> int:
@@ -71,7 +112,10 @@ def scan_text(text: str) -> list[SafetyFinding]:
 
 
 def build_context_plan(
-    store: Store, conversation_id: str, payload: TurnPreflight
+    store: Store,
+    conversation_id: str,
+    payload: TurnPreflight,
+    web_results: list[dict[str, str]] | None = None,
 ) -> ContextPlan:
     conversation = store.get_conversation(conversation_id)
     local = payload.provider in {"echo", "ollama", "omniroute"}
@@ -86,8 +130,13 @@ def build_context_plan(
     history_text = "\n".join(item.content for item in conversation.messages[-20:])
     memories = [item for item in store.list_memories() if item.status == "active"] if memory_allowed else []
     uploads = store.upload_texts(conversation_id) if attachment_allowed else []
+    retrieval_hits = (
+        retrieve_context(store, conversation_id, payload.content) if retrieval_allowed else []
+    )
     memory_text = "\n".join(item.content for item in memories)
     upload_text = "\n".join(content for _, _, content in uploads)
+    web_results = web_results or []
+    web_text = "\n".join(item.get("snippet", "") for item in web_results)
     sections = [
         ContextSection(kind="system", estimated_tokens=24),
         ContextSection(
@@ -104,6 +153,10 @@ def build_context_plan(
         ),
         ContextSection(
             kind="retrieval",
+            estimated_tokens=sum(
+                estimate_tokens(str(item.get("text") or item.get("content") or ""))
+                for item in retrieval_hits
+            ),
             included=retrieval_allowed,
             reason=None if retrieval_allowed else "Disabled by provider policy or run settings",
         ),
@@ -115,6 +168,7 @@ def build_context_plan(
         ),
         ContextSection(
             kind="web",
+            estimated_tokens=estimate_tokens(web_text),
             included=web_allowed,
             reason=None if web_allowed else "Disabled by provider policy or run settings",
         ),
@@ -157,6 +211,34 @@ def build_context_plan(
         )
         for upload_id, filename, content in uploads
     )
+    sources.extend(
+        ContextSource(
+            id=str(item.get("id", "")),
+            kind="retrieval",
+            title=str(item.get("title") or item.get("doc") or "Related conversation"),
+            preview=str(item.get("text") or item.get("content") or "")[:500],
+            estimated_tokens=estimate_tokens(
+                str(item.get("text") or item.get("content") or "")
+            ),
+            score=float(item.get("similarity") or item.get("score") or 0),
+            conversation_id=str(item.get("conv_id")) if item.get("conv_id") else None,
+        )
+        for item in retrieval_hits
+        if item.get("id") and (item.get("text") or item.get("content"))
+    )
+    if web_allowed:
+        sources.extend(
+            ContextSource(
+                id=hashlib.sha256(item["url"].encode()).hexdigest()[:16],
+                kind="web",
+                title=item.get("title") or item["url"],
+                preview=item.get("snippet", "")[:500],
+                url=item["url"],
+                estimated_tokens=estimate_tokens(item.get("snippet", "")),
+            )
+            for item in web_results
+            if item.get("url")
+        )
     if payload.backpack_id and backpack_allowed:
         backpack = store.get_backpack(payload.backpack_id)
         for item in backpack.items:
@@ -209,9 +291,15 @@ def assemble_messages(
     payload: TurnPreflight,
     plan: ContextPlan,
     excluded_source_ids: set[str] | None = None,
+    web_results: list[dict[str, str]] | None = None,
 ) -> list[ChatMessage]:
     excluded = excluded_source_ids or set()
     included = {section.kind: section.included for section in plan.sections}
+    approved_sources = {
+        source.id
+        for source in plan.sources
+        if source.included and source.trust == "trusted" and source.id not in excluded
+    }
     messages: list[ChatMessage] = []
     system_parts = ["You are a helpful personal AI assistant. Be direct and accurate."]
     focus = store.active_focus(conversation_id)
@@ -223,14 +311,16 @@ def assemble_messages(
         )
     if payload.backpack_id and included.get("backpack"):
         backpack = store.get_backpack(payload.backpack_id)
-        items = [item for item in backpack.items if item.id not in excluded]
+        items = [item for item in backpack.items if item.id in approved_sources]
         if items:
             system_parts.append(
                 "Context backpack:\n" + "\n".join(f"- {item.title}: {item.content}" for item in items)
             )
     if included.get("memory"):
         memories = [
-            item for item in store.list_memories() if item.status == "active" and item.id not in excluded
+            item
+            for item in store.list_memories()
+            if item.status == "active" and item.id in approved_sources
         ]
         if memories:
             system_parts.append(
@@ -238,12 +328,44 @@ def assemble_messages(
                 + "\n".join(f"- [{item.category}] {item.content}" for item in memories)
             )
     if included.get("attachments"):
-        uploads = [item for item in store.upload_texts(conversation_id) if item[0] not in excluded]
+        uploads = [
+            item for item in store.upload_texts(conversation_id) if item[0] in approved_sources
+        ]
         if uploads:
             system_parts.append(
                 "Uploaded documents:\n"
                 + "\n\n".join(f"[{filename}]\n{content}" for _, filename, content in uploads)
             )
+    if included.get("retrieval"):
+        retrieved = [
+            source
+            for source in plan.sources
+            if source.kind == "retrieval"
+            and source.included
+            and source.trust == "trusted"
+            and source.id not in excluded
+        ]
+        if retrieved:
+            system_parts.append(
+                "Related prior context:\n"
+                + "\n\n".join(f"[{source.title}]\n{source.preview}" for source in retrieved)
+            )
+    if included.get("web") and web_results:
+        approved_ids = {
+            source.id
+            for source in plan.sources
+            if source.kind == "web" and source.included and source.trust == "trusted"
+        }
+        web_context = []
+        for item in web_results:
+            source_id = hashlib.sha256(item.get("url", "").encode()).hexdigest()[:16]
+            if source_id in approved_ids and source_id not in excluded:
+                web_context.append(
+                    f"[{item.get('title') or item.get('url')}]({item.get('url')})\n"
+                    f"{item.get('snippet', '')}"
+                )
+        if web_context:
+            system_parts.append("Web search results:\n" + "\n\n".join(web_context))
     messages.append(ChatMessage(role="system", content="\n\n".join(system_parts)))
     if included.get("history"):
         conversation = store.get_conversation(conversation_id)

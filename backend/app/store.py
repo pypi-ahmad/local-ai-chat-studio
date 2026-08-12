@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sqlite3
 import threading
 import uuid
@@ -203,6 +204,28 @@ class Store:
                     "SELECT * FROM conversations ORDER BY pinned DESC, updated_at DESC"
                 ).fetchall()
         return [self._conversation(row, []) for row in rows]
+
+    def search_related_messages(
+        self, query: str, exclude_conversation_id: str, limit: int = 5
+    ) -> list[dict[str, Any]]:
+        terms = {term for term in re.findall(r"[a-z0-9]+", query.lower()) if len(term) > 2}
+        if not terms:
+            return []
+        with self.lock:
+            rows = self.connection.execute(
+                "SELECT m.id, m.conv_id, m.role, m.content, c.title "
+                "FROM messages m JOIN conversations c ON c.id = m.conv_id "
+                "WHERE m.conv_id != ? ORDER BY m.ts DESC LIMIT 1000",
+                (exclude_conversation_id,),
+            ).fetchall()
+        matches = []
+        for row in rows:
+            candidate_terms = set(re.findall(r"[a-z0-9]+", row["content"].lower()))
+            score = len(terms & candidate_terms) / len(terms)
+            if score:
+                matches.append({**dict(row), "score": score})
+        matches.sort(key=lambda item: item["score"], reverse=True)
+        return matches[:limit]
 
     def get_conversation(self, conversation_id: str) -> Conversation:
         with self.lock:

@@ -48,6 +48,12 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return response.status === 204 ? (undefined as T) : response.json()
 }
 
+async function requestText(path: string): Promise<string> {
+  const response = await fetch(`/api/v1${path}`, { credentials: 'same-origin' })
+  if (!response.ok) throw new ApiError(response.status, response.statusText)
+  return response.text()
+}
+
 export async function streamRun(
   runId: string,
   onEvent: (event: RunEvent) => void,
@@ -110,9 +116,13 @@ export const api = {
   memories: () => request<Memory[]>('/memories'),
   createMemory: (content: string, category = 'fact') =>
     request<Memory>('/memories', { method: 'POST', body: JSON.stringify({ content, category }) }),
+  updateMemory: (id: string, payload: { status?: Memory['status']; pinned?: boolean; content?: string; category?: string }) =>
+    request<Memory>(`/memories/${id}`, { method: 'PATCH', body: JSON.stringify(payload) }),
+  deleteMemory: (id: string) => request<void>(`/memories/${id}`, { method: 'DELETE' }),
   presets: () => request<Preset[]>('/presets'),
   createPreset: (payload: Omit<Preset, 'id'>) =>
     request<Preset>('/presets', { method: 'POST', body: JSON.stringify(payload) }),
+  deletePreset: (id: string) => request<void>(`/presets/${id}`, { method: 'DELETE' }),
   backpacks: () => request<Backpack[]>('/backpacks'),
   createBackpack: (name: string, title: string, content: string) =>
     request<Backpack>('/backpacks', {
@@ -121,6 +131,10 @@ export const api = {
   createFocus: (payload: {
     conversation_id: string; objective: string; success_criteria: string; constraints: string[]
   }) => request<FocusSession>('/focus-sessions', { method: 'POST', body: JSON.stringify(payload) }),
+  focusSessions: (conversationId?: string) =>
+    request<FocusSession[]>(`/focus-sessions${conversationId ? `?conversation_id=${encodeURIComponent(conversationId)}` : ''}`),
+  updateFocus: (id: string, status: 'completed' | 'abandoned') =>
+    request<FocusSession>(`/focus-sessions/${id}`, { method: 'PATCH', body: JSON.stringify({ status }) }),
   upload: (conversationId: string, filename: string, contentBase64: string) =>
     request<Upload>('/uploads', {
       method: 'POST',
@@ -128,11 +142,23 @@ export const api = {
     }),
   uploads: (conversationId: string) => request<Upload[]>(`/conversations/${conversationId}/uploads`),
   activity: () => request<RunSnapshot[]>('/activity'),
-  bundle: (runId: string) => request<ReplayBundle>(`/runs/${runId}/bundle`),
+  bundle: (runId: string, mode: 'full' | 'redacted' = 'full') =>
+    request<ReplayBundle>(`/runs/${runId}/bundle?mode=${mode}`),
   replay: (runId: string, provider: string, model: string) =>
     request<RunSnapshot>(`/runs/${runId}/replay`, {
       method: 'POST', body: JSON.stringify({ provider, model }),
     }),
   diff: (leftId: string, rightId: string) =>
     request<{ changed: boolean; diff: string }>(`/runs/${leftId}/diff/${rightId}`),
+  setFeedback: (messageId: string, rating: -1 | 1) =>
+    request<void>(`/messages/${messageId}/feedback`, { method: 'PUT', body: JSON.stringify({ rating }) }),
+  conversationMarkdown: (id: string) => requestText(`/conversations/${id}/export.md`),
+  exportData: () => request<{ jsonl: string }>('/data/export'),
+  importData: (jsonl: string) =>
+    request<{ imported: number }>('/data/import', { method: 'POST', body: JSON.stringify({ jsonl }) }),
+  wipeData: () => request<void>('/data/wipe', { method: 'POST', body: JSON.stringify({ confirmation: 'WIPE' }) }),
+  simulateProvider: (provider: string, scenario: string, fallbackProvider?: string) =>
+    request<{ recovered: boolean; events: { type: string; provider: string; message: string }[] }>(`/providers/${provider}/simulate`, {
+      method: 'POST', body: JSON.stringify({ scenario, fallback_provider: fallbackProvider || null }),
+    }),
 }

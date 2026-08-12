@@ -306,3 +306,79 @@ def test_workspace_resource_lifecycle_and_provider_simulator(client: TestClient)
 
     assert client.delete(f"/api/v1/backpacks/{backpack['id']}").status_code == 204
     assert client.get("/api/v1/backpacks").json() == []
+
+
+def test_web_sources_are_provenanced_and_replayed_without_a_second_search(
+    monkeypatch,
+) -> None:
+    from backend.app.main import create_app
+
+    calls: list[str] = []
+
+    def fake_search(query: str, max_results: int = 5) -> list[dict[str, str]]:
+        calls.append(query)
+        return [
+            {
+                "title": "Primary source",
+                "url": "https://example.test/source",
+                "snippet": "Verified context",
+            }
+        ]
+
+    monkeypatch.setattr("backend.app.main.search_web", fake_search)
+    with TestClient(create_app(database_url=":memory:")) as client:
+        conversation_id = _conversation(client)
+        preflight = client.post(
+            f"/api/v1/conversations/{conversation_id}/turns/preflight",
+            json={
+                "provider": "echo",
+                "model": "deterministic",
+                "content": "current facts",
+                "include_web": True,
+            },
+        ).json()
+        web_source = next(item for item in preflight["sources"] if item["kind"] == "web")
+        assert web_source["url"] == "https://example.test/source"
+
+        created = client.post(
+            f"/api/v1/conversations/{conversation_id}/turns",
+            json={
+                "provider": "echo",
+                "model": "deterministic",
+                "content": "current facts",
+                "include_web": True,
+                "plan_hash": preflight["plan_hash"],
+            },
+        )
+        bundle = client.get(f"/api/v1/runs/{created.json()['id']}/bundle").json()
+
+    assert calls == ["current facts"]
+    assert "Verified context" in bundle["messages"][0]["content"]
+
+
+def test_cross_chat_retrieval_has_provenance_and_can_be_excluded(client: TestClient) -> None:
+    old_conversation = _conversation(client)
+    client.post(
+        f"/api/v1/conversations/{old_conversation}/messages",
+        json={"role": "user", "content": "Project Juniper deploys on the green cluster"},
+    )
+    conversation_id = _conversation(client)
+    payload = {
+        "provider": "echo",
+        "model": "deterministic",
+        "content": "Where does Project Juniper deploy?",
+        "include_retrieval": True,
+    }
+    plan = client.post(
+        f"/api/v1/conversations/{conversation_id}/turns/preflight", json=payload
+    ).json()
+    source = next(item for item in plan["sources"] if item["kind"] == "retrieval")
+    assert source["conversation_id"] == old_conversation
+    assert source["score"] > 0
+
+    created = client.post(
+        f"/api/v1/conversations/{conversation_id}/turns",
+        json={**payload, "plan_hash": plan["plan_hash"], "excluded_source_ids": [source["id"]]},
+    )
+    bundle = client.get(f"/api/v1/runs/{created.json()['id']}/bundle").json()
+    assert "green cluster" not in bundle["messages"][0]["content"]

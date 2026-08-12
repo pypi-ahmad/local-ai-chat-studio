@@ -131,6 +131,8 @@ class ContextSource(BaseModel):
     estimated_tokens: int
     included: bool = True
     score: float | None = None
+    url: str | None = None
+    conversation_id: str | None = None
     trust: Literal["trusted", "suspicious", "quarantined"] = "trusted"
 
 

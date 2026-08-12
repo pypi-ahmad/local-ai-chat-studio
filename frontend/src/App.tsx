@@ -3,8 +3,11 @@ import type { ReactNode } from 'react'
 import {
   Backpack,
   Brain,
+  CheckCircle,
   CirclePlus,
   Command,
+  Copy,
+  Download,
   FileUp,
   Focus,
   GitBranch,
@@ -20,6 +23,10 @@ import {
   Settings,
   ShieldCheck,
   Square,
+  ThumbsDown,
+  ThumbsUp,
+  Trash2,
+  XCircle,
 } from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
@@ -107,11 +114,15 @@ function ConversationHistory({
   activeId,
   onSelect,
   onCreate,
+  onUpdate,
+  onDelete,
 }: {
   conversations: Conversation[]
   activeId: string | null
   onSelect: (id: string) => void
   onCreate: () => void
+  onUpdate: (id: string, payload: { title?: string; pinned?: boolean }) => Promise<void>
+  onDelete: (id: string) => Promise<void>
 }) {
   const [query, setQuery] = useState('')
   const visible = conversations.filter((item) => item.title.toLowerCase().includes(query.toLowerCase()))
@@ -125,14 +136,14 @@ function ConversationHistory({
       <ScrollArea className="history-list">
         <p className="section-label">Conversations</p>
         {visible.map((conversation) => (
-          <button
-            className={activeId === conversation.id ? 'conversation active' : 'conversation'}
-            key={conversation.id}
-            onClick={() => onSelect(conversation.id)}
-            type="button"
-          >
-            <span>{conversation.title}</span>{conversation.pinned && <small>pinned</small>}
-          </button>
+          <div className={activeId === conversation.id ? 'conversation active' : 'conversation'} key={conversation.id}>
+            <button className="conversation-select" onClick={() => onSelect(conversation.id)} type="button"><span>{conversation.title}</span>{conversation.pinned && <small>pinned</small>}</button>
+            <div className="conversation-tools">
+              <Button aria-label={`Rename ${conversation.title}`} onClick={async () => { const title = window.prompt('Conversation title', conversation.title); if (title?.trim()) await onUpdate(conversation.id, { title: title.trim() }) }} size="icon-sm" variant="ghost">✎</Button>
+              <Button aria-label={`${conversation.pinned ? 'Unpin' : 'Pin'} ${conversation.title}`} onClick={() => onUpdate(conversation.id, { pinned: !conversation.pinned })} size="icon-sm" variant="ghost">⌖</Button>
+              <Button aria-label={`Delete ${conversation.title}`} onClick={() => onDelete(conversation.id)} size="icon-sm" variant="ghost"><Trash2 /></Button>
+            </div>
+          </div>
         ))}
         {!visible.length && <p className="empty-copy">No conversations yet.</p>}
       </ScrollArea>
@@ -179,6 +190,7 @@ function ChatWorkspace({
   onCancel,
   onUpload,
   onBranch,
+  onFeedback,
 }: {
   conversation: Conversation | null
   models: ModelSummary[]
@@ -194,6 +206,7 @@ function ChatWorkspace({
   onCancel: () => Promise<void>
   onUpload: (file: File) => Promise<void>
   onBranch: (messageId: string) => Promise<void>
+  onFeedback: (messageId: string, rating: -1 | 1) => Promise<void>
 }) {
   const [prompt, setPrompt] = useState('')
   const fileRef = useRef<HTMLInputElement>(null)
@@ -218,7 +231,11 @@ function ChatWorkspace({
             <article className={`message ${message.role}`} key={message.id}>
               <div className="message-label"><span>{message.role === 'user' ? 'You' : 'Assistant'}</span>{message.run_id && <Badge variant="outline">evidence saved</Badge>}</div>
               <p>{message.content}</p>
-              <div className="message-actions"><Button onClick={() => onBranch(message.id)} size="sm" variant="ghost"><GitBranch /> Branch here</Button></div>
+              <div className="message-actions">
+                <Button onClick={() => navigator.clipboard.writeText(message.content)} size="sm" variant="ghost"><Copy /> Copy</Button>
+                <Button onClick={() => onBranch(message.id)} size="sm" variant="ghost"><GitBranch /> Branch here</Button>
+                {message.role === 'assistant' && <><Button aria-label="Helpful" onClick={() => onFeedback(message.id, 1)} size="icon-sm" variant="ghost"><ThumbsUp /></Button><Button aria-label="Not helpful" onClick={() => onFeedback(message.id, -1)} size="icon-sm" variant="ghost"><ThumbsDown /></Button></>}
+              </div>
             </article>
           ))}
           {liveOutput && <article className="message assistant live"><div className="message-label"><span>Assistant</span><Badge>streaming</Badge></div><p>{liveOutput}</p></article>}
@@ -286,8 +303,8 @@ function ContextPage({ plan, backpacks, onCreate }: { plan: ContextPlan | null; 
   return <Surface eyebrow="What enters the model" title="Context control" description="Budget, inspect, and carry deliberate context between conversations."><ContextRail plan={plan} /><div className="surface-grid"><Card><CardHeader><CardTitle>Current plan</CardTitle><CardDescription>Sections are estimated locally and preserve 20% for output.</CardDescription></CardHeader><CardContent className="stack-list">{plan?.sections.map((section) => <div className="data-row" key={section.kind}><span>{section.kind}</span><Badge variant={section.included ? 'default' : 'outline'}>{section.included ? `${section.estimated_tokens} tokens` : 'excluded'}</Badge></div>) ?? <p className="muted">Send or preflight a message to build a plan.</p>}</CardContent></Card><Card><CardHeader><CardTitle>Context backpack</CardTitle><CardDescription>Pin an immutable local snapshot for reuse.</CardDescription></CardHeader><CardContent className="form-stack"><Input onChange={(event) => setName(event.target.value)} value={name} /><Input onChange={(event) => setTitle(event.target.value)} value={title} /><Textarea onChange={(event) => setContent(event.target.value)} placeholder="Context to carry" value={content} /><Button disabled={!content.trim()} onClick={async () => { await onCreate(name, title, content); setContent('') }}><Backpack /> Save backpack</Button>{backpacks.map((item) => <div className="data-row" key={item.id}><span>{item.name}</span><small>{item.items.length} items</small></div>)}</CardContent></Card></div></Surface>
 }
 
-function EvidencePage({ activity, plan }: { activity: RunSnapshot[]; plan: ContextPlan | null }) {
-  return <Surface eyebrow="Why this answer" title="Evidence" description="Inspect sources, policy decisions, safety findings, and integrity receipts."><div className="surface-grid"><Card><CardHeader><CardTitle>Retrieved sources</CardTitle></CardHeader><CardContent className="stack-list">{plan?.sources.map((source) => <div className="source-card" key={source.id}><div><strong>{source.title}</strong><small>{source.kind} · {source.estimated_tokens} tokens</small></div><Badge variant={source.trust === 'trusted' ? 'outline' : 'destructive'}>{source.trust}</Badge><p>{source.preview}</p></div>) ?? <p className="muted">No context plan selected.</p>}</CardContent></Card><Card><CardHeader><CardTitle>Integrity chain</CardTitle></CardHeader><CardContent className="stack-list">{activity.map((run) => <div className="data-row" key={run.id}><div><strong>{run.model}</strong><small>{run.status} · {String(run.metrics.elapsed_seconds ?? '—')}s</small></div><code>{run.receipt_hash?.slice(0, 12) || 'pending'}</code></div>)}</CardContent></Card></div></Surface>
+function EvidencePage({ activity, plan, excluded, onToggle }: { activity: RunSnapshot[]; plan: ContextPlan | null; excluded: Set<string>; onToggle: (id: string) => void }) {
+  return <Surface eyebrow="Why this answer" title="Evidence" description="Inspect sources, exclude individual records, and verify integrity receipts."><div className="surface-grid"><Card><CardHeader><CardTitle>Retrieved sources</CardTitle></CardHeader><CardContent className="stack-list">{plan?.sources.map((source) => <div className="source-card" key={source.id}><div><strong>{source.title}</strong><small>{source.kind} · {source.estimated_tokens} tokens</small></div><Badge variant={source.trust === 'trusted' ? 'outline' : 'destructive'}>{source.trust}</Badge><p>{source.preview}</p><label><input checked={!excluded.has(source.id)} disabled={source.trust !== 'trusted'} onChange={() => onToggle(source.id)} type="checkbox" /> Include in next send</label>{source.url && <a href={source.url} rel="noreferrer" target="_blank">Open source</a>}</div>) ?? <p className="muted">No context plan selected.</p>}</CardContent></Card><Card><CardHeader><CardTitle>Integrity chain</CardTitle></CardHeader><CardContent className="stack-list">{activity.map((run) => <div className="data-row" key={run.id}><div><strong>{run.model}</strong><small>{run.status} · {String(run.metrics.elapsed_seconds ?? '—')}s</small></div><code>{run.receipt_hash?.slice(0, 12) || 'pending'}</code></div>)}</CardContent></Card></div></Surface>
 }
 
 function ReplayPage({ activity, models, onReplay }: { activity: RunSnapshot[]; models: ModelSummary[]; onReplay: (run: RunSnapshot) => Promise<void> }) {
@@ -304,13 +321,14 @@ function FocusPage({ conversationId, onCreate }: { conversationId: string | null
 function ProviderCard({ provider, onChanged }: { provider: ProviderSummary; onChanged: () => Promise<void> }) {
   const [key, setKey] = useState('')
   const [policy, setPolicy] = useState<ProviderPolicy>(defaultPolicy)
+  const [simulation, setSimulation] = useState('')
   useEffect(() => { void api.providerPolicy(provider.id).then(setPolicy).catch(() => setPolicy(defaultPolicy)) }, [provider.id])
   const toggle = async (field: keyof ProviderPolicy) => {
     const next = { ...policy, [field]: !policy[field] }
     setPolicy(next)
     await api.setProviderPolicy(provider.id, next)
   }
-  return <Card><CardHeader><div className="provider-title"><div className="provider-icon">{provider.label[0]}</div><div><CardTitle>{provider.label}</CardTitle><CardDescription>{provider.key_source ? `Connected from ${provider.key_source}` : 'Prompt-only cloud policy'}</CardDescription></div></div></CardHeader><CardContent className="form-stack"><div className="action-row"><Input aria-label={`${provider.label} API key`} onChange={(event) => setKey(event.target.value)} placeholder="Session API key" type="password" value={key} /><Button disabled={!key.trim()} onClick={async () => { await api.setCredential(provider.id, key); setKey(''); await onChanged() }}>Connect</Button>{provider.key_source && <Button onClick={async () => { await api.removeCredential(provider.id); await onChanged() }} variant="outline">Forget</Button>}</div><div className="policy-grid">{Object.keys(policy).map((field) => <label key={field}><input checked={policy[field as keyof ProviderPolicy]} onChange={() => toggle(field as keyof ProviderPolicy)} type="checkbox" />{field.replace('allow_', '').replace('_', ' ')}</label>)}</div></CardContent></Card>
+  return <Card><CardHeader><div className="provider-title"><div className="provider-icon">{provider.label[0]}</div><div><CardTitle>{provider.label}</CardTitle><CardDescription>{provider.key_source ? `Connected from ${provider.key_source}` : 'Prompt-only cloud policy'}</CardDescription></div></div></CardHeader><CardContent className="form-stack"><div className="action-row"><Input aria-label={`${provider.label} API key`} onChange={(event) => setKey(event.target.value)} placeholder="Session API key" type="password" value={key} /><Button disabled={!key.trim()} onClick={async () => { await api.setCredential(provider.id, key); setKey(''); await onChanged() }}>Connect</Button>{provider.key_source && <Button onClick={async () => { await api.removeCredential(provider.id); await onChanged() }} variant="outline">Forget</Button>}</div><div className="policy-grid">{Object.keys(policy).map((field) => <label key={field}><input checked={policy[field as keyof ProviderPolicy]} onChange={() => toggle(field as keyof ProviderPolicy)} type="checkbox" />{field.replace('allow_', '').replace('_', ' ')}</label>)}</div><Button onClick={async () => { const result = await api.simulateProvider(provider.id, 'rate_limit', provider.id === 'ollama' ? undefined : 'ollama'); setSimulation(result.recovered ? 'Fallback path recovered' : 'Failure surfaced safely') }} variant="outline"><Play /> Test failover</Button>{simulation && <small>{simulation}</small>}</CardContent></Card>
 }
 
 function ProvidersPage({ providers, onChanged }: { providers: ProviderSummary[]; onChanged: () => Promise<void> }) {
@@ -318,19 +336,21 @@ function ProvidersPage({ providers, onChanged }: { providers: ProviderSummary[];
 }
 
 function LibraryPage({
-  memories, presets, uploads, conversationId, onMemory, onPreset, onUpload,
+  memories, presets, uploads, conversationId, onMemory, onMemoryUpdate, onMemoryDelete, onPreset, onPresetDelete, onUpload,
 }: {
   memories: Memory[]; presets: Preset[]; uploads: Upload[]; conversationId: string | null
-  onMemory: (content: string) => Promise<void>; onPreset: (name: string, prompt: string) => Promise<void>; onUpload: (file: File) => Promise<void>
+  onMemory: (content: string) => Promise<void>; onMemoryUpdate: (id: string, payload: { status?: Memory['status']; pinned?: boolean }) => Promise<void>; onMemoryDelete: (id: string) => Promise<void>; onPreset: (name: string, prompt: string) => Promise<void>; onPresetDelete: (id: string) => Promise<void>; onUpload: (file: File) => Promise<void>
 }) {
   const [memory, setMemory] = useState('')
   const [presetName, setPresetName] = useState('')
   const [presetPrompt, setPresetPrompt] = useState('')
-  return <Surface eyebrow="Durable local knowledge" title="Library" description="Manage memories, assistants, and conversation files from one place."><div className="three-grid"><Card><CardHeader><CardTitle>Memory</CardTitle></CardHeader><CardContent className="form-stack"><Textarea onChange={(event) => setMemory(event.target.value)} placeholder="A fact or preference" value={memory} /><Button disabled={!memory.trim()} onClick={async () => { await onMemory(memory); setMemory('') }}><Brain /> Add memory</Button>{memories.map((item) => <div className="data-row" key={item.id}><span>{item.content}</span><Badge variant={item.status === 'active' ? 'outline' : 'destructive'}>{item.status}</Badge></div>)}</CardContent></Card><Card><CardHeader><CardTitle>Assistants</CardTitle></CardHeader><CardContent className="form-stack"><Input onChange={(event) => setPresetName(event.target.value)} placeholder="Assistant name" value={presetName} /><Textarea onChange={(event) => setPresetPrompt(event.target.value)} placeholder="System prompt" value={presetPrompt} /><Button disabled={!presetName.trim()} onClick={async () => { await onPreset(presetName, presetPrompt); setPresetName(''); setPresetPrompt('') }}>Save assistant</Button>{presets.map((item) => <div className="data-row" key={item.id}><span>{item.name}</span><small>{item.model_key || 'Any model'}</small></div>)}</CardContent></Card><Card><CardHeader><CardTitle>Files</CardTitle></CardHeader><CardContent className="form-stack"><label className="file-drop"><FileUp /><span>{conversationId ? 'Add to current conversation' : 'Select a conversation first'}</span><input disabled={!conversationId} onChange={(event) => { const file = event.target.files?.[0]; if (file) void onUpload(file) }} type="file" /></label>{uploads.map((item) => <div className="data-row" key={item.id}><span>{item.filename}</span><small>{Math.ceil(item.size / 1024)} KB</small></div>)}</CardContent></Card></div></Surface>
+  return <Surface eyebrow="Durable local knowledge" title="Library" description="Manage memories, assistants, and conversation files from one place."><div className="three-grid"><Card><CardHeader><CardTitle>Memory</CardTitle></CardHeader><CardContent className="form-stack"><Textarea onChange={(event) => setMemory(event.target.value)} placeholder="A fact or preference" value={memory} /><Button disabled={!memory.trim()} onClick={async () => { await onMemory(memory); setMemory('') }}><Brain /> Add memory</Button>{memories.map((item) => <div className="data-row" key={item.id}><span>{item.content}</span><Badge variant={item.status === 'active' ? 'outline' : 'destructive'}>{item.status}</Badge><div className="inline-actions">{item.status === 'quarantined' && <Button onClick={() => onMemoryUpdate(item.id, { status: 'active' })} size="icon-sm" variant="ghost"><CheckCircle /></Button>}<Button onClick={() => onMemoryUpdate(item.id, { pinned: !item.pinned })} size="icon-sm" variant="ghost">⌖</Button><Button onClick={() => onMemoryUpdate(item.id, { status: 'archived' })} size="icon-sm" variant="ghost"><XCircle /></Button><Button onClick={() => onMemoryDelete(item.id)} size="icon-sm" variant="ghost"><Trash2 /></Button></div></div>)}</CardContent></Card><Card><CardHeader><CardTitle>Assistants</CardTitle></CardHeader><CardContent className="form-stack"><Input onChange={(event) => setPresetName(event.target.value)} placeholder="Assistant name" value={presetName} /><Textarea onChange={(event) => setPresetPrompt(event.target.value)} placeholder="System prompt" value={presetPrompt} /><Button disabled={!presetName.trim()} onClick={async () => { await onPreset(presetName, presetPrompt); setPresetName(''); setPresetPrompt('') }}>Save assistant</Button>{presets.map((item) => <div className="data-row" key={item.id}><span>{item.name}</span><small>{item.model_key || 'Any model'}</small><Button onClick={() => onPresetDelete(item.id)} size="icon-sm" variant="ghost"><Trash2 /></Button></div>)}</CardContent></Card><Card><CardHeader><CardTitle>Files</CardTitle></CardHeader><CardContent className="form-stack"><label className="file-drop"><FileUp /><span>{conversationId ? 'Add to current conversation' : 'Select a conversation first'}</span><input disabled={!conversationId} onChange={(event) => { const file = event.target.files?.[0]; if (file) void onUpload(file) }} type="file" /></label>{uploads.map((item) => <div className="data-row" key={item.id}><span>{item.filename}</span><small>{Math.ceil(item.size / 1024)} KB</small></div>)}</CardContent></Card></div></Surface>
 }
 
-function SettingsPage({ connected }: { connected: boolean }) {
-  return <Surface eyebrow="Local runtime" title="Settings" description="Operational defaults are conservative and visible."><div className="surface-grid"><Card><CardHeader><CardTitle>Privacy defaults</CardTitle></CardHeader><CardContent className="stack-list"><div className="data-row"><span>Cloud context</span><Badge>Prompt only</Badge></div><div className="data-row"><span>Credentials</span><Badge variant="outline">Process memory</Badge></div><div className="data-row"><span>Context output reserve</span><Badge variant="outline">20%</Badge></div></CardContent></Card><Card><CardHeader><CardTitle>Runtime</CardTitle></CardHeader><CardContent className="stack-list"><div className="data-row"><span>FastAPI</span><Badge variant={connected ? 'default' : 'destructive'}>{connected ? 'Connected' : 'Unavailable'}</Badge></div><div className="data-row"><span>Canonical data</span><code>data/app.db</code></div><div className="data-row"><span>Vector data</span><code>data/chroma</code></div></CardContent></Card></div></Surface>
+function SettingsPage({ connected, onRefresh }: { connected: boolean; onRefresh: () => Promise<void> }) {
+  const importRef = useRef<HTMLInputElement>(null)
+  const download = async () => { const { jsonl } = await api.exportData(); const url = URL.createObjectURL(new Blob([jsonl], { type: 'application/x-ndjson' })); const anchor = document.createElement('a'); anchor.href = url; anchor.download = 'local-ai-chat-studio.jsonl'; anchor.click(); URL.revokeObjectURL(url) }
+  return <Surface eyebrow="Local runtime" title="Settings" description="Operational defaults and portable data controls are visible here."><div className="surface-grid"><Card><CardHeader><CardTitle>Privacy defaults</CardTitle></CardHeader><CardContent className="stack-list"><div className="data-row"><span>Cloud context</span><Badge>Prompt only</Badge></div><div className="data-row"><span>Credentials</span><Badge variant="outline">Process memory</Badge></div><div className="data-row"><span>Context output reserve</span><Badge variant="outline">20%</Badge></div><Button onClick={download} variant="outline"><Download /> Export JSONL</Button><input accept=".jsonl,.ndjson,.txt" hidden onChange={async (event) => { const file = event.target.files?.[0]; if (file) { await api.importData(await file.text()); await onRefresh() } }} ref={importRef} type="file" /><Button onClick={() => importRef.current?.click()} variant="outline"><FileUp /> Import JSONL</Button><Button onClick={async () => { if (window.confirm('Permanently wipe all local workspace data?')) { await api.wipeData(); await onRefresh() } }} variant="destructive"><Trash2 /> Panic wipe</Button></CardContent></Card><Card><CardHeader><CardTitle>Runtime</CardTitle></CardHeader><CardContent className="stack-list"><div className="data-row"><span>FastAPI</span><Badge variant={connected ? 'default' : 'destructive'}>{connected ? 'Connected' : 'Unavailable'}</Badge></div><div className="data-row"><span>Canonical data</span><code>data/app.db</code></div><div className="data-row"><span>Vector data</span><code>data/chroma</code></div></CardContent></Card></div></Surface>
 }
 
 async function fileAsBase64(file: File) {
@@ -360,6 +380,7 @@ function App() {
   const [liveOutput, setLiveOutput] = useState('')
   const [activeRun, setActiveRun] = useState<string | null>(null)
   const [error, setError] = useState('')
+  const [excludedSources, setExcludedSources] = useState<Set<string>>(new Set())
 
   const refreshProviders = useCallback(async () => {
     const [providerData, modelData] = await Promise.all([api.providers(), api.models()])
@@ -407,7 +428,7 @@ function App() {
       ...payload,
       plan_hash: contextPlan.plan_hash,
       confirmed_finding_ids: confirmed,
-      excluded_source_ids: [],
+      excluded_source_ids: [...excludedSources],
     })
     setActiveRun(run.id)
     await streamRun(run.id, (event) => {
@@ -438,6 +459,7 @@ function App() {
     try {
       const nextPlan = await api.preflight(activeId, payload)
       setPlan(nextPlan)
+      setExcludedSources(new Set(nextPlan.sources.filter((source) => !source.included || source.trust !== 'trusted').map((source) => source.id)))
       if (nextPlan.requires_confirmation) { setPendingPlan(nextPlan); setPendingPayload(payload); return }
       await submitTurn(payload, nextPlan)
     } catch (cause) { setError(messageOf(cause)) }
@@ -461,16 +483,16 @@ function App() {
     <TooltipProvider>
       <div className="app-shell">
         <Navigation connected={connected} onPage={setPage} page={page} />
-        {page === 'Chat' && <ConversationHistory activeId={activeId} conversations={conversations} onCreate={createConversation} onSelect={setActiveId} />}
-        {page === 'Chat' && <ChatWorkspace conversation={conversation} error={error} liveOutput={liveOutput} models={models} onBranch={async (messageId) => { if (!activeId) return; const branch = await api.branchConversation(activeId, messageId); await refreshConversations(); setActiveId(branch.id) }} onCancel={async () => { if (activeRun) await api.cancelRun(activeRun) }} onConfirm={async () => { if (pendingPayload && pendingPlan) await submitTurn(pendingPayload, pendingPlan, pendingPlan.findings.map((item) => item.id)) }} onModel={setSelectedModel} onSend={send} onUpload={upload} pendingPlan={pendingPlan} plan={plan} running={Boolean(activeRun)} selectedModel={selectedModel} />}
+        {page === 'Chat' && <ConversationHistory activeId={activeId} conversations={conversations} onCreate={createConversation} onDelete={async (id) => { if (!window.confirm('Delete this conversation?')) return; await api.deleteConversation(id); if (activeId === id) setActiveId(null); await refreshConversations() }} onSelect={setActiveId} onUpdate={async (id, payload) => { await api.updateConversation(id, payload); await refreshConversations(); if (activeId === id) setConversation(await api.conversation(id)) }} />}
+        {page === 'Chat' && <ChatWorkspace conversation={conversation} error={error} liveOutput={liveOutput} models={models} onBranch={async (messageId) => { if (!activeId) return; const branch = await api.branchConversation(activeId, messageId); await refreshConversations(); setActiveId(branch.id) }} onCancel={async () => { if (activeRun) await api.cancelRun(activeRun) }} onConfirm={async () => { if (pendingPayload && pendingPlan) await submitTurn(pendingPayload, pendingPlan, pendingPlan.findings.map((item) => item.id)) }} onFeedback={api.setFeedback} onModel={setSelectedModel} onSend={send} onUpload={upload} pendingPlan={pendingPlan} plan={plan} running={Boolean(activeRun)} selectedModel={selectedModel} />}
         {page === 'Compare' && <ComparePage models={models} />}
         {page === 'Context' && <ContextPage backpacks={backpacks} onCreate={async (name, title, content) => { await api.createBackpack(name, title, content); setBackpacks(await api.backpacks()) }} plan={plan} />}
-        {page === 'Evidence' && <EvidencePage activity={activity} plan={plan} />}
+        {page === 'Evidence' && <EvidencePage activity={activity} excluded={excludedSources} onToggle={(id) => setExcludedSources((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} plan={plan} />}
         {page === 'Replay' && <ReplayPage activity={activity} models={models} onReplay={async (run) => { const model = models[0]; if (!model) return; const replay = await api.replay(run.id, model.provider, model.id); await streamRun(replay.id, () => {}); setActivity(await api.activity()) }} />}
         {page === 'Focus' && <FocusPage conversationId={activeId} onCreate={async (objective, criteria, constraints) => { if (!activeId) return; await api.createFocus({ conversation_id: activeId, objective, success_criteria: criteria, constraints }); setPage('Chat') }} />}
         {page === 'Providers' && <ProvidersPage onChanged={refreshProviders} providers={providers} />}
-        {page === 'Library' && <LibraryPage conversationId={activeId} memories={memories} onMemory={async (content) => { await api.createMemory(content); setMemories(await api.memories()) }} onPreset={async (name, prompt) => { await api.createPreset({ name, system_prompt: prompt, model_key: selectedModel, temperature: 0.7 }); setPresets(await api.presets()) }} onUpload={upload} presets={presets} uploads={uploads} />}
-        {page === 'Settings' && <SettingsPage connected={connected} />}
+        {page === 'Library' && <LibraryPage conversationId={activeId} memories={memories} onMemory={async (content) => { await api.createMemory(content); setMemories(await api.memories()) }} onMemoryDelete={async (id) => { await api.deleteMemory(id); setMemories(await api.memories()) }} onMemoryUpdate={async (id, payload) => { await api.updateMemory(id, payload); setMemories(await api.memories()) }} onPreset={async (name, prompt) => { await api.createPreset({ name, system_prompt: prompt, model_key: selectedModel, temperature: 0.7 }); setPresets(await api.presets()) }} onPresetDelete={async (id) => { await api.deletePreset(id); setPresets(await api.presets()) }} onUpload={upload} presets={presets} uploads={uploads} />}
+        {page === 'Settings' && <SettingsPage connected={connected} onRefresh={async () => { await Promise.all([refreshConversations(), refreshLibrary()]) }} />}
       </div>
     </TooltipProvider>
   )

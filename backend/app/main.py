@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import base64
+import asyncio
 import binascii
 import difflib
 import hashlib
@@ -57,7 +58,7 @@ from backend.app.runs import RunManager
 from backend.app.providers import ProviderRegistry, build_provider_registry
 from backend.app.sessions import PROVIDER_ENV, SessionVault
 from backend.app.store import Store
-from backend.app.workspace import assemble_messages, build_context_plan, scan_text
+from backend.app.workspace import assemble_messages, build_context_plan, scan_text, search_web
 from src.files import ACCEPTED_TYPES, parse_upload
 
 
@@ -78,6 +79,21 @@ def create_app(
     if missing_env:
         raise RuntimeError(f"Providers missing from PROVIDER_ENV: {sorted(missing_env)}")
     runs = RunManager(registry, vault, store)
+    web_by_plan: dict[str, list[dict[str, str]]] = {}
+
+    async def context_plan(
+        conversation_id: str, payload: TurnPreflight
+    ) -> ContextPlan:
+        provisional = build_context_plan(store, conversation_id, payload)
+        web_enabled = any(
+            section.kind == "web" and section.included for section in provisional.sections
+        )
+        results = (
+            await asyncio.to_thread(search_web, payload.content) if web_enabled else []
+        )
+        plan = build_context_plan(store, conversation_id, payload, results)
+        web_by_plan[plan.plan_hash] = results
+        return plan
 
     @asynccontextmanager
     async def lifespan(_: FastAPI):
@@ -175,9 +191,9 @@ def create_app(
         "/api/v1/conversations/{conversation_id}/turns/preflight",
         response_model=ContextPlan,
     )
-    def preflight_turn(conversation_id: str, payload: TurnPreflight) -> ContextPlan:
+    async def preflight_turn(conversation_id: str, payload: TurnPreflight) -> ContextPlan:
         try:
-            return build_context_plan(store, conversation_id, payload)
+            return await context_plan(conversation_id, payload)
         except KeyError as exc:
             raise HTTPException(404, "Conversation or context backpack not found") from exc
 
@@ -191,7 +207,12 @@ def create_app(
     ) -> RunSnapshot:
         base = TurnPreflight(**payload.model_dump())
         try:
-            plan = build_context_plan(store, conversation_id, base)
+            cached_web = web_by_plan.get(payload.plan_hash)
+            if cached_web is None:
+                plan = await context_plan(conversation_id, base)
+                cached_web = web_by_plan.get(plan.plan_hash, [])
+            else:
+                plan = build_context_plan(store, conversation_id, base, cached_web)
             if plan.plan_hash != payload.plan_hash:
                 raise HTTPException(409, detail={"message": "Context changed", "plan": plan.model_dump()})
             required = {finding.id for finding in plan.findings}
@@ -203,6 +224,7 @@ def create_app(
                 base,
                 plan,
                 set(payload.excluded_source_ids),
+                cached_web,
             )
             store.add_message(conversation_id, "user", payload.content)
         except KeyError as exc:
