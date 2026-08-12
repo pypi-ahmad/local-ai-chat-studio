@@ -59,9 +59,15 @@ class OAuthCodeInput(BaseModel):
     code: str = Field(min_length=1)
 
 
+class ImageInput(BaseModel):
+    mime: Literal["image/png", "image/jpeg", "image/webp", "image/gif", "image/bmp"]
+    data_base64: str = Field(max_length=14_000_000)
+
+
 class ChatMessage(BaseModel):
     role: Literal["system", "user", "assistant", "tool"]
     content: str = Field(min_length=1)
+    images: list[ImageInput] = Field(default_factory=list)
 
 
 class ModelDescriptor(BaseModel):
@@ -142,6 +148,10 @@ class SafetyFinding(BaseModel):
     severity: Literal["low", "medium", "high"]
     preview: str
     message: str
+
+
+class SafetyText(BaseModel):
+    content: str = Field(min_length=1, max_length=100_000)
 
 
 class ProviderPolicy(BaseModel):
@@ -308,3 +318,11 @@ class DataImport(BaseModel):
 
 class WipeRequest(BaseModel):
     confirmation: Literal["WIPE"]
+
+
+class V2ImportRequest(BaseModel):
+    confirmation: Literal["IMPORT_V2"]
+
+
+class Profile(BaseModel):
+    content: str = Field(default="", max_length=50_000)

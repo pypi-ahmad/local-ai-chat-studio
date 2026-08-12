@@ -82,6 +82,11 @@ export async function streamRun(
 
 export const api = {
   health: () => request<{ status: string; version: string }>('/health'),
+  runtimeHealth: () => request<{ ollama_available: boolean; running_models: { name: string; size_gb: number }[] }>('/runtime/health'),
+  profile: () => request<{ content: string }>('/profile'),
+  setProfile: (content: string) => request<{ content: string }>('/profile', { method: 'PUT', body: JSON.stringify({ content }) }),
+  sanitize: (content: string) =>
+    request<{ content: string }>('/safety/sanitize', { method: 'POST', body: JSON.stringify({ content }) }),
   conversations: (query = '') =>
     request<Conversation[]>(`/conversations${query ? `?query=${encodeURIComponent(query)}` : ''}`),
   conversation: (id: string) => request<Conversation>(`/conversations/${id}`),
@@ -110,6 +115,7 @@ export const api = {
   setCredential: (provider: string, apiKey: string) =>
     request<void>(`/providers/${provider}/credential`, { method: 'PUT', body: JSON.stringify({ api_key: apiKey }) }),
   removeCredential: (provider: string) => request<void>(`/providers/${provider}/credential`, { method: 'DELETE' }),
+  startOpenRouterAuth: () => request<{ authorization_url: string }>('/providers/openrouter/auth/start', { method: 'POST' }),
   providerPolicy: (provider: string) => request<ProviderPolicy>(`/providers/${provider}/policy`),
   setProviderPolicy: (provider: string, policy: ProviderPolicy) =>
     request<ProviderPolicy>(`/providers/${provider}/policy`, { method: 'PUT', body: JSON.stringify(policy) }),
@@ -156,6 +162,7 @@ export const api = {
   exportData: () => request<{ jsonl: string }>('/data/export'),
   importData: (jsonl: string) =>
     request<{ imported: number }>('/data/import', { method: 'POST', body: JSON.stringify({ jsonl }) }),
+  importV2: () => request<{ imported: number }>('/data/import-v2', { method: 'POST', body: JSON.stringify({ confirmation: 'IMPORT_V2' }) }),
   wipeData: () => request<void>('/data/wipe', { method: 'POST', body: JSON.stringify({ confirmation: 'WIPE' }) }),
   simulateProvider: (provider: string, scenario: string, fallbackProvider?: string) =>
     request<{ recovered: boolean; events: { type: string; provider: string; message: string }[] }>(`/providers/${provider}/simulate`, {

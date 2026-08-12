@@ -12,6 +12,7 @@ from backend.app.contracts import (
     ContextPlan,
     ContextSection,
     ContextSource,
+    ImageInput,
     SafetyFinding,
     TurnPreflight,
 )
@@ -111,6 +112,14 @@ def scan_text(text: str) -> list[SafetyFinding]:
     return findings
 
 
+def sanitize_text(text: str) -> str:
+    sanitized = text
+    for label, patterns in (("SECRET", SECRET_PATTERNS), ("PRIVATE", PII_PATTERNS)):
+        for pattern in patterns:
+            sanitized = pattern.sub(f"[REDACTED {label}]", sanitized)
+    return sanitized
+
+
 def build_context_plan(
     store: Store,
     conversation_id: str,
@@ -130,6 +139,7 @@ def build_context_plan(
     history_text = "\n".join(item.content for item in conversation.messages[-20:])
     memories = [item for item in store.list_memories() if item.status == "active"] if memory_allowed else []
     uploads = store.upload_texts(conversation_id) if attachment_allowed else []
+    upload_records = store.list_uploads(conversation_id) if attachment_allowed else []
     retrieval_hits = (
         retrieve_context(store, conversation_id, payload.content) if retrieval_allowed else []
     )
@@ -201,15 +211,16 @@ def build_context_plan(
         )
         for item in memories
     )
+    upload_text_by_id = {upload_id: content for upload_id, _, content in uploads}
     sources.extend(
         ContextSource(
-            id=upload_id,
+            id=item.id,
             kind="attachment",
-            title=filename,
-            preview=content[:160],
-            estimated_tokens=estimate_tokens(content),
+            title=item.filename,
+            preview=upload_text_by_id.get(item.id, "Image attachment")[:160],
+            estimated_tokens=estimate_tokens(upload_text_by_id.get(item.id, "")),
         )
-        for upload_id, filename, content in uploads
+        for item in upload_records
     )
     sources.extend(
         ContextSource(
@@ -262,8 +273,33 @@ def build_context_plan(
             for item in source_findings:
                 item.id = hashlib.sha256(f"{source.id}:{item.id}".encode()).hexdigest()[:12]
             findings.extend(source_findings)
-    estimated = sum(section.estimated_tokens for section in sections if section.included)
+    section_by_kind = {section.kind: section for section in sections}
+    section_kind = {"attachment": "attachments"}
+    for source in sources:
+        if source.included:
+            continue
+        section = section_by_kind.get(section_kind.get(source.kind, source.kind))
+        if section:
+            section.estimated_tokens = max(
+                0, section.estimated_tokens - source.estimated_tokens
+            )
     budget = max(1, int(payload.context_limit * 0.8))
+    estimated = sum(section.estimated_tokens for section in sections if section.included)
+    prune_order = {"history": 0, "retrieval": 1, "web": 2, "memory": 3, "attachment": 4, "backpack": 5}
+    for source in sorted(
+        sources,
+        key=lambda item: (prune_order.get(item.kind, 99), item.score or 0),
+    ):
+        if estimated <= budget:
+            break
+        if not source.included:
+            continue
+        source.included = False
+        section = section_by_kind.get(section_kind.get(source.kind, source.kind))
+        if section and section.included:
+            removed = min(section.estimated_tokens, source.estimated_tokens)
+            section.estimated_tokens -= removed
+            estimated -= removed
     plan_basis = {
         "conversation_id": conversation_id,
         "request": payload.model_dump(),
@@ -374,7 +410,14 @@ def assemble_messages(
             for item in conversation.messages[-20:]
             if item.id not in excluded and item.role in {"user", "assistant"}
         )
-    messages.append(ChatMessage(role="user", content=payload.content))
+    images = []
+    if included.get("attachments"):
+        images = [
+            ImageInput(mime=mime, data_base64=data)
+            for upload_id, _filename, mime, data in store.upload_images(conversation_id)
+            if upload_id in approved_sources
+        ]
+    messages.append(ChatMessage(role="user", content=payload.content, images=images))
     return messages
 
 

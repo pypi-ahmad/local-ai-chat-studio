@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import base64
 import os
 from abc import ABC, abstractmethod
 from collections.abc import AsyncIterator, Callable
@@ -51,9 +52,23 @@ class OpenAICompatibleAdapter(ProviderAdapter):
         messages: list[ChatMessage],
         temperature: float,
     ) -> AsyncIterator[str]:
+        formatted = []
+        for message in messages:
+            if message.images:
+                content: Any = [{"type": "text", "text": message.content}]
+                content.extend(
+                    {
+                        "type": "image_url",
+                        "image_url": {"url": f"data:{image.mime};base64,{image.data_base64}"},
+                    }
+                    for image in message.images
+                )
+                formatted.append({"role": message.role, "content": content})
+            else:
+                formatted.append(message.model_dump(exclude={"images"}))
         response = await self._client(api_key).chat.completions.create(
             model=model,
-            messages=[message.model_dump() for message in messages],
+            messages=formatted,
             temperature=temperature,
             stream=True,
         )
@@ -92,7 +107,17 @@ class OllamaAdapter(ProviderAdapter):
     ) -> AsyncIterator[str]:
         response = await self._client(api_key).chat(
             model=model,
-            messages=[message.model_dump() for message in messages],
+            messages=[
+                {
+                    **message.model_dump(exclude={"images"}),
+                    **(
+                        {"images": [base64.b64decode(image.data_base64) for image in message.images]}
+                        if message.images
+                        else {}
+                    ),
+                }
+                for message in messages
+            ],
             options={"temperature": temperature},
             stream=True,
         )
@@ -127,7 +152,26 @@ class AnthropicAdapter(ProviderAdapter):
         from anthropic import AsyncAnthropic
 
         system = "\n\n".join(message.content for message in messages if message.role == "system")
-        chat = [message.model_dump() for message in messages if message.role in {"user", "assistant"}]
+        chat = []
+        for message in messages:
+            if message.role not in {"user", "assistant"}:
+                continue
+            if message.images:
+                content: Any = [{"type": "text", "text": message.content}]
+                content.extend(
+                    {
+                        "type": "image",
+                        "source": {
+                            "type": "base64",
+                            "media_type": image.mime,
+                            "data": image.data_base64,
+                        },
+                    }
+                    for image in message.images
+                )
+                chat.append({"role": message.role, "content": content})
+            else:
+                chat.append(message.model_dump(exclude={"images"}))
         kwargs: dict[str, Any] = {
             "model": model,
             "messages": chat,
@@ -166,8 +210,18 @@ class GeminiAdapter(ProviderAdapter):
         temperature: float,
     ) -> AsyncIterator[str]:
         prompt = "\n\n".join(f"{item.role}: {item.content}" for item in messages)
+        contents: list[Any] = [prompt]
+        from google.genai import types
+
+        contents.extend(
+            types.Part.from_bytes(
+                data=base64.b64decode(image.data_base64), mime_type=image.mime
+            )
+            for message in messages
+            for image in message.images
+        )
         response = await self._client(api_key).aio.models.generate_content_stream(
-            model=model, contents=prompt, config={"temperature": temperature}
+            model=model, contents=contents, config={"temperature": temperature}
         )
         try:
             async for chunk in response:

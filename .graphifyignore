@@ -1,0 +1,7 @@
+.ua/
+graphify-out/
+.codegraph/
+.code-review-graph/
+.claude/
+.agents/
+.codex/

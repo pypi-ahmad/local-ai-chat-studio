@@ -21,6 +21,58 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/safety/sanitize": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Sanitize */
+        post: operations["sanitize_api_v1_safety_sanitize_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/runtime/health": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Runtime Health */
+        get: operations["runtime_health_api_v1_runtime_health_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/profile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Profile */
+        get: operations["get_profile_api_v1_profile_get"];
+        /** Set Profile */
+        put: operations["set_profile_api_v1_profile_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/conversations": {
         parameters: {
             query?: never;
@@ -491,6 +543,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/data/import-v2": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Import V2 */
+        post: operations["import_v2_api_v1_data_import_v2_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/data/wipe": {
         parameters: {
             query?: never;
@@ -717,6 +786,8 @@ export interface components {
             role: "system" | "user" | "assistant" | "tool";
             /** Content */
             content: string;
+            /** Images */
+            images?: components["schemas"]["ImageInput"][];
         };
         /** ContextPlan */
         ContextPlan: {
@@ -917,6 +988,16 @@ export interface components {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
         };
+        /** ImageInput */
+        ImageInput: {
+            /**
+             * Mime
+             * @enum {string}
+             */
+            mime: "image/png" | "image/jpeg" | "image/webp" | "image/gif" | "image/bmp";
+            /** Data Base64 */
+            data_base64: string;
+        };
         /** Memory */
         Memory: {
             /** Content */
@@ -1058,6 +1139,14 @@ export interface components {
              */
             temperature: number;
         };
+        /** Profile */
+        Profile: {
+            /**
+             * Content
+             * @default
+             */
+            content: string;
+        };
         /** ProviderPolicy */
         ProviderPolicy: {
             /**
@@ -1195,6 +1284,11 @@ export interface components {
             preview: string;
             /** Message */
             message: string;
+        };
+        /** SafetyText */
+        SafetyText: {
+            /** Content */
+            content: string;
         };
         /** TurnCreate */
         TurnCreate: {
@@ -1337,6 +1431,14 @@ export interface components {
             /** Content Base64 */
             content_base64: string;
         };
+        /** V2ImportRequest */
+        V2ImportRequest: {
+            /**
+             * Confirmation
+             * @constant
+             */
+            confirmation: "IMPORT_V2";
+        };
         /** ValidationError */
         ValidationError: {
             /** Location */
@@ -1385,6 +1487,116 @@ export interface operations {
                     "application/json": {
                         [key: string]: string;
                     };
+                };
+            };
+        };
+    };
+    sanitize_api_v1_safety_sanitize_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SafetyText"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: string;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    runtime_health_api_v1_runtime_health_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    get_profile_api_v1_profile_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Profile"];
+                };
+            };
+        };
+    };
+    set_profile_api_v1_profile_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Profile"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Profile"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -2525,6 +2737,41 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["DataImport"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: number;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    import_v2_api_v1_data_import_v2_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["V2ImportRequest"];
             };
         };
         responses: {

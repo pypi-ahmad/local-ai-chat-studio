@@ -42,32 +42,44 @@ from backend.app.contracts import (
     OAuthCodeInput,
     Preset,
     PresetCreate,
+    Profile,
     ProviderPolicy,
     ProviderSimulationInput,
     ReplayBundle,
     ReplayCreate,
     RunCreate,
     RunSnapshot,
+    SafetyText,
     TurnCreate,
     TurnPreflight,
     Upload,
     UploadCreate,
+    V2ImportRequest,
     WipeRequest,
 )
 from backend.app.runs import RunManager
 from backend.app.providers import ProviderRegistry, build_provider_registry
 from backend.app.sessions import PROVIDER_ENV, SessionVault
 from backend.app.store import Store
-from backend.app.workspace import assemble_messages, build_context_plan, scan_text, search_web
+from backend.app.workspace import (
+    assemble_messages,
+    build_context_plan,
+    sanitize_text,
+    scan_text,
+    search_web,
+)
 from src.files import ACCEPTED_TYPES, parse_upload
+from src.ollama_client import ollama_alive, running_models
 
 
 def create_app(
     database_url: str | None = None,
     provider_registry: ProviderRegistry | None = None,
+    v2_database_url: str | None = None,
 ) -> FastAPI:
     data_dir = Path(os.getenv("CHAT_DATA_DIR", "data"))
     store = Store(database_url or str(data_dir / "app.db"))
+    v2_database = v2_database_url or str(data_dir / "v2" / "studio.db")
     vault = SessionVault()
     OAUTH_VERIFIER_TTL = 600  # seconds; abandoned flows are pruned, not kept forever
     oauth_verifiers: dict[str, tuple[str, float]] = {}
@@ -92,6 +104,8 @@ def create_app(
             await asyncio.to_thread(search_web, payload.content) if web_enabled else []
         )
         plan = build_context_plan(store, conversation_id, payload, results)
+        if len(web_by_plan) >= 128:
+            web_by_plan.pop(next(iter(web_by_plan)))
         web_by_plan[plan.plan_hash] = results
         return plan
 
@@ -126,6 +140,25 @@ def create_app(
     @app.get("/api/v1/health")
     def health() -> dict[str, str]:
         return {"status": "ok", "version": "2"}
+
+    @app.post("/api/v1/safety/sanitize")
+    def sanitize(payload: SafetyText) -> dict[str, str]:
+        return {"content": sanitize_text(payload.content)}
+
+    @app.get("/api/v1/runtime/health")
+    async def runtime_health() -> dict[str, object]:
+        available, loaded = await asyncio.gather(
+            asyncio.to_thread(ollama_alive), asyncio.to_thread(running_models)
+        )
+        return {"ollama_available": available, "running_models": loaded}
+
+    @app.get("/api/v1/profile", response_model=Profile)
+    def get_profile() -> Profile:
+        return Profile(content=store.get_profile())
+
+    @app.put("/api/v1/profile", response_model=Profile)
+    def set_profile(payload: Profile) -> Profile:
+        return Profile(content=store.set_profile(payload.content))
 
     @app.post("/api/v1/conversations", response_model=Conversation, status_code=201)
     def create_conversation(payload: ConversationCreate) -> Conversation:
@@ -496,9 +529,22 @@ def create_app(
     def import_data(payload: DataImport) -> dict[str, int]:
         return {"imported": store.import_jsonl(payload.jsonl)}
 
+    @app.post("/api/v1/data/import-v2")
+    def import_v2(_: V2ImportRequest) -> dict[str, int]:
+        try:
+            return {"imported": store.import_v2_database(v2_database)}
+        except FileNotFoundError as exc:
+            raise HTTPException(404, "No v2 database is available to import") from exc
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+
     @app.post("/api/v1/data/wipe", status_code=204)
-    def wipe_data(_: WipeRequest) -> Response:
-        store.wipe()
+    async def wipe_data(_: WipeRequest, request: Request) -> Response:
+        await asyncio.to_thread(store.wipe)
+        runs.clear()
+        vault.clear(request.state.session_id)
+        oauth_verifiers.pop(request.state.session_id, None)
+        web_by_plan.clear()
         return Response(status_code=204)
 
     @app.post("/api/v1/uploads", response_model=Upload, status_code=201)
@@ -575,9 +621,22 @@ def create_app(
             raise HTTPException(404, "Run not found") from exc
         run = bundle["snapshot"]
         request_data = bundle["request"]
+        if mode == "redacted":
+            run = run.model_copy(
+                update={"output": sanitize_text(run.output), "error": None}
+            )
         return ReplayBundle(
             run=run,
-            messages=request_data.get("messages", []),
+            messages=[
+                {
+                    **message,
+                    "content": sanitize_text(message.get("content", "")),
+                    "images": [],
+                }
+                if mode == "redacted"
+                else message
+                for message in request_data.get("messages", [])
+            ],
             context=None if mode == "redacted" else bundle["context"],
             integrity={"algorithm": "sha256-chain", "hash": run.receipt_hash or ""},
         )

@@ -1,5 +1,10 @@
 # Local AI Chat Studio — Code Tutorial: Zero to Hero
 
+> Historical architecture note: sections describing `app.py`, `pages/`, or Streamlit
+> document the retired UI. The current application flow is
+> `backend/app/main.py` → `runs.py`/`workspace.py`/`store.py` →
+> `frontend/src/api/client.ts` → `frontend/src/App.tsx`.
+
 This is a **read-the-code-out-loud** tutorial. It walks every module in this
 repository, in the order data actually flows through it, quoting real
 functions and explaining why each one is shaped the way it is. If you want

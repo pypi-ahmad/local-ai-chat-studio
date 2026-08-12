@@ -1,5 +1,9 @@
 # Local AI Chat Studio: Zero-to-Hero Study Handbook
 
+> Historical study material: Streamlit-specific modules in this handbook describe the
+> retired UI. Use `README.md` and `docs/codebase/` for the current FastAPI + React
+> architecture.
+
 > Verified against repository version **v0.2.0 on 2026-07-23**. Status markers: **[v2]** FastAPI/React v2, **[legacy]** Streamlit application, **[shared]** repository-wide tooling or concepts, and **[gap]** designed or displayed but not wired end to end.
 
 This handbook takes a beginner from “what is an LLM?” to making a focused contribution. It is intentionally honest about the transition in this repository: the v2 backend is functional, but the v2 React app is mostly a visual shell. The legacy Streamlit application still contains the rich chat, files, RAG, memory, personalization, assistant, and comparison behavior.

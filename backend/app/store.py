@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import json
 import re
 import sqlite3
@@ -155,6 +156,7 @@ CREATE TABLE IF NOT EXISTS schema_migrations (
 
 class Store:
     def __init__(self, database_url: str) -> None:
+        self.database_url = database_url
         if database_url != ":memory:":
             Path(database_url).parent.mkdir(parents=True, exist_ok=True)
         self.connection = sqlite3.connect(database_url, check_same_thread=False)
@@ -801,6 +803,95 @@ class Store:
             ):
                 self.connection.execute(f"DELETE FROM {table}")
 
+    def get_profile(self) -> str:
+        with self.lock:
+            row = self.connection.execute(
+                "SELECT value FROM kv WHERE key = 'user_profile'"
+            ).fetchone()
+        return row["value"] if row else ""
+
+    def set_profile(self, content: str) -> str:
+        with self.lock, self.connection:
+            self.connection.execute(
+                "INSERT INTO kv (key, value, updated_at) VALUES ('user_profile', ?, ?) "
+                "ON CONFLICT(key) DO UPDATE SET value = excluded.value, "
+                "updated_at = excluded.updated_at",
+                (content, utc_now()),
+            )
+        return content
+
+    def import_v2_database(self, source_path: str) -> int:
+        migration_version = 2001
+        with self.lock:
+            applied = self.connection.execute(
+                "SELECT 1 FROM schema_migrations WHERE version = ?", (migration_version,)
+            ).fetchone()
+        if applied:
+            return 0
+        source = Path(source_path)
+        if not source.is_file():
+            raise FileNotFoundError(source)
+        if self.database_url != ":memory:":
+            target = Path(self.database_url)
+            backup = target.with_name(f"{target.name}.pre-v2-import-{uuid.uuid4().hex[:8]}.bak")
+            with sqlite3.connect(backup) as backup_connection, self.lock:
+                self.connection.backup(backup_connection)
+        imported = 0
+        previous = sqlite3.connect(source)
+        previous.row_factory = sqlite3.Row
+        try:
+            tables = {
+                row[0]
+                for row in previous.execute(
+                    "SELECT name FROM sqlite_master WHERE type = 'table'"
+                )
+            }
+            if "conversations" not in tables or "messages" not in tables:
+                raise ValueError("The v2 database has no conversation schema")
+            table_order = (
+                "conversations",
+                "messages",
+                "memories",
+                "presets",
+                "provider_policies",
+                "backpacks",
+                "backpack_items",
+                "focus_sessions",
+                "uploads",
+                "runs",
+                "run_events",
+            )
+            with self.lock, self.connection:
+                for table in table_order:
+                    if table not in tables:
+                        continue
+                    source_columns = [
+                        row[1] for row in previous.execute(f"PRAGMA table_info({table})")
+                    ]
+                    target_columns = {
+                        row["name"]
+                        for row in self.connection.execute(f"PRAGMA table_info({table})")
+                    }
+                    columns = [column for column in source_columns if column in target_columns]
+                    if not columns:
+                        continue
+                    names = ", ".join(columns)
+                    placeholders = ", ".join("?" for _ in columns)
+                    for row in previous.execute(f"SELECT {names} FROM {table}"):
+                        cursor = self.connection.execute(
+                            f"INSERT OR IGNORE INTO {table} ({names}) VALUES ({placeholders})",
+                            tuple(row[column] for column in columns),
+                        )
+                        if table == "conversations":
+                            imported += int(cursor.rowcount > 0)
+                self.connection.execute(
+                    "INSERT INTO schema_migrations VALUES (?, ?)",
+                    (migration_version, utc_now()),
+                )
+        finally:
+            previous.close()
+        return imported
+
     def create_upload(
         self,
         conversation_id: str,
@@ -866,6 +957,24 @@ class Store:
                 (conversation_id,),
             ).fetchall()
         return [(row["id"], row["filename"], row["text_content"]) for row in rows]
+
+    def upload_images(self, conversation_id: str) -> list[tuple[str, str, str, str]]:
+        with self.lock:
+            rows = self.connection.execute(
+                "SELECT id, filename, mime, content_blob FROM uploads "
+                "WHERE conversation_id = ? AND kind = 'image' AND content_blob IS NOT NULL "
+                "ORDER BY created_at",
+                (conversation_id,),
+            ).fetchall()
+        return [
+            (
+                row["id"],
+                row["filename"],
+                row["mime"],
+                base64.b64encode(row["content_blob"]).decode("ascii"),
+            )
+            for row in rows
+        ]
 
     @staticmethod
     def _messages(rows: list[sqlite3.Row]) -> list[Message]:

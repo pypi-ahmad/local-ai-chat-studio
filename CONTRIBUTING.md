@@ -1,13 +1,9 @@
 # Contributing to Local AI Chat Studio
 
 Contributions are welcome — PRs, issues, and ideas are all appreciated. This
-guide covers the mechanics of contributing; for a deep dive into *how the code
-works* before you change it, see the
-[Zero-to-Hero Study Handbook](ZERO_TO_HERO_STUDY_HANDBOOK.md) (§10 has
-step-by-step recipes for the most common contribution types: adding a v2
-provider, adding an endpoint, wiring a React workspace slice, adding a legacy
-file parser) and [CODE_TUTORIAL.md](CODE_TUTORIAL.md) for a narrative
-walkthrough of the existing modules.
+guide covers the mechanics of contributing. Start with the current architecture map in
+[`docs/codebase/`](docs/codebase/); the longer handbook and code tutorial retain some
+clearly marked historical Streamlit material.
 
 ## Before you start
 
@@ -30,10 +26,8 @@ cd frontend && npm ci && cd ..
 
 ## Code style
 
-- **Python**: type hints throughout, Google-style docstrings, `loguru` for
-  logging (not `print`). Match the existing pattern in the file you're
-  editing — legacy `src/`/`app.py`/`pages/` and v2 `backend/app/` have
-  slightly different conventions; follow whichever stack you're touching.
+- **Python**: type hints throughout and no `print` debugging. Match the existing
+  pattern in `backend/app/` or the shared helper under `src/` that you touch.
 - **TypeScript/React**: match `frontend/src/components/ui/` conventions
   (shadcn-style primitives) for new UI components; `frontend/.oxlintrc.json`
   is the linter config.
@@ -58,18 +52,15 @@ green locally means green in CI.
 1. Run the app and verify your change end-to-end (not just unit tests).
 2. Open a PR describing *why*, not just *what* — link any related issue.
 3. If you touched `backend/app/contracts.py` (any request/response shape),
-   regenerate the frontend types: `uv run python scripts/generate_api_types.py`
-   (or `npm run generate:api` from `frontend/`) and commit the diff to
+   regenerate the frontend types with `npm run generate:api` from `frontend/`,
+   remove the temporary root `openapi.json`, and commit the diff to
    `frontend/src/api/schema.ts`.
-4. Add or update tests for the behavior you changed — `tests/` for the v2
-   backend, alongside the module for legacy `src/` code.
+4. Add or update tests for the behavior you changed under `tests/`.
 
 ## Good first issues
 
-New file parsers (`src/files.py`), more BYOK providers (legacy
-`src/providers.py` or v2 `backend/app/providers.py`), model-hint heuristics
-(`src/model_labels.py`), tests for the legacy stack (currently thin — see
-handbook §11.1), and UI polish on the v2 frontend.
+New file parsers (`src/files.py`), more BYOK providers
+(`backend/app/providers.py`), retrieval improvements, and React workspace polish.
 
 Found a bug but don't have time to fix it?
 [Open an issue](https://github.com/pypi-ahmad/local-ai-chat-studio/issues) —

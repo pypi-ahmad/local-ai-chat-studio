@@ -78,6 +78,15 @@ class RunManager:
         with self._lock:
             return state.snapshot.model_copy()
 
+    def clear(self) -> None:
+        with self._lock:
+            states = list(self._runs.values())
+            self._runs.clear()
+        for state in states:
+            state.cancel.set()
+            if state.task and not state.task.done():
+                state.task.cancel()
+
     async def events(self, run_id: str, session_id: str) -> AsyncIterator[RunEvent]:
         state, offset = self._state(run_id, session_id), 0
         terminal = {RunStatus.completed, RunStatus.cancelled, RunStatus.failed}

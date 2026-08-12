@@ -33,6 +33,10 @@ class SessionVault:
         with self._lock:
             self._values.get(session_id, {}).pop(provider, None)
 
+    def clear(self, session_id: str) -> None:
+        with self._lock:
+            self._values.pop(session_id, None)
+
     def get(self, session_id: str, provider: str) -> str | None:
         with self._lock:
             value = self._values.get(session_id, {}).get(provider)

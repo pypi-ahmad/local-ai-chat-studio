@@ -239,10 +239,17 @@ def test_memory_lifecycle_feedback_and_data_controls(client: TestClient) -> None
     exported = client.get("/api/v1/data/export").json()["jsonl"]
     assert "Useful answer" in exported
 
+    client.put("/api/v1/providers/openai/credential", json={"api_key": "session-key"})
+
     wiped = client.post("/api/v1/data/wipe", json={"confirmation": "WIPE"})
     assert wiped.status_code == 204
     assert client.get("/api/v1/conversations").json() == []
     assert client.get("/api/v1/memories").json() == []
+    assert next(
+        item
+        for item in client.get("/api/v1/providers").json()["providers"]
+        if item["id"] == "openai"
+    )["key_source"] != "session"
 
     imported = client.post("/api/v1/data/import", json={"jsonl": exported})
     assert imported.json()["imported"] == 1
@@ -262,6 +269,24 @@ def test_redacted_replay_bundle_hides_private_context(client: TestClient) -> Non
     assert bundle.status_code == 200
     assert bundle.json()["messages"][-1]["content"] == "public prompt"
     assert bundle.json()["context"] is None
+
+    secret_run = client.post(
+        "/api/v1/runs",
+        json={
+            "provider": "echo",
+            "model": "deterministic",
+            "messages": [
+                {"role": "user", "content": "sk-1234567890abcdef", "images": []}
+            ],
+        },
+    ).json()
+    with client.stream("GET", f"/api/v1/runs/{secret_run['id']}/events") as stream:
+        list(stream.iter_lines())
+    shared = client.get(
+        f"/api/v1/runs/{secret_run['id']}/bundle?mode=redacted"
+    ).json()
+    assert "1234567890abcdef" not in shared["run"]["output"]
+    assert "1234567890abcdef" not in shared["messages"][0]["content"]
 
 
 def test_workspace_resource_lifecycle_and_provider_simulator(client: TestClient) -> None:
@@ -382,3 +407,109 @@ def test_cross_chat_retrieval_has_provenance_and_can_be_excluded(client: TestCli
     )
     bundle = client.get(f"/api/v1/runs/{created.json()['id']}/bundle").json()
     assert "green cluster" not in bundle["messages"][0]["content"]
+
+
+def test_image_attachment_is_available_to_full_replay_but_not_redacted_share(
+    client: TestClient,
+) -> None:
+    conversation_id = _conversation(client)
+    # 1x1 transparent PNG
+    uploaded = client.post(
+        "/api/v1/uploads",
+        json={
+            "conversation_id": conversation_id,
+            "filename": "pixel.png",
+            "content_base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M/wHwAF/gL+XxYvWQAAAABJRU5ErkJggg==",
+        },
+    )
+    assert uploaded.status_code == 201
+    payload = {
+        "provider": "echo",
+        "model": "deterministic",
+        "content": "Describe the image",
+        "include_attachments": True,
+    }
+    plan = client.post(
+        f"/api/v1/conversations/{conversation_id}/turns/preflight", json=payload
+    ).json()
+    assert any(source["title"] == "pixel.png" for source in plan["sources"])
+    created = client.post(
+        f"/api/v1/conversations/{conversation_id}/turns",
+        json={**payload, "plan_hash": plan["plan_hash"]},
+    ).json()
+
+    full = client.get(f"/api/v1/runs/{created['id']}/bundle").json()
+    redacted = client.get(f"/api/v1/runs/{created['id']}/bundle?mode=redacted").json()
+    assert full["messages"][-1]["images"][0]["mime"] == "image/png"
+    assert redacted["messages"][-1]["images"] == []
+
+
+def test_context_budget_prunes_sources_and_private_text_can_be_sanitized(
+    client: TestClient,
+) -> None:
+    old_conversation = _conversation(client)
+    client.post(
+        f"/api/v1/conversations/{old_conversation}/messages",
+        json={"role": "user", "content": "Juniper " + "context " * 200},
+    )
+    conversation_id = _conversation(client)
+    plan = client.post(
+        f"/api/v1/conversations/{conversation_id}/turns/preflight",
+        json={
+            "provider": "echo",
+            "model": "deterministic",
+            "content": "Juniper context",
+            "include_retrieval": True,
+            "context_limit": 512,
+        },
+    ).json()
+    assert plan["estimated_tokens"] <= plan["budget_tokens"]
+    assert any(not source["included"] for source in plan["sources"])
+
+    sanitized = client.post(
+        "/api/v1/safety/sanitize",
+        json={"content": "Email me at person@example.com with sk-1234567890abcdef"},
+    )
+    assert sanitized.status_code == 200
+    assert "person@example.com" not in sanitized.json()["content"]
+    assert "1234567890abcdef" not in sanitized.json()["content"]
+
+
+def test_profile_runtime_health_and_opt_in_v2_import(tmp_path, monkeypatch) -> None:
+    from backend.app.main import create_app
+
+    source = tmp_path / "studio.db"
+    connection = sqlite3.connect(source)
+    connection.executescript(
+        "CREATE TABLE conversations (id TEXT PRIMARY KEY, title TEXT, model TEXT, "
+        "created_at TEXT, updated_at TEXT);"
+        "CREATE TABLE messages (id TEXT PRIMARY KEY, conv_id TEXT, role TEXT, content TEXT, ts TEXT);"
+        "INSERT INTO conversations VALUES ('old', 'Imported v2', 'echo', 'now', 'now');"
+        "INSERT INTO messages VALUES ('msg', 'old', 'user', 'preserved', 'now');"
+    )
+    connection.close()
+    monkeypatch.setattr("backend.app.main.ollama_alive", lambda: True)
+    monkeypatch.setattr(
+        "backend.app.main.running_models", lambda: [{"name": "tiny", "size_gb": 1.5}]
+    )
+
+    with TestClient(
+        create_app(database_url=str(tmp_path / "app.db"), v2_database_url=str(source))
+    ) as client:
+        profile = client.put("/api/v1/profile", json={"content": "Prefer terse answers"})
+        assert profile.json()["content"] == "Prefer terse answers"
+        assert client.get("/api/v1/profile").json() == profile.json()
+        health = client.get("/api/v1/runtime/health").json()
+        assert health == {
+            "ollama_available": True,
+            "running_models": [{"name": "tiny", "size_gb": 1.5}],
+        }
+        imported = client.post(
+            "/api/v1/data/import-v2", json={"confirmation": "IMPORT_V2"}
+        )
+        assert imported.json()["imported"] == 1
+        assert client.get("/api/v1/conversations/old").json()["messages"][0]["content"] == "preserved"
+        assert client.post(
+            "/api/v1/data/import-v2", json={"confirmation": "IMPORT_V2"}
+        ).json()["imported"] == 0
+    assert list(tmp_path.glob("app.db.pre-v2-import-*.bak"))
