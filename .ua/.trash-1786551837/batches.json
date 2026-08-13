@@ -1,0 +1,1675 @@
+{
+  "schemaVersion": 1,
+  "algorithm": "louvain",
+  "totalFiles": 101,
+  "totalBatches": 9,
+  "exportsByPath": {
+    ".code-review-graph/graph.db": [],
+    ".graphifyignore": [],
+    ".python-version": [],
+    "backend/__init__.py": [],
+    "backend/app/__init__.py": [],
+    "backend/app/cli.py": [
+      "main"
+    ],
+    "backend/app/contracts.py": [
+      "utc_now",
+      "MessageCreate",
+      "Message",
+      "ConversationCreate",
+      "ConversationUpdate",
+      "Conversation",
+      "CredentialInput",
+      "OAuthCodeInput",
+      "OpenCodeOAuthStart",
+      "OpenCodeOAuthComplete",
+      "ImageInput",
+      "ChatMessage",
+      "ModelDescriptor",
+      "ProviderDiscovery",
+      "RunCreate",
+      "RunStatus",
+      "RunSnapshot",
+      "RunEvent",
+      "ContextSection",
+      "ContextSource",
+      "SafetyFinding",
+      "SafetyText",
+      "ProviderPolicy",
+      "TurnPreflight",
+      "TurnCreate",
+      "ContextPlan",
+      "ConversationBranch",
+      "BackpackItemInput",
+      "BackpackCreate",
+      "BackpackItem",
+      "Backpack",
+      "FocusCreate",
+      "FocusSession",
+      "FocusUpdate",
+      "ProviderSimulationInput",
+      "ReplayBundle",
+      "MemoryCreate",
+      "Memory",
+      "MemoryUpdate",
+      "MemoryExtractionRequest",
+      "MemoryExtractionResult",
+      "PresetCreate",
+      "Preset",
+      "UploadCreate",
+      "Upload",
+      "ReplayCreate",
+      "FeedbackInput",
+      "DataImport",
+      "WipeRequest",
+      "V2ImportRequest",
+      "Profile"
+    ],
+    "backend/app/main.py": [
+      "create_app"
+    ],
+    "backend/app/memory.py": [
+      "ExtractionOutcome",
+      "extract_memories",
+      "_complete",
+      "_selection_prompt",
+      "_consolidation_prompt",
+      "_parse_memories",
+      "_category"
+    ],
+    "backend/app/providers.py": [
+      "ProviderAdapter",
+      "OpenAICompatibleAdapter",
+      "OllamaAdapter",
+      "AnthropicAdapter",
+      "GeminiAdapter",
+      "OpenCodeZenAdapter",
+      "OpenCodeBridgeAdapter",
+      "ProviderRegistry",
+      "build_provider_registry"
+    ],
+    "backend/app/runs.py": [
+      "RunState",
+      "RunManager"
+    ],
+    "backend/app/sessions.py": [
+      "SessionVault",
+      "_anthropic_wif_configured"
+    ],
+    "backend/app/store.py": [
+      "Store"
+    ],
+    "backend/app/workspace.py": [
+      "search_web",
+      "retrieve_context",
+      "relevant_memories",
+      "estimate_tokens",
+      "scan_text",
+      "sanitize_text",
+      "build_context_plan",
+      "assemble_messages",
+      "_redact"
+    ],
+    "frontend/src/App.test.tsx": [],
+    "frontend/src/App.tsx": [],
+    "frontend/src/ErrorBoundary.tsx": [
+      "ErrorBoundary"
+    ],
+    "frontend/src/api/client.ts": [
+      "ApiError",
+      "streamRun",
+      "api"
+    ],
+    "frontend/src/api/schema.ts": [],
+    "frontend/src/components/ui/avatar.tsx": [
+      "Avatar",
+      "AvatarImage",
+      "AvatarFallback",
+      "AvatarGroup",
+      "AvatarGroupCount",
+      "AvatarBadge"
+    ],
+    "frontend/src/components/ui/badge.tsx": [
+      "Badge",
+      "badgeVariants"
+    ],
+    "frontend/src/components/ui/button.tsx": [
+      "Button",
+      "buttonVariants"
+    ],
+    "frontend/src/components/ui/card.tsx": [
+      "Card",
+      "CardHeader",
+      "CardFooter",
+      "CardTitle",
+      "CardAction",
+      "CardDescription",
+      "CardContent"
+    ],
+    "frontend/src/components/ui/dialog.tsx": [
+      "Dialog",
+      "DialogClose",
+      "DialogContent",
+      "DialogDescription",
+      "DialogFooter",
+      "DialogHeader",
+      "DialogOverlay",
+      "DialogPortal",
+      "DialogTitle",
+      "DialogTrigger"
+    ],
+    "frontend/src/components/ui/dropdown-menu.tsx": [
+      "DropdownMenu",
+      "DropdownMenuPortal",
+      "DropdownMenuTrigger",
+      "DropdownMenuContent",
+      "DropdownMenuGroup",
+      "DropdownMenuLabel",
+      "DropdownMenuItem",
+      "DropdownMenuCheckboxItem",
+      "DropdownMenuRadioGroup",
+      "DropdownMenuRadioItem",
+      "DropdownMenuSeparator",
+      "DropdownMenuShortcut",
+      "DropdownMenuSub",
+      "DropdownMenuSubTrigger",
+      "DropdownMenuSubContent"
+    ],
+    "frontend/src/components/ui/field.tsx": [
+      "Field",
+      "FieldLabel",
+      "FieldDescription",
+      "FieldError",
+      "FieldGroup",
+      "FieldLegend",
+      "FieldSeparator",
+      "FieldSet",
+      "FieldContent",
+      "FieldTitle"
+    ],
+    "frontend/src/components/ui/input.tsx": [
+      "Input"
+    ],
+    "frontend/src/components/ui/label.tsx": [
+      "Label"
+    ],
+    "frontend/src/components/ui/scroll-area.tsx": [
+      "ScrollArea",
+      "ScrollBar"
+    ],
+    "frontend/src/components/ui/select.tsx": [
+      "Select",
+      "SelectContent",
+      "SelectGroup",
+      "SelectItem",
+      "SelectLabel",
+      "SelectScrollDownButton",
+      "SelectScrollUpButton",
+      "SelectSeparator",
+      "SelectTrigger",
+      "SelectValue"
+    ],
+    "frontend/src/components/ui/separator.tsx": [
+      "Separator"
+    ],
+    "frontend/src/components/ui/sheet.tsx": [
+      "Sheet",
+      "SheetTrigger",
+      "SheetClose",
+      "SheetContent",
+      "SheetHeader",
+      "SheetFooter",
+      "SheetTitle",
+      "SheetDescription"
+    ],
+    "frontend/src/components/ui/sidebar.tsx": [
+      "Sidebar",
+      "SidebarContent",
+      "SidebarFooter",
+      "SidebarGroup",
+      "SidebarGroupAction",
+      "SidebarGroupContent",
+      "SidebarGroupLabel",
+      "SidebarHeader",
+      "SidebarInput",
+      "SidebarInset",
+      "SidebarMenu",
+      "SidebarMenuAction",
+      "SidebarMenuBadge",
+      "SidebarMenuButton",
+      "SidebarMenuItem",
+      "SidebarMenuSkeleton",
+      "SidebarMenuSub",
+      "SidebarMenuSubButton",
+      "SidebarMenuSubItem",
+      "SidebarProvider",
+      "SidebarRail",
+      "SidebarSeparator",
+      "SidebarTrigger",
+      "useSidebar"
+    ],
+    "frontend/src/components/ui/skeleton.tsx": [
+      "Skeleton"
+    ],
+    "frontend/src/components/ui/switch.tsx": [
+      "Switch"
+    ],
+    "frontend/src/components/ui/table.tsx": [
+      "Table",
+      "TableHeader",
+      "TableBody",
+      "TableFooter",
+      "TableHead",
+      "TableRow",
+      "TableCell",
+      "TableCaption"
+    ],
+    "frontend/src/components/ui/tabs.tsx": [
+      "Tabs",
+      "TabsList",
+      "TabsTrigger",
+      "TabsContent",
+      "tabsListVariants"
+    ],
+    "frontend/src/components/ui/textarea.tsx": [
+      "Textarea"
+    ],
+    "frontend/src/components/ui/tooltip.tsx": [
+      "Tooltip",
+      "TooltipTrigger",
+      "TooltipContent",
+      "TooltipProvider"
+    ],
+    "frontend/src/hooks/use-mobile.ts": [
+      "useIsMobile"
+    ],
+    "frontend/src/lib/utils.ts": [
+      "cn"
+    ],
+    "frontend/src/main.tsx": [],
+    "frontend/src/test/setup.ts": [],
+    "frontend/vite.config.ts": [],
+    "frontend/vitest.config.ts": [],
+    "scripts/generate_api_types.py": [],
+    "src/catalog.py": [
+      "SelectedModel",
+      "normalize_model_key",
+      "build_model_catalog",
+      "ordered_keys",
+      "present_groups",
+      "best_coding_model"
+    ],
+    "src/chat_store.py": [
+      "_now",
+      "_conn",
+      "init_db",
+      "create_conversation",
+      "list_conversations",
+      "get_conversation",
+      "rename_conversation",
+      "delete_conversation",
+      "set_pinned",
+      "search_conversations",
+      "delete_messages_from",
+      "clear_all_conversations",
+      "mark_memory_extracted",
+      "add_message",
+      "get_messages",
+      "message_count",
+      "add_memory",
+      "list_memories",
+      "touch_memories",
+      "update_memory",
+      "delete_memory",
+      "decay_memories",
+      "set_feedback",
+      "get_feedback",
+      "recent_feedback_samples",
+      "kv_get",
+      "kv_set",
+      "list_presets",
+      "save_preset",
+      "delete_preset",
+      "get_preset_by_name",
+      "export_conversation_markdown",
+      "import_jsonl",
+      "wipe_everything",
+      "export_jsonl"
+    ],
+    "src/config.py": [
+      "AppConfig"
+    ],
+    "src/files.py": [
+      "Attachment",
+      "_ext",
+      "parse_upload",
+      "_parse_pdf",
+      "_parse_docx",
+      "_parse_excel",
+      "_parse_legacy_doc",
+      "chunk_text"
+    ],
+    "src/jobs.py": [
+      "Job",
+      "stop",
+      "get",
+      "is_running",
+      "running_conversations",
+      "clear",
+      "start",
+      "run_ephemeral",
+      "_tokens_per_sec",
+      "_stream",
+      "_web_search",
+      "_process_attachments",
+      "_run",
+      "_friendly_error",
+      "_autotitle",
+      "_maybe_extract"
+    ],
+    "src/memory.py": [
+      "extract_memories",
+      "relevant_memories",
+      "run_decay",
+      "_parse_json_list"
+    ],
+    "src/model_labels.py": [
+      "_size_tag",
+      "hint_for",
+      "dropdown_label"
+    ],
+    "src/ollama_client.py": [
+      "_client",
+      "ModelInfo",
+      "list_models",
+      "chat_models",
+      "embedding_model",
+      "vision_fallback_model",
+      "smallest_text_model",
+      "stream_chat",
+      "running_models",
+      "generate",
+      "describe_image",
+      "embed_texts",
+      "ollama_alive"
+    ],
+    "src/orchestrator.py": [
+      "build_messages",
+      "after_turn_indexing"
+    ],
+    "src/personalization.py": [
+      "get_profile",
+      "note_conversation_done",
+      "rebuild_profile"
+    ],
+    "src/providers.py": [
+      "ApiModel",
+      "_get_secret",
+      "_set_secret",
+      "get_api_key",
+      "key_source",
+      "set_api_key",
+      "remove_api_key",
+      "configured_providers",
+      "clear_all_secrets",
+      "get_ollama_host",
+      "get_ollama_key",
+      "ollama_key_source",
+      "set_ollama_config",
+      "reset_ollama_config",
+      "_excluded",
+      "_vision_by_pattern",
+      "list_provider_models",
+      "_list_anthropic",
+      "_list_openrouter",
+      "_list_openai_compat",
+      "test_connection",
+      "stream_chat",
+      "_stream_anthropic",
+      "_stream_openai_compat",
+      "openrouter_auth_url",
+      "openrouter_exchange_code"
+    ],
+    "src/rag.py": [
+      "_collection",
+      "_embed",
+      "index_doc_chunks",
+      "search_docs",
+      "conv_has_docs",
+      "index_history_turn",
+      "search_history",
+      "delete_conv_vectors",
+      "clear_all_chat_vectors",
+      "clear_all_vectors",
+      "search_history_all",
+      "index_memory",
+      "similar_memory",
+      "search_memories",
+      "delete_memory_vector",
+      "_flatten"
+    ],
+    "tests/conftest.py": [
+      "client"
+    ],
+    "tests/test_api_contract.py": [
+      "test_health_and_session_cookie",
+      "test_managed_server_can_be_stopped_from_the_local_ui",
+      "test_shutdown_rejects_cross_site_and_unmanaged_requests",
+      "test_conversation_crud_preserves_message_order",
+      "test_provider_secret_is_scoped_to_browser_session",
+      "test_anthropic_reports_workload_identity_source",
+      "test_run_stream_contract_retains_completed_output",
+      "test_openrouter_auth_uses_session_pkce_and_current_callback_origin"
+    ],
+    "tests/test_provider_adapters.py": [
+      "test_registry_contains_all_phase_one_providers",
+      "test_model_discovery_is_concurrent_and_degrades_per_provider",
+      "test_echo_like_adapter_contract_accepts_normalized_messages",
+      "test_local_ollama_filters_daemon_cloud_models_and_reports_vision",
+      "test_ollama_cloud_uses_bearer_auth",
+      "test_opencode_bridge_rejects_non_loopback_urls"
+    ],
+    "tests/test_workspace_features.py": [
+      "_conversation",
+      "_complete_echo_run",
+      "test_run_is_owned_by_browser_session",
+      "test_cloud_preflight_warns_about_secrets_and_excludes_private_context",
+      "test_turn_persists_messages_context_and_replay_bundle",
+      "test_branch_backpack_focus_and_provider_policy",
+      "test_memory_preset_upload_activity_and_replay",
+      "test_store_accepts_the_legacy_seven_column_preset_table",
+      "test_memory_lifecycle_feedback_and_data_controls",
+      "test_llm_memory_extraction_requires_cloud_confirmation_and_saves_provenance",
+      "test_redacted_replay_bundle_hides_private_context",
+      "test_workspace_resource_lifecycle_and_provider_simulator",
+      "test_web_sources_are_provenanced_and_replayed_without_a_second_search",
+      "test_cross_chat_retrieval_has_provenance_and_can_be_excluded",
+      "test_image_attachment_is_available_to_full_replay_but_not_redacted_share",
+      "test_context_budget_prunes_sources_and_private_text_can_be_sanitized",
+      "test_profile_runtime_health_and_opt_in_v2_import"
+    ]
+  },
+  "batches": [
+    {
+      "batchIndex": 1,
+      "files": [
+        {
+          "path": "frontend/src/components/ui/avatar.tsx",
+          "language": "typescript",
+          "sizeLines": 109,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/components/ui/button.tsx",
+          "language": "typescript",
+          "sizeLines": 58,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/components/ui/dialog.tsx",
+          "language": "typescript",
+          "sizeLines": 158,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/components/ui/dropdown-menu.tsx",
+          "language": "typescript",
+          "sizeLines": 266,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/components/ui/field.tsx",
+          "language": "typescript",
+          "sizeLines": 236,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/components/ui/input.tsx",
+          "language": "typescript",
+          "sizeLines": 20,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/components/ui/label.tsx",
+          "language": "typescript",
+          "sizeLines": 20,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/components/ui/select.tsx",
+          "language": "typescript",
+          "sizeLines": 201,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/components/ui/separator.tsx",
+          "language": "typescript",
+          "sizeLines": 25,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/components/ui/sheet.tsx",
+          "language": "typescript",
+          "sizeLines": 138,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/components/ui/sidebar.tsx",
+          "language": "typescript",
+          "sizeLines": 723,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/components/ui/skeleton.tsx",
+          "language": "typescript",
+          "sizeLines": 13,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/components/ui/switch.tsx",
+          "language": "typescript",
+          "sizeLines": 30,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/components/ui/table.tsx",
+          "language": "typescript",
+          "sizeLines": 114,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/components/ui/tabs.tsx",
+          "language": "typescript",
+          "sizeLines": 80,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/hooks/use-mobile.ts",
+          "language": "typescript",
+          "sizeLines": 19,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/lib/utils.ts",
+          "language": "typescript",
+          "sizeLines": 6,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "frontend/src/components/ui/avatar.tsx": [
+          "frontend/src/lib/utils.ts"
+        ],
+        "frontend/src/components/ui/button.tsx": [
+          "frontend/src/lib/utils.ts"
+        ],
+        "frontend/src/components/ui/dialog.tsx": [
+          "frontend/src/components/ui/button.tsx",
+          "frontend/src/lib/utils.ts"
+        ],
+        "frontend/src/components/ui/dropdown-menu.tsx": [
+          "frontend/src/lib/utils.ts"
+        ],
+        "frontend/src/components/ui/field.tsx": [
+          "frontend/src/components/ui/label.tsx",
+          "frontend/src/components/ui/separator.tsx",
+          "frontend/src/lib/utils.ts"
+        ],
+        "frontend/src/components/ui/input.tsx": [
+          "frontend/src/lib/utils.ts"
+        ],
+        "frontend/src/components/ui/label.tsx": [
+          "frontend/src/lib/utils.ts"
+        ],
+        "frontend/src/components/ui/select.tsx": [
+          "frontend/src/lib/utils.ts"
+        ],
+        "frontend/src/components/ui/separator.tsx": [
+          "frontend/src/lib/utils.ts"
+        ],
+        "frontend/src/components/ui/sheet.tsx": [
+          "frontend/src/components/ui/button.tsx",
+          "frontend/src/lib/utils.ts"
+        ],
+        "frontend/src/components/ui/sidebar.tsx": [
+          "frontend/src/components/ui/button.tsx",
+          "frontend/src/components/ui/input.tsx",
+          "frontend/src/components/ui/separator.tsx",
+          "frontend/src/components/ui/sheet.tsx",
+          "frontend/src/components/ui/skeleton.tsx",
+          "frontend/src/components/ui/tooltip.tsx",
+          "frontend/src/hooks/use-mobile.ts",
+          "frontend/src/lib/utils.ts"
+        ],
+        "frontend/src/components/ui/skeleton.tsx": [
+          "frontend/src/lib/utils.ts"
+        ],
+        "frontend/src/components/ui/switch.tsx": [
+          "frontend/src/lib/utils.ts"
+        ],
+        "frontend/src/components/ui/table.tsx": [
+          "frontend/src/lib/utils.ts"
+        ],
+        "frontend/src/components/ui/tabs.tsx": [
+          "frontend/src/lib/utils.ts"
+        ],
+        "frontend/src/hooks/use-mobile.ts": [],
+        "frontend/src/lib/utils.ts": []
+      },
+      "neighborMap": {
+        "frontend/src/components/ui/button.tsx": [
+          {
+            "path": "frontend/src/App.tsx",
+            "batchIndex": 3,
+            "symbols": []
+          }
+        ],
+        "frontend/src/components/ui/input.tsx": [
+          {
+            "path": "frontend/src/App.tsx",
+            "batchIndex": 3,
+            "symbols": []
+          }
+        ],
+        "frontend/src/components/ui/sidebar.tsx": [
+          {
+            "path": "frontend/src/components/ui/tooltip.tsx",
+            "batchIndex": 3,
+            "symbols": [
+              "Tooltip",
+              "TooltipTrigger",
+              "TooltipContent",
+              "TooltipProvider"
+            ]
+          }
+        ],
+        "frontend/src/lib/utils.ts": [
+          {
+            "path": "frontend/src/components/ui/badge.tsx",
+            "batchIndex": 3,
+            "symbols": [
+              "Badge",
+              "badgeVariants"
+            ]
+          },
+          {
+            "path": "frontend/src/components/ui/card.tsx",
+            "batchIndex": 3,
+            "symbols": [
+              "Card",
+              "CardHeader",
+              "CardFooter",
+              "CardTitle",
+              "CardAction",
+              "CardDescription",
+              "CardContent"
+            ]
+          },
+          {
+            "path": "frontend/src/components/ui/scroll-area.tsx",
+            "batchIndex": 3,
+            "symbols": [
+              "ScrollArea",
+              "ScrollBar"
+            ]
+          },
+          {
+            "path": "frontend/src/components/ui/textarea.tsx",
+            "batchIndex": 3,
+            "symbols": [
+              "Textarea"
+            ]
+          },
+          {
+            "path": "frontend/src/components/ui/tooltip.tsx",
+            "batchIndex": 3,
+            "symbols": [
+              "Tooltip",
+              "TooltipTrigger",
+              "TooltipContent",
+              "TooltipProvider"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 2,
+      "files": [
+        {
+          "path": "backend/app/cli.py",
+          "language": "python",
+          "sizeLines": 23,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/app/contracts.py",
+          "language": "python",
+          "sizeLines": 353,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/app/main.py",
+          "language": "python",
+          "sizeLines": 923,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/app/memory.py",
+          "language": "python",
+          "sizeLines": 160,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/app/providers.py",
+          "language": "python",
+          "sizeLines": 620,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/app/runs.py",
+          "language": "python",
+          "sizeLines": 216,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/app/sessions.py",
+          "language": "python",
+          "sizeLines": 73,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/app/store.py",
+          "language": "python",
+          "sizeLines": 1151,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/app/workspace.py",
+          "language": "python",
+          "sizeLines": 517,
+          "fileCategory": "code"
+        },
+        {
+          "path": "scripts/generate_api_types.py",
+          "language": "python",
+          "sizeLines": 17,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/files.py",
+          "language": "python",
+          "sizeLines": 191,
+          "fileCategory": "code"
+        },
+        {
+          "path": "tests/test_provider_adapters.py",
+          "language": "python",
+          "sizeLines": 114,
+          "fileCategory": "code"
+        },
+        {
+          "path": "tests/test_workspace_features.py",
+          "language": "python",
+          "sizeLines": 624,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "backend/app/cli.py": [
+          "backend/app/main.py"
+        ],
+        "backend/app/contracts.py": [],
+        "backend/app/main.py": [
+          "backend/app/contracts.py",
+          "backend/app/memory.py",
+          "backend/app/providers.py",
+          "backend/app/runs.py",
+          "backend/app/sessions.py",
+          "backend/app/store.py",
+          "backend/app/workspace.py",
+          "src/files.py",
+          "src/ollama_client.py"
+        ],
+        "backend/app/memory.py": [
+          "backend/app/contracts.py",
+          "backend/app/providers.py",
+          "src/files.py"
+        ],
+        "backend/app/providers.py": [
+          "backend/app/contracts.py"
+        ],
+        "backend/app/runs.py": [
+          "backend/app/contracts.py",
+          "backend/app/providers.py",
+          "backend/app/sessions.py",
+          "backend/app/store.py"
+        ],
+        "backend/app/sessions.py": [],
+        "backend/app/store.py": [
+          "backend/app/contracts.py"
+        ],
+        "backend/app/workspace.py": [
+          "backend/app/contracts.py",
+          "backend/app/store.py"
+        ],
+        "scripts/generate_api_types.py": [
+          "backend/app/main.py"
+        ],
+        "src/files.py": [],
+        "tests/test_provider_adapters.py": [
+          "backend/app/contracts.py",
+          "backend/app/providers.py"
+        ],
+        "tests/test_workspace_features.py": [
+          "backend/app/contracts.py",
+          "backend/app/main.py",
+          "backend/app/providers.py",
+          "backend/app/store.py"
+        ]
+      },
+      "neighborMap": {
+        "backend/app/main.py": [
+          {
+            "path": "src/ollama_client.py",
+            "batchIndex": 4,
+            "symbols": [
+              "_client",
+              "ModelInfo",
+              "list_models",
+              "chat_models",
+              "embedding_model",
+              "vision_fallback_model",
+              "smallest_text_model",
+              "stream_chat",
+              "running_models",
+              "generate",
+              "describe_image",
+              "embed_texts",
+              "ollama_alive"
+            ]
+          }
+        ],
+        "src/files.py": [
+          {
+            "path": "src/jobs.py",
+            "batchIndex": 4,
+            "symbols": [
+              "Job",
+              "stop",
+              "get",
+              "is_running",
+              "running_conversations",
+              "clear",
+              "start",
+              "run_ephemeral",
+              "_tokens_per_sec",
+              "_stream",
+              "_web_search",
+              "_process_attachments",
+              "_run",
+              "_friendly_error",
+              "_autotitle",
+              "_maybe_extract"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 3,
+      "files": [
+        {
+          "path": "frontend/src/App.test.tsx",
+          "language": "typescript",
+          "sizeLines": 114,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "language": "typescript",
+          "sizeLines": 569,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/ErrorBoundary.tsx",
+          "language": "typescript",
+          "sizeLines": 33,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/api/client.ts",
+          "language": "typescript",
+          "sizeLines": 196,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/api/schema.ts",
+          "language": "typescript",
+          "sizeLines": 3482,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/components/ui/badge.tsx",
+          "language": "typescript",
+          "sizeLines": 52,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/components/ui/card.tsx",
+          "language": "typescript",
+          "sizeLines": 103,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/components/ui/scroll-area.tsx",
+          "language": "typescript",
+          "sizeLines": 52,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/components/ui/textarea.tsx",
+          "language": "typescript",
+          "sizeLines": 18,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/components/ui/tooltip.tsx",
+          "language": "typescript",
+          "sizeLines": 66,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/main.tsx",
+          "language": "typescript",
+          "sizeLines": 14,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "frontend/src/App.test.tsx": [
+          "frontend/src/App.tsx"
+        ],
+        "frontend/src/App.tsx": [
+          "frontend/src/api/client.ts",
+          "frontend/src/components/ui/badge.tsx",
+          "frontend/src/components/ui/button.tsx",
+          "frontend/src/components/ui/card.tsx",
+          "frontend/src/components/ui/input.tsx",
+          "frontend/src/components/ui/scroll-area.tsx",
+          "frontend/src/components/ui/textarea.tsx",
+          "frontend/src/components/ui/tooltip.tsx"
+        ],
+        "frontend/src/ErrorBoundary.tsx": [],
+        "frontend/src/api/client.ts": [
+          "frontend/src/api/schema.ts"
+        ],
+        "frontend/src/api/schema.ts": [],
+        "frontend/src/components/ui/badge.tsx": [
+          "frontend/src/lib/utils.ts"
+        ],
+        "frontend/src/components/ui/card.tsx": [
+          "frontend/src/lib/utils.ts"
+        ],
+        "frontend/src/components/ui/scroll-area.tsx": [
+          "frontend/src/lib/utils.ts"
+        ],
+        "frontend/src/components/ui/textarea.tsx": [
+          "frontend/src/lib/utils.ts"
+        ],
+        "frontend/src/components/ui/tooltip.tsx": [
+          "frontend/src/lib/utils.ts"
+        ],
+        "frontend/src/main.tsx": [
+          "frontend/src/App.css",
+          "frontend/src/App.tsx",
+          "frontend/src/ErrorBoundary.tsx",
+          "frontend/src/index.css"
+        ]
+      },
+      "neighborMap": {
+        "frontend/src/App.tsx": [
+          {
+            "path": "frontend/src/components/ui/button.tsx",
+            "batchIndex": 1,
+            "symbols": [
+              "Button",
+              "buttonVariants"
+            ]
+          },
+          {
+            "path": "frontend/src/components/ui/input.tsx",
+            "batchIndex": 1,
+            "symbols": [
+              "Input"
+            ]
+          }
+        ],
+        "frontend/src/components/ui/badge.tsx": [
+          {
+            "path": "frontend/src/lib/utils.ts",
+            "batchIndex": 1,
+            "symbols": [
+              "cn"
+            ]
+          }
+        ],
+        "frontend/src/components/ui/card.tsx": [
+          {
+            "path": "frontend/src/lib/utils.ts",
+            "batchIndex": 1,
+            "symbols": [
+              "cn"
+            ]
+          }
+        ],
+        "frontend/src/components/ui/scroll-area.tsx": [
+          {
+            "path": "frontend/src/lib/utils.ts",
+            "batchIndex": 1,
+            "symbols": [
+              "cn"
+            ]
+          }
+        ],
+        "frontend/src/components/ui/textarea.tsx": [
+          {
+            "path": "frontend/src/lib/utils.ts",
+            "batchIndex": 1,
+            "symbols": [
+              "cn"
+            ]
+          }
+        ],
+        "frontend/src/components/ui/tooltip.tsx": [
+          {
+            "path": "frontend/src/lib/utils.ts",
+            "batchIndex": 1,
+            "symbols": [
+              "cn"
+            ]
+          },
+          {
+            "path": "frontend/src/components/ui/sidebar.tsx",
+            "batchIndex": 1,
+            "symbols": [
+              "Sidebar",
+              "SidebarContent",
+              "SidebarFooter",
+              "SidebarGroup",
+              "SidebarGroupAction",
+              "SidebarGroupContent",
+              "SidebarGroupLabel",
+              "SidebarHeader",
+              "SidebarInput",
+              "SidebarInset",
+              "SidebarMenu",
+              "SidebarMenuAction",
+              "SidebarMenuBadge",
+              "SidebarMenuButton",
+              "SidebarMenuItem",
+              "SidebarMenuSkeleton",
+              "SidebarMenuSub",
+              "SidebarMenuSubButton",
+              "SidebarMenuSubItem",
+              "SidebarProvider",
+              "SidebarRail",
+              "SidebarSeparator",
+              "SidebarTrigger",
+              "useSidebar"
+            ]
+          }
+        ],
+        "frontend/src/main.tsx": [
+          {
+            "path": "frontend/src/App.css",
+            "batchIndex": 9,
+            "symbols": []
+          },
+          {
+            "path": "frontend/src/index.css",
+            "batchIndex": 9,
+            "symbols": []
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 4,
+      "files": [
+        {
+          "path": "src/catalog.py",
+          "language": "python",
+          "sizeLines": 108,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/chat_store.py",
+          "language": "python",
+          "sizeLines": 405,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/config.py",
+          "language": "python",
+          "sizeLines": 61,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/jobs.py",
+          "language": "python",
+          "sizeLines": 414,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/memory.py",
+          "language": "python",
+          "sizeLines": 96,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/model_labels.py",
+          "language": "python",
+          "sizeLines": 64,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/ollama_client.py",
+          "language": "python",
+          "sizeLines": 249,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/orchestrator.py",
+          "language": "python",
+          "sizeLines": 92,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/personalization.py",
+          "language": "python",
+          "sizeLines": 66,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/providers.py",
+          "language": "python",
+          "sizeLines": 442,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/rag.py",
+          "language": "python",
+          "sizeLines": 175,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "src/catalog.py": [
+          "src/model_labels.py",
+          "src/ollama_client.py"
+        ],
+        "src/chat_store.py": [
+          "src/config.py"
+        ],
+        "src/config.py": [],
+        "src/jobs.py": [
+          "src/config.py",
+          "src/files.py",
+          "src/ollama_client.py",
+          "src/orchestrator.py",
+          "src/personalization.py"
+        ],
+        "src/memory.py": [
+          "src/config.py",
+          "src/ollama_client.py"
+        ],
+        "src/model_labels.py": [
+          "src/ollama_client.py"
+        ],
+        "src/ollama_client.py": [
+          "src/config.py"
+        ],
+        "src/orchestrator.py": [
+          "src/config.py"
+        ],
+        "src/personalization.py": [
+          "src/config.py",
+          "src/ollama_client.py"
+        ],
+        "src/providers.py": [
+          "src/config.py"
+        ],
+        "src/rag.py": [
+          "src/config.py",
+          "src/ollama_client.py"
+        ]
+      },
+      "neighborMap": {
+        "src/jobs.py": [
+          {
+            "path": "src/files.py",
+            "batchIndex": 2,
+            "symbols": [
+              "Attachment",
+              "_ext",
+              "parse_upload",
+              "_parse_pdf",
+              "_parse_docx",
+              "_parse_excel",
+              "_parse_legacy_doc",
+              "chunk_text"
+            ]
+          }
+        ],
+        "src/ollama_client.py": [
+          {
+            "path": "backend/app/main.py",
+            "batchIndex": 2,
+            "symbols": [
+              "create_app"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 5,
+      "files": [
+        {
+          "path": ".github/workflows/ci.yml",
+          "language": "yaml",
+          "sizeLines": 35,
+          "fileCategory": "infra"
+        }
+      ],
+      "batchImportData": {
+        ".github/workflows/ci.yml": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 6,
+      "files": [
+        {
+          "path": "CHANGELOG.md",
+          "language": "markdown",
+          "sizeLines": 44,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "CODE_OF_CONDUCT.md",
+          "language": "markdown",
+          "sizeLines": 28,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "CODE_TUTORIAL.md",
+          "language": "markdown",
+          "sizeLines": 906,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "CONTRIBUTING.md",
+          "language": "markdown",
+          "sizeLines": 74,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "DATASET.md",
+          "language": "markdown",
+          "sizeLines": 3,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "GRAPH_REPORT.md",
+          "language": "markdown",
+          "sizeLines": 370,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "Launch Chat Studio.cmd",
+          "language": "batch",
+          "sizeLines": 204,
+          "fileCategory": "script"
+        },
+        {
+          "path": "README.md",
+          "language": "markdown",
+          "sizeLines": 113,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "SECURITY.md",
+          "language": "markdown",
+          "sizeLines": 42,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "TECHNICAL.md",
+          "language": "markdown",
+          "sizeLines": 95,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "USAGE.md",
+          "language": "markdown",
+          "sizeLines": 77,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "USER_GUIDE.md",
+          "language": "markdown",
+          "sizeLines": 111,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
+          "language": "markdown",
+          "sizeLines": 568,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "pyproject.toml",
+          "language": "toml",
+          "sizeLines": 45,
+          "fileCategory": "config"
+        }
+      ],
+      "batchImportData": {
+        "CHANGELOG.md": [],
+        "CODE_OF_CONDUCT.md": [],
+        "CODE_TUTORIAL.md": [],
+        "CONTRIBUTING.md": [],
+        "DATASET.md": [],
+        "GRAPH_REPORT.md": [],
+        "Launch Chat Studio.cmd": [],
+        "README.md": [],
+        "SECURITY.md": [],
+        "TECHNICAL.md": [],
+        "USAGE.md": [],
+        "USER_GUIDE.md": [],
+        "ZERO_TO_HERO_STUDY_HANDBOOK.md": [],
+        "pyproject.toml": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 7,
+      "files": [
+        {
+          "path": "docs/codebase/ARCHITECTURE.md",
+          "language": "markdown",
+          "sizeLines": 36,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "docs/codebase/CONCERNS.md",
+          "language": "markdown",
+          "sizeLines": 38,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "docs/codebase/CONVENTIONS.md",
+          "language": "markdown",
+          "sizeLines": 16,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "docs/codebase/INTEGRATIONS.md",
+          "language": "markdown",
+          "sizeLines": 45,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "docs/codebase/STACK.md",
+          "language": "markdown",
+          "sizeLines": 27,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "docs/codebase/STRUCTURE.md",
+          "language": "markdown",
+          "sizeLines": 24,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "docs/codebase/TESTING.md",
+          "language": "markdown",
+          "sizeLines": 24,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "docs/codebase/ARCHITECTURE.md": [],
+        "docs/codebase/CONCERNS.md": [],
+        "docs/codebase/CONVENTIONS.md": [],
+        "docs/codebase/INTEGRATIONS.md": [],
+        "docs/codebase/STACK.md": [],
+        "docs/codebase/STRUCTURE.md": [],
+        "docs/codebase/TESTING.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 8,
+      "files": [
+        {
+          "path": "frontend/.oxlintrc.json",
+          "language": "json",
+          "sizeLines": 8,
+          "fileCategory": "config"
+        },
+        {
+          "path": "frontend/README.md",
+          "language": "markdown",
+          "sizeLines": 13,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "frontend/components.json",
+          "language": "json",
+          "sizeLines": 25,
+          "fileCategory": "config"
+        },
+        {
+          "path": "frontend/index.html",
+          "language": "html",
+          "sizeLines": 13,
+          "fileCategory": "markup"
+        },
+        {
+          "path": "frontend/package.json",
+          "language": "json",
+          "sizeLines": 42,
+          "fileCategory": "config"
+        },
+        {
+          "path": "frontend/tsconfig.app.json",
+          "language": "json",
+          "sizeLines": 29,
+          "fileCategory": "config"
+        },
+        {
+          "path": "frontend/tsconfig.json",
+          "language": "json",
+          "sizeLines": 12,
+          "fileCategory": "config"
+        },
+        {
+          "path": "frontend/tsconfig.node.json",
+          "language": "json",
+          "sizeLines": 23,
+          "fileCategory": "config"
+        }
+      ],
+      "batchImportData": {
+        "frontend/.oxlintrc.json": [],
+        "frontend/README.md": [],
+        "frontend/components.json": [],
+        "frontend/index.html": [],
+        "frontend/package.json": [],
+        "frontend/tsconfig.app.json": [],
+        "frontend/tsconfig.json": [],
+        "frontend/tsconfig.node.json": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 9,
+      "files": [
+        {
+          "path": ".code-review-graph/graph.db",
+          "language": "db",
+          "sizeLines": 16242,
+          "fileCategory": "code"
+        },
+        {
+          "path": ".github/ISSUE_TEMPLATE/bug_report.md",
+          "language": "markdown",
+          "sizeLines": 27,
+          "fileCategory": "docs"
+        },
+        {
+          "path": ".github/ISSUE_TEMPLATE/feature_request.md",
+          "language": "markdown",
+          "sizeLines": 18,
+          "fileCategory": "docs"
+        },
+        {
+          "path": ".github/pull_request_template.md",
+          "language": "markdown",
+          "sizeLines": 22,
+          "fileCategory": "docs"
+        },
+        {
+          "path": ".graphifyignore",
+          "language": "unknown",
+          "sizeLines": 7,
+          "fileCategory": "code"
+        },
+        {
+          "path": ".python-version",
+          "language": "unknown",
+          "sizeLines": 1,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/__init__.py",
+          "language": "python",
+          "sizeLines": 1,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/app/__init__.py",
+          "language": "python",
+          "sizeLines": 1,
+          "fileCategory": "code"
+        },
+        {
+          "path": "docs/site/index.html",
+          "language": "html",
+          "sizeLines": 148,
+          "fileCategory": "markup"
+        },
+        {
+          "path": "docs/tutorial/index.html",
+          "language": "html",
+          "sizeLines": 752,
+          "fileCategory": "markup"
+        },
+        {
+          "path": "frontend/src/App.css",
+          "language": "css",
+          "sizeLines": 32,
+          "fileCategory": "markup"
+        },
+        {
+          "path": "frontend/src/index.css",
+          "language": "css",
+          "sizeLines": 1,
+          "fileCategory": "markup"
+        },
+        {
+          "path": "frontend/src/test/setup.ts",
+          "language": "typescript",
+          "sizeLines": 5,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/vite.config.ts",
+          "language": "typescript",
+          "sizeLines": 20,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/vitest.config.ts",
+          "language": "typescript",
+          "sizeLines": 12,
+          "fileCategory": "code"
+        },
+        {
+          "path": "tasks/plan.md",
+          "language": "markdown",
+          "sizeLines": 160,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "tasks/todo.md",
+          "language": "markdown",
+          "sizeLines": 31,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "tests/conftest.py",
+          "language": "python",
+          "sizeLines": 12,
+          "fileCategory": "code"
+        },
+        {
+          "path": "tests/test_api_contract.py",
+          "language": "python",
+          "sizeLines": 142,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        ".code-review-graph/graph.db": [],
+        ".github/ISSUE_TEMPLATE/bug_report.md": [],
+        ".github/ISSUE_TEMPLATE/feature_request.md": [],
+        ".github/pull_request_template.md": [],
+        ".graphifyignore": [],
+        ".python-version": [],
+        "backend/__init__.py": [],
+        "backend/app/__init__.py": [],
+        "docs/site/index.html": [],
+        "docs/tutorial/index.html": [],
+        "frontend/src/App.css": [],
+        "frontend/src/index.css": [],
+        "frontend/src/test/setup.ts": [],
+        "frontend/vite.config.ts": [],
+        "frontend/vitest.config.ts": [],
+        "tasks/plan.md": [],
+        "tasks/todo.md": [],
+        "tests/conftest.py": [],
+        "tests/test_api_contract.py": []
+      },
+      "neighborMap": {
+        "frontend/src/App.css": [
+          {
+            "path": "frontend/src/main.tsx",
+            "batchIndex": 3,
+            "symbols": []
+          }
+        ],
+        "frontend/src/index.css": [
+          {
+            "path": "frontend/src/main.tsx",
+            "batchIndex": 3,
+            "symbols": []
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -205,3 +205,14 @@
 [CodeGraph daemon] Listening on \\.\pipe\codegraph-c9e8dcb282dddd1b (pid 28764, v1.5.0). Idle timeout 300000ms.
 [CodeGraph MCP] File watcher active — graph will auto-sync on changes
 [CodeGraph MCP] Query pool: up to 15 worker thread(s) for concurrent reads.
+[CodeGraph daemon] Reaping client with dead peer (pid 18448); clients=2.
+[CodeGraph daemon] Reaping client with dead peer (pid 64112); clients=1.
+[CodeGraph daemon] Reaping client with dead peer (pid 45576); clients=0.
+[CodeGraph daemon] Shutting down (idle timeout; clients=0).
+[CodeGraph daemon] Listening on \\.\pipe\codegraph-c9e8dcb282dddd1b (pid 8664, v1.5.0). Idle timeout 300000ms.
+[CodeGraph MCP] File watcher active — graph will auto-sync on changes
+[CodeGraph MCP] Query pool: up to 15 worker thread(s) for concurrent reads.
+[CodeGraph daemon] Shutting down (idle timeout; clients=0).
+[CodeGraph daemon] Listening on \\.\pipe\codegraph-c9e8dcb282dddd1b (pid 10244, v1.5.0). Idle timeout 300000ms.
+[CodeGraph MCP] File watcher active — graph will auto-sync on changes
+[CodeGraph MCP] Query pool: up to 15 worker thread(s) for concurrent reads.

@@ -1,0 +1,2599 @@
+{
+  "scriptCompleted": true,
+  "entryPointCandidates": [
+    {
+      "id": "document:README.md",
+      "score": 5,
+      "name": "README.md",
+      "summary": "Project overview covering features, installation, local data handling, architecture, verification commands, and links to supporting documentation."
+    },
+    {
+      "id": "file:backend/app/main.py",
+      "score": 4,
+      "name": "main.py",
+      "summary": "Builds the FastAPI application, wiring API routes to storage, provider, run, session, and workspace services."
+    },
+    {
+      "id": "file:src/catalog.py",
+      "score": 3,
+      "name": "catalog.py",
+      "summary": "Builds a unified, provider-grouped catalog of local and cloud models for chat and comparison interfaces."
+    },
+    {
+      "id": "file:src/chat_store.py",
+      "score": 3,
+      "name": "chat_store.py",
+      "summary": "Persists conversations, messages, memories, feedback, presets, and key-value settings in the local SQLite database."
+    },
+    {
+      "id": "file:src/jobs.py",
+      "score": 3,
+      "name": "jobs.py",
+      "summary": "Coordinates streaming chat jobs, attachments, retrieval context, persistence, post-turn indexing, and background personalization tasks."
+    }
+  ],
+  "fanInRanking": [
+    {
+      "id": "file:frontend/src/lib/utils.ts",
+      "fanIn": 20,
+      "name": "utils.ts"
+    },
+    {
+      "id": "file:backend/app/contracts.py",
+      "fanIn": 9,
+      "name": "contracts.py"
+    },
+    {
+      "id": "file:src/config.py",
+      "fanIn": 8,
+      "name": "config.py"
+    },
+    {
+      "id": "file:src/ollama_client.py",
+      "fanIn": 7,
+      "name": "ollama_client.py"
+    },
+    {
+      "id": "file:backend/app/main.py",
+      "fanIn": 6,
+      "name": "main.py"
+    },
+    {
+      "id": "file:backend/app/providers.py",
+      "fanIn": 6,
+      "name": "providers.py"
+    },
+    {
+      "id": "file:frontend/src/main.tsx",
+      "fanIn": 5,
+      "name": "main.tsx"
+    },
+    {
+      "id": "file:Launch Chat Studio.cmd",
+      "fanIn": 5,
+      "name": "Launch Chat Studio.cmd"
+    },
+    {
+      "id": "file:backend/app/store.py",
+      "fanIn": 4,
+      "name": "store.py"
+    },
+    {
+      "id": "file:frontend/src/components/ui/button.tsx",
+      "fanIn": 4,
+      "name": "button.tsx"
+    },
+    {
+      "id": "file:src/files.py",
+      "fanIn": 4,
+      "name": "files.py"
+    },
+    {
+      "id": "file:tests/test_workspace_features.py",
+      "fanIn": 4,
+      "name": "test_workspace_features.py"
+    },
+    {
+      "id": "function:backend/app/main.py:create_app",
+      "fanIn": 4,
+      "name": "create_app"
+    },
+    {
+      "id": "file:backend/app/runs.py",
+      "fanIn": 3,
+      "name": "runs.py"
+    },
+    {
+      "id": "file:backend/app/workspace.py",
+      "fanIn": 3,
+      "name": "workspace.py"
+    },
+    {
+      "id": "file:frontend/src/App.tsx",
+      "fanIn": 3,
+      "name": "App.tsx"
+    },
+    {
+      "id": "function:frontend/src/api/client.ts:streamRun",
+      "fanIn": 3,
+      "name": "streamRun"
+    },
+    {
+      "id": "function:frontend/src/components/ui/scroll-area.tsx:ScrollArea",
+      "fanIn": 3,
+      "name": "ScrollArea"
+    },
+    {
+      "id": "function:frontend/src/components/ui/textarea.tsx:Textarea",
+      "fanIn": 3,
+      "name": "Textarea"
+    },
+    {
+      "id": "function:frontend/src/components/ui/tooltip.tsx:Tooltip",
+      "fanIn": 3,
+      "name": "Tooltip"
+    }
+  ],
+  "fanOutRanking": [
+    {
+      "id": "file:backend/app/contracts.py",
+      "fanOut": 104,
+      "name": "contracts.py"
+    },
+    {
+      "id": "file:frontend/src/components/ui/sidebar.tsx",
+      "fanOut": 56,
+      "name": "sidebar.tsx"
+    },
+    {
+      "id": "file:tests/test_workspace_features.py",
+      "fanOut": 38,
+      "name": "test_workspace_features.py"
+    },
+    {
+      "id": "file:frontend/src/components/ui/dropdown-menu.tsx",
+      "fanOut": 31,
+      "name": "dropdown-menu.tsx"
+    },
+    {
+      "id": "file:frontend/src/components/ui/field.tsx",
+      "fanOut": 23,
+      "name": "field.tsx"
+    },
+    {
+      "id": "file:src/jobs.py",
+      "fanOut": 23,
+      "name": "jobs.py"
+    },
+    {
+      "id": "file:frontend/src/components/ui/dialog.tsx",
+      "fanOut": 22,
+      "name": "dialog.tsx"
+    },
+    {
+      "id": "file:backend/app/providers.py",
+      "fanOut": 21,
+      "name": "providers.py"
+    },
+    {
+      "id": "file:backend/app/workspace.py",
+      "fanOut": 20,
+      "name": "workspace.py"
+    },
+    {
+      "id": "file:frontend/src/App.tsx",
+      "fanOut": 19,
+      "name": "App.tsx"
+    },
+    {
+      "id": "file:frontend/src/components/ui/select.tsx",
+      "fanOut": 19,
+      "name": "select.tsx"
+    },
+    {
+      "id": "file:frontend/src/components/ui/sheet.tsx",
+      "fanOut": 19,
+      "name": "sheet.tsx"
+    },
+    {
+      "id": "file:src/ollama_client.py",
+      "fanOut": 19,
+      "name": "ollama_client.py"
+    },
+    {
+      "id": "file:src/providers.py",
+      "fanOut": 19,
+      "name": "providers.py"
+    },
+    {
+      "id": "file:backend/app/memory.py",
+      "fanOut": 17,
+      "name": "memory.py"
+    },
+    {
+      "id": "file:frontend/src/components/ui/table.tsx",
+      "fanOut": 17,
+      "name": "table.tsx"
+    },
+    {
+      "id": "file:src/chat_store.py",
+      "fanOut": 17,
+      "name": "chat_store.py"
+    },
+    {
+      "id": "file:src/files.py",
+      "fanOut": 16,
+      "name": "files.py"
+    },
+    {
+      "id": "file:tests/test_api_contract.py",
+      "fanOut": 16,
+      "name": "test_api_contract.py"
+    },
+    {
+      "id": "file:frontend/src/components/ui/card.tsx",
+      "fanOut": 15,
+      "name": "card.tsx"
+    }
+  ],
+  "bfsTraversal": {
+    "startNode": "file:backend/app/main.py",
+    "order": [
+      "file:backend/app/main.py",
+      "file:backend/app/contracts.py",
+      "file:backend/app/memory.py",
+      "file:backend/app/providers.py",
+      "file:backend/app/runs.py",
+      "file:backend/app/sessions.py",
+      "file:backend/app/store.py",
+      "file:backend/app/workspace.py",
+      "file:src/files.py",
+      "file:src/ollama_client.py",
+      "file:src/config.py"
+    ],
+    "depthMap": {
+      "file:backend/app/main.py": 0,
+      "file:backend/app/contracts.py": 1,
+      "file:backend/app/memory.py": 1,
+      "file:backend/app/providers.py": 1,
+      "file:backend/app/runs.py": 1,
+      "file:backend/app/sessions.py": 1,
+      "file:backend/app/store.py": 1,
+      "file:backend/app/workspace.py": 1,
+      "file:src/files.py": 1,
+      "file:src/ollama_client.py": 1,
+      "file:src/config.py": 2
+    },
+    "byDepth": {
+      "0": [
+        "file:backend/app/main.py"
+      ],
+      "1": [
+        "file:backend/app/contracts.py",
+        "file:backend/app/memory.py",
+        "file:backend/app/providers.py",
+        "file:backend/app/runs.py",
+        "file:backend/app/sessions.py",
+        "file:backend/app/store.py",
+        "file:backend/app/workspace.py",
+        "file:src/files.py",
+        "file:src/ollama_client.py"
+      ],
+      "2": [
+        "file:src/config.py"
+      ]
+    }
+  },
+  "nonCodeFiles": {
+    "documentation": [
+      {
+        "id": "document:CHANGELOG.md",
+        "name": "CHANGELOG.md",
+        "type": "document",
+        "summary": "Records released and unreleased changes for the Local AI Chat Studio, including the FastAPI/React v2 rollout."
+      },
+      {
+        "id": "document:CODE_OF_CONDUCT.md",
+        "name": "CODE_OF_CONDUCT.md",
+        "type": "document",
+        "summary": "Defines expected community behavior, enforcement, and the private security-reporting route for project participation."
+      },
+      {
+        "id": "document:CODE_TUTORIAL.md",
+        "name": "CODE_TUTORIAL.md",
+        "type": "document",
+        "summary": "Provides a detailed guided tour of the legacy Streamlit and current FastAPI/React implementations, including end-to-end request traces."
+      },
+      {
+        "id": "document:CONTRIBUTING.md",
+        "name": "CONTRIBUTING.md",
+        "type": "document",
+        "summary": "Explains contributor setup, focused-change expectations, validation commands, API type regeneration, and pull-request workflow."
+      },
+      {
+        "id": "document:DATASET.md",
+        "name": "DATASET.md",
+        "type": "document",
+        "summary": "Clarifies that the project has no single fixed public dataset and is intended to process user-provided documents and data."
+      },
+      {
+        "id": "document:GRAPH_REPORT.md",
+        "name": "GRAPH_REPORT.md",
+        "type": "document",
+        "summary": "Presents a generated repository graph report with connectivity checks, community hubs, core abstractions, and identified knowledge gaps."
+      },
+      {
+        "id": "document:README.md",
+        "name": "README.md",
+        "type": "document",
+        "summary": "Project overview covering features, installation, local data handling, architecture, verification commands, and links to supporting documentation."
+      },
+      {
+        "id": "document:SECURITY.md",
+        "name": "SECURITY.md",
+        "type": "document",
+        "summary": "Defines the local-first security model, sensitive-data boundaries, localhost exposure guidance, and private vulnerability reporting process."
+      },
+      {
+        "id": "document:TECHNICAL.md",
+        "name": "TECHNICAL.md",
+        "type": "document",
+        "summary": "Concise developer guide to the FastAPI/React runtime, persistence, sessions, provider integrations, configuration, and contract-generation workflow."
+      },
+      {
+        "id": "document:USAGE.md",
+        "name": "USAGE.md",
+        "type": "document",
+        "summary": "Task-oriented guide for launching the studio, selecting providers, managing conversations and memory, and handling privacy or troubleshooting."
+      },
+      {
+        "id": "document:USER_GUIDE.md",
+        "name": "USER_GUIDE.md",
+        "type": "document",
+        "summary": "Complete product workflow guide for chat, context evidence, backpacks, replay, providers, library data controls, and troubleshooting."
+      },
+      {
+        "id": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+        "name": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
+        "type": "document",
+        "summary": "Comprehensive learning handbook covering concepts, setup, FastAPI and React modules, legacy behavior, end-to-end traces, testing, and contributor exercises."
+      },
+      {
+        "id": "document:docs/codebase/ARCHITECTURE.md",
+        "name": "ARCHITECTURE.md",
+        "type": "document",
+        "summary": "Describes the React-to-FastAPI architecture, context preflight, streamed run lifecycle, persistence, retrieval, and provider boundaries for the localhost workspace."
+      },
+      {
+        "id": "document:docs/codebase/CONCERNS.md",
+        "name": "CONCERNS.md",
+        "type": "document",
+        "summary": "Records operational constraints, security boundaries, and focused change guidance for the single-process local workspace."
+      },
+      {
+        "id": "document:docs/codebase/CONVENTIONS.md",
+        "name": "CONVENTIONS.md",
+        "type": "document",
+        "summary": "Defines Python and React naming conventions, API-schema generation expectations, safe error handling, credential rules, and test tooling."
+      },
+      {
+        "id": "document:docs/codebase/INTEGRATIONS.md",
+        "name": "INTEGRATIONS.md",
+        "type": "document",
+        "summary": "Catalogs local and cloud model providers, the loopback OpenCode bridge, web search, file conversion, attachment handling, and memory storage policies."
+      },
+      {
+        "id": "document:docs/codebase/STACK.md",
+        "name": "STACK.md",
+        "type": "document",
+        "summary": "Summarizes the backend, frontend, persistence, inference, search, file-processing, and development-tooling stack with local build and test commands."
+      },
+      {
+        "id": "document:docs/codebase/STRUCTURE.md",
+        "name": "STRUCTURE.md",
+        "type": "document",
+        "summary": "Maps the FastAPI application, React workspace, shared parsing and retrieval modules, tests, and local runtime data to their responsibilities."
+      },
+      {
+        "id": "document:docs/codebase/TESTING.md",
+        "name": "TESTING.md",
+        "type": "document",
+        "summary": "Documents backend and frontend verification commands, isolated test fixtures, covered lifecycle and safety behavior, and remaining manual smoke-test areas."
+      },
+      {
+        "id": "document:frontend/README.md",
+        "name": "README.md",
+        "type": "document",
+        "summary": "Documents frontend workspace commands for development, testing, linting, building, and generating the FastAPI-derived API schema."
+      },
+      {
+        "id": "document:.github/ISSUE_TEMPLATE/bug_report.md",
+        "name": "bug_report.md",
+        "type": "document",
+        "summary": "GitHub issue template that collects reproduction steps, expected behavior, logs, and environment details for defects."
+      },
+      {
+        "id": "document:.github/ISSUE_TEMPLATE/feature_request.md",
+        "name": "feature_request.md",
+        "type": "document",
+        "summary": "GitHub issue template for proposing product improvements with problem context, solutions, alternatives, and examples."
+      },
+      {
+        "id": "document:.github/pull_request_template.md",
+        "name": "pull_request_template.md",
+        "type": "document",
+        "summary": "Pull request checklist that records scope, testing, typing, UI-worker separation, model configuration, and secret-handling expectations."
+      },
+      {
+        "id": "document:tasks/plan.md",
+        "name": "plan.md",
+        "type": "document",
+        "summary": "Implementation plan for a static htmx documentation site, including architecture decisions, task details, acceptance criteria, and risks."
+      },
+      {
+        "id": "document:tasks/todo.md",
+        "name": "todo.md",
+        "type": "document",
+        "summary": "Tracks completed documentation-site work, browser verification results, deviations from the original plan, and remaining repository tasks."
+      }
+    ],
+    "infrastructure": [
+      {
+        "id": "pipeline:.github/workflows/ci.yml",
+        "name": "ci.yml",
+        "type": "pipeline",
+        "summary": "GitHub Actions workflow that validates backend and frontend changes on push and pull request events. It installs locked dependencies, then runs Python tests and Ruff alongside frontend linting, tests, and production builds."
+      }
+    ],
+    "data": [],
+    "config": [
+      {
+        "id": "config:pyproject.toml",
+        "name": "pyproject.toml",
+        "type": "config",
+        "summary": "Defines Python package metadata, runtime and development dependencies, the chat-studio CLI entry point, Hatch build settings, and uv configuration."
+      },
+      {
+        "id": "config:frontend/.oxlintrc.json",
+        "name": ".oxlintrc.json",
+        "type": "config",
+        "summary": "Configures Oxlint with React, TypeScript, and Oxc plugins, enforcing hook rules and warning on component-only exports."
+      },
+      {
+        "id": "config:frontend/components.json",
+        "name": "components.json",
+        "type": "config",
+        "summary": "Configures shadcn-style component generation with the base-nova style, Tailwind CSS settings, Lucide icons, and project path aliases."
+      },
+      {
+        "id": "config:frontend/package.json",
+        "name": "package.json",
+        "type": "config",
+        "summary": "Defines the frontend package scripts and dependencies for Vite, React, TypeScript, Tailwind CSS, Vitest, Oxlint, and OpenAPI type generation."
+      },
+      {
+        "id": "config:frontend/tsconfig.app.json",
+        "name": "tsconfig.app.json",
+        "type": "config",
+        "summary": "Configures strict TypeScript compilation for frontend source files using bundler resolution, React JSX, Vite types, and the @ path alias."
+      },
+      {
+        "id": "config:frontend/tsconfig.json",
+        "name": "tsconfig.json",
+        "type": "config",
+        "summary": "Defines the TypeScript solution configuration that references separate application and Node-oriented compiler projects while sharing the @ path alias."
+      },
+      {
+        "id": "config:frontend/tsconfig.node.json",
+        "name": "tsconfig.node.json",
+        "type": "config",
+        "summary": "Configures strict NodeNext TypeScript checking for the Vite configuration with Node type definitions and no emitted output."
+      }
+    ]
+  },
+  "clusters": [],
+  "layers": {
+    "count": 10,
+    "list": [
+      {
+        "id": "layer:ui",
+        "name": "User Interface",
+        "description": "React components, application shell, and Tailwind-backed styles that present the Local AI Chat Studio workspace."
+      },
+      {
+        "id": "layer:api",
+        "name": "API Layer",
+        "description": "FastAPI application entry points and package boundaries that expose the local HTTP and Uvicorn server interface."
+      },
+      {
+        "id": "layer:service",
+        "name": "AI Services",
+        "description": "Backend workflows, provider adapters, retrieval, orchestration, and frontend client helpers that power chat and workspace behavior."
+      },
+      {
+        "id": "layer:data",
+        "name": "Data Layer",
+        "description": "SQLite-backed persistence modules for the local conversation and workspace state."
+      },
+      {
+        "id": "layer:types",
+        "name": "Contract Types",
+        "description": "Pydantic and generated TypeScript contracts that keep the FastAPI API boundary typed on both sides."
+      },
+      {
+        "id": "layer:test",
+        "name": "Test Layer",
+        "description": "Pytest and Vitest coverage plus shared test setup for API, provider, workspace, and UI workflows."
+      },
+      {
+        "id": "layer:config",
+        "name": "Configuration",
+        "description": "Python, Vite, TypeScript, Tailwind component, lint, runtime, and analysis-tool configuration for local development."
+      },
+      {
+        "id": "layer:documentation",
+        "name": "Documentation",
+        "description": "Product, architecture, contributor, policy, planning, and static documentation-site materials for the studio."
+      },
+      {
+        "id": "layer:ci-cd",
+        "name": "CI/CD",
+        "description": "GitHub Actions validation for the backend and frontend test, lint, and build pipeline."
+      },
+      {
+        "id": "layer:operations",
+        "name": "Project Operations",
+        "description": "Windows launch, OpenAPI type generation, and local code-review graph artifacts supporting project operation."
+      }
+    ]
+  },
+  "nodeSummaryIndex": {
+    "file:frontend/src/components/ui/avatar.tsx": {
+      "name": "avatar.tsx",
+      "type": "file",
+      "summary": "Provides reusable avatar and identity for the frontend component library."
+    },
+    "function:frontend/src/components/ui/avatar.tsx:Avatar": {
+      "name": "Avatar",
+      "type": "function",
+      "summary": "Renders the exported Avatar UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/avatar.tsx:AvatarImage": {
+      "name": "AvatarImage",
+      "type": "function",
+      "summary": "Renders the exported AvatarImage UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/avatar.tsx:AvatarFallback": {
+      "name": "AvatarFallback",
+      "type": "function",
+      "summary": "Renders the exported AvatarFallback UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/avatar.tsx:AvatarBadge": {
+      "name": "AvatarBadge",
+      "type": "function",
+      "summary": "Renders the exported AvatarBadge UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/avatar.tsx:AvatarGroup": {
+      "name": "AvatarGroup",
+      "type": "function",
+      "summary": "Renders the exported AvatarGroup UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/avatar.tsx:AvatarGroupCount": {
+      "name": "AvatarGroupCount",
+      "type": "function",
+      "summary": "Renders the exported AvatarGroupCount UI primitive with its configured styling and props."
+    },
+    "file:frontend/src/components/ui/button.tsx": {
+      "name": "button.tsx",
+      "type": "file",
+      "summary": "Provides reusable button controls for the frontend component library."
+    },
+    "function:frontend/src/components/ui/button.tsx:Button": {
+      "name": "Button",
+      "type": "function",
+      "summary": "Renders the exported Button UI primitive with its configured styling and props."
+    },
+    "file:frontend/src/components/ui/dialog.tsx": {
+      "name": "dialog.tsx",
+      "type": "file",
+      "summary": "Provides reusable modal dialog primitives for the frontend component library."
+    },
+    "function:frontend/src/components/ui/dialog.tsx:Dialog": {
+      "name": "Dialog",
+      "type": "function",
+      "summary": "Renders the exported Dialog UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dialog.tsx:DialogTrigger": {
+      "name": "DialogTrigger",
+      "type": "function",
+      "summary": "Renders the exported DialogTrigger UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dialog.tsx:DialogPortal": {
+      "name": "DialogPortal",
+      "type": "function",
+      "summary": "Renders the exported DialogPortal UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dialog.tsx:DialogClose": {
+      "name": "DialogClose",
+      "type": "function",
+      "summary": "Renders the exported DialogClose UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dialog.tsx:DialogOverlay": {
+      "name": "DialogOverlay",
+      "type": "function",
+      "summary": "Renders the exported DialogOverlay UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dialog.tsx:DialogContent": {
+      "name": "DialogContent",
+      "type": "function",
+      "summary": "Renders the exported DialogContent UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dialog.tsx:DialogHeader": {
+      "name": "DialogHeader",
+      "type": "function",
+      "summary": "Renders the exported DialogHeader UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dialog.tsx:DialogFooter": {
+      "name": "DialogFooter",
+      "type": "function",
+      "summary": "Renders the exported DialogFooter UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dialog.tsx:DialogTitle": {
+      "name": "DialogTitle",
+      "type": "function",
+      "summary": "Renders the exported DialogTitle UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dialog.tsx:DialogDescription": {
+      "name": "DialogDescription",
+      "type": "function",
+      "summary": "Renders the exported DialogDescription UI primitive with its configured styling and props."
+    },
+    "file:frontend/src/components/ui/dropdown-menu.tsx": {
+      "name": "dropdown-menu.tsx",
+      "type": "file",
+      "summary": "Provides reusable dropdown menu primitives for the frontend component library."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenu": {
+      "name": "DropdownMenu",
+      "type": "function",
+      "summary": "Renders the exported DropdownMenu UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuPortal": {
+      "name": "DropdownMenuPortal",
+      "type": "function",
+      "summary": "Renders the exported DropdownMenuPortal UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuTrigger": {
+      "name": "DropdownMenuTrigger",
+      "type": "function",
+      "summary": "Renders the exported DropdownMenuTrigger UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuContent": {
+      "name": "DropdownMenuContent",
+      "type": "function",
+      "summary": "Renders the exported DropdownMenuContent UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuGroup": {
+      "name": "DropdownMenuGroup",
+      "type": "function",
+      "summary": "Renders the exported DropdownMenuGroup UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuLabel": {
+      "name": "DropdownMenuLabel",
+      "type": "function",
+      "summary": "Renders the exported DropdownMenuLabel UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuItem": {
+      "name": "DropdownMenuItem",
+      "type": "function",
+      "summary": "Renders the exported DropdownMenuItem UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuSub": {
+      "name": "DropdownMenuSub",
+      "type": "function",
+      "summary": "Renders the exported DropdownMenuSub UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuSubTrigger": {
+      "name": "DropdownMenuSubTrigger",
+      "type": "function",
+      "summary": "Renders the exported DropdownMenuSubTrigger UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuSubContent": {
+      "name": "DropdownMenuSubContent",
+      "type": "function",
+      "summary": "Renders the exported DropdownMenuSubContent UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuCheckboxItem": {
+      "name": "DropdownMenuCheckboxItem",
+      "type": "function",
+      "summary": "Renders the exported DropdownMenuCheckboxItem UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuRadioGroup": {
+      "name": "DropdownMenuRadioGroup",
+      "type": "function",
+      "summary": "Renders the exported DropdownMenuRadioGroup UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuRadioItem": {
+      "name": "DropdownMenuRadioItem",
+      "type": "function",
+      "summary": "Renders the exported DropdownMenuRadioItem UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuSeparator": {
+      "name": "DropdownMenuSeparator",
+      "type": "function",
+      "summary": "Renders the exported DropdownMenuSeparator UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/dropdown-menu.tsx:DropdownMenuShortcut": {
+      "name": "DropdownMenuShortcut",
+      "type": "function",
+      "summary": "Renders the exported DropdownMenuShortcut UI primitive with its configured styling and props."
+    },
+    "file:frontend/src/components/ui/field.tsx": {
+      "name": "field.tsx",
+      "type": "file",
+      "summary": "Provides reusable form field layout for the frontend component library."
+    },
+    "function:frontend/src/components/ui/field.tsx:FieldSet": {
+      "name": "FieldSet",
+      "type": "function",
+      "summary": "Renders the exported FieldSet UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/field.tsx:FieldLegend": {
+      "name": "FieldLegend",
+      "type": "function",
+      "summary": "Renders the exported FieldLegend UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/field.tsx:FieldGroup": {
+      "name": "FieldGroup",
+      "type": "function",
+      "summary": "Renders the exported FieldGroup UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/field.tsx:Field": {
+      "name": "Field",
+      "type": "function",
+      "summary": "Renders the exported Field UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/field.tsx:FieldContent": {
+      "name": "FieldContent",
+      "type": "function",
+      "summary": "Renders the exported FieldContent UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/field.tsx:FieldLabel": {
+      "name": "FieldLabel",
+      "type": "function",
+      "summary": "Renders the exported FieldLabel UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/field.tsx:FieldTitle": {
+      "name": "FieldTitle",
+      "type": "function",
+      "summary": "Renders the exported FieldTitle UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/field.tsx:FieldDescription": {
+      "name": "FieldDescription",
+      "type": "function",
+      "summary": "Renders the exported FieldDescription UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/field.tsx:FieldSeparator": {
+      "name": "FieldSeparator",
+      "type": "function",
+      "summary": "Renders the exported FieldSeparator UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/field.tsx:FieldError": {
+      "name": "FieldError",
+      "type": "function",
+      "summary": "Renders the exported FieldError UI primitive with its configured styling and props."
+    },
+    "file:frontend/src/components/ui/input.tsx": {
+      "name": "input.tsx",
+      "type": "file",
+      "summary": "Provides reusable text input control for the frontend component library."
+    },
+    "function:frontend/src/components/ui/input.tsx:Input": {
+      "name": "Input",
+      "type": "function",
+      "summary": "Renders the exported Input UI primitive with its configured styling and props."
+    },
+    "file:frontend/src/components/ui/label.tsx": {
+      "name": "label.tsx",
+      "type": "file",
+      "summary": "Provides reusable form label control for the frontend component library."
+    },
+    "function:frontend/src/components/ui/label.tsx:Label": {
+      "name": "Label",
+      "type": "function",
+      "summary": "Renders the exported Label UI primitive with its configured styling and props."
+    },
+    "file:frontend/src/components/ui/select.tsx": {
+      "name": "select.tsx",
+      "type": "file",
+      "summary": "Provides reusable select menu primitives for the frontend component library."
+    },
+    "function:frontend/src/components/ui/select.tsx:SelectGroup": {
+      "name": "SelectGroup",
+      "type": "function",
+      "summary": "Renders the exported SelectGroup UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/select.tsx:SelectValue": {
+      "name": "SelectValue",
+      "type": "function",
+      "summary": "Renders the exported SelectValue UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/select.tsx:SelectTrigger": {
+      "name": "SelectTrigger",
+      "type": "function",
+      "summary": "Renders the exported SelectTrigger UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/select.tsx:SelectContent": {
+      "name": "SelectContent",
+      "type": "function",
+      "summary": "Renders the exported SelectContent UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/select.tsx:SelectLabel": {
+      "name": "SelectLabel",
+      "type": "function",
+      "summary": "Renders the exported SelectLabel UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/select.tsx:SelectItem": {
+      "name": "SelectItem",
+      "type": "function",
+      "summary": "Renders the exported SelectItem UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/select.tsx:SelectSeparator": {
+      "name": "SelectSeparator",
+      "type": "function",
+      "summary": "Renders the exported SelectSeparator UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/select.tsx:SelectScrollUpButton": {
+      "name": "SelectScrollUpButton",
+      "type": "function",
+      "summary": "Renders the exported SelectScrollUpButton UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/select.tsx:SelectScrollDownButton": {
+      "name": "SelectScrollDownButton",
+      "type": "function",
+      "summary": "Renders the exported SelectScrollDownButton UI primitive with its configured styling and props."
+    },
+    "file:frontend/src/components/ui/separator.tsx": {
+      "name": "separator.tsx",
+      "type": "file",
+      "summary": "Provides reusable visual separators for the frontend component library."
+    },
+    "function:frontend/src/components/ui/separator.tsx:Separator": {
+      "name": "Separator",
+      "type": "function",
+      "summary": "Renders the exported Separator UI primitive with its configured styling and props."
+    },
+    "file:frontend/src/components/ui/sheet.tsx": {
+      "name": "sheet.tsx",
+      "type": "file",
+      "summary": "Provides reusable side panel primitives for the frontend component library."
+    },
+    "function:frontend/src/components/ui/sheet.tsx:Sheet": {
+      "name": "Sheet",
+      "type": "function",
+      "summary": "Renders the exported Sheet UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sheet.tsx:SheetTrigger": {
+      "name": "SheetTrigger",
+      "type": "function",
+      "summary": "Renders the exported SheetTrigger UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sheet.tsx:SheetClose": {
+      "name": "SheetClose",
+      "type": "function",
+      "summary": "Renders the exported SheetClose UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sheet.tsx:SheetOverlay": {
+      "name": "SheetOverlay",
+      "type": "function",
+      "summary": "Renders the exported SheetOverlay UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sheet.tsx:SheetContent": {
+      "name": "SheetContent",
+      "type": "function",
+      "summary": "Renders the exported SheetContent UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sheet.tsx:SheetHeader": {
+      "name": "SheetHeader",
+      "type": "function",
+      "summary": "Renders the exported SheetHeader UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sheet.tsx:SheetFooter": {
+      "name": "SheetFooter",
+      "type": "function",
+      "summary": "Renders the exported SheetFooter UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sheet.tsx:SheetTitle": {
+      "name": "SheetTitle",
+      "type": "function",
+      "summary": "Renders the exported SheetTitle UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sheet.tsx:SheetDescription": {
+      "name": "SheetDescription",
+      "type": "function",
+      "summary": "Renders the exported SheetDescription UI primitive with its configured styling and props."
+    },
+    "file:frontend/src/components/ui/sidebar.tsx": {
+      "name": "sidebar.tsx",
+      "type": "file",
+      "summary": "Provides reusable responsive sidebar layout for the frontend component library."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:useSidebar": {
+      "name": "useSidebar",
+      "type": "function",
+      "summary": "Exposes responsive sidebar state and controls through the useSidebar hook."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarProvider": {
+      "name": "SidebarProvider",
+      "type": "function",
+      "summary": "Renders the exported SidebarProvider UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:Sidebar": {
+      "name": "Sidebar",
+      "type": "function",
+      "summary": "Renders the exported Sidebar UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarTrigger": {
+      "name": "SidebarTrigger",
+      "type": "function",
+      "summary": "Renders the exported SidebarTrigger UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarRail": {
+      "name": "SidebarRail",
+      "type": "function",
+      "summary": "Renders the exported SidebarRail UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarInset": {
+      "name": "SidebarInset",
+      "type": "function",
+      "summary": "Renders the exported SidebarInset UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarInput": {
+      "name": "SidebarInput",
+      "type": "function",
+      "summary": "Renders the exported SidebarInput UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarHeader": {
+      "name": "SidebarHeader",
+      "type": "function",
+      "summary": "Renders the exported SidebarHeader UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarFooter": {
+      "name": "SidebarFooter",
+      "type": "function",
+      "summary": "Renders the exported SidebarFooter UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarSeparator": {
+      "name": "SidebarSeparator",
+      "type": "function",
+      "summary": "Renders the exported SidebarSeparator UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarContent": {
+      "name": "SidebarContent",
+      "type": "function",
+      "summary": "Renders the exported SidebarContent UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarGroup": {
+      "name": "SidebarGroup",
+      "type": "function",
+      "summary": "Renders the exported SidebarGroup UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarGroupLabel": {
+      "name": "SidebarGroupLabel",
+      "type": "function",
+      "summary": "Renders the exported SidebarGroupLabel UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarGroupAction": {
+      "name": "SidebarGroupAction",
+      "type": "function",
+      "summary": "Renders the exported SidebarGroupAction UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarGroupContent": {
+      "name": "SidebarGroupContent",
+      "type": "function",
+      "summary": "Renders the exported SidebarGroupContent UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarMenu": {
+      "name": "SidebarMenu",
+      "type": "function",
+      "summary": "Renders the exported SidebarMenu UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuItem": {
+      "name": "SidebarMenuItem",
+      "type": "function",
+      "summary": "Renders the exported SidebarMenuItem UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuButton": {
+      "name": "SidebarMenuButton",
+      "type": "function",
+      "summary": "Renders the exported SidebarMenuButton UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuAction": {
+      "name": "SidebarMenuAction",
+      "type": "function",
+      "summary": "Renders the exported SidebarMenuAction UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuBadge": {
+      "name": "SidebarMenuBadge",
+      "type": "function",
+      "summary": "Renders the exported SidebarMenuBadge UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuSkeleton": {
+      "name": "SidebarMenuSkeleton",
+      "type": "function",
+      "summary": "Renders the exported SidebarMenuSkeleton UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuSub": {
+      "name": "SidebarMenuSub",
+      "type": "function",
+      "summary": "Renders the exported SidebarMenuSub UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuSubItem": {
+      "name": "SidebarMenuSubItem",
+      "type": "function",
+      "summary": "Renders the exported SidebarMenuSubItem UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuSubButton": {
+      "name": "SidebarMenuSubButton",
+      "type": "function",
+      "summary": "Renders the exported SidebarMenuSubButton UI primitive with its configured styling and props."
+    },
+    "file:frontend/src/components/ui/skeleton.tsx": {
+      "name": "skeleton.tsx",
+      "type": "file",
+      "summary": "Provides reusable loading placeholder for the frontend component library."
+    },
+    "function:frontend/src/components/ui/skeleton.tsx:Skeleton": {
+      "name": "Skeleton",
+      "type": "function",
+      "summary": "Renders the exported Skeleton UI primitive with its configured styling and props."
+    },
+    "file:frontend/src/components/ui/switch.tsx": {
+      "name": "switch.tsx",
+      "type": "file",
+      "summary": "Provides reusable toggle control for the frontend component library."
+    },
+    "function:frontend/src/components/ui/switch.tsx:Switch": {
+      "name": "Switch",
+      "type": "function",
+      "summary": "Renders the exported Switch UI primitive with its configured styling and props."
+    },
+    "file:frontend/src/components/ui/table.tsx": {
+      "name": "table.tsx",
+      "type": "file",
+      "summary": "Provides reusable table layout primitives for the frontend component library."
+    },
+    "function:frontend/src/components/ui/table.tsx:Table": {
+      "name": "Table",
+      "type": "function",
+      "summary": "Renders the exported Table UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/table.tsx:TableHeader": {
+      "name": "TableHeader",
+      "type": "function",
+      "summary": "Renders the exported TableHeader UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/table.tsx:TableBody": {
+      "name": "TableBody",
+      "type": "function",
+      "summary": "Renders the exported TableBody UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/table.tsx:TableFooter": {
+      "name": "TableFooter",
+      "type": "function",
+      "summary": "Renders the exported TableFooter UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/table.tsx:TableRow": {
+      "name": "TableRow",
+      "type": "function",
+      "summary": "Renders the exported TableRow UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/table.tsx:TableHead": {
+      "name": "TableHead",
+      "type": "function",
+      "summary": "Renders the exported TableHead UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/table.tsx:TableCell": {
+      "name": "TableCell",
+      "type": "function",
+      "summary": "Renders the exported TableCell UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/table.tsx:TableCaption": {
+      "name": "TableCaption",
+      "type": "function",
+      "summary": "Renders the exported TableCaption UI primitive with its configured styling and props."
+    },
+    "file:frontend/src/components/ui/tabs.tsx": {
+      "name": "tabs.tsx",
+      "type": "file",
+      "summary": "Provides reusable tab navigation primitives for the frontend component library."
+    },
+    "function:frontend/src/components/ui/tabs.tsx:Tabs": {
+      "name": "Tabs",
+      "type": "function",
+      "summary": "Renders the exported Tabs UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/tabs.tsx:TabsList": {
+      "name": "TabsList",
+      "type": "function",
+      "summary": "Renders the exported TabsList UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/tabs.tsx:TabsTrigger": {
+      "name": "TabsTrigger",
+      "type": "function",
+      "summary": "Renders the exported TabsTrigger UI primitive with its configured styling and props."
+    },
+    "function:frontend/src/components/ui/tabs.tsx:TabsContent": {
+      "name": "TabsContent",
+      "type": "function",
+      "summary": "Renders the exported TabsContent UI primitive with its configured styling and props."
+    },
+    "file:frontend/src/hooks/use-mobile.ts": {
+      "name": "use-mobile.ts",
+      "type": "file",
+      "summary": "Provides a React hook that tracks mobile viewport state for responsive UI behavior."
+    },
+    "function:frontend/src/hooks/use-mobile.ts:useIsMobile": {
+      "name": "useIsMobile",
+      "type": "function",
+      "summary": "Exposes responsive sidebar state and controls through the useIsMobile hook."
+    },
+    "file:frontend/src/lib/utils.ts": {
+      "name": "utils.ts",
+      "type": "file",
+      "summary": "Provides class-name composition used by styled UI components."
+    },
+    "function:frontend/src/lib/utils.ts:cn": {
+      "name": "cn",
+      "type": "function",
+      "summary": "Combines conditional class names and resolves Tailwind CSS conflicts."
+    },
+    "file:backend/app/cli.py": {
+      "name": "cli.py",
+      "type": "file",
+      "summary": "Starts the local Uvicorn server and supplies FastAPI with a shutdown callback."
+    },
+    "function:backend/app/cli.py:main": {
+      "name": "main",
+      "type": "function",
+      "summary": "Configures and runs the local Uvicorn server."
+    },
+    "file:backend/app/contracts.py": {
+      "name": "contracts.py",
+      "type": "file",
+      "summary": "Defines the Pydantic request, response, and domain contracts shared across the backend API."
+    },
+    "class:backend/app/contracts.py:MessageCreate": {
+      "name": "MessageCreate",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for message create data."
+    },
+    "class:backend/app/contracts.py:Message": {
+      "name": "Message",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for message data."
+    },
+    "class:backend/app/contracts.py:ConversationCreate": {
+      "name": "ConversationCreate",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for conversation create data."
+    },
+    "class:backend/app/contracts.py:ConversationUpdate": {
+      "name": "ConversationUpdate",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for conversation update data."
+    },
+    "class:backend/app/contracts.py:Conversation": {
+      "name": "Conversation",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for conversation data."
+    },
+    "class:backend/app/contracts.py:CredentialInput": {
+      "name": "CredentialInput",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for credential input data."
+    },
+    "class:backend/app/contracts.py:OAuthCodeInput": {
+      "name": "OAuthCodeInput",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for oauth code input data."
+    },
+    "class:backend/app/contracts.py:OpenCodeOAuthStart": {
+      "name": "OpenCodeOAuthStart",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for open code oauth start data."
+    },
+    "class:backend/app/contracts.py:OpenCodeOAuthComplete": {
+      "name": "OpenCodeOAuthComplete",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for open code oauth complete data."
+    },
+    "class:backend/app/contracts.py:ImageInput": {
+      "name": "ImageInput",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for image input data."
+    },
+    "class:backend/app/contracts.py:ChatMessage": {
+      "name": "ChatMessage",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for chat message data."
+    },
+    "class:backend/app/contracts.py:ModelDescriptor": {
+      "name": "ModelDescriptor",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for model descriptor data."
+    },
+    "class:backend/app/contracts.py:ProviderDiscovery": {
+      "name": "ProviderDiscovery",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for provider discovery data."
+    },
+    "class:backend/app/contracts.py:RunCreate": {
+      "name": "RunCreate",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for run create data."
+    },
+    "class:backend/app/contracts.py:RunStatus": {
+      "name": "RunStatus",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for run status data."
+    },
+    "class:backend/app/contracts.py:RunSnapshot": {
+      "name": "RunSnapshot",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for run snapshot data."
+    },
+    "class:backend/app/contracts.py:RunEvent": {
+      "name": "RunEvent",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for run event data."
+    },
+    "class:backend/app/contracts.py:ContextSection": {
+      "name": "ContextSection",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for context section data."
+    },
+    "class:backend/app/contracts.py:ContextSource": {
+      "name": "ContextSource",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for context source data."
+    },
+    "class:backend/app/contracts.py:SafetyFinding": {
+      "name": "SafetyFinding",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for safety finding data."
+    },
+    "class:backend/app/contracts.py:SafetyText": {
+      "name": "SafetyText",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for safety text data."
+    },
+    "class:backend/app/contracts.py:ProviderPolicy": {
+      "name": "ProviderPolicy",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for provider policy data."
+    },
+    "class:backend/app/contracts.py:TurnPreflight": {
+      "name": "TurnPreflight",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for turn preflight data."
+    },
+    "class:backend/app/contracts.py:TurnCreate": {
+      "name": "TurnCreate",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for turn create data."
+    },
+    "class:backend/app/contracts.py:ContextPlan": {
+      "name": "ContextPlan",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for context plan data."
+    },
+    "class:backend/app/contracts.py:ConversationBranch": {
+      "name": "ConversationBranch",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for conversation branch data."
+    },
+    "class:backend/app/contracts.py:BackpackItemInput": {
+      "name": "BackpackItemInput",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for backpack item input data."
+    },
+    "class:backend/app/contracts.py:BackpackCreate": {
+      "name": "BackpackCreate",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for backpack create data."
+    },
+    "class:backend/app/contracts.py:BackpackItem": {
+      "name": "BackpackItem",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for backpack item data."
+    },
+    "class:backend/app/contracts.py:Backpack": {
+      "name": "Backpack",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for backpack data."
+    },
+    "class:backend/app/contracts.py:FocusCreate": {
+      "name": "FocusCreate",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for focus create data."
+    },
+    "class:backend/app/contracts.py:FocusSession": {
+      "name": "FocusSession",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for focus session data."
+    },
+    "class:backend/app/contracts.py:FocusUpdate": {
+      "name": "FocusUpdate",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for focus update data."
+    },
+    "class:backend/app/contracts.py:ProviderSimulationInput": {
+      "name": "ProviderSimulationInput",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for provider simulation input data."
+    },
+    "class:backend/app/contracts.py:ReplayBundle": {
+      "name": "ReplayBundle",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for replay bundle data."
+    },
+    "class:backend/app/contracts.py:MemoryCreate": {
+      "name": "MemoryCreate",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for memory create data."
+    },
+    "class:backend/app/contracts.py:Memory": {
+      "name": "Memory",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for memory data."
+    },
+    "class:backend/app/contracts.py:MemoryUpdate": {
+      "name": "MemoryUpdate",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for memory update data."
+    },
+    "class:backend/app/contracts.py:MemoryExtractionRequest": {
+      "name": "MemoryExtractionRequest",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for memory extraction request data."
+    },
+    "class:backend/app/contracts.py:MemoryExtractionResult": {
+      "name": "MemoryExtractionResult",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for memory extraction result data."
+    },
+    "class:backend/app/contracts.py:PresetCreate": {
+      "name": "PresetCreate",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for preset create data."
+    },
+    "class:backend/app/contracts.py:Preset": {
+      "name": "Preset",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for preset data."
+    },
+    "class:backend/app/contracts.py:UploadCreate": {
+      "name": "UploadCreate",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for upload create data."
+    },
+    "class:backend/app/contracts.py:Upload": {
+      "name": "Upload",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for upload data."
+    },
+    "class:backend/app/contracts.py:ReplayCreate": {
+      "name": "ReplayCreate",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for replay create data."
+    },
+    "class:backend/app/contracts.py:FeedbackInput": {
+      "name": "FeedbackInput",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for feedback input data."
+    },
+    "class:backend/app/contracts.py:DataImport": {
+      "name": "DataImport",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for data import data."
+    },
+    "class:backend/app/contracts.py:WipeRequest": {
+      "name": "WipeRequest",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for wipe request data."
+    },
+    "class:backend/app/contracts.py:V2ImportRequest": {
+      "name": "V2ImportRequest",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for v2import request data."
+    },
+    "class:backend/app/contracts.py:Profile": {
+      "name": "Profile",
+      "type": "class",
+      "summary": "Defines the Pydantic API contract for profile data."
+    },
+    "function:backend/app/contracts.py:utc_now": {
+      "name": "utc_now",
+      "type": "function",
+      "summary": "Provides utc now behavior for this module."
+    },
+    "file:backend/app/main.py": {
+      "name": "main.py",
+      "type": "file",
+      "summary": "Builds the FastAPI application, wiring API routes to storage, provider, run, session, and workspace services."
+    },
+    "function:backend/app/main.py:create_app": {
+      "name": "create_app",
+      "type": "function",
+      "summary": "Creates the FastAPI application and registers its routes and dependencies."
+    },
+    "file:backend/app/memory.py": {
+      "name": "memory.py",
+      "type": "file",
+      "summary": "Extracts and classifies reusable memories from conversation transcripts through a provider adapter."
+    },
+    "class:backend/app/memory.py:ExtractionOutcome": {
+      "name": "ExtractionOutcome",
+      "type": "class",
+      "summary": "Records the accepted and discarded results of a memory extraction pass."
+    },
+    "function:backend/app/memory.py:extract_memories": {
+      "name": "extract_memories",
+      "type": "function",
+      "summary": "Extracts, deduplicates, and categorizes memory candidates from a conversation."
+    },
+    "function:backend/app/memory.py:_complete": {
+      "name": "_complete",
+      "type": "function",
+      "summary": "Requests a completion from the selected provider adapter."
+    },
+    "function:backend/app/memory.py:_selection_prompt": {
+      "name": "_selection_prompt",
+      "type": "function",
+      "summary": "Builds the prompt used to select useful memory candidates."
+    },
+    "function:backend/app/memory.py:_consolidation_prompt": {
+      "name": "_consolidation_prompt",
+      "type": "function",
+      "summary": "Builds the prompt used to consolidate existing and candidate memories."
+    },
+    "function:backend/app/memory.py:_parse_memories": {
+      "name": "_parse_memories",
+      "type": "function",
+      "summary": "Parses structured memory candidates from model output."
+    },
+    "function:backend/app/memory.py:_category": {
+      "name": "_category",
+      "type": "function",
+      "summary": "Normalizes a memory category."
+    },
+    "file:backend/app/providers.py": {
+      "name": "providers.py",
+      "type": "file",
+      "summary": "Implements provider adapters and a registry for model discovery and streaming completions."
+    },
+    "class:backend/app/providers.py:ProviderAdapter": {
+      "name": "ProviderAdapter",
+      "type": "class",
+      "summary": "Implements the Provider Adapter role within the provider integration layer."
+    },
+    "class:backend/app/providers.py:OpenAICompatibleAdapter": {
+      "name": "OpenAICompatibleAdapter",
+      "type": "class",
+      "summary": "Implements the Open AICompatible Adapter role within the provider integration layer."
+    },
+    "class:backend/app/providers.py:OllamaAdapter": {
+      "name": "OllamaAdapter",
+      "type": "class",
+      "summary": "Implements the Ollama Adapter role within the provider integration layer."
+    },
+    "class:backend/app/providers.py:AnthropicAdapter": {
+      "name": "AnthropicAdapter",
+      "type": "class",
+      "summary": "Implements the Anthropic Adapter role within the provider integration layer."
+    },
+    "class:backend/app/providers.py:GeminiAdapter": {
+      "name": "GeminiAdapter",
+      "type": "class",
+      "summary": "Implements the Gemini Adapter role within the provider integration layer."
+    },
+    "class:backend/app/providers.py:OpenCodeZenAdapter": {
+      "name": "OpenCodeZenAdapter",
+      "type": "class",
+      "summary": "Implements the Open Code Zen Adapter role within the provider integration layer."
+    },
+    "class:backend/app/providers.py:OpenCodeBridgeAdapter": {
+      "name": "OpenCodeBridgeAdapter",
+      "type": "class",
+      "summary": "Implements the Open Code Bridge Adapter role within the provider integration layer."
+    },
+    "class:backend/app/providers.py:ProviderRegistry": {
+      "name": "ProviderRegistry",
+      "type": "class",
+      "summary": "Implements the Provider Registry role within the provider integration layer."
+    },
+    "function:backend/app/providers.py:build_provider_registry": {
+      "name": "build_provider_registry",
+      "type": "function",
+      "summary": "Constructs the configured provider adapter registry."
+    },
+    "file:backend/app/runs.py": {
+      "name": "runs.py",
+      "type": "file",
+      "summary": "Coordinates asynchronous model runs, event streaming, cancellation, and persisted run state."
+    },
+    "class:backend/app/runs.py:RunState": {
+      "name": "RunState",
+      "type": "class",
+      "summary": "Represents mutable state for an active model run."
+    },
+    "class:backend/app/runs.py:RunManager": {
+      "name": "RunManager",
+      "type": "class",
+      "summary": "Manages active model runs, lifecycle events, cancellation, and persisted snapshots."
+    },
+    "file:backend/app/sessions.py": {
+      "name": "sessions.py",
+      "type": "file",
+      "summary": "Keeps provider credentials scoped to browser sessions and resolves environment-backed credentials."
+    },
+    "class:backend/app/sessions.py:SessionVault": {
+      "name": "SessionVault",
+      "type": "class",
+      "summary": "Stores provider credential values under isolated browser session identifiers."
+    },
+    "function:backend/app/sessions.py:_anthropic_wif_configured": {
+      "name": "_anthropic_wif_configured",
+      "type": "function",
+      "summary": "Provides  anthropic wif configured behavior for this module."
+    },
+    "file:backend/app/store.py": {
+      "name": "store.py",
+      "type": "file",
+      "summary": "Provides the SQLite persistence layer for conversations, runs, memories, workspace resources, and settings."
+    },
+    "class:backend/app/store.py:Store": {
+      "name": "Store",
+      "type": "class",
+      "summary": "Encapsulates SQLite schema initialization and persistent workspace operations."
+    },
+    "file:backend/app/workspace.py": {
+      "name": "workspace.py",
+      "type": "file",
+      "summary": "Builds safe context plans from workspace sources, retrieval, memories, attachments, and optional web results."
+    },
+    "function:backend/app/workspace.py:search_web": {
+      "name": "search_web",
+      "type": "function",
+      "summary": "Queries configured web search support for context sources."
+    },
+    "function:backend/app/workspace.py:retrieve_context": {
+      "name": "retrieve_context",
+      "type": "function",
+      "summary": "Retrieves relevant conversation context from storage."
+    },
+    "function:backend/app/workspace.py:relevant_memories": {
+      "name": "relevant_memories",
+      "type": "function",
+      "summary": "Selects memories relevant to the current request."
+    },
+    "function:backend/app/workspace.py:estimate_tokens": {
+      "name": "estimate_tokens",
+      "type": "function",
+      "summary": "Provides estimate tokens behavior for this module."
+    },
+    "function:backend/app/workspace.py:scan_text": {
+      "name": "scan_text",
+      "type": "function",
+      "summary": "Detects sensitive content and prompt-injection signals in text."
+    },
+    "function:backend/app/workspace.py:sanitize_text": {
+      "name": "sanitize_text",
+      "type": "function",
+      "summary": "Redacts sensitive fragments from text."
+    },
+    "function:backend/app/workspace.py:build_context_plan": {
+      "name": "build_context_plan",
+      "type": "function",
+      "summary": "Builds a budgeted, safety-aware context plan for a chat turn."
+    },
+    "function:backend/app/workspace.py:assemble_messages": {
+      "name": "assemble_messages",
+      "type": "function",
+      "summary": "Assembles model messages from a context plan and user request."
+    },
+    "function:backend/app/workspace.py:_redact": {
+      "name": "_redact",
+      "type": "function",
+      "summary": "Provides  redact behavior for this module."
+    },
+    "file:scripts/generate_api_types.py": {
+      "name": "generate_api_types.py",
+      "type": "file",
+      "summary": "Exports the FastAPI OpenAPI schema for TypeScript client type generation."
+    },
+    "file:src/files.py": {
+      "name": "files.py",
+      "type": "file",
+      "summary": "Parses uploaded documents and images into model-ready attachments and chunked text."
+    },
+    "class:src/files.py:Attachment": {
+      "name": "Attachment",
+      "type": "class",
+      "summary": "Represents a parsed uploaded attachment and its model-ready content."
+    },
+    "function:src/files.py:_ext": {
+      "name": "_ext",
+      "type": "function",
+      "summary": "Provides  ext behavior for this module."
+    },
+    "function:src/files.py:parse_upload": {
+      "name": "parse_upload",
+      "type": "function",
+      "summary": "Parses an uploaded file into an attachment suitable for model context."
+    },
+    "function:src/files.py:_parse_pdf": {
+      "name": "_parse_pdf",
+      "type": "function",
+      "summary": "Provides  parse pdf behavior for this module."
+    },
+    "function:src/files.py:_parse_docx": {
+      "name": "_parse_docx",
+      "type": "function",
+      "summary": "Provides  parse docx behavior for this module."
+    },
+    "function:src/files.py:_parse_excel": {
+      "name": "_parse_excel",
+      "type": "function",
+      "summary": "Provides  parse excel behavior for this module."
+    },
+    "function:src/files.py:_parse_legacy_doc": {
+      "name": "_parse_legacy_doc",
+      "type": "function",
+      "summary": "Extracts text from legacy document formats."
+    },
+    "function:src/files.py:chunk_text": {
+      "name": "chunk_text",
+      "type": "function",
+      "summary": "Splits text into overlapping chunks for downstream processing."
+    },
+    "file:tests/test_provider_adapters.py": {
+      "name": "test_provider_adapters.py",
+      "type": "file",
+      "summary": "Tests provider registration, discovery behavior, normalized message handling, and provider security constraints."
+    },
+    "function:tests/test_provider_adapters.py:test_registry_contains_all_phase_one_providers": {
+      "name": "test_registry_contains_all_phase_one_providers",
+      "type": "function",
+      "summary": "Verifies registry contains all phase one providers."
+    },
+    "function:tests/test_provider_adapters.py:test_model_discovery_is_concurrent_and_degrades_per_provider": {
+      "name": "test_model_discovery_is_concurrent_and_degrades_per_provider",
+      "type": "function",
+      "summary": "Verifies model discovery is concurrent and degrades per provider."
+    },
+    "function:tests/test_provider_adapters.py:test_echo_like_adapter_contract_accepts_normalized_messages": {
+      "name": "test_echo_like_adapter_contract_accepts_normalized_messages",
+      "type": "function",
+      "summary": "Verifies echo like adapter contract accepts normalized messages."
+    },
+    "function:tests/test_provider_adapters.py:test_local_ollama_filters_daemon_cloud_models_and_reports_vision": {
+      "name": "test_local_ollama_filters_daemon_cloud_models_and_reports_vision",
+      "type": "function",
+      "summary": "Verifies local ollama filters daemon cloud models and reports vision."
+    },
+    "function:tests/test_provider_adapters.py:test_ollama_cloud_uses_bearer_auth": {
+      "name": "test_ollama_cloud_uses_bearer_auth",
+      "type": "function",
+      "summary": "Verifies ollama cloud uses bearer auth."
+    },
+    "function:tests/test_provider_adapters.py:test_opencode_bridge_rejects_non_loopback_urls": {
+      "name": "test_opencode_bridge_rejects_non_loopback_urls",
+      "type": "function",
+      "summary": "Verifies opencode bridge rejects non loopback urls."
+    },
+    "file:tests/test_workspace_features.py": {
+      "name": "test_workspace_features.py",
+      "type": "file",
+      "summary": "Exercises workspace API workflows including context safety, replay, memory, uploads, and data controls."
+    },
+    "function:tests/test_workspace_features.py:_conversation": {
+      "name": "_conversation",
+      "type": "function",
+      "summary": "Provides  conversation behavior for this module."
+    },
+    "function:tests/test_workspace_features.py:_complete_echo_run": {
+      "name": "_complete_echo_run",
+      "type": "function",
+      "summary": "Provides  complete echo run behavior for this module."
+    },
+    "function:tests/test_workspace_features.py:test_run_is_owned_by_browser_session": {
+      "name": "test_run_is_owned_by_browser_session",
+      "type": "function",
+      "summary": "Verifies run is owned by browser session."
+    },
+    "function:tests/test_workspace_features.py:test_cloud_preflight_warns_about_secrets_and_excludes_private_context": {
+      "name": "test_cloud_preflight_warns_about_secrets_and_excludes_private_context",
+      "type": "function",
+      "summary": "Verifies cloud preflight warns about secrets and excludes private context."
+    },
+    "function:tests/test_workspace_features.py:test_turn_persists_messages_context_and_replay_bundle": {
+      "name": "test_turn_persists_messages_context_and_replay_bundle",
+      "type": "function",
+      "summary": "Verifies turn persists messages context and replay bundle."
+    },
+    "function:tests/test_workspace_features.py:test_branch_backpack_focus_and_provider_policy": {
+      "name": "test_branch_backpack_focus_and_provider_policy",
+      "type": "function",
+      "summary": "Verifies branch backpack focus and provider policy."
+    },
+    "function:tests/test_workspace_features.py:test_memory_preset_upload_activity_and_replay": {
+      "name": "test_memory_preset_upload_activity_and_replay",
+      "type": "function",
+      "summary": "Verifies memory preset upload activity and replay."
+    },
+    "function:tests/test_workspace_features.py:test_store_accepts_the_legacy_seven_column_preset_table": {
+      "name": "test_store_accepts_the_legacy_seven_column_preset_table",
+      "type": "function",
+      "summary": "Verifies store accepts the legacy seven column preset table."
+    },
+    "function:tests/test_workspace_features.py:test_memory_lifecycle_feedback_and_data_controls": {
+      "name": "test_memory_lifecycle_feedback_and_data_controls",
+      "type": "function",
+      "summary": "Verifies memory lifecycle feedback and data controls."
+    },
+    "function:tests/test_workspace_features.py:test_llm_memory_extraction_requires_cloud_confirmation_and_saves_provenance": {
+      "name": "test_llm_memory_extraction_requires_cloud_confirmation_and_saves_provenance",
+      "type": "function",
+      "summary": "Verifies llm memory extraction requires cloud confirmation and saves provenance."
+    },
+    "function:tests/test_workspace_features.py:test_redacted_replay_bundle_hides_private_context": {
+      "name": "test_redacted_replay_bundle_hides_private_context",
+      "type": "function",
+      "summary": "Verifies redacted replay bundle hides private context."
+    },
+    "function:tests/test_workspace_features.py:test_workspace_resource_lifecycle_and_provider_simulator": {
+      "name": "test_workspace_resource_lifecycle_and_provider_simulator",
+      "type": "function",
+      "summary": "Verifies workspace resource lifecycle and provider simulator."
+    },
+    "function:tests/test_workspace_features.py:test_web_sources_are_provenanced_and_replayed_without_a_second_search": {
+      "name": "test_web_sources_are_provenanced_and_replayed_without_a_second_search",
+      "type": "function",
+      "summary": "Verifies web sources are provenanced and replayed without a second search."
+    },
+    "function:tests/test_workspace_features.py:test_cross_chat_retrieval_has_provenance_and_can_be_excluded": {
+      "name": "test_cross_chat_retrieval_has_provenance_and_can_be_excluded",
+      "type": "function",
+      "summary": "Verifies cross chat retrieval has provenance and can be excluded."
+    },
+    "function:tests/test_workspace_features.py:test_image_attachment_is_available_to_full_replay_but_not_redacted_share": {
+      "name": "test_image_attachment_is_available_to_full_replay_but_not_redacted_share",
+      "type": "function",
+      "summary": "Verifies image attachment is available to full replay but not redacted share."
+    },
+    "function:tests/test_workspace_features.py:test_context_budget_prunes_sources_and_private_text_can_be_sanitized": {
+      "name": "test_context_budget_prunes_sources_and_private_text_can_be_sanitized",
+      "type": "function",
+      "summary": "Verifies context budget prunes sources and private text can be sanitized."
+    },
+    "function:tests/test_workspace_features.py:test_profile_runtime_health_and_opt_in_v2_import": {
+      "name": "test_profile_runtime_health_and_opt_in_v2_import",
+      "type": "function",
+      "summary": "Verifies profile runtime health and opt in v2 import."
+    },
+    "file:frontend/src/App.test.tsx": {
+      "name": "App.test.tsx",
+      "type": "file",
+      "summary": "Tests the primary application workflow and its HTTP-driven UI behavior."
+    },
+    "file:frontend/src/App.tsx": {
+      "name": "App.tsx",
+      "type": "file",
+      "summary": "Implements the Local AI Chat Studio single-page interface, coordinating conversations, models, context review, workspace data, and provider controls."
+    },
+    "file:frontend/src/ErrorBoundary.tsx": {
+      "name": "ErrorBoundary.tsx",
+      "type": "file",
+      "summary": "Provides a React error boundary that logs rendering failures and shows a recovery message."
+    },
+    "file:frontend/src/api/client.ts": {
+      "name": "client.ts",
+      "type": "file",
+      "summary": "Defines typed browser-side API helpers for the backend, including request failures and streamed run events."
+    },
+    "file:frontend/src/api/schema.ts": {
+      "name": "schema.ts",
+      "type": "file",
+      "summary": "Contains generated TypeScript API schema types consumed by the frontend client."
+    },
+    "file:frontend/src/components/ui/badge.tsx": {
+      "name": "badge.tsx",
+      "type": "file",
+      "summary": "Provides a styled, renderable badge component with variant support."
+    },
+    "file:frontend/src/components/ui/card.tsx": {
+      "name": "card.tsx",
+      "type": "file",
+      "summary": "Exports composable styled card layout primitives for headers, content, actions, and footers."
+    },
+    "file:frontend/src/components/ui/scroll-area.tsx": {
+      "name": "scroll-area.tsx",
+      "type": "file",
+      "summary": "Wraps scroll-area primitives with application styling for content regions and scrollbars."
+    },
+    "file:frontend/src/components/ui/textarea.tsx": {
+      "name": "textarea.tsx",
+      "type": "file",
+      "summary": "Exports a styled textarea control compatible with standard textarea props."
+    },
+    "file:frontend/src/components/ui/tooltip.tsx": {
+      "name": "tooltip.tsx",
+      "type": "file",
+      "summary": "Provides styled tooltip provider, trigger, and content components built on tooltip primitives."
+    },
+    "file:frontend/src/main.tsx": {
+      "name": "main.tsx",
+      "type": "file",
+      "summary": "Bootstraps the React application and its global styles into the browser root."
+    },
+    "function:frontend/src/App.tsx:Navigation": {
+      "name": "Navigation",
+      "type": "function",
+      "summary": "Renders the primary page-navigation rail and backend connection indicator."
+    },
+    "function:frontend/src/App.tsx:ConversationHistory": {
+      "name": "ConversationHistory",
+      "type": "function",
+      "summary": "Renders searchable conversation history with create, rename, pin, select, and delete controls."
+    },
+    "function:frontend/src/App.tsx:ContextRail": {
+      "name": "ContextRail",
+      "type": "function",
+      "summary": "Displays estimated context-token usage and included context sections."
+    },
+    "function:frontend/src/App.tsx:ChatWorkspace": {
+      "name": "ChatWorkspace",
+      "type": "function",
+      "summary": "Renders conversation messages, context confirmation, attachments, and the streaming chat composer."
+    },
+    "function:frontend/src/App.tsx:ComparePage": {
+      "name": "ComparePage",
+      "type": "function",
+      "summary": "Runs the same prompt against selected models and displays their streamed outputs."
+    },
+    "function:frontend/src/App.tsx:ProviderCard": {
+      "name": "ProviderCard",
+      "type": "function",
+      "summary": "Displays and updates a provider's policy, credentials, and authentication state."
+    },
+    "function:frontend/src/App.tsx:LibraryPage": {
+      "name": "LibraryPage",
+      "type": "function",
+      "summary": "Provides library controls for memories, presets, and uploaded workspace files."
+    },
+    "function:frontend/src/App.tsx:SettingsPage": {
+      "name": "SettingsPage",
+      "type": "function",
+      "summary": "Shows connection status and exposes workspace refresh controls."
+    },
+    "function:frontend/src/App.tsx:App": {
+      "name": "App",
+      "type": "function",
+      "summary": "Owns frontend application state and composes page views with backend API workflows."
+    },
+    "class:frontend/src/ErrorBoundary.tsx:ErrorBoundary": {
+      "name": "ErrorBoundary",
+      "type": "class",
+      "summary": "Catches descendant render errors, logs diagnostic details, and renders a fallback screen."
+    },
+    "class:frontend/src/api/client.ts:ApiError": {
+      "name": "ApiError",
+      "type": "class",
+      "summary": "Represents failed API responses with HTTP status and backend error detail."
+    },
+    "function:frontend/src/api/client.ts:request": {
+      "name": "request",
+      "type": "function",
+      "summary": "Performs JSON API requests and converts unsuccessful responses into ApiError instances."
+    },
+    "function:frontend/src/api/client.ts:streamRun": {
+      "name": "streamRun",
+      "type": "function",
+      "summary": "Reads server-sent run events from a streaming response and forwards parsed events to a callback."
+    },
+    "function:frontend/src/components/ui/badge.tsx:Badge": {
+      "name": "Badge",
+      "type": "function",
+      "summary": "Renders a badge using variant classes and render-prop-compatible primitive composition."
+    },
+    "function:frontend/src/components/ui/card.tsx:Card": {
+      "name": "Card",
+      "type": "function",
+      "summary": "Renders the configurable outer card container."
+    },
+    "function:frontend/src/components/ui/card.tsx:CardHeader": {
+      "name": "CardHeader",
+      "type": "function",
+      "summary": "Renders the header region of a card."
+    },
+    "function:frontend/src/components/ui/card.tsx:CardTitle": {
+      "name": "CardTitle",
+      "type": "function",
+      "summary": "Renders a styled card title."
+    },
+    "function:frontend/src/components/ui/card.tsx:CardDescription": {
+      "name": "CardDescription",
+      "type": "function",
+      "summary": "Renders muted descriptive card text."
+    },
+    "function:frontend/src/components/ui/card.tsx:CardAction": {
+      "name": "CardAction",
+      "type": "function",
+      "summary": "Renders positioned actions in a card header."
+    },
+    "function:frontend/src/components/ui/card.tsx:CardContent": {
+      "name": "CardContent",
+      "type": "function",
+      "summary": "Renders the main content region of a card."
+    },
+    "function:frontend/src/components/ui/card.tsx:CardFooter": {
+      "name": "CardFooter",
+      "type": "function",
+      "summary": "Renders the footer region of a card."
+    },
+    "function:frontend/src/components/ui/scroll-area.tsx:ScrollArea": {
+      "name": "ScrollArea",
+      "type": "function",
+      "summary": "Renders a styled scroll-area root with its viewport and vertical scrollbar."
+    },
+    "function:frontend/src/components/ui/scroll-area.tsx:ScrollBar": {
+      "name": "ScrollBar",
+      "type": "function",
+      "summary": "Renders a styled scrollbar for a selected orientation."
+    },
+    "function:frontend/src/components/ui/textarea.tsx:Textarea": {
+      "name": "Textarea",
+      "type": "function",
+      "summary": "Renders a styled native textarea control."
+    },
+    "function:frontend/src/components/ui/tooltip.tsx:TooltipProvider": {
+      "name": "TooltipProvider",
+      "type": "function",
+      "summary": "Configures tooltip timing through a wrapper provider."
+    },
+    "function:frontend/src/components/ui/tooltip.tsx:Tooltip": {
+      "name": "Tooltip",
+      "type": "function",
+      "summary": "Wraps the tooltip root primitive."
+    },
+    "function:frontend/src/components/ui/tooltip.tsx:TooltipTrigger": {
+      "name": "TooltipTrigger",
+      "type": "function",
+      "summary": "Wraps the tooltip trigger primitive."
+    },
+    "function:frontend/src/components/ui/tooltip.tsx:TooltipContent": {
+      "name": "TooltipContent",
+      "type": "function",
+      "summary": "Renders positioned, styled tooltip content with configurable alignment."
+    },
+    "file:src/catalog.py": {
+      "name": "catalog.py",
+      "type": "file",
+      "summary": "Builds a unified, provider-grouped catalog of local and cloud models for chat and comparison interfaces."
+    },
+    "function:src/catalog.py:build_model_catalog": {
+      "name": "build_model_catalog",
+      "type": "function",
+      "summary": "Implements build model catalog as part of builds a unified, provider-grouped catalog of local and cloud models for chat and comparison interfaces."
+    },
+    "file:src/chat_store.py": {
+      "name": "chat_store.py",
+      "type": "file",
+      "summary": "Persists conversations, messages, memories, feedback, presets, and key-value settings in the local SQLite database."
+    },
+    "function:src/chat_store.py:search_conversations": {
+      "name": "search_conversations",
+      "type": "function",
+      "summary": "Implements search conversations as part of persists conversations, messages, memories, feedback, presets, and key-value settings in the local sqlite database."
+    },
+    "function:src/chat_store.py:clear_all_conversations": {
+      "name": "clear_all_conversations",
+      "type": "function",
+      "summary": "Implements clear all conversations as part of persists conversations, messages, memories, feedback, presets, and key-value settings in the local sqlite database."
+    },
+    "function:src/chat_store.py:add_message": {
+      "name": "add_message",
+      "type": "function",
+      "summary": "Implements add message as part of persists conversations, messages, memories, feedback, presets, and key-value settings in the local sqlite database."
+    },
+    "function:src/chat_store.py:get_messages": {
+      "name": "get_messages",
+      "type": "function",
+      "summary": "Implements get messages as part of persists conversations, messages, memories, feedback, presets, and key-value settings in the local sqlite database."
+    },
+    "function:src/chat_store.py:add_memory": {
+      "name": "add_memory",
+      "type": "function",
+      "summary": "Implements add memory as part of persists conversations, messages, memories, feedback, presets, and key-value settings in the local sqlite database."
+    },
+    "function:src/chat_store.py:save_preset": {
+      "name": "save_preset",
+      "type": "function",
+      "summary": "Implements save preset as part of persists conversations, messages, memories, feedback, presets, and key-value settings in the local sqlite database."
+    },
+    "function:src/chat_store.py:import_jsonl": {
+      "name": "import_jsonl",
+      "type": "function",
+      "summary": "Implements import jsonl as part of persists conversations, messages, memories, feedback, presets, and key-value settings in the local sqlite database."
+    },
+    "function:src/chat_store.py:export_jsonl": {
+      "name": "export_jsonl",
+      "type": "function",
+      "summary": "Implements export jsonl as part of persists conversations, messages, memories, feedback, presets, and key-value settings in the local sqlite database."
+    },
+    "file:src/config.py": {
+      "name": "config.py",
+      "type": "file",
+      "summary": "Defines environment-overridable Pydantic settings and creates the local data, database, vector, and upload directories."
+    },
+    "class:src/config.py:AppConfig": {
+      "name": "AppConfig",
+      "type": "class",
+      "summary": "Holds environment-configurable application paths, generation defaults, and retrieval tuning, while ensuring required local directories exist."
+    },
+    "file:src/jobs.py": {
+      "name": "jobs.py",
+      "type": "file",
+      "summary": "Coordinates streaming chat jobs, attachments, retrieval context, persistence, post-turn indexing, and background personalization tasks."
+    },
+    "function:src/jobs.py:start": {
+      "name": "start",
+      "type": "function",
+      "summary": "Implements start as part of coordinates streaming chat jobs, attachments, retrieval context, persistence, post-turn indexing, and background personalization tasks."
+    },
+    "function:src/jobs.py:run_ephemeral": {
+      "name": "run_ephemeral",
+      "type": "function",
+      "summary": "Implements run ephemeral as part of coordinates streaming chat jobs, attachments, retrieval context, persistence, post-turn indexing, and background personalization tasks."
+    },
+    "function:src/jobs.py:_stream": {
+      "name": "_stream",
+      "type": "function",
+      "summary": "Implements stream as part of coordinates streaming chat jobs, attachments, retrieval context, persistence, post-turn indexing, and background personalization tasks."
+    },
+    "function:src/jobs.py:_web_search": {
+      "name": "_web_search",
+      "type": "function",
+      "summary": "Implements web search as part of coordinates streaming chat jobs, attachments, retrieval context, persistence, post-turn indexing, and background personalization tasks."
+    },
+    "function:src/jobs.py:_process_attachments": {
+      "name": "_process_attachments",
+      "type": "function",
+      "summary": "Implements process attachments as part of coordinates streaming chat jobs, attachments, retrieval context, persistence, post-turn indexing, and background personalization tasks."
+    },
+    "function:src/jobs.py:_run": {
+      "name": "_run",
+      "type": "function",
+      "summary": "Implements run as part of coordinates streaming chat jobs, attachments, retrieval context, persistence, post-turn indexing, and background personalization tasks."
+    },
+    "function:src/jobs.py:_friendly_error": {
+      "name": "_friendly_error",
+      "type": "function",
+      "summary": "Implements friendly error as part of coordinates streaming chat jobs, attachments, retrieval context, persistence, post-turn indexing, and background personalization tasks."
+    },
+    "function:src/jobs.py:_autotitle": {
+      "name": "_autotitle",
+      "type": "function",
+      "summary": "Implements autotitle as part of coordinates streaming chat jobs, attachments, retrieval context, persistence, post-turn indexing, and background personalization tasks."
+    },
+    "function:src/jobs.py:_maybe_extract": {
+      "name": "_maybe_extract",
+      "type": "function",
+      "summary": "Implements maybe extract as part of coordinates streaming chat jobs, attachments, retrieval context, persistence, post-turn indexing, and background personalization tasks."
+    },
+    "file:src/memory.py": {
+      "name": "memory.py",
+      "type": "file",
+      "summary": "Extracts durable user facts from conversations and retrieves relevant stored memories for a new prompt."
+    },
+    "function:src/memory.py:extract_memories": {
+      "name": "extract_memories",
+      "type": "function",
+      "summary": "Implements extract memories as part of extracts durable user facts from conversations and retrieves relevant stored memories for a new prompt."
+    },
+    "function:src/memory.py:relevant_memories": {
+      "name": "relevant_memories",
+      "type": "function",
+      "summary": "Implements relevant memories as part of extracts durable user facts from conversations and retrieves relevant stored memories for a new prompt."
+    },
+    "function:src/memory.py:_parse_json_list": {
+      "name": "_parse_json_list",
+      "type": "function",
+      "summary": "Implements parse json list as part of extracts durable user facts from conversations and retrieves relevant stored memories for a new prompt."
+    },
+    "file:src/model_labels.py": {
+      "name": "model_labels.py",
+      "type": "file",
+      "summary": "Derives concise model capability and size labels from Ollama model metadata for selection controls."
+    },
+    "function:src/model_labels.py:_size_tag": {
+      "name": "_size_tag",
+      "type": "function",
+      "summary": "Implements size tag as part of derives concise model capability and size labels from ollama model metadata for selection controls."
+    },
+    "function:src/model_labels.py:hint_for": {
+      "name": "hint_for",
+      "type": "function",
+      "summary": "Implements hint for as part of derives concise model capability and size labels from ollama model metadata for selection controls."
+    },
+    "file:src/ollama_client.py": {
+      "name": "ollama_client.py",
+      "type": "file",
+      "summary": "Wraps the Ollama client for model discovery, streaming generation, embeddings, image description, and health checks."
+    },
+    "function:src/ollama_client.py:_client": {
+      "name": "_client",
+      "type": "function",
+      "summary": "Implements client as part of wraps the ollama client for model discovery, streaming generation, embeddings, image description, and health checks."
+    },
+    "function:src/ollama_client.py:list_models": {
+      "name": "list_models",
+      "type": "function",
+      "summary": "Implements list models as part of wraps the ollama client for model discovery, streaming generation, embeddings, image description, and health checks."
+    },
+    "function:src/ollama_client.py:vision_fallback_model": {
+      "name": "vision_fallback_model",
+      "type": "function",
+      "summary": "Implements vision fallback model as part of wraps the ollama client for model discovery, streaming generation, embeddings, image description, and health checks."
+    },
+    "function:src/ollama_client.py:smallest_text_model": {
+      "name": "smallest_text_model",
+      "type": "function",
+      "summary": "Implements smallest text model as part of wraps the ollama client for model discovery, streaming generation, embeddings, image description, and health checks."
+    },
+    "function:src/ollama_client.py:stream_chat": {
+      "name": "stream_chat",
+      "type": "function",
+      "summary": "Implements stream chat as part of wraps the ollama client for model discovery, streaming generation, embeddings, image description, and health checks."
+    },
+    "function:src/ollama_client.py:running_models": {
+      "name": "running_models",
+      "type": "function",
+      "summary": "Implements running models as part of wraps the ollama client for model discovery, streaming generation, embeddings, image description, and health checks."
+    },
+    "function:src/ollama_client.py:generate": {
+      "name": "generate",
+      "type": "function",
+      "summary": "Implements generate as part of wraps the ollama client for model discovery, streaming generation, embeddings, image description, and health checks."
+    },
+    "function:src/ollama_client.py:describe_image": {
+      "name": "describe_image",
+      "type": "function",
+      "summary": "Implements describe image as part of wraps the ollama client for model discovery, streaming generation, embeddings, image description, and health checks."
+    },
+    "class:src/ollama_client.py:ModelInfo": {
+      "name": "ModelInfo",
+      "type": "class",
+      "summary": "Represents normalized Ollama model metadata used for filtering, selection, and capability-aware chat behavior."
+    },
+    "file:src/orchestrator.py": {
+      "name": "orchestrator.py",
+      "type": "file",
+      "summary": "Assembles system instructions, history, memories, cross-chat results, and document excerpts into an Ollama message list."
+    },
+    "function:src/orchestrator.py:build_messages": {
+      "name": "build_messages",
+      "type": "function",
+      "summary": "Implements build messages as part of assembles system instructions, history, memories, cross-chat results, and document excerpts into an ollama message list."
+    },
+    "function:src/orchestrator.py:after_turn_indexing": {
+      "name": "after_turn_indexing",
+      "type": "function",
+      "summary": "Implements after turn indexing as part of assembles system instructions, history, memories, cross-chat results, and document excerpts into an ollama message list."
+    },
+    "file:src/personalization.py": {
+      "name": "personalization.py",
+      "type": "file",
+      "summary": "Maintains a rolling user profile from recent conversation snippets and response feedback."
+    },
+    "function:src/personalization.py:rebuild_profile": {
+      "name": "rebuild_profile",
+      "type": "function",
+      "summary": "Implements rebuild profile as part of maintains a rolling user profile from recent conversation snippets and response feedback."
+    },
+    "file:src/providers.py": {
+      "name": "providers.py",
+      "type": "file",
+      "summary": "Manages BYOK provider credentials, model discovery, streaming adapters, and OpenRouter OAuth exchange flows."
+    },
+    "function:src/providers.py:list_provider_models": {
+      "name": "list_provider_models",
+      "type": "function",
+      "summary": "Implements list provider models as part of manages byok provider credentials, model discovery, streaming adapters, and openrouter oauth exchange flows."
+    },
+    "function:src/providers.py:_list_openrouter": {
+      "name": "_list_openrouter",
+      "type": "function",
+      "summary": "Implements list openrouter as part of manages byok provider credentials, model discovery, streaming adapters, and openrouter oauth exchange flows."
+    },
+    "function:src/providers.py:_list_openai_compat": {
+      "name": "_list_openai_compat",
+      "type": "function",
+      "summary": "Implements list openai compat as part of manages byok provider credentials, model discovery, streaming adapters, and openrouter oauth exchange flows."
+    },
+    "function:src/providers.py:stream_chat": {
+      "name": "stream_chat",
+      "type": "function",
+      "summary": "Implements stream chat as part of manages byok provider credentials, model discovery, streaming adapters, and openrouter oauth exchange flows."
+    },
+    "function:src/providers.py:_stream_anthropic": {
+      "name": "_stream_anthropic",
+      "type": "function",
+      "summary": "Implements stream anthropic as part of manages byok provider credentials, model discovery, streaming adapters, and openrouter oauth exchange flows."
+    },
+    "function:src/providers.py:_stream_openai_compat": {
+      "name": "_stream_openai_compat",
+      "type": "function",
+      "summary": "Implements stream openai compat as part of manages byok provider credentials, model discovery, streaming adapters, and openrouter oauth exchange flows."
+    },
+    "function:src/providers.py:openrouter_auth_url": {
+      "name": "openrouter_auth_url",
+      "type": "function",
+      "summary": "Implements openrouter auth url as part of manages byok provider credentials, model discovery, streaming adapters, and openrouter oauth exchange flows."
+    },
+    "function:src/providers.py:openrouter_exchange_code": {
+      "name": "openrouter_exchange_code",
+      "type": "function",
+      "summary": "Implements openrouter exchange code as part of manages byok provider credentials, model discovery, streaming adapters, and openrouter oauth exchange flows."
+    },
+    "class:src/providers.py:ApiModel": {
+      "name": "ApiModel",
+      "type": "class",
+      "summary": "Represents a normalized model offered by an external BYOK provider, including capability and context metadata."
+    },
+    "file:src/rag.py": {
+      "name": "rag.py",
+      "type": "file",
+      "summary": "Stores and queries document, chat-history, and memory vectors through ChromaDB using Ollama embeddings."
+    },
+    "function:src/rag.py:index_doc_chunks": {
+      "name": "index_doc_chunks",
+      "type": "function",
+      "summary": "Implements index doc chunks as part of stores and queries document, chat-history, and memory vectors through chromadb using ollama embeddings."
+    },
+    "function:src/rag.py:search_docs": {
+      "name": "search_docs",
+      "type": "function",
+      "summary": "Implements search docs as part of stores and queries document, chat-history, and memory vectors through chromadb using ollama embeddings."
+    },
+    "function:src/rag.py:index_history_turn": {
+      "name": "index_history_turn",
+      "type": "function",
+      "summary": "Implements index history turn as part of stores and queries document, chat-history, and memory vectors through chromadb using ollama embeddings."
+    },
+    "function:src/rag.py:search_history": {
+      "name": "search_history",
+      "type": "function",
+      "summary": "Implements search history as part of stores and queries document, chat-history, and memory vectors through chromadb using ollama embeddings."
+    },
+    "function:src/rag.py:similar_memory": {
+      "name": "similar_memory",
+      "type": "function",
+      "summary": "Implements similar memory as part of stores and queries document, chat-history, and memory vectors through chromadb using ollama embeddings."
+    },
+    "function:src/rag.py:_flatten": {
+      "name": "_flatten",
+      "type": "function",
+      "summary": "Implements flatten as part of stores and queries document, chat-history, and memory vectors through chromadb using ollama embeddings."
+    },
+    "pipeline:.github/workflows/ci.yml": {
+      "name": "ci.yml",
+      "type": "pipeline",
+      "summary": "GitHub Actions workflow that validates backend and frontend changes on push and pull request events. It installs locked dependencies, then runs Python tests and Ruff alongside frontend linting, tests, and production builds."
+    },
+    "document:CHANGELOG.md": {
+      "name": "CHANGELOG.md",
+      "type": "document",
+      "summary": "Records released and unreleased changes for the Local AI Chat Studio, including the FastAPI/React v2 rollout."
+    },
+    "document:CODE_OF_CONDUCT.md": {
+      "name": "CODE_OF_CONDUCT.md",
+      "type": "document",
+      "summary": "Defines expected community behavior, enforcement, and the private security-reporting route for project participation."
+    },
+    "document:CODE_TUTORIAL.md": {
+      "name": "CODE_TUTORIAL.md",
+      "type": "document",
+      "summary": "Provides a detailed guided tour of the legacy Streamlit and current FastAPI/React implementations, including end-to-end request traces."
+    },
+    "document:CONTRIBUTING.md": {
+      "name": "CONTRIBUTING.md",
+      "type": "document",
+      "summary": "Explains contributor setup, focused-change expectations, validation commands, API type regeneration, and pull-request workflow."
+    },
+    "document:DATASET.md": {
+      "name": "DATASET.md",
+      "type": "document",
+      "summary": "Clarifies that the project has no single fixed public dataset and is intended to process user-provided documents and data."
+    },
+    "document:GRAPH_REPORT.md": {
+      "name": "GRAPH_REPORT.md",
+      "type": "document",
+      "summary": "Presents a generated repository graph report with connectivity checks, community hubs, core abstractions, and identified knowledge gaps."
+    },
+    "file:Launch Chat Studio.cmd": {
+      "name": "Launch Chat Studio.cmd",
+      "type": "file",
+      "summary": "Windows launcher that bootstraps portable uv and Node.js when needed, verifies or builds the frontend, starts the local server, and opens the browser after a health check."
+    },
+    "function:Launch Chat Studio.cmd:Test-LocalPort": {
+      "name": "Test-LocalPort",
+      "type": "function",
+      "summary": "Tests whether the local application port is already accepting TCP connections."
+    },
+    "function:Launch Chat Studio.cmd:Get-FrontendState": {
+      "name": "Get-FrontendState",
+      "type": "function",
+      "summary": "Determines whether frontend dependencies need installation and whether the built client is stale or absent."
+    },
+    "function:Launch Chat Studio.cmd:Install-Node": {
+      "name": "Install-Node",
+      "type": "function",
+      "summary": "Downloads a compatible Node.js LTS archive, verifies its official SHA-256 checksum, and installs it into the portable runtime directory."
+    },
+    "document:README.md": {
+      "name": "README.md",
+      "type": "document",
+      "summary": "Project overview covering features, installation, local data handling, architecture, verification commands, and links to supporting documentation."
+    },
+    "document:SECURITY.md": {
+      "name": "SECURITY.md",
+      "type": "document",
+      "summary": "Defines the local-first security model, sensitive-data boundaries, localhost exposure guidance, and private vulnerability reporting process."
+    },
+    "document:TECHNICAL.md": {
+      "name": "TECHNICAL.md",
+      "type": "document",
+      "summary": "Concise developer guide to the FastAPI/React runtime, persistence, sessions, provider integrations, configuration, and contract-generation workflow."
+    },
+    "document:USAGE.md": {
+      "name": "USAGE.md",
+      "type": "document",
+      "summary": "Task-oriented guide for launching the studio, selecting providers, managing conversations and memory, and handling privacy or troubleshooting."
+    },
+    "document:USER_GUIDE.md": {
+      "name": "USER_GUIDE.md",
+      "type": "document",
+      "summary": "Complete product workflow guide for chat, context evidence, backpacks, replay, providers, library data controls, and troubleshooting."
+    },
+    "document:ZERO_TO_HERO_STUDY_HANDBOOK.md": {
+      "name": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "type": "document",
+      "summary": "Comprehensive learning handbook covering concepts, setup, FastAPI and React modules, legacy behavior, end-to-end traces, testing, and contributor exercises."
+    },
+    "config:pyproject.toml": {
+      "name": "pyproject.toml",
+      "type": "config",
+      "summary": "Defines Python package metadata, runtime and development dependencies, the chat-studio CLI entry point, Hatch build settings, and uv configuration."
+    },
+    "document:docs/codebase/ARCHITECTURE.md": {
+      "name": "ARCHITECTURE.md",
+      "type": "document",
+      "summary": "Describes the React-to-FastAPI architecture, context preflight, streamed run lifecycle, persistence, retrieval, and provider boundaries for the localhost workspace."
+    },
+    "document:docs/codebase/CONCERNS.md": {
+      "name": "CONCERNS.md",
+      "type": "document",
+      "summary": "Records operational constraints, security boundaries, and focused change guidance for the single-process local workspace."
+    },
+    "document:docs/codebase/CONVENTIONS.md": {
+      "name": "CONVENTIONS.md",
+      "type": "document",
+      "summary": "Defines Python and React naming conventions, API-schema generation expectations, safe error handling, credential rules, and test tooling."
+    },
+    "document:docs/codebase/INTEGRATIONS.md": {
+      "name": "INTEGRATIONS.md",
+      "type": "document",
+      "summary": "Catalogs local and cloud model providers, the loopback OpenCode bridge, web search, file conversion, attachment handling, and memory storage policies."
+    },
+    "document:docs/codebase/STACK.md": {
+      "name": "STACK.md",
+      "type": "document",
+      "summary": "Summarizes the backend, frontend, persistence, inference, search, file-processing, and development-tooling stack with local build and test commands."
+    },
+    "document:docs/codebase/STRUCTURE.md": {
+      "name": "STRUCTURE.md",
+      "type": "document",
+      "summary": "Maps the FastAPI application, React workspace, shared parsing and retrieval modules, tests, and local runtime data to their responsibilities."
+    },
+    "document:docs/codebase/TESTING.md": {
+      "name": "TESTING.md",
+      "type": "document",
+      "summary": "Documents backend and frontend verification commands, isolated test fixtures, covered lifecycle and safety behavior, and remaining manual smoke-test areas."
+    },
+    "config:frontend/.oxlintrc.json": {
+      "name": ".oxlintrc.json",
+      "type": "config",
+      "summary": "Configures Oxlint with React, TypeScript, and Oxc plugins, enforcing hook rules and warning on component-only exports."
+    },
+    "document:frontend/README.md": {
+      "name": "README.md",
+      "type": "document",
+      "summary": "Documents frontend workspace commands for development, testing, linting, building, and generating the FastAPI-derived API schema."
+    },
+    "config:frontend/components.json": {
+      "name": "components.json",
+      "type": "config",
+      "summary": "Configures shadcn-style component generation with the base-nova style, Tailwind CSS settings, Lucide icons, and project path aliases."
+    },
+    "file:frontend/index.html": {
+      "name": "index.html",
+      "type": "file",
+      "summary": "Defines the Vite HTML shell for Local AI Chat Studio, including the root mount element and module entry point for the React application."
+    },
+    "config:frontend/package.json": {
+      "name": "package.json",
+      "type": "config",
+      "summary": "Defines the frontend package scripts and dependencies for Vite, React, TypeScript, Tailwind CSS, Vitest, Oxlint, and OpenAPI type generation."
+    },
+    "config:frontend/tsconfig.app.json": {
+      "name": "tsconfig.app.json",
+      "type": "config",
+      "summary": "Configures strict TypeScript compilation for frontend source files using bundler resolution, React JSX, Vite types, and the @ path alias."
+    },
+    "config:frontend/tsconfig.json": {
+      "name": "tsconfig.json",
+      "type": "config",
+      "summary": "Defines the TypeScript solution configuration that references separate application and Node-oriented compiler projects while sharing the @ path alias."
+    },
+    "config:frontend/tsconfig.node.json": {
+      "name": "tsconfig.node.json",
+      "type": "config",
+      "summary": "Configures strict NodeNext TypeScript checking for the Vite configuration with Node type definitions and no emitted output."
+    },
+    "file:.code-review-graph/graph.db": {
+      "name": "graph.db",
+      "type": "file",
+      "summary": "Stores the local code-review graph database generated by repository analysis tooling."
+    },
+    "document:.github/ISSUE_TEMPLATE/bug_report.md": {
+      "name": "bug_report.md",
+      "type": "document",
+      "summary": "GitHub issue template that collects reproduction steps, expected behavior, logs, and environment details for defects."
+    },
+    "document:.github/ISSUE_TEMPLATE/feature_request.md": {
+      "name": "feature_request.md",
+      "type": "document",
+      "summary": "GitHub issue template for proposing product improvements with problem context, solutions, alternatives, and examples."
+    },
+    "document:.github/pull_request_template.md": {
+      "name": "pull_request_template.md",
+      "type": "document",
+      "summary": "Pull request checklist that records scope, testing, typing, UI-worker separation, model configuration, and secret-handling expectations."
+    },
+    "file:.graphifyignore": {
+      "name": ".graphifyignore",
+      "type": "file",
+      "summary": "Excludes generated analysis directories and agent-workspace metadata from Graphify processing."
+    },
+    "file:.python-version": {
+      "name": ".python-version",
+      "type": "file",
+      "summary": "Pins the repository's Python runtime version to 3.12 for local tooling and environment managers."
+    },
+    "file:backend/__init__.py": {
+      "name": "__init__.py",
+      "type": "file",
+      "summary": "Declares the Local AI Chat Studio v2 backend package."
+    },
+    "file:backend/app/__init__.py": {
+      "name": "__init__.py",
+      "type": "file",
+      "summary": "Declares the FastAPI application package within the backend."
+    },
+    "file:docs/site/index.html": {
+      "name": "index.html",
+      "type": "file",
+      "summary": "Provides a static htmx documentation shell that loads a curated set of project Markdown documents and renders them in the browser."
+    },
+    "file:docs/tutorial/index.html": {
+      "name": "index.html",
+      "type": "file",
+      "summary": "Provides an interactive zero-to-hero handbook page covering product use, providers, trust, architecture, code flows, and contribution guidance."
+    },
+    "file:frontend/src/App.css": {
+      "name": "App.css",
+      "type": "file",
+      "summary": "Defines the dark, responsive application-shell styling for navigation, conversations, providers, workspace views, and status feedback."
+    },
+    "file:frontend/src/index.css": {
+      "name": "index.css",
+      "type": "file",
+      "summary": "Loads Tailwind CSS into the frontend stylesheet entry point."
+    },
+    "file:frontend/src/test/setup.ts": {
+      "name": "setup.ts",
+      "type": "file",
+      "summary": "Configures the frontend test environment with jest-dom matchers and automatic React Testing Library cleanup."
+    },
+    "file:frontend/vite.config.ts": {
+      "name": "vite.config.ts",
+      "type": "file",
+      "summary": "Configures the React and Tailwind Vite frontend, source aliasing, loopback API proxying, and jsdom test setup."
+    },
+    "file:frontend/vitest.config.ts": {
+      "name": "vitest.config.ts",
+      "type": "file",
+      "summary": "Configures the Vitest test runner with the React plugin, source aliasing, jsdom, and shared test setup."
+    },
+    "document:tasks/plan.md": {
+      "name": "plan.md",
+      "type": "document",
+      "summary": "Implementation plan for a static htmx documentation site, including architecture decisions, task details, acceptance criteria, and risks."
+    },
+    "document:tasks/todo.md": {
+      "name": "todo.md",
+      "type": "document",
+      "summary": "Tracks completed documentation-site work, browser verification results, deviations from the original plan, and remaining repository tasks."
+    },
+    "file:tests/conftest.py": {
+      "name": "conftest.py",
+      "type": "file",
+      "summary": "Provides a pytest fixture that runs a fresh in-memory FastAPI application client for API contract tests."
+    },
+    "file:tests/test_api_contract.py": {
+      "name": "test_api_contract.py",
+      "type": "file",
+      "summary": "Exercises the API contract for health, shutdown safeguards, conversations, provider credentials, workload identity, streaming runs, and OpenRouter PKCE."
+    },
+    "function:tests/conftest.py:client": {
+      "name": "client",
+      "type": "function",
+      "summary": "Creates an in-memory FastAPI TestClient for isolated API tests."
+    },
+    "function:tests/test_api_contract.py:test_health_and_session_cookie": {
+      "name": "test_health_and_session_cookie",
+      "type": "function",
+      "summary": "Verifies the health endpoint response and browser-session cookie."
+    },
+    "function:tests/test_api_contract.py:test_managed_server_can_be_stopped_from_the_local_ui": {
+      "name": "test_managed_server_can_be_stopped_from_the_local_ui",
+      "type": "function",
+      "summary": "Verifies that a managed local server accepts the authenticated shutdown request and invokes its callback."
+    },
+    "function:tests/test_api_contract.py:test_shutdown_rejects_cross_site_and_unmanaged_requests": {
+      "name": "test_shutdown_rejects_cross_site_and_unmanaged_requests",
+      "type": "function",
+      "summary": "Verifies shutdown protections reject missing local authorization and unmanaged runtime requests."
+    },
+    "function:tests/test_api_contract.py:test_conversation_crud_preserves_message_order": {
+      "name": "test_conversation_crud_preserves_message_order",
+      "type": "function",
+      "summary": "Verifies conversation creation and message persistence preserve insertion order."
+    },
+    "function:tests/test_api_contract.py:test_provider_secret_is_scoped_to_browser_session": {
+      "name": "test_provider_secret_is_scoped_to_browser_session",
+      "type": "function",
+      "summary": "Verifies a provider credential is retained only within the originating browser session."
+    },
+    "function:tests/test_api_contract.py:test_anthropic_reports_workload_identity_source": {
+      "name": "test_anthropic_reports_workload_identity_source",
+      "type": "function",
+      "summary": "Verifies the Anthropic provider reports workload identity when no API key is present."
+    },
+    "function:tests/test_api_contract.py:test_run_stream_contract_retains_completed_output": {
+      "name": "test_run_stream_contract_retains_completed_output",
+      "type": "function",
+      "summary": "Verifies streamed run events culminate in persisted completed output."
+    },
+    "function:tests/test_api_contract.py:test_openrouter_auth_uses_session_pkce_and_current_callback_origin": {
+      "name": "test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+      "type": "function",
+      "summary": "Verifies OpenRouter authorization uses PKCE and derives its callback URL from the active origin."
+    }
+  },
+  "totalNodes": 409,
+  "totalEdges": 752
+}

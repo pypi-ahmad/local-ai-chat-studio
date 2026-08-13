@@ -1,0 +1,940 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/catalog.py",
+      "type": "file",
+      "name": "catalog.py",
+      "filePath": "src/catalog.py",
+      "summary": "Builds a unified, provider-grouped catalog of local and cloud models for chat and comparison interfaces.",
+      "tags": [
+        "model-catalog",
+        "provider-integration",
+        "selection"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/catalog.py:build_model_catalog",
+      "type": "function",
+      "name": "build_model_catalog",
+      "filePath": "src/catalog.py",
+      "lineRange": [
+        46,
+        82
+      ],
+      "summary": "Implements build model catalog as part of builds a unified, provider-grouped catalog of local and cloud models for chat and comparison interfaces.",
+      "tags": [
+        "python",
+        "function",
+        "model-catalog"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/chat_store.py",
+      "type": "file",
+      "name": "chat_store.py",
+      "filePath": "src/chat_store.py",
+      "summary": "Persists conversations, messages, memories, feedback, presets, and key-value settings in the local SQLite database.",
+      "tags": [
+        "persistence",
+        "sqlite",
+        "chat-history"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src/chat_store.py:search_conversations",
+      "type": "function",
+      "name": "search_conversations",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        129,
+        140
+      ],
+      "summary": "Implements search conversations as part of persists conversations, messages, memories, feedback, presets, and key-value settings in the local sqlite database.",
+      "tags": [
+        "python",
+        "function",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:clear_all_conversations",
+      "type": "function",
+      "name": "clear_all_conversations",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        152,
+        162
+      ],
+      "summary": "Implements clear all conversations as part of persists conversations, messages, memories, feedback, presets, and key-value settings in the local sqlite database.",
+      "tags": [
+        "python",
+        "function",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:add_message",
+      "type": "function",
+      "name": "add_message",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        174,
+        185
+      ],
+      "summary": "Implements add message as part of persists conversations, messages, memories, feedback, presets, and key-value settings in the local sqlite database.",
+      "tags": [
+        "python",
+        "function",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:get_messages",
+      "type": "function",
+      "name": "get_messages",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        188,
+        198
+      ],
+      "summary": "Implements get messages as part of persists conversations, messages, memories, feedback, presets, and key-value settings in the local sqlite database.",
+      "tags": [
+        "python",
+        "function",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:add_memory",
+      "type": "function",
+      "name": "add_memory",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        209,
+        218
+      ],
+      "summary": "Implements add memory as part of persists conversations, messages, memories, feedback, presets, and key-value settings in the local sqlite database.",
+      "tags": [
+        "python",
+        "function",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:save_preset",
+      "type": "function",
+      "name": "save_preset",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        327,
+        338
+      ],
+      "summary": "Implements save preset as part of persists conversations, messages, memories, feedback, presets, and key-value settings in the local sqlite database.",
+      "tags": [
+        "python",
+        "function",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:import_jsonl",
+      "type": "function",
+      "name": "import_jsonl",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        365,
+        382
+      ],
+      "summary": "Implements import jsonl as part of persists conversations, messages, memories, feedback, presets, and key-value settings in the local sqlite database.",
+      "tags": [
+        "python",
+        "function",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/chat_store.py:export_jsonl",
+      "type": "function",
+      "name": "export_jsonl",
+      "filePath": "src/chat_store.py",
+      "lineRange": [
+        392,
+        405
+      ],
+      "summary": "Implements export jsonl as part of persists conversations, messages, memories, feedback, presets, and key-value settings in the local sqlite database.",
+      "tags": [
+        "python",
+        "function",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/config.py",
+      "type": "file",
+      "name": "config.py",
+      "filePath": "src/config.py",
+      "summary": "Defines environment-overridable Pydantic settings and creates the local data, database, vector, and upload directories.",
+      "tags": [
+        "configuration",
+        "pydantic",
+        "environment"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:src/config.py:AppConfig",
+      "type": "class",
+      "name": "AppConfig",
+      "filePath": "src/config.py",
+      "lineRange": [
+        10,
+        57
+      ],
+      "summary": "Holds environment-configurable application paths, generation defaults, and retrieval tuning, while ensuring required local directories exist.",
+      "tags": [
+        "configuration",
+        "settings",
+        "pydantic"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/jobs.py",
+      "type": "file",
+      "name": "jobs.py",
+      "filePath": "src/jobs.py",
+      "summary": "Coordinates streaming chat jobs, attachments, retrieval context, persistence, post-turn indexing, and background personalization tasks.",
+      "tags": [
+        "orchestration",
+        "streaming",
+        "chat-jobs"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src/jobs.py:start",
+      "type": "function",
+      "name": "start",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        89,
+        126
+      ],
+      "summary": "Implements start as part of coordinates streaming chat jobs, attachments, retrieval context, persistence, post-turn indexing, and background personalization tasks.",
+      "tags": [
+        "python",
+        "function",
+        "orchestration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:run_ephemeral",
+      "type": "function",
+      "name": "run_ephemeral",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        129,
+        165
+      ],
+      "summary": "Implements run ephemeral as part of coordinates streaming chat jobs, attachments, retrieval context, persistence, post-turn indexing, and background personalization tasks.",
+      "tags": [
+        "python",
+        "function",
+        "orchestration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:_stream",
+      "type": "function",
+      "name": "_stream",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        176,
+        189
+      ],
+      "summary": "Implements stream as part of coordinates streaming chat jobs, attachments, retrieval context, persistence, post-turn indexing, and background personalization tasks.",
+      "tags": [
+        "python",
+        "function",
+        "orchestration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:_web_search",
+      "type": "function",
+      "name": "_web_search",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        192,
+        207
+      ],
+      "summary": "Implements web search as part of coordinates streaming chat jobs, attachments, retrieval context, persistence, post-turn indexing, and background personalization tasks.",
+      "tags": [
+        "python",
+        "function",
+        "orchestration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:_process_attachments",
+      "type": "function",
+      "name": "_process_attachments",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        210,
+        248
+      ],
+      "summary": "Implements process attachments as part of coordinates streaming chat jobs, attachments, retrieval context, persistence, post-turn indexing, and background personalization tasks.",
+      "tags": [
+        "python",
+        "function",
+        "orchestration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:_run",
+      "type": "function",
+      "name": "_run",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        251,
+        367
+      ],
+      "summary": "Implements run as part of coordinates streaming chat jobs, attachments, retrieval context, persistence, post-turn indexing, and background personalization tasks.",
+      "tags": [
+        "python",
+        "function",
+        "orchestration"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/jobs.py:_friendly_error",
+      "type": "function",
+      "name": "_friendly_error",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        370,
+        384
+      ],
+      "summary": "Implements friendly error as part of coordinates streaming chat jobs, attachments, retrieval context, persistence, post-turn indexing, and background personalization tasks.",
+      "tags": [
+        "python",
+        "function",
+        "orchestration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:_autotitle",
+      "type": "function",
+      "name": "_autotitle",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        387,
+        399
+      ],
+      "summary": "Implements autotitle as part of coordinates streaming chat jobs, attachments, retrieval context, persistence, post-turn indexing, and background personalization tasks.",
+      "tags": [
+        "python",
+        "function",
+        "orchestration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/jobs.py:_maybe_extract",
+      "type": "function",
+      "name": "_maybe_extract",
+      "filePath": "src/jobs.py",
+      "lineRange": [
+        402,
+        414
+      ],
+      "summary": "Implements maybe extract as part of coordinates streaming chat jobs, attachments, retrieval context, persistence, post-turn indexing, and background personalization tasks.",
+      "tags": [
+        "python",
+        "function",
+        "orchestration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/memory.py",
+      "type": "file",
+      "name": "memory.py",
+      "filePath": "src/memory.py",
+      "summary": "Extracts durable user facts from conversations and retrieves relevant stored memories for a new prompt.",
+      "tags": [
+        "memory",
+        "retrieval",
+        "personalization"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/memory.py:extract_memories",
+      "type": "function",
+      "name": "extract_memories",
+      "filePath": "src/memory.py",
+      "lineRange": [
+        27,
+        59
+      ],
+      "summary": "Implements extract memories as part of extracts durable user facts from conversations and retrieves relevant stored memories for a new prompt.",
+      "tags": [
+        "python",
+        "function",
+        "memory"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/memory.py:relevant_memories",
+      "type": "function",
+      "name": "relevant_memories",
+      "filePath": "src/memory.py",
+      "lineRange": [
+        62,
+        74
+      ],
+      "summary": "Implements relevant memories as part of extracts durable user facts from conversations and retrieves relevant stored memories for a new prompt.",
+      "tags": [
+        "python",
+        "function",
+        "memory"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/memory.py:_parse_json_list",
+      "type": "function",
+      "name": "_parse_json_list",
+      "filePath": "src/memory.py",
+      "lineRange": [
+        81,
+        96
+      ],
+      "summary": "Implements parse json list as part of extracts durable user facts from conversations and retrieves relevant stored memories for a new prompt.",
+      "tags": [
+        "python",
+        "function",
+        "memory"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/model_labels.py",
+      "type": "file",
+      "name": "model_labels.py",
+      "filePath": "src/model_labels.py",
+      "summary": "Derives concise model capability and size labels from Ollama model metadata for selection controls.",
+      "tags": [
+        "model-metadata",
+        "presentation",
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/model_labels.py:_size_tag",
+      "type": "function",
+      "name": "_size_tag",
+      "filePath": "src/model_labels.py",
+      "lineRange": [
+        27,
+        37
+      ],
+      "summary": "Implements size tag as part of derives concise model capability and size labels from ollama model metadata for selection controls.",
+      "tags": [
+        "python",
+        "function",
+        "model-metadata"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/model_labels.py:hint_for",
+      "type": "function",
+      "name": "hint_for",
+      "filePath": "src/model_labels.py",
+      "lineRange": [
+        40,
+        58
+      ],
+      "summary": "Implements hint for as part of derives concise model capability and size labels from ollama model metadata for selection controls.",
+      "tags": [
+        "python",
+        "function",
+        "model-metadata"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/catalog.py",
+      "target": "function:src/catalog.py:build_model_catalog",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "function:src/catalog.py:build_model_catalog",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:search_conversations",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:search_conversations",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:clear_all_conversations",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:clear_all_conversations",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:add_message",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:add_message",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:get_messages",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:get_messages",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:add_memory",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:add_memory",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:save_preset",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:save_preset",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:import_jsonl",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:import_jsonl",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:export_jsonl",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "function:src/chat_store.py:export_jsonl",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/config.py",
+      "target": "class:src/config.py:AppConfig",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/config.py",
+      "target": "class:src/config.py:AppConfig",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:start",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:start",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:run_ephemeral",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:run_ephemeral",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_stream",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_stream",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_web_search",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_web_search",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_process_attachments",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_process_attachments",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_run",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_friendly_error",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_friendly_error",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_autotitle",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_autotitle",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_maybe_extract",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "function:src/jobs.py:_maybe_extract",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "function:src/memory.py:extract_memories",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "function:src/memory.py:extract_memories",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "function:src/memory.py:relevant_memories",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "function:src/memory.py:relevant_memories",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "function:src/memory.py:_parse_json_list",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "function:src/memory.py:_parse_json_list",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/model_labels.py",
+      "target": "function:src/model_labels.py:_size_tag",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/model_labels.py",
+      "target": "function:src/model_labels.py:_size_tag",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/model_labels.py",
+      "target": "function:src/model_labels.py:hint_for",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/model_labels.py",
+      "target": "function:src/model_labels.py:hint_for",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "file:src/model_labels.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/catalog.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/chat_store.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/files.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/orchestrator.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/jobs.py",
+      "target": "file:src/personalization.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "file:src/config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/memory.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/model_labels.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "function:src/jobs.py:_run",
+      "target": "function:src/orchestrator.py:build_messages",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/jobs.py:_run",
+      "target": "function:src/orchestrator.py:after_turn_indexing",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/jobs.py:_run",
+      "target": "function:src/ollama_client.py:stream_chat",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/jobs.py:_run",
+      "target": "function:src/providers.py:stream_chat",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/memory.py:extract_memories",
+      "target": "function:src/rag.py:similar_memory",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

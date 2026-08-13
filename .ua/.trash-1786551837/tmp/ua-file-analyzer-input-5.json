@@ -1,0 +1,9 @@
+{
+  "projectRoot": "D:\\AI\\Github\\local-ai-chat-studio",
+  "batchFiles": [
+    {"path": ".github/workflows/ci.yml", "language": "yaml", "sizeLines": 35, "fileCategory": "infra"}
+  ],
+  "batchImportData": {
+    ".github/workflows/ci.yml": []
+  }
+}

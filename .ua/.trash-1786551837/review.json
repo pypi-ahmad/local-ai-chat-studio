@@ -1,0 +1,47 @@
+{
+  "issues": [],
+  "warnings": [
+    "Node 'function:frontend/src/lib/utils.ts:cn' has no edges (orphan)",
+    "Node 'pipeline:.github/workflows/ci.yml' has no edges (orphan)",
+    "Node 'document:CHANGELOG.md' has no edges (orphan)",
+    "Node 'document:CODE_TUTORIAL.md' has no edges (orphan)",
+    "Node 'document:DATASET.md' has no edges (orphan)",
+    "Node 'document:GRAPH_REPORT.md' has no edges (orphan)",
+    "Node 'config:frontend/tsconfig.json' has no edges (orphan)",
+    "Node 'file:.code-review-graph/graph.db' has no edges (orphan)",
+    "Node 'document:.github/ISSUE_TEMPLATE/bug_report.md' has no edges (orphan)",
+    "Node 'document:.github/ISSUE_TEMPLATE/feature_request.md' has no edges (orphan)",
+    "Node 'document:.github/pull_request_template.md' has no edges (orphan)",
+    "Node 'file:.graphifyignore' has no edges (orphan)",
+    "Node 'file:.python-version' has no edges (orphan)",
+    "Node 'file:backend/__init__.py' has no edges (orphan)",
+    "Node 'file:backend/app/__init__.py' has no edges (orphan)",
+    "Node 'file:docs/tutorial/index.html' has no edges (orphan)",
+    "Node 'file:frontend/src/test/setup.ts' has no edges (orphan)",
+    "Node 'file:frontend/vitest.config.ts' has no edges (orphan)"
+  ],
+  "stats": {
+    "totalNodes": 409,
+    "totalEdges": 752,
+    "totalLayers": 10,
+    "tourSteps": 12,
+    "nodeTypes": {
+      "file": 68,
+      "function": 239,
+      "class": 69,
+      "pipeline": 1,
+      "document": 25,
+      "config": 7
+    },
+    "edgeTypes": {
+      "contains": 307,
+      "exports": 294,
+      "imports": 91,
+      "calls": 17,
+      "tested_by": 8,
+      "documents": 28,
+      "configures": 6,
+      "depends_on": 1
+    }
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "nodes": [
+    {
+      "id": "document:docs/codebase/ARCHITECTURE.md",
+      "type": "document",
+      "name": "ARCHITECTURE.md",
+      "filePath": "docs/codebase/ARCHITECTURE.md",
+      "summary": "Describes the React-to-FastAPI architecture, context preflight, streamed run lifecycle, persistence, retrieval, and provider boundaries for the localhost workspace.",
+      "tags": ["documentation", "architecture", "backend", "frontend"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:docs/codebase/CONCERNS.md",
+      "type": "document",
+      "name": "CONCERNS.md",
+      "filePath": "docs/codebase/CONCERNS.md",
+      "summary": "Records operational constraints, security boundaries, and focused change guidance for the single-process local workspace.",
+      "tags": ["documentation", "security", "operations", "maintenance"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:docs/codebase/CONVENTIONS.md",
+      "type": "document",
+      "name": "CONVENTIONS.md",
+      "filePath": "docs/codebase/CONVENTIONS.md",
+      "summary": "Defines Python and React naming conventions, API-schema generation expectations, safe error handling, credential rules, and test tooling.",
+      "tags": ["documentation", "conventions", "api-contracts", "security"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:docs/codebase/INTEGRATIONS.md",
+      "type": "document",
+      "name": "INTEGRATIONS.md",
+      "filePath": "docs/codebase/INTEGRATIONS.md",
+      "summary": "Catalogs local and cloud model providers, the loopback OpenCode bridge, web search, file conversion, attachment handling, and memory storage policies.",
+      "tags": ["documentation", "integrations", "providers", "security"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:docs/codebase/STACK.md",
+      "type": "document",
+      "name": "STACK.md",
+      "filePath": "docs/codebase/STACK.md",
+      "summary": "Summarizes the backend, frontend, persistence, inference, search, file-processing, and development-tooling stack with local build and test commands.",
+      "tags": ["documentation", "technology-stack", "development", "tooling"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:docs/codebase/STRUCTURE.md",
+      "type": "document",
+      "name": "STRUCTURE.md",
+      "filePath": "docs/codebase/STRUCTURE.md",
+      "summary": "Maps the FastAPI application, React workspace, shared parsing and retrieval modules, tests, and local runtime data to their responsibilities.",
+      "tags": ["documentation", "architecture", "project-structure", "backend"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:docs/codebase/TESTING.md",
+      "type": "document",
+      "name": "TESTING.md",
+      "filePath": "docs/codebase/TESTING.md",
+      "summary": "Documents backend and frontend verification commands, isolated test fixtures, covered lifecycle and safety behavior, and remaining manual smoke-test areas.",
+      "tags": ["documentation", "testing", "backend", "frontend"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:docs/codebase/ARCHITECTURE.md",
+      "target": "file:backend/app/main.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/ARCHITECTURE.md",
+      "target": "file:backend/app/runs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/ARCHITECTURE.md",
+      "target": "file:backend/app/workspace.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/CONCERNS.md",
+      "target": "file:backend/app/runs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/CONCERNS.md",
+      "target": "file:backend/app/workspace.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/CONVENTIONS.md",
+      "target": "file:backend/app/contracts.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/CONVENTIONS.md",
+      "target": "file:frontend/src/api/schema.ts",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/INTEGRATIONS.md",
+      "target": "file:backend/app/providers.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/INTEGRATIONS.md",
+      "target": "file:src/files.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/INTEGRATIONS.md",
+      "target": "file:backend/app/memory.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STACK.md",
+      "target": "file:backend/app/main.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STACK.md",
+      "target": "file:frontend/src/main.tsx",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STRUCTURE.md",
+      "target": "file:backend/app/main.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STRUCTURE.md",
+      "target": "file:frontend/src/App.tsx",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/TESTING.md",
+      "target": "file:tests/test_api_contract.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/TESTING.md",
+      "target": "file:frontend/src/App.test.tsx",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

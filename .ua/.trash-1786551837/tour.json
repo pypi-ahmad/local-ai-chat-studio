@@ -1,0 +1,82 @@
+[
+  {
+    "order": 1,
+    "title": "Browser Entry Point",
+    "description": "Start at the React bootstrap to see how Local AI Chat Studio enters the browser and applies its global styling. This is the frontend counterpart to the backend entry points later in the tour, and it establishes the application shell that users actually load.",
+    "nodeIds": ["file:frontend/src/main.tsx"],
+    "languageLesson": "React applications commonly mount a single root component into a DOM element; imports at this boundary also establish global CSS and application-wide setup."
+  },
+  {
+    "order": 2,
+    "title": "Studio Interface",
+    "description": "App.tsx is the high-level single-page workspace, coordinating conversations, model selection, context review, workspace data, and provider controls. Building on the browser bootstrap, it is the best place to understand which user interactions must cross the API boundary.",
+    "nodeIds": ["file:frontend/src/App.tsx"]
+  },
+  {
+    "order": 3,
+    "title": "Typed API Boundary",
+    "description": "The browser client turns the interface actions from the previous step into typed backend requests and streamed run events. Its generated schema types keep that client aligned with the server contracts, making the frontend-backend boundary explicit rather than relying on untyped JSON.",
+    "nodeIds": ["file:frontend/src/api/client.ts", "file:frontend/src/api/schema.ts"],
+    "languageLesson": "TypeScript types are erased at runtime, but they let the compiler verify that request payloads and responses match the API shape before the browser code is shipped."
+  },
+  {
+    "order": 4,
+    "title": "Server Startup",
+    "description": "The CLI starts the local Uvicorn server and provides FastAPI with a shutdown callback. It is the operational entry point for the backend that receives the typed requests introduced in the browser client.",
+    "nodeIds": ["file:backend/app/cli.py"],
+    "languageLesson": "Python command-line entry points often keep process setup separate from application construction, which makes the application easier to test and host in other environments."
+  },
+  {
+    "order": 5,
+    "title": "FastAPI Composition",
+    "description": "The FastAPI application composes routes with the storage, provider, run, session, and workspace services. Its direct dependencies form the backend's main hub, so this file explains how the HTTP surface is connected to the local AI workflows explored next.",
+    "nodeIds": ["file:backend/app/main.py"],
+    "languageLesson": "FastAPI applications are typically assembled through route registration and dependency wiring, keeping HTTP concerns separate from the services that implement the work."
+  },
+  {
+    "order": 6,
+    "title": "Shared API Contracts",
+    "description": "Pydantic contracts define the request, response, and domain shapes used throughout the backend API. Because this file has both high fan-in and the largest fan-out in the graph, understanding these models provides the vocabulary for the service calls wired by the application.",
+    "nodeIds": ["file:backend/app/contracts.py"],
+    "languageLesson": "Pydantic models validate and serialize structured Python data, making API contracts executable rather than merely documented."
+  },
+  {
+    "order": 7,
+    "title": "Provider Integrations",
+    "description": "Provider adapters and their registry handle model discovery and streaming completions, while the Ollama wrapper supplies the local-first model capabilities. Session handling keeps credentials scoped to browser sessions, allowing optional cloud providers without making them part of durable application state.",
+    "nodeIds": ["file:backend/app/providers.py", "file:src/ollama_client.py", "file:backend/app/sessions.py"]
+  },
+  {
+    "order": 8,
+    "title": "Run and Context Flow",
+    "description": "Run coordination manages asynchronous generation, streamed events, cancellation, and persisted state using the provider layer from the prior step. Workspace planning assembles safe context from sources and retrieval, while memory extraction turns useful conversation information into reusable context for later turns.",
+    "nodeIds": ["file:backend/app/runs.py", "file:backend/app/workspace.py", "file:backend/app/memory.py"],
+    "languageLesson": "Python async workflows use awaitable operations to handle streaming and I/O without blocking other requests, which is essential when model output arrives incrementally."
+  },
+  {
+    "order": 9,
+    "title": "Local Persistence",
+    "description": "The SQLite store persists conversations, runs, memories, workspace resources, and settings produced by the run and context services. This data-layer boundary is what lets the local studio retain state across requests without coupling every feature directly to database details.",
+    "nodeIds": ["file:backend/app/store.py"]
+  },
+  {
+    "order": 10,
+    "title": "Runtime Configuration",
+    "description": "Configuration provides environment-overridable settings and creates the local directories for databases, vectors, and uploads. It supports the persistence and provider services already covered, centralizing operational choices instead of scattering environment access through the application.",
+    "nodeIds": ["file:src/config.py"],
+    "languageLesson": "Centralized settings models make environment-driven configuration explicit and typed, while keeping defaults and validation in one place."
+  },
+  {
+    "order": 11,
+    "title": "Contract Verification",
+    "description": "The API contract tests exercise health, shutdown safeguards, conversations, credentials, streaming runs, and provider flows. They close the loop on the typed boundary from Step 3 by checking that the assembled server preserves the behaviors the browser client depends on.",
+    "nodeIds": ["file:tests/test_api_contract.py"]
+  },
+  {
+    "order": 12,
+    "title": "Windows Launch Workflow",
+    "description": "The Windows launcher brings the architecture together for local use: it prepares portable tooling when needed, verifies or builds the frontend, starts the backend, waits for health, and opens the browser. Read it last to see how the browser entry point, server startup, and verification-oriented health flow become one developer-facing command.",
+    "nodeIds": ["file:Launch Chat Studio.cmd"],
+    "languageLesson": "Batch launchers orchestrate command-line tools sequentially; explicit health checks prevent a browser from opening before the local server is ready."
+  }
+]

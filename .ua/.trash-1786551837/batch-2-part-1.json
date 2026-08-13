@@ -1,0 +1,2308 @@
+{
+  "nodes": [
+    {
+      "id": "file:backend/app/cli.py",
+      "type": "file",
+      "name": "cli.py",
+      "filePath": "backend/app/cli.py",
+      "summary": "Starts the local Uvicorn server and supplies FastAPI with a shutdown callback.",
+      "tags": [
+        "entry-point",
+        "server",
+        "fastapi"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/cli.py:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "backend/app/cli.py",
+      "lineRange": [
+        8,
+        23
+      ],
+      "summary": "Configures and runs the local Uvicorn server.",
+      "tags": [
+        "service",
+        "backend",
+        "api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/app/contracts.py",
+      "type": "file",
+      "name": "contracts.py",
+      "filePath": "backend/app/contracts.py",
+      "summary": "Defines the Pydantic request, response, and domain contracts shared across the backend API.",
+      "tags": [
+        "api-contract",
+        "data-model",
+        "pydantic"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:backend/app/contracts.py:MessageCreate",
+      "type": "class",
+      "name": "MessageCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        14,
+        16
+      ],
+      "summary": "Defines the Pydantic API contract for message create data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:Message",
+      "type": "class",
+      "name": "Message",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        19,
+        24
+      ],
+      "summary": "Defines the Pydantic API contract for message data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ConversationCreate",
+      "type": "class",
+      "name": "ConversationCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        27,
+        28
+      ],
+      "summary": "Defines the Pydantic API contract for conversation create data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ConversationUpdate",
+      "type": "class",
+      "name": "ConversationUpdate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        31,
+        33
+      ],
+      "summary": "Defines the Pydantic API contract for conversation update data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:Conversation",
+      "type": "class",
+      "name": "Conversation",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        36,
+        43
+      ],
+      "summary": "Defines the Pydantic API contract for conversation data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:CredentialInput",
+      "type": "class",
+      "name": "CredentialInput",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        46,
+        55
+      ],
+      "summary": "Defines the Pydantic API contract for credential input data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:OAuthCodeInput",
+      "type": "class",
+      "name": "OAuthCodeInput",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        58,
+        59
+      ],
+      "summary": "Defines the Pydantic API contract for oauth code input data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:OpenCodeOAuthStart",
+      "type": "class",
+      "name": "OpenCodeOAuthStart",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        62,
+        63
+      ],
+      "summary": "Defines the Pydantic API contract for open code oauth start data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:OpenCodeOAuthComplete",
+      "type": "class",
+      "name": "OpenCodeOAuthComplete",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        66,
+        67
+      ],
+      "summary": "Defines the Pydantic API contract for open code oauth complete data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ImageInput",
+      "type": "class",
+      "name": "ImageInput",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        70,
+        72
+      ],
+      "summary": "Defines the Pydantic API contract for image input data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ChatMessage",
+      "type": "class",
+      "name": "ChatMessage",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        75,
+        78
+      ],
+      "summary": "Defines the Pydantic API contract for chat message data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ModelDescriptor",
+      "type": "class",
+      "name": "ModelDescriptor",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        81,
+        86
+      ],
+      "summary": "Defines the Pydantic API contract for model descriptor data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ProviderDiscovery",
+      "type": "class",
+      "name": "ProviderDiscovery",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        89,
+        92
+      ],
+      "summary": "Defines the Pydantic API contract for provider discovery data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:RunCreate",
+      "type": "class",
+      "name": "RunCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        95,
+        100
+      ],
+      "summary": "Defines the Pydantic API contract for run create data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:RunStatus",
+      "type": "class",
+      "name": "RunStatus",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        103,
+        108
+      ],
+      "summary": "Defines the Pydantic API contract for run status data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:RunSnapshot",
+      "type": "class",
+      "name": "RunSnapshot",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        111,
+        123
+      ],
+      "summary": "Defines the Pydantic API contract for run snapshot data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:RunEvent",
+      "type": "class",
+      "name": "RunEvent",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        126,
+        130
+      ],
+      "summary": "Defines the Pydantic API contract for run event data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ContextSection",
+      "type": "class",
+      "name": "ContextSection",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        133,
+        137
+      ],
+      "summary": "Defines the Pydantic API contract for context section data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ContextSource",
+      "type": "class",
+      "name": "ContextSource",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        140,
+        150
+      ],
+      "summary": "Defines the Pydantic API contract for context source data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:SafetyFinding",
+      "type": "class",
+      "name": "SafetyFinding",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        153,
+        158
+      ],
+      "summary": "Defines the Pydantic API contract for safety finding data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:SafetyText",
+      "type": "class",
+      "name": "SafetyText",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        161,
+        162
+      ],
+      "summary": "Defines the Pydantic API contract for safety text data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ProviderPolicy",
+      "type": "class",
+      "name": "ProviderPolicy",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        165,
+        170
+      ],
+      "summary": "Defines the Pydantic API contract for provider policy data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:TurnPreflight",
+      "type": "class",
+      "name": "TurnPreflight",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        173,
+        185
+      ],
+      "summary": "Defines the Pydantic API contract for turn preflight data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:TurnCreate",
+      "type": "class",
+      "name": "TurnCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        188,
+        191
+      ],
+      "summary": "Defines the Pydantic API contract for turn create data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ContextPlan",
+      "type": "class",
+      "name": "ContextPlan",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        194,
+        201
+      ],
+      "summary": "Defines the Pydantic API contract for context plan data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ConversationBranch",
+      "type": "class",
+      "name": "ConversationBranch",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        204,
+        206
+      ],
+      "summary": "Defines the Pydantic API contract for conversation branch data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:BackpackItemInput",
+      "type": "class",
+      "name": "BackpackItemInput",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        209,
+        211
+      ],
+      "summary": "Defines the Pydantic API contract for backpack item input data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:BackpackCreate",
+      "type": "class",
+      "name": "BackpackCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        214,
+        216
+      ],
+      "summary": "Defines the Pydantic API contract for backpack create data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:BackpackItem",
+      "type": "class",
+      "name": "BackpackItem",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        219,
+        220
+      ],
+      "summary": "Defines the Pydantic API contract for backpack item data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:Backpack",
+      "type": "class",
+      "name": "Backpack",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        223,
+        228
+      ],
+      "summary": "Defines the Pydantic API contract for backpack data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:FocusCreate",
+      "type": "class",
+      "name": "FocusCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        231,
+        236
+      ],
+      "summary": "Defines the Pydantic API contract for focus create data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:FocusSession",
+      "type": "class",
+      "name": "FocusSession",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        239,
+        243
+      ],
+      "summary": "Defines the Pydantic API contract for focus session data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:FocusUpdate",
+      "type": "class",
+      "name": "FocusUpdate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        246,
+        247
+      ],
+      "summary": "Defines the Pydantic API contract for focus update data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ProviderSimulationInput",
+      "type": "class",
+      "name": "ProviderSimulationInput",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        250,
+        252
+      ],
+      "summary": "Defines the Pydantic API contract for provider simulation input data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ReplayBundle",
+      "type": "class",
+      "name": "ReplayBundle",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        255,
+        260
+      ],
+      "summary": "Defines the Pydantic API contract for replay bundle data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:MemoryCreate",
+      "type": "class",
+      "name": "MemoryCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        263,
+        266
+      ],
+      "summary": "Defines the Pydantic API contract for memory create data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:Memory",
+      "type": "class",
+      "name": "Memory",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        269,
+        280
+      ],
+      "summary": "Defines the Pydantic API contract for memory data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:MemoryUpdate",
+      "type": "class",
+      "name": "MemoryUpdate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        283,
+        287
+      ],
+      "summary": "Defines the Pydantic API contract for memory update data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:MemoryExtractionRequest",
+      "type": "class",
+      "name": "MemoryExtractionRequest",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        290,
+        293
+      ],
+      "summary": "Defines the Pydantic API contract for memory extraction request data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:MemoryExtractionResult",
+      "type": "class",
+      "name": "MemoryExtractionResult",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        296,
+        299
+      ],
+      "summary": "Defines the Pydantic API contract for memory extraction result data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:PresetCreate",
+      "type": "class",
+      "name": "PresetCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        302,
+        306
+      ],
+      "summary": "Defines the Pydantic API contract for preset create data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:Preset",
+      "type": "class",
+      "name": "Preset",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        309,
+        310
+      ],
+      "summary": "Defines the Pydantic API contract for preset data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:UploadCreate",
+      "type": "class",
+      "name": "UploadCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        313,
+        316
+      ],
+      "summary": "Defines the Pydantic API contract for upload create data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:Upload",
+      "type": "class",
+      "name": "Upload",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        319,
+        327
+      ],
+      "summary": "Defines the Pydantic API contract for upload data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ReplayCreate",
+      "type": "class",
+      "name": "ReplayCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        330,
+        333
+      ],
+      "summary": "Defines the Pydantic API contract for replay create data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:FeedbackInput",
+      "type": "class",
+      "name": "FeedbackInput",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        336,
+        337
+      ],
+      "summary": "Defines the Pydantic API contract for feedback input data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:DataImport",
+      "type": "class",
+      "name": "DataImport",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        340,
+        341
+      ],
+      "summary": "Defines the Pydantic API contract for data import data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:WipeRequest",
+      "type": "class",
+      "name": "WipeRequest",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        344,
+        345
+      ],
+      "summary": "Defines the Pydantic API contract for wipe request data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:V2ImportRequest",
+      "type": "class",
+      "name": "V2ImportRequest",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        348,
+        349
+      ],
+      "summary": "Defines the Pydantic API contract for v2import request data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:Profile",
+      "type": "class",
+      "name": "Profile",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        352,
+        353
+      ],
+      "summary": "Defines the Pydantic API contract for profile data.",
+      "tags": [
+        "data-model",
+        "pydantic",
+        "api-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/contracts.py:utc_now",
+      "type": "function",
+      "name": "utc_now",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        10,
+        11
+      ],
+      "summary": "Provides utc now behavior for this module.",
+      "tags": [
+        "service",
+        "backend",
+        "api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/app/main.py",
+      "type": "file",
+      "name": "main.py",
+      "filePath": "backend/app/main.py",
+      "summary": "Builds the FastAPI application, wiring API routes to storage, provider, run, session, and workspace services.",
+      "tags": [
+        "api-handler",
+        "fastapi",
+        "application-factory"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/app/main.py:create_app",
+      "type": "function",
+      "name": "create_app",
+      "filePath": "backend/app/main.py",
+      "lineRange": [
+        88,
+        923
+      ],
+      "summary": "Creates the FastAPI application and registers its routes and dependencies.",
+      "tags": [
+        "service",
+        "backend",
+        "api"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:backend/app/memory.py",
+      "type": "file",
+      "name": "memory.py",
+      "filePath": "backend/app/memory.py",
+      "summary": "Extracts and classifies reusable memories from conversation transcripts through a provider adapter.",
+      "tags": [
+        "memory",
+        "service",
+        "ai-workflow"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/app/memory.py:ExtractionOutcome",
+      "type": "class",
+      "name": "ExtractionOutcome",
+      "filePath": "backend/app/memory.py",
+      "lineRange": [
+        13,
+        15
+      ],
+      "summary": "Records the accepted and discarded results of a memory extraction pass.",
+      "tags": [
+        "service",
+        "backend",
+        "domain-model"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/memory.py:extract_memories",
+      "type": "function",
+      "name": "extract_memories",
+      "filePath": "backend/app/memory.py",
+      "lineRange": [
+        18,
+        87
+      ],
+      "summary": "Extracts, deduplicates, and categorizes memory candidates from a conversation.",
+      "tags": [
+        "service",
+        "backend",
+        "api"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/app/memory.py:_complete",
+      "type": "function",
+      "name": "_complete",
+      "filePath": "backend/app/memory.py",
+      "lineRange": [
+        90,
+        108
+      ],
+      "summary": "Requests a completion from the selected provider adapter.",
+      "tags": [
+        "helper",
+        "internal",
+        "backend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/memory.py:_selection_prompt",
+      "type": "function",
+      "name": "_selection_prompt",
+      "filePath": "backend/app/memory.py",
+      "lineRange": [
+        111,
+        120
+      ],
+      "summary": "Builds the prompt used to select useful memory candidates.",
+      "tags": [
+        "helper",
+        "internal",
+        "backend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/memory.py:_consolidation_prompt",
+      "type": "function",
+      "name": "_consolidation_prompt",
+      "filePath": "backend/app/memory.py",
+      "lineRange": [
+        123,
+        133
+      ],
+      "summary": "Builds the prompt used to consolidate existing and candidate memories.",
+      "tags": [
+        "helper",
+        "internal",
+        "backend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/memory.py:_parse_memories",
+      "type": "function",
+      "name": "_parse_memories",
+      "filePath": "backend/app/memory.py",
+      "lineRange": [
+        136,
+        152
+      ],
+      "summary": "Parses structured memory candidates from model output.",
+      "tags": [
+        "helper",
+        "internal",
+        "backend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/memory.py:_category",
+      "type": "function",
+      "name": "_category",
+      "filePath": "backend/app/memory.py",
+      "lineRange": [
+        155,
+        160
+      ],
+      "summary": "Normalizes a memory category.",
+      "tags": [
+        "helper",
+        "internal",
+        "backend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/app/providers.py",
+      "type": "file",
+      "name": "providers.py",
+      "filePath": "backend/app/providers.py",
+      "summary": "Implements provider adapters and a registry for model discovery and streaming completions.",
+      "tags": [
+        "provider",
+        "service",
+        "ai-integration"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:backend/app/providers.py:ProviderAdapter",
+      "type": "class",
+      "name": "ProviderAdapter",
+      "filePath": "backend/app/providers.py",
+      "lineRange": [
+        18,
+        36
+      ],
+      "summary": "Implements the Provider Adapter role within the provider integration layer.",
+      "tags": [
+        "provider",
+        "adapter",
+        "service"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/providers.py:OpenAICompatibleAdapter",
+      "type": "class",
+      "name": "OpenAICompatibleAdapter",
+      "filePath": "backend/app/providers.py",
+      "lineRange": [
+        39,
+        91
+      ],
+      "summary": "Implements the Open AICompatible Adapter role within the provider integration layer.",
+      "tags": [
+        "provider",
+        "adapter",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/app/providers.py:OllamaAdapter",
+      "type": "class",
+      "name": "OllamaAdapter",
+      "filePath": "backend/app/providers.py",
+      "lineRange": [
+        94,
+        178
+      ],
+      "summary": "Implements the Ollama Adapter role within the provider integration layer.",
+      "tags": [
+        "provider",
+        "adapter",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/app/providers.py:AnthropicAdapter",
+      "type": "class",
+      "name": "AnthropicAdapter",
+      "filePath": "backend/app/providers.py",
+      "lineRange": [
+        181,
+        238
+      ],
+      "summary": "Implements the Anthropic Adapter role within the provider integration layer.",
+      "tags": [
+        "provider",
+        "adapter",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/app/providers.py:GeminiAdapter",
+      "type": "class",
+      "name": "GeminiAdapter",
+      "filePath": "backend/app/providers.py",
+      "lineRange": [
+        241,
+        286
+      ],
+      "summary": "Implements the Gemini Adapter role within the provider integration layer.",
+      "tags": [
+        "provider",
+        "adapter",
+        "service"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/providers.py:OpenCodeZenAdapter",
+      "type": "class",
+      "name": "OpenCodeZenAdapter",
+      "filePath": "backend/app/providers.py",
+      "lineRange": [
+        289,
+        399
+      ],
+      "summary": "Implements the Open Code Zen Adapter role within the provider integration layer.",
+      "tags": [
+        "provider",
+        "adapter",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/app/providers.py:OpenCodeBridgeAdapter",
+      "type": "class",
+      "name": "OpenCodeBridgeAdapter",
+      "filePath": "backend/app/providers.py",
+      "lineRange": [
+        402,
+        555
+      ],
+      "summary": "Implements the Open Code Bridge Adapter role within the provider integration layer.",
+      "tags": [
+        "provider",
+        "adapter",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/app/providers.py:ProviderRegistry",
+      "type": "class",
+      "name": "ProviderRegistry",
+      "filePath": "backend/app/providers.py",
+      "lineRange": [
+        558,
+        589
+      ],
+      "summary": "Implements the Provider Registry role within the provider integration layer.",
+      "tags": [
+        "provider",
+        "adapter",
+        "service"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/providers.py:build_provider_registry",
+      "type": "function",
+      "name": "build_provider_registry",
+      "filePath": "backend/app/providers.py",
+      "lineRange": [
+        592,
+        620
+      ],
+      "summary": "Constructs the configured provider adapter registry.",
+      "tags": [
+        "service",
+        "backend",
+        "api"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:backend/app/cli.py",
+      "target": "function:backend/app/cli.py:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/cli.py",
+      "target": "function:backend/app/cli.py:main",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:MessageCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:MessageCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Message",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Message",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ConversationCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ConversationCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ConversationUpdate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ConversationUpdate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Conversation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Conversation",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:CredentialInput",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:CredentialInput",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:OAuthCodeInput",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:OAuthCodeInput",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:OpenCodeOAuthStart",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:OpenCodeOAuthStart",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:OpenCodeOAuthComplete",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:OpenCodeOAuthComplete",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ImageInput",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ImageInput",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ChatMessage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ChatMessage",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ModelDescriptor",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ModelDescriptor",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ProviderDiscovery",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ProviderDiscovery",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:RunCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:RunCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:RunStatus",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:RunStatus",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:RunSnapshot",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:RunSnapshot",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:RunEvent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:RunEvent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ContextSection",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ContextSection",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ContextSource",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ContextSource",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:SafetyFinding",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:SafetyFinding",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:SafetyText",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:SafetyText",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ProviderPolicy",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ProviderPolicy",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:TurnPreflight",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:TurnPreflight",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:TurnCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:TurnCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ContextPlan",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ContextPlan",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ConversationBranch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ConversationBranch",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:BackpackItemInput",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:BackpackItemInput",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:BackpackCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:BackpackCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:BackpackItem",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:BackpackItem",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Backpack",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Backpack",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:FocusCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:FocusCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:FocusSession",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:FocusSession",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:FocusUpdate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:FocusUpdate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ProviderSimulationInput",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ProviderSimulationInput",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ReplayBundle",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ReplayBundle",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:MemoryCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:MemoryCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Memory",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Memory",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:MemoryUpdate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:MemoryUpdate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:MemoryExtractionRequest",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:MemoryExtractionRequest",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:MemoryExtractionResult",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:MemoryExtractionResult",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:PresetCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:PresetCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Preset",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Preset",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:UploadCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:UploadCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Upload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Upload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ReplayCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ReplayCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:FeedbackInput",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:FeedbackInput",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:DataImport",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:DataImport",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:WipeRequest",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:WipeRequest",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:V2ImportRequest",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:V2ImportRequest",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Profile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Profile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "function:backend/app/contracts.py:utc_now",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "function:backend/app/contracts.py:utc_now",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "function:backend/app/main.py:create_app",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "function:backend/app/main.py:create_app",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "class:backend/app/memory.py:ExtractionOutcome",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "class:backend/app/memory.py:ExtractionOutcome",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:extract_memories",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:extract_memories",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:_complete",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:_complete",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:_selection_prompt",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:_selection_prompt",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:_consolidation_prompt",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:_consolidation_prompt",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:_parse_memories",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:_parse_memories",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:_category",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "function:backend/app/memory.py:_category",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:ProviderAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:ProviderAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OpenAICompatibleAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OpenAICompatibleAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OllamaAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OllamaAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:AnthropicAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:AnthropicAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:GeminiAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:GeminiAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OpenCodeZenAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OpenCodeZenAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OpenCodeBridgeAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OpenCodeBridgeAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:ProviderRegistry",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:ProviderRegistry",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "function:backend/app/providers.py:build_provider_registry",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "function:backend/app/providers.py:build_provider_registry",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/cli.py",
+      "target": "file:backend/app/main.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/memory.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/runs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/sessions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/workspace.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:src/files.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/memory.py",
+      "target": "file:src/files.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

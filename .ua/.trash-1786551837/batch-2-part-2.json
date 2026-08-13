@@ -1,0 +1,561 @@
+{
+  "nodes": [
+    {
+      "id": "file:backend/app/runs.py",
+      "type": "file",
+      "name": "runs.py",
+      "filePath": "backend/app/runs.py",
+      "summary": "Coordinates asynchronous model runs, event streaming, cancellation, and persisted run state.",
+      "tags": [
+        "run-management",
+        "service",
+        "async"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/app/runs.py:RunState",
+      "type": "class",
+      "name": "RunState",
+      "filePath": "backend/app/runs.py",
+      "lineRange": [
+        19,
+        27
+      ],
+      "summary": "Represents mutable state for an active model run.",
+      "tags": [
+        "service",
+        "backend",
+        "domain-model"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/runs.py:RunManager",
+      "type": "class",
+      "name": "RunManager",
+      "filePath": "backend/app/runs.py",
+      "lineRange": [
+        30,
+        216
+      ],
+      "summary": "Manages active model runs, lifecycle events, cancellation, and persisted snapshots.",
+      "tags": [
+        "service",
+        "backend",
+        "domain-model"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/app/sessions.py",
+      "type": "file",
+      "name": "sessions.py",
+      "filePath": "backend/app/sessions.py",
+      "summary": "Keeps provider credentials scoped to browser sessions and resolves environment-backed credentials.",
+      "tags": [
+        "session",
+        "credentials",
+        "security"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/app/sessions.py:SessionVault",
+      "type": "class",
+      "name": "SessionVault",
+      "filePath": "backend/app/sessions.py",
+      "lineRange": [
+        23,
+        59
+      ],
+      "summary": "Stores provider credential values under isolated browser session identifiers.",
+      "tags": [
+        "service",
+        "backend",
+        "domain-model"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/sessions.py:_anthropic_wif_configured",
+      "type": "function",
+      "name": "_anthropic_wif_configured",
+      "filePath": "backend/app/sessions.py",
+      "lineRange": [
+        62,
+        73
+      ],
+      "summary": "Provides  anthropic wif configured behavior for this module.",
+      "tags": [
+        "helper",
+        "internal",
+        "backend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/app/store.py",
+      "type": "file",
+      "name": "store.py",
+      "filePath": "backend/app/store.py",
+      "summary": "Provides the SQLite persistence layer for conversations, runs, memories, workspace resources, and settings.",
+      "tags": [
+        "database",
+        "persistence",
+        "sqlite"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:backend/app/store.py:Store",
+      "type": "class",
+      "name": "Store",
+      "filePath": "backend/app/store.py",
+      "lineRange": [
+        161,
+        1151
+      ],
+      "summary": "Encapsulates SQLite schema initialization and persistent workspace operations.",
+      "tags": [
+        "database",
+        "persistence",
+        "service"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:backend/app/workspace.py",
+      "type": "file",
+      "name": "workspace.py",
+      "filePath": "backend/app/workspace.py",
+      "summary": "Builds safe context plans from workspace sources, retrieval, memories, attachments, and optional web results.",
+      "tags": [
+        "context-management",
+        "safety",
+        "retrieval"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/app/workspace.py:search_web",
+      "type": "function",
+      "name": "search_web",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [
+        46,
+        63
+      ],
+      "summary": "Queries configured web search support for context sources.",
+      "tags": [
+        "service",
+        "backend",
+        "api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/workspace.py:retrieve_context",
+      "type": "function",
+      "name": "retrieve_context",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [
+        66,
+        83
+      ],
+      "summary": "Retrieves relevant conversation context from storage.",
+      "tags": [
+        "service",
+        "backend",
+        "api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/workspace.py:relevant_memories",
+      "type": "function",
+      "name": "relevant_memories",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [
+        86,
+        112
+      ],
+      "summary": "Selects memories relevant to the current request.",
+      "tags": [
+        "service",
+        "backend",
+        "api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/workspace.py:estimate_tokens",
+      "type": "function",
+      "name": "estimate_tokens",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [
+        115,
+        116
+      ],
+      "summary": "Provides estimate tokens behavior for this module.",
+      "tags": [
+        "service",
+        "backend",
+        "api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/workspace.py:scan_text",
+      "type": "function",
+      "name": "scan_text",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [
+        119,
+        149
+      ],
+      "summary": "Detects sensitive content and prompt-injection signals in text.",
+      "tags": [
+        "service",
+        "backend",
+        "api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/workspace.py:sanitize_text",
+      "type": "function",
+      "name": "sanitize_text",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [
+        152,
+        157
+      ],
+      "summary": "Redacts sensitive fragments from text.",
+      "tags": [
+        "service",
+        "backend",
+        "api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/workspace.py:build_context_plan",
+      "type": "function",
+      "name": "build_context_plan",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [
+        160,
+        404
+      ],
+      "summary": "Builds a budgeted, safety-aware context plan for a chat turn.",
+      "tags": [
+        "service",
+        "backend",
+        "api"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/app/workspace.py:assemble_messages",
+      "type": "function",
+      "name": "assemble_messages",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [
+        407,
+        511
+      ],
+      "summary": "Assembles model messages from a context plan and user request.",
+      "tags": [
+        "service",
+        "backend",
+        "api"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/app/workspace.py:_redact",
+      "type": "function",
+      "name": "_redact",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [
+        514,
+        517
+      ],
+      "summary": "Provides  redact behavior for this module.",
+      "tags": [
+        "helper",
+        "internal",
+        "backend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/generate_api_types.py",
+      "type": "file",
+      "name": "generate_api_types.py",
+      "filePath": "scripts/generate_api_types.py",
+      "summary": "Exports the FastAPI OpenAPI schema for TypeScript client type generation.",
+      "tags": [
+        "code-generation",
+        "openapi",
+        "script"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "class:backend/app/runs.py:RunState",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "class:backend/app/runs.py:RunState",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "class:backend/app/runs.py:RunManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "class:backend/app/runs.py:RunManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/sessions.py",
+      "target": "class:backend/app/sessions.py:SessionVault",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/sessions.py",
+      "target": "class:backend/app/sessions.py:SessionVault",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/sessions.py",
+      "target": "function:backend/app/sessions.py:_anthropic_wif_configured",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/sessions.py",
+      "target": "function:backend/app/sessions.py:_anthropic_wif_configured",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/store.py",
+      "target": "class:backend/app/store.py:Store",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/store.py",
+      "target": "class:backend/app/store.py:Store",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:search_web",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:search_web",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:retrieve_context",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:retrieve_context",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:relevant_memories",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:relevant_memories",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:estimate_tokens",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:estimate_tokens",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:scan_text",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:scan_text",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:sanitize_text",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:sanitize_text",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:build_context_plan",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:build_context_plan",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:assemble_messages",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:assemble_messages",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:_redact",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:_redact",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/sessions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/store.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "file:backend/app/store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/generate_api_types.py",
+      "target": "file:backend/app/main.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

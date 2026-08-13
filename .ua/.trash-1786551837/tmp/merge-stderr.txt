@@ -1,0 +1,28 @@
+Found 14 batch files (9 logical batches, 3 multi-part):
+  batch-1-part-1.json: 49 nodes, 95 edges
+  batch-1-part-2.json: 51 nodes, 106 edges
+  batch-1-part-3.json: 20 nodes, 31 edges
+  batch-2-part-1.json: 74 nodes, 152 edges
+  batch-2-part-2.json: 19 nodes, 36 edges
+  batch-2-part-3.json: 34 nodes, 74 edges
+  batch-3.json: 39 nodes, 70 edges
+  batch-4-part-1.json: 30 nodes, 64 edges
+  batch-4-part-2.json: 32 nodes, 65 edges
+  batch-5.json: 1 nodes, 0 edges
+  batch-6.json: 17 nodes, 12 edges
+  batch-7.json: 7 nodes, 16 edges
+  batch-8.json: 8 nodes, 7 edges
+  batch-9.json: 28 nodes, 24 edges
+
+Input: 409 nodes, 752 edges
+
+Tested-by linker:
+     0 � tested_by edges produced (path-convention supplement, production \u2192 test)
+     5 � production nodes tagged "tested"
+
+Output: 409 nodes, 752 edges
+
+Imports edge recovery:
+  Recovered 0 `imports` edges from importMap (101 entries scanned)
+
+Written to D:\AI\Github\local-ai-chat-studio\.ua\intermediate\assembled-graph.json (349 KB)

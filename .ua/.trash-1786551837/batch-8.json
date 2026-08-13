@@ -1,0 +1,127 @@
+{
+  "nodes": [
+    {
+      "id": "config:frontend/.oxlintrc.json",
+      "type": "config",
+      "name": ".oxlintrc.json",
+      "filePath": "frontend/.oxlintrc.json",
+      "summary": "Configures Oxlint with React, TypeScript, and Oxc plugins, enforcing hook rules and warning on component-only exports.",
+      "tags": ["configuration", "linting", "react", "typescript"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:frontend/README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "frontend/README.md",
+      "summary": "Documents frontend workspace commands for development, testing, linting, building, and generating the FastAPI-derived API schema.",
+      "tags": ["documentation", "development", "frontend", "api-generation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:frontend/components.json",
+      "type": "config",
+      "name": "components.json",
+      "filePath": "frontend/components.json",
+      "summary": "Configures shadcn-style component generation with the base-nova style, Tailwind CSS settings, Lucide icons, and project path aliases.",
+      "tags": ["configuration", "component-library", "tailwind", "path-aliases"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/index.html",
+      "type": "file",
+      "name": "index.html",
+      "filePath": "frontend/index.html",
+      "summary": "Defines the Vite HTML shell for Local AI Chat Studio, including the root mount element and module entry point for the React application.",
+      "tags": ["entry-point", "html-shell", "vite", "react"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:frontend/package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "frontend/package.json",
+      "summary": "Defines the frontend package scripts and dependencies for Vite, React, TypeScript, Tailwind CSS, Vitest, Oxlint, and OpenAPI type generation.",
+      "tags": ["configuration", "build-system", "frontend", "dependencies"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:frontend/tsconfig.app.json",
+      "type": "config",
+      "name": "tsconfig.app.json",
+      "filePath": "frontend/tsconfig.app.json",
+      "summary": "Configures strict TypeScript compilation for frontend source files using bundler resolution, React JSX, Vite types, and the @ path alias.",
+      "tags": ["configuration", "typescript", "react", "path-aliases"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:frontend/tsconfig.json",
+      "type": "config",
+      "name": "tsconfig.json",
+      "filePath": "frontend/tsconfig.json",
+      "summary": "Defines the TypeScript solution configuration that references separate application and Node-oriented compiler projects while sharing the @ path alias.",
+      "tags": ["configuration", "typescript", "project-references", "path-aliases"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:frontend/tsconfig.node.json",
+      "type": "config",
+      "name": "tsconfig.node.json",
+      "filePath": "frontend/tsconfig.node.json",
+      "summary": "Configures strict NodeNext TypeScript checking for the Vite configuration with Node type definitions and no emitted output.",
+      "tags": ["configuration", "typescript", "nodejs", "vite"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:frontend/index.html",
+      "target": "file:frontend/src/main.tsx",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/.oxlintrc.json",
+      "target": "file:frontend/src/main.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/components.json",
+      "target": "file:frontend/src/index.css",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/package.json",
+      "target": "file:frontend/src/main.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/tsconfig.app.json",
+      "target": "file:frontend/src/main.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/tsconfig.node.json",
+      "target": "file:frontend/vite.config.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:frontend/README.md",
+      "target": "config:frontend/package.json",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

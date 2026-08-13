@@ -1,0 +1,14 @@
+{
+  "fixedSectionOk": true,
+  "nodesRecovered": 0,
+  "edgesRestored": 0,
+  "crossBatchEdgesAdded": 0,
+  "typesRemapped": 0,
+  "complexityRemapped": 0,
+  "notes": [
+    "The assembled graph contains 409 unique nodes and 752 unique edges, with no missing IDs, invalid type/ID prefixes, dangling edges, or duplicate edges.",
+    "All 91 import relationships in scan-result.json have matching imports edges between existing file nodes; no cross-batch edges were needed.",
+    "All node types and complexity values are within the expected canonical sets. Five production file nodes are tagged tested, matching the merge report.",
+    "The supplied merge report was internally consistent; it did not include per-pattern Fixed-section counts for further upstream correction-rate assessment."
+  ]
+}

@@ -1,0 +1,1642 @@
+{
+  "nodes": [
+    {
+      "id": "file:frontend/src/components/ui/label.tsx",
+      "type": "file",
+      "name": "label.tsx",
+      "filePath": "frontend/src/components/ui/label.tsx",
+      "summary": "Provides reusable form label control for the frontend component library.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/label.tsx:Label",
+      "type": "function",
+      "name": "Label",
+      "filePath": "frontend/src/components/ui/label.tsx",
+      "lineRange": [
+        7,
+        18
+      ],
+      "summary": "Renders the exported Label UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/select.tsx",
+      "type": "file",
+      "name": "select.tsx",
+      "filePath": "frontend/src/components/ui/select.tsx",
+      "summary": "Provides reusable select menu primitives for the frontend component library.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/components/ui/select.tsx:SelectGroup",
+      "type": "function",
+      "name": "SelectGroup",
+      "filePath": "frontend/src/components/ui/select.tsx",
+      "lineRange": [
+        11,
+        19
+      ],
+      "summary": "Renders the exported SelectGroup UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/select.tsx:SelectValue",
+      "type": "function",
+      "name": "SelectValue",
+      "filePath": "frontend/src/components/ui/select.tsx",
+      "lineRange": [
+        21,
+        29
+      ],
+      "summary": "Renders the exported SelectValue UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/select.tsx:SelectTrigger",
+      "type": "function",
+      "name": "SelectTrigger",
+      "filePath": "frontend/src/components/ui/select.tsx",
+      "lineRange": [
+        31,
+        57
+      ],
+      "summary": "Renders the exported SelectTrigger UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/select.tsx:SelectContent",
+      "type": "function",
+      "name": "SelectContent",
+      "filePath": "frontend/src/components/ui/select.tsx",
+      "lineRange": [
+        59,
+        96
+      ],
+      "summary": "Renders the exported SelectContent UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/select.tsx:SelectLabel",
+      "type": "function",
+      "name": "SelectLabel",
+      "filePath": "frontend/src/components/ui/select.tsx",
+      "lineRange": [
+        98,
+        109
+      ],
+      "summary": "Renders the exported SelectLabel UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/select.tsx:SelectItem",
+      "type": "function",
+      "name": "SelectItem",
+      "filePath": "frontend/src/components/ui/select.tsx",
+      "lineRange": [
+        111,
+        137
+      ],
+      "summary": "Renders the exported SelectItem UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/select.tsx:SelectSeparator",
+      "type": "function",
+      "name": "SelectSeparator",
+      "filePath": "frontend/src/components/ui/select.tsx",
+      "lineRange": [
+        139,
+        150
+      ],
+      "summary": "Renders the exported SelectSeparator UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/select.tsx:SelectScrollUpButton",
+      "type": "function",
+      "name": "SelectScrollUpButton",
+      "filePath": "frontend/src/components/ui/select.tsx",
+      "lineRange": [
+        152,
+        169
+      ],
+      "summary": "Renders the exported SelectScrollUpButton UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/select.tsx:SelectScrollDownButton",
+      "type": "function",
+      "name": "SelectScrollDownButton",
+      "filePath": "frontend/src/components/ui/select.tsx",
+      "lineRange": [
+        171,
+        188
+      ],
+      "summary": "Renders the exported SelectScrollDownButton UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/separator.tsx",
+      "type": "file",
+      "name": "separator.tsx",
+      "filePath": "frontend/src/components/ui/separator.tsx",
+      "summary": "Provides reusable visual separators for the frontend component library.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/separator.tsx:Separator",
+      "type": "function",
+      "name": "Separator",
+      "filePath": "frontend/src/components/ui/separator.tsx",
+      "lineRange": [
+        7,
+        23
+      ],
+      "summary": "Renders the exported Separator UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/sheet.tsx",
+      "type": "file",
+      "name": "sheet.tsx",
+      "filePath": "frontend/src/components/ui/sheet.tsx",
+      "summary": "Provides reusable side panel primitives for the frontend component library.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sheet.tsx:Sheet",
+      "type": "function",
+      "name": "Sheet",
+      "filePath": "frontend/src/components/ui/sheet.tsx",
+      "lineRange": [
+        10,
+        12
+      ],
+      "summary": "Renders the exported Sheet UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sheet.tsx:SheetTrigger",
+      "type": "function",
+      "name": "SheetTrigger",
+      "filePath": "frontend/src/components/ui/sheet.tsx",
+      "lineRange": [
+        14,
+        16
+      ],
+      "summary": "Renders the exported SheetTrigger UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sheet.tsx:SheetClose",
+      "type": "function",
+      "name": "SheetClose",
+      "filePath": "frontend/src/components/ui/sheet.tsx",
+      "lineRange": [
+        18,
+        20
+      ],
+      "summary": "Renders the exported SheetClose UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sheet.tsx:SheetOverlay",
+      "type": "function",
+      "name": "SheetOverlay",
+      "filePath": "frontend/src/components/ui/sheet.tsx",
+      "lineRange": [
+        26,
+        37
+      ],
+      "summary": "Renders the exported SheetOverlay UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sheet.tsx:SheetContent",
+      "type": "function",
+      "name": "SheetContent",
+      "filePath": "frontend/src/components/ui/sheet.tsx",
+      "lineRange": [
+        39,
+        81
+      ],
+      "summary": "Renders the exported SheetContent UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sheet.tsx:SheetHeader",
+      "type": "function",
+      "name": "SheetHeader",
+      "filePath": "frontend/src/components/ui/sheet.tsx",
+      "lineRange": [
+        83,
+        91
+      ],
+      "summary": "Renders the exported SheetHeader UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sheet.tsx:SheetFooter",
+      "type": "function",
+      "name": "SheetFooter",
+      "filePath": "frontend/src/components/ui/sheet.tsx",
+      "lineRange": [
+        93,
+        101
+      ],
+      "summary": "Renders the exported SheetFooter UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sheet.tsx:SheetTitle",
+      "type": "function",
+      "name": "SheetTitle",
+      "filePath": "frontend/src/components/ui/sheet.tsx",
+      "lineRange": [
+        103,
+        114
+      ],
+      "summary": "Renders the exported SheetTitle UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sheet.tsx:SheetDescription",
+      "type": "function",
+      "name": "SheetDescription",
+      "filePath": "frontend/src/components/ui/sheet.tsx",
+      "lineRange": [
+        116,
+        127
+      ],
+      "summary": "Renders the exported SheetDescription UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/sidebar.tsx",
+      "type": "file",
+      "name": "sidebar.tsx",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "summary": "Provides reusable responsive sidebar layout for the frontend component library.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:useSidebar",
+      "type": "function",
+      "name": "useSidebar",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        47,
+        54
+      ],
+      "summary": "Exposes responsive sidebar state and controls through the useSidebar hook.",
+      "tags": [
+        "hook",
+        "react",
+        "state",
+        "responsive"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:SidebarProvider",
+      "type": "function",
+      "name": "SidebarProvider",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        56,
+        150
+      ],
+      "summary": "Renders the exported SidebarProvider UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:Sidebar",
+      "type": "function",
+      "name": "Sidebar",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        152,
+        252
+      ],
+      "summary": "Renders the exported Sidebar UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:SidebarTrigger",
+      "type": "function",
+      "name": "SidebarTrigger",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        254,
+        278
+      ],
+      "summary": "Renders the exported SidebarTrigger UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:SidebarRail",
+      "type": "function",
+      "name": "SidebarRail",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        280,
+        303
+      ],
+      "summary": "Renders the exported SidebarRail UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:SidebarInset",
+      "type": "function",
+      "name": "SidebarInset",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        305,
+        316
+      ],
+      "summary": "Renders the exported SidebarInset UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:SidebarInput",
+      "type": "function",
+      "name": "SidebarInput",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        318,
+        330
+      ],
+      "summary": "Renders the exported SidebarInput UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:SidebarHeader",
+      "type": "function",
+      "name": "SidebarHeader",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        332,
+        341
+      ],
+      "summary": "Renders the exported SidebarHeader UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:SidebarFooter",
+      "type": "function",
+      "name": "SidebarFooter",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        343,
+        352
+      ],
+      "summary": "Renders the exported SidebarFooter UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:SidebarSeparator",
+      "type": "function",
+      "name": "SidebarSeparator",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        354,
+        366
+      ],
+      "summary": "Renders the exported SidebarSeparator UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:SidebarContent",
+      "type": "function",
+      "name": "SidebarContent",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        368,
+        380
+      ],
+      "summary": "Renders the exported SidebarContent UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:SidebarGroup",
+      "type": "function",
+      "name": "SidebarGroup",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        382,
+        391
+      ],
+      "summary": "Renders the exported SidebarGroup UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:SidebarGroupLabel",
+      "type": "function",
+      "name": "SidebarGroupLabel",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        393,
+        415
+      ],
+      "summary": "Renders the exported SidebarGroupLabel UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:SidebarGroupAction",
+      "type": "function",
+      "name": "SidebarGroupAction",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        417,
+        439
+      ],
+      "summary": "Renders the exported SidebarGroupAction UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:SidebarGroupContent",
+      "type": "function",
+      "name": "SidebarGroupContent",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        441,
+        453
+      ],
+      "summary": "Renders the exported SidebarGroupContent UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenu",
+      "type": "function",
+      "name": "SidebarMenu",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        455,
+        464
+      ],
+      "summary": "Renders the exported SidebarMenu UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuItem",
+      "type": "function",
+      "name": "SidebarMenuItem",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        466,
+        475
+      ],
+      "summary": "Renders the exported SidebarMenuItem UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuButton",
+      "type": "function",
+      "name": "SidebarMenuButton",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        499,
+        551
+      ],
+      "summary": "Renders the exported SidebarMenuButton UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuAction",
+      "type": "function",
+      "name": "SidebarMenuAction",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        553,
+        581
+      ],
+      "summary": "Renders the exported SidebarMenuAction UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuBadge",
+      "type": "function",
+      "name": "SidebarMenuBadge",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        583,
+        598
+      ],
+      "summary": "Renders the exported SidebarMenuBadge UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuSkeleton",
+      "type": "function",
+      "name": "SidebarMenuSkeleton",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        600,
+        636
+      ],
+      "summary": "Renders the exported SidebarMenuSkeleton UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuSub",
+      "type": "function",
+      "name": "SidebarMenuSub",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        638,
+        650
+      ],
+      "summary": "Renders the exported SidebarMenuSub UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuSubItem",
+      "type": "function",
+      "name": "SidebarMenuSubItem",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        652,
+        664
+      ],
+      "summary": "Renders the exported SidebarMenuSubItem UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuSubButton",
+      "type": "function",
+      "name": "SidebarMenuSubButton",
+      "filePath": "frontend/src/components/ui/sidebar.tsx",
+      "lineRange": [
+        666,
+        696
+      ],
+      "summary": "Renders the exported SidebarMenuSubButton UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/components/ui/skeleton.tsx",
+      "type": "file",
+      "name": "skeleton.tsx",
+      "filePath": "frontend/src/components/ui/skeleton.tsx",
+      "summary": "Provides reusable loading placeholder for the frontend component library.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/components/ui/skeleton.tsx:Skeleton",
+      "type": "function",
+      "name": "Skeleton",
+      "filePath": "frontend/src/components/ui/skeleton.tsx",
+      "lineRange": [
+        3,
+        11
+      ],
+      "summary": "Renders the exported Skeleton UI primitive with its configured styling and props.",
+      "tags": [
+        "component",
+        "ui",
+        "react",
+        "frontend"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:frontend/src/components/ui/label.tsx",
+      "target": "function:frontend/src/components/ui/label.tsx:Label",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/label.tsx",
+      "target": "function:frontend/src/components/ui/label.tsx:Label",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/label.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/select.tsx",
+      "target": "function:frontend/src/components/ui/select.tsx:SelectGroup",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/select.tsx",
+      "target": "function:frontend/src/components/ui/select.tsx:SelectGroup",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/select.tsx",
+      "target": "function:frontend/src/components/ui/select.tsx:SelectValue",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/select.tsx",
+      "target": "function:frontend/src/components/ui/select.tsx:SelectValue",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/select.tsx",
+      "target": "function:frontend/src/components/ui/select.tsx:SelectTrigger",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/select.tsx",
+      "target": "function:frontend/src/components/ui/select.tsx:SelectTrigger",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/select.tsx",
+      "target": "function:frontend/src/components/ui/select.tsx:SelectContent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/select.tsx",
+      "target": "function:frontend/src/components/ui/select.tsx:SelectContent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/select.tsx",
+      "target": "function:frontend/src/components/ui/select.tsx:SelectLabel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/select.tsx",
+      "target": "function:frontend/src/components/ui/select.tsx:SelectLabel",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/select.tsx",
+      "target": "function:frontend/src/components/ui/select.tsx:SelectItem",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/select.tsx",
+      "target": "function:frontend/src/components/ui/select.tsx:SelectItem",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/select.tsx",
+      "target": "function:frontend/src/components/ui/select.tsx:SelectSeparator",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/select.tsx",
+      "target": "function:frontend/src/components/ui/select.tsx:SelectSeparator",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/select.tsx",
+      "target": "function:frontend/src/components/ui/select.tsx:SelectScrollUpButton",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/select.tsx",
+      "target": "function:frontend/src/components/ui/select.tsx:SelectScrollUpButton",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/select.tsx",
+      "target": "function:frontend/src/components/ui/select.tsx:SelectScrollDownButton",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/select.tsx",
+      "target": "function:frontend/src/components/ui/select.tsx:SelectScrollDownButton",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/select.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/separator.tsx",
+      "target": "function:frontend/src/components/ui/separator.tsx:Separator",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/separator.tsx",
+      "target": "function:frontend/src/components/ui/separator.tsx:Separator",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/separator.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "function:frontend/src/components/ui/sheet.tsx:Sheet",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "function:frontend/src/components/ui/sheet.tsx:Sheet",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "function:frontend/src/components/ui/sheet.tsx:SheetTrigger",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "function:frontend/src/components/ui/sheet.tsx:SheetTrigger",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "function:frontend/src/components/ui/sheet.tsx:SheetClose",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "function:frontend/src/components/ui/sheet.tsx:SheetClose",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "function:frontend/src/components/ui/sheet.tsx:SheetOverlay",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "function:frontend/src/components/ui/sheet.tsx:SheetContent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "function:frontend/src/components/ui/sheet.tsx:SheetContent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "function:frontend/src/components/ui/sheet.tsx:SheetHeader",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "function:frontend/src/components/ui/sheet.tsx:SheetHeader",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "function:frontend/src/components/ui/sheet.tsx:SheetFooter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "function:frontend/src/components/ui/sheet.tsx:SheetFooter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "function:frontend/src/components/ui/sheet.tsx:SheetTitle",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "function:frontend/src/components/ui/sheet.tsx:SheetTitle",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "function:frontend/src/components/ui/sheet.tsx:SheetDescription",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "function:frontend/src/components/ui/sheet.tsx:SheetDescription",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "file:frontend/src/components/ui/button.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sheet.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:useSidebar",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:useSidebar",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarProvider",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarProvider",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:Sidebar",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:Sidebar",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarTrigger",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarTrigger",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarRail",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarRail",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarInset",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarInset",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarInput",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarInput",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarHeader",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarHeader",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarFooter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarFooter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarSeparator",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarSeparator",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarContent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarContent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarGroup",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarGroup",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarGroupLabel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarGroupLabel",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarGroupAction",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarGroupAction",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarGroupContent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarGroupContent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenu",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenu",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuItem",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuItem",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuButton",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuButton",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuAction",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuAction",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuBadge",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuBadge",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuSkeleton",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuSkeleton",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuSub",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuSub",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuSubItem",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuSubItem",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuSubButton",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuSubButton",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/components/ui/button.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/components/ui/input.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/components/ui/separator.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/components/ui/sheet.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/components/ui/skeleton.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/components/ui/tooltip.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/hooks/use-mobile.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/sidebar.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:frontend/src/components/ui/skeleton.tsx",
+      "target": "function:frontend/src/components/ui/skeleton.tsx:Skeleton",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/src/components/ui/skeleton.tsx",
+      "target": "function:frontend/src/components/ui/skeleton.tsx:Skeleton",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:frontend/src/components/ui/skeleton.tsx",
+      "target": "file:frontend/src/lib/utils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuButton",
+      "target": "function:frontend/src/components/ui/tooltip.tsx:Tooltip",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuButton",
+      "target": "function:frontend/src/components/ui/tooltip.tsx:TooltipContent",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:frontend/src/components/ui/sidebar.tsx:SidebarMenuButton",
+      "target": "function:frontend/src/components/ui/tooltip.tsx:TooltipTrigger",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

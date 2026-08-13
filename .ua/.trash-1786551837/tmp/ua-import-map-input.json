@@ -1,0 +1,510 @@
+{
+  "projectRoot": "D:\\AI\\Github\\local-ai-chat-studio",
+  "files": [
+    {
+      "path": ".code-review-graph/graph.db",
+      "language": "db",
+      "fileCategory": "code"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/bug_report.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/feature_request.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": ".github/pull_request_template.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "language": "yaml",
+      "fileCategory": "infra"
+    },
+    {
+      "path": ".graphifyignore",
+      "language": "unknown",
+      "fileCategory": "code"
+    },
+    {
+      "path": ".python-version",
+      "language": "unknown",
+      "fileCategory": "code"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "CODE_OF_CONDUCT.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "CODE_TUTORIAL.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "DATASET.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "GRAPH_REPORT.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "Launch Chat Studio.cmd",
+      "language": "batch",
+      "fileCategory": "script"
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "SECURITY.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "TECHNICAL.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "USAGE.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "USER_GUIDE.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "backend/__init__.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/app/__init__.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/app/cli.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/app/contracts.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/app/main.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/app/memory.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/app/providers.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/app/runs.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/app/sessions.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/app/store.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/app/workspace.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "docs/codebase/ARCHITECTURE.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/codebase/CONCERNS.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/codebase/CONVENTIONS.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/codebase/INTEGRATIONS.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/codebase/STACK.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/codebase/STRUCTURE.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/codebase/TESTING.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/site/index.html",
+      "language": "html",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "docs/tutorial/index.html",
+      "language": "html",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "frontend/.oxlintrc.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": "frontend/README.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "frontend/components.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": "frontend/index.html",
+      "language": "html",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "frontend/package.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": "frontend/src/App.css",
+      "language": "css",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "frontend/src/App.test.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/App.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/ErrorBoundary.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/api/client.ts",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/api/schema.ts",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/avatar.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/badge.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/button.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/card.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/dialog.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/dropdown-menu.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/field.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/input.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/label.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/scroll-area.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/select.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/separator.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/sheet.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/sidebar.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/skeleton.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/switch.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/table.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/tabs.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/textarea.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/components/ui/tooltip.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/hooks/use-mobile.ts",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/index.css",
+      "language": "css",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "frontend/src/lib/utils.ts",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/main.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/test/setup.ts",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/tsconfig.app.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": "frontend/tsconfig.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": "frontend/tsconfig.node.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": "frontend/vite.config.ts",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/vitest.config.ts",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "pyproject.toml",
+      "language": "toml",
+      "fileCategory": "config"
+    },
+    {
+      "path": "scripts/generate_api_types.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/catalog.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/chat_store.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/config.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/files.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/jobs.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/memory.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/model_labels.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/ollama_client.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/orchestrator.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/personalization.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/providers.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/rag.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "tasks/plan.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "tasks/todo.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "tests/conftest.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "tests/test_api_contract.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "tests/test_provider_adapters.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "tests/test_workspace_features.py",
+      "language": "python",
+      "fileCategory": "code"
+    }
+  ]
+}

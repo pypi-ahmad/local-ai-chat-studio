@@ -1,0 +1,1263 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 13,
+  "filesSkipped": [
+    "Launch Chat Studio.cmd"
+  ],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 13,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 0,
+      "failed": 0,
+      "skipped": 13
+    }
+  },
+  "results": [
+    {
+      "path": "CHANGELOG.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 44,
+      "nonEmptyLines": 26,
+      "sections": [
+        {
+          "heading": "Changelog",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "[Unreleased]",
+          "level": 2,
+          "line": 8
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 10
+        },
+        {
+          "heading": "Changed",
+          "level": 3,
+          "line": 15
+        },
+        {
+          "heading": "Fixed",
+          "level": 3,
+          "line": 20
+        },
+        {
+          "heading": "[0.2.0] - 2026-07-23",
+          "level": 2,
+          "line": 22
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 24
+        },
+        {
+          "heading": "Changed",
+          "level": 3,
+          "line": 32
+        },
+        {
+          "heading": "Fixed",
+          "level": 3,
+          "line": 36
+        },
+        {
+          "heading": "[2026-06-13]",
+          "level": 2,
+          "line": 40
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 42
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 11
+      }
+    },
+    {
+      "path": "CODE_OF_CONDUCT.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 28,
+      "nonEmptyLines": 18,
+      "sections": [
+        {
+          "heading": "Code of Conduct",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Our pledge",
+          "level": 2,
+          "line": 3
+        },
+        {
+          "heading": "Our standards",
+          "level": 2,
+          "line": 8
+        },
+        {
+          "heading": "Scope",
+          "level": 2,
+          "line": 15
+        },
+        {
+          "heading": "Enforcement",
+          "level": 2,
+          "line": 20
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 5
+      }
+    },
+    {
+      "path": "CODE_TUTORIAL.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 906,
+      "nonEmptyLines": 752,
+      "sections": [
+        {
+          "heading": "Local AI Chat Studio — Code Tutorial: Zero to Hero",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Part 1 — Foundations: the ideas this codebase is built on",
+          "level": 2,
+          "line": 21
+        },
+        {
+          "heading": "Part 2 — The 10,000-foot view",
+          "level": 2,
+          "line": 87
+        },
+        {
+          "heading": "Part 3 — The legacy stack (Streamlit): a message's full journey",
+          "level": 2,
+          "line": 111
+        },
+        {
+          "heading": "3.1 `src/config.py` — one object everything else reads from",
+          "level": 3,
+          "line": 117
+        },
+        {
+          "heading": "3.2 `src/chat_store.py` — SQLite, the durable memory",
+          "level": 3,
+          "line": 144
+        },
+        {
+          "heading": "3.3 `src/ollama_client.py` — talking to the model server",
+          "level": 3,
+          "line": 183
+        },
+        {
+          "heading": "3.4 `src/catalog.py` + `src/model_labels.py` — one dropdown, many sources",
+          "level": 3,
+          "line": 220
+        },
+        {
+          "heading": "3.5 `src/providers.py` — cloud providers and the secrets vault",
+          "level": 3,
+          "line": 249
+        },
+        {
+          "heading": "3.6 `src/files.py` — turning an upload into text",
+          "level": 3,
+          "line": 275
+        },
+        {
+          "heading": "3.7 `src/rag.py` — the vector search layer",
+          "level": 3,
+          "line": 308
+        },
+        {
+          "heading": "3.8 `src/memory.py` + `src/personalization.py` — the two forms of \"knowing you\"",
+          "level": 3,
+          "line": 338
+        },
+        {
+          "heading": "3.9 `src/orchestrator.py` — assembling the prompt",
+          "level": 3,
+          "line": 376
+        },
+        {
+          "heading": "3.10 `src/jobs.py` — the background worker (the heart of the legacy app)",
+          "level": 3,
+          "line": 413
+        },
+        {
+          "heading": "3.11 `app.py` — tying it together",
+          "level": 3,
+          "line": 487
+        },
+        {
+          "heading": "Part 4 — The v2 stack (FastAPI + React): the target architecture",
+          "level": 2,
+          "line": 533
+        },
+        {
+          "heading": "4.1 `backend/app/contracts.py` — one file, every shape",
+          "level": 3,
+          "line": 540
+        },
+        {
+          "heading": "4.2 `backend/app/store.py` — SQLite, v2 style",
+          "level": 3,
+          "line": 576
+        },
+        {
+          "heading": "4.3 `backend/app/sessions.py` — the v2 credential vault",
+          "level": 3,
+          "line": 612
+        },
+        {
+          "heading": "4.4 `backend/app/providers.py` — the adapter pattern, for real",
+          "level": 3,
+          "line": 634
+        },
+        {
+          "heading": "4.5 `backend/app/runs.py` — the async run lifecycle",
+          "level": 3,
+          "line": 671
+        },
+        {
+          "heading": "4.6 `backend/app/main.py` — composition root, and a live bug-fix case study",
+          "level": 3,
+          "line": 741
+        },
+        {
+          "heading": "4.7 `backend/app/cli.py` — the entrypoint",
+          "level": 3,
+          "line": 825
+        },
+        {
+          "heading": "4.8 `frontend/` — what's real, what's a shell",
+          "level": 3,
+          "line": 839
+        },
+        {
+          "heading": "Part 5 — Two full traces, side by side",
+          "level": 2,
+          "line": 854
+        },
+        {
+          "heading": "Part 6 — Where to go from here",
+          "level": 2,
+          "line": 892
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 26
+      }
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 74,
+      "nonEmptyLines": 56,
+      "sections": [
+        {
+          "heading": "Contributing to Local AI Chat Studio",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Before you start",
+          "level": 2,
+          "line": 9
+        },
+        {
+          "heading": "Setup",
+          "level": 2,
+          "line": 18
+        },
+        {
+          "heading": "Code style",
+          "level": 2,
+          "line": 28
+        },
+        {
+          "heading": "Running checks before you open a PR",
+          "level": 2,
+          "line": 39
+        },
+        {
+          "heading": "Opening a PR",
+          "level": 2,
+          "line": 53
+        },
+        {
+          "heading": "Good first issues",
+          "level": 2,
+          "line": 63
+        },
+        {
+          "heading": "Code of Conduct",
+          "level": 2,
+          "line": 72
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 8
+      }
+    },
+    {
+      "path": "DATASET.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 3,
+      "nonEmptyLines": 2,
+      "sections": [
+        {
+          "heading": "Datasets",
+          "level": 1,
+          "line": 1
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 1
+      }
+    },
+    {
+      "path": "GRAPH_REPORT.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 371,
+      "nonEmptyLines": 306,
+      "sections": [
+        {
+          "heading": "Graph Report - D:\\AI\\Github\\local-ai-chat-studio  (2026-08-12)",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Corpus Check",
+          "level": 2,
+          "line": 3
+        },
+        {
+          "heading": "Summary",
+          "level": 2,
+          "line": 7
+        },
+        {
+          "heading": "Community Hubs (Navigation)",
+          "level": 2,
+          "line": 12
+        },
+        {
+          "heading": "God Nodes (most connected - your core abstractions)",
+          "level": 2,
+          "line": 98
+        },
+        {
+          "heading": "Surprising Connections (you probably didn't know these)",
+          "level": 2,
+          "line": 110
+        },
+        {
+          "heading": "Import Cycles",
+          "level": 2,
+          "line": 122
+        },
+        {
+          "heading": "Hyperedges (group relationships)",
+          "level": 2,
+          "line": 125
+        },
+        {
+          "heading": "Communities (87 total, 30 thin omitted)",
+          "level": 2,
+          "line": 132
+        },
+        {
+          "heading": "Community 0 - \"Chat API and Memory\"",
+          "level": 3,
+          "line": 134
+        },
+        {
+          "heading": "Community 1 - \"SQLite Conversation Storage\"",
+          "level": 3,
+          "line": 138
+        },
+        {
+          "heading": "Community 2 - \"Backend Models and CLI\"",
+          "level": 3,
+          "line": 142
+        },
+        {
+          "heading": "Community 3 - \"Legacy Chat Store\"",
+          "level": 3,
+          "line": 146
+        },
+        {
+          "heading": "Community 4 - \"Sheet and Sidebar UI\"",
+          "level": 3,
+          "line": 150
+        },
+        {
+          "heading": "Community 5 - \"Legacy Handbook and Catalog\"",
+          "level": 3,
+          "line": 154
+        },
+        {
+          "heading": "Community 6 - \"Dropdown Menu UI\"",
+          "level": 3,
+          "line": 158
+        },
+        {
+          "heading": "Community 7 - \"Legacy Provider Configuration\"",
+          "level": 3,
+          "line": 162
+        },
+        {
+          "heading": "Community 8 - \"App TypeScript Settings\"",
+          "level": 3,
+          "line": 166
+        },
+        {
+          "heading": "Community 9 - \"Retrieval and Embeddings\"",
+          "level": 3,
+          "line": 170
+        },
+        {
+          "heading": "Community 10 - \"Run Lifecycle Manager\"",
+          "level": 3,
+          "line": 174
+        },
+        {
+          "heading": "Community 11 - \"Chat Workspace UI\"",
+          "level": 3,
+          "line": 178
+        },
+        {
+          "heading": "Community 12 - \"UI Component Configuration\"",
+          "level": 3,
+          "line": 182
+        },
+        {
+          "heading": "Community 13 - \"Feature Integration Tests\"",
+          "level": 3,
+          "line": 186
+        },
+        {
+          "heading": "Community 14 - \"Frontend Runtime Dependencies\"",
+          "level": 3,
+          "line": 190
+        },
+        {
+          "heading": "Community 15 - \"Project Architecture Docs\"",
+          "level": 3,
+          "line": 194
+        },
+        {
+          "heading": "Community 16 - \"Typed Frontend API\"",
+          "level": 3,
+          "line": 198
+        },
+        {
+          "heading": "Community 17 - \"Node TypeScript Settings\"",
+          "level": 3,
+          "line": 202
+        },
+        {
+          "heading": "Community 18 - \"Frontend Development Tooling\"",
+          "level": 3,
+          "line": 206
+        },
+        {
+          "heading": "Community 19 - \"Context Planning Workspace\"",
+          "level": 3,
+          "line": 210
+        },
+        {
+          "heading": "Community 20 - \"Background Job Management\"",
+          "level": 3,
+          "line": 214
+        },
+        {
+          "heading": "Community 21 - \"Prompt Personalization\"",
+          "level": 3,
+          "line": 218
+        },
+        {
+          "heading": "Community 22 - \"Card Input Switch UI\"",
+          "level": 3,
+          "line": 222
+        },
+        {
+          "heading": "Community 23 - \"Field Components UI\"",
+          "level": 3,
+          "line": 226
+        },
+        {
+          "heading": "Community 24 - \"File Parsing Uploads\"",
+          "level": 3,
+          "line": 230
+        },
+        {
+          "heading": "Community 25 - \"Ollama Client Services\"",
+          "level": 3,
+          "line": 234
+        },
+        {
+          "heading": "Community 26 - \"Button Dialog UI\"",
+          "level": 3,
+          "line": 238
+        },
+        {
+          "heading": "Community 27 - \"Memory Extraction Service\"",
+          "level": 3,
+          "line": 242
+        },
+        {
+          "heading": "Community 28 - \"Backend Data Settings\"",
+          "level": 3,
+          "line": 246
+        },
+        {
+          "heading": "Community 29 - \"Chat UI Screenshots\"",
+          "level": 3,
+          "line": 250
+        },
+        {
+          "heading": "Community 31 - \"Store Run Persistence\"",
+          "level": 3,
+          "line": 254
+        },
+        {
+          "heading": "Community 32 - \"API Contract Tests\"",
+          "level": 3,
+          "line": 258
+        },
+        {
+          "heading": "Community 33 - \"Frontend Lint Rules\"",
+          "level": 3,
+          "line": 262
+        },
+        {
+          "heading": "Community 34 - \"Ephemeral Job Streaming\"",
+          "level": 3,
+          "line": 266
+        },
+        {
+          "heading": "Community 35 - \"Model Comparison Screenshots\"",
+          "level": 3,
+          "line": 270
+        },
+        {
+          "heading": "Community 36 - \"React Error Boundary\"",
+          "level": 3,
+          "line": 274
+        },
+        {
+          "heading": "Community 37 - \"Documentation Architecture\"",
+          "level": 3,
+          "line": 278
+        },
+        {
+          "heading": "Community 38 - \"Frontend NPM Scripts\"",
+          "level": 3,
+          "line": 282
+        },
+        {
+          "heading": "Community 39 - \"Avatar Components UI\"",
+          "level": 3,
+          "line": 286
+        },
+        {
+          "heading": "Community 40 - \"Frontend TypeScript Settings\"",
+          "level": 3,
+          "line": 290
+        },
+        {
+          "heading": "Community 41 - \"React Sidebar Components\"",
+          "level": 3,
+          "line": 294
+        },
+        {
+          "heading": "Community 42 - \"OpenAPI Schema Definition\"",
+          "level": 3,
+          "line": 298
+        },
+        {
+          "heading": "Community 43 - \"Tabs Components UI\"",
+          "level": 3,
+          "line": 302
+        },
+        {
+          "heading": "Community 44 - \"Governance Documentation\"",
+          "level": 3,
+          "line": 306
+        },
+        {
+          "heading": "Community 45 - \"Frontend Package Metadata\"",
+          "level": 3,
+          "line": 310
+        },
+        {
+          "heading": "Community 46 - \"Hero Architecture Assets\"",
+          "level": 3,
+          "line": 314
+        },
+        {
+          "heading": "Community 47 - \"Vite Branding Assets\"",
+          "level": 3,
+          "line": 318
+        },
+        {
+          "heading": "Community 48 - \"CI Build Pipeline\"",
+          "level": 3,
+          "line": 322
+        },
+        {
+          "heading": "Community 49 - \"Pull Request Template\"",
+          "level": 3,
+          "line": 326
+        },
+        {
+          "heading": "Community 51 - \"Bug Report Template\"",
+          "level": 3,
+          "line": 330
+        },
+        {
+          "heading": "Community 52 - \"Favicon Assets\"",
+          "level": 3,
+          "line": 334
+        },
+        {
+          "heading": "Community 53 - \"Documentation Icon Assets\"",
+          "level": 3,
+          "line": 338
+        },
+        {
+          "heading": "Community 54 - \"React Logo Asset\"",
+          "level": 3,
+          "line": 342
+        },
+        {
+          "heading": "Community 56 - \"Graphify Memory Notes\"",
+          "level": 3,
+          "line": 346
+        },
+        {
+          "heading": "Knowledge Gaps",
+          "level": 2,
+          "line": 350
+        },
+        {
+          "heading": "Suggested Questions",
+          "level": 2,
+          "line": 355
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 65
+      }
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 113,
+      "nonEmptyLines": 89,
+      "sections": [
+        {
+          "heading": "Local AI Chat Studio",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "What is included",
+          "level": 2,
+          "line": 7
+        },
+        {
+          "heading": "Install and run",
+          "level": 2,
+          "line": 25
+        },
+        {
+          "heading": "Data and migration",
+          "level": 2,
+          "line": 50
+        },
+        {
+          "heading": "Architecture",
+          "level": 2,
+          "line": 73
+        },
+        {
+          "heading": "Verification",
+          "level": 2,
+          "line": 87
+        },
+        {
+          "heading": "Documentation",
+          "level": 2,
+          "line": 98
+        },
+        {
+          "heading": "Security",
+          "level": 2,
+          "line": 108
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 8
+      }
+    },
+    {
+      "path": "SECURITY.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 42,
+      "nonEmptyLines": 34,
+      "sections": [
+        {
+          "heading": "Security Policy",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Scope",
+          "level": 2,
+          "line": 3
+        },
+        {
+          "heading": "Reporting a vulnerability",
+          "level": 2,
+          "line": 29
+        },
+        {
+          "heading": "Supported versions",
+          "level": 2,
+          "line": 40
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 4
+      }
+    },
+    {
+      "path": "TECHNICAL.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 95,
+      "nonEmptyLines": 77,
+      "sections": [
+        {
+          "heading": "Technical Guide",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Runtime architecture",
+          "level": 2,
+          "line": 8
+        },
+        {
+          "heading": "Data, sessions, and runs",
+          "level": 2,
+          "line": 21
+        },
+        {
+          "heading": "Main subsystems",
+          "level": 2,
+          "line": 37
+        },
+        {
+          "heading": "Providers and integrations",
+          "level": 2,
+          "line": 49
+        },
+        {
+          "heading": "Configuration",
+          "level": 2,
+          "line": 61
+        },
+        {
+          "heading": "API contracts and development",
+          "level": 2,
+          "line": 76
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 7
+      }
+    },
+    {
+      "path": "USAGE.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 77,
+      "nonEmptyLines": 58,
+      "sections": [
+        {
+          "heading": "Using Local AI Chat Studio",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Start the studio",
+          "level": 2,
+          "line": 6
+        },
+        {
+          "heading": "Choose a model",
+          "level": 2,
+          "line": 26
+        },
+        {
+          "heading": "Work with a conversation",
+          "level": 2,
+          "line": 39
+        },
+        {
+          "heading": "Use memory deliberately",
+          "level": 2,
+          "line": 54
+        },
+        {
+          "heading": "Privacy and troubleshooting",
+          "level": 2,
+          "line": 65
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 6
+      }
+    },
+    {
+      "path": "USER_GUIDE.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 111,
+      "nonEmptyLines": 80,
+      "sections": [
+        {
+          "heading": "Local AI Chat Studio — User Guide",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Start the studio",
+          "level": 2,
+          "line": 3
+        },
+        {
+          "heading": "Main workflows",
+          "level": 2,
+          "line": 23
+        },
+        {
+          "heading": "Chat",
+          "level": 3,
+          "line": 25
+        },
+        {
+          "heading": "Context and Evidence",
+          "level": 3,
+          "line": 36
+        },
+        {
+          "heading": "Context backpacks and Focus",
+          "level": 3,
+          "line": 49
+        },
+        {
+          "heading": "Replay and Compare",
+          "level": 3,
+          "line": 55
+        },
+        {
+          "heading": "Providers",
+          "level": 3,
+          "line": 65
+        },
+        {
+          "heading": "Library",
+          "level": 3,
+          "line": 78
+        },
+        {
+          "heading": "Settings and data controls",
+          "level": 3,
+          "line": 87
+        },
+        {
+          "heading": "Privacy defaults",
+          "level": 2,
+          "line": 94
+        },
+        {
+          "heading": "Troubleshooting",
+          "level": 2,
+          "line": 102
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 12
+      }
+    },
+    {
+      "path": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 568,
+      "nonEmptyLines": 406,
+      "sections": [
+        {
+          "heading": "Local AI Chat Studio: Zero-to-Hero Study Handbook",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "1. Start with the product boundary",
+          "level": 2,
+          "line": 13
+        },
+        {
+          "heading": "2. Foundations: the ideas behind the code",
+          "level": 2,
+          "line": 33
+        },
+        {
+          "heading": "2.1 LLMs, tokens, context, and temperature",
+          "level": 3,
+          "line": 35
+        },
+        {
+          "heading": "2.2 Embeddings, cosine similarity, vector databases, and RAG",
+          "level": 3,
+          "line": 43
+        },
+        {
+          "heading": "2.3 BYOK, SPA, REST, SSE, and PKCE",
+          "level": 3,
+          "line": 59
+        },
+        {
+          "heading": "2.4 Persistence and concurrency",
+          "level": 3,
+          "line": 67
+        },
+        {
+          "heading": "3. Install and run",
+          "level": 2,
+          "line": 80
+        },
+        {
+          "heading": "3.1 Prerequisites",
+          "level": 3,
+          "line": 82
+        },
+        {
+          "heading": "3.2 Windows PowerShell",
+          "level": 3,
+          "line": 90
+        },
+        {
+          "heading": "3.3 POSIX shells",
+          "level": 3,
+          "line": 121
+        },
+        {
+          "heading": "3.4 Configuration and data",
+          "level": 3,
+          "line": 138
+        },
+        {
+          "heading": "4. Repository map",
+          "level": 2,
+          "line": 149
+        },
+        {
+          "heading": "5. FastAPI v2, module by module",
+          "level": 2,
+          "line": 166
+        },
+        {
+          "heading": "5.1 `backend/app/main.py`: composition and HTTP contracts",
+          "level": 3,
+          "line": 168
+        },
+        {
+          "heading": "5.2 `contracts.py`: one source for request/response shapes",
+          "level": 3,
+          "line": 193
+        },
+        {
+          "heading": "5.3 `store.py`: SQLite and ordering",
+          "level": 3,
+          "line": 199
+        },
+        {
+          "heading": "5.4 `sessions.py`: credential isolation",
+          "level": 3,
+          "line": 205
+        },
+        {
+          "heading": "5.5 `providers.py`: normalized adapters",
+          "level": 3,
+          "line": 209
+        },
+        {
+          "heading": "5.6 `runs.py`: lifecycle, events, and cancellation",
+          "level": 3,
+          "line": 219
+        },
+        {
+          "heading": "5.7 `cli.py` and static serving",
+          "level": 3,
+          "line": 240
+        },
+        {
+          "heading": "6. React v2: shell, client, schema, and gaps",
+          "level": 2,
+          "line": 244
+        },
+        {
+          "heading": "7. Legacy Streamlit: where feature-rich behavior lives",
+          "level": 2,
+          "line": 261
+        },
+        {
+          "heading": "7.1 `app.py` and pages",
+          "level": 3,
+          "line": 263
+        },
+        {
+          "heading": "7.2 `src/jobs.py` and `src/orchestrator.py`",
+          "level": 3,
+          "line": 274
+        },
+        {
+          "heading": "7.3 Catalog, providers, and Ollama",
+          "level": 3,
+          "line": 290
+        },
+        {
+          "heading": "7.4 Files and RAG",
+          "level": 3,
+          "line": 298
+        },
+        {
+          "heading": "7.5 Memory and personalization",
+          "level": 3,
+          "line": 306
+        },
+        {
+          "heading": "7.6 `src/chat_store.py`",
+          "level": 3,
+          "line": 312
+        },
+        {
+          "heading": "8. End-to-end traces",
+          "level": 2,
+          "line": 316
+        },
+        {
+          "heading": "8.1 v2 API run",
+          "level": 3,
+          "line": 318
+        },
+        {
+          "heading": "8.2 v2 conversation persistence",
+          "level": 3,
+          "line": 333
+        },
+        {
+          "heading": "8.3 legacy rich turn",
+          "level": 3,
+          "line": 343
+        },
+        {
+          "heading": "8.4 legacy RAG question",
+          "level": 3,
+          "line": 357
+        },
+        {
+          "heading": "9. Data, privacy, and security",
+          "level": 2,
+          "line": 364
+        },
+        {
+          "heading": "10. Contributor tutorials",
+          "level": 2,
+          "line": 376
+        },
+        {
+          "heading": "10.1 Add a v2 provider",
+          "level": 3,
+          "line": 378
+        },
+        {
+          "heading": "10.2 Add an endpoint and regenerate frontend types",
+          "level": 3,
+          "line": 389
+        },
+        {
+          "heading": "10.3 Wire one React workspace",
+          "level": 3,
+          "line": 400
+        },
+        {
+          "heading": "10.4 Add a legacy file parser",
+          "level": 3,
+          "line": 411
+        },
+        {
+          "heading": "11. Testing, CI, and debugging",
+          "level": 2,
+          "line": 421
+        },
+        {
+          "heading": "11.1 Local checks",
+          "level": 3,
+          "line": 423
+        },
+        {
+          "heading": "11.2 Debugging playbook",
+          "level": 3,
+          "line": 438
+        },
+        {
+          "heading": "12. Module atlas",
+          "level": 2,
+          "line": 453
+        },
+        {
+          "heading": "13. Exercises and solution outlines",
+          "level": 2,
+          "line": 482
+        },
+        {
+          "heading": "14. Glossary",
+          "level": 2,
+          "line": 520
+        },
+        {
+          "heading": "15. Official sources",
+          "level": 2,
+          "line": 544
+        },
+        {
+          "heading": "16. A practical contributor path",
+          "level": 2,
+          "line": 564
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 48
+      }
+    },
+    {
+      "path": "pyproject.toml",
+      "language": "toml",
+      "fileCategory": "config",
+      "totalLines": 45,
+      "nonEmptyLines": 40,
+      "sections": [
+        {
+          "heading": "project",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "project.scripts",
+          "level": 2,
+          "line": 26
+        },
+        {
+          "heading": "build-system",
+          "level": 1,
+          "line": 29
+        },
+        {
+          "heading": "tool.hatch.build.targets.wheel",
+          "level": 5,
+          "line": 33
+        },
+        {
+          "heading": "tool.uv",
+          "level": 2,
+          "line": 36
+        },
+        {
+          "heading": "dependency-groups",
+          "level": 1,
+          "line": 39
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 6
+      }
+    }
+  ]
+}
