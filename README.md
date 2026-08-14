@@ -69,6 +69,24 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 
 Cloud providers begin with prompt-only access. Credentials entered in the browser remain in server-process memory for that browser session and are not written to the database or included in exports.
 
+## Workspace Navigation
+
+Desktop navigation is grouped by purpose and can be collapsed. On mobile, **Chat**, **Compare**, and **Library** remain in the bottom bar; the other destinations are available through **More**.
+
+| Group | Tab | Purpose |
+|---|---|---|
+| Work | **Chat** | Hold conversations, attach files, choose a provider/model and reasoning effort, inspect prompt context, and navigate saved messages. |
+| Work | **Compare** | Send one prompt to two to four models concurrently and compare independent streamed results. |
+| Inspect | **Context** | Review token pressure and the current context plan, and create reusable context backpacks. |
+| Inspect | **Evidence** | Inspect retrieved sources, control next-send inclusion, and verify run integrity receipts. |
+| Inspect | **Replay** | Re-run recorded prompts with another model, diff answers, and export full or redacted bundles. |
+| Personalize | **Focus** | Define a temporary objective, success criteria, and constraints for the active conversation. |
+| Personalize | **Library** | Manage durable memories, assistant presets, and conversation files. |
+| System | **Providers** | Configure session credentials, provider data policies, OAuth connections, discovery, and failover checks. |
+| System | **Settings** | Manage local data, personalization, runtime health, migration, wipe, and managed shutdown. |
+
+Chat also includes an optional **Context/Evidence inspector**. On wide screens it docks beside the conversation; on smaller screens it opens as a drawer. Its open state and selected tab persist locally.
+
 ## Screenshots
 
 | Chat with OpenAI Luna | Luna and Agnes parallel comparison |
