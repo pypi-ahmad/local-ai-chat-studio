@@ -7,6 +7,17 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.13] - 2026-08-15
+
+### Changed
+
+- Expanded the README with explicit frontend layer ownership, persisted-versus-local
+  state boundaries, and page-level recovery behavior.
+- Updated contributor and technical references for the route, feature, hook, state,
+  and generated API boundaries introduced in v0.7.12.
+- Corrected the study handbook and tutorials to follow the current Chat preflight,
+  conversation-turn, streaming, persistence, and route-composition flow.
+
 ## [0.7.12] - 2026-08-15
 
 ### Changed

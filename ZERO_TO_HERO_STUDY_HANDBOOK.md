@@ -1,11 +1,11 @@
 # Local AI Chat Studio: Zero-to-Hero Study Handbook
 
-> Current product (v0.7.12): a single FastAPI + React workspace on
+> Current product (v0.7.13): a single FastAPI + React workspace on
 > `http://127.0.0.1:8506`. Streamlit-specific modules later in this handbook
 > describe a **retired UI**. Use `README.md`, `USER_GUIDE.md`, `TECHNICAL.md`,
 > and `docs/codebase/` as the source of truth.
 
-> Verified against repository version **v0.7.12 on 2026-08-15**. Status markers: **[current]** FastAPI/React workspace, **[legacy]** retired Streamlit material, **[shared]** repository-wide tooling, and **[gap]** remaining limits (not “the React app is a shell”).
+> Verified against repository version **v0.7.13 on 2026-08-15**. Status markers: **[current]** FastAPI/React workspace, **[legacy]** retired Streamlit material, **[shared]** repository-wide tooling, and **[gap]** remaining limits (not “the React app is a shell”).
 
 This handbook takes a beginner from “what is an LLM?” to making a focused contribution. Chat, compare, providers, memory, files, replay, guarded MCP tools, and Settings **Stop Studio** all run in the React workspace against `data/app.db`.
 

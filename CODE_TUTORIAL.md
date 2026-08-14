@@ -5,7 +5,7 @@
 > `backend/app/main.py` → `runs.py`/`workspace.py`/`store.py` →
 > `frontend/src/api/client.ts` → `frontend/src/App.tsx` → `frontend/src/routes/`.
 
-> Current UI note (v0.7.12): `App.tsx`, page routes, and focused feature components provide safe rich
+> Current UI note (v0.7.13): `App.tsx`, page routes, and focused feature components provide safe rich
 > Markdown/code/LaTeX rendering, provider-scoped capability-aware model search,
 > attachment status/retry cards, saved-message navigation, exact context overflow
 > warnings with blocking over-budget sends, optional local history compression,
