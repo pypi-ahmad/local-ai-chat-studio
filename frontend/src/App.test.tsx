@@ -42,6 +42,7 @@ async function waitForStudio() {
   expect(await screen.findByRole('heading', { name: 'Provider architecture' })).toBeInTheDocument()
   await screen.findByText('Backend connected')
   await waitFor(() => expect(window.location.pathname).toBe('/chat/c1'))
+  await new Promise((resolve) => setTimeout(resolve, 0))
   await waitFor(() => expect(screen.getByLabelText('Provider')).toHaveValue('echo'))
   await waitFor(() => expect(screen.getByLabelText('Model')).toHaveTextContent('Deterministic'))
 }
@@ -297,7 +298,7 @@ describe('studio workspace', () => {
     holdNextUpload = true
     render(<App />)
     await waitForStudio()
-    const input = document.querySelector('.composer-actions input[type="file"]') as HTMLInputElement
+    const input = screen.getByLabelText('Attachment upload') as HTMLInputElement
 
     fireEvent.change(input, { target: { files: [new File(['notes'], 'notes.txt', { type: 'text/plain' })] } })
     expect(await screen.findByText(/Uploading · 1 KB/)).toBeInTheDocument()
@@ -311,7 +312,7 @@ describe('studio workspace', () => {
     failNextUpload = true
     render(<App />)
     await waitForStudio()
-    const input = document.querySelector('.composer-actions input[type="file"]') as HTMLInputElement
+    const input = screen.getByLabelText('Attachment upload') as HTMLInputElement
 
     fireEvent.change(input, { target: { files: [new File(['bad'], 'bad.pdf', { type: 'application/pdf' })] } })
     expect(await screen.findByText('File exceeds the 10 MB upload limit.')).toBeInTheDocument()
@@ -347,6 +348,39 @@ describe('studio workspace', () => {
     fireEvent.change(provider, { target: { value: 'agnes' } })
     await waitFor(() => expect(effort).toBeDisabled())
     expect(effort).toHaveValue('')
+  })
+
+  it('keeps primary composer controls together and applies compact settings', async () => {
+    render(<App />)
+    await waitForStudio()
+
+    const dock = screen.getByRole('toolbar', { name: 'Composer controls' })
+    expect(screen.getByLabelText('Model').closest('[role="toolbar"]')).toBe(dock)
+    expect(screen.getByLabelText('Reasoning effort').closest('[role="toolbar"]')).toBe(dock)
+    expect(screen.getByLabelText('Context mode').closest('[role="toolbar"]')).toBe(dock)
+    expect(screen.getByLabelText('Attach file').closest('[role="toolbar"]')).toBe(dock)
+    expect(screen.getByLabelText('Send message').closest('[role="toolbar"]')).toBe(dock)
+
+    fireEvent.change(screen.getByLabelText('Context mode'), { target: { value: 'chat' } })
+    fireEvent.click(screen.getByRole('button', { name: 'More composer settings' }))
+    fireEvent.click(await screen.findByRole('menuitemcheckbox', { name: 'Web evidence' }))
+    fireEvent.click(screen.getByRole('menuitem', { name: /Temperature/ }))
+    fireEvent.click(await screen.findByRole('menuitemradio', { name: 'Precise · 0.2' }))
+
+    fireEvent.change(screen.getByLabelText('Message'), { target: { value: 'use compact controls' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Send message' }))
+
+    await waitFor(() => {
+      const request = vi.mocked(fetch).mock.calls.find(([url]) => String(url).endsWith('/turns/preflight'))
+      expect(JSON.parse(String(request?.[1]?.body))).toMatchObject({
+        temperature: 0.2,
+        include_memory: false,
+        include_retrieval: false,
+        include_attachments: false,
+        include_web: true,
+        include_backpack: false,
+      })
+    })
   })
 
   it('offers Claude subscription sign-in through OpenCode', async () => {
