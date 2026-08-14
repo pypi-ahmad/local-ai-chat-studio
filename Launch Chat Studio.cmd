@@ -120,8 +120,13 @@ function Test-PythonSetup {
 }
 
 function Get-FilesFingerprint([IO.FileInfo[]]$Files) {
+    $rootPrefix = [IO.Path]::GetFullPath($Root).TrimEnd([IO.Path]::DirectorySeparatorChar) + [IO.Path]::DirectorySeparatorChar
     $lines = @($Files | Sort-Object FullName -Unique | ForEach-Object {
-        $relative = [IO.Path]::GetRelativePath($Root, $_.FullName).Replace("\", "/")
+        $fullPath = [IO.Path]::GetFullPath($_.FullName)
+        if (!$fullPath.StartsWith($rootPrefix, [StringComparison]::OrdinalIgnoreCase)) {
+            throw "Fingerprint input is outside the repository: $fullPath"
+        }
+        $relative = $fullPath.Substring($rootPrefix.Length).Replace("\", "/")
         $hash = Get-Sha256File $_.FullName
         "$relative`:$hash"
     })
