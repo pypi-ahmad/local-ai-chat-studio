@@ -709,6 +709,30 @@ def test_context_compression_summarizes_old_messages_and_keeps_recent_turns(
     assert [message["content"] for message in bundle["messages"][-9:-1]] == message_contents[-8:]
 
 
+def test_turn_rejects_a_context_plan_that_remains_over_budget(
+    client: TestClient,
+) -> None:
+    conversation_id = _conversation(client)
+    payload = {
+        "provider": "echo",
+        "model": "deterministic",
+        "content": "oversized " * 1000,
+        "context_limit": 512,
+    }
+    plan = client.post(
+        f"/api/v1/conversations/{conversation_id}/turns/preflight",
+        json=payload,
+    ).json()
+    assert plan["estimated_tokens"] > plan["budget_tokens"]
+
+    created = client.post(
+        f"/api/v1/conversations/{conversation_id}/turns",
+        json={**payload, "plan_hash": plan["plan_hash"]},
+    )
+    assert created.status_code == 422
+    assert created.json()["detail"]["message"] == "Context exceeds the safe budget"
+
+
 def test_profile_runtime_health_and_opt_in_v2_import(tmp_path, monkeypatch) -> None:
     from backend.app.main import create_app
 

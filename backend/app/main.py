@@ -328,6 +328,14 @@ def create_app(
                     409,
                     detail={"message": "Context changed", "plan": plan.model_dump()},
                 )
+            if plan.estimated_tokens > plan.budget_tokens:
+                raise HTTPException(
+                    422,
+                    detail={
+                        "message": "Context exceeds the safe budget",
+                        "plan": plan.model_dump(),
+                    },
+                )
             required = {finding.id for finding in plan.findings}
             if not required.issubset(payload.confirmed_finding_ids):
                 raise HTTPException(
