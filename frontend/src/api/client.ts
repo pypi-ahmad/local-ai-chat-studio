@@ -16,6 +16,7 @@ export type Memory = components['schemas']['Memory']
 export type Preset = components['schemas']['Preset']
 export type Upload = components['schemas']['Upload']
 export type ReplayBundle = components['schemas']['ReplayBundle']
+export type ConversationExportFormat = 'markdown' | 'html' | 'txt' | 'json'
 
 export type ProviderSummary = {
   id: string
@@ -194,6 +195,8 @@ export const api = {
   setFeedback: (messageId: string, rating: -1 | 1) =>
     request<void>(`/messages/${messageId}/feedback`, { method: 'PUT', body: JSON.stringify({ rating }) }),
   conversationMarkdown: (id: string) => requestText(`/conversations/${id}/export.md`),
+  conversationExport: (id: string, format: ConversationExportFormat) =>
+    requestText(`/conversations/${id}/export/${format}`),
   exportData: () => request<{ jsonl: string }>('/data/export'),
   importData: (jsonl: string) =>
     request<{ imported: number }>('/data/import', { method: 'POST', body: JSON.stringify({ jsonl }) }),

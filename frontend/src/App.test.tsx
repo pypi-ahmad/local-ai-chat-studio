@@ -112,6 +112,9 @@ beforeEach(() => {
       return json({ ...conversation, settings: conversationSettings, messages: conversationMessages })
     }
     if (path.endsWith('/conversations/c2') && createdAssistantConversation) return json(createdAssistantConversation)
+    if (/\/conversations\/c1\/export\/(markdown|html|txt|json)$/.test(path)) {
+      return new Response('exported conversation', { headers: { 'Content-Type': 'text/plain' } })
+    }
     if (path.endsWith('/providers')) return json({ providers: [
       { id: 'echo', label: 'Echo', key_source: null, auth_modes: ['none'], connected: true, health: 'ready' },
       { id: 'opencode-bridge', label: 'OpenCode', key_source: null, auth_modes: ['oauth'], connected: true, health: 'ready' },
@@ -206,6 +209,9 @@ beforeEach(() => {
       const body = JSON.parse(String(init.body)) as { provider: string; model: string }
       return json({ id: 'replay-1', status: 'queued', provider: body.provider, model: body.model, output: '', created_at: 'now', metrics: {} }, 202)
     }
+    if (path.endsWith('/runs/export-run/bundle?mode=full')) {
+      return json({ run: { id: 'export-run' }, messages: [], context_plan: null, receipt: null })
+    }
     if (path.endsWith('/runs/replay-1/events')) {
       const body = new TextEncoder().encode('event: run.completed\ndata: {"type":"run.completed","run_id":"replay-1","data":{"output":"replayed"},"timestamp":"now"}\n\n')
       return new Response(new ReadableStream({ start(controller) { controller.enqueue(body); controller.close() } }))
@@ -245,6 +251,38 @@ describe('studio workspace', () => {
     expect(screen.getByLabelText('Conversation history')).toBeInTheDocument()
     expect(screen.getByLabelText('Chat workspace')).toBeInTheDocument()
     expect(screen.getByText(/Estimated pricing:/)).toHaveTextContent('$0.00 in / $0.00 out per 1M')
+  })
+
+  it('downloads every conversation export format and the latest reproducibility bundle', async () => {
+    conversationMessages = [
+      { id: 'm1', role: 'user', content: 'Export this', position: 0, created_at: 'now', run_id: null, metadata: {} },
+    ]
+    activityRuns = [{
+      id: 'export-run', conversation_id: 'c1', status: 'completed', provider: 'echo', model: 'deterministic',
+      output: 'done', created_at: 'now', metrics: {},
+    }]
+    const click = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => {})
+    vi.stubGlobal('URL', {
+      ...URL,
+      createObjectURL: vi.fn(() => 'blob:export'),
+      revokeObjectURL: vi.fn(),
+    })
+    render(<App />)
+    await waitForStudio()
+
+    for (const [label, path] of [
+      ['Markdown (.md)', '/api/v1/conversations/c1/export/markdown'],
+      ['HTML (.html)', '/api/v1/conversations/c1/export/html'],
+      ['Plain text (.txt)', '/api/v1/conversations/c1/export/txt'],
+      ['JSON (.json)', '/api/v1/conversations/c1/export/json'],
+      ['Reproducibility bundle (.json)', '/api/v1/runs/export-run/bundle?mode=full'],
+    ] as const) {
+      fireEvent.click(screen.getByRole('button', { name: 'Export conversation' }))
+      fireEvent.click(await screen.findByRole('menuitem', { name: label }))
+      await waitFor(() => expect(fetch).toHaveBeenCalledWith(path, expect.anything()))
+    }
+
+    expect(click).toHaveBeenCalledTimes(5)
   })
 
   it('navigates saved chat messages with bounded previous and next controls', async () => {

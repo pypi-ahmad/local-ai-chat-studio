@@ -50,7 +50,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { MarkdownContent } from '@/components/MarkdownContent'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -75,6 +75,7 @@ import {
   type Backpack as BackpackRecord,
   type ContextPlan,
   type Conversation,
+  type ConversationExportFormat,
   type ConversationSettings,
   type Memory,
   type ModelSummary,
@@ -98,6 +99,7 @@ type InspectorTab = 'context' | 'evidence'
 type ContextMode = 'full' | 'chat' | 'files'
 type ComposerSettings = { contextMode: ContextMode; temperature: number; includeWeb: boolean; autoCompressHistory: boolean }
 type ConversationLayout = ConversationSettings['layout']
+type ChatExportFormat = ConversationExportFormat | 'bundle'
 
 const defaultConversationSettings: ConversationSettings = {
   model_key: '',
@@ -208,6 +210,15 @@ function Navigation({ page, onPage, connected, collapsed, onCollapsed }: { page:
       <Button aria-expanded={!collapsed} aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'} className="nav-collapse" onClick={() => onCollapsed(!collapsed)} size="icon-sm" variant="ghost">{collapsed ? <ChevronRight /> : <ChevronLeft />}</Button>
     </nav>
   )
+}
+
+function downloadFile(content: BlobPart, type: string, filename: string) {
+  const url = URL.createObjectURL(new Blob([content], { type }))
+  const anchor = document.createElement('a')
+  anchor.href = url
+  anchor.download = filename
+  anchor.click()
+  URL.revokeObjectURL(url)
 }
 
 function ConversationHistory({
@@ -438,6 +449,8 @@ function ChatWorkspace({
   inspectorOpen,
   onInspector,
   onRuns,
+  onExport,
+  canExportBundle,
   composerSettings,
   onComposerSettings,
   systemPrompt,
@@ -474,6 +487,8 @@ function ChatWorkspace({
   inspectorOpen: boolean
   onInspector: () => void
   onRuns: () => void
+  onExport: (format: ChatExportFormat) => Promise<void>
+  canExportBundle: boolean
   composerSettings: ComposerSettings
   onComposerSettings: (settings: ComposerSettings) => void
   systemPrompt: string
@@ -586,7 +601,7 @@ function ChatWorkspace({
       <header className="workspace-header">
         <Button aria-label="Open conversation history" className="mobile-history-trigger" onClick={onHistory} size="icon" variant="ghost"><PanelLeft /></Button>
         <div className="workspace-title"><p className="eyebrow">Conversation</p><h2>{conversation?.title ?? 'New conversation'}</h2>{selected?.pricing && <small>Estimated pricing: {pricingLabel(selected)} · <a href={selected.pricing.source_url} rel="noreferrer" target="_blank">official source</a></small>}</div>
-        <div className="action-row"><Button aria-expanded={settingsOpen} aria-label="Conversation settings" onClick={() => changeSettingsOpen(true)} variant="outline"><Settings /> Settings</Button><Button aria-label="Open runs" onClick={onRuns} variant="outline"><RotateCcw /> Runs</Button><Button aria-controls="context-evidence-inspector" aria-expanded={inspectorOpen} aria-label={`${inspectorOpen ? 'Close' : 'Open'} context and evidence inspector`} onClick={onInspector} variant={inspectorOpen ? 'secondary' : 'outline'}><PanelRightOpen /> Inspector</Button><Button disabled={!conversation?.messages.length || savingMemories || !selectedModel} onClick={onSaveMemories} variant="outline"><Brain /> {savingMemories ? 'Saving…' : 'Save memories & close'}</Button></div>
+        <div className="action-row"><Button aria-expanded={settingsOpen} aria-label="Conversation settings" onClick={() => changeSettingsOpen(true)} variant="outline"><Settings /> Settings</Button><DropdownMenu><DropdownMenuTrigger aria-label="Export conversation" disabled={!conversation} render={<Button variant="outline" />}><Download /> Export</DropdownMenuTrigger><DropdownMenuContent align="end" className="conversation-export-menu"><DropdownMenuGroup><DropdownMenuLabel>Conversation</DropdownMenuLabel><DropdownMenuItem onClick={() => void onExport('markdown')}><FileText /> Markdown (.md)</DropdownMenuItem><DropdownMenuItem onClick={() => void onExport('html')}><Code2 /> HTML (.html)</DropdownMenuItem><DropdownMenuItem onClick={() => void onExport('txt')}><FileText /> Plain text (.txt)</DropdownMenuItem><DropdownMenuItem onClick={() => void onExport('json')}><Code2 /> JSON (.json)</DropdownMenuItem></DropdownMenuGroup><DropdownMenuSeparator /><DropdownMenuGroup><DropdownMenuLabel>Latest completed run</DropdownMenuLabel><DropdownMenuItem disabled={!canExportBundle} onClick={() => void onExport('bundle')}><Download /> Reproducibility bundle (.json)</DropdownMenuItem></DropdownMenuGroup></DropdownMenuContent></DropdownMenu><Button aria-label="Open runs" onClick={onRuns} variant="outline"><RotateCcw /> Runs</Button><Button aria-controls="context-evidence-inspector" aria-expanded={inspectorOpen} aria-label={`${inspectorOpen ? 'Close' : 'Open'} context and evidence inspector`} onClick={onInspector} variant={inspectorOpen ? 'secondary' : 'outline'}><PanelRightOpen /> Inspector</Button><Button disabled={!conversation?.messages.length || savingMemories || !selectedModel} onClick={onSaveMemories} variant="outline"><Brain /> {savingMemories ? 'Saving…' : 'Save memories & close'}</Button></div>
       </header>
       <ContextRail model={selected} plan={plan} />
       <div className="message-region" ref={messageRegionRef}><ScrollArea className="message-area">
@@ -1224,6 +1239,31 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
     selectConversation(created.id)
   }
 
+  const latestCompletedRun = activity.find((run) => run.conversation_id === activeId && run.status === 'completed')
+  const exportActiveConversation = async (format: ChatExportFormat) => {
+    if (!conversation) return
+    try {
+      const filename = conversation.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'conversation'
+      if (format === 'bundle') {
+        if (!latestCompletedRun) return
+        const bundle = await api.bundle(latestCompletedRun.id, 'full')
+        downloadFile(JSON.stringify(bundle, null, 2), 'application/json', `${filename}-reproducibility.json`)
+        return
+      }
+      const formats: Record<ConversationExportFormat, { extension: string; type: string }> = {
+        markdown: { extension: 'md', type: 'text/markdown' },
+        html: { extension: 'html', type: 'text/html' },
+        txt: { extension: 'txt', type: 'text/plain' },
+        json: { extension: 'json', type: 'application/json' },
+      }
+      const exported = await api.conversationExport(conversation.id, format)
+      const target = formats[format]
+      downloadFile(exported, target.type, `${filename}.${target.extension}`)
+    } catch (cause) {
+      setError(messageOf(cause))
+    }
+  }
+
   const toggleSource = (id: string) => setExcludedSources((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })
   const inspector = <ContextEvidenceInspector excluded={excludedSources} onClose={() => setInspectorOpen(false)} onPage={setPage} onTab={setInspectorTab} onToggle={toggleSource} plan={plan} tab={inspectorTab} />
 
@@ -1232,7 +1272,7 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
       <div className={navigationCollapsed ? 'app-shell nav-collapsed' : 'app-shell nav-expanded'}>
         <Navigation collapsed={navigationCollapsed} connected={connected} onCollapsed={setNavigationCollapsed} onPage={setPage} page={page} />
         {page === 'Chat' && <ConversationHistory activeId={activeId} conversations={conversations} onCreate={createConversation} onDelete={async (id) => { if (!window.confirm('Delete this conversation?')) return; await api.deleteConversation(id); if (activeId === id) { setActiveId(null); navigate('/chat') } await refreshConversations() }} onSelect={selectConversation} onUpdate={async (id, payload) => { await api.updateConversation(id, payload); await refreshConversations(); if (activeId === id) setConversation(await api.conversation(id)) }} />}
-        {page === 'Chat' && <div className={wideInspector && inspectorOpen ? 'chat-stage inspector-docked' : 'chat-stage'}><ChatWorkspace attachmentIds={attachmentIds} composerSettings={composerSettings} conversation={conversation} error={error} inspectorOpen={inspectorOpen} layout={conversationLayout} liveOutput={liveOutput} models={models} onAttachment={(id) => setAttachmentIds((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} onBranch={async (messageId) => { if (!activeId) return; const branch = await api.branchConversation(activeId, messageId); await refreshConversations(); selectConversation(branch.id) }} onCancel={async () => { if (activeRun) await api.cancelRun(activeRun) }} onComposerSettings={setComposerSettings} onConfirm={async () => { if (pendingPayload && pendingPlan) await submitTurn(pendingPayload, pendingPlan, pendingPlan.findings.map((item) => item.id)) }} onFeedback={api.setFeedback} onHistory={() => setHistoryOpen(true)} onInspector={() => setInspectorOpen((current) => !current)} onLayout={setConversationLayout} onModel={setSelectedModel} onReasoningEffort={setReasoningEffort} onRemoveUpload={removeUpload} onRuns={() => setRunsOpen(true)} onSanitize={async () => { if (!pendingPayload) return; const sanitized = await api.sanitize(pendingPayload.content); setPendingPlan(null); setPendingPayload(null); await send(sanitized.content) }} onSaveMemories={saveMemoriesAndClose} onSend={send} onSystemPrompt={setSystemPrompt} onUpload={async (file, onStage) => { await upload(file, true, onStage) }} pendingPlan={pendingPlan} plan={plan} providers={providers} reasoningEffort={reasoningEffort} running={Boolean(activeRun)} savingMemories={savingMemories} selectedModel={selectedModel} systemPrompt={systemPrompt} uploads={uploads} />{wideInspector && inspectorOpen && inspector}</div>}
+        {page === 'Chat' && <div className={wideInspector && inspectorOpen ? 'chat-stage inspector-docked' : 'chat-stage'}><ChatWorkspace attachmentIds={attachmentIds} canExportBundle={Boolean(latestCompletedRun)} composerSettings={composerSettings} conversation={conversation} error={error} inspectorOpen={inspectorOpen} layout={conversationLayout} liveOutput={liveOutput} models={models} onAttachment={(id) => setAttachmentIds((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} onBranch={async (messageId) => { if (!activeId) return; const branch = await api.branchConversation(activeId, messageId); await refreshConversations(); selectConversation(branch.id) }} onCancel={async () => { if (activeRun) await api.cancelRun(activeRun) }} onComposerSettings={setComposerSettings} onConfirm={async () => { if (pendingPayload && pendingPlan) await submitTurn(pendingPayload, pendingPlan, pendingPlan.findings.map((item) => item.id)) }} onExport={exportActiveConversation} onFeedback={api.setFeedback} onHistory={() => setHistoryOpen(true)} onInspector={() => setInspectorOpen((current) => !current)} onLayout={setConversationLayout} onModel={setSelectedModel} onReasoningEffort={setReasoningEffort} onRemoveUpload={removeUpload} onRuns={() => setRunsOpen(true)} onSanitize={async () => { if (!pendingPayload) return; const sanitized = await api.sanitize(pendingPayload.content); setPendingPlan(null); setPendingPayload(null); await send(sanitized.content) }} onSaveMemories={saveMemoriesAndClose} onSend={send} onSystemPrompt={setSystemPrompt} onUpload={async (file, onStage) => { await upload(file, true, onStage) }} pendingPlan={pendingPlan} plan={plan} providers={providers} reasoningEffort={reasoningEffort} running={Boolean(activeRun)} savingMemories={savingMemories} selectedModel={selectedModel} systemPrompt={systemPrompt} uploads={uploads} />{wideInspector && inspectorOpen && inspector}</div>}
         {page === 'Chat' && !wideInspector && <Sheet onOpenChange={setInspectorOpen} open={inspectorOpen}><SheetContent className="inspector-sheet" showCloseButton={false} side="right">{inspector}</SheetContent></Sheet>}
         <Sheet onOpenChange={setHistoryOpen} open={historyOpen}>
           <SheetContent className="history-sheet" side="left">
