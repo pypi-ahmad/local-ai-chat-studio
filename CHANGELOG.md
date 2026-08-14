@@ -7,6 +7,19 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.3] - 2026-08-15
+
+### Added
+
+- Added jump-to-top and jump-to-bottom actions to the compact transcript navigator.
+- Added scroll-aware unread-output signaling when a response streams while the
+  reader is reviewing an earlier message.
+
+### Changed
+
+- Adapted the message navigator into a vertical desktop rail and horizontal mobile
+  control while preserving previous/next navigation and the exact position counter.
+
 ## [0.7.2] - 2026-08-15
 
 ### Added

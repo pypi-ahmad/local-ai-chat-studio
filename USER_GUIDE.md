@@ -64,9 +64,11 @@ The answer streams live and **Stop** cancels the active provider request. Hover 
 to copy, branch from that point, or rate an answer. Conversation controls support
 rename, pin, delete, and text search.
 
-For long conversations, the previous/next message controls jump between saved
-messages, center the selected message, and show its current/total position. Sending
-a new message returns the navigator to the newest entry.
+For long conversations, the transcript rail can jump to the top, move to the
+previous or next saved message, or return to the bottom. It centers the selected
+message and shows its current/total position. If output arrives while you are
+reviewing an earlier message, a **New output** indicator remains visible until you
+return to the bottom. The rail becomes horizontal on smaller screens.
 
 Assistant answers render headings, links, lists, tables, task lists, blockquotes,
 syntax-highlighted fenced code, and LaTeX math. Use `$...$` for inline math and

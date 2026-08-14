@@ -17,7 +17,7 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 - **Streaming chat:** Responses arrive incrementally through server-sent events. A running generation can be cancelled without discarding the partial output already received.
 - **Rich response rendering:** Chat and comparison answers render CommonMark and GitHub-flavored Markdown, tables, task lists, syntax-highlighted fenced code with copy controls, inline or display LaTeX through KaTeX, and fenced Mermaid diagrams. Mermaid loads only when needed, uses strict security, and shows invalid source with a clear error; raw HTML remains disabled.
 - **Conversation management:** Create, search, rename, pin, and delete conversations. Branch from any message to explore another direction while preserving the earlier history.
-- **Message navigation:** Move through long transcripts one saved message at a time with previous/next controls, an exact position counter, smooth scrolling, and a visible active-message marker.
+- **Message navigation:** Use a compact, responsive transcript rail to jump to the top, move through saved messages, or return to the bottom. The exact position counter and active-message marker preserve orientation, while a **New output** signal appears if a response streams while you are reading earlier content. The interaction is adapted from Chatbox's [message navigation pattern](https://github.com/chatboxai/chatbox/blob/main/src/renderer/components/chat/MessageNavigation.tsx).
 - **Feedback and activity:** Rate assistant messages and inspect recorded runs, including status, model, timing, token usage, provenance, and integrity receipts.
 - **Replay and comparison:** Replay a recorded run with another model and inspect its output diff, or export a full reproducibility bundle. Redacted bundles remove private context and image data for safer sharing.
 
@@ -323,7 +323,7 @@ Canonical state lives in `data/app.db`; uploads and optional Chroma collections 
 3. Create a conversation and optionally attach documents or images. Follow each card through **Uploading** and **Parsing & indexing** to **Ready**; retry or remove failures, or remove a stored ready upload, before sending.
 4. Enter a message and review its context plan, safety findings, sources, and estimated cost.
 5. Confirm required findings and send the turn.
-6. Watch streamed events, cancel if needed, and use the transcript navigator to jump between saved messages. Inspect completed runs under **Evidence** or **Replay**.
+6. Watch streamed events, cancel if needed, and use the transcript navigator to jump to either end or move between saved messages. If **New output** appears while you are reading earlier content, use the bottom action to return to the live answer. Inspect completed runs under **Evidence** or **Replay**.
 7. Open **Compare**, choose two to four distinct models, and run one prompt across them in parallel. Each response streams independently, one provider failure does not stop the others, and **Cancel all** stops every active comparison run. Every selected cloud model receives a separate billable request.
 8. Branch the conversation, provide feedback, or export a replay bundle.
 
