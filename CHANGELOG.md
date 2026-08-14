@@ -7,6 +7,15 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.6.4] - 2026-08-15
+
+### Added
+
+- Added exact context utilization percentages and used/available token totals to
+  the shared Chat, Context, and inspector budget rail.
+- Added amber high-pressure warnings from 80% utilization and explicit overflow
+  warnings with excess-token counts and corrective guidance.
+
 ## [0.6.3] - 2026-08-15
 
 ### Added
