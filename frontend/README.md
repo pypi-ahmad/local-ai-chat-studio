@@ -39,6 +39,11 @@ owns saved-message navigation, exact context utilization/overflow warnings, grou
 desktop/mobile navigation, and a persisted optional Context/Evidence inspector.
 Keep these behaviors covered by focused Vitest tests.
 
+`features/tools/ToolControlCenter.tsx` is the guarded MCP Work Mode surface. Preserve
+the three-stage connection → proposal → approval flow, exact redacted argument/hash
+display, decision reason, and terminal audit cards. Saving a server must remain inert;
+never add an “always allow” control or send credential values through the browser.
+
 Chat settings are conversation-owned, not global UI preferences. Loading a
 conversation hydrates its model, effort, temperature, context policy, web/compression
 flags, system prompt, and message layout. Changes are saved through

@@ -7,6 +7,25 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.10] - 2026-08-15
+
+### Added
+
+- Added a guarded Work Mode for local stdio and remote Streamable HTTP MCP servers,
+  explicit tool discovery, JSON-Schema argument validation, and user- or
+  agent-originated proposals.
+- Added a session-owned approval inbox with exact redacted arguments, rationale,
+  immutable execution hashes, approve/deny reasons, and a durable terminal audit log.
+
+### Security
+
+- MCP registration is inert, approvals are single-use, raw arguments are scrubbed
+  after terminal decisions, and results are bounded and redacted.
+- Local servers run without a shell, with an executable allowlist, minimal environment,
+  isolated working directory, and timeout. Remote endpoints require public HTTPS and
+  reject embedded credentials and private/reserved DNS targets. These controls are
+  explicitly documented as process isolation rather than an OS sandbox.
+
 ## [0.7.9] - 2026-08-15
 
 ### Added

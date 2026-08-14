@@ -78,6 +78,16 @@ alter routing, billing, or provider requests.
 The system is deliberately single-process and localhost-first. Horizontal scaling
 would require external run events and credential/session state.
 
+MCP tools form a separate guarded execution path. Server definitions and discovered
+JSON Schemas are global local-workspace records; tool requests are scoped by a hash of
+the HTTP session cookie. Registration is inert. Discovery explicitly connects, and
+invocation first writes a pending immutable argument hash. An atomic approve/deny
+transition prevents replay. Successful approval reconnects to the stored server,
+executes exactly the stored tool and arguments, bounds/redacts the result, optionally
+adds it as a `tool` message to its conversation, and scrubs raw arguments. Local stdio
+uses an argv launch, minimal environment, timeout, and isolated working directory;
+remote transport is limited to public HTTPS. The boundary is not an OS sandbox.
+
 Managed shutdown is part of that single-process model. Settings **Stop Studio**
 posts to `/api/v1/runtime/shutdown`, `RunManager.shutdown()` cancels and awaits
 active generation tasks, then the CLI sets `uvicorn.Server.should_exit`. Process

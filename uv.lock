@@ -1225,7 +1225,7 @@ wheels = [
 
 [[package]]
 name = "local-ai-chat-studio"
-version = "0.7.9"
+version = "0.7.10"
 source = { editable = "." }
 dependencies = [
     { name = "anthropic" },
@@ -1233,6 +1233,7 @@ dependencies = [
     { name = "ddgs" },
     { name = "fastapi" },
     { name = "google-genai" },
+    { name = "httpx2" },
     { name = "jsonschema" },
     { name = "loguru" },
     { name = "mcp" },
@@ -1264,6 +1265,7 @@ requires-dist = [
     { name = "ddgs", specifier = ">=9.14.4" },
     { name = "fastapi", specifier = ">=0.139.2" },
     { name = "google-genai", specifier = ">=2.13.0" },
+    { name = "httpx2", specifier = ">=2.10.0,<3" },
     { name = "jsonschema", specifier = ">=4.26.0,<5" },
     { name = "loguru", specifier = ">=0.7.3" },
     { name = "mcp", specifier = ">=2.0.0,<3" },

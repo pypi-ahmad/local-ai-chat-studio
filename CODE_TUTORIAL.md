@@ -5,7 +5,7 @@
 > `backend/app/main.py` → `runs.py`/`workspace.py`/`store.py` →
 > `frontend/src/api/client.ts` → `frontend/src/App.tsx`.
 
-> Current UI note (v0.7.9): `App.tsx` and its focused components provide safe rich
+> Current UI note (v0.7.10): `App.tsx` and its focused components provide safe rich
 > Markdown/code/LaTeX rendering, provider-scoped capability-aware model search,
 > attachment status/retry cards, saved-message navigation, exact context overflow
 > warnings with blocking over-budget sends, optional local history compression,
@@ -897,6 +897,27 @@ temperature because its API accepts only the model default, while Agnes
 A focused contribution is still a small vertical slice — for example
 tightening one Settings or Providers control plus a Vitest case — but the
 old “UI is a static shell” description is no longer true.
+
+### 4.9 `backend/app/mcp_tools.py` — approval before capability
+
+MCP servers are powerful because they expand what an agent can do; that also makes the
+connection itself a trust boundary. The Studio therefore separates configuration,
+discovery, proposal, decision, and execution. Saving a server launches nothing.
+Discovery is an explicit confirmed action. A proposal is validated against the stored
+tool schema and saved with a canonical SHA-256 argument hash. Only the browser session
+that created it can approve it, and that transition is single-use.
+
+`DefaultMcpGateway` connects with the official MCP Python SDK. Stdio uses an argv list,
+not a shell, and receives a minimal environment plus only named variables; its working
+directory is isolated under the data folder. Remote servers require public HTTPS.
+After execution, the store removes raw arguments and retains a redacted preview,
+decision, bounded output, status, and timestamps. This is defense in depth, not an OS
+sandbox—the MCP server itself must still be trusted.
+
+The React `ToolControlCenter` mirrors the backend state machine as three visible
+columns: connection, proposal, and approval. A fourth flight-recorder section keeps
+terminal audit records. The design makes the exact action and its hash more prominent
+than convenience, and intentionally provides no persistent “always allow” switch.
 
 ---
 

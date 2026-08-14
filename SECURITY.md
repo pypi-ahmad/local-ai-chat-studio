@@ -41,6 +41,14 @@ security-relevant surfaces are:
 - **Local bridges** — OpenCode subscription flows use a loopback-only local
   server. Keep its optional credentials private and do not change the bridge to
   a public endpoint.
+- **MCP and agent tools** — saving an MCP configuration is inert, discovery is an
+  explicit connection action, and every invocation requires a single-use approval
+  from the browser session that created it. Review the exact redacted arguments,
+  rationale, and execution hash. Stdio servers launch without a shell, receive only
+  a minimal environment plus named variables, and use an isolated working directory;
+  remote endpoints must be public HTTPS. Raw arguments are removed after a terminal
+  decision and outputs are bounded/redacted. These controls are not a full OS sandbox:
+  a local MCP server is executable third-party code, so install only servers you trust.
 
 ## Reporting a vulnerability
 

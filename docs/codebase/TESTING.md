@@ -22,6 +22,10 @@ unmanaged servers return 503). Knowledge-base coverage creates mixed file/memory
 source sets, verifies retrieval gating and assembled prompt content, exercises list/update/
 delete contracts, and confirms deletion clears conversation bindings without deleting
 source records.
+MCP coverage injects a fake gateway and proves inert registration, explicit discovery,
+JSON-Schema validation, one-time session-owned approval, denial without execution,
+terminal argument scrubbing, output redaction, and rejection of shells, private URLs,
+and credential-bearing arguments.
 
 Frontend tests use Vitest, Testing Library, jest-dom, and jsdom. They exercise the
 connected workspace shell, semantic desktop/mobile navigation groups, persisted and
@@ -40,7 +44,9 @@ all transcript export choices and active-conversation reproducibility selection,
 artifact format classification, scriptless/CSP-isolated HTML and SVG rendering,
 strict iframe-isolated Mermaid output, escaped code source, and Chat split-pane lifecycle,
 four-model partial failure isolation, cancel-all behavior, and the Settings **Stop
-Studio** control. There is no browser E2E
+Studio** control. Work Mode coverage queues an agent-originated tool proposal, verifies
+the visible immutable approval evidence, approves it, and observes the terminal audit
+result. There is no browser E2E
 runner or coverage threshold yet; real external-provider calls, OAuth flows, and a
 running Ollama daemon remain manual smoke tests.
 

@@ -1,13 +1,13 @@
 # Local AI Chat Studio: Zero-to-Hero Study Handbook
 
-> Current product (v0.7.9): a single FastAPI + React workspace on
+> Current product (v0.7.10): a single FastAPI + React workspace on
 > `http://127.0.0.1:8506`. Streamlit-specific modules later in this handbook
 > describe a **retired UI**. Use `README.md`, `USER_GUIDE.md`, `TECHNICAL.md`,
 > and `docs/codebase/` as the source of truth.
 
-> Verified against repository version **v0.7.9 on 2026-08-15**. Status markers: **[current]** FastAPI/React workspace, **[legacy]** retired Streamlit material, **[shared]** repository-wide tooling, and **[gap]** remaining limits (not “the React app is a shell”).
+> Verified against repository version **v0.7.10 on 2026-08-15**. Status markers: **[current]** FastAPI/React workspace, **[legacy]** retired Streamlit material, **[shared]** repository-wide tooling, and **[gap]** remaining limits (not “the React app is a shell”).
 
-This handbook takes a beginner from “what is an LLM?” to making a focused contribution. Chat, compare, providers, memory, files, replay, and Settings **Stop Studio** all run in the React workspace against `data/app.db`.
+This handbook takes a beginner from “what is an LLM?” to making a focused contribution. Chat, compare, providers, memory, files, replay, guarded MCP tools, and Settings **Stop Studio** all run in the React workspace against `data/app.db`.
 
 The app is still not a production multi-user deployment: it has no account layer and must stay on localhost.
 
@@ -27,6 +27,7 @@ Local AI Chat Studio is a local-first interface for chatting with models served 
 | Rich responses and navigation | [current] | Safe Markdown, highlighted copyable code, KaTeX, sandboxed HTML/SVG/Mermaid/code artifact preview, transcript navigation, blocking context overflow warnings, and optional local compression of older history. |
 | Capability-aware model selection | [current] | Provider-scoped search, Vision/Reasoning filters, context and effort metadata, and verified pricing where available. |
 | Assistants, knowledge, and model comparison | [current] | Presets and Knowledge Bases in Library; Compare runs one prompt across two to four selected models concurrently; Replay records and diffs completed runs. |
+| MCP and agent tools | [current] | Inert server registration, explicit discovery, JSON-Schema validation, session-owned one-time approval, process isolation, redaction, and terminal audit records. |
 | Managed shutdown | [current] | Settings **Stop Studio** → `POST /api/v1/runtime/shutdown` on a `chat-studio` process. |
 | Authentication/multi-user authorization | [gap] | A browser-session cookie scopes keys; it is not user authentication. Bind to localhost. |
 

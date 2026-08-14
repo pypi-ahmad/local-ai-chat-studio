@@ -98,9 +98,16 @@ bridge remains on loopback by default.
    a long transcript, then branch, pin, rename, search, or replay responses when
    you need to explore alternatives.
 
-Desktop navigation groups pages under **Work**, **Inspect**, **Personalize**, and
-**System**. On mobile, Chat, Compare, and Library stay visible while **More** opens
-the remaining pages. The optional context/evidence inspector preserves its open
+For MCP tools, open **Tools**, save a trusted server configuration, explicitly connect
+and discover it, then submit a proposal with JSON arguments and a rationale. Nothing
+runs until the owning browser session enters a decision reason and chooses **Approve
+and run**. Review the immutable hash and exact redacted arguments first. Denied,
+failed, and completed calls remain in the audit log; raw arguments are removed after
+the decision. Local stdio isolation is not a substitute for an OS sandbox.
+
+Desktop navigation groups pages under **Primary**, **Workspace**, and
+**Administration**. On mobile, Chat, Compare, and Library stay visible while **More**
+opens Focus, Tools, Providers, and Settings. The optional context/evidence inspector preserves its open
 state and selected tab; press Escape to close it or open the full Context/Evidence
 page for more room.
 

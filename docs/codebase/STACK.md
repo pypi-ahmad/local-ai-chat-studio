@@ -2,7 +2,7 @@
 
 | Area | Technology |
 |---|---|
-| Backend | Python 3.12, FastAPI, Uvicorn, Pydantic |
+| Backend | Python 3.12, FastAPI, Uvicorn, Pydantic, MCP Python SDK, jsonschema |
 | Frontend | React 19, TypeScript 5.9, Vite, Tailwind CSS, Base UI |
 | Persistence | stdlib SQLite and ChromaDB |
 | Local inference | Ollama |

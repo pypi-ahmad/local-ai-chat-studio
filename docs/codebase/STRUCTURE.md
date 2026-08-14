@@ -4,6 +4,7 @@
 |---|---|
 | `backend/app/cli.py` | Uvicorn on `127.0.0.1:8506` and managed-shutdown callback |
 | `backend/app/main.py` | FastAPI composition, routes, session cookies, OAuth, static client, shutdown |
+| `backend/app/mcp_tools.py` | MCP stdio/Streamable HTTP gateway, public-host checks, isolated process environment, and redaction |
 | `backend/app/contracts.py` | Pydantic API contracts, conversation-settings validation, and generated-schema source |
 | `backend/app/runs.py` | Async streaming lifecycle, cancellation, events, receipts, task drain |
 | `backend/app/store.py` | Legacy-compatible SQLite schema, migrations, conversation settings, and knowledge-base source ledgers |
@@ -15,6 +16,7 @@
 | `frontend/src/features/models/` | Model metadata/search helpers and browser-local favorite/recent preferences |
 | `frontend/src/features/assistants/` | Browser-local assistant favorite and recent-launch preferences |
 | `frontend/src/features/knowledge/` | Searchable source-ledger editor and per-conversation knowledge-base binding UI |
+| `frontend/src/features/tools/` | MCP connection registry, proposal builder, approval inbox, and audit timeline |
 | `frontend/src/features/artifact-preview/` | Fenced-output classification, sandbox document policy, and responsive Chat preview pane |
 | `src/files.py` | Shared document/image parsing and upload validation |
 | `src/rag.py` | Existing Chroma collections and embedding retrieval |

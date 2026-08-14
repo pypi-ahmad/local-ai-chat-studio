@@ -29,8 +29,8 @@ Process lifespan shutdown also waits for runs and closes the SQLite connection.
 ## Data, sessions, and runs
 
 - `data/app.db` is the canonical SQLite store for conversations, messages,
-  memories, presets, knowledge bases and their ordered source references, feedback,
-  activity, and data-control metadata.
+  memories, presets, knowledge bases and their ordered source references, MCP server
+  definitions, tool approvals/audit records, feedback, activity, and data-control metadata.
 - `data/chroma` holds the optional retrieval index and `data/uploads` holds
   local uploaded-file data. `CHAT_DATA_DIR` relocates the whole data area.
 - The backend creates an HTTP-only, same-site `chat_session` cookie. API keys
@@ -57,6 +57,7 @@ Process lifespan shutdown also waits for runs and closes the SQLite connection.
 | Context safety and retrieval | `backend/app/workspace.py` | Context planning, pruning, provenance, retrieval, safety scanning |
 | Local persistence | `backend/app/store.py` | SQLite schema, conversations, memory, knowledge-base source ledgers, exports, imports |
 | Providers and OAuth bridges | `backend/app/providers.py`, `backend/app/sessions.py` | Provider adapters, discovery, credential/session handling |
+| MCP tool boundary | `backend/app/mcp_tools.py`, `backend/app/store.py` | stdio/HTTPS connections, SSRF checks, isolated working directories, approval state, redaction, audit |
 | Model pricing | `backend/app/pricing.py` | Official-source standard token-rate catalog and OpenRouter live-price normalization |
 | Web client | `frontend/src/` | React workspaces and generated typed API client |
 | Shared helpers | `src/` | File parsing, Ollama health/embeddings, and Chroma retrieval |
@@ -132,6 +133,18 @@ empty value retains the built-in direct-and-accurate assistant instruction.
 OpenRouter uses a local PKCE flow. ChatGPT, SuperGrok, and Claude subscription
 flows are delegated through a local OpenCode server. The server URL must use a
 loopback host, preventing an accidental remote bridge configuration.
+
+MCP registration and execution are deliberately separate. `POST /api/v1/mcp/servers`
+persists an inert configuration; discovery is an explicit request that starts a local
+stdio process or contacts a remote Streamable HTTP server and then stores its tool
+schemas. `POST /api/v1/tool-requests` validates JSON arguments against the stored
+schema and creates a session-hashed pending record. Approve/deny endpoints perform an
+atomic single-use transition. Approved calls execute the stored server/tool/arguments,
+then discard raw arguments and retain the redacted preview, SHA-256 hash, decision,
+bounded result, and terminal timestamp. Stdio uses an argument vector rather than a
+shell, an executable allowlist, an isolated directory under `data/mcp-sandboxes`, a
+minimal environment, and a 30-second timeout. Public HTTPS endpoints are checked for
+embedded credentials and private/reserved DNS targets. This is not an OS sandbox.
 
 ## Configuration
 

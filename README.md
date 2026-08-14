@@ -36,7 +36,7 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 - **Searchable, capability-aware selection:** Choose a provider first, then search its discovered models by name, ID, or capability in Chat, Compare, Replay, and assistant presets. Provider marks, favorites, recent choices, verified pricing, context size, and vision, tool-use, and reasoning badges make large catalogs easier to scan; favorites and recents stay in local browser storage.
 - **Composer control dock:** Chat keeps attachments, provider/model selection, capability-aware reasoning effort, context scope, and send/stop actions in one responsive dock. Choose **Full context**, **Chat only**, or **Files + chat** per turn; a compact menu holds temperature presets, opt-in web evidence, and optional local compression of older messages. Effort defaults to **Auto** and is disabled for models that do not advertise support; OpenAI GPT-5.6 options follow the [official model guide](https://developers.openai.com/api/docs/guides/latest-model).
 - **Per-conversation settings:** Every chat independently remembers its model, reasoning effort, temperature, context policy, web/compression choices, system prompt, bound knowledge base, and **Conversation**, **Compact**, or **Full-width** message layout. Open **Settings** in the Chat header to edit the system prompt and layout; branches inherit the source settings once and can then diverge.
-- **Focused navigation:** Desktop keeps Chat, Compare, and Library in **Primary**, Focus in **Workspace**, and provider/runtime controls in **Administration**. Mobile keeps the three primary destinations one tap away and moves advanced workspaces into **More**.
+- **Focused navigation:** Desktop keeps Chat, Compare, and Library in **Primary**, Focus and Tools in **Workspace**, and provider/runtime controls in **Administration**. Mobile keeps the three primary destinations one tap away and moves advanced workspaces into **More**.
 - **Run actions drawer:** Open **Runs** from Chat to replay recorded prompts, compare outputs, or export full and privacy-safe bundles without leaving the conversation.
 - **Session-only credentials:** Keys entered in **Providers** remain in server-process memory for the browser session. Keys can alternatively come from operating-system environment variables; neither source is written to the database or exports.
 - **Subscription OAuth:** ChatGPT, Claude, SuperGrok, and other supported subscription sign-ins are bridged through a loopback-only OpenCode server, which owns the upstream OAuth and streaming sessions.
@@ -58,13 +58,14 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 - **Cross-chat retrieval:** Reuse relevant details from previous conversations through optional Chroma embeddings. When no embedding model is configured, the Studio falls back to local lexical retrieval.
 - **Context backpacks:** Save reusable project facts or instructions and make them available as an explicit context source.
 - **Focus sessions:** Attach a temporary objective, success criteria, and constraints to a conversation to keep a task bounded.
+- **Guarded MCP Work Mode:** Register local stdio or remote Streamable HTTP MCP servers without connecting them, explicitly discover their tools, validate arguments against each tool's JSON Schema, and route every user- or agent-originated call through a session-scoped one-time approval. The inbox shows the redacted arguments, rationale, and SHA-256 execution hash; terminal calls remain in a durable audit log. Local servers run without a shell in an isolated working directory with a minimal environment, but this is not a full OS sandbox.
 - **Assistant gallery and personalization:** Search reusable assistants as visual cards with role icons and prompt descriptions, keep browser-local favorites and recent choices, and start a correctly configured conversation in one click. Each assistant carries its system prompt, preferred model, and temperature; the local personalization profile remains available separately.
 - **Document and image inputs:** Parse PDF, Word, spreadsheet, text, and code files into selectable conversation context. Cards above the composer show upload and parsing/indexing progress, file type, exact size, ready state, and server errors. Failed uploads provide Retry and Remove actions; removing a ready card deletes the stored conversation upload. Supported vision models can receive selected image uploads directly.
 - **Web evidence:** Opt-in search adds titled, linked results to the context plan with source provenance and replayable cached evidence.
 
 ### Local data and operations
 
-- **Local-first persistence:** Conversations, messages, policies, memories, runs, and receipts live in SQLite under the configured data directory; uploads and optional Chroma collections remain local as well.
+- **Local-first persistence:** Conversations, messages, policies, memories, runs, MCP definitions and tool audit records, and receipts live in SQLite under the configured data directory; uploads and optional Chroma collections remain local as well.
 - **Portable data controls:** Export and import workspace data as JSONL; export individual conversations as Markdown, safe standalone HTML, plain text, or structured JSON; and explicitly migrate an earlier v2 database with a backup and repeat-import protection.
 - **Privacy controls:** Redacted replay exports omit private context, **Panic wipe** removes local workspace data and session credentials, and provider keys are never included in exports.
 - **Runtime visibility:** See FastAPI connectivity, Ollama availability, active Ollama models, and approximate VRAM use from **Settings**.
@@ -78,7 +79,7 @@ Cloud providers begin with prompt-only access. Credentials entered in the browse
 Desktop navigation is grouped by purpose and can be collapsed. On mobile, **Chat**, **Compare**, and **Library** remain in the bottom bar; the other destinations are available through **More**.
 
 Every destination has a direct browser URL, such as `/chat/<conversation-id>`,
-`/compare`, `/library`, and `/settings`. Browser Back/Forward navigation and
+`/compare`, `/library`, `/tools`, and `/settings`. Browser Back/Forward navigation and
 bookmarked links preserve the selected workspace.
 
 | Group | Tab | Purpose |
@@ -87,6 +88,7 @@ bookmarked links preserve the selected workspace.
 | Primary | **Compare** | Send one prompt to two to four models concurrently and compare independent streamed results. |
 | Primary | **Library** | Switch between the assistant gallery and Knowledge Bases; create reusable source sets from files, active memories, backpacks, and optional retrieval; bind one base per chat; and maintain the underlying local sources. |
 | Workspace | **Focus** | Define a temporary objective, success criteria, and constraints for the active conversation. |
+| Workspace | **Tools** | Configure trusted MCP servers, discover tools, submit user- or agent-originated proposals, approve or deny each exact invocation, and review the audit trail. |
 | Administration | **Providers** | Configure session credentials, provider data policies, OAuth connections, discovery, and failover checks. |
 | Administration | **Settings** | Manage local data, personalization, runtime health, migration, wipe, and managed shutdown. |
 
@@ -103,7 +105,7 @@ Transcript and latest-run exports are available from **Export** in the Chat head
 
 | Area | Technologies |
 |---|---|
-| Backend | Python 3.12+, FastAPI, Uvicorn, Pydantic, HTTPX |
+| Backend | Python 3.12+, FastAPI, Uvicorn, Pydantic, HTTPX, MCP Python SDK, JSON Schema |
 | Frontend | React 19, React Router 8, TypeScript 5.9, Vite 8, Tailwind CSS, Base UI |
 | AI providers | Ollama, OpenAI SDK, Anthropic SDK, Google Gen AI, OpenAI-compatible APIs |
 | Storage | SQLite, optional Chroma vector database, local uploads |
@@ -120,6 +122,7 @@ local-ai-chat-studio/
 ├── backend/app/
 │   ├── cli.py               Uvicorn entrypoint and managed shutdown
 │   ├── main.py              FastAPI routes, sessions, and static frontend
+│   ├── mcp_tools.py         MCP transports, process isolation, SSRF checks, and result redaction
 │   ├── runs.py              Async runs, SSE, cancellation, and receipts
 │   ├── workspace.py         Context planning, safety, retrieval, and web evidence
 │   ├── providers.py         Provider adapters and live model discovery
@@ -130,7 +133,7 @@ local-ai-chat-studio/
 │   ├── src/App.tsx          Workspace composition and feature orchestration
 │   ├── src/api/             Typed client and generated OpenAPI schema
 │   ├── src/components/      Shared workspace and UI primitives
-│   ├── src/features/        Models, assistants, attachments, knowledge bases, and safe artifact preview
+│   ├── src/features/        Models, assistants, attachments, knowledge bases, guarded tools, and safe artifact preview
 │   ├── src/hooks/           Reusable responsive browser hooks
 │   ├── src/state/           Local UI preference boundaries
 │   └── package.json         Frontend commands and dependencies
@@ -319,6 +322,12 @@ The searchable model picker displays context length, vision, tool-use, and reaso
 
 Canonical state lives in `data/app.db`, including each conversation's validated settings snapshot, knowledge-base definitions, ordered source references, and per-chat binding; uploads and optional Chroma collections remain under the configured data directory. Deleting a referenced upload, memory, or backpack removes that reference from its bases, and deleting a base clears affected conversation bindings. Existing databases receive compatible schema additions automatically. Without `CHAT_EMBED_MODEL`, cross-chat retrieval uses local lexical search. An earlier `data/v2/studio.db` can be imported explicitly from **Settings**; the Studio backs up `app.db` and records the migration so repeat imports are no-ops.
 
+### MCP and agent-tool approvals
+
+The **Tools** page supports local stdio servers launched by an allowlisted executable name (`uvx`, `uv`, `npx`, `node`, `python`, `python3`, or `py`) and public HTTPS Streamable HTTP endpoints. Registration is inert; **Connect and discover** is the first action that starts or contacts a server. Stdio arguments cannot contain credential flags—enter environment-variable names instead, and set their values in the launching process. Remote URLs reject embedded credentials, query strings, fragments, and private or reserved DNS targets.
+
+Every invocation is stored as **pending** before execution. Review the server, tool, redacted argument preview, rationale, origin, and hash, then enter a decision reason and choose **Approve and run** or **Deny**. Approval is single-use and limited to the browser session that created the request. Terminal records discard raw arguments while retaining the redacted preview, hash, decision, bounded/redacted result, and timestamps. There is intentionally no “always allow” or unrestricted shell mode.
+
 ## Usage
 
 1. Start the Studio and open <http://127.0.0.1:8506>.
@@ -329,7 +338,8 @@ Canonical state lives in `data/app.db`, including each conversation's validated 
 6. Watch streamed events, cancel if needed, and use the transcript navigator to jump to either end or move between saved messages. If **New output** appears while you are reading earlier content, use the bottom action to return to the live answer. Inspect completed runs under **Evidence** or **Replay**.
 7. Open **Compare**, choose two to four distinct models, and run one prompt across them in parallel. Each response streams independently, one provider failure does not stop the others, and **Cancel all** stops every active comparison run. Every selected cloud model receives a separate billable request.
 8. Use **Preview** on a fenced HTML, SVG, Mermaid, or code block to inspect it beside the transcript, then close the pane when finished. Executable previews are isolated and cannot load external resources.
-9. Branch the conversation, provide feedback, or open **Export** to download Markdown, HTML, TXT, JSON, or the latest completed run's reproducibility bundle.
+9. Open **Tools** to register a trusted MCP server. Connect and discover it explicitly, prepare a tool proposal, inspect the exact approval card, and approve or deny it once. Treat local servers as trusted code: working-directory and environment isolation are not an OS sandbox.
+10. Branch the conversation, provide feedback, or open **Export** to download Markdown, HTML, TXT, JSON, or the latest completed run's reproducibility bundle.
 
 ### Example: launch with OpenAI
 
@@ -369,6 +379,7 @@ FastAPI API ── session boundary ── in-memory credential vault
    │
    ├─ safety scan and context planning
    ├─ history, memory, files, web evidence, and retrieval
+   ├─ MCP registry → approval gate → stdio / HTTPS tool
    └─ confirmation and source exclusions
    │
    ▼
@@ -409,6 +420,10 @@ Additional project references:
 - [Code tutorial](CODE_TUTORIAL.md)
 - [Offline Zero-to-Hero tutorial](docs/tutorial/index.html)
 - [Integration reference](docs/codebase/INTEGRATIONS.md)
+- [Model Context Protocol documentation](https://modelcontextprotocol.io/docs/getting-started/intro)
+- [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk)
+- [MCP security best practices](https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices)
+- [Chatbox Work Mode overview](https://releases.chatboxai.app/en/guide/work-mode/overview) — interaction reference for explicit tool approvals
 - [Chatbox releases](https://github.com/chatboxai/chatbox/releases) — interaction-pattern reference for context pressure and compression
 - [Changelog](CHANGELOG.md)
 
@@ -435,7 +450,7 @@ npm run generate:api
 
 ## Security
 
-The server binds to `127.0.0.1` and has no user-account or multi-tenant authentication layer. Do not expose it directly to an untrusted network. Provider credentials are session-scoped in memory or read from the launching process environment; they are not persisted or exported.
+The server binds to `127.0.0.1` and has no user-account or multi-tenant authentication layer. Do not expose it directly to an untrusted network. Provider credentials are session-scoped in memory or read from the launching process environment; they are not persisted or exported. MCP servers are third-party code or services: inspect their configuration and every requested action, and never mistake the local working-directory boundary for an OS sandbox.
 
 See [SECURITY.md](SECURITY.md) for the security model and private vulnerability-reporting instructions.
 

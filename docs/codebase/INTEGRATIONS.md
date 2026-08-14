@@ -13,6 +13,7 @@
 | OpenCode Zen / Go | Discovery and chat | Session key or env fallback |
 | DuckDuckGo via DDGS | Opt-in web evidence | No key |
 | antiword / LibreOffice | Optional old `.doc` conversion | Local executable |
+| Model Context Protocol | User-approved local stdio or public HTTPS tools | Named environment variables only; values are resolved at process launch |
 
 Cloud context starts prompt-only and is expanded per provider policy. Browser-entered
 keys live in the session vault, are never written to SQLite, and are cleared on panic
@@ -32,6 +33,17 @@ credentials use `OPENCODE_SERVER_USERNAME` and `OPENCODE_SERVER_PASSWORD`. The
 Providers page lists only OAuth methods that the running server reports, then lets the
 server complete the upstream flow. A local bridge is not treated as a local model:
 connected upstream providers still follow the remote-context policy.
+
+## Model Context Protocol
+
+The Tools workspace accepts allowlisted stdio executable names and public HTTPS
+Streamable HTTP URLs. Registration never connects. Explicit discovery stores each
+tool's JSON input schema, and proposed calls are validated before they enter a
+session-scoped approval queue. Approval is single-use; denial never contacts the tool.
+Local subprocesses receive no shell, use `data/mcp-sandboxes/<server-id>` as their
+working directory, and inherit only basic runtime variables plus explicitly named
+environment keys. Values, raw terminal arguments, and unbounded output are not exposed
+in the audit API. These restrictions reduce risk but do not constitute an OS sandbox.
 
 ## Pricing metadata
 

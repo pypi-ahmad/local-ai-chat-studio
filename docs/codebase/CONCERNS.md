@@ -28,6 +28,10 @@
 - OpenCode capabilities and upstream OAuth methods depend on the locally running server;
   the app intentionally does not proxy OpenCode over a remote network address.
 - The documentation site renderer still needs a separate raw-HTML sanitization audit.
+- Local MCP stdio servers are trusted executable code. The Studio removes shell
+  interpretation, narrows the environment and working directory, and requires every
+  tool approval, but it does not provide an operating-system sandbox or filesystem/
+  network syscall isolation.
 
 ## Protected boundaries
 
@@ -49,6 +53,10 @@
   with no sandbox permissions, no referrer, and a network-blocking CSP. Never move
   generated markup into the host DOM or enable scripts, same-origin, forms, or navigation.
 - Provider exceptions are reduced to safe error categories before reaching clients.
+- MCP request IDs are browser-session scoped, approval transitions are single-use,
+  arguments are schema-validated, and raw arguments are scrubbed after completion or
+  denial. Remote MCP endpoints must remain public HTTPS; never weaken the SSRF checks
+  or add an unrestricted shell/always-allow mode.
 
 ## Change strategy
 
