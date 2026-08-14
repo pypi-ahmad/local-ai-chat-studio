@@ -7,6 +7,15 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.6.6] - 2026-08-15
+
+### Changed
+
+- Established explicit frontend boundaries for shared surfaces, attachment
+  encoding, model metadata, responsive behavior, and persisted UI preferences.
+- Reduced `App.tsx` responsibility without changing routes, APIs, or visible
+  workspace behavior.
+
 ## [0.6.5] - 2026-08-15
 
 ### Changed
