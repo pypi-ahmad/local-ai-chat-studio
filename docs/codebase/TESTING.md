@@ -52,5 +52,11 @@ result. There is no browser E2E
 runner or coverage threshold yet; real external-provider calls, OAuth flows, and a
 running Ollama daemon remain manual smoke tests.
 
+The structural seams are also the preferred test seams: `App.test.tsx` covers route
+composition and complete user flows, while focused tests can target model/context
+metadata and other feature-level pure behavior. Route extraction must preserve the
+same accessible labels and generated API contract rather than introducing mock-only
+page interfaces.
+
 Provider adapter tests also lock the `gpt-5.6-luna` request contract: its OpenAI-
 compatible request must omit a custom temperature and use the model default.

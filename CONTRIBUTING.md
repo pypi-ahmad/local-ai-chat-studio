@@ -33,9 +33,11 @@ pinned to 5.9.
 
 - **Python**: type hints throughout and no `print` debugging. Match the existing
   pattern in `backend/app/` or the shared helper under `src/` that you touch.
-- **TypeScript/React**: match `frontend/src/components/ui/` conventions
-  (shadcn-style primitives) for new UI components; `frontend/.oxlintrc.json`
-  is the linter config.
+- **TypeScript/React**: keep page composition under `frontend/src/routes/`, reusable
+  domain UI under `frontend/src/features/`, shared primitives under
+  `frontend/src/components/`, and backend calls/types under `frontend/src/api/`.
+  Match the existing shadcn-style primitives; `frontend/.oxlintrc.json` is the
+  linter config.
 - Keep changes focused — a bug fix shouldn't also refactor unrelated code.
 - Update the relevant English documentation when user-visible behavior,
   configuration, security boundaries, or API contracts change.
@@ -64,7 +66,8 @@ green locally means green in CI.
    regenerate the frontend types with `npm run generate:api` from `frontend/`,
    remove the temporary root `openapi.json`, and commit the diff to
    `frontend/src/api/schema.ts`.
-4. Add or update tests for the behavior you changed under `tests/`.
+4. Add or update backend tests under `tests/` and frontend tests beside the relevant
+   route, feature, or `App.test.tsx` integration boundary.
 
 ## Good first issues
 

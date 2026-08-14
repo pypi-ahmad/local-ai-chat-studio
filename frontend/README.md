@@ -1,5 +1,17 @@
 # React workspace
 
+```text
+src/
+├── App.tsx       Session/API orchestration and route composition
+├── app/          Route map and page-level error boundary
+├── routes/       Page components
+├── features/     Composer, messages, models, context, knowledge, tools, artifacts
+├── components/   Shared workspace and UI primitives
+├── hooks/        Media queries and persisted shell preferences
+├── api/          Generated contracts, typed requests, and SSE client
+└── state/        Browser-storage helpers
+```
+
 ```powershell
 npm ci --legacy-peer-deps
 npm run dev          # proxies /api to 127.0.0.1:8506

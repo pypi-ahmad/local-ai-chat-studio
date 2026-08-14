@@ -59,7 +59,10 @@ Process lifespan shutdown also waits for runs and closes the SQLite connection.
 | Providers and OAuth bridges | `backend/app/providers.py`, `backend/app/sessions.py` | Provider adapters, discovery, credential/session handling |
 | MCP tool boundary | `backend/app/mcp_tools.py`, `backend/app/store.py` | stdio/HTTPS connections, SSRF checks, isolated working directories, approval state, redaction, audit |
 | Model pricing | `backend/app/pricing.py` | Official-source standard token-rate catalog and OpenRouter live-price normalization |
-| Web client | `frontend/src/` | React workspaces and generated typed API client |
+| Web orchestration | `frontend/src/App.tsx` | Session-owned data, API coordination, navigation shell, and route composition |
+| Page routes | `frontend/src/routes/` | Chat, Compare, Library, Focus, Replay, Context, Evidence, Providers, and Settings pages |
+| Chat features | `frontend/src/features/composer/`, `messages/`, `models/`, `context/` | Composer controls, transcript/navigation, model metadata/selection, and prompt inspection |
+| Client state and contracts | `frontend/src/hooks/`, `frontend/src/api/` | Browser-persisted shell preferences plus generated backend-authoritative types and SSE requests |
 | Shared helpers | `src/` | File parsing, Ollama health/embeddings, and Chroma retrieval |
 
 ## Providers and integrations
@@ -78,6 +81,10 @@ Custom OpenAI base URLs and other unverified gateways deliberately receive no pr
 The React client uses one capability-aware model-picker contract across Chat,
 Compare, Replay, and assistant configuration. It scopes discovery by provider,
 searches model names/IDs/capabilities, and filters vision or reasoning support.
+`App.tsx` remains the session/API orchestration boundary; page presentation lives in
+`routes/`, and Chat composes `ChatWorkspace`, `ChatComposer`, `MessageList`, and the
+context/model features. This keeps backend-derived conversation state separate from
+temporary component state and browser-persisted shell preferences.
 Shared presentation contracts also cover safe Markdown/code/KaTeX rendering,
 attachment upload states, transcript navigation, and context utilization warnings.
 The workspace shell keeps browser-local UI preferences for navigation collapse,

@@ -3,7 +3,7 @@
 | Area | Technology |
 |---|---|
 | Backend | Python 3.12, FastAPI, Uvicorn, Pydantic, MCP Python SDK, jsonschema |
-| Frontend | React 19, TypeScript 5.9, Vite, Tailwind CSS, Base UI |
+| Frontend | React 19, React Router 8, TypeScript 5.9, Vite, Tailwind CSS, Base UI |
 | Persistence | stdlib SQLite and ChromaDB |
 | Local inference | Ollama |
 | Cloud inference | Ollama Cloud, OpenAI, Agnes AI, Anthropic, Google GenAI, OpenRouter, xAI, OpenCode Zen/Go |
