@@ -7,6 +7,19 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.1] - 2026-08-15
+
+### Added
+
+- Added a unified composer control dock for attachments, provider/model selection,
+  reasoning effort, context scope, and send/stop actions.
+- Added compact secondary settings for temperature presets and opt-in web evidence.
+
+### Changed
+
+- Context scope now maps directly to preflight source flags, so each turn can use
+  full local context, chat only, or selected files plus chat.
+
 ## [0.7.0] - 2026-08-15
 
 ### Added

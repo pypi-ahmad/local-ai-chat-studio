@@ -50,8 +50,17 @@ by model name, ID, or capability and can filter for **Vision** or **Reasoning**.
 Results expose available context length, reasoning levels, capabilities, and known
 pricing. **Effort** defaults to **Auto**; supported OpenAI GPT-5.6 models offer
 explicit reasoning levels, while other models show a disabled **Provider default**.
-Higher effort can take longer and consume more billed reasoning or output tokens. The
-answer streams live and **Stop** cancels the active provider request. Hover messages
+Higher effort can take longer and consume more billed reasoning or output tokens.
+
+The composer dock also keeps **Attach**, **Context**, secondary settings, and
+**Send/Stop** together. **Full context** allows memory, retrieval, selected files, and
+backpacks; **Chat only** excludes those optional local sources; **Files + chat** keeps
+only selected attachments alongside conversation history. Open the compact settings
+menu to choose a **Precise (0.2)**, **Balanced (0.7)**, or **Creative (1.0)**
+temperature and to opt into web evidence for the next turns. Provider data policies
+still decide which requested sources may leave the machine.
+
+The answer streams live and **Stop** cancels the active provider request. Hover messages
 to copy, branch from that point, or rate an answer. Conversation controls support
 rename, pin, delete, and text search.
 

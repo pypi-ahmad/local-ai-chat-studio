@@ -25,6 +25,7 @@ context utilization and overflow states, preflight, SSE output, the OpenCode Cla
 sign-in affordance, searchable capability-aware model selection, favorites, recents,
 tool-use filtering, provider marks, and rate display,
 attachment progress/completion/error/retry states, parallel comparison across three models,
+composer control grouping and context/temperature/web-evidence request mapping,
 four-model partial failure isolation, cancel-all behavior, and the Settings **Stop
 Studio** control. There is no browser E2E
 runner or coverage threshold yet; real external-provider calls, OAuth flows, and a

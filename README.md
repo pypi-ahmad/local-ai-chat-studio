@@ -33,7 +33,7 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 - **Local and cloud providers:** Use Ollama locally without an API key, or connect OpenAI, Agnes AI, Anthropic, Google Gemini, OpenRouter, xAI, OmniRoute, Ollama Cloud, OpenCode Zen, and OpenCode Go.
 - **Live model discovery:** The Studio asks configured providers for their available models instead of relying only on a fixed list. Discovered entries can include context length, vision support, and provider metadata.
 - **Searchable, capability-aware selection:** Choose a provider first, then search its discovered models by name, ID, or capability in Chat, Compare, Replay, and assistant presets. Provider marks, favorites, recent choices, verified pricing, context size, and vision, tool-use, and reasoning badges make large catalogs easier to scan; favorites and recents stay in local browser storage.
-- **Composer model controls:** Chat keeps provider, model, and capability-aware reasoning effort beside the prompt. Effort defaults to **Auto** and is disabled for models that do not advertise support; OpenAI GPT-5.6 options follow the [official model guide](https://developers.openai.com/api/docs/guides/latest-model).
+- **Composer control dock:** Chat keeps attachments, provider/model selection, capability-aware reasoning effort, context scope, and send/stop actions in one responsive dock. Choose **Full context**, **Chat only**, or **Files + chat** per turn; a compact menu holds temperature presets and opt-in web evidence. Effort defaults to **Auto** and is disabled for models that do not advertise support; OpenAI GPT-5.6 options follow the [official model guide](https://developers.openai.com/api/docs/guides/latest-model).
 - **Focused navigation:** Desktop keeps Chat, Compare, and Library in **Primary**, Focus in **Workspace**, and provider/runtime controls in **Administration**. Mobile keeps the three primary destinations one tap away and moves advanced workspaces into **More**.
 - **Run actions drawer:** Open **Runs** from Chat to replay recorded prompts, compare outputs, or export full and privacy-safe bundles without leaving the conversation.
 - **Session-only credentials:** Keys entered in **Providers** remain in server-process memory for the browser session. Keys can alternatively come from operating-system environment variables; neither source is written to the database or exports.
@@ -80,7 +80,7 @@ bookmarked links preserve the selected workspace.
 
 | Group | Tab | Purpose |
 |---|---|---|
-| Primary | **Chat** | Hold conversations, attach files, choose a provider/model and reasoning effort, inspect prompt context, navigate messages, and open run actions. |
+| Primary | **Chat** | Hold conversations and use the unified composer dock to attach files, choose a provider/model, set reasoning effort and context scope, adjust secondary generation settings, and send or stop a run. |
 | Primary | **Compare** | Send one prompt to two to four models concurrently and compare independent streamed results. |
 | Primary | **Library** | Manage durable memories, assistant presets, and conversation files. |
 | Workspace | **Focus** | Define a temporary objective, success criteria, and constraints for the active conversation. |
