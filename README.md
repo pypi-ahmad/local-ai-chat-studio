@@ -56,7 +56,7 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 - **Context backpacks:** Save reusable project facts or instructions and make them available as an explicit context source.
 - **Focus sessions:** Attach a temporary objective, success criteria, and constraints to a conversation to keep a task bounded.
 - **Assistant presets and personalization:** Store reusable system prompts, preferred model settings, and a local personalization profile.
-- **Document and image inputs:** Parse PDF, Word, spreadsheet, text, and code files into selectable conversation context. Attachment cards show uploading, ready, and failed states; failed uploads retain the server explanation and provide Retry and Remove actions. Supported vision models can receive selected image uploads directly.
+- **Document and image inputs:** Parse PDF, Word, spreadsheet, text, and code files into selectable conversation context. Cards above the composer show upload and parsing/indexing progress, file type, exact size, ready state, and server errors. Failed uploads provide Retry and Remove actions; removing a ready card deletes the stored conversation upload. Supported vision models can receive selected image uploads directly.
 - **Web evidence:** Opt-in search adds titled, linked results to the context plan with source provenance and replayable cached evidence.
 
 ### Local data and operations
@@ -320,7 +320,7 @@ Canonical state lives in `data/app.db`; uploads and optional Chroma collections 
 
 1. Start the Studio and open <http://127.0.0.1:8506>.
 2. Select an installed Ollama model or connect a provider. Choose the provider, open the model field, then search, filter by capability, star a favorite, or choose a recent model.
-3. Create a conversation and optionally attach documents or images. Wait for each attachment card to show **Ready**; retry or remove any failed upload before sending.
+3. Create a conversation and optionally attach documents or images. Follow each card through **Uploading** and **Parsing & indexing** to **Ready**; retry or remove failures, or remove a stored ready upload, before sending.
 4. Enter a message and review its context plan, safety findings, sources, and estimated cost.
 5. Confirm required findings and send the turn.
 6. Watch streamed events, cancel if needed, and use the transcript navigator to jump between saved messages. Inspect completed runs under **Evidence** or **Replay**.

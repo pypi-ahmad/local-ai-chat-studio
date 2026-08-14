@@ -73,10 +73,12 @@ syntax-highlighted fenced code, and LaTeX math. Use `$...$` for inline math and
 `$$...$$` for display math. Every fenced code block includes its language and a
 copy button. Raw HTML is displayed as text rather than executed.
 
-Files and images attached to the current conversation show **Uploading**, **Ready**,
-or **Failed** cards. Failed uploads display the server error and provide **Retry** and
-**Remove** actions; a successful new upload is selected automatically. Attachments
-are included only when the selected provider's data policy permits them.
+Files and images attached to the current conversation show **Uploading**, **Parsing &
+indexing**, **Ready**, or **Failed** cards above the composer. Each card includes the
+file type and exact size. Failed uploads display the server error and provide **Retry**
+and **Remove** actions; a successful new upload is selected automatically, and
+removing its Ready card deletes the stored conversation upload. Attachments are
+included only when the selected provider's data policy permits them.
 Vision-capable providers receive images in their native format.
 
 ### Context and Evidence

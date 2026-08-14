@@ -7,6 +7,15 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.2] - 2026-08-15
+
+### Added
+
+- Added attachment cards that show upload and parsing/indexing progress, file type,
+  exact size, ready state, and server errors directly above the composer.
+- Added durable removal for stored conversation uploads; failed uploads retain
+  explicit Retry and Remove actions.
+
 ## [0.7.1] - 2026-08-15
 
 ### Added
