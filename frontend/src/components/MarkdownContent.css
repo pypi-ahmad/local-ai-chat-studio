@@ -19,11 +19,17 @@
 .markdown-code button { height: 25px; display: inline-flex; align-items: center; gap: 5px; border: 0; border-radius: 6px; background: transparent; color: #a89fa8; padding: 0 7px; font-size: 10px; cursor: pointer; }
 .markdown-code button:hover { background: #272229; color: #fff2f6; }
 .markdown-code button svg { width: 12px; }
+.markdown-code-actions { display: inline-flex; align-items: center; gap: 2px; }
 .markdown-code pre { margin: 0; overflow: auto; background: #0d0d11; padding: 14px 15px; tab-size: 2; }
 .markdown-code pre code.hljs { overflow: visible; background: transparent; padding: 0; font: 12px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace; }
 .mermaid-diagram,.mermaid-error { margin: 13px 0; overflow: hidden; border: 1px solid #4b2733; border-radius: 10px; background: #0d0d11; }
 .mermaid-diagram > figcaption,.mermaid-error > figcaption { min-height: 34px; display: flex; align-items: center; gap: 7px; border-bottom: 1px solid #34242c; padding: 0 12px; background: #171218; color: #baacb5; font: 650 10px/1 ui-monospace,SFMono-Regular,Consolas,monospace; text-transform: uppercase; letter-spacing: .06em; }
+.mermaid-diagram > figcaption { justify-content: space-between; }
+.mermaid-diagram > figcaption button { height: 25px; display: inline-flex; align-items: center; gap: 5px; border: 0; border-radius: 6px; background: transparent; color: #a89fa8; padding: 0 7px; font-size: 10px; cursor: pointer; }
+.mermaid-diagram > figcaption button:hover { background: #272229; color: #fff2f6; }
+.mermaid-diagram > figcaption button svg { width: 12px; }
 .mermaid-diagram [role='img'] { min-height: 120px; display: grid; place-items: center; overflow: auto; padding: 18px; background: radial-gradient(circle at 50% 0,rgba(255,61,113,.07),transparent 52%); }
+.mermaid-diagram iframe { width: 100%; min-height: 180px; border: 0; background: #0d0d11; }
 .mermaid-diagram svg { display: block; max-width: 100%; height: auto; }
 .mermaid-loading { color: #817680; font-size: 11px; }
 .mermaid-error { border-color: #713047; }

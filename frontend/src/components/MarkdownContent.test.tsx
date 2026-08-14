@@ -42,11 +42,27 @@ describe('MarkdownContent', () => {
     await waitFor(() => expect(screen.getByRole('button', { name: 'Copy code' })).toHaveTextContent('Copied'))
   })
 
+  it('offers fenced output to the artifact preview with its detected format', () => {
+    const onArtifact = vi.fn()
+    render(<MarkdownContent content={'```html\n<main>Hello artifact</main>\n```'} onArtifact={onArtifact} />)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Preview HTML artifact' }))
+
+    expect(onArtifact).toHaveBeenCalledWith({
+      kind: 'html',
+      language: 'html',
+      source: '<main>Hello artifact</main>',
+      title: 'HTML artifact',
+    })
+  })
+
   it('renders Mermaid fences as diagrams', async () => {
     const { container } = render(<MarkdownContent content={'```mermaid\nflowchart LR\n  Prompt --> Model --> Answer\n```'} />)
 
     expect(await screen.findByRole('img', { name: 'Mermaid diagram' })).toBeInTheDocument()
-    await waitFor(() => expect(container.querySelector('.mermaid-diagram svg')).not.toBeNull())
+    await waitFor(() => expect(container.querySelector('.mermaid-diagram iframe')?.getAttribute('srcdoc')).toContain('<svg'))
+    expect(container.querySelector('.mermaid-diagram iframe')).toHaveAttribute('sandbox', '')
+    expect(container.querySelector('.mermaid-diagram svg')).toBeNull()
     const mermaid = (await import('mermaid')).default
     expect(mermaid.initialize).toHaveBeenCalledWith(expect.objectContaining({ securityLevel: 'strict', startOnLoad: false }))
     expect(screen.queryByText('flowchart LR')).not.toBeInTheDocument()

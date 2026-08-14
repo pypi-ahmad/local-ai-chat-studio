@@ -1,10 +1,13 @@
-import { Children, isValidElement, useEffect, useId, useRef, useState, type ReactNode } from 'react'
-import { Check, Copy, TriangleAlert } from 'lucide-react'
+import { Children, isValidElement, useEffect, useId, useState, type ReactNode } from 'react'
+import { Check, Copy, PanelRightOpen, TriangleAlert } from 'lucide-react'
 import ReactMarkdown, { type Components } from 'react-markdown'
 import rehypeHighlight from 'rehype-highlight'
 import rehypeKatex from 'rehype-katex'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
+
+import { artifactFromFence, type Artifact } from '@/features/artifact-preview/artifact'
+import { sandboxDocument } from '@/features/artifact-preview/sandboxDocument'
 
 import 'highlight.js/styles/github-dark.css'
 import 'katex/dist/katex.min.css'
@@ -42,14 +45,15 @@ function textOf(node: ReactNode): string {
   return ''
 }
 
-function CodeBlock({ children }: { children?: ReactNode }) {
+function CodeBlock({ children, onArtifact }: { children?: ReactNode; onArtifact?: (artifact: Artifact) => void }) {
   const [copied, setCopied] = useState(false)
   const code = textOf(children).replace(/\n$/, '')
   const codeElement = Children.toArray(children).find(isValidElement)
   const className = codeElement && (codeElement.props as { className?: string }).className
   const language = className?.match(/language-([\w-]+)/)?.[1] ?? 'text'
+  const artifact = artifactFromFence(language, code)
 
-  if (language.toLowerCase() === 'mermaid') return <MermaidDiagram source={code} />
+  if (language.toLowerCase() === 'mermaid') return <MermaidDiagram onArtifact={onArtifact} source={code} />
 
   const copy = async () => {
     await navigator.clipboard.writeText(code)
@@ -59,24 +63,25 @@ function CodeBlock({ children }: { children?: ReactNode }) {
 
   return (
     <figure className="markdown-code">
-      <figcaption><span>{language}</span><button aria-label="Copy code" onClick={() => void copy()} type="button">{copied ? <Check /> : <Copy />}{copied ? 'Copied' : 'Copy'}</button></figcaption>
+      <figcaption><span>{language}</span><span className="markdown-code-actions">{onArtifact && <button aria-label={`Preview ${artifact.title}`} onClick={() => onArtifact(artifact)} type="button"><PanelRightOpen /> Preview</button>}<button aria-label="Copy code" onClick={() => void copy()} type="button">{copied ? <Check /> : <Copy />}{copied ? 'Copied' : 'Copy'}</button></span></figcaption>
       <pre>{children}</pre>
     </figure>
   )
 }
 
-function MermaidDiagram({ source }: { source: string }) {
+export function MermaidDiagram({ source, onArtifact }: { source: string; onArtifact?: (artifact: Artifact) => void }) {
   const id = `mermaid-${useId().replace(/:/g, '')}`
-  const diagramRef = useRef<HTMLDivElement>(null)
+  const [svg, setSvg] = useState('')
   const [error, setError] = useState(false)
 
   useEffect(() => {
     let active = true
     setError(false)
+    setSvg('')
     void loadMermaid()
       .then((mermaid) => mermaid.render(id, source))
       .then(({ svg }) => {
-        if (active && diagramRef.current) diagramRef.current.innerHTML = svg
+        if (active) setSvg(svg)
       })
       .catch(() => { if (active) setError(true) })
     return () => { active = false }
@@ -89,7 +94,7 @@ function MermaidDiagram({ source }: { source: string }) {
     </figure>
   )
 
-  return <figure className="mermaid-diagram"><figcaption>Mermaid diagram</figcaption><div aria-label="Mermaid diagram" ref={diagramRef} role="img"><span className="mermaid-loading">Rendering diagram…</span></div></figure>
+  return <figure className="mermaid-diagram"><figcaption><span>Mermaid diagram</span>{onArtifact && <button aria-label="Preview Mermaid artifact" onClick={() => onArtifact(artifactFromFence('mermaid', source))} type="button"><PanelRightOpen /> Preview</button>}</figcaption><div aria-label="Mermaid diagram" role="img">{svg ? <iframe referrerPolicy="no-referrer" sandbox="" srcDoc={sandboxDocument(svg, 'dark')} title="Mermaid diagram canvas" /> : <span className="mermaid-loading">Rendering diagram…</span>}</div></figure>
 }
 
 const markdownComponents: Components = {
@@ -97,18 +102,21 @@ const markdownComponents: Components = {
     const external = Boolean(href?.startsWith('http://') || href?.startsWith('https://'))
     return <a {...props} href={href} rel={external ? 'noreferrer noopener' : undefined} target={external ? '_blank' : undefined}>{children}</a>
   },
-  pre({ children }) {
-    return <CodeBlock>{children}</CodeBlock>
-  },
   table({ children }) {
     return <div className="markdown-table"><table>{children}</table></div>
   },
 }
 
-export function MarkdownContent({ content, className = '' }: { content: string; className?: string }) {
+export function MarkdownContent({ content, className = '', onArtifact }: { content: string; className?: string; onArtifact?: (artifact: Artifact) => void }) {
+  const components: Components = {
+    ...markdownComponents,
+    pre({ children }) {
+      return <CodeBlock onArtifact={onArtifact}>{children}</CodeBlock>
+    },
+  }
   return (
     <div className={`markdown-content ${className}`.trim()}>
-      <ReactMarkdown components={markdownComponents} rehypePlugins={[rehypeKatex, rehypeHighlight]} remarkPlugins={[remarkGfm, remarkMath]}>{content}</ReactMarkdown>
+      <ReactMarkdown components={components} rehypePlugins={[rehypeKatex, rehypeHighlight]} remarkPlugins={[remarkGfm, remarkMath]}>{content}</ReactMarkdown>
     </div>
   )
 }
