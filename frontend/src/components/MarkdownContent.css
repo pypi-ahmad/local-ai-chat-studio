@@ -1,0 +1,36 @@
+.markdown-content { min-width: 0; overflow-wrap: anywhere; color: inherit; line-height: 1.65; }
+.message > .markdown-content { margin-top: 8px; }
+.markdown-content > :first-child { margin-top: 0; }
+.markdown-content > :last-child { margin-bottom: 0; }
+.markdown-content p { margin: 0 0 10px; white-space: normal; }
+.markdown-content h1,.markdown-content h2,.markdown-content h3,.markdown-content h4 { margin: 20px 0 8px; color: #fbf7f9; line-height: 1.25; letter-spacing: -.025em; }
+.markdown-content h1 { font-size: 1.55em; }
+.markdown-content h2 { padding-bottom: 5px; border-bottom: 1px solid #302c34; font-size: 1.3em; }
+.markdown-content h3 { font-size: 1.12em; }
+.markdown-content h4 { font-size: 1em; }
+.markdown-content ul,.markdown-content ol { margin: 8px 0 12px; padding-left: 24px; }
+.markdown-content li + li { margin-top: 4px; }
+.markdown-content li > p { margin-bottom: 4px; }
+.markdown-content blockquote { margin: 12px 0; border-left: 3px solid #b92a55; padding: 3px 0 3px 13px; color: #beb5bd; background: linear-gradient(90deg,rgba(255,61,113,.07),transparent); }
+.markdown-content blockquote p { margin: 0; }
+.markdown-content :not(pre) > code { border: 1px solid #3b3038; border-radius: 5px; background: #18151a; color: #ff9ab5; padding: 1px 5px; font: .9em/1.5 ui-monospace,SFMono-Regular,Consolas,monospace; }
+.markdown-code { margin: 13px 0; overflow: hidden; border: 1px solid #37323b; border-radius: 10px; background: #0d0d11; }
+.markdown-code figcaption { height: 34px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #2b2830; padding: 0 8px 0 12px; background: #17151a; color: #8f858f; font: 650 10px/1 ui-monospace,SFMono-Regular,Consolas,monospace; text-transform: uppercase; letter-spacing: .06em; }
+.markdown-code button { height: 25px; display: inline-flex; align-items: center; gap: 5px; border: 0; border-radius: 6px; background: transparent; color: #a89fa8; padding: 0 7px; font-size: 10px; cursor: pointer; }
+.markdown-code button:hover { background: #272229; color: #fff2f6; }
+.markdown-code button svg { width: 12px; }
+.markdown-code pre { margin: 0; overflow: auto; background: #0d0d11; padding: 14px 15px; tab-size: 2; }
+.markdown-code pre code.hljs { overflow: visible; background: transparent; padding: 0; font: 12px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace; }
+.markdown-table { max-width: 100%; margin: 13px 0; overflow-x: auto; border: 1px solid #37323b; border-radius: 9px; }
+.markdown-table table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.markdown-table th,.markdown-table td { border-bottom: 1px solid #302c34; padding: 8px 10px; text-align: left; }
+.markdown-table th { background: #1b171d; color: #f5edf1; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; }
+.markdown-table tr:last-child td { border-bottom: 0; }
+.markdown-table tr:nth-child(even) td { background: rgba(255,255,255,.015); }
+.markdown-content hr { height: 1px; margin: 18px 0; border: 0; background: #343039; }
+.markdown-content img { display: block; max-width: 100%; height: auto; margin: 12px 0; border: 1px solid #37323b; border-radius: 10px; }
+.markdown-content input[type='checkbox'] { margin-right: 6px; accent-color: var(--rose); }
+.markdown-content .contains-task-list { padding-left: 4px; list-style: none; }
+.markdown-content .katex-display { max-width: 100%; margin: 14px 0; overflow-x: auto; overflow-y: hidden; padding: 8px 2px; }
+.markdown-content .katex { color: #f4edf1; font-size: 1.02em; }
+.comparison-markdown { min-height: 72px; color: #ded6dc; }
