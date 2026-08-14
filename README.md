@@ -41,7 +41,7 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 
 ### Controlled context and safety
 
-- **Context preflight:** Before generation, review the exact context plan, estimated token use, automatic pruning, and a reserved 20% output budget. A hash binds the approved plan to the run so changed context must be reviewed again.
+- **Context preflight and pressure:** Before generation, review the exact context plan, used/available tokens, utilization percentage, automatic pruning, and a reserved 20% output budget. Amber warnings appear from 80% utilization; overflow states report the exact excess and recommend removing sources or choosing a larger-context model. A hash binds the approved plan to the run so changed context must be reviewed again.
 - **Optional Chat inspector:** Open a docked desktop panel or responsive drawer to inspect the current context sections and evidence sources, including source trust and next-send inclusion, without leaving the conversation. The inspector remembers its open state and selected tab locally.
 - **Source-level control:** Inspect and exclude individual conversation-history, memory, retrieval, upload, web, backpack, or focus sources before sending them to a model.
 - **Provider data boundaries:** Cloud providers default to prompt-only access. Enable memory, retrieval, attachments, web results, or backpacks separately for each provider.
@@ -281,7 +281,7 @@ The **Providers** page supports temporary API keys, supported OAuth flows, live 
 
 ### Context and safety
 
-Before a message is sent, the Studio builds a context plan that shows estimated tokens, source provenance, trust state, automatic pruning, and a 20% output reserve. Users can exclude trusted sources, redact sensitive text, and must confirm blocking safety findings.
+Before a message is sent, the Studio builds a context plan that shows estimated tokens, source provenance, trust state, automatic pruning, and a 20% output reserve. The shared context rail displays used/available tokens and the exact safe-budget percentage in Chat, Context, and the inspector. At 80% it warns about remaining capacity; above 100% it reports the precise overflow. Users can exclude trusted sources, redact sensitive text, and must confirm blocking safety findings.
 
 ### Pricing
 

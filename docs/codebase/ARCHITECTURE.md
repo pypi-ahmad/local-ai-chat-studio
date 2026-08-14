@@ -12,7 +12,9 @@ React workspace
 provider registry, and run manager. Preflight produces a hash-bound context plan. A
 turn is accepted only when the plan still matches and required safety findings were
 confirmed. Exact web evidence is cached by plan hash; individual sources can be
-excluded.
+excluded. The frontend derives utilization and remaining or excess tokens from the
+plan's estimated and safe-budget totals; these warnings are informational and do not
+alter the server-owned pruning or validation rules.
 
 Runs are persisted to SQLite and also retained in memory while the process lives so
 SSE subscribers can replay events and follow new deltas. Run IDs are scoped to the
