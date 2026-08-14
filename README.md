@@ -73,6 +73,10 @@ Cloud providers begin with prompt-only access. Credentials entered in the browse
 
 Desktop navigation is grouped by purpose and can be collapsed. On mobile, **Chat**, **Compare**, and **Library** remain in the bottom bar; the other destinations are available through **More**.
 
+Every destination has a direct browser URL, such as `/chat/<conversation-id>`,
+`/compare`, `/library`, and `/settings`. Browser Back/Forward navigation and
+bookmarked links preserve the selected workspace.
+
 | Group | Tab | Purpose |
 |---|---|---|
 | Work | **Chat** | Hold conversations, attach files, choose a provider/model and reasoning effort, inspect prompt context, and navigate saved messages. |
@@ -98,7 +102,7 @@ Chat also includes an optional **Context/Evidence inspector**. On wide screens i
 | Area | Technologies |
 |---|---|
 | Backend | Python 3.12+, FastAPI, Uvicorn, Pydantic, HTTPX |
-| Frontend | React 19, TypeScript 5.9, Vite 8, Tailwind CSS, Base UI |
+| Frontend | React 19, React Router 8, TypeScript 5.9, Vite 8, Tailwind CSS, Base UI |
 | AI providers | Ollama, OpenAI SDK, Anthropic SDK, Google Gen AI, OpenAI-compatible APIs |
 | Storage | SQLite, optional Chroma vector database, local uploads |
 | Documents | pypdf, python-docx, pandas, openpyxl, xlrd, Pillow |
