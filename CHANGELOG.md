@@ -7,6 +7,15 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.6.3] - 2026-08-15
+
+### Added
+
+- Added compact previous/next navigation for saved chat messages with a current
+  position counter, smooth centered scrolling, and bounded end states.
+- Added a subtle active-message marker and automatic reset to the newest saved
+  message when a conversation changes.
+
 ## [0.6.2] - 2026-08-15
 
 ### Added
