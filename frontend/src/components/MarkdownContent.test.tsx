@@ -46,7 +46,9 @@ describe('MarkdownContent', () => {
     const { container } = render(<MarkdownContent content={'```mermaid\nflowchart LR\n  Prompt --> Model --> Answer\n```'} />)
 
     expect(await screen.findByRole('img', { name: 'Mermaid diagram' })).toBeInTheDocument()
-    expect(container.querySelector('.mermaid-diagram svg')).not.toBeNull()
+    await waitFor(() => expect(container.querySelector('.mermaid-diagram svg')).not.toBeNull())
+    const mermaid = (await import('mermaid')).default
+    expect(mermaid.initialize).toHaveBeenCalledWith(expect.objectContaining({ securityLevel: 'strict', startOnLoad: false }))
     expect(screen.queryByText('flowchart LR')).not.toBeInTheDocument()
   })
 
