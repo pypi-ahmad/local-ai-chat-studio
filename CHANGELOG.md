@@ -7,6 +7,20 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.6] - 2026-08-15
+
+### Added
+
+- Added a searchable Assistant gallery with role icons, prompt descriptions,
+  model and temperature metadata, browser-local favorites, and recent assistants.
+- Added one-click assistant chat creation that atomically applies the preset's
+  model, temperature, and system prompt to a new conversation.
+
+### Changed
+
+- Reorganized Library around the Assistant gallery while retaining memory,
+  assistant creation, and conversation-file tools below it.
+
 ## [0.7.5] - 2026-08-15
 
 ### Added

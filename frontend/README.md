@@ -20,6 +20,10 @@ capability. Preserve its Vision/Reasoning filters and the displayed context leng
 reasoning levels, capabilities, and pricing when changing model-discovery surfaces.
 Chat, Compare, Replay, and assistant configuration use this contract.
 
+Library presents saved presets as a searchable assistant gallery. Favorites and the
+four most recent launches are browser-local preferences; **Start chat** sends the
+preset settings with the conversation-create request so Chat opens fully configured.
+
 Assistant output is rendered as CommonMark/GFM with tables, task lists,
 syntax-highlighted copyable code, and KaTeX math; raw HTML must remain inert.
 Attachments expose Uploading/Ready/Failed cards with retry and removal. Chat also

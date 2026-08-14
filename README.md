@@ -56,7 +56,7 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 - **Cross-chat retrieval:** Reuse relevant details from previous conversations through optional Chroma embeddings. When no embedding model is configured, the Studio falls back to local lexical retrieval.
 - **Context backpacks:** Save reusable project facts or instructions and make them available as an explicit context source.
 - **Focus sessions:** Attach a temporary objective, success criteria, and constraints to a conversation to keep a task bounded.
-- **Assistant presets and personalization:** Store reusable system prompts, preferred model settings, and a local personalization profile.
+- **Assistant gallery and personalization:** Search reusable assistants as visual cards with role icons and prompt descriptions, keep browser-local favorites and recent choices, and start a correctly configured conversation in one click. Each assistant carries its system prompt, preferred model, and temperature; the local personalization profile remains available separately.
 - **Document and image inputs:** Parse PDF, Word, spreadsheet, text, and code files into selectable conversation context. Cards above the composer show upload and parsing/indexing progress, file type, exact size, ready state, and server errors. Failed uploads provide Retry and Remove actions; removing a ready card deletes the stored conversation upload. Supported vision models can receive selected image uploads directly.
 - **Web evidence:** Opt-in search adds titled, linked results to the context plan with source provenance and replayable cached evidence.
 
@@ -83,7 +83,7 @@ bookmarked links preserve the selected workspace.
 |---|---|---|
 | Primary | **Chat** | Hold conversations; restore chat-specific model, effort, temperature, context, prompt, and layout settings; attach files; and send or stop a run from the unified composer. |
 | Primary | **Compare** | Send one prompt to two to four models concurrently and compare independent streamed results. |
-| Primary | **Library** | Manage durable memories, assistant presets, and conversation files. |
+| Primary | **Library** | Search and launch assistants, manage favorites and recent choices, create reusable presets, and maintain durable memories and conversation files. |
 | Workspace | **Focus** | Define a temporary objective, success criteria, and constraints for the active conversation. |
 | Administration | **Providers** | Configure session credentials, provider data policies, OAuth connections, discovery, and failover checks. |
 | Administration | **Settings** | Manage local data, personalization, runtime health, migration, wipe, and managed shutdown. |

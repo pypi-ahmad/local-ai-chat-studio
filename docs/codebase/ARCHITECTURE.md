@@ -23,6 +23,9 @@ conversation row. Chat hydrates that snapshot when the active conversation chang
 and debounces updates through the existing PATCH endpoint. System prompts flow into
 preflight estimation, the plan hash, assembled messages, and replay data. Branches
 copy settings at creation and remain independent afterward.
+Library assistants pass the same snapshot during conversation creation, so the
+preset's model, temperature, and system prompt are committed atomically. Favorite
+and recent assistant IDs stay in browser storage and do not alter preset records.
 
 Runs are persisted to SQLite and also retained in memory while the process lives so
 SSE subscribers can replay events and follow new deltas. Run IDs are scoped to the

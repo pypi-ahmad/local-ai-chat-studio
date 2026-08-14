@@ -30,6 +30,7 @@ attachment upload/processing/completion/error states, metadata, retry, and durab
 parallel comparison across three models,
 composer control grouping, context/temperature/web-evidence/compression request mapping,
 per-conversation settings hydration, system-prompt persistence, and layout changes,
+assistant search, favorite/recent persistence, and one-click configured chat creation,
 four-model partial failure isolation, cancel-all behavior, and the Settings **Stop
 Studio** control. There is no browser E2E
 runner or coverage threshold yet; real external-provider calls, OAuth flows, and a

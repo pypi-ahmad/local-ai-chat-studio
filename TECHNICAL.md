@@ -82,6 +82,11 @@ Each conversation stores a validated JSON settings snapshot in SQLite. The gener
 `Conversation` contract returns model key, reasoning effort, temperature, context
 policy, web/compression flags, system prompt, and layout; the React client hydrates
 these values on selection and saves changes through the conversation PATCH endpoint.
+`ConversationCreate` also accepts the validated settings snapshot, allowing Library
+assistants to create a configured conversation atomically rather than creating and
+then patching it. Assistant favorites and the four most recent launches are UI
+preferences stored in browser local storage; preset definitions remain authoritative
+SQLite records.
 Branches copy the snapshot at creation, preserving independent settings afterward.
 Optional context compression deterministically replaces older history with a bounded
 extractive summary, retains the latest eight messages verbatim, records compression

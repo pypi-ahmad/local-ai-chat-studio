@@ -163,8 +163,14 @@ the selected model to reduce the whole chat to durable user facts and preference
 stores only supported points in SQLite, and records their source messages. A cloud
 model requires confirmation before the transcript is sent. Memories that resemble
 prompt injection start quarantined; review and approve, archive, pin, or delete them.
-Saved assistants retain a system prompt, model preference, and temperature. Select
-the assistant's provider first so its model menu contains only valid choices.
+Saved assistants appear as searchable cards with role icons, a prompt description,
+their preferred model, and temperature. Star assistants to keep them in **Favorites**;
+successfully launched assistants also appear in **Recently used**. These two lists are
+stored only in the current browser. Select **Start chat** to create a new conversation
+with the assistant's model, temperature, and system prompt already applied.
+
+Use **Create assistant** below the gallery to save another system prompt. Select the
+assistant's provider first so its model menu contains only valid choices.
 
 ### Settings and data controls
 
