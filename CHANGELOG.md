@@ -7,6 +7,23 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-08-15
+
+### Added
+
+- Added rich Markdown rendering to Chat and Compare, including GFM tables and
+  task lists, syntax-highlighted fenced code with copy controls, and KaTeX math.
+- Added grouped, expandable navigation and an optional persisted Context and
+  Evidence inspector that docks on wide screens and becomes a drawer elsewhere.
+
+### Changed
+
+- Replaced combined model menus with provider-first, filtered model selectors in
+  Chat, Compare, Replay, and assistant creation.
+- Moved Chat provider and model selection into the composer and added a
+  capability-aware reasoning-effort selector. Unsupported models keep their
+  provider default; OpenAI GPT-5.6 models expose their supported effort levels.
+
 ## [0.5.1] - 2026-08-15
 
 ### Fixed
