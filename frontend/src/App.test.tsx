@@ -38,6 +38,12 @@ function setViewport(width: number) {
   })
 }
 
+async function waitForStudio() {
+  expect(await screen.findByRole('heading', { name: 'Provider architecture' })).toBeInTheDocument()
+  await screen.findByText('Backend connected')
+  await waitFor(() => expect(screen.getByLabelText('Model')).toHaveTextContent('Deterministic'))
+}
+
 beforeEach(() => {
   holdComparisonStreams = false
   activityRuns = []
@@ -167,7 +173,7 @@ describe('studio workspace', () => {
   it('loads the connected conversation workspace', async () => {
     render(<App />)
 
-    expect(await screen.findByRole('heading', { name: 'Provider architecture' })).toBeInTheDocument()
+    await waitForStudio()
     expect(screen.getByLabelText('Primary navigation')).toBeInTheDocument()
     expect(screen.getByLabelText('Conversation history')).toBeInTheDocument()
     expect(screen.getByLabelText('Chat workspace')).toBeInTheDocument()
@@ -198,15 +204,16 @@ describe('studio workspace', () => {
   it('exposes the consolidated product surfaces', () => {
     render(<App />)
 
-    for (const label of ['Chat', 'Compare', 'Context', 'Evidence', 'Replay', 'Focus', 'Providers', 'Library', 'Settings']) {
+    for (const label of ['Chat', 'Compare', 'Library', 'Focus', 'Providers', 'Settings']) {
       expect(screen.getByRole('button', { name: label })).toBeInTheDocument()
     }
+    for (const label of ['Context', 'Evidence', 'Replay']) expect(screen.queryByRole('button', { name: label })).not.toBeInTheDocument()
   })
 
   it('groups and remembers the expandable desktop navigation', async () => {
     render(<App />)
 
-    for (const group of ['Work', 'Inspect', 'Personalize', 'System']) expect(screen.getByRole('group', { name: group })).toBeInTheDocument()
+    for (const group of ['Primary', 'Workspace', 'Administration']) expect(screen.getByRole('group', { name: group })).toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: 'Collapse navigation' }))
 
     expect(screen.getByRole('button', { name: 'Expand navigation' })).toHaveAttribute('aria-expanded', 'false')
@@ -215,7 +222,7 @@ describe('studio workspace', () => {
 
   it('inspects current context and controls evidence without leaving Chat', async () => {
     render(<App />)
-    await screen.findByRole('heading', { name: 'Provider architecture' })
+    await waitForStudio()
     fireEvent.change(screen.getByLabelText('Message'), { target: { value: 'hello' } })
     fireEvent.click(screen.getByRole('button', { name: 'Send message' }))
     await screen.findByText('hello back')
@@ -241,15 +248,16 @@ describe('studio workspace', () => {
     for (const label of ['Chat', 'Compare', 'Library', 'More']) expect(screen.getByRole('button', { name: label })).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Context' })).not.toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: 'More' }))
-    expect(await screen.findByRole('group', { name: 'Inspect' })).toBeInTheDocument()
-    fireEvent.click(await screen.findByRole('button', { name: 'Context' }))
+    expect(await screen.findByRole('group', { name: 'Workspace' })).toBeInTheDocument()
+    expect(screen.getByRole('group', { name: 'Administration' })).toBeInTheDocument()
+    fireEvent.click(await screen.findByRole('button', { name: 'Focus' }))
 
-    expect(await screen.findByRole('heading', { name: 'Context control' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Focus' })).toBeInTheDocument()
   })
 
   it('preflights and streams a turn', async () => {
     render(<App />)
-    await screen.findByRole('heading', { name: 'Provider architecture' })
+    await waitForStudio()
     fireEvent.change(screen.getByLabelText('Message'), { target: { value: 'hello' } })
     fireEvent.click(screen.getByRole('button', { name: 'Send message' }))
 
@@ -260,7 +268,7 @@ describe('studio workspace', () => {
     contextEstimate = 900
     contextBudget = 1000
     render(<App />)
-    await screen.findByRole('heading', { name: 'Provider architecture' })
+    await waitForStudio()
     fireEvent.change(screen.getByLabelText('Message'), { target: { value: 'use substantial context' } })
     fireEvent.click(screen.getByRole('button', { name: 'Send message' }))
 
@@ -273,7 +281,7 @@ describe('studio workspace', () => {
     contextEstimate = 1250
     contextBudget = 1000
     render(<App />)
-    await screen.findByRole('heading', { name: 'Provider architecture' })
+    await waitForStudio()
     fireEvent.change(screen.getByLabelText('Message'), { target: { value: 'overflow context' } })
     fireEvent.click(screen.getByRole('button', { name: 'Send message' }))
 
@@ -285,7 +293,7 @@ describe('studio workspace', () => {
   it('shows attachment upload progress and marks completed files ready', async () => {
     holdNextUpload = true
     render(<App />)
-    await screen.findByRole('heading', { name: 'Provider architecture' })
+    await waitForStudio()
     const input = document.querySelector('.composer-actions input[type="file"]') as HTMLInputElement
 
     fireEvent.change(input, { target: { files: [new File(['notes'], 'notes.txt', { type: 'text/plain' })] } })
@@ -299,7 +307,7 @@ describe('studio workspace', () => {
   it('keeps failed attachments actionable and retries them in place', async () => {
     failNextUpload = true
     render(<App />)
-    await screen.findByRole('heading', { name: 'Provider architecture' })
+    await waitForStudio()
     const input = document.querySelector('.composer-actions input[type="file"]') as HTMLInputElement
 
     fireEvent.change(input, { target: { files: [new File(['bad'], 'bad.pdf', { type: 'application/pdf' })] } })
@@ -313,7 +321,7 @@ describe('studio workspace', () => {
 
   it('selects supported reasoning effort from the chat composer', async () => {
     render(<App />)
-    await screen.findByRole('heading', { name: 'Provider architecture' })
+    await waitForStudio()
 
     const provider = screen.getByLabelText('Provider')
     const effort = screen.getByLabelText('Reasoning effort')
@@ -346,7 +354,7 @@ describe('studio workspace', () => {
 
   it('searches and filters capability-aware models for the selected provider', async () => {
     render(<App />)
-    await screen.findByRole('heading', { name: 'Provider architecture' })
+    await waitForStudio()
 
     expect(screen.getByLabelText('Provider')).toHaveValue('echo')
     expect(screen.getByLabelText('Model')).toHaveTextContent('Deterministic')
@@ -366,7 +374,7 @@ describe('studio workspace', () => {
 
   it('opens conversation history from the compact workspace control', async () => {
     render(<App />)
-    await screen.findByRole('heading', { name: 'Provider architecture' })
+    await waitForStudio()
 
     fireEvent.click(screen.getByRole('button', { name: 'Open conversation history' }))
 
@@ -396,15 +404,17 @@ describe('studio workspace', () => {
   it('uses explicit provider and model targets for Replay and assistants', async () => {
     activityRuns = [{ id: 'source-run', status: 'completed', provider: 'echo', model: 'deterministic', output: 'original', created_at: 'now', metrics: {} }]
     render(<App />)
-    fireEvent.click(screen.getByRole('button', { name: 'Replay' }))
+    await waitForStudio()
+    fireEvent.click(screen.getByRole('button', { name: 'Open runs' }))
     await screen.findByText('original')
     fireEvent.change(screen.getByLabelText('Replay provider'), { target: { value: 'agnes' } })
-    fireEvent.click(screen.getAllByRole('button', { name: 'Replay' })[1])
+    fireEvent.click(screen.getByRole('button', { name: 'Replay' }))
 
     await waitFor(() => expect(fetch).toHaveBeenCalledWith('/api/v1/runs/source-run/replay', expect.objectContaining({ body: expect.stringContaining('agnes-2.5-flash') })))
 
+    fireEvent.click(screen.getByRole('button', { name: 'Close' }))
     fireEvent.click(screen.getByRole('button', { name: 'Library' }))
-    expect(await screen.findByLabelText('Assistant provider')).toHaveValue('agnes')
+    fireEvent.change(await screen.findByLabelText('Assistant provider'), { target: { value: 'agnes' } })
     fireEvent.change(screen.getByPlaceholderText('Assistant name'), { target: { value: 'Agnes helper' } })
     fireEvent.click(screen.getByRole('button', { name: 'Save assistant' }))
 
