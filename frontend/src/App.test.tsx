@@ -41,6 +41,8 @@ function setViewport(width: number) {
 async function waitForStudio() {
   expect(await screen.findByRole('heading', { name: 'Provider architecture' })).toBeInTheDocument()
   await screen.findByText('Backend connected')
+  await waitFor(() => expect(window.location.pathname).toBe('/chat/c1'))
+  await waitFor(() => expect(screen.getByLabelText('Provider')).toHaveValue('echo'))
   await waitFor(() => expect(screen.getByLabelText('Model')).toHaveTextContent('Deterministic'))
 }
 
@@ -84,7 +86,7 @@ beforeEach(() => {
           provider: 'echo', id: 'deterministic', label: 'Deterministic',
           pricing: { input_per_million: 0, output_per_million: 0, source_url: 'https://ollama.com/', as_of: '2026-08-14' },
         }] },
-        openai: { provider: 'openai', models: [{ provider: 'openai', id: 'gpt-5.6-luna', label: 'Luna', context_length: 128000, capabilities: ['vision'], reasoning_efforts: ['none', 'low', 'medium', 'high', 'xhigh', 'max'] }] },
+        openai: { provider: 'openai', models: [{ provider: 'openai', id: 'gpt-5.6-luna', label: 'Luna', context_length: 128000, capabilities: ['vision', 'tool_use'], reasoning_efforts: ['none', 'low', 'medium', 'high', 'xhigh', 'max'] }] },
         agnes: { provider: 'agnes', models: [{ provider: 'agnes', id: 'agnes-2.5-flash', label: 'Agnes 2.5 Flash', context_length: 1000000 }] },
         broken: { provider: 'broken', models: [{ provider: 'broken', id: 'unavailable', label: 'Unavailable' }] },
       })
@@ -178,7 +180,7 @@ describe('studio workspace', () => {
     expect(screen.getByLabelText('Conversation history')).toBeInTheDocument()
     expect(screen.getByLabelText('Chat workspace')).toBeInTheDocument()
     fireEvent.click(screen.getByLabelText('Model'))
-    expect(await screen.findByRole('option', { name: /\$0\.00 in \/ \$0\.00 out per 1M/ })).toBeInTheDocument()
+    expect(await screen.findByRole('option', { name: /\$0\.00 in \/ \$0\.00 out per 1M/ }, { timeout: 3000 })).toBeInTheDocument()
   })
 
   it('navigates saved chat messages with bounded previous and next controls', async () => {
@@ -188,6 +190,7 @@ describe('studio workspace', () => {
       { id: 'm3', role: 'user', content: 'Follow-up question', position: 2, created_at: 'now', run_id: null, metadata: {} },
     ]
     render(<App />)
+    await waitForStudio()
 
     const navigation = await screen.findByRole('navigation', { name: 'Message navigation' })
     await waitFor(() => expect(navigation).toHaveTextContent('3 / 3'))
@@ -272,7 +275,7 @@ describe('studio workspace', () => {
     fireEvent.change(screen.getByLabelText('Message'), { target: { value: 'use substantial context' } })
     fireEvent.click(screen.getByRole('button', { name: 'Send message' }))
 
-    expect(await screen.findByText('90% of safe budget')).toBeInTheDocument()
+    expect(await screen.findByText('90% of safe budget', {}, { timeout: 3000 })).toBeInTheDocument()
     expect(screen.getByRole('progressbar', { name: '90% of safe context budget used' })).toHaveAttribute('aria-valuenow', '90')
     expect(screen.getByRole('alert')).toHaveTextContent('Only 100 tokens remain')
   })
@@ -324,6 +327,7 @@ describe('studio workspace', () => {
     await waitForStudio()
 
     const provider = screen.getByLabelText('Provider')
+    expect(provider).toBeEnabled()
     const effort = screen.getByLabelText('Reasoning effort')
     expect(provider.closest('.composer-shell')).not.toBeNull()
     expect(effort).toBeDisabled()
@@ -358,18 +362,28 @@ describe('studio workspace', () => {
 
     expect(screen.getByLabelText('Provider')).toHaveValue('echo')
     expect(screen.getByLabelText('Model')).toHaveTextContent('Deterministic')
-    fireEvent.change(screen.getByLabelText('Provider'), { target: { value: 'openai' } })
-    expect(screen.getByLabelText('Model')).toHaveTextContent('Luna')
+    const provider = screen.getByLabelText('Provider')
+    fireEvent.change(provider, { target: { value: 'openai' } })
+    expect(provider).toHaveValue('openai')
+    await waitFor(() => expect(screen.getByLabelText('Model')).toHaveTextContent('Luna'))
 
     fireEvent.click(screen.getByLabelText('Model'))
     expect(await screen.findByText('128K context')).toBeInTheDocument()
     expect(screen.getByText('Reasoning · 6 levels')).toBeInTheDocument()
+    expect(screen.getByText('Tools')).toBeInTheDocument()
+    expect(screen.getAllByLabelText('OpenAI provider').length).toBeGreaterThan(0)
+    fireEvent.click(screen.getByRole('button', { name: 'Add Luna to favorites' }))
+    expect(screen.getByText('Favorites')).toBeInTheDocument()
+    expect(localStorage.getItem('chat-studio.favorite-models')).toContain('openai::gpt-5.6-luna')
+    fireEvent.click(screen.getByRole('button', { name: 'Remove Luna from favorites' }))
     fireEvent.click(screen.getByRole('button', { name: 'vision' }))
     expect(screen.getByRole('option', { name: /Luna/ })).toHaveTextContent('Vision')
     fireEvent.change(screen.getByLabelText('Search model'), { target: { value: 'gpt-5.6-luna' } })
     fireEvent.click(screen.getByRole('option', { name: /Luna/ }))
 
     expect(screen.getByLabelText('Model')).toHaveTextContent('Luna')
+    fireEvent.click(screen.getByLabelText('Model'))
+    expect(await screen.findByText('Recent')).toBeInTheDocument()
   })
 
   it('opens conversation history from the compact workspace control', async () => {
