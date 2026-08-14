@@ -404,3 +404,5 @@ See [SECURITY.md](SECURITY.md) for the security model and private vulnerability-
 ## License
 
 Released under the [MIT License](LICENSE). Copyright © 2026 Ahmad Mujtaba.
+
+<p align="center">Made with ❤️ by Ahmad Mujtaba</p>
