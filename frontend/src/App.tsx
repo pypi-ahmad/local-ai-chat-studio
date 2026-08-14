@@ -8,6 +8,8 @@ import {
   ChevronDown,
   ChevronRight,
   ChevronUp,
+  ChevronsDown,
+  ChevronsUp,
   CirclePlus,
   Command,
   Copy,
@@ -457,11 +459,53 @@ function ChatWorkspace({
   const [prompt, setPrompt] = useState('')
   const [attachmentAttempts, setAttachmentAttempts] = useState<AttachmentAttempt[]>([])
   const [messageIndex, setMessageIndex] = useState(0)
+  const [atTranscriptEnd, setAtTranscriptEnd] = useState(true)
+  const [unreadOutput, setUnreadOutput] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
   const messageRefs = useRef(new Map<string, HTMLElement>())
+  const messageRegionRef = useRef<HTMLDivElement>(null)
+  const liveMessageRef = useRef<HTMLElement>(null)
+  const atTranscriptEndRef = useRef(true)
+  const previousConversationId = useRef<string | undefined>(undefined)
+  const previousLiveOutput = useRef('')
   const selected = models.find((model) => `${model.provider}::${model.id}` === selectedModel)
   const messages = conversation?.messages ?? []
-  useLayoutEffect(() => setMessageIndex(Math.max(0, messages.length - 1)), [conversation?.id, messages.length])
+  const lastMessageId = messages.at(-1)?.id
+  useLayoutEffect(() => {
+    const changedConversation = previousConversationId.current !== conversation?.id
+    previousConversationId.current = conversation?.id
+    if (changedConversation) {
+      atTranscriptEndRef.current = true
+      setAtTranscriptEnd(true)
+      setUnreadOutput(false)
+      messageRefs.current.get(lastMessageId ?? '')?.scrollIntoView({ behavior: 'auto', block: 'end' })
+    }
+    if (changedConversation || atTranscriptEndRef.current) setMessageIndex(Math.max(0, messages.length - 1))
+  }, [conversation?.id, lastMessageId, messages.length])
+  useEffect(() => {
+    const viewport = messageRegionRef.current?.querySelector<HTMLElement>('[data-slot="scroll-area-viewport"]')
+    if (!viewport) return
+    const trackPosition = () => {
+      if (!viewport.scrollHeight && !viewport.clientHeight) return
+      const atEnd = viewport.scrollHeight - viewport.scrollTop - viewport.clientHeight <= 32
+      atTranscriptEndRef.current = atEnd
+      setAtTranscriptEnd(atEnd)
+      if (atEnd) {
+        setUnreadOutput(false)
+        setMessageIndex(Math.max(0, messages.length - 1))
+      }
+    }
+    viewport.addEventListener('scroll', trackPosition, { passive: true })
+    trackPosition()
+    return () => viewport.removeEventListener('scroll', trackPosition)
+  }, [conversation?.id, messages.length])
+  useEffect(() => {
+    const receivedOutput = liveOutput.length > previousLiveOutput.current.length
+    previousLiveOutput.current = liveOutput
+    if (!receivedOutput) return
+    if (atTranscriptEndRef.current) liveMessageRef.current?.scrollIntoView({ behavior: 'auto', block: 'end' })
+    else setUnreadOutput(true)
+  }, [liveOutput])
   const submit = async () => {
     if (!prompt.trim()) return
     await onSend(prompt.trim())
@@ -481,10 +525,21 @@ function ChatWorkspace({
     setAttachmentAttempts((current) => [...current, attempt])
     void uploadAttachment(attempt)
   }
-  const navigateMessage = (nextIndex: number) => {
+  const navigateMessage = (nextIndex: number, block: ScrollLogicalPosition = 'center') => {
     const boundedIndex = Math.max(0, Math.min(messages.length - 1, nextIndex))
+    atTranscriptEndRef.current = false
+    setAtTranscriptEnd(false)
     setMessageIndex(boundedIndex)
-    messageRefs.current.get(messages[boundedIndex]?.id)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    messageRefs.current.get(messages[boundedIndex]?.id)?.scrollIntoView({ behavior: 'smooth', block })
+  }
+  const jumpToBottom = () => {
+    const finalIndex = Math.max(0, messages.length - 1)
+    atTranscriptEndRef.current = true
+    setAtTranscriptEnd(true)
+    setUnreadOutput(false)
+    setMessageIndex(finalIndex)
+    const target = liveMessageRef.current ?? messageRefs.current.get(messages[finalIndex]?.id)
+    target?.scrollIntoView({ behavior: 'smooth', block: 'end' })
   }
   return (
     <main aria-label="Chat workspace" className="workspace">
@@ -494,7 +549,7 @@ function ChatWorkspace({
         <div className="action-row"><Button aria-label="Open runs" onClick={onRuns} variant="outline"><RotateCcw /> Runs</Button><Button aria-controls="context-evidence-inspector" aria-expanded={inspectorOpen} aria-label={`${inspectorOpen ? 'Close' : 'Open'} context and evidence inspector`} onClick={onInspector} variant={inspectorOpen ? 'secondary' : 'outline'}><PanelRightOpen /> Inspector</Button><Button disabled={!conversation?.messages.length || savingMemories || !selectedModel} onClick={onSaveMemories} variant="outline"><Brain /> {savingMemories ? 'Saving…' : 'Save memories & close'}</Button></div>
       </header>
       <ContextRail model={selected} plan={plan} />
-      <div className="message-region"><ScrollArea className="message-area">
+      <div className="message-region" ref={messageRegionRef}><ScrollArea className="message-area">
         <div className="messages">
           {!conversation?.messages.length && !liveOutput && (
             <div className="welcome"><div className="signal-mark">LOCAL / CONTEXT / CONTROL</div><h3>Work with the whole trail visible.</h3><p>Inspect what enters the prompt, keep private context local, and replay any answer.</p></div>
@@ -510,9 +565,16 @@ function ChatWorkspace({
               </div>
             </article>
           ))}
-          {liveOutput && <article className="message assistant live"><div className="message-label"><span>Assistant</span><Badge>streaming</Badge></div><MarkdownContent content={liveOutput} /></article>}
+          {liveOutput && <article className="message assistant live" ref={liveMessageRef}><div className="message-label"><span>Assistant</span><Badge>streaming</Badge></div><MarkdownContent content={liveOutput} /></article>}
         </div>
-      </ScrollArea>{messages.length > 1 && <nav aria-label="Message navigation" className="message-navigator"><Button aria-label="Previous message" disabled={messageIndex === 0} onClick={() => navigateMessage(messageIndex - 1)} size="icon-sm" variant="ghost"><ChevronUp /></Button><span aria-live="polite">{messageIndex + 1} / {messages.length}</span><Button aria-label="Next message" disabled={messageIndex === messages.length - 1} onClick={() => navigateMessage(messageIndex + 1)} size="icon-sm" variant="ghost"><ChevronDown /></Button></nav>}</div>
+      </ScrollArea>{(messages.length > 0 || liveOutput) && <nav aria-label="Message navigation" className={unreadOutput ? 'message-navigator has-unread' : 'message-navigator'}>
+        {unreadOutput && <span aria-label="Unread output" className="message-unread" role="status">New output</span>}
+        <Button aria-label="Jump to top" disabled={!messages.length || messageIndex === 0} onClick={() => navigateMessage(0, 'start')} size="icon-sm" variant="ghost"><ChevronsUp /></Button>
+        <Button aria-label="Previous message" disabled={!messages.length || messageIndex === 0} onClick={() => navigateMessage(messageIndex - 1)} size="icon-sm" variant="ghost"><ChevronUp /></Button>
+        <span aria-live="polite" className="message-position">{messages.length ? `${messageIndex + 1} / ${messages.length}` : 'Live'}</span>
+        <Button aria-label="Next message" disabled={!messages.length || messageIndex === messages.length - 1} onClick={() => navigateMessage(messageIndex + 1)} size="icon-sm" variant="ghost"><ChevronDown /></Button>
+        <Button aria-label={unreadOutput ? 'Jump to bottom, new output available' : 'Jump to bottom'} className={unreadOutput ? 'unread-target' : undefined} disabled={atTranscriptEnd && !unreadOutput} onClick={jumpToBottom} size="icon-sm" variant="ghost"><ChevronsDown /></Button>
+      </nav>}</div>
       {pendingPlan && (
         <div className="safety-strip" role="alert">
           <ShieldCheck /><div><strong>Review before sending</strong><p>{pendingPlan.findings.map((finding) => finding.message).join(' · ')}</p></div>
