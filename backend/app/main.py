@@ -254,7 +254,10 @@ def create_app(
     ) -> Conversation:
         try:
             return store.update_conversation(
-                conversation_id, title=payload.title, pinned=payload.pinned
+                conversation_id,
+                title=payload.title,
+                pinned=payload.pinned,
+                settings=payload.settings,
             )
         except KeyError as exc:
             raise HTTPException(404, "Conversation not found") from exc

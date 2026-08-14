@@ -138,6 +138,58 @@ def test_turn_forwards_and_persists_reasoning_effort() -> None:
         assert adapter.effort == "high"
 
 
+def test_custom_system_prompt_is_included_in_turn_context(client: TestClient) -> None:
+    conversation_id = _conversation(client)
+    payload = {
+        "provider": "echo",
+        "model": "deterministic",
+        "content": "hello",
+        "system_prompt": "Respond using only short sentences.",
+    }
+
+    plan = client.post(
+        f"/api/v1/conversations/{conversation_id}/turns/preflight", json=payload
+    ).json()
+    created = client.post(
+        f"/api/v1/conversations/{conversation_id}/turns",
+        json={**payload, "plan_hash": plan["plan_hash"]},
+    )
+    run_id = created.json()["id"]
+    with client.stream("GET", f"/api/v1/runs/{run_id}/events") as stream:
+        list(stream.iter_lines())
+
+    bundle = client.get(f"/api/v1/runs/{run_id}/bundle").json()
+    system_message = bundle["messages"][0]
+    assert system_message["role"] == "system"
+    assert "Respond using only short sentences." in system_message["content"]
+
+
+def test_store_migrates_legacy_conversations_with_default_settings(tmp_path) -> None:
+    from backend.app.store import Store
+
+    database = tmp_path / "legacy.db"
+    with sqlite3.connect(database) as connection:
+        connection.execute(
+            "CREATE TABLE conversations ("
+            "id TEXT PRIMARY KEY, title TEXT NOT NULL, model TEXT NOT NULL, "
+            "created_at TEXT NOT NULL, updated_at TEXT NOT NULL, "
+            "memory_extracted_at TEXT, pinned INTEGER NOT NULL DEFAULT 0)"
+        )
+        connection.execute(
+            "INSERT INTO conversations VALUES "
+            "('legacy', 'Legacy', 'unknown', 'now', 'now', NULL, 0)"
+        )
+
+    store = Store(str(database))
+
+    assert store.get_conversation("legacy").settings.model_key == ""
+    columns = {
+        row[1]
+        for row in store.connection.execute("PRAGMA table_info(conversations)")
+    }
+    assert "settings_json" in columns
+
+
 def test_turn_persists_messages_context_and_replay_bundle(client: TestClient) -> None:
     conversation_id = _conversation(client)
     run_id = _complete_echo_run(client, conversation_id, "repeat this")

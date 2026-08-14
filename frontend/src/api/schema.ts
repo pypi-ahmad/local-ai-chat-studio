@@ -1011,6 +1011,7 @@ export interface components {
              * @default false
              */
             pinned: boolean;
+            settings?: components["schemas"]["ConversationSettings"];
             /**
              * Messages
              * @default []
@@ -1035,12 +1036,55 @@ export interface components {
              */
             title: string;
         };
+        /** ConversationSettings */
+        ConversationSettings: {
+            /**
+             * Model Key
+             * @default
+             */
+            model_key: string;
+            /** Reasoning Effort */
+            reasoning_effort?: ("none" | "minimal" | "low" | "medium" | "high" | "xhigh" | "max") | null;
+            /**
+             * Temperature
+             * @default 0.7
+             */
+            temperature: number;
+            /**
+             * Context Policy
+             * @default full
+             * @enum {string}
+             */
+            context_policy: "full" | "chat" | "files";
+            /**
+             * Include Web
+             * @default false
+             */
+            include_web: boolean;
+            /**
+             * Auto Compress History
+             * @default false
+             */
+            auto_compress_history: boolean;
+            /**
+             * System Prompt
+             * @default
+             */
+            system_prompt: string;
+            /**
+             * Layout
+             * @default conversation
+             * @enum {string}
+             */
+            layout: "conversation" | "compact" | "full-width";
+        };
         /** ConversationUpdate */
         ConversationUpdate: {
             /** Title */
             title?: string | null;
             /** Pinned */
             pinned?: boolean | null;
+            settings?: components["schemas"]["ConversationSettings"] | null;
         };
         /** CredentialInput */
         CredentialInput: {
@@ -1493,6 +1537,11 @@ export interface components {
             /** Reasoning Effort */
             reasoning_effort?: ("none" | "minimal" | "low" | "medium" | "high" | "xhigh" | "max") | null;
             /**
+             * System Prompt
+             * @default
+             */
+            system_prompt: string;
+            /**
              * Include Memory
              * @default true
              */
@@ -1559,6 +1608,11 @@ export interface components {
             temperature: number;
             /** Reasoning Effort */
             reasoning_effort?: ("none" | "minimal" | "low" | "medium" | "high" | "xhigh" | "max") | null;
+            /**
+             * System Prompt
+             * @default
+             */
+            system_prompt: string;
             /**
              * Include Memory
              * @default true

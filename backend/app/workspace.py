@@ -244,7 +244,13 @@ def build_context_plan(
     web_results = web_results or []
     web_text = "\n".join(item.get("snippet", "") for item in web_results)
     sections = [
-        ContextSection(kind="system", estimated_tokens=24),
+        ContextSection(
+            kind="system",
+            estimated_tokens=estimate_tokens(
+                payload.system_prompt
+                or "You are a helpful personal AI assistant. Be direct and accurate."
+            ),
+        ),
         ContextSection(
             kind="history",
             estimated_tokens=estimate_tokens(history_text),
@@ -476,7 +482,10 @@ def assemble_messages(
         if source.included and source.trust == "trusted" and source.id not in excluded
     }
     messages: list[ChatMessage] = []
-    system_parts = ["You are a helpful personal AI assistant. Be direct and accurate."]
+    system_parts = [
+        payload.system_prompt.strip()
+        or "You are a helpful personal AI assistant. Be direct and accurate."
+    ]
     focus = store.active_focus(conversation_id)
     if focus:
         system_parts.append(

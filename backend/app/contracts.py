@@ -30,9 +30,21 @@ class ConversationCreate(BaseModel):
     title: str = Field(default="New chat", min_length=1, max_length=200)
 
 
+class ConversationSettings(BaseModel):
+    model_key: str = Field(default="", max_length=500)
+    reasoning_effort: ReasoningEffort | None = None
+    temperature: float = Field(default=0.7, ge=0, le=2)
+    context_policy: Literal["full", "chat", "files"] = "full"
+    include_web: bool = False
+    auto_compress_history: bool = False
+    system_prompt: str = Field(default="", max_length=50_000)
+    layout: Literal["conversation", "compact", "full-width"] = "conversation"
+
+
 class ConversationUpdate(BaseModel):
     title: str | None = Field(default=None, min_length=1, max_length=200)
     pinned: bool | None = None
+    settings: ConversationSettings | None = None
 
 
 class Conversation(BaseModel):
@@ -42,6 +54,7 @@ class Conversation(BaseModel):
     updated_at: str
     model: str = "unknown"
     pinned: bool = False
+    settings: ConversationSettings = Field(default_factory=ConversationSettings)
     messages: list[Message] = []
 
 
@@ -188,6 +201,7 @@ class TurnPreflight(BaseModel):
     content: str = Field(min_length=1, max_length=200_000)
     temperature: float = Field(default=0.7, ge=0, le=2)
     reasoning_effort: ReasoningEffort | None = None
+    system_prompt: str = Field(default="", max_length=50_000)
     include_memory: bool = True
     include_retrieval: bool = True
     include_attachments: bool = True

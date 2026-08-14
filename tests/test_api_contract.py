@@ -83,6 +83,34 @@ def test_conversation_crud_preserves_message_order(client: TestClient) -> None:
     ]
 
 
+def test_conversation_settings_are_saved_independently(client: TestClient) -> None:
+    first = client.post("/api/v1/conversations", json={"title": "First"}).json()
+    second = client.post("/api/v1/conversations", json={"title": "Second"}).json()
+    settings = {
+        "model_key": "openai::gpt-5.6",
+        "reasoning_effort": "high",
+        "temperature": 0.3,
+        "context_policy": "files",
+        "include_web": True,
+        "auto_compress_history": True,
+        "system_prompt": "Answer as a careful reviewer.",
+        "layout": "compact",
+    }
+
+    updated = client.patch(
+        f"/api/v1/conversations/{first['id']}", json={"settings": settings}
+    )
+
+    assert updated.status_code == 200
+    assert updated.json()["settings"] == settings
+    assert client.get(f"/api/v1/conversations/{first['id']}").json()[
+        "settings"
+    ] == settings
+    assert client.get(f"/api/v1/conversations/{second['id']}").json()[
+        "settings"
+    ] != settings
+
+
 def test_provider_secret_is_scoped_to_browser_session(client: TestClient) -> None:
     connected = client.put(
         "/api/v1/providers/openai/credential", json={"api_key": "sk-test"}

@@ -14,6 +14,7 @@ from backend.app.contracts import (
     BackpackCreate,
     BackpackItem,
     Conversation,
+    ConversationSettings,
     FocusCreate,
     FocusSession,
     Memory,
@@ -37,7 +38,8 @@ CREATE TABLE IF NOT EXISTS conversations (
     created_at TEXT NOT NULL,
     updated_at TEXT NOT NULL,
     memory_extracted_at TEXT,
-    pinned INTEGER NOT NULL DEFAULT 0
+    pinned INTEGER NOT NULL DEFAULT 0,
+    settings_json TEXT NOT NULL DEFAULT '{}'
 );
 CREATE TABLE IF NOT EXISTS messages (
     id TEXT PRIMARY KEY,
@@ -173,6 +175,9 @@ class Store:
             )
             self._ensure_column("conversations", "pinned", "INTEGER NOT NULL DEFAULT 0")
             self._ensure_column("conversations", "memory_extracted_at", "TEXT")
+            self._ensure_column(
+                "conversations", "settings_json", "TEXT NOT NULL DEFAULT '{}'"
+            )
             self._ensure_column("messages", "attachments_json", "TEXT")
             self._ensure_column("messages", "metadata_json", "TEXT")
             self._ensure_column("messages", "run_id", "TEXT")
@@ -199,13 +204,26 @@ class Store:
                 f"ALTER TABLE {table} ADD COLUMN {column} {definition}"
             )
 
-    def create_conversation(self, title: str, model: str = "unknown") -> Conversation:
+    def create_conversation(
+        self,
+        title: str,
+        model: str = "unknown",
+        settings: ConversationSettings | None = None,
+    ) -> Conversation:
         conversation_id, now = str(uuid.uuid4()), utc_now()
         with self.lock, self.connection:
             self.connection.execute(
-                "INSERT INTO conversations (id, title, model, created_at, updated_at) "
-                "VALUES (?, ?, ?, ?, ?)",
-                (conversation_id, title, model, now, now),
+                "INSERT INTO conversations "
+                "(id, title, model, settings_json, created_at, updated_at) "
+                "VALUES (?, ?, ?, ?, ?, ?)",
+                (
+                    conversation_id,
+                    title,
+                    model,
+                    (settings or ConversationSettings()).model_dump_json(),
+                    now,
+                    now,
+                ),
             )
         return self.get_conversation(conversation_id)
 
@@ -269,6 +287,7 @@ class Store:
         *,
         title: str | None = None,
         pinned: bool | None = None,
+        settings: ConversationSettings | None = None,
     ) -> Conversation:
         self.get_conversation(conversation_id)
         fields: list[str] = []
@@ -279,6 +298,9 @@ class Store:
         if pinned is not None:
             fields.append("pinned = ?")
             values.append(int(pinned))
+        if settings is not None:
+            fields.append("settings_json = ?")
+            values.append(settings.model_dump_json())
         if fields:
             fields.append("updated_at = ?")
             values.extend([utc_now(), conversation_id])
@@ -344,7 +366,7 @@ class Store:
         self, conversation_id: str, message_id: str, title: str
     ) -> Conversation:
         source = self.get_conversation(conversation_id)
-        target = self.create_conversation(title, source.model)
+        target = self.create_conversation(title, source.model, source.settings)
         found = False
         for message in source.messages:
             self.add_message(
@@ -1140,6 +1162,7 @@ class Store:
             title=row["title"],
             model=row["model"],
             pinned=bool(row["pinned"]),
+            settings=ConversationSettings.model_validate_json(row["settings_json"]),
             created_at=row["created_at"],
             updated_at=row["updated_at"],
             messages=messages,
