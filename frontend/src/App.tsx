@@ -80,10 +80,9 @@ import {
 } from './api/client'
 
 const navigationGroups: ReadonlyArray<{ label: string; items: ReadonlyArray<readonly [Page, typeof MessageSquare]> }> = [
-  { label: 'Work', items: [['Chat', MessageSquare], ['Compare', GitCompareArrows]] },
-  { label: 'Inspect', items: [['Context', Brain], ['Evidence', ShieldCheck], ['Replay', RotateCcw]] },
-  { label: 'Personalize', items: [['Focus', Focus], ['Library', Library]] },
-  { label: 'System', items: [['Providers', PlugZap], ['Settings', Settings]] },
+  { label: 'Primary', items: [['Chat', MessageSquare], ['Compare', GitCompareArrows], ['Library', Library]] },
+  { label: 'Workspace', items: [['Focus', Focus]] },
+  { label: 'Administration', items: [['Providers', PlugZap], ['Settings', Settings]] },
 ]
 
 type InspectorTab = 'context' | 'evidence'
@@ -367,6 +366,7 @@ function ChatWorkspace({
   onHistory,
   inspectorOpen,
   onInspector,
+  onRuns,
 }: {
   conversation: Conversation | null
   models: ModelSummary[]
@@ -395,6 +395,7 @@ function ChatWorkspace({
   onHistory: () => void
   inspectorOpen: boolean
   onInspector: () => void
+  onRuns: () => void
 }) {
   const [prompt, setPrompt] = useState('')
   const [attachmentAttempts, setAttachmentAttempts] = useState<AttachmentAttempt[]>([])
@@ -433,7 +434,7 @@ function ChatWorkspace({
       <header className="workspace-header">
         <Button aria-label="Open conversation history" className="mobile-history-trigger" onClick={onHistory} size="icon" variant="ghost"><PanelLeft /></Button>
         <div className="workspace-title"><p className="eyebrow">Conversation</p><h2>{conversation?.title ?? 'New conversation'}</h2>{selected?.pricing && <small>Estimated pricing: {pricingLabel(selected)} · <a href={selected.pricing.source_url} rel="noreferrer" target="_blank">official source</a></small>}</div>
-        <div className="action-row"><Button aria-controls="context-evidence-inspector" aria-expanded={inspectorOpen} aria-label={`${inspectorOpen ? 'Close' : 'Open'} context and evidence inspector`} onClick={onInspector} variant={inspectorOpen ? 'secondary' : 'outline'}><PanelRightOpen /> Inspector</Button><Button disabled={!conversation?.messages.length || savingMemories || !selectedModel} onClick={onSaveMemories} variant="outline"><Brain /> {savingMemories ? 'Saving…' : 'Save memories & close'}</Button></div>
+        <div className="action-row"><Button aria-label="Open runs" onClick={onRuns} variant="outline"><RotateCcw /> Runs</Button><Button aria-controls="context-evidence-inspector" aria-expanded={inspectorOpen} aria-label={`${inspectorOpen ? 'Close' : 'Open'} context and evidence inspector`} onClick={onInspector} variant={inspectorOpen ? 'secondary' : 'outline'}><PanelRightOpen /> Inspector</Button><Button disabled={!conversation?.messages.length || savingMemories || !selectedModel} onClick={onSaveMemories} variant="outline"><Brain /> {savingMemories ? 'Saving…' : 'Save memories & close'}</Button></div>
       </header>
       <ContextRail model={selected} plan={plan} />
       <div className="message-region"><ScrollArea className="message-area">
@@ -637,12 +638,14 @@ function EvidencePage({ activity, plan, excluded, onToggle }: { activity: RunSna
   return <Surface eyebrow="Why this answer" title="Evidence" description="Inspect sources, exclude individual records, and verify integrity receipts."><div className="surface-grid"><Card><CardHeader><CardTitle>Retrieved sources</CardTitle></CardHeader><CardContent><EvidenceSourceList excluded={excluded} onToggle={onToggle} plan={plan} /></CardContent></Card><Card><CardHeader><CardTitle>Integrity chain</CardTitle></CardHeader><CardContent className="stack-list">{activity.map((run) => <div className="data-row" key={run.id}><div><strong>{run.model}</strong><small>{run.status} · {String(run.metrics.elapsed_seconds ?? '—')}s</small></div><code>{run.receipt_hash?.slice(0, 12) || 'pending'}</code></div>)}</CardContent></Card></div></Surface>
 }
 
-function ReplayPage({ activity, models, providers, selectedModel, onModel, onReplay }: { activity: RunSnapshot[]; models: ModelSummary[]; providers: ProviderSummary[]; selectedModel: string; onModel: (value: string) => void; onReplay: (run: RunSnapshot, modelKey: string) => Promise<void> }) {
+function ReplayPage({ activity, models, providers, selectedModel, onModel, onReplay, embedded = false }: { activity: RunSnapshot[]; models: ModelSummary[]; providers: ProviderSummary[]; selectedModel: string; onModel: (value: string) => void; onReplay: (run: RunSnapshot, modelKey: string) => Promise<void>; embedded?: boolean }) {
   const [left, setLeft] = useState<string | null>(null)
   const [diff, setDiff] = useState('')
   const saveBundle = async (run: RunSnapshot, mode: 'full' | 'redacted') => { const bundle = await api.bundle(run.id, mode); const url = URL.createObjectURL(new Blob([JSON.stringify(bundle, null, 2)], { type: 'application/json' })); const anchor = document.createElement('a'); anchor.href = url; anchor.download = `${run.id}-${mode}.json`; anchor.click(); URL.revokeObjectURL(url) }
   const compare = async (run: RunSnapshot) => { if (!left) { setLeft(run.id); setDiff(''); return } const result = await api.diff(left, run.id); setDiff(result.diff || 'Outputs are identical.'); setLeft(null) }
-  return <Surface eyebrow="Prompt tape" title="Replay lab" description="Re-run a recorded prompt, compare outputs, and export full or privacy-safe bundles."><div className="replay-target"><p className="section-label">Replay target</p><ProviderModelPicker modelLabel="Replay model" models={models} onChange={onModel} providerLabel="Replay provider" providers={providers} value={selectedModel} /></div><div className="timeline">{activity.map((run) => <Card key={run.id}><CardContent className="run-row"><div><Badge variant="outline">{run.status}</Badge><h3>{run.model}</h3><p>{run.output.slice(0, 180) || run.error || 'No output yet'}</p><small>{run.receipt_hash ? `receipt ${run.receipt_hash.slice(0, 12)}` : 'receipt pending'}</small></div><div className="inline-actions"><Button disabled={!selectedModel} onClick={() => onReplay(run, selectedModel)} variant="outline"><RotateCcw /> Replay</Button><Button onClick={() => compare(run)} variant="outline">{left ? 'Compare here' : 'Select for diff'}</Button><Button onClick={() => saveBundle(run, 'full')} size="icon-sm" variant="ghost" title="Export full local bundle"><Download /></Button><Button onClick={() => saveBundle(run, 'redacted')} size="icon-sm" variant="ghost" title="Export redacted share bundle"><ShieldCheck /></Button></div></CardContent></Card>)}{diff && <pre className="output-block">{diff}</pre>}</div></Surface>
+  const content = <><div className="replay-target"><p className="section-label">Replay target</p><ProviderModelPicker modelLabel="Replay model" models={models} onChange={onModel} providerLabel="Replay provider" providers={providers} value={selectedModel} /></div><div className="timeline">{activity.map((run) => <Card key={run.id}><CardContent className="run-row"><div><Badge variant="outline">{run.status}</Badge><h3>{run.model}</h3><p>{run.output.slice(0, 180) || run.error || 'No output yet'}</p><small>{run.receipt_hash ? `receipt ${run.receipt_hash.slice(0, 12)}` : 'receipt pending'}</small></div><div className="inline-actions"><Button disabled={!selectedModel} onClick={() => onReplay(run, selectedModel)} variant="outline"><RotateCcw /> Replay</Button><Button onClick={() => compare(run)} variant="outline">{left ? 'Compare here' : 'Select for diff'}</Button><Button onClick={() => saveBundle(run, 'full')} size="icon-sm" variant="ghost" title="Export full local bundle"><Download /></Button><Button onClick={() => saveBundle(run, 'redacted')} size="icon-sm" variant="ghost" title="Export redacted share bundle"><ShieldCheck /></Button></div></CardContent></Card>)}{diff && <pre className="output-block">{diff}</pre>}</div></>
+  if (embedded) return <section className="runs-panel"><SheetHeader><SheetTitle>Runs</SheetTitle><SheetDescription>Replay, compare, or export recorded answers.</SheetDescription></SheetHeader>{content}</section>
+  return <Surface eyebrow="Prompt tape" title="Replay lab" description="Re-run a recorded prompt, compare outputs, and export full or privacy-safe bundles.">{content}</Surface>
 }
 
 function FocusPage({ conversationId, onCreate }: { conversationId: string | null; onCreate: (objective: string, criteria: string, constraints: string[]) => Promise<void> }) {
@@ -746,6 +749,7 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
   const [savingMemories, setSavingMemories] = useState(false)
   const [excludedSources, setExcludedSources] = useState<Set<string>>(new Set())
   const [historyOpen, setHistoryOpen] = useState(false)
+  const [runsOpen, setRunsOpen] = useState(false)
 
   const setPage = useCallback((next: Page) => {
     navigate(pathForPage(next, next === 'Chat' ? activeId : null))
@@ -917,11 +921,18 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
       <div className={navigationCollapsed ? 'app-shell nav-collapsed' : 'app-shell nav-expanded'}>
         <Navigation collapsed={navigationCollapsed} connected={connected} onCollapsed={setNavigationCollapsed} onPage={setPage} page={page} />
         {page === 'Chat' && <ConversationHistory activeId={activeId} conversations={conversations} onCreate={createConversation} onDelete={async (id) => { if (!window.confirm('Delete this conversation?')) return; await api.deleteConversation(id); if (activeId === id) { setActiveId(null); navigate('/chat') } await refreshConversations() }} onSelect={selectConversation} onUpdate={async (id, payload) => { await api.updateConversation(id, payload); await refreshConversations(); if (activeId === id) setConversation(await api.conversation(id)) }} />}
-        {page === 'Chat' && <div className={wideInspector && inspectorOpen ? 'chat-stage inspector-docked' : 'chat-stage'}><ChatWorkspace attachmentIds={attachmentIds} conversation={conversation} error={error} inspectorOpen={inspectorOpen} liveOutput={liveOutput} models={models} onAttachment={(id) => setAttachmentIds((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} onBranch={async (messageId) => { if (!activeId) return; const branch = await api.branchConversation(activeId, messageId); await refreshConversations(); selectConversation(branch.id) }} onCancel={async () => { if (activeRun) await api.cancelRun(activeRun) }} onConfirm={async () => { if (pendingPayload && pendingPlan) await submitTurn(pendingPayload, pendingPlan, pendingPlan.findings.map((item) => item.id)) }} onFeedback={api.setFeedback} onHistory={() => setHistoryOpen(true)} onInspector={() => setInspectorOpen((current) => !current)} onModel={setSelectedModel} onReasoningEffort={setReasoningEffort} onSanitize={async () => { if (!pendingPayload) return; const sanitized = await api.sanitize(pendingPayload.content); setPendingPlan(null); setPendingPayload(null); await send(sanitized.content) }} onSaveMemories={saveMemoriesAndClose} onSend={send} onUpload={async (file) => { await upload(file, true) }} pendingPlan={pendingPlan} plan={plan} providers={providers} reasoningEffort={reasoningEffort} running={Boolean(activeRun)} savingMemories={savingMemories} selectedModel={selectedModel} uploads={uploads} />{wideInspector && inspectorOpen && inspector}</div>}
+        {page === 'Chat' && <div className={wideInspector && inspectorOpen ? 'chat-stage inspector-docked' : 'chat-stage'}><ChatWorkspace attachmentIds={attachmentIds} conversation={conversation} error={error} inspectorOpen={inspectorOpen} liveOutput={liveOutput} models={models} onAttachment={(id) => setAttachmentIds((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} onBranch={async (messageId) => { if (!activeId) return; const branch = await api.branchConversation(activeId, messageId); await refreshConversations(); selectConversation(branch.id) }} onCancel={async () => { if (activeRun) await api.cancelRun(activeRun) }} onConfirm={async () => { if (pendingPayload && pendingPlan) await submitTurn(pendingPayload, pendingPlan, pendingPlan.findings.map((item) => item.id)) }} onFeedback={api.setFeedback} onHistory={() => setHistoryOpen(true)} onInspector={() => setInspectorOpen((current) => !current)} onModel={setSelectedModel} onReasoningEffort={setReasoningEffort} onRuns={() => setRunsOpen(true)} onSanitize={async () => { if (!pendingPayload) return; const sanitized = await api.sanitize(pendingPayload.content); setPendingPlan(null); setPendingPayload(null); await send(sanitized.content) }} onSaveMemories={saveMemoriesAndClose} onSend={send} onUpload={async (file) => { await upload(file, true) }} pendingPlan={pendingPlan} plan={plan} providers={providers} reasoningEffort={reasoningEffort} running={Boolean(activeRun)} savingMemories={savingMemories} selectedModel={selectedModel} uploads={uploads} />{wideInspector && inspectorOpen && inspector}</div>}
         {page === 'Chat' && !wideInspector && <Sheet onOpenChange={setInspectorOpen} open={inspectorOpen}><SheetContent className="inspector-sheet" showCloseButton={false} side="right">{inspector}</SheetContent></Sheet>}
         <Sheet onOpenChange={setHistoryOpen} open={historyOpen}>
           <SheetContent className="history-sheet" side="left">
             <ConversationHistory activeId={activeId} conversations={conversations} mobile onCreate={createConversation} onDelete={async (id) => { if (!window.confirm('Delete this conversation?')) return; await api.deleteConversation(id); if (activeId === id) { setActiveId(null); navigate('/chat') } await refreshConversations() }} onSelect={(id) => { selectConversation(id); setHistoryOpen(false) }} onUpdate={async (id, payload) => { await api.updateConversation(id, payload); await refreshConversations(); if (activeId === id) setConversation(await api.conversation(id)) }} />
+          </SheetContent>
+        </Sheet>
+        <Sheet onOpenChange={setRunsOpen} open={runsOpen}>
+          <SheetContent className="runs-sheet" side="right">
+            {runsOpen && <div className="runs-sheet-content">
+            <ReplayPage activity={activity} embedded models={models} onModel={setSelectedModel} onReplay={async (run, key) => { const model = models.find((candidate) => modelKey(candidate) === key); if (!model) return; const replay = await api.replay(run.id, model.provider, model.id); await streamRun(replay.id, () => {}); setActivity(await api.activity()) }} providers={providers} selectedModel={selectedModel} />
+            </div>}
           </SheetContent>
         </Sheet>
         {page === 'Compare' && <ComparePage models={models} providers={providers} />}

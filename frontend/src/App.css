@@ -184,6 +184,9 @@ h3 { margin-bottom: 8px; font-size: 26px; font-weight: 650; letter-spacing: -.03
 .inspector-content > button { justify-self: stretch; }
 .inspector-sheet { width: min(430px,92vw)!important; max-width: none!important; padding: 0!important; gap: 0!important; border-color: #4b2733!important; background: #0d0d11!important; }
 .inspector-sheet .context-inspector { border-left: 0; }
+.runs-sheet { width: min(680px,96vw)!important; max-width: none!important; padding: 0!important; border-color: #4b2733!important; background: #0d0d11!important; }
+.runs-panel { min-height: 100%; display: grid; align-content: start; gap: 18px; padding: 22px; overflow-y: auto; }
+.runs-panel .timeline { padding-bottom: 24px; }
 .context-section-list .data-row { align-items: flex-start; }
 .context-section-list strong { text-transform: capitalize; }
 .context-section-list small { display: block; max-width: 210px; margin-top: 2px; color: #827a83; font-size: 10px; }
