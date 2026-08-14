@@ -7,6 +7,16 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.6.8] - 2026-08-15
+
+### Added
+
+- Added an in-chat Runs drawer for replay, output comparison, and reproducibility exports.
+
+### Changed
+
+- Focused primary navigation on Chat, Compare, and Library, with advanced workspaces grouped under Workspace and Administration.
+
 ## [0.6.7] - 2026-08-15
 
 ### Added
