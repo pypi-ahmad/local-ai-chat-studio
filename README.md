@@ -15,7 +15,7 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 ### Conversations and generation
 
 - **Streaming chat:** Responses arrive incrementally through server-sent events. A running generation can be cancelled without discarding the partial output already received.
-- **Rich response rendering:** Chat and comparison answers render CommonMark and GitHub-flavored Markdown, tables, task lists, syntax-highlighted fenced code with copy controls, and inline or display LaTeX through KaTeX. Raw HTML remains disabled.
+- **Rich response rendering:** Chat and comparison answers render CommonMark and GitHub-flavored Markdown, tables, task lists, syntax-highlighted fenced code with copy controls, inline or display LaTeX through KaTeX, and fenced Mermaid diagrams. Mermaid loads only when needed, uses strict security, and shows invalid source with a clear error; raw HTML remains disabled.
 - **Conversation management:** Create, search, rename, pin, and delete conversations. Branch from any message to explore another direction while preserving the earlier history.
 - **Message navigation:** Move through long transcripts one saved message at a time with previous/next controls, an exact position counter, smooth scrolling, and a visible active-message marker.
 - **Feedback and activity:** Rate assistant messages and inspect recorded runs, including status, model, timing, token usage, provenance, and integrity receipts.
