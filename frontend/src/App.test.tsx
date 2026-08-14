@@ -62,8 +62,8 @@ beforeEach(() => {
           provider: 'echo', id: 'deterministic', label: 'Deterministic',
           pricing: { input_per_million: 0, output_per_million: 0, source_url: 'https://ollama.com/', as_of: '2026-08-14' },
         }] },
-        openai: { provider: 'openai', models: [{ provider: 'openai', id: 'gpt-5.6-luna', label: 'Luna', reasoning_efforts: ['none', 'low', 'medium', 'high', 'xhigh', 'max'] }] },
-        agnes: { provider: 'agnes', models: [{ provider: 'agnes', id: 'agnes-2.5-flash', label: 'Agnes 2.5 Flash' }] },
+        openai: { provider: 'openai', models: [{ provider: 'openai', id: 'gpt-5.6-luna', label: 'Luna', context_length: 128000, capabilities: ['vision'], reasoning_efforts: ['none', 'low', 'medium', 'high', 'xhigh', 'max'] }] },
+        agnes: { provider: 'agnes', models: [{ provider: 'agnes', id: 'agnes-2.5-flash', label: 'Agnes 2.5 Flash', context_length: 1000000 }] },
         broken: { provider: 'broken', models: [{ provider: 'broken', id: 'unavailable', label: 'Unavailable' }] },
       })
     }
@@ -140,7 +140,8 @@ describe('studio workspace', () => {
     expect(screen.getByLabelText('Primary navigation')).toBeInTheDocument()
     expect(screen.getByLabelText('Conversation history')).toBeInTheDocument()
     expect(screen.getByLabelText('Chat workspace')).toBeInTheDocument()
-    expect(screen.getByRole('option', { name: /\$0\.00 in \/ \$0\.00 out per 1M/ })).toBeInTheDocument()
+    fireEvent.click(screen.getByLabelText('Model'))
+    expect(await screen.findByRole('option', { name: /\$0\.00 in \/ \$0\.00 out per 1M/ })).toBeInTheDocument()
   })
 
   it('exposes the consolidated product surfaces', () => {
@@ -232,16 +233,24 @@ describe('studio workspace', () => {
     expect(await screen.findByRole('button', { name: 'Connect Claude Pro/Max through OpenCode' })).toBeInTheDocument()
   })
 
-  it('filters chat models after selecting a provider', async () => {
+  it('searches and filters capability-aware models for the selected provider', async () => {
     render(<App />)
     await screen.findByRole('heading', { name: 'Provider architecture' })
 
     expect(screen.getByLabelText('Provider')).toHaveValue('echo')
-    expect(screen.getByLabelText('Model')).toHaveValue('echo::deterministic')
-    fireEvent.change(screen.getByLabelText('Provider'), { target: { value: 'agnes' } })
+    expect(screen.getByLabelText('Model')).toHaveTextContent('Deterministic')
+    fireEvent.change(screen.getByLabelText('Provider'), { target: { value: 'openai' } })
+    expect(screen.getByLabelText('Model')).toHaveTextContent('Luna')
 
-    expect(screen.getByLabelText('Model')).toHaveValue('agnes::agnes-2.5-flash')
-    expect(screen.queryByRole('option', { name: /Deterministic/ })).not.toBeInTheDocument()
+    fireEvent.click(screen.getByLabelText('Model'))
+    expect(await screen.findByText('128K context')).toBeInTheDocument()
+    expect(screen.getByText('Reasoning · 6 levels')).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'vision' }))
+    expect(screen.getByRole('option', { name: /Luna/ })).toHaveTextContent('Vision')
+    fireEvent.change(screen.getByLabelText('Search model'), { target: { value: 'gpt-5.6-luna' } })
+    fireEvent.click(screen.getByRole('option', { name: /Luna/ }))
+
+    expect(screen.getByLabelText('Model')).toHaveTextContent('Luna')
   })
 
   it('opens conversation history from the compact workspace control', async () => {
@@ -258,11 +267,11 @@ describe('studio workspace', () => {
     render(<App />)
     fireEvent.click(screen.getByRole('button', { name: 'Compare' }))
 
-    expect(await screen.findByLabelText('Comparison model 1')).toHaveValue('echo::deterministic')
+    expect(await screen.findByLabelText('Comparison model 1')).toHaveTextContent('Deterministic')
     expect(screen.getByLabelText('Comparison provider 1')).toHaveValue('echo')
-    expect(screen.getByLabelText('Comparison model 2')).toHaveValue('openai::gpt-5.6-luna')
+    expect(screen.getByLabelText('Comparison model 2')).toHaveTextContent('Luna')
     fireEvent.click(screen.getByRole('button', { name: 'Add model' }))
-    expect(screen.getByLabelText('Comparison model 3')).toHaveValue('agnes::agnes-2.5-flash')
+    expect(screen.getByLabelText('Comparison model 3')).toHaveTextContent('Agnes 2.5 Flash')
     fireEvent.change(screen.getByLabelText('Comparison prompt'), { target: { value: 'Compare this' } })
     fireEvent.click(screen.getByRole('button', { name: 'Run 3 models' }))
 

@@ -112,6 +112,39 @@ h3 { margin-bottom: 8px; font-size: 26px; font-weight: 650; letter-spacing: -.03
 .provider-model-picker label { min-width: 0; display: grid; gap: 5px; color: #948a94; font-size: 10px; font-weight: 680; letter-spacing: .08em; text-transform: uppercase; }
 .provider-model-picker select { width: 100%; min-width: 0; max-width: none; color: #f2ebef; font-size: 13px; font-weight: 450; letter-spacing: normal; text-transform: none; }
 .provider-model-picker select:disabled { color: #716a72; }
+.model-picker-trigger { width: 100%; min-width: 0; height: 38px; display: flex; align-items: center; justify-content: space-between; gap: 8px; border: 1px solid var(--quiet-border); border-radius: 10px; background: #121217; color: #f2ebef; padding: 0 10px 0 12px; text-align: left; cursor: pointer; }
+.model-picker-trigger:hover { border-color: #5b3341; background: #17131a; }
+.model-picker-trigger:focus-visible { border-color: var(--rose); box-shadow: 0 0 0 3px rgba(255,61,113,.12); outline: 0; }
+.model-picker-trigger:disabled { color: #716a72; cursor: not-allowed; }
+.model-picker-trigger > span { min-width: 0; display: grid; line-height: 1.12; letter-spacing: normal; text-transform: none; }
+.model-picker-trigger strong,.model-picker-trigger small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.model-picker-trigger strong { font-size: 13px; font-weight: 500; }
+.model-picker-trigger small { margin-top: 2px; color: #827a83; font: 9px/1.1 ui-monospace,SFMono-Regular,Consolas,monospace; }
+.model-picker-trigger svg { flex: 0 0 auto; width: 14px; color: #7f7680; }
+.model-picker-dialog { width: min(680px,calc(100vw - 28px))!important; max-width: 680px!important; gap: 14px!important; border: 1px solid #42313a; background: #111116!important; padding: 18px!important; }
+.model-search-wrap { position: relative; }
+.model-search-wrap > svg { position: absolute; left: 11px; top: 11px; z-index: 1; width: 15px; color: #847a84; }
+.model-search-wrap input { height: 40px; border-color: #3a333d; background: #0c0c10; padding-left: 35px; }
+.model-capability-filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.model-capability-filters button { height: 28px; border: 1px solid #37313a; border-radius: 999px; background: #17151a; color: #9e959e; padding: 0 10px; font-size: 11px; text-transform: capitalize; cursor: pointer; }
+.model-capability-filters button:hover { color: #f4edf1; border-color: #664050; }
+.model-capability-filters button[aria-pressed='true'] { border-color: #85364f; background: #2a1720; color: #ffabc1; box-shadow: inset 0 0 0 1px rgba(255,61,113,.12); }
+.model-option-list { max-height: min(55vh,470px); display: grid; gap: 7px; overflow-y: auto; padding-right: 3px; }
+.model-option { display: grid; gap: 8px; border: 1px solid #302c34; border-radius: 11px; background: #151419; color: #eee7eb; padding: 11px 12px; text-align: left; cursor: pointer; }
+.model-option:hover { border-color: #61404b; background: #1b171d; }
+.model-option[aria-selected='true'] { border-color: #87364f; background: #23151b; box-shadow: inset 2px 0 var(--rose); }
+.model-option-title { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.model-option-title > div { min-width: 0; display: grid; gap: 2px; }
+.model-option-title strong { overflow: hidden; color: #faf4f7; font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+.model-option-title code { overflow: hidden; color: #8f868f; font: 10px/1.3 ui-monospace,SFMono-Regular,Consolas,monospace; text-overflow: ellipsis; white-space: nowrap; }
+.model-option-title svg { width: 16px; color: #ff6f98; }
+.model-capabilities { display: flex; flex-wrap: wrap; gap: 5px; }
+.model-capabilities span { border: 1px solid #38313a; border-radius: 999px; background: #111015; color: #aaa1aa; padding: 2px 7px; font-size: 9px; letter-spacing: .02em; }
+.model-option > small { color: #887f88; font-size: 10px; }
+.model-picker-empty { min-height: 180px; display: grid; place-items: center; align-content: center; gap: 6px; color: #8b828b; text-align: center; }
+.model-picker-empty svg { width: 22px; color: #6e626c; }
+.model-picker-empty strong { color: #cfc5cc; }
+.model-picker-empty span { font-size: 11px; }
 .mobile-history-trigger { display: none; }
 .message-area { min-height: 0; }
 .welcome { width: min(680px,calc(100% - 40px)); margin: clamp(54px,10vh,110px) auto 0; text-align: center; }

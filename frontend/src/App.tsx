@@ -5,6 +5,7 @@ import {
   Brain,
   CheckCircle,
   ChevronLeft,
+  ChevronDown,
   ChevronRight,
   CirclePlus,
   Command,
@@ -38,6 +39,7 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { MarkdownContent } from '@/components/MarkdownContent'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -246,6 +248,23 @@ function ContextRail({ plan, model }: { plan: ContextPlan | null; model?: ModelS
 
 const modelKey = (model: ModelSummary) => `${model.provider}::${model.id}`
 
+type ModelCapabilityFilter = 'all' | 'vision' | 'reasoning'
+
+function contextLengthLabel(length?: number | null) {
+  if (!length) return 'Context unknown'
+  if (length >= 1_000_000) return `${Number((length / 1_000_000).toFixed(1))}M context`
+  if (length >= 1_000) return `${Math.round(length / 1_000)}K context`
+  return `${length.toLocaleString()} context`
+}
+
+function hasVision(model: ModelSummary) {
+  return model.capabilities?.some((capability) => ['vision', 'image', 'images'].includes(capability.toLowerCase())) ?? false
+}
+
+function modelSearchText(model: ModelSummary) {
+  return [model.label, model.id, model.provider, ...(model.capabilities ?? []), model.reasoning_efforts?.length ? 'reasoning effort' : '', contextLengthLabel(model.context_length), model.pricing ? 'priced' : 'unpriced'].filter(Boolean).join(' ').toLowerCase()
+}
+
 function ProviderModelPicker({
   models,
   providers,
@@ -265,11 +284,25 @@ function ProviderModelPicker({
   disabled?: boolean
   excludedKeys?: Set<string>
 }) {
+  const [open, setOpen] = useState(false)
+  const [query, setQuery] = useState('')
+  const [capability, setCapability] = useState<ModelCapabilityFilter>('all')
   const selected = models.find((model) => modelKey(model) === value)
   const providerIds = [...new Set(models.map((model) => model.provider))]
   const selectedProvider = selected?.provider ?? providerIds[0] ?? ''
   const availableModels = models.filter((model) => model.provider === selectedProvider && (!excludedKeys.has(modelKey(model)) || modelKey(model) === value))
   const providerName = (id: string) => providers.find((provider) => provider.id === id)?.label ?? id
+  const normalizedQuery = query.trim().toLowerCase()
+  const visibleModels = availableModels.filter((model) => {
+    if (capability === 'vision' && !hasVision(model)) return false
+    if (capability === 'reasoning' && !model.reasoning_efforts?.length) return false
+    return !normalizedQuery || modelSearchText(model).includes(normalizedQuery)
+  })
+
+  const changeOpen = (next: boolean) => {
+    setOpen(next)
+    if (!next) { setQuery(''); setCapability('all') }
+  }
 
   return (
     <div className="provider-model-picker">
@@ -280,10 +313,22 @@ function ProviderModelPicker({
         {!providerIds.length && <option value="">No providers available</option>}
         {providerIds.map((provider) => <option disabled={!models.some((model) => model.provider === provider && (!excludedKeys.has(modelKey(model)) || modelKey(model) === value))} key={provider} value={provider}>{providerName(provider)}</option>)}
       </select></label>
-      <label><span>{modelLabel}</span><select aria-label={modelLabel} disabled={disabled || !availableModels.length} onChange={(event) => onChange(event.target.value)} value={value}>
-        {!availableModels.length && <option value="">No models available</option>}
-        {availableModels.map((model) => <option key={modelKey(model)} value={modelKey(model)}>{model.label || model.id} · {pricingLabel(model)}</option>)}
-      </select></label>
+      <label><span>{modelLabel}</span><button aria-expanded={open} aria-haspopup="dialog" aria-label={modelLabel} className="model-picker-trigger" disabled={disabled || !availableModels.length} onClick={() => setOpen(true)} role="combobox" type="button"><span><strong>{selected?.label || selected?.id || 'No models available'}</strong>{selected && <small>{selected.id}</small>}</span><ChevronDown /></button></label>
+      <Dialog onOpenChange={changeOpen} open={open}>
+        <DialogContent className="model-picker-dialog">
+          <DialogHeader><DialogTitle>{providerName(selectedProvider)} models</DialogTitle><DialogDescription>Search discovered models and compare the capabilities relevant to this task.</DialogDescription></DialogHeader>
+          <div className="model-search-wrap"><Search /><Input aria-label={`Search ${modelLabel.toLowerCase()}`} autoFocus onChange={(event) => setQuery(event.target.value)} placeholder="Search by name, ID, or capability" value={query} /></div>
+          <div aria-label="Model capability filter" className="model-capability-filters">{(['all', 'vision', 'reasoning'] as const).map((filter) => <button aria-pressed={capability === filter} key={filter} onClick={() => setCapability(filter)} type="button">{filter === 'all' ? 'All models' : filter}</button>)}</div>
+          <div aria-label={`${modelLabel} options`} className="model-option-list" role="listbox">
+            {visibleModels.map((model) => {
+              const key = modelKey(model)
+              const current = key === value
+              return <button aria-selected={current} className="model-option" key={key} onClick={() => { onChange(key); changeOpen(false) }} role="option" type="button"><div className="model-option-title"><div><strong>{model.label || model.id}</strong><code>{model.id}</code></div>{current && <CheckCircle />}</div><div className="model-capabilities"><span>{contextLengthLabel(model.context_length)}</span>{hasVision(model) && <span>Vision</span>}{Boolean(model.reasoning_efforts?.length) && <span>Reasoning · {model.reasoning_efforts?.length} levels</span>}</div><small>{pricingLabel(model)}</small></button>
+            })}
+            {!visibleModels.length && <div className="model-picker-empty"><Search /><strong>No matching models</strong><span>Change the search or capability filter.</span></div>}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
