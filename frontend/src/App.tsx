@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { BrowserRouter, useLocation, useNavigate } from 'react-router'
 import {
   Backpack,
   Brain,
@@ -56,6 +57,8 @@ import { fileAsBase64 } from '@/features/attachments/fileEncoding'
 import { contextLengthLabel, formatUsd, hasVision, modelKey, modelSearchText, pricingLabel } from '@/features/models/modelMetadata'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { readStoredBoolean, writeStoredBoolean } from '@/state/uiPreferences'
+import { RouteErrorBoundary } from '@/app/RouteErrorBoundary'
+import { pathForPage, routeFromPath, type Page, type WorkspaceRoute } from '@/app/routes'
 
 import {
   ApiError,
@@ -75,8 +78,6 @@ import {
   type TurnPreflight,
   type Upload,
 } from './api/client'
-
-type Page = 'Chat' | 'Compare' | 'Context' | 'Evidence' | 'Replay' | 'Focus' | 'Providers' | 'Library' | 'Settings'
 
 const navigationGroups: ReadonlyArray<{ label: string; items: ReadonlyArray<readonly [Page, typeof MessageSquare]> }> = [
   { label: 'Work', items: [['Chat', MessageSquare], ['Compare', GitCompareArrows]] },
@@ -715,15 +716,16 @@ function SettingsPage({ connected, onRefresh }: { connected: boolean; onRefresh:
   return <Surface eyebrow="Local runtime" title="Settings" description="Operational defaults and portable data controls are visible here."><div className="surface-grid"><Card><CardHeader><CardTitle>Privacy and data</CardTitle></CardHeader><CardContent className="stack-list"><div className="data-row"><span>Cloud context</span><Badge>Prompt only</Badge></div><div className="data-row"><span>Credentials</span><Badge variant="outline">Process memory</Badge></div><div className="data-row"><span>Context output reserve</span><Badge variant="outline">20%</Badge></div><Textarea onChange={(event) => setProfile(event.target.value)} placeholder="Personalization profile" value={profile} /><Button onClick={() => api.setProfile(profile)} variant="outline">Save profile</Button><Button onClick={download} variant="outline"><Download /> Export JSONL</Button><input accept=".jsonl,.ndjson,.txt" hidden onChange={async (event) => { const file = event.target.files?.[0]; if (file) { await api.importData(await file.text()); await onRefresh() } }} ref={importRef} type="file" /><Button onClick={() => importRef.current?.click()} variant="outline"><FileUp /> Import JSONL</Button><Button onClick={async () => { if (window.confirm('Import the previous v2 database into data/app.db? A backup is created first.')) { await api.importV2(); await onRefresh() } }} variant="outline">Import previous v2 data</Button><Button onClick={async () => { if (window.confirm('Permanently wipe all local workspace data?')) { await api.wipeData(); await onRefresh() } }} variant="destructive"><Trash2 /> Panic wipe</Button></CardContent></Card><Card><CardHeader><CardTitle>Runtime</CardTitle></CardHeader><CardContent className="stack-list"><div className="data-row"><span>FastAPI</span><Badge variant={connected ? 'default' : 'destructive'}>{connected ? 'Connected' : 'Unavailable'}</Badge></div><div className="data-row"><span>Ollama</span><Badge variant={runtime?.ollama_available ? 'default' : 'outline'}>{runtime?.ollama_available ? 'Available' : 'Offline'}</Badge></div>{runtime?.running_models.map((model) => <div className="data-row" key={model.name}><span>{model.name}</span><small>{model.size_gb.toFixed(1)} GB VRAM</small></div>)}<div className="data-row"><span>Canonical data</span><code>data/app.db</code></div><div className="data-row"><span>Vector data</span><code>data/chroma</code></div><Button aria-label={stopping ? 'Stopping…' : 'Stop Studio'} disabled={stopping} onClick={stopStudio} variant="destructive"><Power /> {stopping ? 'Stopping…' : 'Stop Studio'}</Button>{stopping && <small>Studio stopped. You may close this tab.</small>}{stopError && <small className="error-strip">{stopError}</small>}</CardContent></Card></div></Surface>
 }
 
-function App() {
-  const [page, setPage] = useState<Page>('Chat')
+function StudioApp({ route }: { route: WorkspaceRoute }) {
+  const navigate = useNavigate()
+  const page = route.page
   const [navigationCollapsed, setNavigationCollapsed] = useState(() => readStoredBoolean('chat-studio.navigation-collapsed', false))
   const [inspectorOpen, setInspectorOpen] = useState(() => readStoredBoolean('chat-studio.inspector-open', false))
   const [inspectorTab, setInspectorTab] = useState<InspectorTab>(readInspectorTab)
   const wideInspector = useMediaQuery('(min-width: 1440px)')
   const [connected, setConnected] = useState(false)
   const [conversations, setConversations] = useState<Conversation[]>([])
-  const [activeId, setActiveId] = useState<string | null>(null)
+  const [activeId, setActiveId] = useState<string | null>(route.conversationId)
   const [conversation, setConversation] = useState<Conversation | null>(null)
   const [providers, setProviders] = useState<ProviderSummary[]>([])
   const [models, setModels] = useState<ModelSummary[]>([])
@@ -744,6 +746,15 @@ function App() {
   const [savingMemories, setSavingMemories] = useState(false)
   const [excludedSources, setExcludedSources] = useState<Set<string>>(new Set())
   const [historyOpen, setHistoryOpen] = useState(false)
+
+  const setPage = useCallback((next: Page) => {
+    navigate(pathForPage(next, next === 'Chat' ? activeId : null))
+  }, [activeId, navigate])
+
+  const selectConversation = useCallback((id: string) => {
+    setActiveId(id)
+    navigate(pathForPage('Chat', id))
+  }, [navigate])
 
   useEffect(() => {
     writeStoredBoolean('chat-studio.navigation-collapsed', navigationCollapsed)
@@ -784,6 +795,20 @@ function App() {
     setConversations(items)
     setActiveId((current) => current ?? items[0]?.id ?? null)
   }, [])
+
+  useEffect(() => {
+    if (route.page !== 'Chat') return
+    if (route.conversationId) {
+      if (conversations.length && !conversations.some((item) => item.id === route.conversationId)) {
+        navigate('/chat', { replace: true })
+        return
+      }
+      setActiveId(route.conversationId)
+      return
+    }
+    const next = activeId && conversations.some((item) => item.id === activeId) ? activeId : conversations[0]?.id
+    if (next) navigate(pathForPage('Chat', next), { replace: true })
+  }, [activeId, conversations, navigate, route.conversationId, route.page])
 
   useEffect(() => {
     void Promise.all([api.health(), refreshConversations(), refreshProviders(), refreshLibrary()])
@@ -873,7 +898,7 @@ function App() {
       const result = await api.extractMemories(activeId, { provider: target.provider, model: target.model, cloud_confirmed: cloud })
       setMemories(await api.memories())
       window.alert(`Saved ${result.saved}; quarantined ${result.quarantined}; discarded ${result.discarded}.`)
-      setActiveId(null); setConversation(null); setUploads([]); setAttachmentIds(new Set())
+      setActiveId(null); setConversation(null); setUploads([]); setAttachmentIds(new Set()); navigate('/chat')
     } catch (cause) { setError(messageOf(cause)) }
     finally { setSavingMemories(false) }
   }
@@ -881,7 +906,7 @@ function App() {
   const createConversation = async () => {
     const created = await api.createConversation()
     await refreshConversations()
-    setActiveId(created.id); setPage('Chat')
+    selectConversation(created.id)
   }
 
   const toggleSource = (id: string) => setExcludedSources((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })
@@ -891,12 +916,12 @@ function App() {
     <TooltipProvider>
       <div className={navigationCollapsed ? 'app-shell nav-collapsed' : 'app-shell nav-expanded'}>
         <Navigation collapsed={navigationCollapsed} connected={connected} onCollapsed={setNavigationCollapsed} onPage={setPage} page={page} />
-        {page === 'Chat' && <ConversationHistory activeId={activeId} conversations={conversations} onCreate={createConversation} onDelete={async (id) => { if (!window.confirm('Delete this conversation?')) return; await api.deleteConversation(id); if (activeId === id) setActiveId(null); await refreshConversations() }} onSelect={setActiveId} onUpdate={async (id, payload) => { await api.updateConversation(id, payload); await refreshConversations(); if (activeId === id) setConversation(await api.conversation(id)) }} />}
-        {page === 'Chat' && <div className={wideInspector && inspectorOpen ? 'chat-stage inspector-docked' : 'chat-stage'}><ChatWorkspace attachmentIds={attachmentIds} conversation={conversation} error={error} inspectorOpen={inspectorOpen} liveOutput={liveOutput} models={models} onAttachment={(id) => setAttachmentIds((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} onBranch={async (messageId) => { if (!activeId) return; const branch = await api.branchConversation(activeId, messageId); await refreshConversations(); setActiveId(branch.id) }} onCancel={async () => { if (activeRun) await api.cancelRun(activeRun) }} onConfirm={async () => { if (pendingPayload && pendingPlan) await submitTurn(pendingPayload, pendingPlan, pendingPlan.findings.map((item) => item.id)) }} onFeedback={api.setFeedback} onHistory={() => setHistoryOpen(true)} onInspector={() => setInspectorOpen((current) => !current)} onModel={setSelectedModel} onReasoningEffort={setReasoningEffort} onSanitize={async () => { if (!pendingPayload) return; const sanitized = await api.sanitize(pendingPayload.content); setPendingPlan(null); setPendingPayload(null); await send(sanitized.content) }} onSaveMemories={saveMemoriesAndClose} onSend={send} onUpload={async (file) => { await upload(file, true) }} pendingPlan={pendingPlan} plan={plan} providers={providers} reasoningEffort={reasoningEffort} running={Boolean(activeRun)} savingMemories={savingMemories} selectedModel={selectedModel} uploads={uploads} />{wideInspector && inspectorOpen && inspector}</div>}
+        {page === 'Chat' && <ConversationHistory activeId={activeId} conversations={conversations} onCreate={createConversation} onDelete={async (id) => { if (!window.confirm('Delete this conversation?')) return; await api.deleteConversation(id); if (activeId === id) { setActiveId(null); navigate('/chat') } await refreshConversations() }} onSelect={selectConversation} onUpdate={async (id, payload) => { await api.updateConversation(id, payload); await refreshConversations(); if (activeId === id) setConversation(await api.conversation(id)) }} />}
+        {page === 'Chat' && <div className={wideInspector && inspectorOpen ? 'chat-stage inspector-docked' : 'chat-stage'}><ChatWorkspace attachmentIds={attachmentIds} conversation={conversation} error={error} inspectorOpen={inspectorOpen} liveOutput={liveOutput} models={models} onAttachment={(id) => setAttachmentIds((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} onBranch={async (messageId) => { if (!activeId) return; const branch = await api.branchConversation(activeId, messageId); await refreshConversations(); selectConversation(branch.id) }} onCancel={async () => { if (activeRun) await api.cancelRun(activeRun) }} onConfirm={async () => { if (pendingPayload && pendingPlan) await submitTurn(pendingPayload, pendingPlan, pendingPlan.findings.map((item) => item.id)) }} onFeedback={api.setFeedback} onHistory={() => setHistoryOpen(true)} onInspector={() => setInspectorOpen((current) => !current)} onModel={setSelectedModel} onReasoningEffort={setReasoningEffort} onSanitize={async () => { if (!pendingPayload) return; const sanitized = await api.sanitize(pendingPayload.content); setPendingPlan(null); setPendingPayload(null); await send(sanitized.content) }} onSaveMemories={saveMemoriesAndClose} onSend={send} onUpload={async (file) => { await upload(file, true) }} pendingPlan={pendingPlan} plan={plan} providers={providers} reasoningEffort={reasoningEffort} running={Boolean(activeRun)} savingMemories={savingMemories} selectedModel={selectedModel} uploads={uploads} />{wideInspector && inspectorOpen && inspector}</div>}
         {page === 'Chat' && !wideInspector && <Sheet onOpenChange={setInspectorOpen} open={inspectorOpen}><SheetContent className="inspector-sheet" showCloseButton={false} side="right">{inspector}</SheetContent></Sheet>}
         <Sheet onOpenChange={setHistoryOpen} open={historyOpen}>
           <SheetContent className="history-sheet" side="left">
-            <ConversationHistory activeId={activeId} conversations={conversations} mobile onCreate={createConversation} onDelete={async (id) => { if (!window.confirm('Delete this conversation?')) return; await api.deleteConversation(id); if (activeId === id) setActiveId(null); await refreshConversations() }} onSelect={(id) => { setActiveId(id); setHistoryOpen(false) }} onUpdate={async (id, payload) => { await api.updateConversation(id, payload); await refreshConversations(); if (activeId === id) setConversation(await api.conversation(id)) }} />
+            <ConversationHistory activeId={activeId} conversations={conversations} mobile onCreate={createConversation} onDelete={async (id) => { if (!window.confirm('Delete this conversation?')) return; await api.deleteConversation(id); if (activeId === id) { setActiveId(null); navigate('/chat') } await refreshConversations() }} onSelect={(id) => { selectConversation(id); setHistoryOpen(false) }} onUpdate={async (id, payload) => { await api.updateConversation(id, payload); await refreshConversations(); if (activeId === id) setConversation(await api.conversation(id)) }} />
           </SheetContent>
         </Sheet>
         {page === 'Compare' && <ComparePage models={models} providers={providers} />}
@@ -912,4 +937,13 @@ function App() {
   )
 }
 
-export default App
+function RoutedApp() {
+  const location = useLocation()
+  const route = routeFromPath(location.pathname)
+  if (!route) return <main className="route-error"><p className="eyebrow">Page not found</p><h1>This workspace does not exist.</h1><p>Use the main navigation or return to Chat.</p><a href="/chat">Return to Chat</a></main>
+  return <RouteErrorBoundary key={location.pathname}><StudioApp route={route} /></RouteErrorBoundary>
+}
+
+export default function App() {
+  return <BrowserRouter><RoutedApp /></BrowserRouter>
+}

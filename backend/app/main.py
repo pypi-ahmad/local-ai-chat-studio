@@ -20,6 +20,7 @@ import httpx
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response, status
 from fastapi.responses import PlainTextResponse, RedirectResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from backend.app.contracts import (
     Backpack,
@@ -83,6 +84,24 @@ from src.ollama_client import ollama_alive, running_models
 
 
 logger = logging.getLogger(__name__)
+
+
+class SPAStaticFiles(StaticFiles):
+    async def get_response(self, path: str, scope: dict) -> Response:
+        try:
+            response = await super().get_response(path, scope)
+        except StarletteHTTPException as exc:
+            if exc.status_code != 404:
+                raise
+            response = Response(status_code=404)
+
+        accepts_html = "text/html" in dict(scope.get("headers", [])).get(
+            b"accept", b""
+        ).decode("latin-1")
+        is_browser_route = not Path(path).suffix and not path.startswith("api/")
+        if response.status_code == 404 and accepts_html and is_browser_route:
+            return await super().get_response("index.html", scope)
+        return response
 
 
 def create_app(
@@ -924,6 +943,6 @@ def create_app(
 
     frontend_dist = Path(__file__).parents[2] / "frontend" / "dist"
     if frontend_dist.is_dir():
-        app.mount("/", StaticFiles(directory=frontend_dist, html=True), name="frontend")
+        app.mount("/", SPAStaticFiles(directory=frontend_dist, html=True), name="frontend")
 
     return app
