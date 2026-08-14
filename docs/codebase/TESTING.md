@@ -19,7 +19,8 @@ simulation, pricing catalog matching/live OpenRouter normalization, profile, run
 unmanaged servers return 503).
 
 Frontend tests use Vitest, Testing Library, jest-dom, and jsdom. They exercise the
-connected workspace shell, grouped navigation, bounded transcript message navigation,
+connected workspace shell, semantic desktop/mobile navigation groups, persisted and
+keyboard-dismissible context/evidence inspection, bounded transcript message navigation,
 context utilization and overflow states, preflight, SSE output, the OpenCode Claude
 sign-in affordance, searchable capability-aware model selection and rate display,
 attachment progress/completion/error/retry states, parallel comparison across three models,
