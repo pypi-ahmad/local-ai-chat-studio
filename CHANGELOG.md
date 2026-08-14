@@ -7,6 +7,16 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-08-15
+
+### Added
+
+- Expanded the provider-scoped model picker with provider marks, tool-use filtering, model favorites, and the six most recent choices.
+
+### Changed
+
+- Grouped model results into favorites, recent choices, and the remaining catalog while retaining context, capability, and pricing details.
+
 ## [0.6.9] - 2026-08-15
 
 ### Added
