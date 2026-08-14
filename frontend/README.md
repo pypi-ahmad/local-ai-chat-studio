@@ -27,6 +27,12 @@ owns saved-message navigation, exact context utilization/overflow warnings, grou
 desktop/mobile navigation, and a persisted optional Context/Evidence inspector.
 Keep these behaviors covered by focused Vitest tests.
 
+Chat settings are conversation-owned, not global UI preferences. Loading a
+conversation hydrates its model, effort, temperature, context policy, web/compression
+flags, system prompt, and message layout. Changes are saved through
+`PATCH /api/v1/conversations/{id}`; keep hydration and save isolation covered when
+changing the composer or Chat header.
+
 The Compare workspace lets users choose two to four distinct discovered models and
 starts one run per model concurrently. Result cards stream and fail independently;
 **Cancel all** aborts each stream and cancels every created run. Keep the selection

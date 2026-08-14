@@ -78,6 +78,11 @@ Compare, Replay, and assistant configuration. It scopes discovery by provider,
 searches model names/IDs/capabilities, and filters vision or reasoning support.
 Shared presentation contracts also cover safe Markdown/code/KaTeX rendering,
 attachment upload states, transcript navigation, and context utilization warnings.
+Each conversation stores a validated JSON settings snapshot in SQLite. The generated
+`Conversation` contract returns model key, reasoning effort, temperature, context
+policy, web/compression flags, system prompt, and layout; the React client hydrates
+these values on selection and saves changes through the conversation PATCH endpoint.
+Branches copy the snapshot at creation, preserving independent settings afterward.
 Optional context compression deterministically replaces older history with a bounded
 extractive summary, retains the latest eight messages verbatim, records compression
 metadata in the hash-bound plan, and prevents over-budget plans from starting a run.
@@ -88,6 +93,10 @@ The OpenAI-compatible adapter omits `temperature` for `gpt-5.6-luna` because tha
 model accepts only its provider default. Other compatible models continue to receive
 the user-selected temperature. Agnes AI uses its fixed official endpoint and discovers
 `agnes-2.5-flash` live rather than relying on a hardcoded catalog.
+
+The custom conversation system prompt is included in `TurnPreflight`, context-token
+estimation, the hash-bound plan, assembled provider messages, and replay records. An
+empty value retains the built-in direct-and-accurate assistant instruction.
 
 OpenRouter uses a local PKCE flow. ChatGPT, SuperGrok, and Claude subscription
 flows are delegated through a local OpenCode server. The server URL must use a

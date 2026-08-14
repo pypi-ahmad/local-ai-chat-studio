@@ -73,6 +73,9 @@ bridge remains on loopback by default.
 
 1. Start a conversation, then use the composer to select a provider, one of its
    available models, and an optional supported reasoning effort.
+   These selections, temperature, and context choices are remembered for this chat.
+   Use the Chat header **Settings** to save a system prompt and select Conversation,
+   Compact, or Full-width message layout.
 2. Attach a supported document, spreadsheet, code file, or image when it helps
    answer the question. Each upload shows **Uploading**, **Ready**, or **Failed**;
    failed cards include the server error and **Retry**/**Remove** actions.

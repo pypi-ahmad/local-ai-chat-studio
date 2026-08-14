@@ -34,6 +34,7 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 - **Live model discovery:** The Studio asks configured providers for their available models instead of relying only on a fixed list. Discovered entries can include context length, vision support, and provider metadata.
 - **Searchable, capability-aware selection:** Choose a provider first, then search its discovered models by name, ID, or capability in Chat, Compare, Replay, and assistant presets. Provider marks, favorites, recent choices, verified pricing, context size, and vision, tool-use, and reasoning badges make large catalogs easier to scan; favorites and recents stay in local browser storage.
 - **Composer control dock:** Chat keeps attachments, provider/model selection, capability-aware reasoning effort, context scope, and send/stop actions in one responsive dock. Choose **Full context**, **Chat only**, or **Files + chat** per turn; a compact menu holds temperature presets, opt-in web evidence, and optional local compression of older messages. Effort defaults to **Auto** and is disabled for models that do not advertise support; OpenAI GPT-5.6 options follow the [official model guide](https://developers.openai.com/api/docs/guides/latest-model).
+- **Per-conversation settings:** Every chat independently remembers its model, reasoning effort, temperature, context policy, web/compression choices, system prompt, and **Conversation**, **Compact**, or **Full-width** message layout. Open **Settings** in the Chat header to edit the system prompt and layout; branches inherit the source settings once and can then diverge.
 - **Focused navigation:** Desktop keeps Chat, Compare, and Library in **Primary**, Focus in **Workspace**, and provider/runtime controls in **Administration**. Mobile keeps the three primary destinations one tap away and moves advanced workspaces into **More**.
 - **Run actions drawer:** Open **Runs** from Chat to replay recorded prompts, compare outputs, or export full and privacy-safe bundles without leaving the conversation.
 - **Session-only credentials:** Keys entered in **Providers** remain in server-process memory for the browser session. Keys can alternatively come from operating-system environment variables; neither source is written to the database or exports.
@@ -80,7 +81,7 @@ bookmarked links preserve the selected workspace.
 
 | Group | Tab | Purpose |
 |---|---|---|
-| Primary | **Chat** | Hold conversations and use the unified composer dock to attach files, choose a provider/model, set reasoning effort and context scope, adjust secondary generation settings, and send or stop a run. |
+| Primary | **Chat** | Hold conversations; restore chat-specific model, effort, temperature, context, prompt, and layout settings; attach files; and send or stop a run from the unified composer. |
 | Primary | **Compare** | Send one prompt to two to four models concurrently and compare independent streamed results. |
 | Primary | **Library** | Manage durable memories, assistant presets, and conversation files. |
 | Workspace | **Focus** | Define a temporary objective, success criteria, and constraints for the active conversation. |
@@ -314,13 +315,13 @@ The searchable model picker displays context length, vision, tool-use, and reaso
 
 ### Persistence and retrieval
 
-Canonical state lives in `data/app.db`; uploads and optional Chroma collections remain under the configured data directory. Without `CHAT_EMBED_MODEL`, cross-chat retrieval uses local lexical search. An earlier `data/v2/studio.db` can be imported explicitly from **Settings**; the Studio backs up `app.db` and records the migration so repeat imports are no-ops.
+Canonical state lives in `data/app.db`, including each conversation's validated settings snapshot; uploads and optional Chroma collections remain under the configured data directory. Existing databases receive the settings column automatically. Without `CHAT_EMBED_MODEL`, cross-chat retrieval uses local lexical search. An earlier `data/v2/studio.db` can be imported explicitly from **Settings**; the Studio backs up `app.db` and records the migration so repeat imports are no-ops.
 
 ## Usage
 
 1. Start the Studio and open <http://127.0.0.1:8506>.
 2. Select an installed Ollama model or connect a provider. Choose the provider, open the model field, then search, filter by capability, star a favorite, or choose a recent model.
-3. Create a conversation and optionally attach documents or images. Follow each card through **Uploading** and **Parsing & indexing** to **Ready**; retry or remove failures, or remove a stored ready upload, before sending.
+3. Create a conversation and optionally open its header **Settings** to set a system prompt and message layout. Model, effort, temperature, context, web, and compression choices are saved automatically for that chat. Attach documents or images as needed; follow each card through **Uploading** and **Parsing & indexing** to **Ready**.
 4. Enter a message and review its context plan, safety findings, sources, and estimated cost.
 5. Confirm required findings and send the turn.
 6. Watch streamed events, cancel if needed, and use the transcript navigator to jump to either end or move between saved messages. If **New output** appears while you are reading earlier content, use the bottom action to return to the live answer. Inspect completed runs under **Evidence** or **Replay**.

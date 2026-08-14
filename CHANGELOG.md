@@ -7,6 +7,24 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.5] - 2026-08-15
+
+### Added
+
+- Added durable per-conversation settings for model, reasoning effort, temperature,
+  context policy, web evidence, history compression, system prompt, and message layout.
+- Added Conversation, Compact, and Full-width message layouts plus a conversation-
+  specific system-prompt editor in Chat.
+
+### Changed
+
+- Conversation branches now inherit the source conversation's settings and can then
+  be customized independently.
+- Custom conversation system prompts now participate in context estimates, approved
+  plan hashes, provider requests, and replay bundles.
+- Existing SQLite databases automatically gain the new settings storage without
+  deleting or recreating user data.
+
 ## [0.7.4] - 2026-08-15
 
 ### Added

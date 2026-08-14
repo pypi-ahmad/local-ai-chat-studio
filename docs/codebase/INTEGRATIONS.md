@@ -48,6 +48,11 @@ discounts, taxes, and subscription charges.
 
 ## Attachments and memory
 
+Conversation settings stay in local SQLite and travel only through the local API.
+The selected system prompt becomes the first provider message for that conversation;
+an empty prompt uses the built-in default. Model, effort, temperature, context policy,
+web/compression flags, and layout remain isolated between conversations.
+
 Uploads stay local until explicitly selected for a turn. Chat represents each file as
 an uploading, ready, or failed card. Successful new uploads are selected for the next
 message; failed cards retain a safe server error and can be retried or removed without

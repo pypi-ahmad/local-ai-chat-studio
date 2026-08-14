@@ -18,6 +18,12 @@ over budget. When requested, the backend locally compresses older history into a
 deterministic summary, retains the latest eight messages verbatim, and includes the
 summary source and compressed count in the hash-bound plan.
 
+Conversation generation settings are stored as a validated JSON snapshot beside the
+conversation row. Chat hydrates that snapshot when the active conversation changes
+and debounces updates through the existing PATCH endpoint. System prompts flow into
+preflight estimation, the plan hash, assembled messages, and replay data. Branches
+copy settings at creation and remain independent afterward.
+
 Runs are persisted to SQLite and also retained in memory while the process lives so
 SSE subscribers can replay events and follow new deltas. Run IDs are scoped to the
 owning browser session. Completed runs append assistant messages and chained receipt

@@ -62,6 +62,12 @@ next turns. Compression happens locally and deterministically: earlier messages 
 a bounded extractive summary while the latest eight remain verbatim. Provider data
 policies still decide which requested sources may leave the machine.
 
+These choices belong to the current conversation. The Studio restores its model,
+effort, temperature, context mode, web and compression toggles whenever you return.
+Use **Settings** in the Chat header to add a conversation-specific system prompt and
+choose **Conversation**, **Compact**, or **Full-width** message layout. Saving affects
+only that chat. A branch starts with the source chat's settings and can then diverge.
+
 The answer streams live and **Stop** cancels the active provider request. Hover messages
 to copy, branch from that point, or rate an answer. Conversation controls support
 rename, pin, delete, and text search.
