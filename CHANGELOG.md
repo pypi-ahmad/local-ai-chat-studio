@@ -7,6 +7,16 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.6.5] - 2026-08-15
+
+### Changed
+
+- Hardened desktop and mobile navigation with semantic Work, Inspect,
+  Personalize, and System group labels for assistive technology.
+- Improved the optional Context/Evidence inspector with an explicit control
+  relationship, Escape-key dismissal, and predictable full-page transitions
+  while preserving its saved open state and active tab.
+
 ## [0.6.4] - 2026-08-15
 
 ### Added
