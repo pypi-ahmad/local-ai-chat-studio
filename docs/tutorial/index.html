@@ -342,7 +342,7 @@
           <li>“Local-first” does not mean every request stays local. Cloud providers, optional web search, and remote memory extraction transmit selected data.</li>
           <li>The single-process design is appropriate for a trusted localhost, not horizontal scaling.</li>
         </ul>
-        <p class="evidence">Evidence: <code>backend/app/main.py</code>, <code>backend/app/store.py</code>, <code>backend/app/providers.py</code>, <code>frontend/src/App.tsx</code>.</p>
+        <p class="evidence">Evidence: <code>backend/app/main.py</code>, <code>backend/app/store.py</code>, <code>backend/app/providers.py</code>, <code>frontend/src/App.tsx</code>, and <code>frontend/src/routes/</code>.</p>
       </section>
 
       <section class="chapter searchable" id="foundations">
@@ -555,7 +555,7 @@ uv run chat-studio</code></pre></div>
           <article><h3><code>memory.py</code></h3><p>Whole-chat selection, chunked extraction, consolidation, provenance validation, deduplication, and categorization.</p></article>
           <article><h3><code>runs.py</code></h3><p>Async lifecycle, cancellation, streaming events, durable updates, assistant-message persistence, and receipts.</p></article>
           <article><h3><code>main.py</code></h3><p>Composition root, middleware, API routes, OAuth, uploads, memory indexing, data controls, and static serving.</p></article>
-          <article><h3><code>frontend/src/App.tsx</code></h3><p>Workspace navigation, conversations, preflight/confirmation, SSE display, providers, library, compare, replay, and settings.</p></article>
+          <article><h3><code>frontend/src/App.tsx</code> + <code>routes/</code></h3><p>Session/API orchestration stays in App; route components and focused composer, message, model, context, and evidence features own page presentation.</p></article>
           <article><h3><code>frontend/src/api/</code></h3><p>Typed fetch/SSE boundary and generated OpenAPI schema. Regenerate types after contract changes.</p></article>
           <article><h3><code>src/files.py</code></h3><p>Document parsing, image verification, PDF signature checks, content chunking, and optional converters.</p></article>
           <article><h3><code>src/rag.py</code></h3><p>Chroma document, conversation, and memory indexes backed by Ollama embeddings.</p></article>
@@ -563,7 +563,7 @@ uv run chat-studio</code></pre></div>
         <h3>Recommended reading path</h3>
         <pre><code>contracts.py → store.py → sessions.py → providers.py
              → workspace.py → memory.py → runs.py → main.py
-             → frontend/src/api/client.ts → frontend/src/App.tsx
+             → frontend/src/api/client.ts → frontend/src/App.tsx → frontend/src/routes/
              → tests/</code></pre>
         <p class="evidence">Supporting maps: <code>docs/codebase/ARCHITECTURE.md</code>, <code>STRUCTURE.md</code>, <code>INTEGRATIONS.md</code>, and <code>CONCERNS.md</code>.</p>
       </section>
@@ -634,7 +634,7 @@ npm run build</code></pre></div>
           <li><span class="path">docs/codebase/</span> — architecture, stack, structure, integrations, testing, conventions, and concerns.</li>
           <li><span class="path">SECURITY.md</span> and <span class="path">CONTRIBUTING.md</span> — reporting and contribution policy.</li>
         </ul>
-        <footer>Local AI Chat Studio · Zero-to-Hero Handbook · v0.7.11 · implementation verified 2026-08-15 · MIT licensed</footer>
+        <footer>Local AI Chat Studio · Zero-to-Hero Handbook · v0.7.12 · implementation verified 2026-08-15 · MIT licensed</footer>
       </section>
       <p class="empty" id="no-results" hidden>No chapter matches that search. Try a feature, module, provider, or concept.</p>
     </main>

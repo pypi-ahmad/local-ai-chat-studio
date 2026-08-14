@@ -7,6 +7,18 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.12] - 2026-08-15
+
+### Changed
+
+- Split the React workspace into page-level route components and focused composer,
+  message-list, model-picker, context-inspector, and conversation-history features.
+- Reduced `App.tsx` to session/API orchestration and route composition while keeping
+  generated backend contracts authoritative and isolating browser-persisted shell
+  preferences in a dedicated hook.
+- Kept the existing browser URLs behind the page-level error boundary with no API or
+  user-visible workflow changes.
+
 ## [0.7.11] - 2026-08-15
 
 ### Added

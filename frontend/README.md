@@ -11,8 +11,8 @@ npm run generate:api
 
 `src/api/schema.ts` is generated from the FastAPI OpenAPI document. The root
 `openapi.json` produced by generation is temporary and should not be committed.
-Model discovery includes optional `ModelPricing` metadata. `App.tsx` displays
-the published input/output rates and calculates preflight input-cost estimates;
+Model discovery includes optional `ModelPricing` metadata. Shared model/context
+features display the published rates and calculate preflight input-cost estimates;
 unknown pricing must remain visibly unavailable.
 
 The shared model picker is provider-scoped and searchable by name, ID, or
@@ -34,10 +34,17 @@ Fenced HTML, SVG, Mermaid, and code blocks expose a Chat-only artifact action. K
 renderable output inside the scriptless `sandbox=""` iframe produced by
 `features/artifact-preview/sandboxDocument.ts`; never inject model output into the
 host DOM. Code preview remains escaped source, and the workbench stacks responsively.
-Attachments expose Uploading/Ready/Failed cards with retry and removal. Chat also
-owns saved-message navigation, exact context utilization/overflow warnings, grouped
+Attachments expose Uploading/Ready/Failed cards with retry and removal. The Chat route
+composes `features/composer/ChatComposer.tsx`, `features/messages/MessageList.tsx`, and
+`features/context/ContextInspector.tsx` for saved-message navigation, exact context
+utilization/overflow warnings, grouped
 desktop/mobile navigation, and a persisted optional Context/Evidence inspector.
 Keep these behaviors covered by focused Vitest tests.
+
+`App.tsx` owns session data and backend coordination. Page UI lives in `src/routes/`,
+generated API contracts remain authoritative under `src/api/`, and browser-persisted
+shell preferences are isolated in `hooks/useWorkspacePreferences.ts` rather than mixed
+with conversation settings.
 
 `features/tools/ToolControlCenter.tsx` is the guarded MCP Work Mode surface. Preserve
 the three-stage connection → proposal → approval flow, exact redacted argument/hash

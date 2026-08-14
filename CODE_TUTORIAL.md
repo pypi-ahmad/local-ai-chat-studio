@@ -3,9 +3,9 @@
 > Historical architecture note: sections describing `app.py`, `pages/`, or Streamlit
 > document the retired UI. The current application flow is
 > `backend/app/main.py` → `runs.py`/`workspace.py`/`store.py` →
-> `frontend/src/api/client.ts` → `frontend/src/App.tsx`.
+> `frontend/src/api/client.ts` → `frontend/src/App.tsx` → `frontend/src/routes/`.
 
-> Current UI note (v0.7.11): `App.tsx` and its focused components provide safe rich
+> Current UI note (v0.7.12): `App.tsx`, page routes, and focused feature components provide safe rich
 > Markdown/code/LaTeX rendering, provider-scoped capability-aware model search,
 > attachment status/retry cards, saved-message navigation, exact context overflow
 > warnings with blocking over-budget sends, optional local history compression,
@@ -114,7 +114,7 @@ This tutorial still walks some historical Streamlit code in Part 3 because
 that path explains product behavior that later moved into FastAPI. Treat
 those sections as history. The current request path is
 `backend/app/main.py` → `runs.py` / `workspace.py` / `store.py` →
-`frontend/src/api/client.ts` → `frontend/src/App.tsx`.
+`frontend/src/api/client.ts` → `frontend/src/App.tsx` → `frontend/src/routes/`.
 
 ---
 
@@ -875,8 +875,9 @@ runs.
 
 ### 4.8 `frontend/` — the current React workspace
 
-`frontend/src/App.tsx` is the live workspace: Chat, Compare, Providers,
-Library, Activity, and Settings. `frontend/src/api/client.ts` is the typed
+`frontend/src/App.tsx` coordinates session data and selected routes. Page components
+live under `frontend/src/routes/`; Chat composes the focused composer, message-list,
+model-picker, and context-inspector features. `frontend/src/api/client.ts` is the typed
 client for conversations, preflight, SSE runs, memory, OpenCode auth, data
 controls, and `api.shutdown()`. Vite's `npm run dev` proxies `/api` to
 `http://127.0.0.1:8506`. TypeScript is pinned to 5.9.

@@ -71,6 +71,15 @@ shell groups pinned, foldered, and date-bucketed chats while keeping sidebar wid
 navigation collapse, inspector state, and command-palette visibility as transient or
 browser-local UI state.
 
+The frontend keeps `App.tsx` as the session and API orchestration boundary. Typed page
+components live under `routes/`; Chat composes the smaller `ChatComposer`,
+`MessageList`, provider-scoped model picker, and Context/Evidence inspector features.
+Browser-persisted shell preferences are isolated in `useWorkspacePreferences`, while
+conversation-owned model, prompt, context, and layout settings continue to hydrate
+from and save through the generated backend contract. `RouteErrorBoundary` wraps the
+selected page so one route-level render failure does not replace the whole browser
+shell.
+
 Provider adapters separate Ollama Local from Ollama Cloud. OpenCode is a loopback-only
 server bridge: it owns upstream OAuth and streaming sessions, while this app continues
 to apply remote-provider context policy before sending chat context to it.

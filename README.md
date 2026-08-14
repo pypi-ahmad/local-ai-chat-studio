@@ -131,12 +131,14 @@ local-ai-chat-studio/
 │   ├── store.py             SQLite persistence, migration, and data controls
 │   └── sessions.py          Session credential vault and environment fallbacks
 ├── frontend/
-│   ├── src/App.tsx          Workspace composition and feature orchestration
+│   ├── src/App.tsx          Session orchestration and route composition
+│   ├── src/app/             Route map and page-level error boundary
 │   ├── src/api/             Typed client and generated OpenAPI schema
+│   ├── src/routes/          Chat, Compare, Library, Focus, Replay, Context, Evidence, and settings pages
+│   ├── src/features/        Composer, messages, models, context, knowledge, tools, and artifact preview
 │   ├── src/components/      Shared workspace and UI primitives
-│   ├── src/features/        Models, assistants, attachments, knowledge bases, guarded tools, and safe artifact preview
-│   ├── src/hooks/           Reusable responsive browser hooks
-│   ├── src/state/           Local UI preference boundaries
+│   ├── src/hooks/           Responsive and persisted workspace-preference hooks
+│   ├── src/state/           Browser-storage helpers
 │   └── package.json         Frontend commands and dependencies
 ├── src/                     Ollama, file parsing, retrieval, and shared helpers
 ├── scripts/                 OpenAPI-to-TypeScript generation

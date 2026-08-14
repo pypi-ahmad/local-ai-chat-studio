@@ -12,12 +12,19 @@
 | `backend/app/workspace.py` | Context plans, safety, provenance, web and retrieval |
 | `backend/app/providers.py` | Provider adapters and model discovery |
 | `backend/app/pricing.py` | Source-linked standard token-rate catalog and normalization |
-| `frontend/src/` | React workspace, grouped and resizable conversation navigation, command palette, rich Markdown/LaTeX/Mermaid rendering, capability-aware model selection, per-conversation controls/layouts, knowledge bases, context/evidence inspection, 2–4 model comparison, design system, typed API client |
+| `frontend/src/App.tsx` | Session-owned data orchestration, route composition, navigation shell, and generated API coordination |
+| `frontend/src/app/` | Typed browser-route map and page-level error boundary |
+| `frontend/src/routes/` | Page components for Chat, Compare, Library, Focus, Replay, Context, Evidence, Providers, and Settings |
+| `frontend/src/features/composer/` | Chat input, attachments, model/effort/context controls, and send/stop actions |
+| `frontend/src/features/messages/` | Rich response rendering, artifact actions, transcript navigation, and unread-output state |
+| `frontend/src/features/context/` | Context budget rail, plan/source summaries, and the optional Context/Evidence inspector |
 | `frontend/src/features/models/` | Model metadata/search helpers and browser-local favorite/recent preferences |
 | `frontend/src/features/assistants/` | Browser-local assistant favorite and recent-launch preferences |
 | `frontend/src/features/knowledge/` | Searchable source-ledger editor and per-conversation knowledge-base binding UI |
 | `frontend/src/features/tools/` | MCP connection registry, proposal builder, approval inbox, and audit timeline |
 | `frontend/src/features/artifact-preview/` | Fenced-output classification, sandbox document policy, and responsive Chat preview pane |
+| `frontend/src/hooks/` | Media-query behavior and persisted workspace UI preferences |
+| `frontend/src/api/` | Backend-authoritative generated contracts, typed requests, and SSE streaming client |
 | `src/files.py` | Shared document/image parsing and upload validation |
 | `src/rag.py` | Existing Chroma collections and embedding retrieval |
 | `src/ollama_client.py` | Shared Ollama discovery, health, and embedding helpers |
