@@ -7,6 +7,15 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.6.1] - 2026-08-15
+
+### Added
+
+- Added a searchable, provider-scoped model picker across Chat, Compare, Replay,
+  and assistant presets, with vision and reasoning capability filters.
+- Added model cards showing identifiers, context length, reasoning levels, vision
+  support, selection state, and source-backed pricing where available.
+
 ## [0.6.0] - 2026-08-15
 
 ### Added
