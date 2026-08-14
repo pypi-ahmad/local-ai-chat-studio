@@ -14,9 +14,14 @@ security-relevant surfaces are:
   data live under `data/` by default (`app.db`, `chroma`, and uploads). They are
   protected by your OS file permissions and can be exported, imported, or wiped
   from the product.
-- **Network exposure** — the launcher binds to `127.0.0.1` and the app ships
-  without a user-account layer. Do not expose it beyond localhost on an
+- **Network exposure** — the launcher binds to `127.0.0.1:8506` and the app
+  ships without a user-account layer. Do not expose it beyond localhost on an
   untrusted network.
+- **Managed shutdown** — `POST /api/v1/runtime/shutdown` stops the process
+  started by `chat-studio`. It requires the `X-Local-Studio: shutdown` header
+  from the Studio UI and is unavailable in unmanaged/test servers. The route
+  cancels active runs before Uvicorn exits; it does not stop Ollama or
+  OpenCode.
 - **Untrusted context** — uploaded documents, pasted text, retrieval results,
   and web evidence can contain prompt-injection attempts or sensitive text. The
   workspace provides warnings, quarantine, provenance, and redaction controls,

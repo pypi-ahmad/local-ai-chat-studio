@@ -1,8 +1,8 @@
 # React workspace
 
 ```powershell
-npm ci
-npm run dev          # proxies /api to 127.0.0.1:8000
+npm ci --legacy-peer-deps
+npm run dev          # proxies /api to 127.0.0.1:8506
 npm test
 npm run lint
 npm run build

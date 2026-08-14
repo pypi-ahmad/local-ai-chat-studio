@@ -91,6 +91,12 @@ local personalization profile, export or import JSONL, import an older
 `data/v2/studio.db`, and panic-wipe workspace data. The v2 import is opt-in, backs up
 `data/app.db`, and is idempotent. Panic wipe requires an explicit browser confirmation.
 
+**Stop Studio** on the Runtime card cancels active model runs, then stops the
+managed `chat-studio` process. Ollama and any local OpenCode server keep running.
+Use it when you started the app from the launcher or `uv run chat-studio`. The
+button is unavailable if the API is running in an unmanaged process (for example
+a test client). After a successful stop, you can close the browser tab.
+
 ## Privacy defaults
 
 - Chats, memories, files, receipts, and policies remain in `data/`.
@@ -108,4 +114,5 @@ local personalization profile, export or import JSONL, import an older
 | No vector results | Set `CHAT_EMBED_MODEL` to an installed embedding model |
 | First local response is slow | Check the VRAM list in Settings; the model may be loading |
 | A provider key vanished | Session keys are intentionally forgotten on server restart |
+| Stop Studio is unavailable | Start the app with the launcher or `uv run chat-studio`, not an unmanaged server |
 | An old `.doc` has no text | Install LibreOffice or `antiword` |

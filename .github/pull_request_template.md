@@ -18,5 +18,5 @@ Closes #
 - [ ] Focused on one topic
 - [ ] Verified end-to-end in the running app
 - [ ] Type hints + docstrings on new public functions
-- [ ] No `st.*` calls inside `src/` worker code
+- [ ] Docs updated if user-visible behavior, config, or API contracts changed
 - [ ] No hardcoded model names; no secrets written to disk

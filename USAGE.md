@@ -6,19 +6,25 @@ see [USER_GUIDE.md](USER_GUIDE.md).
 ## Start the studio
 
 On Windows 11, double-click **Launch Chat Studio.cmd**. It installs the pinned
-runtime dependencies when needed, builds the frontend, starts the local server,
-and opens the app at <http://127.0.0.1:8000>.
+runtime dependencies when needed, builds the frontend, starts the local server
+on port 8506, and opens the app at <http://127.0.0.1:8506>. Run
+`Launch Chat Studio.cmd --check` for a status report without installing
+anything.
 
 For development, install Python 3.12+, `uv`, and Node.js, then run:
 
 ```powershell
 uv sync --locked --dev
 cd frontend
-npm ci
+npm ci --legacy-peer-deps
 npm run build
 cd ..
 uv run chat-studio
 ```
+
+The launcher already uses `--legacy-peer-deps` so npm peer-dependency
+conflicts do not block install. Stop the managed server from **Settings →
+Stop Studio**, or with Ctrl+C in the launcher console.
 
 Ollama is optional, but is the default local-model provider. Install and start
 it separately if you want to run local models.
@@ -58,8 +64,9 @@ user-grounded preferences, goals, constraints, and project decisions from a
 conversation. It intentionally excludes secrets, raw uploads, assistant
 guesses, and temporary requests.
 
-Review, edit, or delete saved memories in **Memory**. Use **Settings** to
-export, import, or wipe local data. For retrieval, install an Ollama embedding
+Review, edit, or delete saved memories in **Library**. Use **Settings** to
+export, import, or wipe local data, or **Stop Studio** to cancel active runs
+and shut down the managed server. For retrieval, install an Ollama embedding
 model and set `CHAT_EMBED_MODEL`; otherwise the app uses local lexical search.
 
 ## Privacy and troubleshooting

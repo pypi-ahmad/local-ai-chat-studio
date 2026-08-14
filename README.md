@@ -1,8 +1,9 @@
 # Local AI Chat Studio
 
-A local-first AI workspace built with FastAPI and React. It connects to Ollama by
-default and supports optional session-scoped keys for Ollama Cloud, OpenAI,
-Anthropic, Gemini, OpenRouter, xAI, OpenCode Zen/Go, and compatible gateways.
+A local-first AI workspace built with FastAPI and React (**v0.3.0**). It connects
+to Ollama by default and supports optional session-scoped keys for Ollama Cloud,
+OpenAI, Anthropic, Gemini, OpenRouter, xAI, OpenCode Zen/Go, and compatible
+gateways.
 
 ## What is included
 
@@ -18,6 +19,7 @@ Anthropic, Gemini, OpenRouter, xAI, OpenCode Zen/Go, and compatible gateways.
 - Memory, assistants, personalization profile, runtime/VRAM health, and data controls
 - LLM-curated SQLite memory with source-message provenance and optional Chroma indexing
 - ChatGPT, SuperGrok, and Claude subscription sign-in through a local OpenCode server
+- Settings **Stop Studio** action that cancels active runs and stops the managed server
 
 Cloud providers start in prompt-only mode. Credentials entered in the browser stay in
 server-process memory for that browser session and are never exported.
@@ -28,8 +30,10 @@ Requirements: Python 3.12+, [uv](https://docs.astral.sh/uv/), Node.js, and optio
 [Ollama](https://ollama.com/) for local models.
 
 On Windows 11, double-click **Launch Chat Studio.cmd**. It installs missing portable
-runtimes and locked dependencies inside the project, builds the frontend when needed,
-starts the server, and opens the browser. Ollama remains optional.
+runtimes and locked dependencies inside the project, builds the frontend when needed
+(using `npm ci --legacy-peer-deps` so peer-dependency conflicts do not block install),
+starts the server on port **8506**, and opens the browser. Ollama remains optional.
+Run `Launch Chat Studio.cmd --check` for a non-installing status report.
 
 For manual or development setup:
 
@@ -38,14 +42,15 @@ git clone https://github.com/pypi-ahmad/local-ai-chat-studio.git
 cd local-ai-chat-studio
 uv sync --locked --dev
 cd frontend
-npm ci
+npm ci --legacy-peer-deps
 npm run build
 cd ..
 uv run chat-studio
 ```
 
 Open <http://127.0.0.1:8506>. For frontend development, run `npm run dev` in
-`frontend`; Vite proxies `/api` to the backend.
+`frontend`; Vite proxies `/api` to `http://127.0.0.1:8506`. Stop the managed
+server from **Settings → Stop Studio**, or with Ctrl+C in the launcher console.
 
 ## Data and migration
 
@@ -74,7 +79,8 @@ Common environment variables:
 
 ```text
 frontend/src/          React workspace and typed API client
-backend/app/main.py    FastAPI routes, session boundary, and static frontend
+backend/app/cli.py     Uvicorn entrypoint on 127.0.0.1:8506 and managed shutdown
+backend/app/main.py    FastAPI routes, session boundary, static frontend, shutdown
 backend/app/runs.py    Async run lifecycle, SSE events, cancellation, receipts
 backend/app/workspace.py  Safety scan, context planning, retrieval, web evidence
 backend/app/store.py   Legacy-compatible SQLite persistence and data controls

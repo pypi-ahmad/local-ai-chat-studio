@@ -1,14 +1,15 @@
 # Local AI Chat Studio: Zero-to-Hero Study Handbook
 
-> Historical study material: Streamlit-specific modules in this handbook describe the
-> retired UI. Use `README.md` and `docs/codebase/` for the current FastAPI + React
-> architecture.
+> Current product (v0.3.0): a single FastAPI + React workspace on
+> `http://127.0.0.1:8506`. Streamlit-specific modules later in this handbook
+> describe a **retired UI**. Use `README.md`, `USER_GUIDE.md`, `TECHNICAL.md`,
+> and `docs/codebase/` as the source of truth.
 
-> Verified against repository version **v0.2.0 on 2026-07-23**. Status markers: **[v2]** FastAPI/React v2, **[legacy]** Streamlit application, **[shared]** repository-wide tooling or concepts, and **[gap]** designed or displayed but not wired end to end.
+> Verified against repository version **v0.3.0 on 2026-08-13**. Status markers: **[current]** FastAPI/React workspace, **[legacy]** retired Streamlit material, **[shared]** repository-wide tooling, and **[gap]** remaining limits (not “the React app is a shell”).
 
-This handbook takes a beginner from “what is an LLM?” to making a focused contribution. It is intentionally honest about the transition in this repository: the v2 backend is functional, but the v2 React app is mostly a visual shell. The legacy Streamlit application still contains the rich chat, files, RAG, memory, personalization, assistant, and comparison behavior.
+This handbook takes a beginner from “what is an LLM?” to making a focused contribution. Chat, compare, providers, memory, files, replay, and Settings **Stop Studio** all run in the React workspace against `data/app.db`.
 
-Today, the legacy Streamlit path is the complete local end-user application; v2 is not yet end to end, and neither stack is production deployment-ready as shipped because the repository does not include authentication or hardened network deployment controls.
+The app is still not a production multi-user deployment: it has no account layer and must stay on localhost.
 
 ## 1. Start with the product boundary
 
@@ -16,19 +17,18 @@ Local AI Chat Studio is a local-first interface for chatting with models served 
 
 | Capability | Status | What exists now |
 |---|---|---|
-| FastAPI health, conversations, messages | [v2] | Working REST routes backed by `data/v2/studio.db` by default. |
-| Provider credentials and discovery | [v2] | Session-scoped in-memory vault, environment fallback, seven adapters, concurrent discovery. |
-| Streaming model runs | [v2] | In-memory run manager, provider dispatch, cancellation, replayable SSE events. |
-| OpenRouter authorization | [v2] | PKCE start, callback, and manual-completion routes; verifier and resulting key remain in process memory. |
-| React workspace | [v2] [gap] | Polished navigation and static/demo content; buttons and composer do not yet drive real conversations or runs. |
-| TypeScript API layer | [v2] [gap] | Generated schema plus `createRun`, `cancelRun`, and `providers` client primitives; no UI integration or SSE client. |
-| Rich chat, attachments, RAG, memory | [legacy] | Implemented in Streamlit and `src/`; not ported to v2 contracts. |
-| Assistants and model comparison | [legacy] | Implemented; v2 screens are placeholders. |
-| Shared v2/legacy persistence | [gap] | They use different SQLite schemas and default locations; there is no migration or synchronization. |
-| v2 durable run history | [gap] | A `runs` table is created, but `RunManager` keeps runs only in memory and does not use it. |
-| Authentication/multi-user authorization | [gap] | A browser-session cookie scopes keys, but it is not user authentication. Bind to localhost. |
+| FastAPI health, conversations, messages | [current] | REST routes on `/api/v1`, persisted in `data/app.db`. |
+| Provider credentials and discovery | [current] | Session-scoped in-memory vault, environment fallback, adapters, concurrent discovery. |
+| Streaming model runs | [current] | `RunManager`, provider dispatch, cancellation, replayable SSE events, receipts. |
+| OpenRouter / OpenCode authorization | [current] | OpenRouter PKCE; OpenCode loopback OAuth methods. |
+| React workspace | [current] | Chat, Compare, Providers, Library, Activity, Settings drive real API calls. |
+| TypeScript API layer | [current] | Generated `schema.ts` plus `frontend/src/api/client.ts` (SSE, shutdown, data controls). |
+| Attachments, retrieval, memory | [current] | Per-turn attachments, context preflight, SQLite memory, optional Chroma. |
+| Assistants and model comparison | [current] | Presets in Library; Compare and Replay in the React workspace. |
+| Managed shutdown | [current] | Settings **Stop Studio** → `POST /api/v1/runtime/shutdown` on a `chat-studio` process. |
+| Authentication/multi-user authorization | [gap] | A browser-session cookie scopes keys; it is not user authentication. Bind to localhost. |
 
-The safest mental model is **two applications in one repository during a parity migration**, not one UI with two equivalent implementations.
+The safest mental model is **one localhost application**. Legacy Streamlit chapters below are historical.
 
 ## 2. Foundations: the ideas behind the code
 
@@ -82,10 +82,10 @@ Locks make individual critical sections safe, not entire workflows atomic. The l
 ### 3.1 Prerequisites
 
 - Python 3.12 or newer and [uv](https://docs.astral.sh/uv/).
-- Node.js and npm for the v2 React build.
-- [Ollama](https://ollama.com/download) plus a chat model for local inference.
-- `ollama pull embeddinggemma` for legacy memory/RAG.
-- Optional LibreOffice or `antiword` for legacy `.doc` parsing.
+- Node.js and npm for the React build.
+- [Ollama](https://ollama.com/download) plus a chat model for local inference (optional).
+- `ollama pull embeddinggemma` (or another embed model) if you want Chroma retrieval.
+- Optional LibreOffice or `antiword` for old `.doc` parsing.
 
 ### 3.2 Windows PowerShell
 
@@ -95,28 +95,25 @@ Set-Location local-ai-chat-studio
 uv sync --locked --dev
 
 Set-Location frontend
-npm ci
+npm ci --legacy-peer-deps
 npm run build
 Set-Location ..
 
 uv run chat-studio
 ```
 
-Open `http://127.0.0.1:8000`. For frontend development, keep the backend running and use a second PowerShell window:
+On Windows you can instead double-click `Launch Chat Studio.cmd`, or run
+`Launch Chat Studio.cmd --check` for a non-installing status report.
+
+Open `http://127.0.0.1:8506`. For frontend development, keep the backend running and use a second PowerShell window:
 
 ```powershell
 Set-Location frontend
 npm run dev
 ```
 
-Vite proxies `/api` to `http://127.0.0.1:8000`. Run the legacy application with:
-
-```powershell
-ollama pull embeddinggemma
-uv run streamlit run app.py
-```
-
-Stop either server with `Ctrl+C` in its terminal.
+Vite proxies `/api` to `http://127.0.0.1:8506`. Stop the managed server from
+**Settings → Stop Studio**, or with `Ctrl+C` in the launcher console.
 
 ### 3.3 POSIX shells
 
@@ -126,54 +123,54 @@ cd local-ai-chat-studio
 uv sync --locked --dev
 
 cd frontend
-npm ci
+npm ci --legacy-peer-deps
 npm run build
 cd ..
 
 uv run chat-studio
 ```
 
-In another terminal, use `cd frontend && npm run dev` for Vite development. Use `ollama pull embeddinggemma && uv run streamlit run app.py` for the legacy app.
+In another terminal, use `cd frontend && npm run dev` for Vite development (proxies `/api` to port 8506).
 
 ### 3.4 Configuration and data
 
-| Setting | v2 effect | Legacy effect |
-|---|---|---|
-| `CHAT_DATA_DIR` | Base for `studio.db`; default relative `data/v2`. | Pydantic `data_dir`; default repository `data`. |
-| `CHAT_OLLAMA_HOST` | Ollama adapter host. | Ollama client endpoint default. |
-| Provider key variables | Session-vault fallback. | Process-memory vault fallback. |
-| `.env` | No explicit v2 settings loader. | Loaded by Pydantic settings. |
+| Setting | Effect |
+|---|---|
+| `CHAT_DATA_DIR` | Data root; default repository `data`. Canonical DB is `data/app.db`. |
+| `CHAT_OLLAMA_HOST` | Ollama adapter host; default `http://localhost:11434`. |
+| `CHAT_EMBED_MODEL` | Optional Ollama embedding model for Chroma. |
+| Provider key variables | Session-vault fallback if the browser did not set a key. |
 
-Provider variables are `OLLAMA_API_KEY`, `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, `OPENROUTER_API_KEY`, `XAI_API_KEY`, and [v2] `OMNIROUTE_API_KEY`. Never commit them.
+Provider variables are `OLLAMA_API_KEY`, `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, `OPENROUTER_API_KEY`, `XAI_API_KEY`, `OMNIROUTE_API_KEY`, `OPENCODE_ZEN_API_KEY`, and `OPENCODE_GO_API_KEY`. Never commit them.
 
 ## 4. Repository map
 
 ```text
-backend/app/             [v2] FastAPI routes, contracts, store, sessions, providers, runs, CLI
-frontend/src/            [v2] React shell, styles, UI primitives, API client/schema
+backend/app/             [current] FastAPI routes, contracts, store, sessions, providers, runs, CLI
+frontend/src/            [current] React workspace, styles, UI primitives, API client/schema
 scripts/                 [shared] OpenAPI-to-TypeScript generator
-tests/                   [v2] API and provider contract tests
-app.py                   [legacy] Streamlit chat entry point
-pages/                   [legacy] Memory, Settings, Providers, Compare pages
-src/                     [legacy] jobs, orchestration, providers, files, RAG, memory, persistence
+tests/                   [current] API, provider, workspace, and frontend tests
+src/                     [shared] file parsing, Ollama helpers, Chroma retrieval
 .github/workflows/ci.yml [shared] backend and frontend CI jobs
 data/                    runtime data; ignored, not source
-docs/tutorial/           generated/interactive learning companion when present
+docs/tutorial/           offline handbook (docs/tutorial/index.html)
 ```
 
-Suggested reading order: `backend/app/contracts.py` → `store.py` → `sessions.py` → `providers.py` → `runs.py` → `main.py` → `frontend/src/api/` → `App.tsx`; then study `app.py` → `src/jobs.py` → `src/orchestrator.py` and the legacy feature modules.
+Suggested reading order: `backend/app/contracts.py` → `store.py` → `sessions.py` → `providers.py` → `runs.py` → `main.py` → `cli.py` → `frontend/src/api/` → `App.tsx`. Historical Streamlit modules remain only as shared helpers.
 
 ## 5. FastAPI v2, module by module
 
 ### 5.1 `backend/app/main.py`: composition and HTTP contracts
 
-`create_app(database_url=None, provider_registry=None)` is the composition root. Dependency injection of a database path and provider registry makes tests deterministic. It constructs one `Store`, `SessionVault`, `ProviderRegistry`, and `RunManager`, exposes them on `app.state`, and closes SQLite during lifespan shutdown.
+`create_app(database_url=None, provider_registry=None, shutdown_callback=None)` is the composition root. Dependency injection of a database path and provider registry makes tests deterministic. It constructs one `Store`, `SessionVault`, `ProviderRegistry`, and `RunManager`, exposes them on `app.state`, drains runs and closes SQLite during lifespan shutdown, and accepts an optional shutdown callback from `cli.py`.
 
-The middleware reads `chat_session` or generates a random ID, adds it to `request.state`, and sets an `HttpOnly`, `SameSite=Strict`, non-secure cookie. This scopes credentials but does not prove user identity.
+The middleware reads `chat_session` or generates a random ID, adds it to `request.state`, and sets an `HttpOnly`, `SameSite=Lax`, non-secure cookie. This scopes credentials but does not prove user identity.
 
 | Method and path | Contract | Behavior |
 |---|---|---|
 | `GET /api/v1/health` | object | Health/version probe. |
+| `GET /api/v1/runtime/health` | object | Ollama availability and loaded VRAM models. |
+| `POST /api/v1/runtime/shutdown` | `{status}` | Cancels runs and stops a managed `chat-studio` process; requires `X-Local-Studio: shutdown`. |
 | `POST /api/v1/conversations` | `ConversationCreate → Conversation` | Creates a conversation, status 201. |
 | `GET /api/v1/conversations` | `Conversation[]` | Lists newest-updated first, without messages. |
 | `GET /api/v1/conversations/{id}` | `Conversation` | Returns messages ordered by position; 404 if absent. |
@@ -194,13 +191,11 @@ After routes are registered, FastAPI mounts `frontend/dist` at `/` only if that 
 
 Pydantic validates roles, required text, title length, temperature, and run status. `RunSnapshot` represents lifecycle state; `RunEvent` represents an occurrence. Mutable defaults appear as `[]`/`{}` in models, but Pydantic copies model defaults per instance.
 
-`conversation_id` exists on `RunCreate`, but [gap] the v2 run path does not persist prompts or output into that conversation.
+`conversation_id` on `RunCreate` ties a completed assistant message back to the conversation. Preflight/turn routes persist the user message first, then create the run.
 
 ### 5.3 `store.py`: SQLite and ordering
 
-The v2 schema has `conversations`, `messages`, and `runs`. Foreign keys cascade message deletion, though [gap] there is no delete-conversation route. `Store.add_message` verifies the conversation, computes `MAX(position)+1`, inserts, and updates the conversation timestamp under one re-entrant lock and transaction.
-
-The `runs` table is currently unused. Actual `RunState` objects live in `RunManager._runs`, so restart loses them.
+The schema has conversations, messages, memories, presets, uploads, runs, events, and data-control metadata. `Store.add_message` verifies the conversation, computes `MAX(position)+1`, inserts, and updates the conversation timestamp under one re-entrant lock and transaction. Conversations can be deleted. Run snapshots and events are written as they occur; live SSE still follows in-memory `RunState` for the current process.
 
 ### 5.4 `sessions.py`: credential isolation
 
@@ -208,7 +203,7 @@ The `runs` table is currently unused. Actual `RunState` objects live in `RunMana
 
 ### 5.5 `providers.py`: normalized adapters
 
-Every adapter implements `list_models(api_key)` and async `stream(api_key, model, messages, temperature)`. The registry contains Ollama, OpenAI, Anthropic, Gemini, OpenRouter, xAI, and OmniRoute.
+Every adapter implements `list_models(api_key)` and async `stream(api_key, model, messages, temperature)`. The registry includes Ollama Local/Cloud, OpenAI, Anthropic, Gemini, OpenRouter, xAI, OmniRoute, and OpenCode paths.
 
 - OpenAI, OpenRouter, xAI, and OmniRoute share `OpenAICompatibleAdapter` with different base URLs.
 - Ollama uses `CHAT_OLLAMA_HOST` and an optional bearer key.
@@ -227,7 +222,7 @@ queued → running → completed
 events: run.started, zero or more run.delta, then one terminal event
 ```
 
-The built-in `echo` provider exists only as a deterministic contract-test path. Cancellation is cooperative: `DELETE` sets a threading event; status changes only when the streaming loop next observes it. A provider stalled before yielding cannot be interrupted immediately.
+The built-in `echo` provider exists only as a deterministic contract-test path. Cancellation is cooperative: `DELETE` sets a threading event and cancels the task; status changes when the streaming loop observes it or the task is cancelled. `RunManager.shutdown()` cancels remaining runs and awaits their tasks before the process exits.
 
 SSE framing in `main.py` is:
 
@@ -239,26 +234,20 @@ data: {"type":"run.delta", ...}
 
 ### 5.7 `cli.py` and static serving
 
-The `chat-studio` console script invokes Uvicorn on `127.0.0.1:8000`, without reload. Build `frontend/dist` before production-style local use. The loopback host is an intentional safety boundary; changing it to `0.0.0.0` exposes an unauthenticated service.
+The `chat-studio` console script invokes Uvicorn on `127.0.0.1:8506`, without reload, and supplies the shutdown callback used by Settings **Stop Studio**. Build `frontend/dist` before production-style local use. The loopback host is an intentional safety boundary; changing it to `0.0.0.0` exposes an unauthenticated service.
 
-## 6. React v2: shell, client, schema, and gaps
+## 6. React workspace: client, schema, and remaining limits
 
-`frontend/src/App.tsx` renders a navigation rail, sample conversation history, a chat composer, provider cards, and generic workspace placeholders. State switches pages and fills prompt suggestions. It uses React and local shadcn/Base UI-style components.
+`frontend/src/App.tsx` is the live workspace: Chat, Compare, Providers, Library, Activity, and Settings. It preflights turns, streams SSE run events, manages credentials, and calls `api.shutdown()` for **Stop Studio**.
 
-What it does **not** currently do:
+`frontend/src/api/client.ts` is the typed client for those routes. `frontend/src/api/schema.ts` is generated by `scripts/generate_api_types.py` from FastAPI OpenAPI. Do not hand-edit it. TypeScript is pinned to 5.9; Vite proxies `/api` to port 8506.
 
-- [gap] load/create conversations or persist messages;
-- [gap] discover models or configure credentials;
-- [gap] submit the composer to `createRun`;
-- [gap] consume SSE deltas or display actual responses;
-- [gap] cancel active runs, upload files, use RAG/memory, compare models, or manage assistants;
-- [gap] derive its “Backend connected” indicator from `/health`.
+Remaining limits are product-scope, not an unfinished shell: no user-account authentication, single-process in-memory credentials, and no browser E2E suite.
 
-`frontend/src/api/client.ts` contains only `createRun`, `cancelRun`, and `providers`. Its shared request helper sends JSON and same-origin cookies. There is no EventSource/fetch-stream implementation and no conversation client methods.
+## 7. Historical Streamlit notes (retired UI)
 
-`frontend/src/api/schema.ts` is generated by `scripts/generate_api_types.py` from FastAPI OpenAPI. Do not hand-edit it. The generator covers the repository’s current simple schemas; it is not a general OpenAPI generator.
-
-## 7. Legacy Streamlit: where feature-rich behavior lives
+> `app.py` and `pages/` are gone. The current product is FastAPI + React. Keep
+> this chapter only as background for leftover helpers under `src/`.
 
 ### 7.1 `app.py` and pages
 
@@ -363,15 +352,15 @@ question → embed → nearest chunks → bounded context → model answer
 
 ## 9. Data, privacy, and security
 
-- [v2] conversation text persists in `data/v2/studio.db`; [legacy] richer data persists under `data/` and vectors in `data/chroma`.
+- Conversation, memory, run, and policy data persist in `data/app.db`. Optional vectors live in `data/chroma`. An older `data/v2/studio.db` is imported only from Settings.
 - Session-entered keys remain in process memory. Environment fallback keys live outside app storage but are readable by the process.
 - A cloud-provider request sends its messages and selected context to that provider. “Local-first” is not “always local.”
-- Legacy uploaded content may be parsed locally, embedded by configured Ollama, and injected into a cloud-model request if a cloud model is selected.
-- The cookie is `HttpOnly` and `SameSite=Strict`, but `secure=False` for local HTTP. It scopes secrets; it is not authentication, authorization, CSRF proof for every deployment, or encryption at rest.
+- Uploaded content is parsed locally and is sent only when selected for a turn and permitted by provider policy.
+- The cookie is `HttpOnly` and `SameSite=Lax`, but `secure=False` for local HTTP. It scopes secrets; it is not authentication, authorization, or encryption at rest.
 - PKCE protects code exchange, not the application itself. Pending verifiers and keys disappear on restart.
-- Exception strings currently surface in discovery/run failures; avoid placing secrets in upstream error text and logs.
-- SQLite locks are process-local. In-memory runs/vaults will diverge across multiple Uvicorn workers.
-- Never expose either app publicly without an authentication, TLS, origin, and deployment review.
+- Provider exceptions are reduced to safe categories before they reach run events.
+- SQLite locks are process-local. In-memory vaults will diverge across multiple Uvicorn workers.
+- Never expose the app publicly without an authentication, TLS, origin, and deployment review.
 
 ## 10. Contributor tutorials
 
@@ -433,14 +422,15 @@ npm run build
 
 The same commands work in POSIX shells with `cd frontend`. CI runs backend and frontend jobs on Ubuntu, Python 3.12, and Node 22.12. The backend tests inject an in-memory database and fake registry where needed; the `echo` run avoids a network model.
 
-Current test scope is intentionally small: API contracts, credential session isolation, SSE completion, PKCE construction, provider registry/discovery, and React shell rendering/navigation. [gap] Legacy feature paths have no committed automated coverage in the current tree.
+Current tests cover API contracts, session-owned runs, cancellation, managed shutdown, safety/context policy, replay/bundles, data controls, provider adapters, OpenCode loopback, and the React workspace including **Stop Studio**. Real external-provider calls and a running Ollama daemon remain manual smoke tests.
 
 ### 11.2 Debugging playbook
 
 | Symptom | First checks |
 |---|---|
-| `/` returns 404 on port 8000 | Build `frontend/dist`; confirm backend startup directory. |
-| Vite UI cannot call API | Confirm backend on 8000 and `vite.config.ts` proxy. |
+| `/` returns 404 on port 8506 | Build `frontend/dist`; confirm backend startup directory. |
+| Vite UI cannot call API | Confirm backend on 8506 and `vite.config.ts` proxy. |
+| Stop Studio returns 503 | The process was not started via `chat-studio` (no shutdown callback). |
 | provider discovery shows an error | Check only that provider’s key, base URL, and network; discovery intentionally degrades independently. |
 | run stays queued/running | Inspect `/runs/{id}` and `/events`; check provider stream and server exception. |
 | cancel appears delayed | Cancellation is checked between received chunks. |
@@ -454,16 +444,16 @@ Debug in the sequence reproduce → localize → form one hypothesis → change 
 
 | Module | Marker | Owns |
 |---|---|---|
-| `backend/app/main.py` | [v2] | HTTP routes, middleware, PKCE exchange, static mount. |
-| `backend/app/contracts.py` | [v2] | Pydantic API and event types. |
-| `backend/app/store.py` | [v2] | Minimal SQLite conversations/messages schema. |
-| `backend/app/sessions.py` | [v2] | Session credential vault and env fallback. |
-| `backend/app/providers.py` | [v2] | Async adapters and concurrent discovery. |
-| `backend/app/runs.py` | [v2] | In-memory streaming run lifecycle. |
-| `backend/app/cli.py` | [v2] | Uvicorn console entry point. |
-| `frontend/src/App.tsx` | [v2] [gap] | Mostly static SPA workspace shell. |
-| `frontend/src/api/client.ts` | [v2] [gap] | Three API request primitives. |
-| `frontend/src/api/schema.ts` | [v2] | Generated TypeScript contracts. |
+| `backend/app/main.py` | [current] | HTTP routes, middleware, PKCE, static mount, shutdown. |
+| `backend/app/contracts.py` | [current] | Pydantic API and event types. |
+| `backend/app/store.py` | [current] | SQLite conversations, messages, memory, runs, data controls. |
+| `backend/app/sessions.py` | [current] | Session credential vault and env fallback. |
+| `backend/app/providers.py` | [current] | Async adapters and concurrent discovery. |
+| `backend/app/runs.py` | [current] | Streaming run lifecycle, receipts, shutdown drain. |
+| `backend/app/cli.py` | [current] | Uvicorn on `127.0.0.1:8506` and shutdown callback. |
+| `frontend/src/App.tsx` | [current] | Live React workspace including **Stop Studio**. |
+| `frontend/src/api/client.ts` | [current] | Typed API client, SSE, shutdown. |
+| `frontend/src/api/schema.ts` | [current] | Generated TypeScript contracts. |
 | `scripts/generate_api_types.py` | [shared] | OpenAPI schema conversion. |
 | `app.py` | [legacy] | Streamlit chat and UI orchestration. |
 | `pages/*.py` | [legacy] | Memory, settings, providers, compare screens. |
@@ -481,8 +471,8 @@ Debug in the sequence reproduce → localize → form one hypothesis → change 
 
 ## 13. Exercises and solution outlines
 
-1. **Classify a feature.** Is “Memory” available in v2 because the navigation button exists?
-   **Outline:** No. The React button and placeholder are [v2], but behavior is [legacy]; porting is [gap].
+1. **Classify a feature.** Is “Memory” available because the navigation button exists?
+   **Outline:** Yes for the current app: Library talks to `/api/v1/memories` and whole-chat extract. Historical Streamlit memory pages are retired.
 
 2. **Trace a run without the UI.** Create a run using the `echo` provider and consume events.
    **Outline:** POST a `RunCreate`, retain the ID, GET its `/events`, verify started/delta/completed, then GET its snapshot.
@@ -506,13 +496,13 @@ Debug in the sequence reproduce → localize → form one hypothesis → change 
    **Outline:** keys are not written by the vault, but request messages/context leave the machine for the selected cloud provider. Local storage does not make that call local.
 
 9. **Design the smallest frontend contribution.**
-   **Outline:** Wire provider status first: one existing API method, three UI states, and a focused test. Full chat requires an orchestration ownership decision.
+   **Outline:** Change one existing Settings or Providers control, keep the typed client, and add a focused Vitest case.
 
 10. **Add a contract safely.**
     **Outline:** Pydantic model → route → pytest → regenerate schema → typed client → UI test → all CI commands.
 
-11. **Investigate unused persistence.**
-    **Outline:** Locate `runs` DDL in `store.py`; confirm `RunManager` never receives `Store`; propose either persistence integration or removing misleading schema in a separately approved change.
+11. **Investigate run persistence.**
+    **Outline:** `RunManager` writes snapshots and events through `Store`. Restart still drops in-memory SSE subscribers and session keys; receipts and completed messages remain in SQLite.
 
 12. **Test a parser contribution.**
     **Outline:** valid bytes, malformed bytes, empty extraction, direct-context threshold, chunk overlap, indexing/retrieval, and no execution of embedded data.
@@ -563,6 +553,6 @@ Debug in the sequence reproduce → localize → form one hypothesis → change 
 
 ## 16. A practical contributor path
 
-First run both applications and observe the parity gap. Next, read and test one v2 vertical slice. Make one small contract-backed change, regenerate types if needed, and run both CI command sets. Treat legacy modules as the behavioral reference, not as code that must be copied: preserve behavior while choosing interfaces appropriate to FastAPI and React.
+First run the FastAPI + React app (launcher or `uv run chat-studio`) and complete one chat. Next, read and test one vertical slice. Make one small contract-backed change, regenerate types if needed, and run both CI command sets. Treat leftover `src/` helpers as shared libraries, not a second application.
 
-Before opening a pull request, answer four questions: What user-visible behavior changed? Which stack owns it? What persists and what is session-only? Which automated test proves the public contract?
+Before opening a pull request, answer four questions: What user-visible behavior changed? What persists and what is session-only? How is shutdown or restart affected? Which automated test proves the public contract?

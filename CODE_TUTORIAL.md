@@ -86,33 +86,37 @@ tools because the two web frameworks work fundamentally differently.
 
 ## Part 2 — The 10,000-foot view
 
-Open the repo root and you'll see **two separate applications**:
+The operating product is a **single FastAPI + React application**:
 
 ```
 local-ai-chat-studio/
-├── app.py, pages/, src/        ← "legacy": Streamlit. Feature-complete today.
-└── backend/, frontend/         ← "v2": FastAPI + React. API works; UI is a shell.
+├── backend/app/     FastAPI API, runs, workspace, store, managed shutdown
+├── frontend/src/    React workspace (Chat, Compare, Providers, Library, Settings)
+├── src/             Shared file parsing, Ollama, and Chroma helpers
+└── tests/           Backend and frontend contract tests
 ```
 
-This is not an accident or leftover cruft — it's an in-progress rewrite,
-documented honestly in the handbook as a "parity migration." The Streamlit
-app has every feature (memory, RAG, providers, compare, presets); the v2
-React app currently renders a polished-looking but mostly *static* interface
-that doesn't yet call the real endpoints for chat. Both apps are real,
-working code — just at different points on the same roadmap.
+The server listens on `127.0.0.1:8506`. Settings **Stop Studio** posts to
+`/api/v1/runtime/shutdown`. The Streamlit `app.py` / `pages/` UI has been
+removed; leftover modules under `src/` are helpers, not a second app.
 
-This tutorial walks **both**, because reading the finished (legacy) stack
-teaches you the product's behavior, and reading the in-progress (v2) stack
-teaches you the target architecture — plus one live, real bug-fix case study
-from this very repo.
+This tutorial still walks some historical Streamlit code in Part 3 because
+that path explains product behavior that later moved into FastAPI. Treat
+those sections as history. The current request path is
+`backend/app/main.py` → `runs.py` / `workspace.py` / `store.py` →
+`frontend/src/api/client.ts` → `frontend/src/App.tsx`.
 
 ---
 
-## Part 3 — The legacy stack (Streamlit): a message's full journey
+## Part 3 — Historical Streamlit path (retired UI)
+
+> This part documents the removed Streamlit application. Do not run
+> `streamlit run app.py`; that entrypoint is gone. Read it only to understand
+> how the older stack assembled context.
 
 We'll follow one concrete scenario end to end: **a user types "hello" and
-hits Enter.** Each subsection below is the next stop on that journey — read
-them in order and you'll have traced the entire request path by the end.
+hits Enter.** Each subsection below is the next stop on that historical
+journey.
 
 ### 3.1 `src/config.py` — one object everything else reads from
 
@@ -732,21 +736,20 @@ extra library required.
 > the [asyncio docs](https://docs.python.org/3/library/asyncio-task.html#asyncio.create_task),
 > a task with no remaining references is eligible for garbage collection
 > *mid-run*, which could silently kill an in-flight generation with no error
-> ever surfacing. The fix (not yet applied at time of writing) is to keep
-> tasks in a set the manager owns: `self._tasks.add(task);
-> task.add_done_callback(self._tasks.discard)`. This is a common enough trap
-> that it's worth internalizing the rule: **if you don't keep the task
-> object, Python is allowed to throw it away.**
+> ever surfacing. The current `RunManager` keeps tasks in `self._tasks` and
+> discards them from a done callback, then `shutdown()` awaits the set.
+> Internalize the rule: **if you don't keep the task object, Python is
+> allowed to throw it away.**
 
 ### 4.6 `backend/app/main.py` — composition root, and a live bug-fix case study
 
 ```python
-def create_app(database_url=None, provider_registry=None) -> FastAPI:
-    store = Store(database_url or str(data_dir / "studio.db"))
+def create_app(database_url=None, provider_registry=None, shutdown_callback=None) -> FastAPI:
+    store = Store(database_url or str(data_dir / "app.db"))
     vault = SessionVault()
     registry = provider_registry or ProviderRegistry(build_provider_registry())
-    runs = RunManager(registry, vault)
-    app = FastAPI(...)
+    runs = RunManager(registry, vault, store)
+    app = FastAPI(..., lifespan=lifespan)
     ...
     return app
 ```
@@ -826,7 +829,19 @@ someday, the client would only ever see the shape declared here.
 
 ```python
 def main() -> None:
-    uvicorn.run(create_app(), host="127.0.0.1", port=8000, reload=False, log_level="info")
+    def shutdown() -> None:
+        server.should_exit = True
+
+    server = uvicorn.Server(
+        uvicorn.Config(
+            create_app(shutdown_callback=shutdown),
+            host="127.0.0.1",
+            port=8506,
+            reload=False,
+            log_level="info",
+        )
+    )
+    server.run()
 ```
 
 [Uvicorn](https://www.uvicorn.org/) is the ASGI server that actually accepts
@@ -835,19 +850,21 @@ boundary, not an accident — it means the server only accepts connections
 from the same machine, so "no built-in authentication" (true throughout this
 API) is an acceptable tradeoff *as long as* this stays loopback-only. Binding
 `0.0.0.0` here would expose every unauthenticated route to the network.
+Port **8506** is the default in v0.3.0. The shutdown callback is what
+Settings **Stop Studio** uses after `RunManager.shutdown()` cancels active
+runs.
 
-### 4.8 `frontend/` — what's real, what's a shell
+### 4.8 `frontend/` — the current React workspace
 
-`frontend/src/App.tsx` renders navigation, a chat composer, and provider
-cards — but per the handbook, none of it yet calls `createRun`, discovers
-models, or streams SSE deltas into the screen. `frontend/src/api/client.ts`
-has exactly three typed functions (`createRun`, `cancelRun`, `providers`) —
-read it, it's short, and it's the honest current boundary of what the v2
-frontend can actually do today. If you want to contribute one focused,
-learnable slice: wiring the Providers page to `api.providers()` and
-rendering real `key_source` values (loading/success/error states) is the
-smallest complete vertical slice available, and the handbook (§10.3) walks
-it in more detail.
+`frontend/src/App.tsx` is the live workspace: Chat, Compare, Providers,
+Library, Activity, and Settings. `frontend/src/api/client.ts` is the typed
+client for conversations, preflight, SSE runs, memory, OpenCode auth, data
+controls, and `api.shutdown()`. Vite's `npm run dev` proxies `/api` to
+`http://127.0.0.1:8506`. TypeScript is pinned to 5.9.
+
+A focused contribution is still a small vertical slice — for example
+tightening one Settings or Providers control plus a Vitest case — but the
+old “UI is a static shell” description is no longer true.
 
 ---
 
@@ -901,6 +918,6 @@ different concurrency primitives because the two web frameworks demand it.
 - **A good second read**: `tests/test_provider_adapters.py` and
   `tests/test_api_contract.py` — tests are executable proof of what each
   module in Part 4 is actually guaranteed to do.
-- **A good first contribution**: pick one `[gap]` from the handbook's
-  product-boundary table and wire it — the Providers-status vertical slice
-  mentioned in §4.8 is the smallest complete one available today.
+- **A good first contribution**: a focused UI or contract change with a
+  matching test. See [CONTRIBUTING.md](CONTRIBUTING.md). The old “wire the
+  static shell” gap list is obsolete as of v0.3.0.

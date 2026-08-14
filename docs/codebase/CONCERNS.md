@@ -3,7 +3,8 @@
 ## Current constraints
 
 - The app is intentionally a single-process, localhost workspace. Active run tasks and
-  browser-entered credentials are process memory, so a restart ends them.
+  browser-entered credentials are process memory, so a restart ends them. Managed
+  shutdown is available only when the process is started through `chat-studio`.
 - There is no user authentication. Do not expose the server to an untrusted network.
 - Provider discovery depends on remote SDK calls; one slow catalog can delay the model
   list even though failures degrade per provider.

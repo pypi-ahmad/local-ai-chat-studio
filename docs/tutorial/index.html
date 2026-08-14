@@ -363,7 +363,7 @@
         <p class="chapter-label">04 · Bring-up procedure</p>
         <h2>Install once. Start locally.</h2>
         <p class="chapter-intro">Requirements: Python 3.12+, <code>uv</code>, Node.js/npm, and optionally Ollama for local models.</p>
-        <div class="callout"><strong>Windows one-click path:</strong> double-click <code>Launch Chat Studio.cmd</code> in the repository root. It provisions portable runtimes under <code>.runtime</code>, installs locked dependencies, builds when needed, opens the browser after health succeeds, and keeps server logs visible. Ollama remains optional.</div>
+        <div class="callout"><strong>Windows one-click path:</strong> double-click <code>Launch Chat Studio.cmd</code> in the repository root. It provisions portable runtimes under <code>.runtime</code>, installs locked dependencies (frontend <code>npm ci --legacy-peer-deps</code>), builds when needed, opens <code>http://127.0.0.1:8506</code> after health succeeds, and keeps server logs visible. Run <code>Launch Chat Studio.cmd --check</code> for a non-installing status report. Ollama remains optional.</div>
         <div class="tabs">
           <div role="tablist" aria-label="Operating system commands">
             <button id="windows-tab" role="tab" aria-selected="true" aria-controls="windows-panel">Windows PowerShell</button>
@@ -373,7 +373,7 @@
 Set-Location local-ai-chat-studio
 uv sync --locked --dev
 Set-Location frontend
-npm ci
+npm ci --legacy-peer-deps
 npm run build
 Set-Location ..
 uv run chat-studio</code></pre></div>
@@ -381,7 +381,7 @@ uv run chat-studio</code></pre></div>
 cd local-ai-chat-studio
 uv sync --locked --dev
 cd frontend
-npm ci
+npm ci --legacy-peer-deps
 npm run build
 cd ..
 uv run chat-studio</code></pre></div>
@@ -427,7 +427,7 @@ uv run chat-studio</code></pre></div>
         <h3>Memory workflow</h3>
         <p>Choose <strong>Save memories &amp; close</strong> when a conversation contains durable information worth reusing. The selected model reduces the whole chat into short user-grounded points. A remote model requires confirmation before the transcript leaves the machine. Review new memories in Library; approve quarantined items, archive stale items, pin critical context, or delete mistakes.</p>
         <h3>Settings and recovery</h3>
-        <p>Settings shows server/Ollama health and loaded models, manages the local profile, imports or exports JSONL, imports the old preview database with a backup, and exposes a confirmation-protected panic wipe.</p>
+        <p>Settings shows server/Ollama health and loaded models, manages the local profile, imports or exports JSONL, imports the old preview database with a backup, and exposes a confirmation-protected panic wipe. <strong>Stop Studio</strong> cancels active generations and stops the managed <code>chat-studio</code> process; Ollama and OpenCode keep running.</p>
         <div class="lens-note" data-for="explorer"><strong>Good habit</strong>Use Evidence as your packing list and Replay as your receipt. If either looks surprising, stop before adding more provider access.</div>
         <div class="lens-note" data-for="engineer"><strong>UI contract</strong>The React client preflights first, submits the returned <code>plan_hash</code>, and streams retained events for the resulting run.</div>
         <div class="lens-note" data-for="business"><strong>Adoption signal</strong>The product is strongest where users need model choice plus visible context controls—not where a basic hosted chat is sufficient.</div>
@@ -609,6 +609,7 @@ npm run build</code></pre></div>
           <tr><td>Context changed conflict</td><td>Preflight again; a source, policy, or conversation state changed after review.</td></tr>
           <tr><td>No vector results</td><td>Install and set <code>CHAT_EMBED_MODEL</code>; otherwise expect lexical fallback where supported.</td></tr>
           <tr><td>Provider key vanished</td><td>Session keys intentionally disappear after server restart or a new browser session.</td></tr>
+          <tr><td>Stop Studio unavailable</td><td>Start with the launcher or <code>uv run chat-studio</code>. Unmanaged servers return 503.</td></tr>
           <tr><td>OpenCode unavailable</td><td>Run its server on loopback; check URL and optional basic-auth environment variables.</td></tr>
           <tr><td>Old <code>.doc</code> has no text</td><td>Install LibreOffice or <code>antiword</code>.</td></tr>
         </tbody></table></div>
@@ -631,7 +632,7 @@ npm run build</code></pre></div>
           <li><span class="path">docs/codebase/</span> — architecture, stack, structure, integrations, testing, conventions, and concerns.</li>
           <li><span class="path">SECURITY.md</span> and <span class="path">CONTRIBUTING.md</span> — reporting and contribution policy.</li>
         </ul>
-        <footer>Local AI Chat Studio · Zero-to-Hero Handbook · v0.2.0 · implementation verified 2026-08-12 · MIT licensed</footer>
+        <footer>Local AI Chat Studio · Zero-to-Hero Handbook · v0.3.0 · implementation verified 2026-08-13 · MIT licensed</footer>
       </section>
       <p class="empty" id="no-results" hidden>No chapter matches that search. Try a feature, module, provider, or concept.</p>
     </main>

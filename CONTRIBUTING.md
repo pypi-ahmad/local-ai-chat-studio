@@ -3,8 +3,9 @@
 Contributions are welcome — PRs, issues, and ideas are all appreciated. This
 guide covers the mechanics of contributing. Start with
 [TECHNICAL.md](TECHNICAL.md) and the current architecture map in
-[`docs/codebase/`](docs/codebase/); the longer handbook and code tutorial retain
-some clearly marked historical Streamlit material.
+[`docs/codebase/`](docs/codebase/). The longer handbook and code tutorial still
+contain clearly marked historical Streamlit walkthroughs; they are not the
+operating application.
 
 ## Before you start
 
@@ -12,8 +13,7 @@ some clearly marked historical Streamlit material.
 2. Read [SECURITY.md](SECURITY.md) if your change touches credentials,
    sessions, or anything network-facing.
 3. Check [open issues](https://github.com/pypi-ahmad/local-ai-chat-studio/issues)
-   and the README's [Roadmap](README.md#roadmap) so you're not duplicating
-   in-flight work.
+   and [CHANGELOG.md](CHANGELOG.md) so you're not duplicating in-flight work.
 
 ## Setup
 
@@ -22,8 +22,12 @@ frontend development together:
 
 ```bash
 uv sync --locked --dev
-cd frontend && npm ci && cd ..
+cd frontend && npm ci --legacy-peer-deps && cd ..
 ```
+
+The Windows launcher uses the same `--legacy-peer-deps` flag. The managed
+server listens on `127.0.0.1:8506`. The frontend TypeScript toolchain is
+pinned to 5.9.
 
 ## Code style
 

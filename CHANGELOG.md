@@ -7,6 +7,12 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- Refreshed README and companion documentation for v0.3.0: port 8506, managed
+  **Stop Studio** shutdown, Windows launcher `--check` / `--legacy-peer-deps`,
+  and TypeScript 5.9.
+
 ## [0.3.0] - 2026-08-12
 
 ### Added

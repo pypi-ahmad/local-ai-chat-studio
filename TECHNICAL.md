@@ -13,10 +13,18 @@ React/Vite frontend -> /api/v1 -> FastAPI application -> providers / local store
                                       +-> SSE run events -> browser
 ```
 
-`backend/app/cli.py` starts Uvicorn on `127.0.0.1`. `backend/app/main.py`
-composes the API, static frontend serving, session boundary, persistence,
-providers, run manager, and workspace services. During frontend development,
-Vite proxies `/api` to the backend; production builds are served by FastAPI.
+`backend/app/cli.py` starts Uvicorn on `127.0.0.1:8506` and passes a shutdown
+callback into `create_app()`. `backend/app/main.py` composes the API, static
+frontend serving, session boundary, persistence, providers, run manager,
+workspace services, and managed shutdown. During frontend development, Vite
+proxies `/api` to `http://127.0.0.1:8506`; production builds are served by
+FastAPI.
+
+`POST /api/v1/runtime/shutdown` is the Settings **Stop Studio** path. It
+requires the `X-Local-Studio: shutdown` header, cancels in-flight runs through
+`RunManager.shutdown()`, waits for those background tasks, then asks Uvicorn to
+exit. Without a shutdown callback (unmanaged/test mode) the route returns 503.
+Process lifespan shutdown also waits for runs and closes the SQLite connection.
 
 ## Data, sessions, and runs
 
@@ -38,13 +46,14 @@ Vite proxies `/api` to the backend; production builds are served by FastAPI.
 
 | Area | Primary location | Responsibility |
 | --- | --- | --- |
-| HTTP contracts and routes | `backend/app/contracts.py`, `backend/app/main.py` | Pydantic API shapes and `/api/v1` endpoints |
-| Runs and streaming | `backend/app/runs.py` | Run lifecycle, cancellation, SSE events, receipts |
+| HTTP contracts and routes | `backend/app/contracts.py`, `backend/app/main.py` | Pydantic API shapes, `/api/v1` endpoints, managed shutdown |
+| Process entry | `backend/app/cli.py` | Uvicorn on `127.0.0.1:8506` and shutdown callback |
+| Runs and streaming | `backend/app/runs.py` | Run lifecycle, cancellation, SSE events, receipts, task drain |
 | Context safety and retrieval | `backend/app/workspace.py` | Context planning, pruning, provenance, retrieval, safety scanning |
 | Local persistence | `backend/app/store.py` | SQLite schema, conversations, memory, exports, imports |
 | Providers and OAuth bridges | `backend/app/providers.py`, `backend/app/sessions.py` | Provider adapters, discovery, credential/session handling |
 | Web client | `frontend/src/` | React workspaces and generated typed API client |
-| Legacy compatibility | `src/` | Existing file parsing, Chroma retrieval, and Streamlit-era helpers |
+| Shared helpers | `src/` | File parsing, Ollama health/embeddings, and Chroma retrieval |
 
 ## Providers and integrations
 
@@ -78,6 +87,8 @@ loopback host, preventing an accidental remote bridge configuration.
 The OpenAPI contract originates from FastAPI/Pydantic models. When a contract
 in `backend/app/contracts.py` changes, regenerate the frontend client from
 `frontend/` with `npm run generate:api`, then commit the generated schema.
+Frontend TypeScript is pinned to 5.9. Use `npm ci --legacy-peer-deps` so the
+same peer-dependency resolution as the Windows launcher applies.
 
 Run the same checks used in CI before opening a pull request:
 

@@ -34,3 +34,9 @@ to apply remote-provider context policy before sending chat context to it.
 
 The system is deliberately single-process and localhost-first. Horizontal scaling
 would require external run events and credential/session state.
+
+Managed shutdown is part of that single-process model. Settings **Stop Studio**
+posts to `/api/v1/runtime/shutdown`, `RunManager.shutdown()` cancels and awaits
+active generation tasks, then the CLI sets `uvicorn.Server.should_exit`. Process
+lifespan performs the same run drain and closes SQLite. Ollama and OpenCode are
+not stopped.
