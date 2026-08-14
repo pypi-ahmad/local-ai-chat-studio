@@ -1,0 +1,521 @@
+{
+  "nodes": [
+    {
+      "id": "document:.github/ISSUE_TEMPLATE/bug_report.md",
+      "type": "document",
+      "name": "bug_report.md",
+      "filePath": ".github/ISSUE_TEMPLATE/bug_report.md",
+      "summary": "GitHub issue template that collects reproduction steps, expected behavior, logs, and environment details (OS, Python, Ollama, model, app version) for bug reports.",
+      "tags": ["documentation", "github", "issue-template", "bug-report"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:.github/pull_request_template.md",
+      "type": "document",
+      "name": "pull_request_template.md",
+      "filePath": ".github/pull_request_template.md",
+      "summary": "Pull request template requiring a purpose statement, change list, end-to-end testing notes, and a checklist for focused, documented, secret-safe contributions.",
+      "tags": ["documentation", "github", "pull-request", "contribution"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:docs/site/index.html",
+      "type": "file",
+      "name": "index.html",
+      "filePath": "docs/site/index.html",
+      "summary": "Client-side docs viewer that fetches project markdown from a sticky nav and renders it with marked, warning when file:// blocks those loads.",
+      "tags": ["documentation", "markup", "docs-viewer", "entry-point"],
+      "complexity": "moderate",
+      "languageNotes": "Uses HTMX plus marked over CDN; relative image and link paths are rebased to each source markdown file."
+    },
+    {
+      "id": "file:docs/tutorial/index.html",
+      "type": "file",
+      "name": "index.html",
+      "filePath": "docs/tutorial/index.html",
+      "summary": "Self-contained offline handbook covering setup, product use, providers, architecture, and a code atlas, with explorer/engineer/business audience lenses.",
+      "tags": ["documentation", "markup", "tutorial", "handbook"],
+      "complexity": "complex",
+      "languageNotes": "Single-file handbook with no CDN; search, tabs, and audience switching run from an inline IIFE."
+    },
+    {
+      "id": "file:frontend/vite.config.ts",
+      "type": "file",
+      "name": "vite.config.ts",
+      "filePath": "frontend/vite.config.ts",
+      "summary": "Vite configuration for the React and Tailwind frontend: `@` alias to `src`, a 127.0.0.1-only dev server that proxies `/api` to `http://127.0.0.1:8506`, and jsdom tests via `src/test/setup.ts`.",
+      "tags": ["config", "build-system", "vite", "dev-server"],
+      "complexity": "simple",
+      "languageNotes": "Uses vitest/config defineConfig so the same file drives both the dev server and frontend tests."
+    },
+    {
+      "id": "file:tests/test_api_contract.py",
+      "type": "file",
+      "name": "test_api_contract.py",
+      "filePath": "tests/test_api_contract.py",
+      "summary": "FastAPI contract tests for health and session cookies, managed shutdown via the X-Local-Studio header, unmanaged 503, conversation order, session-scoped secrets, Anthropic WIF, run SSE snapshots, and OpenRouter PKCE.",
+      "tags": ["test", "api-contract", "fastapi", "integration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/test_api_contract.py:test_health_and_session_cookie",
+      "type": "function",
+      "name": "test_health_and_session_cookie",
+      "filePath": "tests/test_api_contract.py",
+      "lineRange": [10, 15],
+      "summary": "Asserts GET /api/v1/health returns status ok with version 2 and sets a chat_session cookie.",
+      "tags": ["test", "health", "session"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_api_contract.py:test_managed_server_can_be_stopped_from_the_local_ui",
+      "type": "function",
+      "name": "test_managed_server_can_be_stopped_from_the_local_ui",
+      "filePath": "tests/test_api_contract.py",
+      "lineRange": [18, 32],
+      "summary": "Builds an in-memory app with a shutdown callback and verifies POST /api/v1/runtime/shutdown with X-Local-Studio: shutdown returns 202 and invokes that callback.",
+      "tags": ["test", "shutdown", "managed-mode"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_api_contract.py:test_shutdown_rejects_cross_site_and_unmanaged_requests",
+      "type": "function",
+      "name": "test_shutdown_rejects_cross_site_and_unmanaged_requests",
+      "filePath": "tests/test_api_contract.py",
+      "lineRange": [35, 43],
+      "summary": "Asserts shutdown without the X-Local-Studio header is 403 and a header-authenticated request is 503 when no shutdown callback is configured.",
+      "tags": ["test", "shutdown", "security"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_api_contract.py:test_conversation_crud_preserves_message_order",
+      "type": "function",
+      "name": "test_conversation_crud_preserves_message_order",
+      "filePath": "tests/test_api_contract.py",
+      "lineRange": [46, 65],
+      "summary": "Creates a conversation, posts two messages, and asserts GET detail returns them in insertion order.",
+      "tags": ["test", "conversation", "crud"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_api_contract.py:test_provider_secret_is_scoped_to_browser_session",
+      "type": "function",
+      "name": "test_provider_secret_is_scoped_to_browser_session",
+      "filePath": "tests/test_api_contract.py",
+      "lineRange": [68, 84],
+      "summary": "Stores an OpenAI session key then confirms a new TestClient session does not inherit that key_source.",
+      "tags": ["test", "providers", "session"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_api_contract.py:test_anthropic_reports_workload_identity_source",
+      "type": "function",
+      "name": "test_anthropic_reports_workload_identity_source",
+      "filePath": "tests/test_api_contract.py",
+      "lineRange": [87, 98],
+      "summary": "With ANTHROPIC_PROFILE set and no API key, asserts the Anthropic provider reports key_source wif.",
+      "tags": ["test", "providers", "anthropic"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_api_contract.py:test_run_stream_contract_retains_completed_output",
+      "type": "function",
+      "name": "test_run_stream_contract_retains_completed_output",
+      "filePath": "tests/test_api_contract.py",
+      "lineRange": [101, 125],
+      "summary": "Starts an echo run, reads SSE events through completion, and asserts the run snapshot retains the completed output.",
+      "tags": ["test", "runs", "sse"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/test_api_contract.py:test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+      "type": "function",
+      "name": "test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+      "filePath": "tests/test_api_contract.py",
+      "lineRange": [128, 142],
+      "summary": "Starts OpenRouter OAuth and asserts PKCE S256 plus a callback_url bound to the current TestClient origin.",
+      "tags": ["test", "oauth", "openrouter"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_health_and_session_cookie",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_managed_server_can_be_stopped_from_the_local_ui",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_shutdown_rejects_cross_site_and_unmanaged_requests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_conversation_crud_preserves_message_order",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_provider_secret_is_scoped_to_browser_session",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_anthropic_reports_workload_identity_source",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_run_stream_contract_retains_completed_output",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_health_and_session_cookie",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_managed_server_can_be_stopped_from_the_local_ui",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_shutdown_rejects_cross_site_and_unmanaged_requests",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_conversation_crud_preserves_message_order",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_provider_secret_is_scoped_to_browser_session",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_anthropic_reports_workload_identity_source",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_run_stream_contract_retains_completed_output",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_api_contract.py",
+      "target": "function:tests/test_api_contract.py:test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:tests/test_api_contract.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:tests/test_api_contract.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:frontend/vite.config.ts",
+      "target": "file:frontend/src/test/setup.ts",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:docs/site/index.html",
+      "target": "document:README.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/site/index.html",
+      "target": "document:USAGE.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/site/index.html",
+      "target": "document:USER_GUIDE.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/site/index.html",
+      "target": "document:TECHNICAL.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/site/index.html",
+      "target": "document:CODE_TUTORIAL.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/site/index.html",
+      "target": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/site/index.html",
+      "target": "document:CONTRIBUTING.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/site/index.html",
+      "target": "document:CHANGELOG.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/site/index.html",
+      "target": "document:SECURITY.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/site/index.html",
+      "target": "document:CODE_OF_CONDUCT.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/site/index.html",
+      "target": "document:DATASET.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/site/index.html",
+      "target": "document:frontend/README.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/tutorial/index.html",
+      "target": "file:backend/app/main.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/tutorial/index.html",
+      "target": "file:backend/app/store.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/tutorial/index.html",
+      "target": "file:backend/app/providers.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/tutorial/index.html",
+      "target": "file:backend/app/runs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/tutorial/index.html",
+      "target": "file:backend/app/contracts.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/tutorial/index.html",
+      "target": "file:backend/app/sessions.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/tutorial/index.html",
+      "target": "file:backend/app/workspace.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/tutorial/index.html",
+      "target": "file:backend/app/memory.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/tutorial/index.html",
+      "target": "file:frontend/src/App.tsx",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/tutorial/index.html",
+      "target": "file:frontend/src/api/client.ts",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/tutorial/index.html",
+      "target": "file:src/files.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/tutorial/index.html",
+      "target": "file:src/rag.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/tutorial/index.html",
+      "target": "document:README.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/tutorial/index.html",
+      "target": "document:USER_GUIDE.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/tutorial/index.html",
+      "target": "document:CONTRIBUTING.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/tutorial/index.html",
+      "target": "document:SECURITY.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/tutorial/index.html",
+      "target": "document:docs/codebase/ARCHITECTURE.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/tutorial/index.html",
+      "target": "document:docs/codebase/STRUCTURE.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/tutorial/index.html",
+      "target": "document:docs/codebase/INTEGRATIONS.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/tutorial/index.html",
+      "target": "document:docs/codebase/CONCERNS.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:docs/tutorial/index.html",
+      "target": "file:docs/site/index.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:.github/pull_request_template.md",
+      "target": "document:CONTRIBUTING.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:.github/ISSUE_TEMPLATE/bug_report.md",
+      "target": "document:CONTRIBUTING.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

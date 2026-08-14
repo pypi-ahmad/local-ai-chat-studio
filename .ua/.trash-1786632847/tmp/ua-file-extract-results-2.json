@@ -1,0 +1,2374 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 3,
+  "filesSkipped": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 3,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 3,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "backend/app/cli.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 23,
+      "nonEmptyLines": 17,
+      "functions": [
+        {
+          "name": "main",
+          "startLine": 8,
+          "endLine": 23,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "main",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "main",
+          "callee": "uvicorn.Server",
+          "lineNumber": 14
+        },
+        {
+          "caller": "main",
+          "callee": "uvicorn.Config",
+          "lineNumber": 15
+        },
+        {
+          "caller": "main",
+          "callee": "create_app",
+          "lineNumber": 16
+        },
+        {
+          "caller": "main",
+          "callee": "server.run",
+          "lineNumber": 23
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "backend/app/main.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 923,
+      "nonEmptyLines": 840,
+      "functions": [
+        {
+          "name": "create_app",
+          "startLine": 88,
+          "endLine": 923,
+          "params": [
+            "database_url",
+            "provider_registry",
+            "v2_database_url",
+            "shutdown_callback"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "create_app",
+          "line": 88,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "create_app",
+          "callee": "Path",
+          "lineNumber": 94
+        },
+        {
+          "caller": "create_app",
+          "callee": "os.getenv",
+          "lineNumber": 94
+        },
+        {
+          "caller": "create_app",
+          "callee": "Store",
+          "lineNumber": 95
+        },
+        {
+          "caller": "create_app",
+          "callee": "str",
+          "lineNumber": 95
+        },
+        {
+          "caller": "create_app",
+          "callee": "str",
+          "lineNumber": 96
+        },
+        {
+          "caller": "create_app",
+          "callee": "SessionVault",
+          "lineNumber": 97
+        },
+        {
+          "caller": "create_app",
+          "callee": "ProviderRegistry",
+          "lineNumber": 100
+        },
+        {
+          "caller": "create_app",
+          "callee": "build_provider_registry",
+          "lineNumber": 100
+        },
+        {
+          "caller": "create_app",
+          "callee": "set",
+          "lineNumber": 104
+        },
+        {
+          "caller": "create_app",
+          "callee": "set",
+          "lineNumber": 104
+        },
+        {
+          "caller": "create_app",
+          "callee": "RuntimeError",
+          "lineNumber": 106
+        },
+        {
+          "caller": "create_app",
+          "callee": "sorted",
+          "lineNumber": 107
+        },
+        {
+          "caller": "create_app",
+          "callee": "RunManager",
+          "lineNumber": 109
+        },
+        {
+          "caller": "context_plan",
+          "callee": "store.list_uploads",
+          "lineNumber": 114
+        },
+        {
+          "caller": "context_plan",
+          "callee": "set",
+          "lineNumber": 115
+        },
+        {
+          "caller": "context_plan",
+          "callee": "uploads.keys",
+          "lineNumber": 115
+        },
+        {
+          "caller": "context_plan",
+          "callee": "KeyError",
+          "lineNumber": 116
+        },
+        {
+          "caller": "context_plan",
+          "callee": "next",
+          "lineNumber": 116
+        },
+        {
+          "caller": "context_plan",
+          "callee": "iter",
+          "lineNumber": 116
+        },
+        {
+          "caller": "context_plan",
+          "callee": "any",
+          "lineNumber": 117
+        },
+        {
+          "caller": "context_plan",
+          "callee": "registry.supports_images",
+          "lineNumber": 118
+        },
+        {
+          "caller": "context_plan",
+          "callee": "HTTPException",
+          "lineNumber": 119
+        },
+        {
+          "caller": "context_plan",
+          "callee": "build_context_plan",
+          "lineNumber": 122
+        },
+        {
+          "caller": "context_plan",
+          "callee": "any",
+          "lineNumber": 123
+        },
+        {
+          "caller": "context_plan",
+          "callee": "asyncio.to_thread",
+          "lineNumber": 128
+        },
+        {
+          "caller": "context_plan",
+          "callee": "build_context_plan",
+          "lineNumber": 130
+        },
+        {
+          "caller": "context_plan",
+          "callee": "len",
+          "lineNumber": 131
+        },
+        {
+          "caller": "context_plan",
+          "callee": "web_by_plan.pop",
+          "lineNumber": 132
+        },
+        {
+          "caller": "context_plan",
+          "callee": "next",
+          "lineNumber": 132
+        },
+        {
+          "caller": "context_plan",
+          "callee": "iter",
+          "lineNumber": 132
+        },
+        {
+          "caller": "sync_memory_index",
+          "callee": "os.getenv",
+          "lineNumber": 137
+        },
+        {
+          "caller": "sync_memory_index",
+          "callee": "delete_memory_vector",
+          "lineNumber": 143
+        },
+        {
+          "caller": "sync_memory_index",
+          "callee": "index_memory",
+          "lineNumber": 145
+        },
+        {
+          "caller": "sync_memory_index",
+          "callee": "logger.warning",
+          "lineNumber": 147
+        },
+        {
+          "caller": "sync_memory_index",
+          "callee": "type",
+          "lineNumber": 147
+        },
+        {
+          "caller": "lifespan",
+          "callee": "runs.shutdown",
+          "lineNumber": 154
+        },
+        {
+          "caller": "lifespan",
+          "callee": "store.connection.close",
+          "lineNumber": 155
+        },
+        {
+          "caller": "create_app",
+          "callee": "FastAPI",
+          "lineNumber": 157
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.middleware",
+          "lineNumber": 161
+        },
+        {
+          "caller": "security_headers",
+          "callee": "call_next",
+          "lineNumber": 163
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.middleware",
+          "lineNumber": 169
+        },
+        {
+          "caller": "session_cookie",
+          "callee": "request.cookies.get",
+          "lineNumber": 171
+        },
+        {
+          "caller": "session_cookie",
+          "callee": "vault.new_id",
+          "lineNumber": 171
+        },
+        {
+          "caller": "session_cookie",
+          "callee": "call_next",
+          "lineNumber": 173
+        },
+        {
+          "caller": "session_cookie",
+          "callee": "response.set_cookie",
+          "lineNumber": 175
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 180
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 184
+        },
+        {
+          "caller": "sanitize",
+          "callee": "sanitize_text",
+          "lineNumber": 186
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 188
+        },
+        {
+          "caller": "runtime_health",
+          "callee": "asyncio.gather",
+          "lineNumber": 190
+        },
+        {
+          "caller": "runtime_health",
+          "callee": "asyncio.to_thread",
+          "lineNumber": 191
+        },
+        {
+          "caller": "runtime_health",
+          "callee": "asyncio.to_thread",
+          "lineNumber": 191
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 195
+        },
+        {
+          "caller": "shutdown",
+          "callee": "request.headers.get",
+          "lineNumber": 197
+        },
+        {
+          "caller": "shutdown",
+          "callee": "HTTPException",
+          "lineNumber": 198
+        },
+        {
+          "caller": "shutdown",
+          "callee": "HTTPException",
+          "lineNumber": 200
+        },
+        {
+          "caller": "shutdown",
+          "callee": "runs.shutdown",
+          "lineNumber": 201
+        },
+        {
+          "caller": "shutdown",
+          "callee": "background_tasks.add_task",
+          "lineNumber": 202
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 205
+        },
+        {
+          "caller": "get_profile",
+          "callee": "Profile",
+          "lineNumber": 207
+        },
+        {
+          "caller": "get_profile",
+          "callee": "store.get_profile",
+          "lineNumber": 207
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.put",
+          "lineNumber": 209
+        },
+        {
+          "caller": "set_profile",
+          "callee": "Profile",
+          "lineNumber": 211
+        },
+        {
+          "caller": "set_profile",
+          "callee": "store.set_profile",
+          "lineNumber": 211
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 213
+        },
+        {
+          "caller": "create_conversation",
+          "callee": "store.create_conversation",
+          "lineNumber": 215
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 217
+        },
+        {
+          "caller": "list_conversations",
+          "callee": "store.list_conversations",
+          "lineNumber": 219
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 221
+        },
+        {
+          "caller": "get_conversation",
+          "callee": "store.get_conversation",
+          "lineNumber": 224
+        },
+        {
+          "caller": "get_conversation",
+          "callee": "HTTPException",
+          "lineNumber": 226
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.patch",
+          "lineNumber": 228
+        },
+        {
+          "caller": "update_conversation",
+          "callee": "store.update_conversation",
+          "lineNumber": 233
+        },
+        {
+          "caller": "update_conversation",
+          "callee": "HTTPException",
+          "lineNumber": 237
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.delete",
+          "lineNumber": 239
+        },
+        {
+          "caller": "delete_conversation",
+          "callee": "store.delete_conversation",
+          "lineNumber": 242
+        },
+        {
+          "caller": "delete_conversation",
+          "callee": "HTTPException",
+          "lineNumber": 244
+        },
+        {
+          "caller": "delete_conversation",
+          "callee": "Response",
+          "lineNumber": 245
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 247
+        },
+        {
+          "caller": "add_message",
+          "callee": "store.add_message",
+          "lineNumber": 254
+        },
+        {
+          "caller": "add_message",
+          "callee": "HTTPException",
+          "lineNumber": 256
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 258
+        },
+        {
+          "caller": "branch_conversation",
+          "callee": "store.branch_conversation",
+          "lineNumber": 267
+        },
+        {
+          "caller": "branch_conversation",
+          "callee": "HTTPException",
+          "lineNumber": 271
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 273
+        },
+        {
+          "caller": "preflight_turn",
+          "callee": "context_plan",
+          "lineNumber": 281
+        },
+        {
+          "caller": "preflight_turn",
+          "callee": "HTTPException",
+          "lineNumber": 283
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 287
+        },
+        {
+          "caller": "create_turn",
+          "callee": "TurnPreflight",
+          "lineNumber": 295
+        },
+        {
+          "caller": "create_turn",
+          "callee": "payload.model_dump",
+          "lineNumber": 295
+        },
+        {
+          "caller": "create_turn",
+          "callee": "web_by_plan.get",
+          "lineNumber": 297
+        },
+        {
+          "caller": "create_turn",
+          "callee": "context_plan",
+          "lineNumber": 299
+        },
+        {
+          "caller": "create_turn",
+          "callee": "web_by_plan.get",
+          "lineNumber": 300
+        },
+        {
+          "caller": "create_turn",
+          "callee": "build_context_plan",
+          "lineNumber": 302
+        },
+        {
+          "caller": "create_turn",
+          "callee": "HTTPException",
+          "lineNumber": 304
+        },
+        {
+          "caller": "create_turn",
+          "callee": "plan.model_dump",
+          "lineNumber": 306
+        },
+        {
+          "caller": "create_turn",
+          "callee": "required.issubset",
+          "lineNumber": 309
+        },
+        {
+          "caller": "create_turn",
+          "callee": "HTTPException",
+          "lineNumber": 310
+        },
+        {
+          "caller": "create_turn",
+          "callee": "plan.model_dump",
+          "lineNumber": 314
+        },
+        {
+          "caller": "create_turn",
+          "callee": "assemble_messages",
+          "lineNumber": 317
+        },
+        {
+          "caller": "create_turn",
+          "callee": "set",
+          "lineNumber": 322
+        },
+        {
+          "caller": "create_turn",
+          "callee": "store.add_message",
+          "lineNumber": 325
+        },
+        {
+          "caller": "create_turn",
+          "callee": "HTTPException",
+          "lineNumber": 332
+        },
+        {
+          "caller": "create_turn",
+          "callee": "RunCreate",
+          "lineNumber": 335
+        },
+        {
+          "caller": "create_turn",
+          "callee": "runs.create",
+          "lineNumber": 342
+        },
+        {
+          "caller": "create_turn",
+          "callee": "plan.model_dump",
+          "lineNumber": 342
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 344
+        },
+        {
+          "caller": "providers",
+          "callee": "vault.source",
+          "lineNumber": 351
+        },
+        {
+          "caller": "providers",
+          "callee": "list",
+          "lineNumber": 352
+        },
+        {
+          "caller": "providers",
+          "callee": "bool",
+          "lineNumber": 353
+        },
+        {
+          "caller": "providers",
+          "callee": "vault.source",
+          "lineNumber": 354
+        },
+        {
+          "caller": "providers",
+          "callee": "vault.source",
+          "lineNumber": 359
+        },
+        {
+          "caller": "providers",
+          "callee": "registry.adapters.items",
+          "lineNumber": 364
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 368
+        },
+        {
+          "caller": "provider_models",
+          "callee": "registry.discover_models",
+          "lineNumber": 370
+        },
+        {
+          "caller": "provider_models",
+          "callee": "vault.get",
+          "lineNumber": 371
+        },
+        {
+          "caller": "opencode_bridge",
+          "callee": "registry.adapters.get",
+          "lineNumber": 375
+        },
+        {
+          "caller": "opencode_bridge",
+          "callee": "isinstance",
+          "lineNumber": 376
+        },
+        {
+          "caller": "opencode_bridge",
+          "callee": "HTTPException",
+          "lineNumber": 377
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 380
+        },
+        {
+          "caller": "opencode_status",
+          "callee": "opencode_bridge().health",
+          "lineNumber": 383
+        },
+        {
+          "caller": "opencode_status",
+          "callee": "opencode_bridge",
+          "lineNumber": 383
+        },
+        {
+          "caller": "opencode_status",
+          "callee": "logger.info",
+          "lineNumber": 385
+        },
+        {
+          "caller": "opencode_status",
+          "callee": "type",
+          "lineNumber": 385
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 388
+        },
+        {
+          "caller": "opencode_auth_methods",
+          "callee": "opencode_bridge().oauth_methods",
+          "lineNumber": 391
+        },
+        {
+          "caller": "opencode_auth_methods",
+          "callee": "opencode_bridge",
+          "lineNumber": 391
+        },
+        {
+          "caller": "opencode_auth_methods",
+          "callee": "HTTPException",
+          "lineNumber": 393
+        },
+        {
+          "caller": "opencode_auth_methods",
+          "callee": "enumerate",
+          "lineNumber": 397
+        },
+        {
+          "caller": "opencode_auth_methods",
+          "callee": "method.get",
+          "lineNumber": 398
+        },
+        {
+          "caller": "opencode_auth_methods",
+          "callee": "methods.items",
+          "lineNumber": 400
+        },
+        {
+          "caller": "opencode_auth_methods",
+          "callee": "any",
+          "lineNumber": 401
+        },
+        {
+          "caller": "opencode_auth_methods",
+          "callee": "method.get",
+          "lineNumber": 401
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 404
+        },
+        {
+          "caller": "start_opencode_auth",
+          "callee": "opencode_auth_methods",
+          "lineNumber": 408
+        },
+        {
+          "caller": "start_opencode_auth",
+          "callee": "any",
+          "lineNumber": 409
+        },
+        {
+          "caller": "start_opencode_auth",
+          "callee": "methods.get",
+          "lineNumber": 410
+        },
+        {
+          "caller": "start_opencode_auth",
+          "callee": "HTTPException",
+          "lineNumber": 412
+        },
+        {
+          "caller": "start_opencode_auth",
+          "callee": "opencode_bridge().oauth_authorize",
+          "lineNumber": 414
+        },
+        {
+          "caller": "start_opencode_auth",
+          "callee": "opencode_bridge",
+          "lineNumber": 414
+        },
+        {
+          "caller": "start_opencode_auth",
+          "callee": "HTTPException",
+          "lineNumber": 416
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 418
+        },
+        {
+          "caller": "complete_opencode_auth",
+          "callee": "opencode_auth_methods",
+          "lineNumber": 422
+        },
+        {
+          "caller": "complete_opencode_auth",
+          "callee": "any",
+          "lineNumber": 423
+        },
+        {
+          "caller": "complete_opencode_auth",
+          "callee": "methods.get",
+          "lineNumber": 424
+        },
+        {
+          "caller": "complete_opencode_auth",
+          "callee": "HTTPException",
+          "lineNumber": 426
+        },
+        {
+          "caller": "complete_opencode_auth",
+          "callee": "opencode_bridge().oauth_complete",
+          "lineNumber": 428
+        },
+        {
+          "caller": "complete_opencode_auth",
+          "callee": "opencode_bridge",
+          "lineNumber": 428
+        },
+        {
+          "caller": "complete_opencode_auth",
+          "callee": "HTTPException",
+          "lineNumber": 432
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 435
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "time.monotonic",
+          "lineNumber": 437
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "list",
+          "lineNumber": 438
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "oauth_verifiers.items",
+          "lineNumber": 438
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "oauth_verifiers.pop",
+          "lineNumber": 440
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "secrets.token_urlsafe",
+          "lineNumber": 441
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "base64.urlsafe_b64encode(hashlib.sha256(verifier.encode()).digest())\r\n            .rstrip(b\"=\")\r\n            .decode",
+          "lineNumber": 443
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "base64.urlsafe_b64encode(hashlib.sha256(verifier.encode()).digest())\r\n            .rstrip",
+          "lineNumber": 443
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "base64.urlsafe_b64encode",
+          "lineNumber": 443
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "hashlib.sha256(verifier.encode()).digest",
+          "lineNumber": 443
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "hashlib.sha256",
+          "lineNumber": 443
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "verifier.encode",
+          "lineNumber": 443
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "str(request.base_url).rstrip",
+          "lineNumber": 449
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "str",
+          "lineNumber": 449
+        },
+        {
+          "caller": "start_openrouter_auth",
+          "callee": "urlencode",
+          "lineNumber": 452
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 464
+        },
+        {
+          "caller": "complete_openrouter_auth",
+          "callee": "exchange_openrouter_code",
+          "lineNumber": 468
+        },
+        {
+          "caller": "complete_openrouter_auth",
+          "callee": "Response",
+          "lineNumber": 469
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 471
+        },
+        {
+          "caller": "openrouter_auth_callback",
+          "callee": "exchange_openrouter_code",
+          "lineNumber": 473
+        },
+        {
+          "caller": "openrouter_auth_callback",
+          "callee": "RedirectResponse",
+          "lineNumber": 474
+        },
+        {
+          "caller": "exchange_openrouter_code",
+          "callee": "oauth_verifiers.pop",
+          "lineNumber": 477
+        },
+        {
+          "caller": "exchange_openrouter_code",
+          "callee": "HTTPException",
+          "lineNumber": 479
+        },
+        {
+          "caller": "exchange_openrouter_code",
+          "callee": "httpx.AsyncClient",
+          "lineNumber": 481
+        },
+        {
+          "caller": "exchange_openrouter_code",
+          "callee": "client.post",
+          "lineNumber": 482
+        },
+        {
+          "caller": "exchange_openrouter_code",
+          "callee": "HTTPException",
+          "lineNumber": 491
+        },
+        {
+          "caller": "exchange_openrouter_code",
+          "callee": "response.json().get",
+          "lineNumber": 492
+        },
+        {
+          "caller": "exchange_openrouter_code",
+          "callee": "response.json",
+          "lineNumber": 492
+        },
+        {
+          "caller": "exchange_openrouter_code",
+          "callee": "HTTPException",
+          "lineNumber": 494
+        },
+        {
+          "caller": "exchange_openrouter_code",
+          "callee": "vault.set",
+          "lineNumber": 495
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.put",
+          "lineNumber": 497
+        },
+        {
+          "caller": "set_credential",
+          "callee": "registry.adapters.get",
+          "lineNumber": 501
+        },
+        {
+          "caller": "set_credential",
+          "callee": "HTTPException",
+          "lineNumber": 503
+        },
+        {
+          "caller": "set_credential",
+          "callee": "HTTPException",
+          "lineNumber": 505
+        },
+        {
+          "caller": "set_credential",
+          "callee": "vault.set",
+          "lineNumber": 506
+        },
+        {
+          "caller": "set_credential",
+          "callee": "Response",
+          "lineNumber": 507
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.delete",
+          "lineNumber": 509
+        },
+        {
+          "caller": "remove_credential",
+          "callee": "HTTPException",
+          "lineNumber": 512
+        },
+        {
+          "caller": "remove_credential",
+          "callee": "vault.remove",
+          "lineNumber": 513
+        },
+        {
+          "caller": "remove_credential",
+          "callee": "Response",
+          "lineNumber": 514
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 516
+        },
+        {
+          "caller": "get_provider_policy",
+          "callee": "HTTPException",
+          "lineNumber": 519
+        },
+        {
+          "caller": "get_provider_policy",
+          "callee": "store.get_policy",
+          "lineNumber": 520
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.put",
+          "lineNumber": 522
+        },
+        {
+          "caller": "set_provider_policy",
+          "callee": "HTTPException",
+          "lineNumber": 525
+        },
+        {
+          "caller": "set_provider_policy",
+          "callee": "store.set_policy",
+          "lineNumber": 526
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 528
+        },
+        {
+          "caller": "simulate_provider",
+          "callee": "HTTPException",
+          "lineNumber": 533
+        },
+        {
+          "caller": "simulate_provider",
+          "callee": "HTTPException",
+          "lineNumber": 536
+        },
+        {
+          "caller": "simulate_provider",
+          "callee": "events.extend",
+          "lineNumber": 552
+        },
+        {
+          "caller": "simulate_provider",
+          "callee": "bool",
+          "lineNumber": 560
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 564
+        },
+        {
+          "caller": "list_backpacks",
+          "callee": "store.list_backpacks",
+          "lineNumber": 566
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 568
+        },
+        {
+          "caller": "create_backpack",
+          "callee": "store.create_backpack",
+          "lineNumber": 570
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.put",
+          "lineNumber": 572
+        },
+        {
+          "caller": "update_backpack",
+          "callee": "store.update_backpack",
+          "lineNumber": 575
+        },
+        {
+          "caller": "update_backpack",
+          "callee": "HTTPException",
+          "lineNumber": 577
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.delete",
+          "lineNumber": 579
+        },
+        {
+          "caller": "delete_backpack",
+          "callee": "store.delete_backpack",
+          "lineNumber": 582
+        },
+        {
+          "caller": "delete_backpack",
+          "callee": "HTTPException",
+          "lineNumber": 584
+        },
+        {
+          "caller": "delete_backpack",
+          "callee": "Response",
+          "lineNumber": 585
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 587
+        },
+        {
+          "caller": "create_focus",
+          "callee": "store.create_focus",
+          "lineNumber": 590
+        },
+        {
+          "caller": "create_focus",
+          "callee": "HTTPException",
+          "lineNumber": 592
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 594
+        },
+        {
+          "caller": "list_focus",
+          "callee": "store.list_focus",
+          "lineNumber": 596
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.patch",
+          "lineNumber": 598
+        },
+        {
+          "caller": "update_focus",
+          "callee": "store.update_focus",
+          "lineNumber": 601
+        },
+        {
+          "caller": "update_focus",
+          "callee": "HTTPException",
+          "lineNumber": 603
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 605
+        },
+        {
+          "caller": "list_memories",
+          "callee": "store.list_memories",
+          "lineNumber": 607
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 609
+        },
+        {
+          "caller": "create_memory",
+          "callee": "scan_text",
+          "lineNumber": 613
+        },
+        {
+          "caller": "create_memory",
+          "callee": "store.create_memory",
+          "lineNumber": 616
+        },
+        {
+          "caller": "create_memory",
+          "callee": "sync_memory_index",
+          "lineNumber": 623
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 626
+        },
+        {
+          "caller": "extract_conversation_memories",
+          "callee": "registry.adapters.get",
+          "lineNumber": 635
+        },
+        {
+          "caller": "extract_conversation_memories",
+          "callee": "HTTPException",
+          "lineNumber": 637
+        },
+        {
+          "caller": "extract_conversation_memories",
+          "callee": "HTTPException",
+          "lineNumber": 639
+        },
+        {
+          "caller": "extract_conversation_memories",
+          "callee": "store.get_conversation",
+          "lineNumber": 643
+        },
+        {
+          "caller": "extract_conversation_memories",
+          "callee": "extract_memories",
+          "lineNumber": 644
+        },
+        {
+          "caller": "extract_conversation_memories",
+          "callee": "vault.get",
+          "lineNumber": 647
+        },
+        {
+          "caller": "extract_conversation_memories",
+          "callee": "store.list_memories",
+          "lineNumber": 649
+        },
+        {
+          "caller": "extract_conversation_memories",
+          "callee": "HTTPException",
+          "lineNumber": 652
+        },
+        {
+          "caller": "extract_conversation_memories",
+          "callee": "HTTPException",
+          "lineNumber": 654
+        },
+        {
+          "caller": "extract_conversation_memories",
+          "callee": "str",
+          "lineNumber": 654
+        },
+        {
+          "caller": "extract_conversation_memories",
+          "callee": "scan_text",
+          "lineNumber": 658
+        },
+        {
+          "caller": "extract_conversation_memories",
+          "callee": "any",
+          "lineNumber": 659
+        },
+        {
+          "caller": "extract_conversation_memories",
+          "callee": "next",
+          "lineNumber": 662
+        },
+        {
+          "caller": "extract_conversation_memories",
+          "callee": "safe_candidates.append",
+          "lineNumber": 667
+        },
+        {
+          "caller": "extract_conversation_memories",
+          "callee": "store.create_memories_batch",
+          "lineNumber": 668
+        },
+        {
+          "caller": "extract_conversation_memories",
+          "callee": "sync_memory_index",
+          "lineNumber": 675
+        },
+        {
+          "caller": "extract_conversation_memories",
+          "callee": "MemoryExtractionResult",
+          "lineNumber": 676
+        },
+        {
+          "caller": "extract_conversation_memories",
+          "callee": "sum",
+          "lineNumber": 677
+        },
+        {
+          "caller": "extract_conversation_memories",
+          "callee": "sum",
+          "lineNumber": 678
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.patch",
+          "lineNumber": 682
+        },
+        {
+          "caller": "update_memory",
+          "callee": "store.update_memory",
+          "lineNumber": 685
+        },
+        {
+          "caller": "update_memory",
+          "callee": "payload.model_dump",
+          "lineNumber": 686
+        },
+        {
+          "caller": "update_memory",
+          "callee": "HTTPException",
+          "lineNumber": 689
+        },
+        {
+          "caller": "update_memory",
+          "callee": "sync_memory_index",
+          "lineNumber": 690
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.delete",
+          "lineNumber": 693
+        },
+        {
+          "caller": "delete_memory",
+          "callee": "store.delete_memory",
+          "lineNumber": 696
+        },
+        {
+          "caller": "delete_memory",
+          "callee": "HTTPException",
+          "lineNumber": 698
+        },
+        {
+          "caller": "delete_memory",
+          "callee": "os.getenv",
+          "lineNumber": 699
+        },
+        {
+          "caller": "delete_memory",
+          "callee": "delete_memory_vector",
+          "lineNumber": 703
+        },
+        {
+          "caller": "delete_memory",
+          "callee": "logger.warning",
+          "lineNumber": 705
+        },
+        {
+          "caller": "delete_memory",
+          "callee": "type",
+          "lineNumber": 705
+        },
+        {
+          "caller": "delete_memory",
+          "callee": "Response",
+          "lineNumber": 706
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 708
+        },
+        {
+          "caller": "list_presets",
+          "callee": "store.list_presets",
+          "lineNumber": 710
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 712
+        },
+        {
+          "caller": "create_preset",
+          "callee": "store.create_preset",
+          "lineNumber": 715
+        },
+        {
+          "caller": "create_preset",
+          "callee": "str",
+          "lineNumber": 717
+        },
+        {
+          "caller": "create_preset",
+          "callee": "HTTPException",
+          "lineNumber": 718
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.delete",
+          "lineNumber": 721
+        },
+        {
+          "caller": "delete_preset",
+          "callee": "store.delete_preset",
+          "lineNumber": 724
+        },
+        {
+          "caller": "delete_preset",
+          "callee": "HTTPException",
+          "lineNumber": 726
+        },
+        {
+          "caller": "delete_preset",
+          "callee": "Response",
+          "lineNumber": 727
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.put",
+          "lineNumber": 729
+        },
+        {
+          "caller": "set_feedback",
+          "callee": "store.set_feedback",
+          "lineNumber": 732
+        },
+        {
+          "caller": "set_feedback",
+          "callee": "HTTPException",
+          "lineNumber": 734
+        },
+        {
+          "caller": "set_feedback",
+          "callee": "Response",
+          "lineNumber": 735
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 737
+        },
+        {
+          "caller": "get_feedback",
+          "callee": "store.get_feedback",
+          "lineNumber": 740
+        },
+        {
+          "caller": "get_feedback",
+          "callee": "HTTPException",
+          "lineNumber": 742
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 744
+        },
+        {
+          "caller": "export_conversation",
+          "callee": "store.export_conversation_markdown",
+          "lineNumber": 750
+        },
+        {
+          "caller": "export_conversation",
+          "callee": "HTTPException",
+          "lineNumber": 752
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 754
+        },
+        {
+          "caller": "export_data",
+          "callee": "store.export_jsonl",
+          "lineNumber": 756
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 758
+        },
+        {
+          "caller": "import_data",
+          "callee": "store.import_jsonl",
+          "lineNumber": 760
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 762
+        },
+        {
+          "caller": "import_v2",
+          "callee": "store.import_v2_database",
+          "lineNumber": 765
+        },
+        {
+          "caller": "import_v2",
+          "callee": "HTTPException",
+          "lineNumber": 767
+        },
+        {
+          "caller": "import_v2",
+          "callee": "HTTPException",
+          "lineNumber": 769
+        },
+        {
+          "caller": "import_v2",
+          "callee": "str",
+          "lineNumber": 769
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 771
+        },
+        {
+          "caller": "wipe_data",
+          "callee": "asyncio.to_thread",
+          "lineNumber": 773
+        },
+        {
+          "caller": "wipe_data",
+          "callee": "runs.clear",
+          "lineNumber": 774
+        },
+        {
+          "caller": "wipe_data",
+          "callee": "vault.clear",
+          "lineNumber": 775
+        },
+        {
+          "caller": "wipe_data",
+          "callee": "oauth_verifiers.pop",
+          "lineNumber": 776
+        },
+        {
+          "caller": "wipe_data",
+          "callee": "web_by_plan.clear",
+          "lineNumber": 777
+        },
+        {
+          "caller": "wipe_data",
+          "callee": "Response",
+          "lineNumber": 778
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 780
+        },
+        {
+          "caller": "create_upload",
+          "callee": "Path",
+          "lineNumber": 782
+        },
+        {
+          "caller": "create_upload",
+          "callee": "filename.rsplit(\".\", 1)[-1].lower",
+          "lineNumber": 783
+        },
+        {
+          "caller": "create_upload",
+          "callee": "filename.rsplit",
+          "lineNumber": 783
+        },
+        {
+          "caller": "create_upload",
+          "callee": "HTTPException",
+          "lineNumber": 785
+        },
+        {
+          "caller": "create_upload",
+          "callee": "base64.b64decode",
+          "lineNumber": 787
+        },
+        {
+          "caller": "create_upload",
+          "callee": "HTTPException",
+          "lineNumber": 789
+        },
+        {
+          "caller": "create_upload",
+          "callee": "len",
+          "lineNumber": 790
+        },
+        {
+          "caller": "create_upload",
+          "callee": "HTTPException",
+          "lineNumber": 791
+        },
+        {
+          "caller": "create_upload",
+          "callee": "parse_upload",
+          "lineNumber": 793
+        },
+        {
+          "caller": "create_upload",
+          "callee": "store.create_upload",
+          "lineNumber": 794
+        },
+        {
+          "caller": "create_upload",
+          "callee": "HTTPException",
+          "lineNumber": 803
+        },
+        {
+          "caller": "create_upload",
+          "callee": "HTTPException",
+          "lineNumber": 805
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 807
+        },
+        {
+          "caller": "list_uploads",
+          "callee": "store.list_uploads",
+          "lineNumber": 811
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 813
+        },
+        {
+          "caller": "create_run",
+          "callee": "runs.create",
+          "lineNumber": 815
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 817
+        },
+        {
+          "caller": "get_run",
+          "callee": "runs.get",
+          "lineNumber": 820
+        },
+        {
+          "caller": "get_run",
+          "callee": "HTTPException",
+          "lineNumber": 822
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 824
+        },
+        {
+          "caller": "run_events",
+          "callee": "runs.get",
+          "lineNumber": 827
+        },
+        {
+          "caller": "run_events",
+          "callee": "HTTPException",
+          "lineNumber": 829
+        },
+        {
+          "caller": "stream",
+          "callee": "runs.events",
+          "lineNumber": 832
+        },
+        {
+          "caller": "stream",
+          "callee": "json.dumps",
+          "lineNumber": 833
+        },
+        {
+          "caller": "stream",
+          "callee": "event.model_dump",
+          "lineNumber": 833
+        },
+        {
+          "caller": "run_events",
+          "callee": "StreamingResponse",
+          "lineNumber": 835
+        },
+        {
+          "caller": "run_events",
+          "callee": "stream",
+          "lineNumber": 835
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.delete",
+          "lineNumber": 837
+        },
+        {
+          "caller": "cancel_run",
+          "callee": "runs.cancel",
+          "lineNumber": 840
+        },
+        {
+          "caller": "cancel_run",
+          "callee": "HTTPException",
+          "lineNumber": 842
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 844
+        },
+        {
+          "caller": "run_bundle",
+          "callee": "HTTPException",
+          "lineNumber": 847
+        },
+        {
+          "caller": "run_bundle",
+          "callee": "store.run_bundle",
+          "lineNumber": 849
+        },
+        {
+          "caller": "run_bundle",
+          "callee": "HTTPException",
+          "lineNumber": 851
+        },
+        {
+          "caller": "run_bundle",
+          "callee": "run.model_copy",
+          "lineNumber": 855
+        },
+        {
+          "caller": "run_bundle",
+          "callee": "sanitize_text",
+          "lineNumber": 856
+        },
+        {
+          "caller": "run_bundle",
+          "callee": "ReplayBundle",
+          "lineNumber": 858
+        },
+        {
+          "caller": "run_bundle",
+          "callee": "sanitize_text",
+          "lineNumber": 863
+        },
+        {
+          "caller": "run_bundle",
+          "callee": "message.get",
+          "lineNumber": 863
+        },
+        {
+          "caller": "run_bundle",
+          "callee": "request_data.get",
+          "lineNumber": 868
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 874
+        },
+        {
+          "caller": "activity",
+          "callee": "store.list_runs",
+          "lineNumber": 876
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.post",
+          "lineNumber": 878
+        },
+        {
+          "caller": "replay_run",
+          "callee": "store.run_bundle",
+          "lineNumber": 885
+        },
+        {
+          "caller": "replay_run",
+          "callee": "HTTPException",
+          "lineNumber": 887
+        },
+        {
+          "caller": "replay_run",
+          "callee": "RunCreate",
+          "lineNumber": 889
+        },
+        {
+          "caller": "replay_run",
+          "callee": "original.get",
+          "lineNumber": 895
+        },
+        {
+          "caller": "replay_run",
+          "callee": "dict",
+          "lineNumber": 897
+        },
+        {
+          "caller": "replay_run",
+          "callee": "runs.create",
+          "lineNumber": 899
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 901
+        },
+        {
+          "caller": "diff_runs",
+          "callee": "store.run_bundle",
+          "lineNumber": 904
+        },
+        {
+          "caller": "diff_runs",
+          "callee": "store.run_bundle",
+          "lineNumber": 905
+        },
+        {
+          "caller": "diff_runs",
+          "callee": "HTTPException",
+          "lineNumber": 907
+        },
+        {
+          "caller": "diff_runs",
+          "callee": "\"\\n\".join",
+          "lineNumber": 908
+        },
+        {
+          "caller": "diff_runs",
+          "callee": "difflib.unified_diff",
+          "lineNumber": 909
+        },
+        {
+          "caller": "diff_runs",
+          "callee": "left.output.splitlines",
+          "lineNumber": 910
+        },
+        {
+          "caller": "diff_runs",
+          "callee": "right.output.splitlines",
+          "lineNumber": 911
+        },
+        {
+          "caller": "create_app",
+          "callee": "Path",
+          "lineNumber": 919
+        },
+        {
+          "caller": "create_app",
+          "callee": "frontend_dist.is_dir",
+          "lineNumber": 920
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.mount",
+          "lineNumber": 921
+        },
+        {
+          "caller": "create_app",
+          "callee": "StaticFiles",
+          "lineNumber": 921
+        }
+      ],
+      "metrics": {
+        "importCount": 9,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "backend/app/runs.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 216,
+      "nonEmptyLines": 198,
+      "classes": [
+        {
+          "name": "RunState",
+          "startLine": 19,
+          "endLine": 27,
+          "methods": [],
+          "properties": [
+            "snapshot",
+            "session_id",
+            "request",
+            "context",
+            "events",
+            "changed",
+            "cancel",
+            "task"
+          ]
+        },
+        {
+          "name": "RunManager",
+          "startLine": 30,
+          "endLine": 216,
+          "methods": [
+            "__init__",
+            "create",
+            "get",
+            "cancel",
+            "clear",
+            "shutdown",
+            "events",
+            "_execute",
+            "_echo",
+            "_emit",
+            "_state",
+            "_receipt",
+            "_safe_error"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "RunState",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "RunManager",
+          "line": 30,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "threading.RLock",
+          "lineNumber": 33
+        },
+        {
+          "caller": "__init__",
+          "callee": "set",
+          "lineNumber": 37
+        },
+        {
+          "caller": "create",
+          "callee": "str",
+          "lineNumber": 42
+        },
+        {
+          "caller": "create",
+          "callee": "uuid.uuid4",
+          "lineNumber": 42
+        },
+        {
+          "caller": "create",
+          "callee": "RunSnapshot",
+          "lineNumber": 43
+        },
+        {
+          "caller": "create",
+          "callee": "utc_now",
+          "lineNumber": 48
+        },
+        {
+          "caller": "create",
+          "callee": "RunState",
+          "lineNumber": 51
+        },
+        {
+          "caller": "create",
+          "callee": "self._store.create_run",
+          "lineNumber": 59
+        },
+        {
+          "caller": "create",
+          "callee": "request.model_dump",
+          "lineNumber": 59
+        },
+        {
+          "caller": "create",
+          "callee": "asyncio.create_task",
+          "lineNumber": 62
+        },
+        {
+          "caller": "create",
+          "callee": "self._execute",
+          "lineNumber": 62
+        },
+        {
+          "caller": "create",
+          "callee": "self._tasks.add",
+          "lineNumber": 64
+        },
+        {
+          "caller": "create",
+          "callee": "task.add_done_callback",
+          "lineNumber": 65
+        },
+        {
+          "caller": "get",
+          "callee": "self._state",
+          "lineNumber": 69
+        },
+        {
+          "caller": "get",
+          "callee": "state.snapshot.model_copy",
+          "lineNumber": 71
+        },
+        {
+          "caller": "cancel",
+          "callee": "self._state",
+          "lineNumber": 74
+        },
+        {
+          "caller": "cancel",
+          "callee": "state.cancel.set",
+          "lineNumber": 75
+        },
+        {
+          "caller": "cancel",
+          "callee": "state.task.done",
+          "lineNumber": 76
+        },
+        {
+          "caller": "cancel",
+          "callee": "state.task.cancel",
+          "lineNumber": 77
+        },
+        {
+          "caller": "cancel",
+          "callee": "state.snapshot.model_copy",
+          "lineNumber": 79
+        },
+        {
+          "caller": "clear",
+          "callee": "list",
+          "lineNumber": 83
+        },
+        {
+          "caller": "clear",
+          "callee": "self._runs.values",
+          "lineNumber": 83
+        },
+        {
+          "caller": "clear",
+          "callee": "self._runs.clear",
+          "lineNumber": 84
+        },
+        {
+          "caller": "clear",
+          "callee": "state.cancel.set",
+          "lineNumber": 86
+        },
+        {
+          "caller": "clear",
+          "callee": "state.task.done",
+          "lineNumber": 87
+        },
+        {
+          "caller": "clear",
+          "callee": "state.task.cancel",
+          "lineNumber": 88
+        },
+        {
+          "caller": "shutdown",
+          "callee": "self.clear",
+          "lineNumber": 91
+        },
+        {
+          "caller": "shutdown",
+          "callee": "asyncio.gather",
+          "lineNumber": 93
+        },
+        {
+          "caller": "shutdown",
+          "callee": "tuple",
+          "lineNumber": 93
+        },
+        {
+          "caller": "events",
+          "callee": "self._state",
+          "lineNumber": 96
+        },
+        {
+          "caller": "events",
+          "callee": "len",
+          "lineNumber": 99
+        },
+        {
+          "caller": "events",
+          "callee": "state.changed.clear",
+          "lineNumber": 105
+        },
+        {
+          "caller": "events",
+          "callee": "state.changed.wait",
+          "lineNumber": 106
+        },
+        {
+          "caller": "_execute",
+          "callee": "time.monotonic",
+          "lineNumber": 109
+        },
+        {
+          "caller": "_execute",
+          "callee": "utc_now",
+          "lineNumber": 112
+        },
+        {
+          "caller": "_execute",
+          "callee": "self._emit",
+          "lineNumber": 113
+        },
+        {
+          "caller": "_execute",
+          "callee": "self._echo",
+          "lineNumber": 117
+        },
+        {
+          "caller": "_execute",
+          "callee": "ValueError",
+          "lineNumber": 122
+        },
+        {
+          "caller": "_execute",
+          "callee": "adapter.stream",
+          "lineNumber": 123
+        },
+        {
+          "caller": "_execute",
+          "callee": "self._vault.get",
+          "lineNumber": 124
+        },
+        {
+          "caller": "_execute",
+          "callee": "state.cancel.is_set",
+          "lineNumber": 130
+        },
+        {
+          "caller": "_execute",
+          "callee": "utc_now",
+          "lineNumber": 133
+        },
+        {
+          "caller": "_execute",
+          "callee": "self._emit",
+          "lineNumber": 134
+        },
+        {
+          "caller": "_execute",
+          "callee": "self._emit",
+          "lineNumber": 138
+        },
+        {
+          "caller": "_execute",
+          "callee": "asyncio.sleep",
+          "lineNumber": 139
+        },
+        {
+          "caller": "_execute",
+          "callee": "utc_now",
+          "lineNumber": 142
+        },
+        {
+          "caller": "_execute",
+          "callee": "round",
+          "lineNumber": 143
+        },
+        {
+          "caller": "_execute",
+          "callee": "time.monotonic",
+          "lineNumber": 143
+        },
+        {
+          "caller": "_execute",
+          "callee": "self._receipt",
+          "lineNumber": 144
+        },
+        {
+          "caller": "_execute",
+          "callee": "self._store.add_message",
+          "lineNumber": 147
+        },
+        {
+          "caller": "_execute",
+          "callee": "self._emit",
+          "lineNumber": 156
+        },
+        {
+          "caller": "_execute",
+          "callee": "utc_now",
+          "lineNumber": 160
+        },
+        {
+          "caller": "_execute",
+          "callee": "round",
+          "lineNumber": 161
+        },
+        {
+          "caller": "_execute",
+          "callee": "time.monotonic",
+          "lineNumber": 161
+        },
+        {
+          "caller": "_execute",
+          "callee": "self._receipt",
+          "lineNumber": 162
+        },
+        {
+          "caller": "_execute",
+          "callee": "self._emit",
+          "lineNumber": 163
+        },
+        {
+          "caller": "_execute",
+          "callee": "self._safe_error",
+          "lineNumber": 167
+        },
+        {
+          "caller": "_execute",
+          "callee": "utc_now",
+          "lineNumber": 168
+        },
+        {
+          "caller": "_execute",
+          "callee": "round",
+          "lineNumber": 169
+        },
+        {
+          "caller": "_execute",
+          "callee": "time.monotonic",
+          "lineNumber": 169
+        },
+        {
+          "caller": "_execute",
+          "callee": "self._receipt",
+          "lineNumber": 170
+        },
+        {
+          "caller": "_execute",
+          "callee": "self._emit",
+          "lineNumber": 171
+        },
+        {
+          "caller": "_execute",
+          "callee": "stream.aclose",
+          "lineNumber": 174
+        },
+        {
+          "caller": "_echo",
+          "callee": "enumerate",
+          "lineNumber": 178
+        },
+        {
+          "caller": "_echo",
+          "callee": "content.split",
+          "lineNumber": 178
+        },
+        {
+          "caller": "_echo",
+          "callee": "asyncio.sleep",
+          "lineNumber": 180
+        },
+        {
+          "caller": "_emit",
+          "callee": "RunEvent",
+          "lineNumber": 183
+        },
+        {
+          "caller": "_emit",
+          "callee": "state.events.append",
+          "lineNumber": 184
+        },
+        {
+          "caller": "_emit",
+          "callee": "self._store.update_run",
+          "lineNumber": 185
+        },
+        {
+          "caller": "_emit",
+          "callee": "self._store.add_run_event",
+          "lineNumber": 186
+        },
+        {
+          "caller": "_emit",
+          "callee": "state.changed.set",
+          "lineNumber": 187
+        },
+        {
+          "caller": "_state",
+          "callee": "self._runs.get",
+          "lineNumber": 191
+        },
+        {
+          "caller": "_state",
+          "callee": "KeyError",
+          "lineNumber": 193
+        },
+        {
+          "caller": "_receipt",
+          "callee": "self._store.latest_receipt_hash",
+          "lineNumber": 197
+        },
+        {
+          "caller": "_receipt",
+          "callee": "hashlib.sha256(state.snapshot.output.encode()).hexdigest",
+          "lineNumber": 204
+        },
+        {
+          "caller": "_receipt",
+          "callee": "hashlib.sha256",
+          "lineNumber": 204
+        },
+        {
+          "caller": "_receipt",
+          "callee": "state.snapshot.output.encode",
+          "lineNumber": 204
+        },
+        {
+          "caller": "_receipt",
+          "callee": "hashlib.sha256(\r\n            json.dumps(payload, sort_keys=True, separators=(\",\", \":\")).encode()\r\n        ).hexdigest",
+          "lineNumber": 207
+        },
+        {
+          "caller": "_receipt",
+          "callee": "hashlib.sha256",
+          "lineNumber": 207
+        },
+        {
+          "caller": "_receipt",
+          "callee": "json.dumps(payload, sort_keys=True, separators=(\",\", \":\")).encode",
+          "lineNumber": 208
+        },
+        {
+          "caller": "_receipt",
+          "callee": "json.dumps",
+          "lineNumber": 208
+        },
+        {
+          "caller": "_safe_error",
+          "callee": "type",
+          "lineNumber": 213
+        },
+        {
+          "caller": "_safe_error",
+          "callee": "isinstance",
+          "lineNumber": 214
+        },
+        {
+          "caller": "_safe_error",
+          "callee": "str(exc).strip",
+          "lineNumber": 215
+        },
+        {
+          "caller": "_safe_error",
+          "callee": "str",
+          "lineNumber": 215
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    }
+  ]
+}

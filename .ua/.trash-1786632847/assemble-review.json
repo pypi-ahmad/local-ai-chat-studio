@@ -1,0 +1,11 @@
+{
+  "fixedSectionOk": true,
+  "nodesRecovered": 1,
+  "edgesRestored": 3,
+  "crossBatchEdgesAdded": 0,
+  "typesRemapped": 0,
+  "notes": [
+    "Restored create_app -> ollama_alive calls by adding the missing function node.",
+    "Restored STACK.md documents edge onto config:frontend/package.json (not file:)."
+  ]
+}

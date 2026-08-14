@@ -1,21 +1,21 @@
 {
   "version": "1.0.0",
-  "gitCommitHash": "e867659265b7949353378e2e4b89eeffc3723ad7",
-  "generatedAt": "2026-08-12T16:23:51.171Z",
+  "gitCommitHash": "e437ebdd061bab3ba9234c1f4f209c039505e49d",
+  "generatedAt": "2026-08-13T14:53:56.589Z",
   "files": {
     ".code-review-graph/graph.db": {
       "filePath": ".code-review-graph/graph.db",
-      "contentHash": "f1daf6d24c39327ca88fd1b21379a4905c158dbee0e32bf15a640ad5c58054aa",
+      "contentHash": "ffbce3a96c432a05bb9efbfde43ad893671e5c5de7dedb59284a89fe1c9f1386",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 16243,
+      "totalLines": 18392,
       "hasStructuralAnalysis": false
     },
     ".github/ISSUE_TEMPLATE/bug_report.md": {
       "filePath": ".github/ISSUE_TEMPLATE/bug_report.md",
-      "contentHash": "03a51502b240b54314042180e243336eddc7578064f294bd691e8fc693a932b2",
+      "contentHash": "7538f5e00048a022e01e4d1e00fc5063f2ca474e094d3f7c7976c71f32a3fc65",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -35,7 +35,7 @@
     },
     ".github/pull_request_template.md": {
       "filePath": ".github/pull_request_template.md",
-      "contentHash": "43b8de736fa92080537074ddd8214c6de5c4c2931b9afd29f0c73a7e8aa27145",
+      "contentHash": "bbc5260b560ac7e63b40aed52e8e93bf25bb8aefd822a0438f636e0bf9c82d08",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -75,12 +75,12 @@
     },
     "CHANGELOG.md": {
       "filePath": "CHANGELOG.md",
-      "contentHash": "1d4bf83dcfb3ac0c097014e3fa848edfc809b9c435bc63244310e3e5b2c45419",
+      "contentHash": "c2f104e8e346e6bb956a32ed8518a224808bd211f1a1d436aebd7d92972ab402",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 45,
+      "totalLines": 64,
       "hasStructuralAnalysis": true
     },
     "CODE_OF_CONDUCT.md": {
@@ -95,22 +95,22 @@
     },
     "CODE_TUTORIAL.md": {
       "filePath": "CODE_TUTORIAL.md",
-      "contentHash": "bc867ca47158d6b12930aacabe5f0d057765b6ee93ec57dc3f0ede2e90907c25",
+      "contentHash": "8bdfd8824e69721fac853666d188d9f451c799fee02fc33f83e9335a1a9663b9",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 907,
+      "totalLines": 924,
       "hasStructuralAnalysis": true
     },
     "CONTRIBUTING.md": {
       "filePath": "CONTRIBUTING.md",
-      "contentHash": "a243d12fb67fb0784a5eeebb1bafbc67e71ae56ff2f1850e6aa486a2954b9dcc",
+      "contentHash": "8dd929c2fb346b21e3a65a5ca1ac829b9287be65fef680b766b9c65872dbdae4",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 75,
+      "totalLines": 79,
       "hasStructuralAnalysis": true
     },
     "DATASET.md": {
@@ -125,17 +125,17 @@
     },
     "GRAPH_REPORT.md": {
       "filePath": "GRAPH_REPORT.md",
-      "contentHash": "1232d9a827c0e6f1374e5df3c1fb96d0640583151509a2a00a0c198d61d814ba",
+      "contentHash": "5f4dc27d1edf7e9adcb9d7d462b08582f91a467a8e8693077f28886852a540f1",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 371,
+      "totalLines": 365,
       "hasStructuralAnalysis": true
     },
     "Launch Chat Studio.cmd": {
       "filePath": "Launch Chat Studio.cmd",
-      "contentHash": "6a773c19811d0cbff59206882dd7189e9918cd18c86450aafaa632f2a5a5ed0e",
+      "contentHash": "a516625d97360ab2a8ab36d722a6a9904f38b16cca97246eeeee7f99220f3356",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -145,62 +145,62 @@
     },
     "README.md": {
       "filePath": "README.md",
-      "contentHash": "aa853ba1b99b73187e8384912cc89b5974314b9884da1e6290bbe78e4bb0a5d2",
+      "contentHash": "0535d468f415b54d26002392afcd73dfc7e563a500299ee41c166e17e5f050d0",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 114,
+      "totalLines": 120,
       "hasStructuralAnalysis": true
     },
     "SECURITY.md": {
       "filePath": "SECURITY.md",
-      "contentHash": "96929b891739fdc9d7e3e9029ef15d24f50347e40047d47df97bc071df91f4a8",
+      "contentHash": "cb05f969415f9a19d62ce31f27d97584e5868fd36599b24d49d7e20aaffd8932",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 43,
+      "totalLines": 48,
       "hasStructuralAnalysis": true
     },
     "TECHNICAL.md": {
       "filePath": "TECHNICAL.md",
-      "contentHash": "d9000118e38cd65c881d6e59ae1321858d7d7e27c533935c6790c66f9017f12e",
+      "contentHash": "ccb115c06a54143c0ccc894d8f00902cab86614a71f6848d6175595fb4a04142",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 96,
+      "totalLines": 107,
       "hasStructuralAnalysis": true
     },
     "USAGE.md": {
       "filePath": "USAGE.md",
-      "contentHash": "7d7cae4f627222f37fe267ff64d816adcc5f043d7b72af7180bfba636d7dc4d5",
+      "contentHash": "dd30e685db5292741a5af0f7926db0853decc813658bab411b3af68aa88e2451",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 78,
+      "totalLines": 85,
       "hasStructuralAnalysis": true
     },
     "USER_GUIDE.md": {
       "filePath": "USER_GUIDE.md",
-      "contentHash": "5c0596a534e55822e2df81e4b46b029d8efdea62502e2bff3ebcf70c03738f6c",
+      "contentHash": "8b7a4fe6229eb0618b87f529e16f87f75823d68efb78b9a04da6356f12c176d1",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 112,
+      "totalLines": 119,
       "hasStructuralAnalysis": true
     },
     "ZERO_TO_HERO_STUDY_HANDBOOK.md": {
       "filePath": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
-      "contentHash": "e32ef09a65953e265691035de584ffd379ee22ed145fa66e26166148b01822cd",
+      "contentHash": "1c7ed70f9b4afca3af62491418365a7aef855e05d4a42ac50b55cab35de352bb",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 569,
+      "totalLines": 559,
       "hasStructuralAnalysis": true
     },
     "backend/__init__.py": {
@@ -225,7 +225,7 @@
     },
     "backend/app/cli.py": {
       "filePath": "backend/app/cli.py",
-      "contentHash": "22e4f525cf34268ce7035776a510d50cb3ba44c528c9712b0eb7f597896bcf93",
+      "contentHash": "cd3064396101455ec6fa3c3738f8df6f541a9265edf466e9589d97b04ecaf028",
       "functions": [
         {
           "name": "main",
@@ -938,7 +938,7 @@
     },
     "backend/app/main.py": {
       "filePath": "backend/app/main.py",
-      "contentHash": "6808803f1402449d18cf6e3e6a0e211f2bcf3bed851d5b49988e1a5284d844ff",
+      "contentHash": "74fb6fef0d96bbb5915e025e62a378aaaaf38256a28c7202c2c18bd4312af4e0",
       "functions": [
         {
           "name": "create_app",
@@ -1509,7 +1509,7 @@
     },
     "backend/app/runs.py": {
       "filePath": "backend/app/runs.py",
-      "contentHash": "35036c95096c5e52a393496026ebf8ef6a0350d4a2d2ab260abfd2f845980c84",
+      "contentHash": "77f99ac8d0532260cd6b348f51705e590756352f62e36cacbc12cd8507e623c0",
       "functions": [],
       "classes": [
         {
@@ -2008,22 +2008,22 @@
     },
     "docs/codebase/ARCHITECTURE.md": {
       "filePath": "docs/codebase/ARCHITECTURE.md",
-      "contentHash": "ab9d4296b3ddc1aa3ab257a0c5643965e73344bd5eb61e337d2299ed651b61fb",
+      "contentHash": "1b4f0d0c237b1b65bdf0f98f652f6c3229b2e39f66ed008bacac3eaeb6224f4c",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 37,
+      "totalLines": 43,
       "hasStructuralAnalysis": true
     },
     "docs/codebase/CONCERNS.md": {
       "filePath": "docs/codebase/CONCERNS.md",
-      "contentHash": "da282b75295c8ac0b680aa94321a9a87eba8239baf379f55f6cadcfab1ab1970",
+      "contentHash": "b7ce4b03ad51162c39289544eaa35dd2320be110da793b8baeb83df1faed462a",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 39,
+      "totalLines": 40,
       "hasStructuralAnalysis": true
     },
     "docs/codebase/CONVENTIONS.md": {
@@ -2048,7 +2048,17 @@
     },
     "docs/codebase/STACK.md": {
       "filePath": "docs/codebase/STACK.md",
-      "contentHash": "a09d1addb1f5a07f56437882d2d9a001f2e20e713034a93d66dee123a51434ef",
+      "contentHash": "f854dd8cddc338c0ca96ef2d31c491d3f6e1df94dbea3f89e21a9729035d7bd1",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 30,
+      "hasStructuralAnalysis": true
+    },
+    "docs/codebase/STRUCTURE.md": {
+      "filePath": "docs/codebase/STRUCTURE.md",
+      "contentHash": "8fa0a9fea97f79455c0290f4209176d046e3d5c1601a92425a7ba4618a8466fa",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -2056,44 +2066,34 @@
       "totalLines": 28,
       "hasStructuralAnalysis": true
     },
-    "docs/codebase/STRUCTURE.md": {
-      "filePath": "docs/codebase/STRUCTURE.md",
-      "contentHash": "0dd68a3cb8a1aee24e35787f4bcb3243b085eda2d55e66390b69001b84b809dc",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 25,
-      "hasStructuralAnalysis": true
-    },
     "docs/codebase/TESTING.md": {
       "filePath": "docs/codebase/TESTING.md",
-      "contentHash": "ae271b82e5e935010975177a96d04140c0c52363522ed5801d884d13d15d30d8",
+      "contentHash": "32a7f3c6dc851afbb6268dc1b92b065e840b3306c1078d90c5873232e08f62dd",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 25,
+      "totalLines": 26,
       "hasStructuralAnalysis": true
     },
     "docs/site/index.html": {
       "filePath": "docs/site/index.html",
-      "contentHash": "2997106dffd7260e5bd5dbc5ca8ec77db6f894c6e31e4e90bf6fb999c5be5ef2",
+      "contentHash": "ec850d8572c909b286c0b08925ef78043e775641aea1a562ec88046bf2087783",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 149,
+      "totalLines": 151,
       "hasStructuralAnalysis": false
     },
     "docs/tutorial/index.html": {
       "filePath": "docs/tutorial/index.html",
-      "contentHash": "544ee9d5ddb84887a7df1b173e70b8723c0659805c0d3844c5720725ed60822a",
+      "contentHash": "f5e6a8713984df0eaca02dcc0460d4dbfd0e507296dcdcd146c79bf400af33b1",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 753,
+      "totalLines": 754,
       "hasStructuralAnalysis": false
     },
     "frontend/.oxlintrc.json": {
@@ -2108,7 +2108,7 @@
     },
     "frontend/README.md": {
       "filePath": "frontend/README.md",
-      "contentHash": "0e7edb72011536595c42cf0ffa863873f076a8b7c3f0375e63e822bebd86acd5",
+      "contentHash": "647e43ec1a0785e825fa2349cccc03661e47919366aca161a7bc676048ddde27",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -2138,7 +2138,7 @@
     },
     "frontend/package.json": {
       "filePath": "frontend/package.json",
-      "contentHash": "c6f9cad38aeb5cdd61fac8d052927adb4cf9c2ce330cf9bd0a6c79673d34c68a",
+      "contentHash": "8d79d7a763e8f5db5e4f4164ce425fe2280853cde08ad64af4d842bb0e9acfa8",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -2158,7 +2158,7 @@
     },
     "frontend/src/App.test.tsx": {
       "filePath": "frontend/src/App.test.tsx",
-      "contentHash": "f312e2c79b995d848f5a11459416dbd8ba4484c0c14c606ea2b288558081a395",
+      "contentHash": "6e8cbc5654449293c0fa50b5cbebc0f1cf1cc981e70ff132294615a6723b98c1",
       "functions": [
         {
           "name": "json",
@@ -2206,7 +2206,7 @@
     },
     "frontend/src/App.tsx": {
       "filePath": "frontend/src/App.tsx",
-      "contentHash": "d0e71a8ee420f6d3fcd876bb6dcbebc35cd443f409a5bbcf01e37dd4959235c7",
+      "contentHash": "ec27d5c11516c3497a4d3233030e0733d2c55921809885600bc887ea7702b2cf",
       "functions": [
         {
           "name": "messageOf",
@@ -2509,7 +2509,7 @@
     },
     "frontend/src/api/client.ts": {
       "filePath": "frontend/src/api/client.ts",
-      "contentHash": "2ce79204a36fc75132112f993888b9bd32b0eb9eaba88fd3d08483144386df39",
+      "contentHash": "fcad168e5ff411ec9a03184e32ee93210d978f55e67101d47de372dcf6aceb12",
       "functions": [
         {
           "name": "request",
@@ -2574,7 +2574,7 @@
     },
     "frontend/src/api/schema.ts": {
       "filePath": "frontend/src/api/schema.ts",
-      "contentHash": "526ca435c73979820b515176f172ce5702c1a3364c4d5d29b1a5bfa29402c430",
+      "contentHash": "ad27aad587593498f25425a084507f4238c1b879e5ba4d84ab5173dec4e946fa",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -4466,7 +4466,7 @@
     },
     "frontend/tsconfig.app.json": {
       "filePath": "frontend/tsconfig.app.json",
-      "contentHash": "4b2c25f794cc6e59e5fb6b53234f317fd76d17dcb207ac028661abe66281ac71",
+      "contentHash": "a1cb168e660bf4d7bfedc272f8a784a8732d7a0c190c2613b2581d65af08de79",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -4496,7 +4496,7 @@
     },
     "frontend/vite.config.ts": {
       "filePath": "frontend/vite.config.ts",
-      "contentHash": "c59797271e60d4ae833257854c36065d3acf047ab1c6c544bede23e10805e823",
+      "contentHash": "7d70b182c17e7b844a5b997b35fc78c89d7431214f953227227f68a7496c3a1a",
       "functions": [],
       "classes": [],
       "imports": [
@@ -4560,7 +4560,7 @@
     },
     "pyproject.toml": {
       "filePath": "pyproject.toml",
-      "contentHash": "cfb1a7722d4b59bb1dd57eb80dd49193bf13a7fd31e841e041815b5350e005dc",
+      "contentHash": "01cc7903f82f727d20a1b935541a23ffc5dbbf0e17e4097023f0c0cc358d9864",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -6696,7 +6696,7 @@
     },
     "tests/test_api_contract.py": {
       "filePath": "tests/test_api_contract.py",
-      "contentHash": "0d259120664162f6388cf320598b70be704a380ccfe18100e548618582b5dd7f",
+      "contentHash": "f068dfc1d50f618b47f1824db670d2b1792287338f4fc49d91a6d25ece6d57a9",
       "functions": [
         {
           "name": "test_health_and_session_cookie",

@@ -1,0 +1,431 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 4,
+  "filesSkipped": [
+    "docs/site/index.html",
+    "docs/tutorial/index.html"
+  ],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 4,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 2,
+      "failed": 0,
+      "skipped": 2
+    }
+  },
+  "results": [
+    {
+      "path": ".github/ISSUE_TEMPLATE/bug_report.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 27,
+      "nonEmptyLines": 22,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 0
+      }
+    },
+    {
+      "path": ".github/pull_request_template.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 22,
+      "nonEmptyLines": 14,
+      "sections": [
+        {
+          "heading": "What does this PR do?",
+          "level": 2,
+          "line": 1
+        },
+        {
+          "heading": "Changes",
+          "level": 2,
+          "line": 7
+        },
+        {
+          "heading": "How was it tested?",
+          "level": 2,
+          "line": 11
+        },
+        {
+          "heading": "Checklist",
+          "level": 2,
+          "line": 16
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 4
+      }
+    },
+    {
+      "path": "frontend/vite.config.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 20,
+      "nonEmptyLines": 19,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "tests/test_api_contract.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 142,
+      "nonEmptyLines": 113,
+      "functions": [
+        {
+          "name": "test_health_and_session_cookie",
+          "startLine": 10,
+          "endLine": 15,
+          "params": [
+            "client"
+          ]
+        },
+        {
+          "name": "test_managed_server_can_be_stopped_from_the_local_ui",
+          "startLine": 18,
+          "endLine": 32,
+          "params": []
+        },
+        {
+          "name": "test_shutdown_rejects_cross_site_and_unmanaged_requests",
+          "startLine": 35,
+          "endLine": 43,
+          "params": [
+            "client"
+          ]
+        },
+        {
+          "name": "test_conversation_crud_preserves_message_order",
+          "startLine": 46,
+          "endLine": 65,
+          "params": [
+            "client"
+          ]
+        },
+        {
+          "name": "test_provider_secret_is_scoped_to_browser_session",
+          "startLine": 68,
+          "endLine": 84,
+          "params": [
+            "client"
+          ]
+        },
+        {
+          "name": "test_anthropic_reports_workload_identity_source",
+          "startLine": 87,
+          "endLine": 98,
+          "params": [
+            "client",
+            "monkeypatch"
+          ]
+        },
+        {
+          "name": "test_run_stream_contract_retains_completed_output",
+          "startLine": 101,
+          "endLine": 125,
+          "params": [
+            "client"
+          ]
+        },
+        {
+          "name": "test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+          "startLine": 128,
+          "endLine": 142,
+          "params": [
+            "client"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "test_health_and_session_cookie",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "test_managed_server_can_be_stopped_from_the_local_ui",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "test_shutdown_rejects_cross_site_and_unmanaged_requests",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "test_conversation_crud_preserves_message_order",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "test_provider_secret_is_scoped_to_browser_session",
+          "line": 68,
+          "isDefault": false
+        },
+        {
+          "name": "test_anthropic_reports_workload_identity_source",
+          "line": 87,
+          "isDefault": false
+        },
+        {
+          "name": "test_run_stream_contract_retains_completed_output",
+          "line": 101,
+          "isDefault": false
+        },
+        {
+          "name": "test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+          "line": 128,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "test_health_and_session_cookie",
+          "callee": "client.get",
+          "lineNumber": 11
+        },
+        {
+          "caller": "test_health_and_session_cookie",
+          "callee": "response.json",
+          "lineNumber": 14
+        },
+        {
+          "caller": "test_health_and_session_cookie",
+          "callee": "response.cookies.get",
+          "lineNumber": 15
+        },
+        {
+          "caller": "test_managed_server_can_be_stopped_from_the_local_ui",
+          "callee": "Mock",
+          "lineNumber": 21
+        },
+        {
+          "caller": "test_managed_server_can_be_stopped_from_the_local_ui",
+          "callee": "TestClient",
+          "lineNumber": 22
+        },
+        {
+          "caller": "test_managed_server_can_be_stopped_from_the_local_ui",
+          "callee": "create_app",
+          "lineNumber": 23
+        },
+        {
+          "caller": "test_managed_server_can_be_stopped_from_the_local_ui",
+          "callee": "client.post",
+          "lineNumber": 25
+        },
+        {
+          "caller": "test_managed_server_can_be_stopped_from_the_local_ui",
+          "callee": "response.json",
+          "lineNumber": 31
+        },
+        {
+          "caller": "test_managed_server_can_be_stopped_from_the_local_ui",
+          "callee": "shutdown.assert_called_once_with",
+          "lineNumber": 32
+        },
+        {
+          "caller": "test_shutdown_rejects_cross_site_and_unmanaged_requests",
+          "callee": "client.post",
+          "lineNumber": 36
+        },
+        {
+          "caller": "test_shutdown_rejects_cross_site_and_unmanaged_requests",
+          "callee": "client.post",
+          "lineNumber": 38
+        },
+        {
+          "caller": "test_conversation_crud_preserves_message_order",
+          "callee": "client.post",
+          "lineNumber": 47
+        },
+        {
+          "caller": "test_conversation_crud_preserves_message_order",
+          "callee": "created.json",
+          "lineNumber": 49
+        },
+        {
+          "caller": "test_conversation_crud_preserves_message_order",
+          "callee": "client.post",
+          "lineNumber": 51
+        },
+        {
+          "caller": "test_conversation_crud_preserves_message_order",
+          "callee": "client.post",
+          "lineNumber": 55
+        },
+        {
+          "caller": "test_conversation_crud_preserves_message_order",
+          "callee": "client.get",
+          "lineNumber": 61
+        },
+        {
+          "caller": "test_conversation_crud_preserves_message_order",
+          "callee": "detail.json",
+          "lineNumber": 62
+        },
+        {
+          "caller": "test_provider_secret_is_scoped_to_browser_session",
+          "callee": "client.put",
+          "lineNumber": 69
+        },
+        {
+          "caller": "test_provider_secret_is_scoped_to_browser_session",
+          "callee": "client.get(\"/api/v1/providers\").json",
+          "lineNumber": 73
+        },
+        {
+          "caller": "test_provider_secret_is_scoped_to_browser_session",
+          "callee": "client.get",
+          "lineNumber": 73
+        },
+        {
+          "caller": "test_provider_secret_is_scoped_to_browser_session",
+          "callee": "next",
+          "lineNumber": 75
+        },
+        {
+          "caller": "test_provider_secret_is_scoped_to_browser_session",
+          "callee": "TestClient",
+          "lineNumber": 79
+        },
+        {
+          "caller": "test_provider_secret_is_scoped_to_browser_session",
+          "callee": "isolated.get(\"/api/v1/providers\").json",
+          "lineNumber": 80
+        },
+        {
+          "caller": "test_provider_secret_is_scoped_to_browser_session",
+          "callee": "isolated.get",
+          "lineNumber": 80
+        },
+        {
+          "caller": "test_provider_secret_is_scoped_to_browser_session",
+          "callee": "next",
+          "lineNumber": 82
+        },
+        {
+          "caller": "test_anthropic_reports_workload_identity_source",
+          "callee": "monkeypatch.delenv",
+          "lineNumber": 90
+        },
+        {
+          "caller": "test_anthropic_reports_workload_identity_source",
+          "callee": "monkeypatch.setenv",
+          "lineNumber": 91
+        },
+        {
+          "caller": "test_anthropic_reports_workload_identity_source",
+          "callee": "client.get(\"/api/v1/providers\").json",
+          "lineNumber": 93
+        },
+        {
+          "caller": "test_anthropic_reports_workload_identity_source",
+          "callee": "client.get",
+          "lineNumber": 93
+        },
+        {
+          "caller": "test_anthropic_reports_workload_identity_source",
+          "callee": "next",
+          "lineNumber": 96
+        },
+        {
+          "caller": "test_run_stream_contract_retains_completed_output",
+          "callee": "client.post",
+          "lineNumber": 102
+        },
+        {
+          "caller": "test_run_stream_contract_retains_completed_output",
+          "callee": "created.json",
+          "lineNumber": 111
+        },
+        {
+          "caller": "test_run_stream_contract_retains_completed_output",
+          "callee": "client.stream",
+          "lineNumber": 113
+        },
+        {
+          "caller": "test_run_stream_contract_retains_completed_output",
+          "callee": "json.loads",
+          "lineNumber": 115
+        },
+        {
+          "caller": "test_run_stream_contract_retains_completed_output",
+          "callee": "line.removeprefix",
+          "lineNumber": 115
+        },
+        {
+          "caller": "test_run_stream_contract_retains_completed_output",
+          "callee": "stream.iter_lines",
+          "lineNumber": 116
+        },
+        {
+          "caller": "test_run_stream_contract_retains_completed_output",
+          "callee": "line.startswith",
+          "lineNumber": 117
+        },
+        {
+          "caller": "test_run_stream_contract_retains_completed_output",
+          "callee": "any",
+          "lineNumber": 121
+        },
+        {
+          "caller": "test_run_stream_contract_retains_completed_output",
+          "callee": "client.get(f\"/api/v1/runs/{run_id}\").json",
+          "lineNumber": 123
+        },
+        {
+          "caller": "test_run_stream_contract_retains_completed_output",
+          "callee": "client.get",
+          "lineNumber": 123
+        },
+        {
+          "caller": "test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+          "callee": "client.post",
+          "lineNumber": 131
+        },
+        {
+          "caller": "test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+          "callee": "response.json",
+          "lineNumber": 134
+        },
+        {
+          "caller": "test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+          "callee": "urlparse",
+          "lineNumber": 135
+        },
+        {
+          "caller": "test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+          "callee": "parse_qs",
+          "lineNumber": 136
+        },
+        {
+          "caller": "test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
+          "callee": "len",
+          "lineNumber": 142
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 8,
+        "classCount": 0
+      }
+    }
+  ]
+}

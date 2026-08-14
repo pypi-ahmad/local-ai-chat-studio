@@ -1,0 +1,38 @@
+{
+  "issues": [],
+  "warnings": [
+    "Node 'function:frontend/src/lib/utils.ts:cn' has no edges (orphan)",
+    "Node 'config:frontend/tsconfig.node.json' has no edges (orphan)",
+    "Node 'file:.code-review-graph/graph.db' has no edges (orphan)",
+    "Node 'document:.github/ISSUE_TEMPLATE/feature_request.md' has no edges (orphan)",
+    "Node 'file:.graphifyignore' has no edges (orphan)",
+    "Node 'file:.python-version' has no edges (orphan)",
+    "Node 'file:backend/__init__.py' has no edges (orphan)",
+    "Node 'file:backend/app/__init__.py' has no edges (orphan)"
+  ],
+  "stats": {
+    "totalNodes": 414,
+    "totalEdges": 1046,
+    "totalLayers": 10,
+    "tourSteps": 12,
+    "nodeTypes": {
+      "file": 68,
+      "function": 244,
+      "class": 69,
+      "pipeline": 1,
+      "document": 25,
+      "config": 7
+    },
+    "edgeTypes": {
+      "contains": 324,
+      "exports": 294,
+      "imports": 91,
+      "calls": 41,
+      "tested_by": 10,
+      "documents": 172,
+      "depends_on": 10,
+      "configures": 64,
+      "related": 40
+    }
+  }
+}

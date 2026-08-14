@@ -1,0 +1,502 @@
+{
+  "nodes": [
+    {
+      "id": "file:backend/app/cli.py",
+      "type": "file",
+      "name": "cli.py",
+      "filePath": "backend/app/cli.py",
+      "summary": "Process entry that starts a local uvicorn server for the FastAPI app on 127.0.0.1:8506 and injects a shutdown callback so the Studio UI can stop the process.",
+      "tags": ["entry-point", "cli", "server", "uvicorn"],
+      "complexity": "simple",
+      "languageNotes": "Binds uvicorn to 127.0.0.1:8506 (reload off) and passes shutdown_callback into create_app; the nested shutdown sets server.should_exit = True."
+    },
+    {
+      "id": "function:backend/app/cli.py:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "backend/app/cli.py",
+      "lineRange": [8, 23],
+      "summary": "Constructs uvicorn.Server with create_app(shutdown_callback=shutdown) on port 8506 and runs it until the callback flags should_exit.",
+      "tags": ["entry-point", "server", "shutdown"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/app/main.py",
+      "type": "file",
+      "name": "main.py",
+      "filePath": "backend/app/main.py",
+      "summary": "FastAPI application factory for the Local AI Chat Studio API: session cookies, security headers, conversations, providers, runs, memory, uploads, and data controls. Wires Store, SessionVault, ProviderRegistry, and RunManager, and exposes POST /api/v1/runtime/shutdown when a shutdown_callback is supplied.",
+      "tags": ["entry-point", "api-handler", "factory", "fastapi", "middleware"],
+      "complexity": "complex",
+      "languageNotes": "Single create_app factory nests all routes rather than APIRouter modules. Lifespan and POST /api/v1/runtime/shutdown both await RunManager.shutdown; the shutdown route requires header X-Local-Studio: shutdown, then schedules shutdown_callback via BackgroundTasks."
+    },
+    {
+      "id": "function:backend/app/main.py:create_app",
+      "type": "function",
+      "name": "create_app",
+      "filePath": "backend/app/main.py",
+      "lineRange": [88, 923],
+      "summary": "Builds the FastAPI app with Store, SessionVault, ProviderRegistry, and RunManager. Accepts optional shutdown_callback used by POST /api/v1/runtime/shutdown after runs.shutdown(); lifespan also shuts down RunManager and closes the DB. Registers health, conversations, turns, providers/OAuth, backpacks, focus, memories, presets, uploads, runs/SSE, replay, and static frontend.",
+      "tags": ["factory", "api-handler", "entry-point", "fastapi", "shutdown"],
+      "complexity": "complex",
+      "languageNotes": "Signature includes shutdown_callback: Callable[[], None] | None. Unmanaged mode (callback None) returns 503 on the shutdown route. Lazy-imports src.rag when syncing the memory vector index."
+    },
+    {
+      "id": "file:backend/app/runs.py",
+      "type": "file",
+      "name": "runs.py",
+      "filePath": "backend/app/runs.py",
+      "summary": "In-process run orchestrator that streams provider output, persists snapshots and events, enforces session ownership, and supports cooperative cancel plus clean shutdown.",
+      "tags": ["service", "event-handler", "streaming", "async"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/app/runs.py:RunState",
+      "type": "class",
+      "name": "RunState",
+      "filePath": "backend/app/runs.py",
+      "lineRange": [19, 27],
+      "summary": "Dataclass holding a run's snapshot, owning session, request, context, event log, change/cancel signals, and asyncio.Task.",
+      "tags": ["data-model", "async", "state"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/runs.py:RunManager",
+      "type": "class",
+      "name": "RunManager",
+      "filePath": "backend/app/runs.py",
+      "lineRange": [30, 216],
+      "summary": "Session-scoped manager that creates background stream tasks, yields SSE events, cancels runs, and exposes shutdown() which clear()s in-flight work then awaits remaining tasks.",
+      "tags": ["service", "event-handler", "streaming", "shutdown"],
+      "complexity": "complex",
+      "languageNotes": "shutdown() calls clear() then asyncio.gather on tracked tasks with return_exceptions=True so FastAPI lifespan and POST /api/v1/runtime/shutdown can drain streams before process exit."
+    },
+    {
+      "id": "function:backend/app/runs.py:create",
+      "type": "function",
+      "name": "create",
+      "filePath": "backend/app/runs.py",
+      "lineRange": [39, 66],
+      "summary": "Allocates a queued RunSnapshot, persists it, and starts _execute as an asyncio task while retaining a strong reference until completion.",
+      "tags": ["service", "factory", "async"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/app/runs.py:events",
+      "type": "function",
+      "name": "events",
+      "filePath": "backend/app/runs.py",
+      "lineRange": [95, 106],
+      "summary": "Async iterator that yields new RunEvents and waits on the state's changed event until the run reaches a terminal status.",
+      "tags": ["event-handler", "streaming", "async"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/runs.py:_execute",
+      "type": "function",
+      "name": "_execute",
+      "filePath": "backend/app/runs.py",
+      "lineRange": [108, 174],
+      "summary": "Runs the provider or echo stream, emits started/delta/completed/cancelled/failed events, writes the assistant message, and records a chained receipt hash.",
+      "tags": ["service", "streaming", "async", "event-handler"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/app/runs.py:_receipt",
+      "type": "function",
+      "name": "_receipt",
+      "filePath": "backend/app/runs.py",
+      "lineRange": [196, 209],
+      "summary": "Computes a SHA-256 receipt chaining the previous hash with run id, provider, model, status, output hash, and context.",
+      "tags": ["serialization", "integrity", "hashing"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:backend/app/cli.py",
+      "target": "file:backend/app/main.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/memory.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/runs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/sessions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/workspace.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:src/files.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/sessions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:backend/app/store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/cli.py",
+      "target": "function:backend/app/cli.py:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "function:backend/app/main.py:create_app",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "class:backend/app/runs.py:RunState",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "class:backend/app/runs.py:RunManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "function:backend/app/runs.py:create",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "function:backend/app/runs.py:events",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "function:backend/app/runs.py:_execute",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "function:backend/app/runs.py:_receipt",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "class:backend/app/runs.py:RunManager",
+      "target": "function:backend/app/runs.py:create",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "class:backend/app/runs.py:RunManager",
+      "target": "function:backend/app/runs.py:events",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "class:backend/app/runs.py:RunManager",
+      "target": "function:backend/app/runs.py:_execute",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "class:backend/app/runs.py:RunManager",
+      "target": "function:backend/app/runs.py:_receipt",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/app/cli.py",
+      "target": "function:backend/app/cli.py:main",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "function:backend/app/main.py:create_app",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "class:backend/app/runs.py:RunState",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "class:backend/app/runs.py:RunManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/cli.py:main",
+      "target": "function:backend/app/main.py:create_app",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/main.py:create_app",
+      "target": "class:backend/app/store.py:Store",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/main.py:create_app",
+      "target": "class:backend/app/sessions.py:SessionVault",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/main.py:create_app",
+      "target": "class:backend/app/providers.py:ProviderRegistry",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/main.py:create_app",
+      "target": "function:backend/app/providers.py:build_provider_registry",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/main.py:create_app",
+      "target": "class:backend/app/runs.py:RunManager",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/main.py:create_app",
+      "target": "function:backend/app/memory.py:extract_memories",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/main.py:create_app",
+      "target": "function:backend/app/workspace.py:assemble_messages",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/main.py:create_app",
+      "target": "function:backend/app/workspace.py:build_context_plan",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/main.py:create_app",
+      "target": "function:backend/app/workspace.py:sanitize_text",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/main.py:create_app",
+      "target": "function:backend/app/workspace.py:scan_text",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/main.py:create_app",
+      "target": "function:backend/app/workspace.py:search_web",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/main.py:create_app",
+      "target": "function:src/files.py:parse_upload",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/main.py:create_app",
+      "target": "function:src/ollama_client.py:ollama_alive",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/main.py:create_app",
+      "target": "function:src/ollama_client.py:running_models",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/main.py:create_app",
+      "target": "class:backend/app/providers.py:OpenCodeBridgeAdapter",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/runs.py:create",
+      "target": "function:backend/app/contracts.py:utc_now",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/runs.py:create",
+      "target": "class:backend/app/store.py:Store",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/runs.py:_execute",
+      "target": "function:backend/app/contracts.py:utc_now",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/runs.py:_execute",
+      "target": "class:backend/app/store.py:Store",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/runs.py:_execute",
+      "target": "class:backend/app/providers.py:ProviderRegistry",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/runs.py:_execute",
+      "target": "class:backend/app/sessions.py:SessionVault",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:backend/app/runs.py:_receipt",
+      "target": "class:backend/app/store.py:Store",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:tests/test_workspace_features.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:backend/app/runs.py",
+      "target": "file:tests/test_workspace_features.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

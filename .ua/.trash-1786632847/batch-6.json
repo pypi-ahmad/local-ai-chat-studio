@@ -1,0 +1,964 @@
+{
+  "nodes": [
+    {
+      "id": "document:CHANGELOG.md",
+      "type": "document",
+      "name": "CHANGELOG.md",
+      "filePath": "CHANGELOG.md",
+      "summary": "Keep a Changelog history through v0.3.0 covering the FastAPI+React workspace, default port 8506, Settings Stop Studio shutdown, and Windows launcher --check / --legacy-peer-deps fixes.",
+      "tags": ["documentation", "changelog", "versioning", "release-notes"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:CODE_TUTORIAL.md",
+      "type": "document",
+      "name": "CODE_TUTORIAL.md",
+      "filePath": "CODE_TUTORIAL.md",
+      "summary": "Narrative zero-to-hero walkthrough of the current FastAPI+React studio on 127.0.0.1:8506, including Stop Studio, with clearly marked historical Streamlit chapters that are not the operating UI.",
+      "tags": ["documentation", "tutorial", "architecture", "fastapi", "react"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:CONTRIBUTING.md",
+      "type": "document",
+      "name": "CONTRIBUTING.md",
+      "filePath": "CONTRIBUTING.md",
+      "summary": "Contributor setup and PR checklist for the FastAPI+React workspace: uv/npm with --legacy-peer-deps, server on port 8506, OpenAPI type regeneration, and the same pytest/ruff/frontend checks CI runs.",
+      "tags": ["documentation", "development", "contributing", "ci-cd"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:GRAPH_REPORT.md",
+      "type": "document",
+      "name": "GRAPH_REPORT.md",
+      "filePath": "GRAPH_REPORT.md",
+      "summary": "2026-08-12 Graphify community report over the FastAPI+React codebase, highlighting API contracts, Store, RunManager, and the React workspace rather than treating Streamlit as current.",
+      "tags": ["documentation", "architecture", "knowledge-graph", "analysis"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:Launch Chat Studio.cmd",
+      "type": "file",
+      "name": "Launch Chat Studio.cmd",
+      "filePath": "Launch Chat Studio.cmd",
+      "summary": "Windows launcher that installs portable uv and Node, syncs locked Python and frontend deps, builds the React client, and starts chat-studio on 127.0.0.1:8506, with a non-installing --check mode.",
+      "tags": ["entry-point", "launcher", "deployment", "windows", "script"],
+      "complexity": "moderate",
+      "languageNotes": "Hybrid batch wrapper that extracts a PowerShell payload after the #__POWERSHELL_BELOW__ marker and runs it in-process."
+    },
+    {
+      "id": "function:Launch Chat Studio.cmd:Test-LocalPort",
+      "type": "function",
+      "name": "Test-LocalPort",
+      "filePath": "Launch Chat Studio.cmd",
+      "lineRange": [40, 50],
+      "summary": "Probes whether TCP 8506 on 127.0.0.1 is already occupied so the launcher does not collide with another process.",
+      "tags": ["utility", "health-check", "networking"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:Launch Chat Studio.cmd:Get-FrontendState",
+      "type": "function",
+      "name": "Get-FrontendState",
+      "filePath": "Launch Chat Studio.cmd",
+      "lineRange": [52, 68],
+      "summary": "Compares frontend lockfile and source timestamps to decide whether npm ci --legacy-peer-deps or a production build is required.",
+      "tags": ["utility", "build-system", "frontend"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:Launch Chat Studio.cmd:Install-Node",
+      "type": "function",
+      "name": "Install-Node",
+      "filePath": "Launch Chat Studio.cmd",
+      "lineRange": [80, 120],
+      "summary": "Downloads the official Windows Node.js LTS zip, verifies its SHA256 checksum, and installs a portable runtime under .runtime/node.",
+      "tags": ["installer", "runtime", "deployment"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "Project entry point for v0.3.0: FastAPI+React local studio on port 8506, Windows launcher, Settings Stop Studio, architecture map, and links to usage, technical, and security docs.",
+      "tags": ["documentation", "entry-point", "overview", "getting-started"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:SECURITY.md",
+      "type": "document",
+      "name": "SECURITY.md",
+      "filePath": "SECURITY.md",
+      "summary": "Security policy for the local-first FastAPI+React workspace: session-scoped keys, 127.0.0.1:8506 binding, managed Stop Studio shutdown, and private vulnerability reporting.",
+      "tags": ["documentation", "security", "policy", "privacy"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:TECHNICAL.md",
+      "type": "document",
+      "name": "TECHNICAL.md",
+      "filePath": "TECHNICAL.md",
+      "summary": "Concise v0.3.0 architecture guide covering Uvicorn on 127.0.0.1:8506, FastAPI composition, Stop Studio via RunManager shutdown, providers, and configuration.",
+      "tags": ["documentation", "architecture", "configuration", "fastapi"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:USAGE.md",
+      "type": "document",
+      "name": "USAGE.md",
+      "filePath": "USAGE.md",
+      "summary": "Short task-based user guide for starting the FastAPI+React studio on port 8506, choosing models, chatting with provenance, and using Settings Stop Studio.",
+      "tags": ["documentation", "user-guide", "getting-started", "usage"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:USER_GUIDE.md",
+      "type": "document",
+      "name": "USER_GUIDE.md",
+      "filePath": "USER_GUIDE.md",
+      "summary": "Full product walkthrough of Chat, Evidence, Compare, Providers, Library, and Settings, including Stop Studio on the managed chat-studio server at 127.0.0.1:8506.",
+      "tags": ["documentation", "user-guide", "workflows", "product"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "type": "document",
+      "name": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "filePath": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "summary": "v0.3.0 study handbook that maps the FastAPI+React stack on port 8506 module-by-module, including Stop Studio, with retired Streamlit chapters marked historical.",
+      "tags": ["documentation", "tutorial", "study-guide", "architecture"],
+      "complexity": "complex"
+    },
+    {
+      "id": "config:pyproject.toml",
+      "type": "config",
+      "name": "pyproject.toml",
+      "filePath": "pyproject.toml",
+      "summary": "Python 3.12 project metadata for version 0.3.0, FastAPI/Uvicorn runtime dependencies, hatch packaging of backend, and the chat-studio console script pointing at backend.app.cli:main.",
+      "tags": ["configuration", "build-system", "python", "dependencies"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:CHANGELOG.md",
+      "target": "document:README.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CHANGELOG.md",
+      "target": "file:Launch Chat Studio.cmd",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CHANGELOG.md",
+      "target": "document:CONTRIBUTING.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CHANGELOG.md",
+      "target": "document:SECURITY.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:backend/app/contracts.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:backend/app/store.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:backend/app/sessions.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:backend/app/providers.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:backend/app/runs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:backend/app/main.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:backend/app/cli.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:backend/app/workspace.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:frontend/src/App.tsx",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:frontend/src/api/client.ts",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:src/config.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:src/chat_store.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:src/ollama_client.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:src/catalog.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:src/model_labels.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:src/providers.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:src/files.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:src/rag.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:src/memory.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:src/personalization.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:src/orchestrator.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "file:src/jobs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CODE_TUTORIAL.md",
+      "target": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CONTRIBUTING.md",
+      "target": "file:backend/app/contracts.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CONTRIBUTING.md",
+      "target": "file:frontend/src/api/schema.ts",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CONTRIBUTING.md",
+      "target": "file:src/files.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CONTRIBUTING.md",
+      "target": "file:backend/app/providers.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CONTRIBUTING.md",
+      "target": "pipeline:.github/workflows/ci.yml",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CONTRIBUTING.md",
+      "target": "document:TECHNICAL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CONTRIBUTING.md",
+      "target": "document:USAGE.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CONTRIBUTING.md",
+      "target": "document:SECURITY.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CONTRIBUTING.md",
+      "target": "document:CODE_OF_CONDUCT.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CONTRIBUTING.md",
+      "target": "document:docs/codebase/ARCHITECTURE.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CONTRIBUTING.md",
+      "target": "config:frontend/.oxlintrc.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:GRAPH_REPORT.md",
+      "target": "file:src/chat_store.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:GRAPH_REPORT.md",
+      "target": "file:src/jobs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:GRAPH_REPORT.md",
+      "target": "file:src/files.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:GRAPH_REPORT.md",
+      "target": "config:pyproject.toml",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:GRAPH_REPORT.md",
+      "target": "document:CODE_TUTORIAL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:GRAPH_REPORT.md",
+      "target": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:Launch Chat Studio.cmd",
+      "target": "function:Launch Chat Studio.cmd:Test-LocalPort",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:Launch Chat Studio.cmd",
+      "target": "function:Launch Chat Studio.cmd:Get-FrontendState",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:Launch Chat Studio.cmd",
+      "target": "function:Launch Chat Studio.cmd:Install-Node",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:Launch Chat Studio.cmd",
+      "target": "config:pyproject.toml",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:Launch Chat Studio.cmd",
+      "target": "config:frontend/package.json",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:Launch Chat Studio.cmd",
+      "target": "file:backend/app/cli.py",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:backend/app/cli.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:backend/app/main.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:backend/app/runs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:backend/app/workspace.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:backend/app/store.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:backend/app/providers.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:src/files.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:src/rag.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:Launch Chat Studio.cmd",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:USAGE.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:USER_GUIDE.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:TECHNICAL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:CODE_TUTORIAL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:CONTRIBUTING.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:SECURITY.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:CHANGELOG.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:docs/tutorial/index.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:SECURITY.md",
+      "target": "file:Launch Chat Studio.cmd",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:SECURITY.md",
+      "target": "file:backend/app/cli.py",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:TECHNICAL.md",
+      "target": "file:backend/app/cli.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:TECHNICAL.md",
+      "target": "file:backend/app/main.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:TECHNICAL.md",
+      "target": "file:backend/app/contracts.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:TECHNICAL.md",
+      "target": "file:backend/app/runs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:TECHNICAL.md",
+      "target": "file:backend/app/workspace.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:TECHNICAL.md",
+      "target": "file:backend/app/store.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:TECHNICAL.md",
+      "target": "file:backend/app/providers.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:TECHNICAL.md",
+      "target": "file:backend/app/sessions.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:TECHNICAL.md",
+      "target": "document:CODE_TUTORIAL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:TECHNICAL.md",
+      "target": "document:CONTRIBUTING.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:TECHNICAL.md",
+      "target": "document:SECURITY.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:TECHNICAL.md",
+      "target": "document:docs/codebase/STRUCTURE.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:USAGE.md",
+      "target": "file:Launch Chat Studio.cmd",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:USAGE.md",
+      "target": "document:USER_GUIDE.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:USAGE.md",
+      "target": "document:TECHNICAL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:USAGE.md",
+      "target": "document:SECURITY.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:USER_GUIDE.md",
+      "target": "file:Launch Chat Studio.cmd",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:USER_GUIDE.md",
+      "target": "document:SECURITY.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:frontend/src/api/client.ts",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:frontend/src/api/schema.ts",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:backend/app/main.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:backend/app/contracts.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:backend/app/store.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:backend/app/sessions.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:backend/app/providers.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:backend/app/runs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:backend/app/cli.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:frontend/src/App.tsx",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:scripts/generate_api_types.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:src/jobs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:src/orchestrator.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:src/catalog.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:src/providers.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:src/ollama_client.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:src/files.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:src/rag.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:src/memory.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:src/personalization.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:src/chat_store.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:src/config.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "pipeline:.github/workflows/ci.yml",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:docs/tutorial/index.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "document:README.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "document:USER_GUIDE.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "document:TECHNICAL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "target": "file:Launch Chat Studio.cmd",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:pyproject.toml",
+      "target": "file:backend/app/cli.py",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:pyproject.toml",
+      "target": "file:backend/app/main.py",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    }
+  ]
+}

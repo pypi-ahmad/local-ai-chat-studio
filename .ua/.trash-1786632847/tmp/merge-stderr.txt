@@ -1,0 +1,25 @@
+Found 7 batch files (7 logical batches, 0 multi-part):
+  batch-existing.json: 349 nodes, 648 edges
+  batch-2.json: 11 nodes, 55 edges
+  batch-3.json: 16 nodes, 40 edges
+  batch-6.json: 15 nodes, 117 edges
+  batch-7.json: 5 nodes, 58 edges
+  batch-8.json: 3 nodes, 70 edges
+  batch-9.json: 14 nodes, 54 edges
+
+Input: 413 nodes, 1042 edges
+
+Tested-by linker:
+     0 ├ù tested_by edges produced (path-convention supplement, production ÔåÆ test)
+     3 ├ù production nodes tagged "tested"
+
+Could not fix (2 issues ÔÇö needs agent review):
+  - Edge function:backend/app/main.py:create_app ÔåÆ function:src/ollama_client.py:ollama_alive (calls): dropped, missing target 'function:src/ollama_client.py:ollama_alive'
+  - Edge document:docs/codebase/STACK.md ÔåÆ file:frontend/package.json (documents): dropped, missing target 'file:frontend/package.json'
+
+Output: 413 nodes, 1040 edges
+
+Imports edge recovery:
+  Recovered 3 `imports` edges from importMap (101 entries scanned)
+
+Written to D:\AI\Github\local-ai-chat-studio\.ua\intermediate\assembled-graph.json (414 KB)

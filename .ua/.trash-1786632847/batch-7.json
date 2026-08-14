@@ -1,0 +1,458 @@
+{
+  "nodes": [
+    {
+      "id": "document:docs/codebase/ARCHITECTURE.md",
+      "type": "document",
+      "name": "ARCHITECTURE.md",
+      "filePath": "docs/codebase/ARCHITECTURE.md",
+      "summary": "Describes the localhost FastAPI-plus-React turn pipeline from context preflight through RunManager SSE, SQLite receipts, and optional Chroma retrieval. Documents managed shutdown: Settings Stop Studio posts to /api/v1/runtime/shutdown, RunManager.shutdown() drains generation tasks, then the CLI sets uvicorn.Server.should_exit without stopping Ollama or OpenCode.",
+      "tags": ["documentation", "architecture", "runtime", "managed-shutdown", "backend"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:docs/codebase/CONCERNS.md",
+      "type": "document",
+      "name": "CONCERNS.md",
+      "filePath": "docs/codebase/CONCERNS.md",
+      "summary": "Records single-process localhost constraints—including managed shutdown only when started via chat-studio—and protected session, safety, upload, and memory boundaries. Flags backend/app/main.py, runs.py, store.py, and workspace.py as high-blast-radius files and requires regenerating frontend/src/api/schema.ts after contract changes.",
+      "tags": ["documentation", "security", "constraints", "safety", "architecture"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:docs/codebase/STACK.md",
+      "type": "document",
+      "name": "STACK.md",
+      "filePath": "docs/codebase/STACK.md",
+      "summary": "Lists the Python 3.12 FastAPI backend, React 19 / TypeScript 5.9 Vite frontend, SQLite plus Chroma persistence, and local/cloud inference providers. Notes the server binds to 127.0.0.1:8506 and that Settings Stop Studio posts to /api/v1/runtime/shutdown.",
+      "tags": ["documentation", "stack", "typescript", "frontend", "backend"],
+      "complexity": "simple",
+      "languageNotes": "Frontend stack is pinned to TypeScript 5.9 with Vite, Tailwind CSS, Base UI, Vitest, and openapi-typescript."
+    },
+    {
+      "id": "document:docs/codebase/STRUCTURE.md",
+      "type": "document",
+      "name": "STRUCTURE.md",
+      "filePath": "docs/codebase/STRUCTURE.md",
+      "summary": "Maps backend/app modules, frontend/src, shared src helpers, and tests to their responsibilities. States chat-studio starts backend.app.cli:main on 127.0.0.1:8506 with a managed-shutdown callback, and FastAPI serves frontend/dist when present.",
+      "tags": ["documentation", "structure", "backend", "frontend", "entry-point"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:docs/codebase/TESTING.md",
+      "type": "document",
+      "name": "TESTING.md",
+      "filePath": "docs/codebase/TESTING.md",
+      "summary": "Documents pytest, Ruff, Vitest, and frontend lint/build commands plus backend coverage of contracts, lifecycle, safety, and workspace behavior. Notes managed shutdown tests require the X-Local-Studio header and that unmanaged servers return 503.",
+      "tags": ["documentation", "testing", "pytest", "vitest", "managed-shutdown"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:docs/codebase/ARCHITECTURE.md",
+      "target": "file:backend/app/main.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/ARCHITECTURE.md",
+      "target": "file:backend/app/runs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/ARCHITECTURE.md",
+      "target": "file:backend/app/cli.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/ARCHITECTURE.md",
+      "target": "file:backend/app/store.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/ARCHITECTURE.md",
+      "target": "file:backend/app/workspace.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/ARCHITECTURE.md",
+      "target": "file:backend/app/providers.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/ARCHITECTURE.md",
+      "target": "file:backend/app/memory.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/ARCHITECTURE.md",
+      "target": "file:backend/app/sessions.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/ARCHITECTURE.md",
+      "target": "file:frontend/src/App.tsx",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/ARCHITECTURE.md",
+      "target": "file:frontend/src/main.tsx",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/ARCHITECTURE.md",
+      "target": "file:frontend/src/api/client.ts",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/ARCHITECTURE.md",
+      "target": "file:src/files.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/ARCHITECTURE.md",
+      "target": "file:src/ollama_client.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/ARCHITECTURE.md",
+      "target": "file:src/rag.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/CONCERNS.md",
+      "target": "file:backend/app/cli.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/CONCERNS.md",
+      "target": "file:backend/app/main.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/CONCERNS.md",
+      "target": "file:backend/app/runs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/CONCERNS.md",
+      "target": "file:backend/app/store.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/CONCERNS.md",
+      "target": "file:backend/app/workspace.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/CONCERNS.md",
+      "target": "file:backend/app/providers.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/CONCERNS.md",
+      "target": "file:backend/app/memory.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/CONCERNS.md",
+      "target": "file:backend/app/contracts.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/CONCERNS.md",
+      "target": "file:frontend/src/api/schema.ts",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STACK.md",
+      "target": "file:backend/app/main.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STACK.md",
+      "target": "file:backend/app/cli.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STACK.md",
+      "target": "file:frontend/src/main.tsx",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STACK.md",
+      "target": "file:frontend/src/App.tsx",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STACK.md",
+      "target": "file:frontend/src/api/schema.ts",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STACK.md",
+      "target": "file:frontend/package.json",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STACK.md",
+      "target": "file:src/ollama_client.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STACK.md",
+      "target": "file:src/files.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STACK.md",
+      "target": "file:src/rag.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STRUCTURE.md",
+      "target": "file:backend/app/cli.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STRUCTURE.md",
+      "target": "file:backend/app/main.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STRUCTURE.md",
+      "target": "file:backend/app/contracts.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STRUCTURE.md",
+      "target": "file:backend/app/runs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STRUCTURE.md",
+      "target": "file:backend/app/store.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STRUCTURE.md",
+      "target": "file:backend/app/memory.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STRUCTURE.md",
+      "target": "file:backend/app/workspace.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STRUCTURE.md",
+      "target": "file:backend/app/providers.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STRUCTURE.md",
+      "target": "file:frontend/src/App.tsx",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STRUCTURE.md",
+      "target": "file:frontend/src/main.tsx",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STRUCTURE.md",
+      "target": "file:frontend/src/api/client.ts",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STRUCTURE.md",
+      "target": "file:src/files.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STRUCTURE.md",
+      "target": "file:src/rag.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STRUCTURE.md",
+      "target": "file:src/ollama_client.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STRUCTURE.md",
+      "target": "file:tests/test_api_contract.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STRUCTURE.md",
+      "target": "file:tests/test_provider_adapters.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/STRUCTURE.md",
+      "target": "file:tests/test_workspace_features.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/TESTING.md",
+      "target": "file:tests/conftest.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/TESTING.md",
+      "target": "file:tests/test_api_contract.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/TESTING.md",
+      "target": "file:tests/test_provider_adapters.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/TESTING.md",
+      "target": "file:tests/test_workspace_features.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/TESTING.md",
+      "target": "file:frontend/src/App.test.tsx",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/TESTING.md",
+      "target": "file:frontend/src/test/setup.ts",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/TESTING.md",
+      "target": "file:backend/app/cli.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/TESTING.md",
+      "target": "file:backend/app/runs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/codebase/TESTING.md",
+      "target": "file:backend/app/main.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

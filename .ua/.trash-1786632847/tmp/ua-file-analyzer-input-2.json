@@ -1,0 +1,315 @@
+{
+  "projectRoot": "D:/AI/Github/local-ai-chat-studio",
+  "batchIndex": 2,
+  "batchFiles": [
+    {
+      "path": "backend/app/cli.py",
+      "language": "python",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/app/main.py",
+      "language": "python",
+      "sizeLines": 923,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/app/runs.py",
+      "language": "python",
+      "sizeLines": 216,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "backend/app/cli.py": [
+      "backend/app/main.py"
+    ],
+    "backend/app/main.py": [
+      "backend/app/contracts.py",
+      "backend/app/memory.py",
+      "backend/app/providers.py",
+      "backend/app/runs.py",
+      "backend/app/sessions.py",
+      "backend/app/store.py",
+      "backend/app/workspace.py",
+      "src/files.py",
+      "src/ollama_client.py"
+    ],
+    "backend/app/runs.py": [
+      "backend/app/contracts.py",
+      "backend/app/providers.py",
+      "backend/app/sessions.py",
+      "backend/app/store.py"
+    ]
+  },
+  "neighborMap": {
+    "backend/app/main.py": [
+      {
+        "path": "backend/app/contracts.py",
+        "batchIndex": 2,
+        "symbols": [
+          "utc_now",
+          "MessageCreate",
+          "Message",
+          "ConversationCreate",
+          "ConversationUpdate",
+          "Conversation",
+          "CredentialInput",
+          "OAuthCodeInput",
+          "OpenCodeOAuthStart",
+          "OpenCodeOAuthComplete",
+          "ImageInput",
+          "ChatMessage",
+          "ModelDescriptor",
+          "ProviderDiscovery",
+          "RunCreate",
+          "RunStatus",
+          "RunSnapshot",
+          "RunEvent",
+          "ContextSection",
+          "ContextSource",
+          "SafetyFinding",
+          "SafetyText",
+          "ProviderPolicy",
+          "TurnPreflight",
+          "TurnCreate",
+          "ContextPlan",
+          "ConversationBranch",
+          "BackpackItemInput",
+          "BackpackCreate",
+          "BackpackItem",
+          "Backpack",
+          "FocusCreate",
+          "FocusSession",
+          "FocusUpdate",
+          "ProviderSimulationInput",
+          "ReplayBundle",
+          "MemoryCreate",
+          "Memory",
+          "MemoryUpdate",
+          "MemoryExtractionRequest",
+          "MemoryExtractionResult",
+          "PresetCreate",
+          "Preset",
+          "UploadCreate",
+          "Upload",
+          "ReplayCreate",
+          "FeedbackInput",
+          "DataImport",
+          "WipeRequest",
+          "V2ImportRequest",
+          "Profile"
+        ]
+      },
+      {
+        "path": "backend/app/memory.py",
+        "batchIndex": 2,
+        "symbols": [
+          "ExtractionOutcome",
+          "extract_memories",
+          "_complete",
+          "_selection_prompt",
+          "_consolidation_prompt",
+          "_parse_memories",
+          "_category"
+        ]
+      },
+      {
+        "path": "backend/app/providers.py",
+        "batchIndex": 2,
+        "symbols": [
+          "ProviderAdapter",
+          "OpenAICompatibleAdapter",
+          "OllamaAdapter",
+          "AnthropicAdapter",
+          "GeminiAdapter",
+          "OpenCodeZenAdapter",
+          "OpenCodeBridgeAdapter",
+          "ProviderRegistry",
+          "build_provider_registry"
+        ]
+      },
+      {
+        "path": "backend/app/sessions.py",
+        "batchIndex": 2,
+        "symbols": [
+          "SessionVault",
+          "_anthropic_wif_configured"
+        ]
+      },
+      {
+        "path": "backend/app/store.py",
+        "batchIndex": 2,
+        "symbols": [
+          "Store"
+        ]
+      },
+      {
+        "path": "backend/app/workspace.py",
+        "batchIndex": 2,
+        "symbols": [
+          "search_web",
+          "retrieve_context",
+          "relevant_memories",
+          "estimate_tokens",
+          "scan_text",
+          "sanitize_text",
+          "build_context_plan",
+          "assemble_messages",
+          "_redact"
+        ]
+      },
+      {
+        "path": "src/files.py",
+        "batchIndex": 2,
+        "symbols": [
+          "Attachment",
+          "_ext",
+          "parse_upload",
+          "_parse_pdf",
+          "_parse_docx",
+          "_parse_excel",
+          "_parse_legacy_doc",
+          "chunk_text"
+        ]
+      },
+      {
+        "path": "src/ollama_client.py",
+        "batchIndex": 4,
+        "symbols": [
+          "_client",
+          "ModelInfo",
+          "list_models",
+          "chat_models",
+          "embedding_model",
+          "vision_fallback_model",
+          "smallest_text_model",
+          "stream_chat",
+          "running_models",
+          "generate",
+          "describe_image",
+          "embed_texts",
+          "ollama_alive"
+        ]
+      },
+      {
+        "path": "scripts/generate_api_types.py",
+        "batchIndex": 2,
+        "symbols": []
+      },
+      {
+        "path": "tests/test_workspace_features.py",
+        "batchIndex": 2,
+        "symbols": [
+          "_conversation",
+          "_complete_echo_run",
+          "test_run_is_owned_by_browser_session",
+          "test_cloud_preflight_warns_about_secrets_and_excludes_private_context",
+          "test_turn_persists_messages_context_and_replay_bundle",
+          "test_branch_backpack_focus_and_provider_policy",
+          "test_memory_preset_upload_activity_and_replay",
+          "test_store_accepts_the_legacy_seven_column_preset_table",
+          "test_memory_lifecycle_feedback_and_data_controls",
+          "test_llm_memory_extraction_requires_cloud_confirmation_and_saves_provenance",
+          "test_redacted_replay_bundle_hides_private_context",
+          "test_workspace_resource_lifecycle_and_provider_simulator",
+          "test_web_sources_are_provenanced_and_replayed_without_a_second_search",
+          "test_cross_chat_retrieval_has_provenance_and_can_be_excluded",
+          "test_image_attachment_is_available_to_full_replay_but_not_redacted_share",
+          "test_context_budget_prunes_sources_and_private_text_can_be_sanitized",
+          "test_profile_runtime_health_and_opt_in_v2_import"
+        ]
+      }
+    ],
+    "backend/app/runs.py": [
+      {
+        "path": "backend/app/contracts.py",
+        "batchIndex": 2,
+        "symbols": [
+          "utc_now",
+          "MessageCreate",
+          "Message",
+          "ConversationCreate",
+          "ConversationUpdate",
+          "Conversation",
+          "CredentialInput",
+          "OAuthCodeInput",
+          "OpenCodeOAuthStart",
+          "OpenCodeOAuthComplete",
+          "ImageInput",
+          "ChatMessage",
+          "ModelDescriptor",
+          "ProviderDiscovery",
+          "RunCreate",
+          "RunStatus",
+          "RunSnapshot",
+          "RunEvent",
+          "ContextSection",
+          "ContextSource",
+          "SafetyFinding",
+          "SafetyText",
+          "ProviderPolicy",
+          "TurnPreflight",
+          "TurnCreate",
+          "ContextPlan",
+          "ConversationBranch",
+          "BackpackItemInput",
+          "BackpackCreate",
+          "BackpackItem",
+          "Backpack",
+          "FocusCreate",
+          "FocusSession",
+          "FocusUpdate",
+          "ProviderSimulationInput",
+          "ReplayBundle",
+          "MemoryCreate",
+          "Memory",
+          "MemoryUpdate",
+          "MemoryExtractionRequest",
+          "MemoryExtractionResult",
+          "PresetCreate",
+          "Preset",
+          "UploadCreate",
+          "Upload",
+          "ReplayCreate",
+          "FeedbackInput",
+          "DataImport",
+          "WipeRequest",
+          "V2ImportRequest",
+          "Profile"
+        ]
+      },
+      {
+        "path": "backend/app/providers.py",
+        "batchIndex": 2,
+        "symbols": [
+          "ProviderAdapter",
+          "OpenAICompatibleAdapter",
+          "OllamaAdapter",
+          "AnthropicAdapter",
+          "GeminiAdapter",
+          "OpenCodeZenAdapter",
+          "OpenCodeBridgeAdapter",
+          "ProviderRegistry",
+          "build_provider_registry"
+        ]
+      },
+      {
+        "path": "backend/app/sessions.py",
+        "batchIndex": 2,
+        "symbols": [
+          "SessionVault",
+          "_anthropic_wif_configured"
+        ]
+      },
+      {
+        "path": "backend/app/store.py",
+        "batchIndex": 2,
+        "symbols": [
+          "Store"
+        ]
+      }
+    ]
+  }
+}
