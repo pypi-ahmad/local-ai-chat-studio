@@ -187,3 +187,15 @@ def test_mcp_configuration_rejects_shells_and_private_remote_hosts() -> None:
 
     assert shell.status_code == 422
     assert remote.status_code == 422
+
+    with make_client(gateway) as client:
+        embedded_secret = client.post(
+            "/api/v1/mcp/servers",
+            json={
+                "name": "Leaky arguments",
+                "transport": "stdio",
+                "command": "uvx",
+                "args": ["example-mcp", "--api-key", "do-not-store-this"],
+            },
+        )
+    assert embedded_secret.status_code == 422

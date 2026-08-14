@@ -433,8 +433,16 @@ class McpServerCreate(BaseModel):
     @field_validator("args")
     @classmethod
     def _bounded_args(cls, values: list[str]) -> list[str]:
+        import re
+
         if any(len(value) > 1_000 or "\x00" in value for value in values):
             raise ValueError("Each argument must be at most 1000 characters")
+        secret_flag = re.compile(
+            r"^--?(?:api[-_]?key|authorization|credential|password|secret|token)(?:=|$)",
+            re.IGNORECASE,
+        )
+        if any(secret_flag.match(value) for value in values):
+            raise ValueError("Secrets must be supplied by environment variable name, not arguments")
         return values
 
     @model_validator(mode="after")
