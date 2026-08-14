@@ -6,6 +6,8 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, Field, field_validator
 
+ReasoningEffort = Literal["none", "minimal", "low", "medium", "high", "xhigh", "max"]
+
 
 def utc_now() -> str:
     return datetime.now(UTC).isoformat()
@@ -91,6 +93,7 @@ class ModelDescriptor(BaseModel):
     label: str | None = None
     context_length: int | None = None
     capabilities: list[str] = []
+    reasoning_efforts: list[ReasoningEffort] = []
     pricing: ModelPricing | None = None
 
 
@@ -105,6 +108,7 @@ class RunCreate(BaseModel):
     model: str
     messages: list[ChatMessage] = Field(min_length=1)
     temperature: float = Field(default=0.7, ge=0, le=2)
+    reasoning_effort: ReasoningEffort | None = None
     conversation_id: str | None = None
 
 
@@ -183,6 +187,7 @@ class TurnPreflight(BaseModel):
     model: str
     content: str = Field(min_length=1, max_length=200_000)
     temperature: float = Field(default=0.7, ge=0, le=2)
+    reasoning_effort: ReasoningEffort | None = None
     include_memory: bool = True
     include_retrieval: bool = True
     include_attachments: bool = True

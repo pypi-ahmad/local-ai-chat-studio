@@ -3,6 +3,7 @@ import type { components } from './schema'
 export type Conversation = components['schemas']['Conversation']
 export type ContextPlan = components['schemas']['ContextPlan']
 export type TurnPreflight = components['schemas']['TurnPreflight']
+export type ReasoningEffort = NonNullable<TurnPreflight['reasoning_effort']>
 export type TurnCreate = components['schemas']['TurnCreate']
 export type RunCreate = components['schemas']['RunCreate']
 export type RunSnapshot = components['schemas']['RunSnapshot']
@@ -31,6 +32,7 @@ export type ModelSummary = {
   label?: string | null
   context_length?: number | null
   capabilities?: string[]
+  reasoning_efforts?: ReasoningEffort[]
   pricing?: {
     input_per_million: number
     output_per_million: number

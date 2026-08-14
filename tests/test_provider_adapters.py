@@ -70,9 +70,19 @@ def test_luna_uses_its_supported_default_temperature(
             captured.update(kwargs)
             return Response()
 
+    class Models:
+        async def list(self):
+            return SimpleNamespace(
+                data=[
+                    SimpleNamespace(id="gpt-5.6-luna"),
+                    SimpleNamespace(id="gpt-4.1"),
+                ]
+            )
+
     class Client:
         def __init__(self, **_kwargs) -> None:
             self.chat = SimpleNamespace(completions=Completions())
+            self.models = Models()
 
     monkeypatch.setattr(openai, "AsyncOpenAI", Client)
     adapter = OpenAICompatibleAdapter("openai", "OpenAI")
@@ -85,11 +95,23 @@ def test_luna_uses_its_supported_default_temperature(
                 "gpt-5.6-luna",
                 [ChatMessage(role="user", content="hello")],
                 0.7,
+                "high",
             )
         ]
 
     assert asyncio.run(collect()) == ["ok"]
     assert "temperature" not in captured
+    assert captured["reasoning_effort"] == "high"
+    discovered = asyncio.run(adapter.list_models("test-key"))
+    assert discovered[1].reasoning_efforts == [
+        "none",
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max",
+    ]
+    assert discovered[0].reasoning_efforts == []
 
 
 def test_agnes_provider_uses_official_openai_compatible_endpoint() -> None:
@@ -192,7 +214,12 @@ def test_gemini_closes_async_clients_for_discovery_and_streaming() -> None:
     models = asyncio.run(adapter.list_models("key"))
 
     async def collect() -> list[str]:
-        return [chunk async for chunk in adapter.stream("key", "gemini-test", [ChatMessage(role="user", content="hi")], 0.7)]
+        return [
+            chunk
+            async for chunk in adapter.stream(
+                "key", "gemini-test", [ChatMessage(role="user", content="hi")], 0.7
+            )
+        ]
 
     chunks = asyncio.run(collect())
 

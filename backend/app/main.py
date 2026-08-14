@@ -193,9 +193,13 @@ def create_app(
         return {"ollama_available": available, "running_models": loaded}
 
     @app.post("/api/v1/runtime/shutdown", status_code=202)
-    async def shutdown(request: Request, background_tasks: BackgroundTasks) -> dict[str, str]:
+    async def shutdown(
+        request: Request, background_tasks: BackgroundTasks
+    ) -> dict[str, str]:
         if request.headers.get("X-Local-Studio") != "shutdown":
-            raise HTTPException(403, "Shutdown request was not issued by the local Studio UI")
+            raise HTTPException(
+                403, "Shutdown request was not issued by the local Studio UI"
+            )
         if shutdown_callback is None:
             raise HTTPException(503, "Server shutdown is unavailable in unmanaged mode")
         await runs.shutdown()
@@ -337,6 +341,7 @@ def create_app(
             model=payload.model,
             messages=messages,
             temperature=payload.temperature,
+            reasoning_effort=payload.reasoning_effort,
             conversation_id=conversation_id,
         )
         return runs.create(run, request.state.session_id, plan.model_dump())
@@ -893,6 +898,7 @@ def create_app(
             temperature=payload.temperature
             if payload.temperature is not None
             else original.get("temperature", 0.7),
+            reasoning_effort=original.get("reasoning_effort"),
         )
         context = dict(bundle["context"] or {})
         context["replay_of"] = run_id

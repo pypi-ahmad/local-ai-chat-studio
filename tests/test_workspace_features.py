@@ -82,6 +82,62 @@ def test_cloud_preflight_warns_about_secrets_and_excludes_private_context(
     assert sections["history"]["included"] is False
 
 
+def test_turn_forwards_and_persists_reasoning_effort() -> None:
+    class ReasoningAdapter(ProviderAdapter):
+        id, label = "openai", "Reasoning stub"
+        effort = None
+
+        async def list_models(self, _api_key):
+            return [
+                ModelDescriptor(
+                    provider=self.id,
+                    id="gpt-5.6-test",
+                    reasoning_efforts=["none", "low", "high"],
+                )
+            ]
+
+        async def stream(
+            self, _api_key, _model, _messages, _temperature, reasoning_effort=None
+        ):
+            self.effort = reasoning_effort
+            yield "reasoned"
+
+    adapter = ReasoningAdapter()
+    with TestClient(
+        create_app(
+            database_url=":memory:",
+            provider_registry=ProviderRegistry({"openai": adapter}),
+        )
+    ) as local:
+        conversation_id = _conversation(local)
+        payload = {
+            "provider": "openai",
+            "model": "gpt-5.6-test",
+            "content": "think carefully",
+            "reasoning_effort": "high",
+        }
+        plan = local.post(
+            f"/api/v1/conversations/{conversation_id}/turns/preflight", json=payload
+        ).json()
+        created = local.post(
+            f"/api/v1/conversations/{conversation_id}/turns",
+            json={**payload, "plan_hash": plan["plan_hash"]},
+        )
+        run_id = created.json()["id"]
+        with local.stream("GET", f"/api/v1/runs/{run_id}/events") as stream:
+            list(stream.iter_lines())
+
+        assert adapter.effort == "high"
+        adapter.effort = None
+        replay = local.post(
+            f"/api/v1/runs/{run_id}/replay",
+            json={"provider": "openai", "model": "gpt-5.6-test"},
+        ).json()
+        with local.stream("GET", f"/api/v1/runs/{replay['id']}/events") as stream:
+            list(stream.iter_lines())
+        assert adapter.effort == "high"
+
+
 def test_turn_persists_messages_context_and_replay_bundle(client: TestClient) -> None:
     conversation_id = _conversation(client)
     run_id = _complete_echo_run(client, conversation_id, "repeat this")

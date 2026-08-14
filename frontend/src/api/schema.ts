@@ -1382,6 +1382,8 @@ export interface components {
              * @default 0.7
              */
             temperature: number;
+            /** Reasoning Effort */
+            reasoning_effort?: ("none" | "minimal" | "low" | "medium" | "high" | "xhigh" | "max") | null;
             /** Conversation Id */
             conversation_id?: string | null;
         };
@@ -1461,6 +1463,8 @@ export interface components {
              * @default 0.7
              */
             temperature: number;
+            /** Reasoning Effort */
+            reasoning_effort?: ("none" | "minimal" | "low" | "medium" | "high" | "xhigh" | "max") | null;
             /**
              * Include Memory
              * @default true
@@ -1521,6 +1525,8 @@ export interface components {
              * @default 0.7
              */
             temperature: number;
+            /** Reasoning Effort */
+            reasoning_effort?: ("none" | "minimal" | "low" | "medium" | "high" | "xhigh" | "max") | null;
             /**
              * Include Memory
              * @default true

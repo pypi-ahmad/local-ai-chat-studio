@@ -12,7 +12,12 @@ from urllib.parse import urlparse
 
 import httpx
 
-from backend.app.contracts import ChatMessage, ModelDescriptor, ProviderDiscovery
+from backend.app.contracts import (
+    ChatMessage,
+    ModelDescriptor,
+    ProviderDiscovery,
+    ReasoningEffort,
+)
 from backend.app.pricing import model_pricing, openrouter_pricing
 
 
@@ -32,6 +37,7 @@ class ProviderAdapter(ABC):
         model: str,
         messages: list[ChatMessage],
         temperature: float,
+        reasoning_effort: ReasoningEffort | None = None,
     ) -> AsyncIterator[str]:
         if False:
             yield ""
@@ -55,6 +61,11 @@ class OpenAICompatibleAdapter(ProviderAdapter):
                 ModelDescriptor(
                     provider=self.id,
                     id=item.id,
+                    reasoning_efforts=(
+                        ["none", "low", "medium", "high", "xhigh", "max"]
+                        if self.id == "openai" and item.id.startswith("gpt-5.6")
+                        else []
+                    ),
                     pricing=openrouter_pricing(
                         (getattr(item, "model_extra", None) or {}).get("pricing")
                     )
@@ -72,6 +83,7 @@ class OpenAICompatibleAdapter(ProviderAdapter):
         model: str,
         messages: list[ChatMessage],
         temperature: float,
+        reasoning_effort: ReasoningEffort | None = None,
     ) -> AsyncIterator[str]:
         formatted = []
         for message in messages:
@@ -96,6 +108,8 @@ class OpenAICompatibleAdapter(ProviderAdapter):
         }
         if model != "gpt-5.6-luna":
             request["temperature"] = temperature
+        if model.startswith("gpt-5.6") and reasoning_effort:
+            request["reasoning_effort"] = reasoning_effort
         response = await self._client(api_key).chat.completions.create(**request)
         # async with releases the underlying HTTP connection on early exit
         # (cancellation), not just when the stream is fully consumed.
@@ -152,6 +166,7 @@ class OllamaAdapter(ProviderAdapter):
         model: str,
         messages: list[ChatMessage],
         temperature: float,
+        reasoning_effort: ReasoningEffort | None = None,
     ) -> AsyncIterator[str]:
         response = await self._client(api_key).chat(
             model=model,
@@ -215,6 +230,7 @@ class AnthropicAdapter(ProviderAdapter):
         model: str,
         messages: list[ChatMessage],
         temperature: float,
+        reasoning_effort: ReasoningEffort | None = None,
     ) -> AsyncIterator[str]:
         system = "\n\n".join(
             message.content for message in messages if message.role == "system"
@@ -278,6 +294,7 @@ class GeminiAdapter(ProviderAdapter):
         model: str,
         messages: list[ChatMessage],
         temperature: float,
+        reasoning_effort: ReasoningEffort | None = None,
     ) -> AsyncIterator[str]:
         prompt = "\n\n".join(f"{item.role}: {item.content}" for item in messages)
         contents: list[Any] = [prompt]
@@ -315,6 +332,7 @@ class OpenCodeZenAdapter(OpenAICompatibleAdapter):
         model: str,
         messages: list[ChatMessage],
         temperature: float,
+        reasoning_effort: ReasoningEffort | None = None,
     ) -> AsyncIterator[str]:
         if model.startswith("gpt-"):
             formatted = []
@@ -412,7 +430,9 @@ class OpenCodeZenAdapter(OpenAICompatibleAdapter):
                                 if text := part.get("text"):
                                     yield text
             return
-        async for text in super().stream(api_key, model, messages, temperature):
+        async for text in super().stream(
+            api_key, model, messages, temperature, reasoning_effort
+        ):
             yield text
 
 
@@ -504,6 +524,7 @@ class OpenCodeBridgeAdapter(ProviderAdapter):
         model: str,
         messages: list[ChatMessage],
         temperature: float,
+        reasoning_effort: ReasoningEffort | None = None,
     ) -> AsyncIterator[str]:
         if "/" not in model:
             raise ValueError("OpenCode model must be '<provider>/<model>'")

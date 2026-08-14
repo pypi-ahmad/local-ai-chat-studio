@@ -28,7 +28,9 @@ class RunState:
 
 
 class RunManager:
-    def __init__(self, providers: ProviderRegistry, vault: SessionVault, store: Store) -> None:
+    def __init__(
+        self, providers: ProviderRegistry, vault: SessionVault, store: Store
+    ) -> None:
         self._runs: dict[str, RunState] = {}
         self._lock = threading.RLock()
         self._providers = providers
@@ -105,7 +107,9 @@ class RunManager:
             state.changed.clear()
             await state.changed.wait()
 
-    async def _execute(self, state: RunState, request: RunCreate, session_id: str) -> None:
+    async def _execute(
+        self, state: RunState, request: RunCreate, session_id: str
+    ) -> None:
         started = time.monotonic()
         with self._lock:
             state.snapshot.status = RunStatus.running
@@ -125,6 +129,7 @@ class RunManager:
                     request.model,
                     request.messages,
                     request.temperature,
+                    request.reasoning_effort,
                 )
             async for delta in stream:
                 if state.cancel.is_set():
@@ -140,7 +145,9 @@ class RunManager:
             with self._lock:
                 state.snapshot.status = RunStatus.completed
                 state.snapshot.completed_at = utc_now()
-                state.snapshot.metrics = {"elapsed_seconds": round(time.monotonic() - started, 3)}
+                state.snapshot.metrics = {
+                    "elapsed_seconds": round(time.monotonic() - started, 3)
+                }
                 state.snapshot.receipt_hash = self._receipt(state)
             if request.conversation_id:
                 try:
@@ -158,7 +165,9 @@ class RunManager:
             with self._lock:
                 state.snapshot.status = RunStatus.cancelled
                 state.snapshot.completed_at = utc_now()
-                state.snapshot.metrics = {"elapsed_seconds": round(time.monotonic() - started, 3)}
+                state.snapshot.metrics = {
+                    "elapsed_seconds": round(time.monotonic() - started, 3)
+                }
                 state.snapshot.receipt_hash = self._receipt(state)
             self._emit(state, "run.cancelled")
         except Exception as exc:
@@ -166,7 +175,9 @@ class RunManager:
                 state.snapshot.status = RunStatus.failed
                 state.snapshot.error = self._safe_error(exc)
                 state.snapshot.completed_at = utc_now()
-                state.snapshot.metrics = {"elapsed_seconds": round(time.monotonic() - started, 3)}
+                state.snapshot.metrics = {
+                    "elapsed_seconds": round(time.monotonic() - started, 3)
+                }
                 state.snapshot.receipt_hash = self._receipt(state)
             self._emit(state, "run.failed", {"error": state.snapshot.error})
         finally:
@@ -179,7 +190,9 @@ class RunManager:
             yield token if i == 0 else f" {token}"
             await asyncio.sleep(0)
 
-    def _emit(self, state: RunState, event_type: str, data: dict[str, str] | None = None) -> None:
+    def _emit(
+        self, state: RunState, event_type: str, data: dict[str, str] | None = None
+    ) -> None:
         event = RunEvent(type=event_type, run_id=state.snapshot.id, data=data or {})
         state.events.append(event)
         self._store.update_run(state.snapshot)
