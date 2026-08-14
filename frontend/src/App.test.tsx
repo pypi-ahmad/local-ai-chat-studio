@@ -36,6 +36,8 @@ let releaseChatStream: (() => void) | null = null
 let contextEstimate = 12
 let contextBudget = 6553
 let conversationSettings: MockConversationSettings = { ...defaultConversationSettings }
+let libraryPresets: Array<Record<string, unknown>> = []
+let createdAssistantConversation: Record<string, unknown> | null = null
 
 function json(value: unknown, status = 200) {
   return new Response(JSON.stringify(value), { status, headers: { 'Content-Type': 'application/json' } })
@@ -79,6 +81,8 @@ beforeEach(() => {
   contextEstimate = 12
   contextBudget = 6553
   conversationSettings = { ...defaultConversationSettings }
+  libraryPresets = []
+  createdAssistantConversation = null
   localStorage.clear()
   window.history.replaceState({}, '', '/')
   Object.defineProperty(Element.prototype, 'scrollIntoView', { configurable: true, value: vi.fn() })
@@ -91,7 +95,14 @@ beforeEach(() => {
     if (path.endsWith('/runtime/shutdown')) return json({ status: 'stopping' }, 202)
     if (path.endsWith('/conversations')) {
       const record = { ...conversation, settings: conversationSettings }
-      return init?.method === 'POST' ? json(record, 201) : json([record])
+      if (init?.method === 'POST') {
+        const body = JSON.parse(String(init.body)) as { title: string; settings?: MockConversationSettings }
+        createdAssistantConversation = {
+          ...record, id: 'c2', title: body.title, settings: body.settings ?? defaultConversationSettings,
+        }
+        return json(createdAssistantConversation, 201)
+      }
+      return json(createdAssistantConversation ? [createdAssistantConversation, record] : [record])
     }
     if (path.endsWith('/conversations/c1')) {
       if (init?.method === 'PATCH') {
@@ -100,6 +111,7 @@ beforeEach(() => {
       }
       return json({ ...conversation, settings: conversationSettings, messages: conversationMessages })
     }
+    if (path.endsWith('/conversations/c2') && createdAssistantConversation) return json(createdAssistantConversation)
     if (path.endsWith('/providers')) return json({ providers: [
       { id: 'echo', label: 'Echo', key_source: null, auth_modes: ['none'], connected: true, health: 'ready' },
       { id: 'opencode-bridge', label: 'OpenCode', key_source: null, auth_modes: ['oauth'], connected: true, health: 'ready' },
@@ -123,8 +135,12 @@ beforeEach(() => {
     }
     if (path.endsWith('/activity')) return json(activityRuns)
     if (path.endsWith('/presets')) {
-      if (init?.method === 'POST') return json({ id: 'p1', ...JSON.parse(String(init.body)) }, 201)
-      return json([])
+      if (init?.method === 'POST') {
+        const created = { id: 'p1', ...JSON.parse(String(init.body)) }
+        libraryPresets.push(created)
+        return json(created, 201)
+      }
+      return json(libraryPresets)
     }
     if (path.endsWith('/uploads') && init?.method === 'POST') {
       if (holdNextUpload) {
@@ -290,6 +306,46 @@ describe('studio workspace', () => {
       expect(screen.getByRole('button', { name: label })).toBeInTheDocument()
     }
     for (const label of ['Context', 'Evidence', 'Replay']) expect(screen.queryByRole('button', { name: label })).not.toBeInTheDocument()
+  })
+
+  it('searches, favorites, and starts a chat from the assistant gallery', async () => {
+    window.history.replaceState({}, '', '/library')
+    libraryPresets = [
+      {
+        id: 'writer', name: 'Editorial Writer',
+        system_prompt: 'Write clear, polished copy for a general audience.',
+        model_key: 'openai::gpt-5.6-luna', temperature: 0.4,
+      },
+      {
+        id: 'analyst', name: 'Research Analyst',
+        system_prompt: 'Compare evidence, identify gaps, and cite uncertainty.',
+        model_key: 'agnes::agnes-2.5-flash', temperature: 0.2,
+      },
+    ]
+    render(<App />)
+
+    expect(await screen.findByRole('heading', { name: 'All assistants' })).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Add Research Analyst to favorites' }))
+    expect(await screen.findByRole('heading', { name: 'Favorites' })).toBeInTheDocument()
+    expect(localStorage.getItem('chat-studio.favorite-assistants')).toContain('analyst')
+
+    fireEvent.change(screen.getByLabelText('Search assistants'), { target: { value: 'editorial' } })
+    expect(screen.getByText('Editorial Writer')).toBeInTheDocument()
+    expect(screen.queryByText('Research Analyst')).not.toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Start chat with Editorial Writer' }))
+
+    await waitFor(() => expect(window.location.pathname).toBe('/chat/c2'))
+    const request = vi.mocked(fetch).mock.calls.find(([url, init]) => String(url).endsWith('/conversations') && init?.method === 'POST')
+    expect(JSON.parse(String(request?.[1]?.body))).toEqual({
+      title: 'Editorial Writer',
+      settings: {
+        ...defaultConversationSettings,
+        model_key: 'openai::gpt-5.6-luna',
+        temperature: 0.4,
+        system_prompt: 'Write clear, polished copy for a general audience.',
+      },
+    })
+    expect(localStorage.getItem('chat-studio.recent-assistants')).toContain('writer')
   })
 
   it('groups and remembers the expandable desktop navigation', async () => {
