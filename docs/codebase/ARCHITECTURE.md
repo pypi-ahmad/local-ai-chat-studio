@@ -65,6 +65,12 @@ then consolidates them against existing memories. SQLite commits the accepted ba
 the conversation extraction timestamp together; active memories are mirrored to Chroma
 only when an embedding model is configured. Provenance stays with the SQLite record.
 
+Conversation organization is durable: `conversations.folder` is added compatibly at
+startup, returned by the generated API contract, and included in list search. The React
+shell groups pinned, foldered, and date-bucketed chats while keeping sidebar width,
+navigation collapse, inspector state, and command-palette visibility as transient or
+browser-local UI state.
+
 Provider adapters separate Ollama Local from Ollama Cloud. OpenCode is a loopback-only
 server bridge: it owns upstream OAuth and streaming sessions, while this app continues
 to apply remote-provider context policy before sending chat context to it.

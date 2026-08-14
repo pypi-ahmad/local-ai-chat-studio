@@ -7,6 +7,22 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.11] - 2026-08-15
+
+### Added
+
+- Added durable conversation folders, pinned and date-based history groups, folder-aware
+  search, and an adjustable desktop conversation sidebar whose width is remembered.
+- Added a searchable `Ctrl/Cmd+K` command palette for workspace navigation, new chats,
+  the Context/Evidence inspector, and run actions.
+- Added loading skeletons, actionable empty states, starter prompts, and collapsible
+  tool-result activity inside the transcript.
+
+### Changed
+
+- Refined the responsive near-black workspace with quieter borders, a restrained
+  red-pink context spine, and clearer grouping for ordinary chat versus advanced tools.
+
 ## [0.7.10] - 2026-08-15
 
 ### Added

@@ -30,6 +30,8 @@ and credential-bearing arguments.
 Frontend tests use Vitest, Testing Library, jest-dom, and jsdom. They exercise the
 connected workspace shell, semantic desktop/mobile navigation groups, persisted and
 keyboard-dismissible context/evidence inspection, bounded transcript navigation,
+folder/date/pin conversation organization, accessible sidebar resizing, command-palette
+routing, initial skeletons, starter prompts, and collapsible tool activity,
 top/bottom jumps, and unread streamed-output signaling,
 context utilization and overflow states, preflight, SSE output, the OpenCode Claude
 sign-in affordance, searchable capability-aware model selection, favorites, recents,

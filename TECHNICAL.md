@@ -80,6 +80,11 @@ Compare, Replay, and assistant configuration. It scopes discovery by provider,
 searches model names/IDs/capabilities, and filters vision or reasoning support.
 Shared presentation contracts also cover safe Markdown/code/KaTeX rendering,
 attachment upload states, transcript navigation, and context utilization warnings.
+The workspace shell keeps browser-local UI preferences for navigation collapse,
+inspector state, and bounded conversation-sidebar width. A global `Ctrl/Cmd+K`
+command palette routes through the same typed page map. Conversation folders are
+authoritative SQLite fields exposed by the generated `Conversation` contract; startup
+migration adds the column to existing databases and list search includes it.
 Fenced response blocks are classified as HTML, SVG, Mermaid, or source-code artifacts.
 Chat owns the selected artifact and switches to a responsive transcript/preview grid.
 HTML, SVG, and generated Mermaid SVG are placed in unique-origin iframes with an empty
@@ -99,8 +104,9 @@ Branches copy the snapshot at creation, preserving independent settings afterwar
 Optional context compression deterministically replaces older history with a bounded
 extractive summary, retains the latest eight messages verbatim, records compression
 metadata in the hash-bound plan, and prevents over-budget plans from starting a run.
-The grouped desktop/mobile navigation and optional persisted Context/Evidence
-inspector are client-side views over the same workspace APIs.
+The grouped desktop/mobile navigation, loading/empty states, collapsible tool messages,
+and optional persisted Context/Evidence inspector are client-side views over the same
+workspace APIs.
 
 Knowledge bases are local SQLite records with an ordered polymorphic source ledger:
 `upload`, active `memory`, or `backpack`. `GET/POST /api/v1/knowledge-bases` and

@@ -1,11 +1,11 @@
 # Local AI Chat Studio: Zero-to-Hero Study Handbook
 
-> Current product (v0.7.10): a single FastAPI + React workspace on
+> Current product (v0.7.11): a single FastAPI + React workspace on
 > `http://127.0.0.1:8506`. Streamlit-specific modules later in this handbook
 > describe a **retired UI**. Use `README.md`, `USER_GUIDE.md`, `TECHNICAL.md`,
 > and `docs/codebase/` as the source of truth.
 
-> Verified against repository version **v0.7.10 on 2026-08-15**. Status markers: **[current]** FastAPI/React workspace, **[legacy]** retired Streamlit material, **[shared]** repository-wide tooling, and **[gap]** remaining limits (not “the React app is a shell”).
+> Verified against repository version **v0.7.11 on 2026-08-15**. Status markers: **[current]** FastAPI/React workspace, **[legacy]** retired Streamlit material, **[shared]** repository-wide tooling, and **[gap]** remaining limits (not “the React app is a shell”).
 
 This handbook takes a beginner from “what is an LLM?” to making a focused contribution. Chat, compare, providers, memory, files, replay, guarded MCP tools, and Settings **Stop Studio** all run in the React workspace against `data/app.db`.
 
@@ -21,7 +21,7 @@ Local AI Chat Studio is a local-first interface for chatting with models served 
 | Provider credentials and discovery | [current] | Session-scoped in-memory vault, environment fallback, adapters, concurrent discovery. |
 | Streaming model runs | [current] | `RunManager`, provider dispatch, cancellation, replayable SSE events, receipts. |
 | OpenRouter / OpenCode authorization | [current] | OpenRouter PKCE; OpenCode loopback OAuth methods. |
-| React workspace | [current] | Grouped desktop/mobile navigation exposes Chat, Compare, Context, Evidence, Providers, Library, Activity, and Settings; an optional persisted Context/Evidence inspector supports in-chat review. |
+| React workspace | [current] | Grouped desktop/mobile navigation exposes the primary, workspace, and administration surfaces; folder/date-organized resizable history, `Ctrl/Cmd+K` commands, and an optional persisted Context/Evidence inspector support in-chat work. |
 | TypeScript API layer | [current] | Generated `schema.ts` plus `frontend/src/api/client.ts` (SSE, shutdown, data controls). |
 | Attachments, retrieval, memory | [current] | Per-turn attachments, context preflight, SQLite memory, optional Chroma, and reusable mixed-source Knowledge Bases with one binding per chat. |
 | Rich responses and navigation | [current] | Safe Markdown, highlighted copyable code, KaTeX, sandboxed HTML/SVG/Mermaid/code artifact preview, transcript navigation, blocking context overflow warnings, and optional local compression of older history. |

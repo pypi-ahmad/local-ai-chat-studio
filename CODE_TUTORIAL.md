@@ -5,11 +5,12 @@
 > `backend/app/main.py` → `runs.py`/`workspace.py`/`store.py` →
 > `frontend/src/api/client.ts` → `frontend/src/App.tsx`.
 
-> Current UI note (v0.7.10): `App.tsx` and its focused components provide safe rich
+> Current UI note (v0.7.11): `App.tsx` and its focused components provide safe rich
 > Markdown/code/LaTeX rendering, provider-scoped capability-aware model search,
 > attachment status/retry cards, saved-message navigation, exact context overflow
 > warnings with blocking over-budget sends, optional local history compression,
-> grouped responsive navigation, a persisted Context/Evidence inspector, and a
+> grouped responsive navigation, folder/date-organized resizable history, a searchable
+> command palette, loading/empty states, collapsible tool activity, a persisted Context/Evidence inspector, and a
 > sandboxed split-pane preview for fenced HTML, SVG, Mermaid, and code artifacts.
 > Library also provides searchable mixed-source Knowledge Bases with one persisted
 > binding per conversation.

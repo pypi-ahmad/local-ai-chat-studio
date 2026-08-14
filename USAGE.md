@@ -95,8 +95,9 @@ bridge remains on loopback by default.
    of them concurrently. Responses stream independently; one provider failure does
    not stop the others, and **Cancel all** stops every active comparison run.
 6. Use the previous/next message controls and current/total counter to move through
-   a long transcript, then branch, pin, rename, search, or replay responses when
-   you need to explore alternatives.
+   a long transcript, then branch, pin, rename, search, file chats into folders, or
+   replay responses when you need to explore alternatives. Pinned chats, folders,
+   and date groups keep the history organized; drag its desktop divider to resize it.
 
 For MCP tools, open **Tools**, save a trusted server configuration, explicitly connect
 and discover it, then submit a proposal with JSON arguments and a rationale. Nothing
@@ -109,7 +110,7 @@ Desktop navigation groups pages under **Primary**, **Workspace**, and
 **Administration**. On mobile, Chat, Compare, and Library stay visible while **More**
 opens Focus, Tools, Providers, and Settings. The optional context/evidence inspector preserves its open
 state and selected tab; press Escape to close it or open the full Context/Evidence
-page for more room.
+page for more room. Press `Ctrl+K` or `Cmd+K` to search navigation and common actions.
 
 The safety controls flag possible prompt injection and secret/PII exposure in
 pasted or retrieved content. Treat instructions found inside an attachment or

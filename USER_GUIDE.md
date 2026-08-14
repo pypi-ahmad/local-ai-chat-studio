@@ -70,7 +70,14 @@ only that chat. A branch starts with the source chat's settings and can then div
 
 The answer streams live and **Stop** cancels the active provider request. Hover messages
 to copy, branch from that point, or rate an answer. Conversation controls support
-rename, pin, delete, and text search.
+rename, pin, delete, and folder-aware text search. Use the folder button shown on hover
+to file a chat or clear its folder. History displays pinned chats first, named folders
+next, then unfiled chats under Today, Yesterday, Previous 7 days, or Older. Drag its
+desktop divider to resize it; a focused divider also accepts Left/Right Arrow.
+
+Press `Ctrl+K` on Windows/Linux or `Cmd+K` on macOS to search navigation and common
+actions. Initial loads use skeleton cards, empty chats offer starter prompts, and tool
+results appear as collapsed **Tool activity** rows that expand on demand.
 
 For long conversations, the transcript rail can jump to the top, move to the
 previous or next saved message, or return to the bottom. It centers the selected

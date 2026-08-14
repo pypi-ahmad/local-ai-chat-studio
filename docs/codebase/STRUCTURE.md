@@ -12,7 +12,7 @@
 | `backend/app/workspace.py` | Context plans, safety, provenance, web and retrieval |
 | `backend/app/providers.py` | Provider adapters and model discovery |
 | `backend/app/pricing.py` | Source-linked standard token-rate catalog and normalization |
-| `frontend/src/` | React workspace, rich Markdown/LaTeX/Mermaid rendering, capability-aware model selection, per-conversation controls/layouts, knowledge bases, context/evidence inspection, 2–4 model comparison, design system, typed API client |
+| `frontend/src/` | React workspace, grouped and resizable conversation navigation, command palette, rich Markdown/LaTeX/Mermaid rendering, capability-aware model selection, per-conversation controls/layouts, knowledge bases, context/evidence inspection, 2–4 model comparison, design system, typed API client |
 | `frontend/src/features/models/` | Model metadata/search helpers and browser-local favorite/recent preferences |
 | `frontend/src/features/assistants/` | Browser-local assistant favorite and recent-launch preferences |
 | `frontend/src/features/knowledge/` | Searchable source-ledger editor and per-conversation knowledge-base binding UI |
