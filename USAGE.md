@@ -59,8 +59,11 @@ bridge remains on loopback by default.
 3. Send the prompt. The response streams into the chat and can be cancelled.
 4. Inspect source provenance and context-budget information before relying on
    an answer that uses files, retrieved history, or web evidence.
-5. Branch, pin, rename, search, replay, or compare responses from the
-   conversation controls when you need to explore alternatives.
+5. Open **Compare**, select two to four distinct models, and send one prompt to all
+   of them concurrently. Responses stream independently; one provider failure does
+   not stop the others, and **Cancel all** stops every active comparison run.
+6. Branch, pin, rename, search, or replay responses when you need to explore
+   alternatives.
 
 The safety controls flag possible prompt injection and secret/PII exposure in
 pasted or retrieved content. Treat instructions found inside an attachment or

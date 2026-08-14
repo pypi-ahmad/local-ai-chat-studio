@@ -54,8 +54,11 @@ current conversation.
 
 ### Replay and Compare
 
-**Compare** streams the same prompt through two models. **Replay** records completed
-runs, lets you run one again, diff two answers, and export either:
+**Compare** sends the same prompt to two to four distinct models concurrently. Add
+or remove model slots, watch each response stream independently, and use **Cancel
+all** to stop active comparison runs. A provider failure is shown on its own result
+card without stopping the other models. **Replay** records completed runs, lets you
+run one again, diff two answers, and export either:
 
 - a full local bundle containing the exact request and context; or
 - a redacted share bundle with private context and image bytes removed.
@@ -70,8 +73,10 @@ retrieval, attachments, web search, or backpacks separately for each provider.
 
 Ollama Local needs no key; Ollama Cloud, OpenCode Zen, and OpenCode Go accept keys.
 Agnes AI uses `AGNES_API_KEY` and discovers `agnes-2.5-flash` from its
-OpenAI-compatible endpoint. OpenAI optionally uses `OPENAI_BASE_URL`; prices are not
-assumed when that URL points to a custom gateway.
+OpenAI-compatible endpoint. See the [Agnes overview](https://www.agnes-ai.com/en/docs/overview)
+and [Agnes 2.5 Flash model documentation](https://www.agnes-ai.com/en/docs/agnes-25-flash).
+OpenAI optionally uses `OPENAI_BASE_URL`; prices are not assumed when that URL points
+to a custom gateway.
 Run an OpenCode server on loopback to expose its ChatGPT, SuperGrok, or Claude sign-in
 methods in the Providers page. Anthropic also discovers configured workload identity.
 
