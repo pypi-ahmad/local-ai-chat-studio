@@ -8,6 +8,22 @@ const conversation = {
   created_at: 'now', updated_at: 'now', messages: [],
 }
 
+type MockConversationSettings = {
+  model_key: string
+  reasoning_effort: string | null
+  temperature: number
+  context_policy: 'full' | 'chat' | 'files'
+  include_web: boolean
+  auto_compress_history: boolean
+  system_prompt: string
+  layout: 'conversation' | 'compact' | 'full-width'
+}
+
+const defaultConversationSettings: MockConversationSettings = {
+  model_key: '', reasoning_effort: null, temperature: 0.7, context_policy: 'full',
+  include_web: false, auto_compress_history: false, system_prompt: '', layout: 'conversation',
+}
+
 let holdComparisonStreams = false
 let activityRuns: Array<Record<string, unknown>> = []
 let conversationMessages: Array<Record<string, unknown>> = []
@@ -19,6 +35,7 @@ let holdChatStream = false
 let releaseChatStream: (() => void) | null = null
 let contextEstimate = 12
 let contextBudget = 6553
+let conversationSettings: MockConversationSettings = { ...defaultConversationSettings }
 
 function json(value: unknown, status = 200) {
   return new Response(JSON.stringify(value), { status, headers: { 'Content-Type': 'application/json' } })
@@ -41,9 +58,9 @@ function setViewport(width: number) {
 }
 
 async function waitForStudio() {
+  await waitFor(() => expect(window.location.pathname).toBe('/chat/c1'))
   expect(await screen.findByRole('heading', { name: 'Provider architecture' })).toBeInTheDocument()
   await screen.findByText('Backend connected')
-  await waitFor(() => expect(window.location.pathname).toBe('/chat/c1'))
   await new Promise((resolve) => setTimeout(resolve, 0))
   await waitFor(() => expect(screen.getByLabelText('Provider')).toHaveValue('echo'))
   await waitFor(() => expect(screen.getByLabelText('Model')).toHaveTextContent('Deterministic'))
@@ -61,6 +78,7 @@ beforeEach(() => {
   releaseChatStream = null
   contextEstimate = 12
   contextBudget = 6553
+  conversationSettings = { ...defaultConversationSettings }
   localStorage.clear()
   window.history.replaceState({}, '', '/')
   Object.defineProperty(Element.prototype, 'scrollIntoView', { configurable: true, value: vi.fn() })
@@ -72,9 +90,16 @@ beforeEach(() => {
     if (path.endsWith('/profile')) return json({ content: '' })
     if (path.endsWith('/runtime/shutdown')) return json({ status: 'stopping' }, 202)
     if (path.endsWith('/conversations')) {
-      return init?.method === 'POST' ? json(conversation, 201) : json([conversation])
+      const record = { ...conversation, settings: conversationSettings }
+      return init?.method === 'POST' ? json(record, 201) : json([record])
     }
-    if (path.endsWith('/conversations/c1')) return json({ ...conversation, messages: conversationMessages })
+    if (path.endsWith('/conversations/c1')) {
+      if (init?.method === 'PATCH') {
+        const body = JSON.parse(String(init.body)) as { settings?: typeof conversationSettings }
+        if (body.settings) conversationSettings = body.settings
+      }
+      return json({ ...conversation, settings: conversationSettings, messages: conversationMessages })
+    }
     if (path.endsWith('/providers')) return json({ providers: [
       { id: 'echo', label: 'Echo', key_source: null, auth_modes: ['none'], connected: true, health: 'ready' },
       { id: 'opencode-bridge', label: 'OpenCode', key_source: null, auth_modes: ['oauth'], connected: true, health: 'ready' },
@@ -456,6 +481,43 @@ describe('studio workspace', () => {
         include_backpack: false,
       })
     })
+  })
+
+  it('loads and saves settings for the active conversation', async () => {
+    window.history.replaceState({}, '', '/chat/c1')
+    conversationSettings = {
+      model_key: 'openai::gpt-5.6-luna', reasoning_effort: 'high', temperature: 0.2,
+      context_policy: 'chat', include_web: true, auto_compress_history: true,
+      system_prompt: 'Be concise and cite uncertainty.', layout: 'compact',
+    }
+    render(<App />)
+
+    await waitFor(() => expect(window.location.pathname).toBe('/chat/c1'))
+    await waitFor(() => expect(screen.getByLabelText('Provider')).toHaveValue('openai'))
+    await waitFor(() => expect(screen.getByLabelText('Model')).toHaveTextContent('Luna'))
+    expect(screen.getByLabelText('Reasoning effort')).toHaveValue('high')
+    expect(screen.getByLabelText('Context mode')).toHaveValue('chat')
+    expect(document.querySelector('.messages')).toHaveClass('layout-compact')
+    expect(conversationSettings.system_prompt).toBe('Be concise and cite uncertainty.')
+    await screen.findByText('Backend connected')
+    await new Promise((resolve) => setTimeout(resolve, 0))
+
+    const settingsButton = screen.getByRole('button', { name: 'Conversation settings' })
+    fireEvent.click(settingsButton)
+    await waitFor(() => expect(settingsButton).toHaveAttribute('aria-expanded', 'true'))
+    expect(await screen.findByRole('dialog', { name: 'Conversation settings' })).toBeInTheDocument()
+    expect(await screen.findByLabelText('System prompt')).toHaveValue('Be concise and cite uncertainty.')
+    fireEvent.change(screen.getByLabelText('System prompt'), { target: { value: 'Act as a reviewer.' } })
+    fireEvent.click(screen.getByLabelText('Full-width layout'))
+    fireEvent.click(screen.getByRole('button', { name: 'Save conversation settings' }))
+
+    await waitFor(() => {
+      const calls = vi.mocked(fetch).mock.calls.filter(([url, init]) => String(url).endsWith('/conversations/c1') && init?.method === 'PATCH')
+      expect(JSON.parse(String(calls.at(-1)?.[1]?.body))).toMatchObject({
+        settings: { model_key: 'openai::gpt-5.6-luna', reasoning_effort: 'high', temperature: 0.2, context_policy: 'chat', system_prompt: 'Act as a reviewer.', layout: 'full-width' },
+      })
+    })
+    expect(document.querySelector('.messages')).toHaveClass('layout-full-width')
   })
 
   it('offers Claude subscription sign-in through OpenCode', async () => {

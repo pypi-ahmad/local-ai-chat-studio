@@ -72,6 +72,7 @@ import {
   type Backpack as BackpackRecord,
   type ContextPlan,
   type Conversation,
+  type ConversationSettings,
   type Memory,
   type ModelSummary,
   type OpenCodeAuthMethod,
@@ -93,6 +94,18 @@ const navigationGroups: ReadonlyArray<{ label: string; items: ReadonlyArray<read
 type InspectorTab = 'context' | 'evidence'
 type ContextMode = 'full' | 'chat' | 'files'
 type ComposerSettings = { contextMode: ContextMode; temperature: number; includeWeb: boolean; autoCompressHistory: boolean }
+type ConversationLayout = ConversationSettings['layout']
+
+const defaultConversationSettings: ConversationSettings = {
+  model_key: '',
+  reasoning_effort: null,
+  temperature: 0.7,
+  context_policy: 'full',
+  include_web: false,
+  auto_compress_history: false,
+  system_prompt: '',
+  layout: 'conversation',
+}
 
 type AttachmentStage = 'uploading' | 'processing'
 
@@ -424,6 +437,10 @@ function ChatWorkspace({
   onRuns,
   composerSettings,
   onComposerSettings,
+  systemPrompt,
+  onSystemPrompt,
+  layout,
+  onLayout,
 }: {
   conversation: Conversation | null
   models: ModelSummary[]
@@ -456,8 +473,15 @@ function ChatWorkspace({
   onRuns: () => void
   composerSettings: ComposerSettings
   onComposerSettings: (settings: ComposerSettings) => void
+  systemPrompt: string
+  onSystemPrompt: (value: string) => void
+  layout: ConversationLayout
+  onLayout: (value: ConversationLayout) => void
 }) {
   const [prompt, setPrompt] = useState('')
+  const [settingsOpen, setSettingsOpen] = useState(false)
+  const [systemPromptDraft, setSystemPromptDraft] = useState(systemPrompt)
+  const [layoutDraft, setLayoutDraft] = useState<ConversationLayout>(layout)
   const [attachmentAttempts, setAttachmentAttempts] = useState<AttachmentAttempt[]>([])
   const [messageIndex, setMessageIndex] = useState(0)
   const [atTranscriptEnd, setAtTranscriptEnd] = useState(true)
@@ -507,6 +531,11 @@ function ChatWorkspace({
     if (atTranscriptEndRef.current) liveMessageRef.current?.scrollIntoView({ behavior: 'auto', block: 'end' })
     else setUnreadOutput(true)
   }, [liveOutput])
+  useEffect(() => {
+    if (settingsOpen) return
+    setSystemPromptDraft(systemPrompt)
+    setLayoutDraft(layout)
+  }, [layout, settingsOpen, systemPrompt])
   const submit = async () => {
     if (!prompt.trim()) return
     if (await onSend(prompt.trim())) setPrompt('')
@@ -541,16 +570,24 @@ function ChatWorkspace({
     const target = liveMessageRef.current ?? messageRefs.current.get(messages[finalIndex]?.id)
     target?.scrollIntoView({ behavior: 'smooth', block: 'end' })
   }
+  const changeSettingsOpen = (open: boolean) => {
+    setSettingsOpen(open)
+  }
+  const saveConversationSettings = () => {
+    onSystemPrompt(systemPromptDraft)
+    onLayout(layoutDraft)
+    setSettingsOpen(false)
+  }
   return (
-    <main aria-label="Chat workspace" className="workspace">
+    <main aria-label="Chat workspace" className={`workspace layout-${layout}`}>
       <header className="workspace-header">
         <Button aria-label="Open conversation history" className="mobile-history-trigger" onClick={onHistory} size="icon" variant="ghost"><PanelLeft /></Button>
         <div className="workspace-title"><p className="eyebrow">Conversation</p><h2>{conversation?.title ?? 'New conversation'}</h2>{selected?.pricing && <small>Estimated pricing: {pricingLabel(selected)} · <a href={selected.pricing.source_url} rel="noreferrer" target="_blank">official source</a></small>}</div>
-        <div className="action-row"><Button aria-label="Open runs" onClick={onRuns} variant="outline"><RotateCcw /> Runs</Button><Button aria-controls="context-evidence-inspector" aria-expanded={inspectorOpen} aria-label={`${inspectorOpen ? 'Close' : 'Open'} context and evidence inspector`} onClick={onInspector} variant={inspectorOpen ? 'secondary' : 'outline'}><PanelRightOpen /> Inspector</Button><Button disabled={!conversation?.messages.length || savingMemories || !selectedModel} onClick={onSaveMemories} variant="outline"><Brain /> {savingMemories ? 'Saving…' : 'Save memories & close'}</Button></div>
+        <div className="action-row"><Button aria-expanded={settingsOpen} aria-label="Conversation settings" onClick={() => changeSettingsOpen(true)} variant="outline"><Settings /> Settings</Button><Button aria-label="Open runs" onClick={onRuns} variant="outline"><RotateCcw /> Runs</Button><Button aria-controls="context-evidence-inspector" aria-expanded={inspectorOpen} aria-label={`${inspectorOpen ? 'Close' : 'Open'} context and evidence inspector`} onClick={onInspector} variant={inspectorOpen ? 'secondary' : 'outline'}><PanelRightOpen /> Inspector</Button><Button disabled={!conversation?.messages.length || savingMemories || !selectedModel} onClick={onSaveMemories} variant="outline"><Brain /> {savingMemories ? 'Saving…' : 'Save memories & close'}</Button></div>
       </header>
       <ContextRail model={selected} plan={plan} />
       <div className="message-region" ref={messageRegionRef}><ScrollArea className="message-area">
-        <div className="messages">
+        <div className={`messages layout-${layout}`}>
           {!conversation?.messages.length && !liveOutput && (
             <div className="welcome"><div className="signal-mark">LOCAL / CONTEXT / CONTROL</div><h3>Work with the whole trail visible.</h3><p>Inspect what enters the prompt, keep private context local, and replay any answer.</p></div>
           )}
@@ -656,6 +693,16 @@ function ChatWorkspace({
           {running ? <Button aria-label="Stop generation" className="composer-send" onClick={onCancel} size="icon" variant="destructive"><Square /></Button> : <Button aria-label="Send message" className="composer-send" disabled={!prompt.trim() || !selectedModel} onClick={submit} size="icon"><Send /></Button>}
         </div>
       </div>
+      {settingsOpen && <div className="conversation-settings-overlay"><section aria-describedby="conversation-settings-description" aria-labelledby="conversation-settings-title" aria-modal="true" className="conversation-settings-dialog" role="dialog">
+        <header><h2 id="conversation-settings-title">Conversation settings</h2><p id="conversation-settings-description">These instructions and layout apply only to this conversation.</p></header>
+        <label className="conversation-setting-field"><span>System prompt</span><Textarea aria-label="System prompt" autoFocus onChange={(event) => setSystemPromptDraft(event.target.value)} placeholder="Optional instructions for this conversation" value={systemPromptDraft} /></label>
+        <fieldset className="layout-options"><legend>Message layout</legend>{([
+          ['conversation', 'Conversation', 'Balanced chat bubbles'],
+          ['compact', 'Compact', 'Dense, full-row messages'],
+          ['full-width', 'Full-width', 'Use the available reading width'],
+        ] as const).map(([value, label, description]) => <button aria-label={`${label} layout`} aria-pressed={layoutDraft === value} key={value} onClick={() => setLayoutDraft(value)} type="button"><strong>{label}</strong><small>{description}</small></button>)}</fieldset>
+        <div className="conversation-settings-actions"><Button onClick={() => setSettingsOpen(false)} variant="ghost">Cancel</Button><Button aria-label="Save conversation settings" onClick={saveConversationSettings}>Save settings</Button></div>
+      </section></div>}
     </main>
   )
 }
@@ -879,9 +926,12 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
   const [conversation, setConversation] = useState<Conversation | null>(null)
   const [providers, setProviders] = useState<ProviderSummary[]>([])
   const [models, setModels] = useState<ModelSummary[]>([])
+  const modelsRef = useRef<ModelSummary[]>([])
   const [selectedModel, setSelectedModel] = useState('')
   const [reasoningEffort, setReasoningEffort] = useState<ReasoningEffort | ''>('')
   const [composerSettings, setComposerSettings] = useState<ComposerSettings>({ contextMode: 'full', temperature: 0.7, includeWeb: false, autoCompressHistory: false })
+  const [systemPrompt, setSystemPrompt] = useState('')
+  const [conversationLayout, setConversationLayout] = useState<ConversationLayout>('conversation')
   const [activity, setActivity] = useState<RunSnapshot[]>([])
   const [memories, setMemories] = useState<Memory[]>([])
   const [presets, setPresets] = useState<Preset[]>([])
@@ -898,6 +948,9 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
   const [excludedSources, setExcludedSources] = useState<Set<string>>(new Set())
   const [historyOpen, setHistoryOpen] = useState(false)
   const [runsOpen, setRunsOpen] = useState(false)
+  const settingsOwner = useRef<string | null>(null)
+  const lastSavedSettings = useRef('')
+  modelsRef.current = models
 
   const setPage = useCallback((next: Page) => {
     navigate(pathForPage(next, next === 'Chat' ? activeId : null))
@@ -969,12 +1022,58 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
   }, [refreshConversations, refreshLibrary, refreshProviders])
 
   useEffect(() => {
+    if (page !== 'Chat') { settingsOwner.current = null; return }
     setAttachmentIds(new Set())
+    settingsOwner.current = null
     if (!activeId) { setConversation(null); setUploads([]); return }
     void Promise.all([api.conversation(activeId), api.uploads(activeId)])
-      .then(([detail, fileItems]) => { setConversation(detail); setUploads(fileItems) })
+      .then(([detail, fileItems]) => {
+        const settings = detail.settings ?? defaultConversationSettings
+        setConversation(detail)
+        setUploads(fileItems)
+        setSelectedModel((current) => settings.model_key || (modelsRef.current[0] ? modelKey(modelsRef.current[0]) : current))
+        setReasoningEffort(settings.reasoning_effort ?? '')
+        setComposerSettings({
+          contextMode: settings.context_policy,
+          temperature: settings.temperature,
+          includeWeb: settings.include_web,
+          autoCompressHistory: settings.auto_compress_history,
+        })
+        setSystemPrompt(settings.system_prompt)
+        setConversationLayout(settings.layout)
+        lastSavedSettings.current = JSON.stringify(settings)
+        settingsOwner.current = detail.id
+      })
       .catch((cause) => setError(messageOf(cause)))
-  }, [activeId])
+  }, [activeId, page])
+
+  const activeConversationSettings = useMemo<ConversationSettings>(() => ({
+    model_key: selectedModel,
+    reasoning_effort: reasoningEffort || null,
+    temperature: composerSettings.temperature,
+    context_policy: composerSettings.contextMode,
+    include_web: composerSettings.includeWeb,
+    auto_compress_history: composerSettings.autoCompressHistory,
+    system_prompt: systemPrompt,
+    layout: conversationLayout,
+  }), [composerSettings, conversationLayout, reasoningEffort, selectedModel, systemPrompt])
+
+  useEffect(() => {
+    if (page !== 'Chat' || !activeId || settingsOwner.current !== activeId) return
+    const serialized = JSON.stringify(activeConversationSettings)
+    if (serialized === lastSavedSettings.current) return
+    const timeout = window.setTimeout(() => {
+      void api.updateConversation(activeId, { settings: activeConversationSettings })
+        .then((updated) => {
+          if (settingsOwner.current !== activeId) return
+          lastSavedSettings.current = serialized
+          setConversation(updated)
+          setConversations((current) => current.map((item) => item.id === updated.id ? updated : item))
+        })
+        .catch((cause) => setError(messageOf(cause)))
+    }, 300)
+    return () => window.clearTimeout(timeout)
+  }, [activeConversationSettings, activeId, page])
 
   const target = useMemo(() => {
     const [provider, ...modelParts] = selectedModel.split('::')
@@ -983,7 +1082,7 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
 
   useEffect(() => {
     const selected = models.find((model) => modelKey(model) === selectedModel)
-    if (reasoningEffort && !selected?.reasoning_efforts?.includes(reasoningEffort)) setReasoningEffort('')
+    if (reasoningEffort && selected && !selected.reasoning_efforts?.includes(reasoningEffort)) setReasoningEffort('')
   }, [models, reasoningEffort, selectedModel])
 
   const submitTurn = async (payload: TurnPreflight, contextPlan: ContextPlan, confirmed: string[] = []) => {
@@ -1018,6 +1117,7 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
       content,
       temperature: composerSettings.temperature,
       reasoning_effort: reasoningEffort || null,
+      system_prompt: systemPrompt,
       include_memory: includeFullContext,
       include_retrieval: includeFullContext,
       include_attachments: includeFiles,
@@ -1087,7 +1187,7 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
       <div className={navigationCollapsed ? 'app-shell nav-collapsed' : 'app-shell nav-expanded'}>
         <Navigation collapsed={navigationCollapsed} connected={connected} onCollapsed={setNavigationCollapsed} onPage={setPage} page={page} />
         {page === 'Chat' && <ConversationHistory activeId={activeId} conversations={conversations} onCreate={createConversation} onDelete={async (id) => { if (!window.confirm('Delete this conversation?')) return; await api.deleteConversation(id); if (activeId === id) { setActiveId(null); navigate('/chat') } await refreshConversations() }} onSelect={selectConversation} onUpdate={async (id, payload) => { await api.updateConversation(id, payload); await refreshConversations(); if (activeId === id) setConversation(await api.conversation(id)) }} />}
-        {page === 'Chat' && <div className={wideInspector && inspectorOpen ? 'chat-stage inspector-docked' : 'chat-stage'}><ChatWorkspace attachmentIds={attachmentIds} composerSettings={composerSettings} conversation={conversation} error={error} inspectorOpen={inspectorOpen} liveOutput={liveOutput} models={models} onAttachment={(id) => setAttachmentIds((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} onBranch={async (messageId) => { if (!activeId) return; const branch = await api.branchConversation(activeId, messageId); await refreshConversations(); selectConversation(branch.id) }} onCancel={async () => { if (activeRun) await api.cancelRun(activeRun) }} onComposerSettings={setComposerSettings} onConfirm={async () => { if (pendingPayload && pendingPlan) await submitTurn(pendingPayload, pendingPlan, pendingPlan.findings.map((item) => item.id)) }} onFeedback={api.setFeedback} onHistory={() => setHistoryOpen(true)} onInspector={() => setInspectorOpen((current) => !current)} onModel={setSelectedModel} onReasoningEffort={setReasoningEffort} onRemoveUpload={removeUpload} onRuns={() => setRunsOpen(true)} onSanitize={async () => { if (!pendingPayload) return; const sanitized = await api.sanitize(pendingPayload.content); setPendingPlan(null); setPendingPayload(null); await send(sanitized.content) }} onSaveMemories={saveMemoriesAndClose} onSend={send} onUpload={async (file, onStage) => { await upload(file, true, onStage) }} pendingPlan={pendingPlan} plan={plan} providers={providers} reasoningEffort={reasoningEffort} running={Boolean(activeRun)} savingMemories={savingMemories} selectedModel={selectedModel} uploads={uploads} />{wideInspector && inspectorOpen && inspector}</div>}
+        {page === 'Chat' && <div className={wideInspector && inspectorOpen ? 'chat-stage inspector-docked' : 'chat-stage'}><ChatWorkspace attachmentIds={attachmentIds} composerSettings={composerSettings} conversation={conversation} error={error} inspectorOpen={inspectorOpen} layout={conversationLayout} liveOutput={liveOutput} models={models} onAttachment={(id) => setAttachmentIds((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} onBranch={async (messageId) => { if (!activeId) return; const branch = await api.branchConversation(activeId, messageId); await refreshConversations(); selectConversation(branch.id) }} onCancel={async () => { if (activeRun) await api.cancelRun(activeRun) }} onComposerSettings={setComposerSettings} onConfirm={async () => { if (pendingPayload && pendingPlan) await submitTurn(pendingPayload, pendingPlan, pendingPlan.findings.map((item) => item.id)) }} onFeedback={api.setFeedback} onHistory={() => setHistoryOpen(true)} onInspector={() => setInspectorOpen((current) => !current)} onLayout={setConversationLayout} onModel={setSelectedModel} onReasoningEffort={setReasoningEffort} onRemoveUpload={removeUpload} onRuns={() => setRunsOpen(true)} onSanitize={async () => { if (!pendingPayload) return; const sanitized = await api.sanitize(pendingPayload.content); setPendingPlan(null); setPendingPayload(null); await send(sanitized.content) }} onSaveMemories={saveMemoriesAndClose} onSend={send} onSystemPrompt={setSystemPrompt} onUpload={async (file, onStage) => { await upload(file, true, onStage) }} pendingPlan={pendingPlan} plan={plan} providers={providers} reasoningEffort={reasoningEffort} running={Boolean(activeRun)} savingMemories={savingMemories} selectedModel={selectedModel} systemPrompt={systemPrompt} uploads={uploads} />{wideInspector && inspectorOpen && inspector}</div>}
         {page === 'Chat' && !wideInspector && <Sheet onOpenChange={setInspectorOpen} open={inspectorOpen}><SheetContent className="inspector-sheet" showCloseButton={false} side="right">{inspector}</SheetContent></Sheet>}
         <Sheet onOpenChange={setHistoryOpen} open={historyOpen}>
           <SheetContent className="history-sheet" side="left">
@@ -1118,7 +1218,7 @@ function RoutedApp() {
   const location = useLocation()
   const route = routeFromPath(location.pathname)
   if (!route) return <main className="route-error"><p className="eyebrow">Page not found</p><h1>This workspace does not exist.</h1><p>Use the main navigation or return to Chat.</p><a href="/chat">Return to Chat</a></main>
-  return <RouteErrorBoundary key={location.pathname}><StudioApp route={route} /></RouteErrorBoundary>
+  return <RouteErrorBoundary key={route.page}><StudioApp route={route} /></RouteErrorBoundary>
 }
 
 export default function App() {

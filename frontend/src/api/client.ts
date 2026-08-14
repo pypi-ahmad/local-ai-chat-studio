@@ -1,6 +1,7 @@
 import type { components } from './schema'
 
 export type Conversation = components['schemas']['Conversation']
+export type ConversationSettings = components['schemas']['ConversationSettings']
 export type ContextPlan = components['schemas']['ContextPlan']
 export type TurnPreflight = components['schemas']['TurnPreflight']
 export type ReasoningEffort = NonNullable<TurnPreflight['reasoning_effort']>
@@ -112,7 +113,7 @@ export const api = {
   conversation: (id: string) => request<Conversation>(`/conversations/${id}`),
   createConversation: (title = 'New chat') =>
     request<Conversation>('/conversations', { method: 'POST', body: JSON.stringify({ title }) }),
-  updateConversation: (id: string, payload: { title?: string; pinned?: boolean }) =>
+  updateConversation: (id: string, payload: components['schemas']['ConversationUpdate']) =>
     request<Conversation>(`/conversations/${id}`, { method: 'PATCH', body: JSON.stringify(payload) }),
   deleteConversation: (id: string) => request<void>(`/conversations/${id}`, { method: 'DELETE' }),
   branchConversation: (id: string, messageId: string, title = 'Branch') =>
