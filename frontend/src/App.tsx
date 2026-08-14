@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from 'react'
 import { BrowserRouter, useLocation, useNavigate } from 'react-router'
 import {
   Backpack,
@@ -18,6 +18,7 @@ import {
   Download,
   FileText,
   FileUp,
+  Folder,
   Focus,
   GitBranch,
   GitCompareArrows,
@@ -56,6 +57,7 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 import { MarkdownContent } from '@/components/MarkdownContent'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { Skeleton } from '@/components/ui/skeleton'
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Textarea } from '@/components/ui/textarea'
@@ -152,6 +154,15 @@ function readInspectorTab() {
   }
 }
 
+function readHistoryWidth() {
+  try {
+    const stored = Number(localStorage.getItem('chat-studio.history-width'))
+    return Number.isFinite(stored) && stored >= 224 && stored <= 420 ? stored : 272
+  } catch {
+    return 272
+  }
+}
+
 const defaultPolicy: ProviderPolicy = {
   allow_memory: false,
   allow_retrieval: false,
@@ -168,7 +179,7 @@ function messageOf(error: unknown) {
   return error instanceof Error ? error.message : 'Request failed'
 }
 
-function Navigation({ page, onPage, connected, collapsed, onCollapsed }: { page: Page; onPage: (page: Page) => void; connected: boolean; collapsed: boolean; onCollapsed: (collapsed: boolean) => void }) {
+function Navigation({ page, onPage, connected, collapsed, onCollapsed, onCommands }: { page: Page; onPage: (page: Page) => void; connected: boolean; collapsed: boolean; onCollapsed: (collapsed: boolean) => void; onCommands: () => void }) {
   const mobile = useMediaQuery('(max-width: 820px)')
   const [moreOpen, setMoreOpen] = useState(false)
   const mobilePages: Page[] = ['Chat', 'Compare', 'Library']
@@ -193,6 +204,7 @@ function Navigation({ page, onPage, connected, collapsed, onCollapsed }: { page:
                 const groupId = `more-navigation-${group.label.toLowerCase()}`
                 return <div aria-labelledby={groupId} className="more-navigation-group" key={group.label} role="group"><p id={groupId}>{group.label}</p>{items.map(([label, Icon]) => <button aria-current={page === label ? 'page' : undefined} key={label} onClick={() => { onPage(label); setMoreOpen(false) }} type="button"><Icon /><span>{label}</span></button>)}</div>
               })}
+              <div aria-labelledby="more-navigation-shortcuts" className="more-navigation-group" role="group"><p id="more-navigation-shortcuts">Shortcuts</p><button onClick={() => { setMoreOpen(false); onCommands() }} type="button"><Command /><span>Command palette</span></button></div>
             </nav>
           </SheetContent>
         </Sheet>
@@ -215,10 +227,36 @@ function Navigation({ page, onPage, connected, collapsed, onCollapsed }: { page:
           </div>
         )})}
       </div>
+      <Button aria-label="Open command palette" className="command-palette-trigger" onClick={onCommands} title="Command palette (Ctrl+K)" variant="ghost"><Command /><span className="nav-label">Commands</span><kbd>Ctrl K</kbd></Button>
       <div className="nav-footer"><span className={connected ? 'status-dot' : 'status-dot offline'} /><span>{connected ? 'Backend connected' : 'Backend unavailable'}</span></div>
       <Button aria-expanded={!collapsed} aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'} className="nav-collapse" onClick={() => onCollapsed(!collapsed)} size="icon-sm" variant="ghost">{collapsed ? <ChevronRight /> : <ChevronLeft />}</Button>
     </nav>
   )
+}
+
+function CommandPalette({ open, onOpenChange, onPage, onCreate, onInspector, onRuns }: { open: boolean; onOpenChange: (open: boolean) => void; onPage: (page: Page) => void; onCreate: () => void; onInspector: () => void; onRuns: () => void }) {
+  const [query, setQuery] = useState('')
+  const commands: Array<{ label: string; hint: string; action: () => void }> = [
+    ...navigationGroups.flatMap((group) => group.items.map(([page]) => ({ label: `Open ${page}`, hint: group.label, action: () => onPage(page) }))),
+    { label: 'New conversation', hint: 'Chat', action: onCreate },
+    { label: 'Toggle context inspector', hint: 'Chat', action: onInspector },
+    { label: 'Open run actions', hint: 'Chat', action: onRuns },
+  ]
+  const visible = commands.filter((command) => `${command.label} ${command.hint}`.toLowerCase().includes(query.trim().toLowerCase()))
+  const run = (action: () => void) => { action(); onOpenChange(false); setQuery('') }
+  return <Dialog onOpenChange={(next) => { onOpenChange(next); if (!next) setQuery('') }} open={open}><DialogContent aria-label="Command palette" className="command-palette" showCloseButton={false}><DialogHeader><DialogTitle>Command palette</DialogTitle><DialogDescription>Jump between workspaces or run a common action.</DialogDescription></DialogHeader><div className="command-search"><Search /><Input aria-label="Search commands" autoFocus onChange={(event) => setQuery(event.target.value)} placeholder="Search commands…" value={query} /><kbd>Esc</kbd></div><div className="command-list">{visible.map((command) => <button aria-label={command.label} key={command.label} onClick={() => run(command.action)} type="button"><span>{command.label}</span><small>{command.hint}</small></button>)}{!visible.length && <div className="command-empty">No matching commands</div>}</div></DialogContent></Dialog>
+}
+
+function conversationDateGroup(updatedAt: string) {
+  const updated = new Date(updatedAt)
+  if (Number.isNaN(updated.getTime())) return 'Older'
+  const today = new Date()
+  const startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate())
+  const age = startOfToday.getTime() - new Date(updated.getFullYear(), updated.getMonth(), updated.getDate()).getTime()
+  if (age <= 0) return 'Today'
+  if (age <= 86_400_000) return 'Yesterday'
+  if (age <= 7 * 86_400_000) return 'Previous 7 days'
+  return 'Older'
 }
 
 function downloadFile(content: BlobPart, type: string, filename: string) {
@@ -237,18 +275,46 @@ function ConversationHistory({
   onCreate,
   onUpdate,
   onDelete,
+  loading = false,
   mobile = false,
 }: {
   conversations: Conversation[]
   activeId: string | null
   onSelect: (id: string) => void
   onCreate: () => void
-  onUpdate: (id: string, payload: { title?: string; pinned?: boolean }) => Promise<void>
+  onUpdate: (id: string, payload: { title?: string; pinned?: boolean; folder?: string }) => Promise<void>
   onDelete: (id: string) => Promise<void>
+  loading?: boolean
   mobile?: boolean
 }) {
   const [query, setQuery] = useState('')
-  const visible = conversations.filter((item) => item.title.toLowerCase().includes(query.toLowerCase()))
+  const normalizedQuery = query.trim().toLowerCase()
+  const visible = conversations.filter((item) => `${item.title} ${item.folder ?? ''}`.toLowerCase().includes(normalizedQuery))
+  const grouped = useMemo(() => {
+    const groups: Array<{ key: string; label: string; items: Conversation[] }> = []
+    const pinned = visible.filter((item) => item.pinned)
+    if (pinned.length) groups.push({ key: 'pinned', label: 'Pinned', items: pinned })
+    const remaining = visible.filter((item) => !item.pinned)
+    const folders = [...new Set(remaining.map((item) => (item.folder ?? '').trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b))
+    for (const folder of folders) groups.push({ key: `folder:${folder}`, label: folder, items: remaining.filter((item) => item.folder === folder) })
+    const unfiled = remaining.filter((item) => !(item.folder ?? '').trim())
+    for (const label of ['Today', 'Yesterday', 'Previous 7 days', 'Older']) {
+      const items = unfiled.filter((item) => conversationDateGroup(item.updated_at) === label)
+      if (items.length) groups.push({ key: `date:${label}`, label, items })
+    }
+    return groups
+  }, [visible])
+  const conversationRow = (conversation: Conversation) => (
+    <div className={activeId === conversation.id ? 'conversation active' : 'conversation'} key={conversation.id}>
+      <button className="conversation-select" onClick={() => onSelect(conversation.id)} type="button"><span>{conversation.title}</span></button>
+      <div className="conversation-tools">
+        <Button aria-label={`Rename ${conversation.title}`} onClick={async () => { const title = window.prompt('Conversation title', conversation.title); if (title?.trim()) await onUpdate(conversation.id, { title: title.trim() }) }} size="icon-sm" variant="ghost">✎</Button>
+        <Button aria-label={`Move ${conversation.title} to folder`} onClick={async () => { const folder = window.prompt('Folder name (leave blank for no folder)', conversation.folder ?? ''); if (folder !== null) await onUpdate(conversation.id, { folder: folder.trim() }) }} size="icon-sm" variant="ghost"><Folder /></Button>
+        <Button aria-label={`${conversation.pinned ? 'Unpin' : 'Pin'} ${conversation.title}`} onClick={() => onUpdate(conversation.id, { pinned: !conversation.pinned })} size="icon-sm" variant="ghost">⌖</Button>
+        <Button aria-label={`Delete ${conversation.title}`} onClick={() => onDelete(conversation.id)} size="icon-sm" variant="ghost"><Trash2 /></Button>
+      </div>
+    </div>
+  )
   return (
     <aside aria-label="Conversation history" className={mobile ? 'history-pane mobile-history' : 'history-pane'}>
       <div className="history-header">
@@ -257,18 +323,9 @@ function ConversationHistory({
       </div>
       <div className="search-wrap"><Search /><Input aria-label="Search conversations" onChange={(event) => setQuery(event.target.value)} placeholder="Search chats" value={query} /></div>
       <ScrollArea className="history-list">
-        <p className="section-label">Conversations</p>
-        {visible.map((conversation) => (
-          <div className={activeId === conversation.id ? 'conversation active' : 'conversation'} key={conversation.id}>
-            <button className="conversation-select" onClick={() => onSelect(conversation.id)} type="button"><span>{conversation.title}</span>{conversation.pinned && <small>pinned</small>}</button>
-            <div className="conversation-tools">
-              <Button aria-label={`Rename ${conversation.title}`} onClick={async () => { const title = window.prompt('Conversation title', conversation.title); if (title?.trim()) await onUpdate(conversation.id, { title: title.trim() }) }} size="icon-sm" variant="ghost">✎</Button>
-              <Button aria-label={`${conversation.pinned ? 'Unpin' : 'Pin'} ${conversation.title}`} onClick={() => onUpdate(conversation.id, { pinned: !conversation.pinned })} size="icon-sm" variant="ghost">⌖</Button>
-              <Button aria-label={`Delete ${conversation.title}`} onClick={() => onDelete(conversation.id)} size="icon-sm" variant="ghost"><Trash2 /></Button>
-            </div>
-          </div>
-        ))}
-        {!visible.length && <p className="empty-copy">No conversations yet.</p>}
+        {loading && <div aria-label="Loading conversations" className="history-skeletons">{Array.from({ length: 4 }, (_, index) => <Skeleton data-testid="conversation-skeleton" key={index} />)}</div>}
+        {!loading && grouped.map((group) => <section className="conversation-group" key={group.key}><p className="section-label">{group.label}</p>{group.items.map(conversationRow)}</section>)}
+        {!loading && !visible.length && <div className="history-empty"><MessageSquare /><strong>{query ? 'No matching chats' : 'Start a conversation'}</strong><span>{query ? 'Try another title or folder.' : 'Create a chat to begin building your local workspace.'}</span>{!query && <Button onClick={onCreate} size="sm" variant="outline"><CirclePlus /> New chat</Button>}</div>}
       </ScrollArea>
       <div className="local-badge"><span className="pulse" /><div><strong>Local by default</strong><small>Cloud context starts prompt-only</small></div></div>
     </aside>
@@ -466,6 +523,7 @@ function ChatWorkspace({
   onSystemPrompt,
   layout,
   onLayout,
+  loading = false,
 }: {
   conversation: Conversation | null
   models: ModelSummary[]
@@ -504,6 +562,7 @@ function ChatWorkspace({
   onSystemPrompt: (value: string) => void
   layout: ConversationLayout
   onLayout: (value: ConversationLayout) => void
+  loading?: boolean
 }) {
   const [prompt, setPrompt] = useState('')
   const [artifact, setArtifact] = useState<Artifact | null>(null)
@@ -618,18 +677,21 @@ function ChatWorkspace({
       <div className={artifact ? 'chat-workbench has-artifact' : 'chat-workbench'}>
       <div className="message-region" ref={messageRegionRef}><ScrollArea className="message-area">
         <div className={`messages layout-${layout}`}>
-          {!conversation?.messages.length && !liveOutput && (
-            <div className="welcome"><div className="signal-mark">LOCAL / CONTEXT / CONTROL</div><h3>Work with the whole trail visible.</h3><p>Inspect what enters the prompt, keep private context local, and replay any answer.</p></div>
+          {loading && <div aria-label="Loading conversation" className="workspace-skeleton"><Skeleton /><Skeleton /><Skeleton /></div>}
+          {!loading && !conversation?.messages.length && !liveOutput && (
+            <div className="welcome"><div className="signal-mark">LOCAL / CONTEXT / CONTROL</div><h3>Work with the whole trail visible.</h3><p>Inspect what enters the prompt, keep private context local, and replay any answer.</p><div className="prompt-suggestions"><Button onClick={() => setPrompt('Compare two approaches and explain the tradeoffs.')} size="sm" variant="outline">Compare two approaches</Button><Button onClick={() => setPrompt('Summarize the attached material and list the key decisions.')} size="sm" variant="outline">Summarize material</Button><Button onClick={() => setPrompt('Review this idea for risks, assumptions, and next steps.')} size="sm" variant="outline">Review an idea</Button></div></div>
           )}
           {messages.map((message, index) => (
             <article className={`message ${message.role}${index === messageIndex && messages.length > 1 ? ' navigation-target' : ''}`} key={message.id} ref={(node) => { if (node) messageRefs.current.set(message.id, node); else messageRefs.current.delete(message.id) }}>
-              <div className="message-label"><span>{message.role === 'user' ? 'You' : 'Assistant'}</span>{message.run_id && <Badge variant="outline">evidence saved</Badge>}</div>
-              <MarkdownContent content={message.content} onArtifact={setArtifact} />
-              <div className="message-actions">
-                <Button onClick={() => navigator.clipboard.writeText(message.content)} size="sm" variant="ghost"><Copy /> Copy</Button>
-                <Button onClick={() => onBranch(message.id)} size="sm" variant="ghost"><GitBranch /> Branch here</Button>
-                {message.role === 'assistant' && <><Button aria-label="Helpful" onClick={() => onFeedback(message.id, 1)} size="icon-sm" variant="ghost"><ThumbsUp /></Button><Button aria-label="Not helpful" onClick={() => onFeedback(message.id, -1)} size="icon-sm" variant="ghost"><ThumbsDown /></Button></>}
-              </div>
+              {message.role === 'tool' ? <details className="tool-activity"><summary><Wrench /><span>Tool activity</span><small>Expand result</small><ChevronDown /></summary><div className="tool-activity-content"><MarkdownContent content={message.content} onArtifact={setArtifact} /></div></details> : <>
+                <div className="message-label"><span>{message.role === 'user' ? 'You' : 'Assistant'}</span>{message.run_id && <Badge variant="outline">evidence saved</Badge>}</div>
+                <MarkdownContent content={message.content} onArtifact={setArtifact} />
+                <div className="message-actions">
+                  <Button onClick={() => navigator.clipboard.writeText(message.content)} size="sm" variant="ghost"><Copy /> Copy</Button>
+                  <Button onClick={() => onBranch(message.id)} size="sm" variant="ghost"><GitBranch /> Branch here</Button>
+                  {message.role === 'assistant' && <><Button aria-label="Helpful" onClick={() => onFeedback(message.id, 1)} size="icon-sm" variant="ghost"><ThumbsUp /></Button><Button aria-label="Not helpful" onClick={() => onFeedback(message.id, -1)} size="icon-sm" variant="ghost"><ThumbsDown /></Button></>}
+                </div>
+              </>}
             </article>
           ))}
           {liveOutput && <article className="message assistant live" ref={liveMessageRef}><div className="message-label"><span>Assistant</span><Badge>streaming</Badge></div><MarkdownContent content={liveOutput} onArtifact={setArtifact} /></article>}
@@ -1035,6 +1097,10 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
   const [excludedSources, setExcludedSources] = useState<Set<string>>(new Set())
   const [historyOpen, setHistoryOpen] = useState(false)
   const [runsOpen, setRunsOpen] = useState(false)
+  const [commandOpen, setCommandOpen] = useState(false)
+  const [historyWidth, setHistoryWidth] = useState(readHistoryWidth)
+  const [workspaceLoading, setWorkspaceLoading] = useState(true)
+  const [conversationLoading, setConversationLoading] = useState(false)
   const settingsOwner = useRef<string | null>(null)
   const lastSavedSettings = useRef('')
   modelsRef.current = models
@@ -1055,6 +1121,17 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
   useEffect(() => {
     writeStoredBoolean('chat-studio.inspector-open', inspectorOpen)
   }, [inspectorOpen])
+
+  useEffect(() => {
+    const openCommands = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault()
+        setCommandOpen((current) => !current)
+      }
+    }
+    window.addEventListener('keydown', openCommands)
+    return () => window.removeEventListener('keydown', openCommands)
+  }, [])
 
   useEffect(() => {
     if (!inspectorOpen) return
@@ -1106,15 +1183,20 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
     void Promise.all([api.health(), refreshConversations(), refreshProviders(), refreshLibrary()])
       .then(() => setConnected(true))
       .catch((cause) => setError(messageOf(cause)))
+      .finally(() => setWorkspaceLoading(false))
   }, [refreshConversations, refreshLibrary, refreshProviders])
 
   useEffect(() => {
     if (page !== 'Chat') { settingsOwner.current = null; return }
     setAttachmentIds(new Set())
     settingsOwner.current = null
-    if (!activeId) { setConversation(null); setUploads([]); return }
+    if (!activeId) { setConversation(null); setUploads([]); setConversationLoading(false); return }
+    let cancelled = false
+    setConversationLoading(true)
+    setConversation(null)
     void Promise.all([api.conversation(activeId), api.uploads(activeId)])
       .then(([detail, fileItems]) => {
+        if (cancelled) return
         const settings = detail.settings ?? defaultConversationSettings
         setConversation(detail)
         setUploads(fileItems)
@@ -1133,6 +1215,8 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
         settingsOwner.current = detail.id
       })
       .catch((cause) => setError(messageOf(cause)))
+      .finally(() => { if (!cancelled) setConversationLoading(false) })
+    return () => { cancelled = true }
   }, [activeId, page])
 
   useEffect(() => {
@@ -1275,6 +1359,21 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
     selectConversation(created.id)
   }
 
+  const updateHistoryWidth = (width: number) => {
+    const next = Math.min(420, Math.max(224, Math.round(width)))
+    setHistoryWidth(next)
+    try { localStorage.setItem('chat-studio.history-width', String(next)) } catch { /* Browser storage is optional. */ }
+  }
+  const beginHistoryResize = (event: ReactPointerEvent<HTMLDivElement>) => {
+    event.preventDefault()
+    const startX = event.clientX
+    const startWidth = historyWidth
+    const move = (next: PointerEvent) => updateHistoryWidth(startWidth + next.clientX - startX)
+    const stop = () => { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', stop) }
+    window.addEventListener('pointermove', move)
+    window.addEventListener('pointerup', stop)
+  }
+
   const latestCompletedRun = activity.find((run) => run.conversation_id === activeId && run.status === 'completed')
   const exportActiveConversation = async (format: ChatExportFormat) => {
     if (!conversation) return
@@ -1316,10 +1415,11 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
 
   return (
     <TooltipProvider>
-      <div className={navigationCollapsed ? 'app-shell nav-collapsed' : 'app-shell nav-expanded'}>
-        <Navigation collapsed={navigationCollapsed} connected={connected} onCollapsed={setNavigationCollapsed} onPage={setPage} page={page} />
-        {page === 'Chat' && <ConversationHistory activeId={activeId} conversations={conversations} onCreate={createConversation} onDelete={async (id) => { if (!window.confirm('Delete this conversation?')) return; await api.deleteConversation(id); if (activeId === id) { setActiveId(null); navigate('/chat') } await refreshConversations() }} onSelect={selectConversation} onUpdate={async (id, payload) => { await api.updateConversation(id, payload); await refreshConversations(); if (activeId === id) setConversation(await api.conversation(id)) }} />}
-        {page === 'Chat' && <div className={wideInspector && inspectorOpen ? 'chat-stage inspector-docked' : 'chat-stage'}><ChatWorkspace attachmentIds={attachmentIds} canExportBundle={Boolean(latestCompletedRun)} composerSettings={composerSettings} conversation={conversation} error={error} inspectorOpen={inspectorOpen} layout={conversationLayout} liveOutput={liveOutput} models={models} onAttachment={(id) => setAttachmentIds((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} onBranch={async (messageId) => { if (!activeId) return; const branch = await api.branchConversation(activeId, messageId); await refreshConversations(); selectConversation(branch.id) }} onCancel={async () => { if (activeRun) await api.cancelRun(activeRun) }} onComposerSettings={setComposerSettings} onConfirm={async () => { if (pendingPayload && pendingPlan) await submitTurn(pendingPayload, pendingPlan, pendingPlan.findings.map((item) => item.id)) }} onExport={exportActiveConversation} onFeedback={api.setFeedback} onHistory={() => setHistoryOpen(true)} onInspector={() => setInspectorOpen((current) => !current)} onLayout={setConversationLayout} onModel={setSelectedModel} onReasoningEffort={setReasoningEffort} onRemoveUpload={removeUpload} onRuns={() => setRunsOpen(true)} onSanitize={async () => { if (!pendingPayload) return; const sanitized = await api.sanitize(pendingPayload.content); setPendingPlan(null); setPendingPayload(null); await send(sanitized.content) }} onSaveMemories={saveMemoriesAndClose} onSend={send} onSystemPrompt={setSystemPrompt} onUpload={async (file, onStage) => { await upload(file, true, onStage) }} pendingPlan={pendingPlan} plan={plan} providers={providers} reasoningEffort={reasoningEffort} running={Boolean(activeRun)} savingMemories={savingMemories} selectedModel={selectedModel} systemPrompt={systemPrompt} uploads={uploads} />{wideInspector && inspectorOpen && inspector}</div>}
+      <div className={navigationCollapsed ? 'app-shell nav-collapsed' : 'app-shell nav-expanded'} style={{ '--history-width': `${historyWidth}px` } as CSSProperties}>
+        <Navigation collapsed={navigationCollapsed} connected={connected} onCollapsed={setNavigationCollapsed} onCommands={() => setCommandOpen(true)} onPage={setPage} page={page} />
+        {page === 'Chat' && <ConversationHistory activeId={activeId} conversations={conversations} loading={workspaceLoading} onCreate={createConversation} onDelete={async (id) => { if (!window.confirm('Delete this conversation?')) return; await api.deleteConversation(id); if (activeId === id) { setActiveId(null); navigate('/chat') } await refreshConversations() }} onSelect={selectConversation} onUpdate={async (id, payload) => { await api.updateConversation(id, payload); await refreshConversations(); if (activeId === id) setConversation(await api.conversation(id)) }} />}
+        {page === 'Chat' && <div aria-label="Resize conversation sidebar" aria-orientation="vertical" aria-valuemax={420} aria-valuemin={224} aria-valuenow={historyWidth} className="history-resizer" onKeyDown={(event) => { if (event.key === 'ArrowLeft') updateHistoryWidth(historyWidth - 12); if (event.key === 'ArrowRight') updateHistoryWidth(historyWidth + 12) }} onPointerDown={beginHistoryResize} role="separator" tabIndex={0} />}
+        {page === 'Chat' && <div className={wideInspector && inspectorOpen ? 'chat-stage inspector-docked' : 'chat-stage'}><ChatWorkspace attachmentIds={attachmentIds} canExportBundle={Boolean(latestCompletedRun)} composerSettings={composerSettings} conversation={conversation} error={error} inspectorOpen={inspectorOpen} layout={conversationLayout} liveOutput={liveOutput} loading={workspaceLoading || conversationLoading} models={models} onAttachment={(id) => setAttachmentIds((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} onBranch={async (messageId) => { if (!activeId) return; const branch = await api.branchConversation(activeId, messageId); await refreshConversations(); selectConversation(branch.id) }} onCancel={async () => { if (activeRun) await api.cancelRun(activeRun) }} onComposerSettings={setComposerSettings} onConfirm={async () => { if (pendingPayload && pendingPlan) await submitTurn(pendingPayload, pendingPlan, pendingPlan.findings.map((item) => item.id)) }} onExport={exportActiveConversation} onFeedback={api.setFeedback} onHistory={() => setHistoryOpen(true)} onInspector={() => setInspectorOpen((current) => !current)} onLayout={setConversationLayout} onModel={setSelectedModel} onReasoningEffort={setReasoningEffort} onRemoveUpload={removeUpload} onRuns={() => setRunsOpen(true)} onSanitize={async () => { if (!pendingPayload) return; const sanitized = await api.sanitize(pendingPayload.content); setPendingPlan(null); setPendingPayload(null); await send(sanitized.content) }} onSaveMemories={saveMemoriesAndClose} onSend={send} onSystemPrompt={setSystemPrompt} onUpload={async (file, onStage) => { await upload(file, true, onStage) }} pendingPlan={pendingPlan} plan={plan} providers={providers} reasoningEffort={reasoningEffort} running={Boolean(activeRun)} savingMemories={savingMemories} selectedModel={selectedModel} systemPrompt={systemPrompt} uploads={uploads} />{wideInspector && inspectorOpen && inspector}</div>}
         {page === 'Chat' && !wideInspector && <Sheet onOpenChange={setInspectorOpen} open={inspectorOpen}><SheetContent className="inspector-sheet" showCloseButton={false} side="right">{inspector}</SheetContent></Sheet>}
         <Sheet onOpenChange={setHistoryOpen} open={historyOpen}>
           <SheetContent className="history-sheet" side="left">
@@ -1333,6 +1433,7 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
             </div>}
           </SheetContent>
         </Sheet>
+        <CommandPalette onCreate={() => void createConversation()} onInspector={() => { setPage('Chat'); setInspectorOpen((current) => !current) }} onOpenChange={setCommandOpen} onPage={setPage} onRuns={() => setRunsOpen(true)} open={commandOpen} />
         {page === 'Compare' && <ComparePage models={models} providers={providers} />}
         {page === 'Context' && <ContextPage backpacks={backpacks} onCreate={async (name, title, content) => { await api.createBackpack(name, title, content); setBackpacks(await api.backpacks()) }} plan={plan} />}
         {page === 'Evidence' && <EvidencePage activity={activity} excluded={excludedSources} onToggle={toggleSource} plan={plan} />}

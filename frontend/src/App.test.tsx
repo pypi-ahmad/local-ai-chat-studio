@@ -46,6 +46,9 @@ let libraryBackpacks: Array<Record<string, unknown>> = []
 let mcpServers: Array<Record<string, unknown>> = []
 let mcpTools: Array<Record<string, unknown>> = []
 let toolRequests: Array<Record<string, unknown>> = []
+let mockConversations: Array<Record<string, unknown>> = []
+let holdInitialConversations = false
+let releaseInitialConversations: (() => void) | null = null
 
 function json(value: unknown, status = 200) {
   return new Response(JSON.stringify(value), { status, headers: { 'Content-Type': 'application/json' } })
@@ -97,6 +100,9 @@ beforeEach(() => {
   mcpServers = [{ id: 'mcp-1', name: 'Workspace reader', transport: 'stdio', command: 'uvx', args: ['safe-reader-mcp'], env_keys: [], url: null, command_preview: 'uvx safe-reader-mcp', tested_at: 'now', created_at: 'now', updated_at: 'now' }]
   mcpTools = [{ server_id: 'mcp-1', name: 'read_document', title: 'Read document', description: 'Read one approved document.', input_schema: { type: 'object', properties: { path: { type: 'string' } }, required: ['path'] } }]
   toolRequests = []
+  mockConversations = [{ ...conversation, folder: '' }]
+  holdInitialConversations = false
+  releaseInitialConversations = null
   localStorage.clear()
   window.history.replaceState({}, '', '/')
   Object.defineProperty(Element.prototype, 'scrollIntoView', { configurable: true, value: vi.fn() })
@@ -143,14 +149,16 @@ beforeEach(() => {
         }
         return json(createdAssistantConversation, 201)
       }
-      return json(createdAssistantConversation ? [createdAssistantConversation, record] : [record])
+      if (holdInitialConversations) await new Promise<void>((resolve) => { releaseInitialConversations = resolve })
+      return json(createdAssistantConversation ? [createdAssistantConversation, ...mockConversations] : mockConversations)
     }
     if (path.endsWith('/conversations/c1')) {
       if (init?.method === 'PATCH') {
-        const body = JSON.parse(String(init.body)) as { settings?: typeof conversationSettings }
+        const body = JSON.parse(String(init.body)) as { settings?: typeof conversationSettings; folder?: string }
         if (body.settings) conversationSettings = body.settings
+        if (body.folder !== undefined) mockConversations = mockConversations.map((item) => item.id === 'c1' ? { ...item, folder: body.folder } : item)
       }
-      return json({ ...conversation, settings: conversationSettings, messages: conversationMessages })
+      return json({ ...conversation, ...mockConversations.find((item) => item.id === 'c1'), settings: conversationSettings, messages: conversationMessages })
     }
     if (path.endsWith('/conversations/c2') && createdAssistantConversation) return json(createdAssistantConversation)
     if (/\/conversations\/c1\/export\/(markdown|html|txt|json)$/.test(path)) {
@@ -314,6 +322,70 @@ describe('studio workspace', () => {
     expect(screen.getByLabelText('Conversation history')).toBeInTheDocument()
     expect(screen.getByLabelText('Chat workspace')).toBeInTheDocument()
     expect(screen.getByText(/Estimated pricing:/)).toHaveTextContent('$0.00 in / $0.00 out per 1M')
+  })
+
+  it('organizes pinned, foldered, and recent conversations', async () => {
+    const now = new Date().toISOString()
+    mockConversations = [
+      { ...conversation, id: 'c1', pinned: true, folder: '', updated_at: now },
+      { ...conversation, id: 'c2', title: 'Research draft', pinned: false, folder: 'Research', updated_at: now },
+      { ...conversation, id: 'c3', title: 'Daily notes', pinned: false, folder: '', updated_at: now },
+    ]
+
+    render(<App />)
+    await waitForStudio()
+
+    expect(screen.getByText('Pinned')).toBeInTheDocument()
+    expect(screen.getByText('Research')).toBeInTheDocument()
+    expect(screen.getByText('Today')).toBeInTheDocument()
+  })
+
+  it('resizes the conversation sidebar with an accessible keyboard handle', async () => {
+    render(<App />)
+    await waitForStudio()
+
+    fireEvent.keyDown(screen.getByRole('separator', { name: 'Resize conversation sidebar' }), { key: 'ArrowRight' })
+
+    expect(localStorage.getItem('chat-studio.history-width')).toBe('284')
+  })
+
+  it('opens a searchable keyboard command palette', async () => {
+    render(<App />)
+    await waitForStudio()
+
+    fireEvent.keyDown(window, { key: 'k', ctrlKey: true })
+    expect(screen.getByRole('dialog', { name: 'Command palette' })).toBeInTheDocument()
+    fireEvent.change(screen.getByLabelText('Search commands'), { target: { value: 'providers' } })
+    fireEvent.click(screen.getByRole('button', { name: /Open Providers/ }))
+
+    await waitFor(() => expect(window.location.pathname).toBe('/providers'))
+  })
+
+  it('shows skeletons while the workspace is loading', () => {
+    holdInitialConversations = true
+    render(<App />)
+
+    expect(screen.getAllByTestId('conversation-skeleton')).toHaveLength(4)
+    releaseInitialConversations?.()
+  })
+
+  it('collapses tool activity inside the transcript', async () => {
+    conversationMessages = [{ id: 'tool-1', role: 'tool', content: 'Indexed 12 documents', position: 0, created_at: 'now', run_id: null, metadata: {} }]
+    render(<App />)
+    await waitForStudio()
+
+    const activity = screen.getByText('Tool activity').closest('details')
+    expect(activity).not.toHaveAttribute('open')
+    fireEvent.click(screen.getByText('Tool activity'))
+    expect(activity).toHaveAttribute('open')
+  })
+
+  it('offers useful starting prompts in an empty chat', async () => {
+    render(<App />)
+    await waitForStudio()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Compare two approaches' }))
+    expect(screen.getByLabelText('Message')).toHaveValue('Compare two approaches and explain the tradeoffs.')
   })
 
   it('downloads every conversation export format and the latest reproducibility bundle', async () => {
