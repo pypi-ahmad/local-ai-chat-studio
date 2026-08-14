@@ -117,11 +117,11 @@ Double-click **`Launch Chat Studio.cmd`**.
 
 The launcher:
 
-1. Checks the repository and port `8506`.
+1. Gracefully stops a previous Studio, then terminates any remaining process listening on port `8506`.
 2. Installs portable `uv`, Node.js LTS, and Python tooling inside `.runtime/` when missing.
 3. Creates or updates `.venv` from the locked Python dependencies.
-4. Installs frontend packages with `npm ci --legacy-peer-deps` when needed.
-5. Rebuilds the frontend only when its inputs changed.
+4. Installs frontend packages with `npm ci --legacy-peer-deps` only when its dependency fingerprint changed.
+5. Rebuilds the frontend only when its source fingerprint changed.
 6. Starts the managed server and opens <http://127.0.0.1:8506>.
 
 Ollama is optional. The Studio can run entirely with a configured cloud provider.
@@ -132,6 +132,8 @@ Check setup without installing or launching anything:
 & '.\Launch Chat Studio.cmd' --check
 ```
 
+The launcher owns port `8506`: normal launch terminates any process using that port before starting the Studio. Use `--check` first if another application may be using it.
+
 ### Linux: one-file setup
 
 On a glibc-based x86_64 or ARM64 distribution such as Ubuntu, Debian, Fedora, or Arch, run:
@@ -140,7 +142,7 @@ On a glibc-based x86_64 or ARM64 distribution such as Ubuntu, Debian, Fedora, or
 ./Launch\ Chat\ Studio.sh
 ```
 
-The script installs portable `uv`, managed Python, and Node.js LTS inside `.runtime/`, synchronizes dependencies, builds changed frontend assets, starts the Studio, and opens the browser. It does not use `sudo` or modify system packages. Bash, `tar` with xz support, and either `curl` or `wget` must already be available.
+The script installs portable `uv`, managed Python, and Node.js LTS inside `.runtime/`, synchronizes only stale dependencies, builds changed frontend assets, clears port `8506`, starts the Studio, and opens the browser. It does not use `sudo` or modify system packages. Bash, `tar` with xz support, and either `curl` or `wget` must already be available; `fuser`, `lsof`, or `ss` is required to identify a non-Studio port owner.
 
 The executable bit is stored in Git. If it was lost while copying or extracting the project, use:
 

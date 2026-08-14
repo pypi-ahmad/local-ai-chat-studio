@@ -10,12 +10,15 @@ runtime dependencies when needed, builds the frontend, starts the local server
 on port 8506, and opens the app at <http://127.0.0.1:8506>. Run
 `Launch Chat Studio.cmd --check` for a status report without installing
 anything. Once setup is current, later double-clicks skip installation and launch
-the app directly.
+the app directly. Normal launch gracefully restarts an existing Studio and terminates
+any other process using port 8506; run `--check` first when that port may belong to
+another application.
 
 On a glibc-based x86_64 or ARM64 Linux desktop, run
 `./Launch\ Chat\ Studio.sh` or `bash 'Launch Chat Studio.sh'`. The Linux launcher
 provides the same cached setup and launch flow without `sudo`; it requires Bash,
-`tar` with xz support, and either `curl` or `wget`. Use
+`tar` with xz support, either `curl` or `wget`, and `fuser`, `lsof`, or `ss` when
+another process owns the port. Use
 `bash 'Launch Chat Studio.sh' --check` for its non-installing status report.
 
 For development, install Python 3.12+, `uv`, and Node.js, then run:

@@ -8,6 +8,12 @@ when needed, starts the server, and opens <http://127.0.0.1:8506>. Its console r
 open for logs; press Ctrl+C to stop. Run `Launch Chat Studio.cmd --check` from a terminal
 for a non-installing status report.
 
+Both launchers treat port `8506` as Studio-owned. They request a graceful shutdown
+from an existing Studio, then terminate any process still listening on that port
+before starting a fresh server. Use `--check` first if the port may belong to another
+application. Setup fingerprints prevent unchanged Python packages, npm packages, and
+frontend assets from being rebuilt on later launches.
+
 On a mainstream glibc Linux desktop (x86_64 or ARM64), run:
 
 ```bash
@@ -18,7 +24,8 @@ If the executable bit was lost, use `bash 'Launch Chat Studio.sh'`. The launcher
 installs portable runtimes under `.runtime/`, reuses current dependencies and builds,
 starts the server in the foreground, and opens the browser through `xdg-open` or
 `gio`. It never uses `sudo`. Run `bash 'Launch Chat Studio.sh' --check` for a
-non-installing report. Bash, `tar` with xz support, and `curl` or `wget` are required;
+non-installing report. Bash, `tar` with xz support, `curl` or `wget`, and one of
+`fuser`, `lsof`, or `ss` for port-owner discovery are required;
 Alpine/musl is not supported by the portable Node.js setup.
 
 For manual or development setup, build the browser client once and launch the server:

@@ -111,6 +111,10 @@ ARM64. Its portable `uv`, Python, Node.js, download, and npm caches live below
 `.runtime/linux`; the project environment remains `.venv`. Node.js archives are
 downloaded from the official distribution and checked against `SHASUMS256.txt`.
 The launcher uses no system package manager or elevated privileges.
+Both launchers persist content fingerprints only after successful Python sync, npm
+installation, or frontend build. Normal launch clears port `8506`: it first uses the
+managed shutdown API for a recognized Studio and then terminates any remaining
+listener. `--check` reports this state without changing it.
 
 Run the same checks used in CI before opening a pull request:
 
