@@ -400,6 +400,21 @@ The frontend uses OpenAPI-derived TypeScript contracts. A preflight plan is hash
 
 Comparison uses the same ordinary run and SSE endpoints as chat. The browser creates all selected runs concurrently, maps each stream to its own result card, preserves successful responses when another provider fails, and cancels every created run through the existing session-owned cancellation endpoint.
 
+### Frontend architecture
+
+The React workspace is split by responsibility so the application shell does not own every page and interaction:
+
+| Layer | Responsibility |
+|---|---|
+| `frontend/src/App.tsx` | Session-scoped data, API mutations, navigation shell, and route composition |
+| `frontend/src/app/` | Typed route metadata and the page-level error boundary |
+| `frontend/src/routes/` | Page composition for Chat, Compare, Library, Focus, Replay, Context, Evidence, Providers, and Settings |
+| `frontend/src/features/` | Focused composer, transcript, model-picker, context, knowledge, tool, and artifact behavior |
+| `frontend/src/api/` | Backend-authoritative generated types plus HTTP and SSE requests |
+| `frontend/src/hooks/` and `state/` | Responsive behavior and browser-local workspace preferences |
+
+Durable conversation settings remain in SQLite through the backend contract. Temporary prompt, attachment, navigation, and dialog state stays with the feature that owns it; shell preferences such as navigation collapse, inspector state, and history width remain browser-local. Each selected page is wrapped in an error boundary so a rendering failure can show a recovery screen without replacing saved workspace data.
+
 ## Models and References
 
 The Studio discovers models live from each configured provider. Provider catalogs are the authoritative place to review all currently available models, capabilities, identifiers, and prices.
