@@ -12,18 +12,54 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 
 ## Features
 
-- Streaming chat with cancellation, partial-output retention, feedback, branching, pinning, rename, and search
-- Live model discovery from configured providers, including model capabilities and source-linked token pricing when available
-- Parallel comparison across two to four distinct models, with independent streaming, isolated failures, shared cancellation, recorded-run replay, output diffs, and full or redacted export bundles
-- Reviewable context preflight with token estimates, automatic pruning, output reserve, and per-source exclusions
-- Provenance for conversation history, memories, retrieval, uploads, web results, and integrity receipts
-- Prompt-injection quarantine, secret and PII warnings, explicit confirmation, and local redaction
-- Local context backpacks and temporary focus sessions with objectives, success criteria, and constraints
-- PDF, Office, spreadsheet, text, code, and provider-supported image inputs
-- Local memory, assistant presets, personalization profiles, optional Chroma retrieval, and lexical fallback
-- Provider-specific data-boundary policies and deterministic failover simulation
-- JSONL import/export, legacy database migration, panic wipe, runtime health, and managed shutdown
-- ChatGPT, Claude, SuperGrok, and other supported subscription OAuth flows through a loopback-only OpenCode server
+### Conversations and generation
+
+- **Streaming chat:** Responses arrive incrementally through server-sent events. A running generation can be cancelled without discarding the partial output already received.
+- **Conversation management:** Create, search, rename, pin, and delete conversations. Branch from any message to explore another direction while preserving the earlier history.
+- **Feedback and activity:** Rate assistant messages and inspect recorded runs, including status, model, timing, token usage, provenance, and integrity receipts.
+- **Replay and comparison:** Replay a recorded run with another model and inspect its output diff, or export a full reproducibility bundle. Redacted bundles remove private context and image data for safer sharing.
+
+### Parallel model comparison
+
+- **Two to four models per prompt:** Select distinct local or cloud models and send the same prompt to all of them concurrently.
+- **Independent live results:** Every model streams into its own result card with separate status, output, usage, and cost information.
+- **Failure isolation:** One unavailable or failing provider does not stop successful comparisons. **Cancel all** stops every active comparison run together.
+- **Ordinary, replayable runs:** Comparisons use the same persisted run pipeline as chat, so their results remain available for evidence, replay, diffs, and exports. Each cloud model is a separate billable request.
+
+### Models, providers, and pricing
+
+- **Local and cloud providers:** Use Ollama locally without an API key, or connect OpenAI, Agnes AI, Anthropic, Google Gemini, OpenRouter, xAI, OmniRoute, Ollama Cloud, OpenCode Zen, and OpenCode Go.
+- **Live model discovery:** The Studio asks configured providers for their available models instead of relying only on a fixed list. Discovered entries can include context length, vision support, and provider metadata.
+- **Session-only credentials:** Keys entered in **Providers** remain in server-process memory for the browser session. Keys can alternatively come from operating-system environment variables; neither source is written to the database or exports.
+- **Subscription OAuth:** ChatGPT, Claude, SuperGrok, and other supported subscription sign-ins are bridged through a loopback-only OpenCode server, which owns the upstream OAuth and streaming sessions.
+- **Source-linked pricing:** Known models display standard input and output token rates with links to provider sources. The UI estimates preflight input cost and reports completed-run cost when usage is available; unknown or custom models stay explicitly unpriced.
+
+### Controlled context and safety
+
+- **Context preflight:** Before generation, review the exact context plan, estimated token use, automatic pruning, and a reserved 20% output budget. A hash binds the approved plan to the run so changed context must be reviewed again.
+- **Source-level control:** Inspect and exclude individual conversation-history, memory, retrieval, upload, web, backpack, or focus sources before sending them to a model.
+- **Provider data boundaries:** Cloud providers default to prompt-only access. Enable memory, retrieval, attachments, web results, or backpacks separately for each provider.
+- **Safety findings:** Local scanning detects prompt-injection patterns, secrets, and personally identifiable information. Risky memory is quarantined, blocking findings require confirmation, and sensitive prompt text can be locally redacted before submission.
+- **Provenance and integrity:** Context sources retain trust and origin metadata. Completed runs receive chained integrity receipts, while web evidence is cached with the approved plan and replayed without silently searching again.
+
+### Knowledge, files, and focused work
+
+- **Local memory:** Add, pin, archive, approve, or delete durable memories. **Save memories & close** asks the selected model to extract and consolidate candidates from the conversation, records their message provenance, and requires confirmation before sending a full chat to a cloud model.
+- **Cross-chat retrieval:** Reuse relevant details from previous conversations through optional Chroma embeddings. When no embedding model is configured, the Studio falls back to local lexical retrieval.
+- **Context backpacks:** Save reusable project facts or instructions and make them available as an explicit context source.
+- **Focus sessions:** Attach a temporary objective, success criteria, and constraints to a conversation to keep a task bounded.
+- **Assistant presets and personalization:** Store reusable system prompts, preferred model settings, and a local personalization profile.
+- **Document and image inputs:** Parse PDF, Word, spreadsheet, text, and code files into selectable conversation context. Supported vision models can receive selected image uploads directly.
+- **Web evidence:** Opt-in search adds titled, linked results to the context plan with source provenance and replayable cached evidence.
+
+### Local data and operations
+
+- **Local-first persistence:** Conversations, messages, policies, memories, runs, and receipts live in SQLite under the configured data directory; uploads and optional Chroma collections remain local as well.
+- **Portable data controls:** Export and import workspace data as JSONL, export conversations as Markdown, and explicitly migrate an earlier v2 database with a backup and repeat-import protection.
+- **Privacy controls:** Redacted replay exports omit private context, **Panic wipe** removes local workspace data and session credentials, and provider keys are never included in exports.
+- **Runtime visibility:** See FastAPI connectivity, Ollama availability, active Ollama models, and approximate VRAM use from **Settings**.
+- **Managed shutdown:** **Stop Studio** cancels and drains active runs, closes SQLite cleanly, and stops the local Uvicorn server without stopping external Ollama or OpenCode processes.
+- **One-file Windows and Linux launchers:** `Launch Chat Studio.cmd` and `Launch Chat Studio.sh` check prerequisites, install project-local tooling when needed, synchronize dependencies, rebuild changed frontend assets, start the server, and open the app. Later launches reuse the completed setup.
 
 Cloud providers begin with prompt-only access. Credentials entered in the browser remain in server-process memory for that browser session and are not written to the database or included in exports.
 
@@ -50,6 +86,7 @@ Cloud providers begin with prompt-only access. Credentials entered in the browse
 ```text
 local-ai-chat-studio/
 ├── Launch Chat Studio.cmd   One-click Windows setup and launcher
+├── Launch Chat Studio.sh    One-file Linux setup and launcher
 ├── backend/app/
 │   ├── cli.py               Uvicorn entrypoint and managed shutdown
 │   ├── main.py              FastAPI routes, sessions, and static frontend
@@ -94,6 +131,30 @@ Check setup without installing or launching anything:
 ```powershell
 & '.\Launch Chat Studio.cmd' --check
 ```
+
+### Linux: one-file setup
+
+On a glibc-based x86_64 or ARM64 distribution such as Ubuntu, Debian, Fedora, or Arch, run:
+
+```bash
+./Launch\ Chat\ Studio.sh
+```
+
+The script installs portable `uv`, managed Python, and Node.js LTS inside `.runtime/`, synchronizes dependencies, builds changed frontend assets, starts the Studio, and opens the browser. It does not use `sudo` or modify system packages. Bash, `tar` with xz support, and either `curl` or `wget` must already be available.
+
+The executable bit is stored in Git. If it was lost while copying or extracting the project, use:
+
+```bash
+bash 'Launch Chat Studio.sh'
+```
+
+Check setup without downloading, installing, building, or launching:
+
+```bash
+bash 'Launch Chat Studio.sh' --check
+```
+
+The launcher supports mainstream glibc Linux. Alpine and other musl-based distributions are not supported by its portable Node.js setup.
 
 ### Manual setup
 

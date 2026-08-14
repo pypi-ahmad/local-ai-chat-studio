@@ -106,6 +106,12 @@ in `backend/app/contracts.py` changes, regenerate the frontend client from
 Frontend TypeScript is pinned to 5.9. Use `npm ci --legacy-peer-deps` so the
 same peer-dependency resolution as the Windows launcher applies.
 
+`Launch Chat Studio.sh` mirrors that cached setup on glibc Linux for x86_64 and
+ARM64. Its portable `uv`, Python, Node.js, download, and npm caches live below
+`.runtime/linux`; the project environment remains `.venv`. Node.js archives are
+downloaded from the official distribution and checked against `SHASUMS256.txt`.
+The launcher uses no system package manager or elevated privileges.
+
 Run the same checks used in CI before opening a pull request:
 
 ```powershell

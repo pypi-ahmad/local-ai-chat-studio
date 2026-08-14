@@ -8,6 +8,19 @@ when needed, starts the server, and opens <http://127.0.0.1:8506>. Its console r
 open for logs; press Ctrl+C to stop. Run `Launch Chat Studio.cmd --check` from a terminal
 for a non-installing status report.
 
+On a mainstream glibc Linux desktop (x86_64 or ARM64), run:
+
+```bash
+./Launch\ Chat\ Studio.sh
+```
+
+If the executable bit was lost, use `bash 'Launch Chat Studio.sh'`. The launcher
+installs portable runtimes under `.runtime/`, reuses current dependencies and builds,
+starts the server in the foreground, and opens the browser through `xdg-open` or
+`gio`. It never uses `sudo`. Run `bash 'Launch Chat Studio.sh' --check` for a
+non-installing report. Bash, `tar` with xz support, and `curl` or `wget` are required;
+Alpine/musl is not supported by the portable Node.js setup.
+
 For manual or development setup, build the browser client once and launch the server:
 
 ```powershell

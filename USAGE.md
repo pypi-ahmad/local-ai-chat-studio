@@ -12,6 +12,12 @@ on port 8506, and opens the app at <http://127.0.0.1:8506>. Run
 anything. Once setup is current, later double-clicks skip installation and launch
 the app directly.
 
+On a glibc-based x86_64 or ARM64 Linux desktop, run
+`./Launch\ Chat\ Studio.sh` or `bash 'Launch Chat Studio.sh'`. The Linux launcher
+provides the same cached setup and launch flow without `sudo`; it requires Bash,
+`tar` with xz support, and either `curl` or `wget`. Use
+`bash 'Launch Chat Studio.sh' --check` for its non-installing status report.
+
 For development, install Python 3.12+, `uv`, and Node.js, then run:
 
 ```powershell
