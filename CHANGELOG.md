@@ -7,6 +7,15 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.6.7] - 2026-08-15
+
+### Added
+
+- Added direct browser routes for every workspace and conversation, including
+  Back/Forward navigation and bookmarkable conversation links.
+- Added page-level recovery and a safe SPA fallback that preserves API and
+  missing-asset 404 responses.
+
 ## [0.6.6] - 2026-08-15
 
 ### Changed
