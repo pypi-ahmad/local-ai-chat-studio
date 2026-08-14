@@ -122,7 +122,7 @@ h3 { margin-bottom: 8px; font-size: 26px; font-weight: 650; letter-spacing: -.03
 .model-picker-trigger:hover { border-color: #5b3341; background: #17131a; }
 .model-picker-trigger:focus-visible { border-color: var(--rose); box-shadow: 0 0 0 3px rgba(255,61,113,.12); outline: 0; }
 .model-picker-trigger:disabled { color: #716a72; cursor: not-allowed; }
-.model-picker-trigger > span { min-width: 0; display: grid; line-height: 1.12; letter-spacing: normal; text-transform: none; }
+.model-picker-trigger > span:not(.provider-mark) { min-width: 0; flex: 1; display: grid; line-height: 1.12; letter-spacing: normal; text-transform: none; }
 .model-picker-trigger strong,.model-picker-trigger small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .model-picker-trigger strong { font-size: 13px; font-weight: 500; }
 .model-picker-trigger small { margin-top: 2px; color: #827a83; font: 9px/1.1 ui-monospace,SFMono-Regular,Consolas,monospace; }
@@ -135,10 +135,24 @@ h3 { margin-bottom: 8px; font-size: 26px; font-weight: 650; letter-spacing: -.03
 .model-capability-filters button { height: 28px; border: 1px solid #37313a; border-radius: 999px; background: #17151a; color: #9e959e; padding: 0 10px; font-size: 11px; text-transform: capitalize; cursor: pointer; }
 .model-capability-filters button:hover { color: #f4edf1; border-color: #664050; }
 .model-capability-filters button[aria-pressed='true'] { border-color: #85364f; background: #2a1720; color: #ffabc1; box-shadow: inset 0 0 0 1px rgba(255,61,113,.12); }
-.model-option-list { max-height: min(55vh,470px); display: grid; gap: 7px; overflow-y: auto; padding-right: 3px; }
+.model-option-list { max-height: min(55vh,470px); display: grid; gap: 12px; overflow-y: auto; padding-right: 3px; }
+.model-option-section { display: grid; gap: 7px; }
+.model-option-section > p { position: sticky; top: 0; z-index: 1; margin: 0; background: linear-gradient(#111116 75%,transparent); color: #827780; padding: 2px 2px 6px; font: 700 9px/1 ui-monospace,SFMono-Regular,Consolas,monospace; letter-spacing: .1em; text-transform: uppercase; }
 .model-option { display: grid; gap: 8px; border: 1px solid #302c34; border-radius: 11px; background: #151419; color: #eee7eb; padding: 11px 12px; text-align: left; cursor: pointer; }
 .model-option:hover { border-color: #61404b; background: #1b171d; }
+.model-option:focus-visible { border-color: var(--rose); box-shadow: 0 0 0 3px rgba(255,61,113,.12); outline: 0; }
 .model-option[aria-selected='true'] { border-color: #87364f; background: #23151b; box-shadow: inset 2px 0 var(--rose); }
+.model-option-main { min-width: 0; display: grid; grid-template-columns: 34px minmax(0,1fr) 30px; align-items: start; gap: 10px; }
+.model-option-copy { min-width: 0; display: grid; gap: 8px; }
+.provider-mark { width: 28px; height: 28px; flex: 0 0 auto; display: inline-grid!important; place-items: center; border: 1px solid #57303e; border-radius: 8px; background: linear-gradient(145deg,#2b1720,#171218); color: #ff9ab5; font: 750 9px/1 ui-monospace,SFMono-Regular,Consolas,monospace!important; letter-spacing: .03em!important; text-transform: uppercase!important; }
+.provider-openai { border-color: #31524a; background: #14231f; color: #8fdbc6; }
+.provider-agnes { border-color: #68402f; background: #261912; color: #f4b18e; }
+.provider-google { border-color: #364c68; background: #141d29; color: #9bc4f6; }
+.provider-anthropic { border-color: #624a39; background: #241c17; color: #e1b995; }
+.model-favorite { width: 28px; height: 28px; display: grid; place-items: center; border: 0; border-radius: 7px; background: transparent; color: #756a73; cursor: pointer; }
+.model-favorite:hover,.model-favorite:focus-visible { background: #2c1b23; color: #ff8eac; outline: 0; }
+.model-favorite[aria-pressed='true'] { color: #ff6f98; }
+.model-favorite svg { width: 15px; }
 .model-option-title { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
 .model-option-title > div { min-width: 0; display: grid; gap: 2px; }
 .model-option-title strong { overflow: hidden; color: #faf4f7; font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }

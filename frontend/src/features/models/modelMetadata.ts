@@ -24,6 +24,15 @@ export function hasVision(model: ModelSummary) {
   return model.capabilities?.some((capability) => ['vision', 'image', 'images'].includes(capability.toLowerCase())) ?? false
 }
 
+export function hasTools(model: ModelSummary) {
+  return model.capabilities?.some((capability) => ['tool', 'tools', 'tool_use', 'function_calling'].includes(capability.toLowerCase())) ?? false
+}
+
+export function providerMonogram(provider: string) {
+  const known: Record<string, string> = { openai: 'OA', agnes: 'AG', anthropic: 'AN', google: 'GG', openrouter: 'OR', xai: 'XA', 'ollama-local': 'OL', 'ollama-cloud': 'OC', echo: 'EC' }
+  return known[provider] ?? provider.split(/[-_\s]+/).map((part) => part[0]).join('').slice(0, 2).toUpperCase()
+}
+
 export function modelSearchText(model: ModelSummary) {
-  return [model.label, model.id, model.provider, ...(model.capabilities ?? []), model.reasoning_efforts?.length ? 'reasoning effort' : '', contextLengthLabel(model.context_length), model.pricing ? 'priced' : 'unpriced'].filter(Boolean).join(' ').toLowerCase()
+  return [model.label, model.id, model.provider, ...(model.capabilities ?? []), hasVision(model) ? 'vision image' : '', hasTools(model) ? 'tools function calling' : '', model.reasoning_efforts?.length ? 'reasoning effort' : '', contextLengthLabel(model.context_length), model.pricing ? 'priced' : 'unpriced'].filter(Boolean).join(' ').toLowerCase()
 }
