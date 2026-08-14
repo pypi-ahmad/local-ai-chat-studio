@@ -243,24 +243,29 @@ h3 { margin-bottom: 8px; font-size: 26px; font-weight: 650; letter-spacing: -.03
 .composer-settings-menu [data-slot='dropdown-menu-sub-trigger'] > span { margin-left: auto; color: #ff8ead; font: 700 10px/1 ui-monospace,monospace; }
 .composer-settings-hint { margin: 0; padding: 7px 8px 6px; color: #77707a; font-size: 10px; line-height: 1.35; }
 .attachment-tray { display: grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); gap: 7px; padding: 7px 3px 9px; }
-.attachment-card { position: relative; min-width: 0; min-height: 52px; display: grid; grid-template-columns: 34px minmax(0,1fr) auto; align-items: center; gap: 9px; overflow: hidden; border: 1px solid #3a343d; border-radius: 11px; background: #121217; color: #dcd4da; padding: 8px 9px; }
-.attachment-card.ready { cursor: pointer; }
+.attachment-card { position: relative; min-width: 0; min-height: 64px; display: grid; grid-template-columns: 34px minmax(0,1fr) auto; align-items: center; gap: 9px; overflow: hidden; border: 1px solid #3a343d; border-radius: 11px; background: #121217; color: #dcd4da; padding: 8px 9px; }
+.attachment-card.ready { grid-template-columns: minmax(0,1fr) auto; gap: 2px; padding: 0 6px 0 0; }
 .attachment-card.ready:hover { border-color: #62404d; background: #18151a; }
 .attachment-card.selected { border-color: #7d344a; background: #22151b; box-shadow: inset 2px 0 var(--rose); }
 .attachment-card.error { border-color: #71323f; background: #251216; }
-.attachment-card > input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.attachment-select { min-width: 0; min-height: 62px; display: grid; grid-template-columns: 34px minmax(0,1fr) 18px; align-items: center; gap: 9px; border: 0; border-radius: 10px; padding: 7px 7px 7px 9px; background: transparent; color: inherit; text-align: left; cursor: pointer; }
+.attachment-select:focus-visible { outline: 2px solid #ff4f80; outline-offset: -2px; }
 .attachment-icon { width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid #3c3540; border-radius: 9px; background: #19171d; color: #a89da7; }
 .attachment-icon svg { width: 15px; }
-.attachment-card.uploading .attachment-icon { color: #ff7ea2; }
-.attachment-card.uploading .attachment-icon svg { animation: attachment-spin 1.1s linear infinite; }
+.attachment-card.uploading .attachment-icon,.attachment-card.processing .attachment-icon { color: #ff7ea2; }
+.attachment-card.uploading .attachment-icon svg,.attachment-card.processing .attachment-icon svg { animation: attachment-spin 1.1s linear infinite; }
+.attachment-card.processing { border-color: #59313e; background: #191318; }
 .attachment-card.error .attachment-icon { border-color: #65303b; background: #30151c; color: #ff8299; }
-.attachment-card.selected > svg { width: 16px; color: #ff789f; }
-.attachment-card.ready:not(.selected) > svg { width: 16px; color: #5f5861; }
+.attachment-card.selected .attachment-select > svg { width: 16px; color: #ff789f; }
+.attachment-card.ready:not(.selected) .attachment-select > svg { width: 16px; color: #5f5861; }
 .attachment-copy { min-width: 0; display: grid; gap: 3px; }
 .attachment-copy strong,.attachment-copy small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .attachment-copy strong { color: #f2ebef; font-size: 11px; }
-.attachment-copy small { color: #8f858f; font-size: 9px; }
-.attachment-card.error .attachment-copy small { color: #ff9bac; }
+.attachment-copy small { font-size: 9px; }
+.attachment-meta { color: #746d77; font: 700 9px/1.2 ui-monospace,SFMono-Regular,Consolas,monospace; letter-spacing: .04em; }
+.attachment-status { color: #9b919b; }
+.attachment-card.processing .attachment-status { color: #ff9ab5; }
+.attachment-card.error .attachment-status { color: #ff9bac; }
 .attachment-progress { position: relative; width: 100%; height: 2px; overflow: hidden; border-radius: 99px; background: #35272f; }
 .attachment-progress i { position: absolute; inset: 0 auto 0 -35%; width: 45%; border-radius: inherit; background: linear-gradient(90deg,transparent,var(--rose),#ff9ab5); animation: attachment-progress 1.25s ease-in-out infinite; }
 .attachment-actions { display: flex; gap: 2px; }

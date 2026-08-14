@@ -92,11 +92,27 @@ type InspectorTab = 'context' | 'evidence'
 type ContextMode = 'full' | 'chat' | 'files'
 type ComposerSettings = { contextMode: ContextMode; temperature: number; includeWeb: boolean }
 
+type AttachmentStage = 'uploading' | 'processing'
+
 type AttachmentAttempt = {
   id: string
   file: File
-  status: 'uploading' | 'error'
+  status: AttachmentStage | 'error'
   error?: string
+}
+
+const fileTypeLabel = (filename: string, mime = '') => {
+  const extension = filename.includes('.') ? filename.split('.').pop()?.toUpperCase() : ''
+  if (extension) return extension
+  if (mime.startsWith('image/')) return 'IMAGE'
+  if (mime.startsWith('text/')) return 'TEXT'
+  return 'FILE'
+}
+
+const formatFileSize = (bytes: number) => {
+  if (bytes < 1024) return `${bytes} B`
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(bytes < 10 * 1024 ? 1 : 0)} KB`
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
 }
 
 function readInspectorTab() {
@@ -391,6 +407,7 @@ function ChatWorkspace({
   onSanitize,
   onCancel,
   onUpload,
+  onRemoveUpload,
   uploads,
   attachmentIds,
   onAttachment,
@@ -421,7 +438,8 @@ function ChatWorkspace({
   onConfirm: () => Promise<void>
   onSanitize: () => Promise<void>
   onCancel: () => Promise<void>
-  onUpload: (file: File) => Promise<void>
+  onUpload: (file: File, onStage: (stage: AttachmentStage) => void) => Promise<void>
+  onRemoveUpload: (id: string) => Promise<void>
   uploads: Upload[]
   attachmentIds: Set<string>
   onAttachment: (id: string) => void
@@ -452,7 +470,7 @@ function ChatWorkspace({
   const uploadAttachment = async (attempt: AttachmentAttempt) => {
     setAttachmentAttempts((current) => current.map((item) => item.id === attempt.id ? { ...item, status: 'uploading', error: undefined } : item))
     try {
-      await onUpload(attempt.file)
+      await onUpload(attempt.file, (status) => setAttachmentAttempts((current) => current.map((item) => item.id === attempt.id ? { ...item, status } : item)))
       setAttachmentAttempts((current) => current.filter((item) => item.id !== attempt.id))
     } catch (cause) {
       setAttachmentAttempts((current) => current.map((item) => item.id === attempt.id ? { ...item, status: 'error', error: messageOf(cause) } : item))
@@ -514,11 +532,11 @@ function ChatWorkspace({
         />
         {(attachmentAttempts.length > 0 || uploads.length > 0) && <div className="attachment-tray" aria-label="Conversation attachments">
           {attachmentAttempts.map((attempt) => <div aria-live="polite" className={`attachment-card ${attempt.status}`} key={attempt.id}>
-            <div className="attachment-icon">{attempt.status === 'uploading' ? <LoaderCircle /> : <XCircle />}</div>
-            <div className="attachment-copy"><strong>{attempt.file.name}</strong><small>{attempt.status === 'uploading' ? `Uploading · ${Math.max(1, Math.ceil(attempt.file.size / 1024))} KB` : attempt.error || 'Upload failed'}</small>{attempt.status === 'uploading' && <span className="attachment-progress"><i /></span>}</div>
+            <div className="attachment-icon">{attempt.status === 'error' ? <XCircle /> : <LoaderCircle />}</div>
+            <div className="attachment-copy"><strong>{attempt.file.name}</strong><small className="attachment-meta">{fileTypeLabel(attempt.file.name, attempt.file.type)} · {formatFileSize(attempt.file.size)}</small><small className="attachment-status">{attempt.status === 'uploading' ? 'Uploading' : attempt.status === 'processing' ? 'Parsing & indexing' : attempt.error || 'Upload failed'}</small>{attempt.status !== 'error' && <span aria-label={attempt.status === 'processing' ? `Parsing and indexing ${attempt.file.name}` : `Uploading ${attempt.file.name}`} className="attachment-progress" role="progressbar"><i /></span>}</div>
             {attempt.status === 'error' && <div className="attachment-actions"><Button aria-label={`Retry ${attempt.file.name}`} onClick={() => void uploadAttachment(attempt)} size="icon-sm" variant="ghost"><RefreshCw /></Button><Button aria-label={`Remove ${attempt.file.name}`} onClick={() => setAttachmentAttempts((current) => current.filter((item) => item.id !== attempt.id))} size="icon-sm" variant="ghost"><Trash2 /></Button></div>}
           </div>)}
-          {uploads.map((upload) => <label className={attachmentIds.has(upload.id) ? 'attachment-card ready selected' : 'attachment-card ready'} key={upload.id}><input checked={attachmentIds.has(upload.id)} onChange={() => onAttachment(upload.id)} type="checkbox" /><div className="attachment-icon"><FileText /></div><div className="attachment-copy"><strong>{upload.filename}</strong><small>{attachmentIds.has(upload.id) ? 'Ready · included in next message' : 'Ready · click to include'}</small></div><CheckCircle /></label>)}
+          {uploads.map((upload) => <div className={attachmentIds.has(upload.id) ? 'attachment-card ready selected' : 'attachment-card ready'} key={upload.id}><button aria-label={`${attachmentIds.has(upload.id) ? 'Exclude' : 'Include'} ${upload.filename}`} aria-pressed={attachmentIds.has(upload.id)} className="attachment-select" onClick={() => onAttachment(upload.id)} type="button"><div className="attachment-icon"><FileText /></div><div className="attachment-copy"><strong>{upload.filename}</strong><small className="attachment-meta">{fileTypeLabel(upload.filename, upload.mime)} · {formatFileSize(upload.size)}</small><small className="attachment-status">{attachmentIds.has(upload.id) ? 'Ready · included in next message' : 'Ready · click to include'}</small></div><CheckCircle /></button><div className="attachment-actions"><Button aria-label={`Remove ${upload.filename}`} onClick={() => void onRemoveUpload(upload.id)} size="icon-sm" variant="ghost"><Trash2 /></Button></div></div>)}
         </div>}
         <div aria-label="Composer controls" className="composer-control-dock" role="toolbar">
           <input
@@ -954,12 +972,25 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
     } catch (cause) { setError(messageOf(cause)) }
   }
 
-  const upload = async (file: File, select = false) => {
+  const upload = async (file: File, select = false, onStage?: (stage: AttachmentStage) => void) => {
     if (!activeId) throw new Error('Select a conversation before attaching a file.')
-    const uploaded = await api.upload(activeId, file.name, await fileAsBase64(file))
+    onStage?.('uploading')
+    const content = await fileAsBase64(file)
+    onStage?.('processing')
+    const uploaded = await api.upload(activeId, file.name, content)
     setUploads(await api.uploads(activeId))
     if (select) setAttachmentIds((current) => new Set(current).add(uploaded.id))
     return uploaded
+  }
+
+  const removeUpload = async (uploadId: string) => {
+    try {
+      await api.deleteUpload(uploadId)
+      setUploads((current) => current.filter((item) => item.id !== uploadId))
+      setAttachmentIds((current) => { const next = new Set(current); next.delete(uploadId); return next })
+    } catch (cause) {
+      setError(messageOf(cause))
+    }
   }
 
   const saveMemoriesAndClose = async () => {
@@ -990,7 +1021,7 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
       <div className={navigationCollapsed ? 'app-shell nav-collapsed' : 'app-shell nav-expanded'}>
         <Navigation collapsed={navigationCollapsed} connected={connected} onCollapsed={setNavigationCollapsed} onPage={setPage} page={page} />
         {page === 'Chat' && <ConversationHistory activeId={activeId} conversations={conversations} onCreate={createConversation} onDelete={async (id) => { if (!window.confirm('Delete this conversation?')) return; await api.deleteConversation(id); if (activeId === id) { setActiveId(null); navigate('/chat') } await refreshConversations() }} onSelect={selectConversation} onUpdate={async (id, payload) => { await api.updateConversation(id, payload); await refreshConversations(); if (activeId === id) setConversation(await api.conversation(id)) }} />}
-        {page === 'Chat' && <div className={wideInspector && inspectorOpen ? 'chat-stage inspector-docked' : 'chat-stage'}><ChatWorkspace attachmentIds={attachmentIds} composerSettings={composerSettings} conversation={conversation} error={error} inspectorOpen={inspectorOpen} liveOutput={liveOutput} models={models} onAttachment={(id) => setAttachmentIds((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} onBranch={async (messageId) => { if (!activeId) return; const branch = await api.branchConversation(activeId, messageId); await refreshConversations(); selectConversation(branch.id) }} onCancel={async () => { if (activeRun) await api.cancelRun(activeRun) }} onComposerSettings={setComposerSettings} onConfirm={async () => { if (pendingPayload && pendingPlan) await submitTurn(pendingPayload, pendingPlan, pendingPlan.findings.map((item) => item.id)) }} onFeedback={api.setFeedback} onHistory={() => setHistoryOpen(true)} onInspector={() => setInspectorOpen((current) => !current)} onModel={setSelectedModel} onReasoningEffort={setReasoningEffort} onRuns={() => setRunsOpen(true)} onSanitize={async () => { if (!pendingPayload) return; const sanitized = await api.sanitize(pendingPayload.content); setPendingPlan(null); setPendingPayload(null); await send(sanitized.content) }} onSaveMemories={saveMemoriesAndClose} onSend={send} onUpload={async (file) => { await upload(file, true) }} pendingPlan={pendingPlan} plan={plan} providers={providers} reasoningEffort={reasoningEffort} running={Boolean(activeRun)} savingMemories={savingMemories} selectedModel={selectedModel} uploads={uploads} />{wideInspector && inspectorOpen && inspector}</div>}
+        {page === 'Chat' && <div className={wideInspector && inspectorOpen ? 'chat-stage inspector-docked' : 'chat-stage'}><ChatWorkspace attachmentIds={attachmentIds} composerSettings={composerSettings} conversation={conversation} error={error} inspectorOpen={inspectorOpen} liveOutput={liveOutput} models={models} onAttachment={(id) => setAttachmentIds((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} onBranch={async (messageId) => { if (!activeId) return; const branch = await api.branchConversation(activeId, messageId); await refreshConversations(); selectConversation(branch.id) }} onCancel={async () => { if (activeRun) await api.cancelRun(activeRun) }} onComposerSettings={setComposerSettings} onConfirm={async () => { if (pendingPayload && pendingPlan) await submitTurn(pendingPayload, pendingPlan, pendingPlan.findings.map((item) => item.id)) }} onFeedback={api.setFeedback} onHistory={() => setHistoryOpen(true)} onInspector={() => setInspectorOpen((current) => !current)} onModel={setSelectedModel} onReasoningEffort={setReasoningEffort} onRemoveUpload={removeUpload} onRuns={() => setRunsOpen(true)} onSanitize={async () => { if (!pendingPayload) return; const sanitized = await api.sanitize(pendingPayload.content); setPendingPlan(null); setPendingPayload(null); await send(sanitized.content) }} onSaveMemories={saveMemoriesAndClose} onSend={send} onUpload={async (file, onStage) => { await upload(file, true, onStage) }} pendingPlan={pendingPlan} plan={plan} providers={providers} reasoningEffort={reasoningEffort} running={Boolean(activeRun)} savingMemories={savingMemories} selectedModel={selectedModel} uploads={uploads} />{wideInspector && inspectorOpen && inspector}</div>}
         {page === 'Chat' && !wideInspector && <Sheet onOpenChange={setInspectorOpen} open={inspectorOpen}><SheetContent className="inspector-sheet" showCloseButton={false} side="right">{inspector}</SheetContent></Sheet>}
         <Sheet onOpenChange={setHistoryOpen} open={historyOpen}>
           <SheetContent className="history-sheet" side="left">
