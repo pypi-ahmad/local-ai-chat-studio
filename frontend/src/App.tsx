@@ -11,11 +11,13 @@ import {
   Command,
   Copy,
   Download,
+  FileText,
   FileUp,
   Focus,
   GitBranch,
   GitCompareArrows,
   Library,
+  LoaderCircle,
   MessageSquare,
   MoreHorizontal,
   PanelLeft,
@@ -24,6 +26,7 @@ import {
   Play,
   PlugZap,
   Power,
+  RefreshCw,
   RotateCcw,
   Search,
   Send,
@@ -77,6 +80,13 @@ const navigationGroups: ReadonlyArray<{ label: string; items: ReadonlyArray<read
 ]
 
 type InspectorTab = 'context' | 'evidence'
+
+type AttachmentAttempt = {
+  id: string
+  file: File
+  status: 'uploading' | 'error'
+  error?: string
+}
 
 function readStoredBoolean(key: string, fallback: boolean) {
   try {
@@ -416,12 +426,27 @@ function ChatWorkspace({
   onInspector: () => void
 }) {
   const [prompt, setPrompt] = useState('')
+  const [attachmentAttempts, setAttachmentAttempts] = useState<AttachmentAttempt[]>([])
   const fileRef = useRef<HTMLInputElement>(null)
   const selected = models.find((model) => `${model.provider}::${model.id}` === selectedModel)
   const submit = async () => {
     if (!prompt.trim()) return
     await onSend(prompt.trim())
     setPrompt('')
+  }
+  const uploadAttachment = async (attempt: AttachmentAttempt) => {
+    setAttachmentAttempts((current) => current.map((item) => item.id === attempt.id ? { ...item, status: 'uploading', error: undefined } : item))
+    try {
+      await onUpload(attempt.file)
+      setAttachmentAttempts((current) => current.filter((item) => item.id !== attempt.id))
+    } catch (cause) {
+      setAttachmentAttempts((current) => current.map((item) => item.id === attempt.id ? { ...item, status: 'error', error: messageOf(cause) } : item))
+    }
+  }
+  const addAttachment = (file: File) => {
+    const attempt: AttachmentAttempt = { id: `${Date.now()}-${file.name}`, file, status: 'uploading' }
+    setAttachmentAttempts((current) => [...current, attempt])
+    void uploadAttachment(attempt)
   }
   return (
     <main aria-label="Chat workspace" className="workspace">
@@ -486,7 +511,7 @@ function ChatWorkspace({
           <input
             accept=".pdf,.txt,.md,.csv,.docx,.doc,.xlsx,.xls,.json,.py,.png,.jpg,.jpeg,.webp"
             hidden
-            onChange={(event) => { const file = event.target.files?.[0]; if (file) void onUpload(file) }}
+            onChange={(event) => { const file = event.target.files?.[0]; event.target.value = ''; if (file) addAttachment(file) }}
             ref={fileRef}
             type="file"
           />
@@ -494,7 +519,14 @@ function ChatWorkspace({
           <span>Enter to send · Shift+Enter for newline</span>
           {running ? <Button aria-label="Stop generation" onClick={onCancel} size="icon" variant="destructive"><Square /></Button> : <Button aria-label="Send message" disabled={!prompt.trim() || !selectedModel} onClick={submit} size="icon"><Send /></Button>}
         </div>
-        {uploads.length > 0 && <div className="action-row" aria-label="Conversation attachments">{uploads.map((upload) => <label key={upload.id}><input checked={attachmentIds.has(upload.id)} onChange={() => onAttachment(upload.id)} type="checkbox" /> {upload.filename}</label>)}</div>}
+        {(attachmentAttempts.length > 0 || uploads.length > 0) && <div className="attachment-tray" aria-label="Conversation attachments">
+          {attachmentAttempts.map((attempt) => <div aria-live="polite" className={`attachment-card ${attempt.status}`} key={attempt.id}>
+            <div className="attachment-icon">{attempt.status === 'uploading' ? <LoaderCircle /> : <XCircle />}</div>
+            <div className="attachment-copy"><strong>{attempt.file.name}</strong><small>{attempt.status === 'uploading' ? `Uploading · ${Math.max(1, Math.ceil(attempt.file.size / 1024))} KB` : attempt.error || 'Upload failed'}</small>{attempt.status === 'uploading' && <span className="attachment-progress"><i /></span>}</div>
+            {attempt.status === 'error' && <div className="attachment-actions"><Button aria-label={`Retry ${attempt.file.name}`} onClick={() => void uploadAttachment(attempt)} size="icon-sm" variant="ghost"><RefreshCw /></Button><Button aria-label={`Remove ${attempt.file.name}`} onClick={() => setAttachmentAttempts((current) => current.filter((item) => item.id !== attempt.id))} size="icon-sm" variant="ghost"><Trash2 /></Button></div>}
+          </div>)}
+          {uploads.map((upload) => <label className={attachmentIds.has(upload.id) ? 'attachment-card ready selected' : 'attachment-card ready'} key={upload.id}><input checked={attachmentIds.has(upload.id)} onChange={() => onAttachment(upload.id)} type="checkbox" /><div className="attachment-icon"><FileText /></div><div className="attachment-copy"><strong>{upload.filename}</strong><small>{attachmentIds.has(upload.id) ? 'Ready · included in next message' : 'Ready · click to include'}</small></div><CheckCircle /></label>)}
+        </div>}
       </div>
     </main>
   )
@@ -850,13 +882,11 @@ function App() {
   }
 
   const upload = async (file: File, select = false) => {
-    if (!activeId) return undefined
-    try {
-      const uploaded = await api.upload(activeId, file.name, await fileAsBase64(file))
-      setUploads(await api.uploads(activeId))
-      if (select) setAttachmentIds((current) => new Set(current).add(uploaded.id))
-      return uploaded
-    } catch (cause) { setError(messageOf(cause)); return undefined }
+    if (!activeId) throw new Error('Select a conversation before attaching a file.')
+    const uploaded = await api.upload(activeId, file.name, await fileAsBase64(file))
+    setUploads(await api.uploads(activeId))
+    if (select) setAttachmentIds((current) => new Set(current).add(uploaded.id))
+    return uploaded
   }
 
   const saveMemoriesAndClose = async () => {
@@ -900,7 +930,7 @@ function App() {
         {page === 'Replay' && <ReplayPage activity={activity} models={models} onModel={setSelectedModel} onReplay={async (run, key) => { const model = models.find((candidate) => modelKey(candidate) === key); if (!model) return; const replay = await api.replay(run.id, model.provider, model.id); await streamRun(replay.id, () => {}); setActivity(await api.activity()) }} providers={providers} selectedModel={selectedModel} />}
         {page === 'Focus' && <FocusPage conversationId={activeId} onCreate={async (objective, criteria, constraints) => { if (!activeId) return; await api.createFocus({ conversation_id: activeId, objective, success_criteria: criteria, constraints }); setPage('Chat') }} />}
         {page === 'Providers' && <ProvidersPage onChanged={refreshProviders} providers={providers} />}
-        {page === 'Library' && <LibraryPage conversationId={activeId} memories={memories} models={models} onMemory={async (content) => { await api.createMemory(content); setMemories(await api.memories()) }} onMemoryDelete={async (id) => { await api.deleteMemory(id); setMemories(await api.memories()) }} onMemoryUpdate={async (id, payload) => { await api.updateMemory(id, payload); setMemories(await api.memories()) }} onModel={setSelectedModel} onPreset={async (name, prompt) => { await api.createPreset({ name, system_prompt: prompt, model_key: selectedModel, temperature: 0.7 }); setPresets(await api.presets()) }} onPresetDelete={async (id) => { await api.deletePreset(id); setPresets(await api.presets()) }} onUpload={async (file) => { await upload(file) }} presets={presets} providers={providers} selectedModel={selectedModel} uploads={uploads} />}
+        {page === 'Library' && <LibraryPage conversationId={activeId} memories={memories} models={models} onMemory={async (content) => { await api.createMemory(content); setMemories(await api.memories()) }} onMemoryDelete={async (id) => { await api.deleteMemory(id); setMemories(await api.memories()) }} onMemoryUpdate={async (id, payload) => { await api.updateMemory(id, payload); setMemories(await api.memories()) }} onModel={setSelectedModel} onPreset={async (name, prompt) => { await api.createPreset({ name, system_prompt: prompt, model_key: selectedModel, temperature: 0.7 }); setPresets(await api.presets()) }} onPresetDelete={async (id) => { await api.deletePreset(id); setPresets(await api.presets()) }} onUpload={async (file) => { try { await upload(file) } catch (cause) { setError(messageOf(cause)) } }} presets={presets} providers={providers} selectedModel={selectedModel} uploads={uploads} />}
         {page === 'Settings' && <SettingsPage connected={connected} onRefresh={async () => { await Promise.all([refreshConversations(), refreshLibrary()]) }} />}
       </div>
     </TooltipProvider>

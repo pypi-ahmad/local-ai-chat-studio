@@ -10,6 +10,10 @@ const conversation = {
 
 let holdComparisonStreams = false
 let activityRuns: Array<Record<string, unknown>> = []
+let uploadedFiles: Array<Record<string, unknown>> = []
+let holdNextUpload = false
+let releaseUpload: (() => void) | null = null
+let failNextUpload = false
 
 function json(value: unknown, status = 200) {
   return new Response(JSON.stringify(value), { status, headers: { 'Content-Type': 'application/json' } })
@@ -34,6 +38,10 @@ function setViewport(width: number) {
 beforeEach(() => {
   holdComparisonStreams = false
   activityRuns = []
+  uploadedFiles = []
+  holdNextUpload = false
+  releaseUpload = null
+  failNextUpload = false
   localStorage.clear()
   setViewport(1024)
   vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
@@ -72,7 +80,22 @@ beforeEach(() => {
       if (init?.method === 'POST') return json({ id: 'p1', ...JSON.parse(String(init.body)) }, 201)
       return json([])
     }
-    if (/\/(memories|backpacks|conversations\/c1\/uploads)$/.test(path)) return json([])
+    if (path.endsWith('/uploads') && init?.method === 'POST') {
+      if (holdNextUpload) {
+        holdNextUpload = false
+        await new Promise<void>((resolve) => { releaseUpload = resolve })
+      }
+      if (failNextUpload) {
+        failNextUpload = false
+        return json({ detail: 'File exceeds the 10 MB upload limit.' }, 413)
+      }
+      const body = JSON.parse(String(init.body)) as { filename: string }
+      const uploaded = { id: `upload-${uploadedFiles.length + 1}`, conversation_id: 'c1', filename: body.filename, kind: 'document', mime: 'text/plain', size: 12, text_preview: '', created_at: 'now' }
+      uploadedFiles.push(uploaded)
+      return json(uploaded, 201)
+    }
+    if (path.endsWith('/conversations/c1/uploads')) return json(uploadedFiles)
+    if (/\/(memories|backpacks)$/.test(path)) return json([])
     if (path.endsWith('/turns/preflight')) {
       return json({
         plan_hash: 'plan', estimated_tokens: 12, budget_tokens: 6553,
@@ -198,6 +221,35 @@ describe('studio workspace', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Send message' }))
 
     await waitFor(() => expect(screen.getByText('hello back')).toBeInTheDocument())
+  })
+
+  it('shows attachment upload progress and marks completed files ready', async () => {
+    holdNextUpload = true
+    render(<App />)
+    await screen.findByRole('heading', { name: 'Provider architecture' })
+    const input = document.querySelector('.composer-actions input[type="file"]') as HTMLInputElement
+
+    fireEvent.change(input, { target: { files: [new File(['notes'], 'notes.txt', { type: 'text/plain' })] } })
+    expect(await screen.findByText(/Uploading · 1 KB/)).toBeInTheDocument()
+    releaseUpload?.()
+
+    expect(await screen.findByText('Ready · included in next message')).toBeInTheDocument()
+    expect(screen.getByText('notes.txt')).toBeInTheDocument()
+  })
+
+  it('keeps failed attachments actionable and retries them in place', async () => {
+    failNextUpload = true
+    render(<App />)
+    await screen.findByRole('heading', { name: 'Provider architecture' })
+    const input = document.querySelector('.composer-actions input[type="file"]') as HTMLInputElement
+
+    fireEvent.change(input, { target: { files: [new File(['bad'], 'bad.pdf', { type: 'application/pdf' })] } })
+    expect(await screen.findByText('File exceeds the 10 MB upload limit.')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Remove bad.pdf' })).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Retry bad.pdf' }))
+
+    expect(await screen.findByText('Ready · included in next message')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Retry bad.pdf' })).not.toBeInTheDocument()
   })
 
   it('selects supported reasoning effort from the chat composer', async () => {
