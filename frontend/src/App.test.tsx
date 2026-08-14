@@ -15,6 +15,8 @@ let uploadedFiles: Array<Record<string, unknown>> = []
 let holdNextUpload = false
 let releaseUpload: (() => void) | null = null
 let failNextUpload = false
+let holdChatStream = false
+let releaseChatStream: (() => void) | null = null
 let contextEstimate = 12
 let contextBudget = 6553
 
@@ -55,6 +57,8 @@ beforeEach(() => {
   holdNextUpload = false
   releaseUpload = null
   failNextUpload = false
+  holdChatStream = false
+  releaseChatStream = null
   contextEstimate = 12
   contextBudget = 6553
   localStorage.clear()
@@ -163,6 +167,17 @@ beforeEach(() => {
       return new Response(new ReadableStream({ start(controller) { controller.enqueue(body); controller.close() } }))
     }
     if (path.endsWith('/runs/r1/events')) {
+      if (holdChatStream) {
+        return new Response(new ReadableStream({
+          start(controller) {
+            controller.enqueue(new TextEncoder().encode('event: run.delta\ndata: {"type":"run.delta","run_id":"r1","data":{"delta":"new answer"},"timestamp":"now"}\n\n'))
+            releaseChatStream = () => {
+              controller.enqueue(new TextEncoder().encode('event: run.completed\ndata: {"type":"run.completed","run_id":"r1","data":{"output":"new answer"},"timestamp":"now"}\n\n'))
+              controller.close()
+            }
+          },
+        }))
+      }
       const body = new TextEncoder().encode(
         'event: run.completed\ndata: {"type":"run.completed","run_id":"r1","data":{"output":"hello back"},"timestamp":"now"}\n\n',
       )
@@ -199,14 +214,45 @@ describe('studio workspace', () => {
 
     const navigation = await screen.findByRole('navigation', { name: 'Message navigation' })
     await waitFor(() => expect(navigation).toHaveTextContent('3 / 3'))
+    expect(screen.getByRole('button', { name: 'Jump to bottom' })).toBeDisabled()
     expect(screen.getByRole('button', { name: 'Next message' })).toBeDisabled()
-    fireEvent.click(screen.getByRole('button', { name: 'Previous message' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Jump to top' }))
+
+    expect(navigation).toHaveTextContent('1 / 3')
+    expect(screen.getByRole('button', { name: 'Jump to top' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Previous message' })).toBeDisabled()
+    expect(Element.prototype.scrollIntoView).toHaveBeenLastCalledWith({ behavior: 'smooth', block: 'start' })
+    fireEvent.click(screen.getByRole('button', { name: 'Next message' }))
 
     expect(navigation).toHaveTextContent('2 / 3')
     expect(screen.getByText('First answer').closest('article')).toHaveClass('navigation-target')
-    expect(Element.prototype.scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'center' })
+    expect(Element.prototype.scrollIntoView).toHaveBeenLastCalledWith({ behavior: 'smooth', block: 'center' })
     fireEvent.click(screen.getByRole('button', { name: 'Previous message' }))
-    expect(screen.getByRole('button', { name: 'Previous message' })).toBeDisabled()
+
+    expect(navigation).toHaveTextContent('1 / 3')
+    fireEvent.click(screen.getByRole('button', { name: 'Jump to bottom' }))
+    expect(navigation).toHaveTextContent('3 / 3')
+    expect(Element.prototype.scrollIntoView).toHaveBeenLastCalledWith({ behavior: 'smooth', block: 'end' })
+  })
+
+  it('signals unread streamed output while reading an earlier message', async () => {
+    conversationMessages = [
+      { id: 'm1', role: 'user', content: 'First question', position: 0, created_at: 'now', run_id: null, metadata: {} },
+      { id: 'm2', role: 'assistant', content: 'First answer', position: 1, created_at: 'now', run_id: null, metadata: {} },
+      { id: 'm3', role: 'user', content: 'Follow-up question', position: 2, created_at: 'now', run_id: null, metadata: {} },
+    ]
+    holdChatStream = true
+    render(<App />)
+    await waitForStudio()
+    await screen.findByRole('navigation', { name: 'Message navigation' })
+    fireEvent.click(screen.getByRole('button', { name: 'Previous message' }))
+    fireEvent.change(screen.getByLabelText('Message'), { target: { value: 'continue' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Send message' }))
+
+    expect(await screen.findByRole('status', { name: 'Unread output' })).toHaveTextContent('New output')
+    fireEvent.click(screen.getByRole('button', { name: 'Jump to bottom, new output available' }))
+    expect(screen.queryByRole('status', { name: 'Unread output' })).not.toBeInTheDocument()
+    releaseChatStream?.()
   })
 
   it('exposes the consolidated product surfaces', () => {
