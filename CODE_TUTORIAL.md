@@ -101,7 +101,13 @@ The operating product is a **single FastAPI + React application**:
 ```
 local-ai-chat-studio/
 ├── backend/app/     FastAPI API, runs, workspace, store, managed shutdown
-├── frontend/src/    React workspace (Chat, Compare, Providers, Library, Settings)
+├── frontend/src/    React workspace
+│   ├── App.tsx       Session/API orchestration and route composition
+│   ├── app/          Navigation and page-level error boundaries
+│   ├── routes/       Chat, Compare, Library, Replay, Focus, and administration pages
+│   ├── features/     Composer, messages, models, context, evidence, tools, and knowledge UI
+│   ├── api/          Typed HTTP/SSE client and generated OpenAPI schema
+│   └── hooks/        Browser-local workspace preferences
 ├── src/             Shared file parsing, Ollama, and Chroma helpers
 └── tests/           Backend and frontend contract tests
 ```
@@ -875,11 +881,14 @@ runs.
 
 ### 4.8 `frontend/` — the current React workspace
 
-`frontend/src/App.tsx` coordinates session data and selected routes. Page components
-live under `frontend/src/routes/`; Chat composes the focused composer, message-list,
-model-picker, and context-inspector features. `frontend/src/api/client.ts` is the typed
-client for conversations, preflight, SSE runs, memory, OpenCode auth, data
-controls, and `api.shutdown()`. Vite's `npm run dev` proxies `/api` to
+`frontend/src/App.tsx` coordinates session data, API mutations, and selected routes.
+Page components live under `frontend/src/routes/`; Chat composes focused composer,
+message-list, model-picker, and context-inspector features from `features/`.
+`RouteErrorBoundary` isolates page failures, while `useWorkspacePreferences` owns
+browser-local navigation and display preferences. Durable conversation settings remain
+backend-authoritative. `frontend/src/api/client.ts` is the typed client for
+conversations, preflight, SSE runs, memory, OpenCode auth, data controls, and
+`api.shutdown()`. Vite's `npm run dev` proxies `/api` to
 `http://127.0.0.1:8506`. TypeScript is pinned to 5.9.
 
 The Knowledge Bases tab builds an ordered ledger of existing upload, active-memory,

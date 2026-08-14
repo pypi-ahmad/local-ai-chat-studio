@@ -555,7 +555,8 @@ uv run chat-studio</code></pre></div>
           <article><h3><code>memory.py</code></h3><p>Whole-chat selection, chunked extraction, consolidation, provenance validation, deduplication, and categorization.</p></article>
           <article><h3><code>runs.py</code></h3><p>Async lifecycle, cancellation, streaming events, durable updates, assistant-message persistence, and receipts.</p></article>
           <article><h3><code>main.py</code></h3><p>Composition root, middleware, API routes, OAuth, uploads, memory indexing, data controls, and static serving.</p></article>
-          <article><h3><code>frontend/src/App.tsx</code> + <code>routes/</code></h3><p>Session/API orchestration stays in App; route components and focused composer, message, model, context, and evidence features own page presentation.</p></article>
+          <article><h3><code>frontend/src/App.tsx</code> + <code>app/</code></h3><p>App coordinates session data, API mutations, and route composition; navigation metadata and page-level error boundaries live beside it.</p></article>
+          <article><h3><code>frontend/src/routes/</code> + <code>features/</code></h3><p>Routes own page composition. Focused composer, message, model, context, evidence, tools, knowledge, and artifact modules own reusable product behavior.</p></article>
           <article><h3><code>frontend/src/api/</code></h3><p>Typed fetch/SSE boundary and generated OpenAPI schema. Regenerate types after contract changes.</p></article>
           <article><h3><code>src/files.py</code></h3><p>Document parsing, image verification, PDF signature checks, content chunking, and optional converters.</p></article>
           <article><h3><code>src/rag.py</code></h3><p>Chroma document, conversation, and memory indexes backed by Ollama embeddings.</p></article>
@@ -563,7 +564,8 @@ uv run chat-studio</code></pre></div>
         <h3>Recommended reading path</h3>
         <pre><code>contracts.py → store.py → sessions.py → providers.py
              → workspace.py → memory.py → runs.py → main.py
-             → frontend/src/api/client.ts → frontend/src/App.tsx → frontend/src/routes/
+             → frontend/src/api/client.ts → frontend/src/App.tsx
+             → frontend/src/routes/chat/ChatWorkspace.tsx → frontend/src/features/
              → tests/</code></pre>
         <p class="evidence">Supporting maps: <code>docs/codebase/ARCHITECTURE.md</code>, <code>STRUCTURE.md</code>, <code>INTEGRATIONS.md</code>, and <code>CONCERNS.md</code>.</p>
       </section>
