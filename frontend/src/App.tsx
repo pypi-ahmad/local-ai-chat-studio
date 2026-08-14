@@ -60,6 +60,8 @@ import { Textarea } from '@/components/ui/textarea'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { Surface } from '@/components/shared/Surface'
 import { fileAsBase64 } from '@/features/attachments/fileEncoding'
+import { ArtifactPreview } from '@/features/artifact-preview/ArtifactPreview'
+import type { Artifact } from '@/features/artifact-preview/artifact'
 import { readFavoriteAssistants, readRecentAssistants, writeFavoriteAssistants, writeRecentAssistants } from '@/features/assistants/assistantPreferences'
 import { contextLengthLabel, formatUsd, hasTools, hasVision, modelKey, modelSearchText, pricingLabel, providerMonogram } from '@/features/models/modelMetadata'
 import { readFavoriteModels, readRecentModels, writeFavoriteModels, writeRecentModels } from '@/features/models/modelPreferences'
@@ -497,6 +499,7 @@ function ChatWorkspace({
   onLayout: (value: ConversationLayout) => void
 }) {
   const [prompt, setPrompt] = useState('')
+  const [artifact, setArtifact] = useState<Artifact | null>(null)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [systemPromptDraft, setSystemPromptDraft] = useState(systemPrompt)
   const [layoutDraft, setLayoutDraft] = useState<ConversationLayout>(layout)
@@ -518,6 +521,7 @@ function ChatWorkspace({
     const changedConversation = previousConversationId.current !== conversation?.id
     previousConversationId.current = conversation?.id
     if (changedConversation) {
+      setArtifact(null)
       atTranscriptEndRef.current = true
       setAtTranscriptEnd(true)
       setUnreadOutput(false)
@@ -604,6 +608,7 @@ function ChatWorkspace({
         <div className="action-row"><Button aria-expanded={settingsOpen} aria-label="Conversation settings" onClick={() => changeSettingsOpen(true)} variant="outline"><Settings /> Settings</Button><DropdownMenu><DropdownMenuTrigger aria-label="Export conversation" disabled={!conversation} render={<Button variant="outline" />}><Download /> Export</DropdownMenuTrigger><DropdownMenuContent align="end" className="conversation-export-menu"><DropdownMenuGroup><DropdownMenuLabel>Conversation</DropdownMenuLabel><DropdownMenuItem onClick={() => void onExport('markdown')}><FileText /> Markdown (.md)</DropdownMenuItem><DropdownMenuItem onClick={() => void onExport('html')}><Code2 /> HTML (.html)</DropdownMenuItem><DropdownMenuItem onClick={() => void onExport('txt')}><FileText /> Plain text (.txt)</DropdownMenuItem><DropdownMenuItem onClick={() => void onExport('json')}><Code2 /> JSON (.json)</DropdownMenuItem></DropdownMenuGroup><DropdownMenuSeparator /><DropdownMenuGroup><DropdownMenuLabel>Latest completed run</DropdownMenuLabel><DropdownMenuItem disabled={!canExportBundle} onClick={() => void onExport('bundle')}><Download /> Reproducibility bundle (.json)</DropdownMenuItem></DropdownMenuGroup></DropdownMenuContent></DropdownMenu><Button aria-label="Open runs" onClick={onRuns} variant="outline"><RotateCcw /> Runs</Button><Button aria-controls="context-evidence-inspector" aria-expanded={inspectorOpen} aria-label={`${inspectorOpen ? 'Close' : 'Open'} context and evidence inspector`} onClick={onInspector} variant={inspectorOpen ? 'secondary' : 'outline'}><PanelRightOpen /> Inspector</Button><Button disabled={!conversation?.messages.length || savingMemories || !selectedModel} onClick={onSaveMemories} variant="outline"><Brain /> {savingMemories ? 'Saving…' : 'Save memories & close'}</Button></div>
       </header>
       <ContextRail model={selected} plan={plan} />
+      <div className={artifact ? 'chat-workbench has-artifact' : 'chat-workbench'}>
       <div className="message-region" ref={messageRegionRef}><ScrollArea className="message-area">
         <div className={`messages layout-${layout}`}>
           {!conversation?.messages.length && !liveOutput && (
@@ -612,7 +617,7 @@ function ChatWorkspace({
           {messages.map((message, index) => (
             <article className={`message ${message.role}${index === messageIndex && messages.length > 1 ? ' navigation-target' : ''}`} key={message.id} ref={(node) => { if (node) messageRefs.current.set(message.id, node); else messageRefs.current.delete(message.id) }}>
               <div className="message-label"><span>{message.role === 'user' ? 'You' : 'Assistant'}</span>{message.run_id && <Badge variant="outline">evidence saved</Badge>}</div>
-              <MarkdownContent content={message.content} />
+              <MarkdownContent content={message.content} onArtifact={setArtifact} />
               <div className="message-actions">
                 <Button onClick={() => navigator.clipboard.writeText(message.content)} size="sm" variant="ghost"><Copy /> Copy</Button>
                 <Button onClick={() => onBranch(message.id)} size="sm" variant="ghost"><GitBranch /> Branch here</Button>
@@ -620,7 +625,7 @@ function ChatWorkspace({
               </div>
             </article>
           ))}
-          {liveOutput && <article className="message assistant live" ref={liveMessageRef}><div className="message-label"><span>Assistant</span><Badge>streaming</Badge></div><MarkdownContent content={liveOutput} /></article>}
+          {liveOutput && <article className="message assistant live" ref={liveMessageRef}><div className="message-label"><span>Assistant</span><Badge>streaming</Badge></div><MarkdownContent content={liveOutput} onArtifact={setArtifact} /></article>}
         </div>
       </ScrollArea>{(messages.length > 0 || liveOutput) && <nav aria-label="Message navigation" className={unreadOutput ? 'message-navigator has-unread' : 'message-navigator'}>
         {unreadOutput && <span aria-label="Unread output" className="message-unread" role="status">New output</span>}
@@ -630,6 +635,8 @@ function ChatWorkspace({
         <Button aria-label="Next message" disabled={!messages.length || messageIndex === messages.length - 1} onClick={() => navigateMessage(messageIndex + 1)} size="icon-sm" variant="ghost"><ChevronDown /></Button>
         <Button aria-label={unreadOutput ? 'Jump to bottom, new output available' : 'Jump to bottom'} className={unreadOutput ? 'unread-target' : undefined} disabled={atTranscriptEnd && !unreadOutput} onClick={jumpToBottom} size="icon-sm" variant="ghost"><ChevronsDown /></Button>
       </nav>}</div>
+      {artifact && <ArtifactPreview artifact={artifact} onClose={() => setArtifact(null)} />}
+      </div>
       {pendingPlan && (
         <div className="safety-strip" role="alert">
           <ShieldCheck /><div><strong>Review before sending</strong><p>{pendingPlan.findings.map((finding) => finding.message).join(' · ')}</p></div>

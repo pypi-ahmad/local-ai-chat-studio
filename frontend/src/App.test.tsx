@@ -285,6 +285,24 @@ describe('studio workspace', () => {
     expect(click).toHaveBeenCalledTimes(5)
   })
 
+  it('opens generated output in a safe split-pane artifact preview', async () => {
+    conversationMessages = [{
+      id: 'm1', role: 'assistant', position: 0, created_at: 'now', run_id: null, metadata: {},
+      content: '```html\n<main><h1>Preview me</h1><script>window.parent.attack()</script></main>\n```',
+    }]
+    render(<App />)
+    await waitForStudio()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Preview HTML artifact' }))
+
+    const preview = screen.getByRole('complementary', { name: 'Artifact preview' })
+    expect(preview).toBeInTheDocument()
+    expect(screen.getByTitle('HTML artifact preview')).toHaveAttribute('sandbox', '')
+    expect(screen.getByLabelText('Chat workspace').querySelector('.chat-workbench')).toHaveClass('has-artifact')
+    fireEvent.click(screen.getByRole('button', { name: 'Close artifact preview' }))
+    expect(screen.queryByRole('complementary', { name: 'Artifact preview' })).not.toBeInTheDocument()
+  })
+
   it('navigates saved chat messages with bounded previous and next controls', async () => {
     conversationMessages = [
       { id: 'm1', role: 'user', content: 'First question', position: 0, created_at: 'now', run_id: null, metadata: {} },
