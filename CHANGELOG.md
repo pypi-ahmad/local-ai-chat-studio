@@ -7,6 +7,15 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.5.1] - 2026-08-15
+
+### Fixed
+
+- Restored Windows PowerShell 5.1 launcher compatibility by avoiding the newer
+  `.NET`-only `Path.GetRelativePath` API.
+- Corrected the Windows launcher invocation in GitHub Actions for filenames
+  containing spaces.
+
 ## [0.5.0] - 2026-08-15
 
 ### Changed
