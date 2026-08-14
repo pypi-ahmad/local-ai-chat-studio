@@ -14,6 +14,7 @@ import {
   GitCompareArrows,
   Library,
   MessageSquare,
+  PanelLeft,
   Paperclip,
   Play,
   PlugZap,
@@ -35,6 +36,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { Textarea } from '@/components/ui/textarea'
 import { TooltipProvider } from '@/components/ui/tooltip'
 
@@ -118,6 +120,7 @@ function ConversationHistory({
   onCreate,
   onUpdate,
   onDelete,
+  mobile = false,
 }: {
   conversations: Conversation[]
   activeId: string | null
@@ -125,11 +128,12 @@ function ConversationHistory({
   onCreate: () => void
   onUpdate: (id: string, payload: { title?: string; pinned?: boolean }) => Promise<void>
   onDelete: (id: string) => Promise<void>
+  mobile?: boolean
 }) {
   const [query, setQuery] = useState('')
   const visible = conversations.filter((item) => item.title.toLowerCase().includes(query.toLowerCase()))
   return (
-    <aside aria-label="Conversation history" className="history-pane">
+    <aside aria-label="Conversation history" className={mobile ? 'history-pane mobile-history' : 'history-pane'}>
       <div className="history-header">
         <div><p className="eyebrow">Local workspace</p><h1>Studio</h1></div>
         <Button aria-label="New conversation" onClick={onCreate} size="icon-sm" variant="outline"><CirclePlus /></Button>
@@ -211,6 +215,7 @@ function ChatWorkspace({
   savingMemories,
   onBranch,
   onFeedback,
+  onHistory,
 }: {
   conversation: Conversation | null
   models: ModelSummary[]
@@ -233,6 +238,7 @@ function ChatWorkspace({
   savingMemories: boolean
   onBranch: (messageId: string) => Promise<void>
   onFeedback: (messageId: string, rating: -1 | 1) => Promise<void>
+  onHistory: () => void
 }) {
   const [prompt, setPrompt] = useState('')
   const fileRef = useRef<HTMLInputElement>(null)
@@ -245,7 +251,8 @@ function ChatWorkspace({
   return (
     <main aria-label="Chat workspace" className="workspace">
       <header className="workspace-header">
-        <div><p className="eyebrow">Conversation</p><h2>{conversation?.title ?? 'New conversation'}</h2>{selected?.pricing && <small>Estimated pricing: {pricingLabel(selected)} · <a href={selected.pricing.source_url} rel="noreferrer" target="_blank">official source</a></small>}</div>
+        <Button aria-label="Open conversation history" className="mobile-history-trigger" onClick={onHistory} size="icon" variant="ghost"><PanelLeft /></Button>
+        <div className="workspace-title"><p className="eyebrow">Conversation</p><h2>{conversation?.title ?? 'New conversation'}</h2>{selected?.pricing && <small>Estimated pricing: {pricingLabel(selected)} · <a href={selected.pricing.source_url} rel="noreferrer" target="_blank">official source</a></small>}</div>
         <div className="action-row"><Button disabled={!conversation?.messages.length || savingMemories || !selectedModel} onClick={onSaveMemories} variant="outline"><Brain /> {savingMemories ? 'Saving…' : 'Save memories & close'}</Button><ModelPicker models={models} onChange={onModel} value={selectedModel} /></div>
       </header>
       <ContextRail model={selected} plan={plan} />
@@ -546,6 +553,7 @@ function App() {
   const [error, setError] = useState('')
   const [savingMemories, setSavingMemories] = useState(false)
   const [excludedSources, setExcludedSources] = useState<Set<string>>(new Set())
+  const [historyOpen, setHistoryOpen] = useState(false)
 
   const refreshProviders = useCallback(async () => {
     const [providerData, modelData] = await Promise.all([api.providers(), api.models()])
@@ -668,7 +676,12 @@ function App() {
       <div className="app-shell">
         <Navigation connected={connected} onPage={setPage} page={page} />
         {page === 'Chat' && <ConversationHistory activeId={activeId} conversations={conversations} onCreate={createConversation} onDelete={async (id) => { if (!window.confirm('Delete this conversation?')) return; await api.deleteConversation(id); if (activeId === id) setActiveId(null); await refreshConversations() }} onSelect={setActiveId} onUpdate={async (id, payload) => { await api.updateConversation(id, payload); await refreshConversations(); if (activeId === id) setConversation(await api.conversation(id)) }} />}
-        {page === 'Chat' && <ChatWorkspace attachmentIds={attachmentIds} conversation={conversation} error={error} liveOutput={liveOutput} models={models} onAttachment={(id) => setAttachmentIds((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} onBranch={async (messageId) => { if (!activeId) return; const branch = await api.branchConversation(activeId, messageId); await refreshConversations(); setActiveId(branch.id) }} onCancel={async () => { if (activeRun) await api.cancelRun(activeRun) }} onConfirm={async () => { if (pendingPayload && pendingPlan) await submitTurn(pendingPayload, pendingPlan, pendingPlan.findings.map((item) => item.id)) }} onFeedback={api.setFeedback} onModel={setSelectedModel} onSanitize={async () => { if (!pendingPayload) return; const sanitized = await api.sanitize(pendingPayload.content); setPendingPlan(null); setPendingPayload(null); await send(sanitized.content) }} onSaveMemories={saveMemoriesAndClose} onSend={send} onUpload={async (file) => { await upload(file, true) }} pendingPlan={pendingPlan} plan={plan} running={Boolean(activeRun)} savingMemories={savingMemories} selectedModel={selectedModel} uploads={uploads} />}
+        {page === 'Chat' && <ChatWorkspace attachmentIds={attachmentIds} conversation={conversation} error={error} liveOutput={liveOutput} models={models} onAttachment={(id) => setAttachmentIds((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} onBranch={async (messageId) => { if (!activeId) return; const branch = await api.branchConversation(activeId, messageId); await refreshConversations(); setActiveId(branch.id) }} onCancel={async () => { if (activeRun) await api.cancelRun(activeRun) }} onConfirm={async () => { if (pendingPayload && pendingPlan) await submitTurn(pendingPayload, pendingPlan, pendingPlan.findings.map((item) => item.id)) }} onFeedback={api.setFeedback} onHistory={() => setHistoryOpen(true)} onModel={setSelectedModel} onSanitize={async () => { if (!pendingPayload) return; const sanitized = await api.sanitize(pendingPayload.content); setPendingPlan(null); setPendingPayload(null); await send(sanitized.content) }} onSaveMemories={saveMemoriesAndClose} onSend={send} onUpload={async (file) => { await upload(file, true) }} pendingPlan={pendingPlan} plan={plan} running={Boolean(activeRun)} savingMemories={savingMemories} selectedModel={selectedModel} uploads={uploads} />}
+        <Sheet onOpenChange={setHistoryOpen} open={historyOpen}>
+          <SheetContent className="history-sheet" side="left">
+            <ConversationHistory activeId={activeId} conversations={conversations} mobile onCreate={createConversation} onDelete={async (id) => { if (!window.confirm('Delete this conversation?')) return; await api.deleteConversation(id); if (activeId === id) setActiveId(null); await refreshConversations() }} onSelect={(id) => { setActiveId(id); setHistoryOpen(false) }} onUpdate={async (id, payload) => { await api.updateConversation(id, payload); await refreshConversations(); if (activeId === id) setConversation(await api.conversation(id)) }} />
+          </SheetContent>
+        </Sheet>
         {page === 'Compare' && <ComparePage models={models} />}
         {page === 'Context' && <ContextPage backpacks={backpacks} onCreate={async (name, title, content) => { await api.createBackpack(name, title, content); setBackpacks(await api.backpacks()) }} plan={plan} />}
         {page === 'Evidence' && <EvidencePage activity={activity} excluded={excludedSources} onToggle={(id) => setExcludedSources((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} plan={plan} />}

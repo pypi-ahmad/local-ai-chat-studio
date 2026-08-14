@@ -134,6 +134,16 @@ describe('studio workspace', () => {
     expect(await screen.findByRole('button', { name: 'Connect Claude Pro/Max through OpenCode' })).toBeInTheDocument()
   })
 
+  it('opens conversation history from the compact workspace control', async () => {
+    render(<App />)
+    await screen.findByRole('heading', { name: 'Provider architecture' })
+
+    fireEvent.click(screen.getByRole('button', { name: 'Open conversation history' }))
+
+    expect(await screen.findAllByLabelText('Conversation history')).toHaveLength(2)
+    expect(screen.getAllByText('Provider architecture')).toHaveLength(3)
+  })
+
   it('runs one prompt across three selected models in parallel', async () => {
     render(<App />)
     fireEvent.click(screen.getByRole('button', { name: 'Compare' }))
