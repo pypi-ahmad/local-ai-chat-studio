@@ -5,6 +5,11 @@
 > `backend/app/main.py` → `runs.py`/`workspace.py`/`store.py` →
 > `frontend/src/api/client.ts` → `frontend/src/App.tsx`.
 
+> Current UI note (v0.6.5): `App.tsx` and its focused components provide safe rich
+> Markdown/code/LaTeX rendering, provider-scoped capability-aware model search,
+> attachment status/retry cards, saved-message navigation, exact context overflow
+> warnings, grouped responsive navigation, and a persisted Context/Evidence inspector.
+
 This is a **read-the-code-out-loud** tutorial. It walks every module in this
 repository, in the order data actually flows through it, quoting real
 functions and explaining why each one is shaped the way it is. If you want

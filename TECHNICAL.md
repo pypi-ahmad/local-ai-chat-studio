@@ -73,6 +73,14 @@ providers use the dated catalog in `pricing.py`; OpenRouter prices are normalize
 its live Models API. The frontend uses preflight token estimates for input cost only.
 Custom OpenAI base URLs and other unverified gateways deliberately receive no price.
 
+The React client uses one capability-aware model-picker contract across Chat,
+Compare, Replay, and assistant configuration. It scopes discovery by provider,
+searches model names/IDs/capabilities, and filters vision or reasoning support.
+Shared presentation contracts also cover safe Markdown/code/KaTeX rendering,
+attachment upload states, transcript navigation, and context utilization warnings.
+The grouped desktop/mobile navigation and optional persisted Context/Evidence
+inspector are client-side views over the same workspace APIs.
+
 The OpenAI-compatible adapter omits `temperature` for `gpt-5.6-luna` because that
 model accepts only its provider default. Other compatible models continue to receive
 the user-selected temperature. Agnes AI uses its fixed official endpoint and discovers

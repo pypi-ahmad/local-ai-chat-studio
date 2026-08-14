@@ -11,13 +11,14 @@
 | `backend/app/workspace.py` | Context plans, safety, provenance, web and retrieval |
 | `backend/app/providers.py` | Provider adapters and model discovery |
 | `backend/app/pricing.py` | Source-linked standard token-rate catalog and normalization |
-| `frontend/src/` | React workspace, 2–4 model parallel comparison, design system, typed API client |
+| `frontend/src/` | React workspace, rich response rendering, capability-aware model selection, context/evidence inspection, 2–4 model comparison, design system, typed API client |
 | `src/files.py` | Shared document/image parsing and upload validation |
 | `src/rag.py` | Existing Chroma collections and embedding retrieval |
 | `src/ollama_client.py` | Shared Ollama discovery, health, and embedding helpers |
 | `tests/` | Backend contracts, lifecycle, provider, safety, and workspace tests |
 | `data/` | Local SQLite/Chroma runtime state |
 | `Launch Chat Studio.cmd` | Portable Windows setup detection, installation, launch, and browser opening |
+| `Launch Chat Studio.sh` | Equivalent cached setup, port recovery, launch, and browser opening for supported Linux desktops |
 
 `chat-studio` starts `backend.app.cli:main` on `127.0.0.1:8506`. FastAPI serves
 `frontend/dist` when it exists; Vite proxies `/api` to that same origin during
