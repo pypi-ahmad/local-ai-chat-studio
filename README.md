@@ -31,7 +31,7 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 
 - **Local and cloud providers:** Use Ollama locally without an API key, or connect OpenAI, Agnes AI, Anthropic, Google Gemini, OpenRouter, xAI, OmniRoute, Ollama Cloud, OpenCode Zen, and OpenCode Go.
 - **Live model discovery:** The Studio asks configured providers for their available models instead of relying only on a fixed list. Discovered entries can include context length, vision support, and provider metadata.
-- **Provider-first selection:** Choose a provider first, then select from only that provider's available models in Chat, Compare, Replay, and assistant presets.
+- **Searchable, capability-aware selection:** Choose a provider first, then search its discovered models by name, ID, or capability in Chat, Compare, Replay, and assistant presets. Filter for vision or reasoning support and compare context length, reasoning levels, and pricing before selecting.
 - **Composer model controls:** Chat keeps provider, model, and capability-aware reasoning effort beside the prompt. Effort defaults to **Auto** and is disabled for models that do not advertise support; OpenAI GPT-5.6 options follow the [official model guide](https://developers.openai.com/api/docs/guides/latest-model).
 - **Regrouped navigation:** Desktop destinations are organized into Work, Inspect, Personalize, and System groups with an expandable labelled rail. Mobile keeps Chat, Compare, and Library one tap away and moves the remaining destinations into a grouped **More** sheet.
 - **Session-only credentials:** Keys entered in **Providers** remain in server-process memory for the browser session. Keys can alternatively come from operating-system environment variables; neither source is written to the database or exports.
@@ -284,7 +284,7 @@ Before a message is sent, the Studio builds a context plan that shows estimated 
 
 ### Pricing
 
-The model picker displays standard text-token rates and estimates preflight input cost when verified pricing exists. Estimates exclude cached-token discounts, batch or priority pricing, tools, media, taxes, subscriptions, and other provider-specific adjustments. Unknown models and custom OpenAI-compatible gateways remain visibly unpriced rather than using invented values.
+The searchable model picker displays context length, vision and reasoning support, and standard text-token rates when providers report them. Use the **Vision** and **Reasoning** filters to narrow the current provider's catalog. The Studio estimates preflight input cost when verified pricing exists. Estimates exclude cached-token discounts, batch or priority pricing, tools, media, taxes, subscriptions, and other provider-specific adjustments. Unknown models and custom OpenAI-compatible gateways remain visibly unpriced rather than using invented values.
 
 ### Persistence and retrieval
 
@@ -293,7 +293,7 @@ Canonical state lives in `data/app.db`; uploads and optional Chroma collections 
 ## Usage
 
 1. Start the Studio and open <http://127.0.0.1:8506>.
-2. Select an installed Ollama model or connect a provider.
+2. Select an installed Ollama model or connect a provider. Choose the provider, open the model field, then search or filter its available models by capability.
 3. Create a conversation and optionally attach documents or images.
 4. Enter a message and review its context plan, safety findings, sources, and estimated cost.
 5. Confirm required findings and send the turn.

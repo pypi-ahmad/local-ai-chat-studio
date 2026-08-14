@@ -20,7 +20,8 @@ unmanaged servers return 503).
 
 Frontend tests use Vitest, Testing Library, jest-dom, and jsdom. They exercise the
 connected workspace shell, navigation, preflight, SSE output, the OpenCode Claude
-sign-in affordance, model-rate display, parallel comparison across three models,
+sign-in affordance, searchable capability-aware model selection and rate display,
+parallel comparison across three models,
 four-model partial failure isolation, cancel-all behavior, and the Settings **Stop
 Studio** control. There is no browser E2E
 runner or coverage threshold yet; real external-provider calls, OAuth flows, and a
