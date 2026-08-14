@@ -1185,6 +1185,11 @@ export interface components {
              * @default false
              */
             pinned: boolean;
+            /**
+             * Folder
+             * @default
+             */
+            folder: string;
             settings?: components["schemas"]["ConversationSettings"];
             /**
              * Messages
@@ -1261,6 +1266,8 @@ export interface components {
             title?: string | null;
             /** Pinned */
             pinned?: boolean | null;
+            /** Folder */
+            folder?: string | null;
             settings?: components["schemas"]["ConversationSettings"] | null;
         };
         /** CredentialInput */

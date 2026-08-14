@@ -112,6 +112,26 @@ def test_conversation_settings_are_saved_independently(client: TestClient) -> No
     ] != settings
 
 
+def test_conversation_folder_is_persisted_and_searchable(client: TestClient) -> None:
+    conversation = client.post(
+        "/api/v1/conversations", json={"title": "Architecture notes"}
+    ).json()
+
+    updated = client.patch(
+        f"/api/v1/conversations/{conversation['id']}",
+        json={"folder": "Research"},
+    )
+
+    assert updated.status_code == 200
+    assert updated.json()["folder"] == "Research"
+    assert client.get(f"/api/v1/conversations/{conversation['id']}").json()[
+        "folder"
+    ] == "Research"
+    assert [item["id"] for item in client.get(
+        "/api/v1/conversations", params={"query": "Research"}
+    ).json()] == [conversation["id"]]
+
+
 def test_conversation_can_start_with_assistant_settings(client: TestClient) -> None:
     settings = {
         "model_key": "openai::gpt-5.6-luna",

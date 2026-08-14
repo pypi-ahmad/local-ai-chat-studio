@@ -411,6 +411,7 @@ def create_app(
                 conversation_id,
                 title=payload.title,
                 pinned=payload.pinned,
+                folder=payload.folder,
                 settings=payload.settings,
             )
         except KeyError as exc:

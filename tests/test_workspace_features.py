@@ -182,12 +182,15 @@ def test_store_migrates_legacy_conversations_with_default_settings(tmp_path) -> 
 
     store = Store(str(database))
 
-    assert store.get_conversation("legacy").settings.model_key == ""
+    migrated = store.get_conversation("legacy")
+    assert migrated.settings.model_key == ""
+    assert migrated.folder == ""
     columns = {
         row[1]
         for row in store.connection.execute("PRAGMA table_info(conversations)")
     }
     assert "settings_json" in columns
+    assert "folder" in columns
 
 
 def test_turn_persists_messages_context_and_replay_bundle(client: TestClient) -> None:

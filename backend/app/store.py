@@ -51,6 +51,7 @@ CREATE TABLE IF NOT EXISTS conversations (
     updated_at TEXT NOT NULL,
     memory_extracted_at TEXT,
     pinned INTEGER NOT NULL DEFAULT 0,
+    folder TEXT NOT NULL DEFAULT '',
     settings_json TEXT NOT NULL DEFAULT '{}'
 );
 CREATE TABLE IF NOT EXISTS messages (
@@ -243,6 +244,7 @@ class Store:
                 "conversations", "model", "TEXT NOT NULL DEFAULT 'unknown'"
             )
             self._ensure_column("conversations", "pinned", "INTEGER NOT NULL DEFAULT 0")
+            self._ensure_column("conversations", "folder", "TEXT NOT NULL DEFAULT ''")
             self._ensure_column("conversations", "memory_extracted_at", "TEXT")
             self._ensure_column(
                 "conversations", "settings_json", "TEXT NOT NULL DEFAULT '{}'"
@@ -566,9 +568,9 @@ class Store:
                 rows = self.connection.execute(
                     "SELECT DISTINCT c.* FROM conversations c "
                     "LEFT JOIN messages m ON m.conv_id = c.id "
-                    "WHERE c.title LIKE ? OR m.content LIKE ? "
+                    "WHERE c.title LIKE ? OR c.folder LIKE ? OR m.content LIKE ? "
                     "ORDER BY c.pinned DESC, c.updated_at DESC",
-                    (like, like),
+                    (like, like, like),
                 ).fetchall()
             else:
                 rows = self.connection.execute(
@@ -619,6 +621,7 @@ class Store:
         *,
         title: str | None = None,
         pinned: bool | None = None,
+        folder: str | None = None,
         settings: ConversationSettings | None = None,
     ) -> Conversation:
         self.get_conversation(conversation_id)
@@ -630,6 +633,9 @@ class Store:
         if pinned is not None:
             fields.append("pinned = ?")
             values.append(int(pinned))
+        if folder is not None:
+            fields.append("folder = ?")
+            values.append(folder.strip())
         if settings is not None:
             fields.append("settings_json = ?")
             values.append(settings.model_dump_json())
@@ -1780,6 +1786,7 @@ class Store:
             title=row["title"],
             model=row["model"],
             pinned=bool(row["pinned"]),
+            folder=row["folder"],
             settings=ConversationSettings.model_validate_json(row["settings_json"]),
             created_at=row["created_at"],
             updated_at=row["updated_at"],

@@ -46,6 +46,7 @@ class ConversationSettings(BaseModel):
 class ConversationUpdate(BaseModel):
     title: str | None = Field(default=None, min_length=1, max_length=200)
     pinned: bool | None = None
+    folder: str | None = Field(default=None, max_length=80)
     settings: ConversationSettings | None = None
 
 
@@ -56,6 +57,7 @@ class Conversation(BaseModel):
     updated_at: str
     model: str = "unknown"
     pinned: bool = False
+    folder: str = ""
     settings: ConversationSettings = Field(default_factory=ConversationSettings)
     messages: list[Message] = []
 
