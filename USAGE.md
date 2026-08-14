@@ -82,7 +82,10 @@ bridge remains on loopback by default.
 4. Inspect source provenance and context-budget information before relying on
    an answer that uses files, retrieved history, or web evidence. The context rail
    shows used and available tokens plus an exact percentage, turns amber at 80%,
-   and reports how far an oversized request exceeds the limit.
+   and reports how far an oversized request exceeds the limit. Over-budget turns
+   are not sent. For long chats, open the composer's compact settings and enable
+   **Compress older messages** to summarize earlier turns locally while retaining
+   the latest eight messages verbatim.
 5. Open **Compare**, select a provider and model for each of two to four slots, and send one prompt to all
    of them concurrently. Responses stream independently; one provider failure does
    not stop the others, and **Cancel all** stops every active comparison run.

@@ -78,6 +78,9 @@ Compare, Replay, and assistant configuration. It scopes discovery by provider,
 searches model names/IDs/capabilities, and filters vision or reasoning support.
 Shared presentation contracts also cover safe Markdown/code/KaTeX rendering,
 attachment upload states, transcript navigation, and context utilization warnings.
+Optional context compression deterministically replaces older history with a bounded
+extractive summary, retains the latest eight messages verbatim, records compression
+metadata in the hash-bound plan, and prevents over-budget plans from starting a run.
 The grouped desktop/mobile navigation and optional persisted Context/Evidence
 inspector are client-side views over the same workspace APIs.
 

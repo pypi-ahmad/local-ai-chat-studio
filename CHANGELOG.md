@@ -7,6 +7,21 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.4] - 2026-08-15
+
+### Added
+
+- Added opt-in local compression that summarizes older conversation messages while
+  preserving the latest eight messages verbatim.
+- Added compression status and compressed-message counts to the context budget rail.
+
+### Changed
+
+- Over-budget context plans now stop before provider execution and retain the draft
+  so users can reduce context or choose a larger-window model.
+- Context planning and final message assembly now use the same approved history
+  sources, including pruning and trust exclusions.
+
 ## [0.7.3] - 2026-08-15
 
 ### Added

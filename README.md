@@ -33,7 +33,7 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 - **Local and cloud providers:** Use Ollama locally without an API key, or connect OpenAI, Agnes AI, Anthropic, Google Gemini, OpenRouter, xAI, OmniRoute, Ollama Cloud, OpenCode Zen, and OpenCode Go.
 - **Live model discovery:** The Studio asks configured providers for their available models instead of relying only on a fixed list. Discovered entries can include context length, vision support, and provider metadata.
 - **Searchable, capability-aware selection:** Choose a provider first, then search its discovered models by name, ID, or capability in Chat, Compare, Replay, and assistant presets. Provider marks, favorites, recent choices, verified pricing, context size, and vision, tool-use, and reasoning badges make large catalogs easier to scan; favorites and recents stay in local browser storage.
-- **Composer control dock:** Chat keeps attachments, provider/model selection, capability-aware reasoning effort, context scope, and send/stop actions in one responsive dock. Choose **Full context**, **Chat only**, or **Files + chat** per turn; a compact menu holds temperature presets and opt-in web evidence. Effort defaults to **Auto** and is disabled for models that do not advertise support; OpenAI GPT-5.6 options follow the [official model guide](https://developers.openai.com/api/docs/guides/latest-model).
+- **Composer control dock:** Chat keeps attachments, provider/model selection, capability-aware reasoning effort, context scope, and send/stop actions in one responsive dock. Choose **Full context**, **Chat only**, or **Files + chat** per turn; a compact menu holds temperature presets, opt-in web evidence, and optional local compression of older messages. Effort defaults to **Auto** and is disabled for models that do not advertise support; OpenAI GPT-5.6 options follow the [official model guide](https://developers.openai.com/api/docs/guides/latest-model).
 - **Focused navigation:** Desktop keeps Chat, Compare, and Library in **Primary**, Focus in **Workspace**, and provider/runtime controls in **Administration**. Mobile keeps the three primary destinations one tap away and moves advanced workspaces into **More**.
 - **Run actions drawer:** Open **Runs** from Chat to replay recorded prompts, compare outputs, or export full and privacy-safe bundles without leaving the conversation.
 - **Session-only credentials:** Keys entered in **Providers** remain in server-process memory for the browser session. Keys can alternatively come from operating-system environment variables; neither source is written to the database or exports.
@@ -42,7 +42,7 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 
 ### Controlled context and safety
 
-- **Context preflight and pressure:** Before generation, review the exact context plan, used/available tokens, utilization percentage, automatic pruning, and a reserved 20% output budget. Amber warnings appear from 80% utilization; overflow states report the exact excess and recommend removing sources or choosing a larger-context model. A hash binds the approved plan to the run so changed context must be reviewed again.
+- **Context preflight, compression, and pressure:** Before generation, review the exact context plan, used/available tokens, utilization percentage, automatic pruning, and a reserved 20% output budget. Enable **Compress older messages** to create a bounded local extractive summary while preserving the latest eight messages verbatim; the plan reports how many messages were compressed. Amber warnings appear from 80% utilization, and over-budget turns are blocked with the exact excess until context is reduced or a larger-context model is selected. A hash binds the approved plan to the run so changed context must be reviewed again.
 - **Optional Chat inspector:** Open a docked desktop panel or responsive drawer to inspect the current context sections and evidence sources, including source trust and next-send inclusion, without leaving the conversation. The inspector remembers its open state and selected tab locally, closes with **Escape**, and dismisses when opening the full Context or Evidence page.
 - **Source-level control:** Inspect and exclude individual conversation-history, memory, retrieval, upload, web, backpack, or focus sources before sending them to a model.
 - **Provider data boundaries:** Cloud providers default to prompt-only access. Enable memory, retrieval, attachments, web results, or backpacks separately for each provider.
@@ -306,7 +306,7 @@ The **Providers** page supports temporary API keys, supported OAuth flows, live 
 
 ### Context and safety
 
-Before a message is sent, the Studio builds a context plan that shows estimated tokens, source provenance, trust state, automatic pruning, and a 20% output reserve. The shared context rail displays used/available tokens and the exact safe-budget percentage in Chat, Context, and the inspector. At 80% it warns about remaining capacity; above 100% it reports the precise overflow. Users can exclude trusted sources, redact sensitive text, and must confirm blocking safety findings.
+Before a message is sent, the Studio builds a context plan that shows estimated tokens, source provenance, trust state, automatic pruning, and a 20% output reserve. The shared context rail displays used/available tokens and the exact safe-budget percentage in Chat, Context, and the inspector. At 80% it warns about remaining capacity; above 100% it reports the precise overflow and prevents the turn from reaching a provider. Optional **Compress older messages** summarizes earlier turns locally and deterministically, keeps the latest eight messages verbatim, and reports the compressed count. Users can exclude trusted sources, redact sensitive text, and must confirm blocking safety findings.
 
 ### Pricing
 
@@ -405,6 +405,7 @@ Additional project references:
 - [Code tutorial](CODE_TUTORIAL.md)
 - [Offline Zero-to-Hero tutorial](docs/tutorial/index.html)
 - [Integration reference](docs/codebase/INTEGRATIONS.md)
+- [Chatbox releases](https://github.com/chatboxai/chatbox/releases) — interaction-pattern reference for context pressure and compression
 - [Changelog](CHANGELOG.md)
 
 ## Verification

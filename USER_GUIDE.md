@@ -57,8 +57,10 @@ The composer dock also keeps **Attach**, **Context**, secondary settings, and
 backpacks; **Chat only** excludes those optional local sources; **Files + chat** keeps
 only selected attachments alongside conversation history. Open the compact settings
 menu to choose a **Precise (0.2)**, **Balanced (0.7)**, or **Creative (1.0)**
-temperature and to opt into web evidence for the next turns. Provider data policies
-still decide which requested sources may leave the machine.
+temperature, opt into web evidence, or enable **Compress older messages** for the
+next turns. Compression happens locally and deterministically: earlier messages become
+a bounded extractive summary while the latest eight remain verbatim. Provider data
+policies still decide which requested sources may leave the machine.
 
 The answer streams live and **Stop** cancels the active provider request. Hover messages
 to copy, branch from that point, or rate an answer. Conversation controls support
@@ -89,6 +91,9 @@ Every turn gets a preflight plan. The context rail shows used and available toke
 totals and the exact, uncapped percentage. It turns amber at 80%; overflow warnings
 state the exact excess and suggest removing context or choosing a larger-window
 model. Oversized plans shed lower-priority sources automatically.
+If the plan remains over budget, the Studio does not start the provider run; revise
+the context or select a larger-window model and send again. When compression is
+enabled, the rail also reports how many older messages were summarized.
 
 The optional inspector provides compact **Context** and **Evidence** tabs beside the
 conversation. It remembers whether it is open and which tab was selected. Press

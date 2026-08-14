@@ -13,8 +13,10 @@ provider registry, and run manager. Preflight produces a hash-bound context plan
 turn is accepted only when the plan still matches and required safety findings were
 confirmed. Exact web evidence is cached by plan hash; individual sources can be
 excluded. The frontend derives utilization and remaining or excess tokens from the
-plan's estimated and safe-budget totals; these warnings are informational and do not
-alter the server-owned pruning or validation rules.
+plan's estimated and safe-budget totals. It blocks submission while a plan remains
+over budget. When requested, the backend locally compresses older history into a
+deterministic summary, retains the latest eight messages verbatim, and includes the
+summary source and compressed count in the hash-bound plan.
 
 Runs are persisted to SQLite and also retained in memory while the process lives so
 SSE subscribers can replay events and follow new deltas. Run IDs are scoped to the
