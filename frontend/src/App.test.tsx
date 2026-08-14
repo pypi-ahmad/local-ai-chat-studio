@@ -49,6 +49,7 @@ beforeEach(() => {
   contextEstimate = 12
   contextBudget = 6553
   localStorage.clear()
+  window.history.replaceState({}, '', '/')
   Object.defineProperty(Element.prototype, 'scrollIntoView', { configurable: true, value: vi.fn() })
   setViewport(1024)
   vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {

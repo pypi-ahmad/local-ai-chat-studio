@@ -4,7 +4,25 @@ import json
 from urllib.parse import parse_qs, urlparse
 from unittest.mock import Mock
 
+from fastapi import FastAPI
 from fastapi.testclient import TestClient
+
+
+def test_spa_static_files_falls_back_to_index_for_browser_routes(tmp_path) -> None:
+    from backend.app.main import SPAStaticFiles
+
+    (tmp_path / "index.html").write_text("<main>studio</main>", encoding="utf-8")
+    (tmp_path / "asset.js").write_text("console.log('studio')", encoding="utf-8")
+    app = FastAPI()
+    app.mount("/", SPAStaticFiles(directory=tmp_path, html=True), name="frontend")
+
+    with TestClient(app) as spa:
+        route = spa.get("/chat/conversation-1", headers={"Accept": "text/html"})
+        asset = spa.get("/missing.js")
+
+    assert route.status_code == 200
+    assert "studio" in route.text
+    assert asset.status_code == 404
 
 
 def test_health_and_session_cookie(client: TestClient) -> None:
