@@ -6,6 +6,11 @@ OpenAI, [Agnes AI](https://www.agnes-ai.com/en/docs/overview), Anthropic,
 Gemini, OpenRouter, xAI, OpenCode Zen/Go, and compatible gateways. Agnes uses
 the [`agnes-2.5-flash`](https://www.agnes-ai.com/en/docs/agnes-25-flash) model.
 
+[![CI](https://github.com/pypi-ahmad/local-ai-chat-studio/actions/workflows/ci.yml/badge.svg)](https://github.com/pypi-ahmad/local-ai-chat-studio/actions/workflows/ci.yml)
+[![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![React 19](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 ## What is included
 
 - Streaming chat, cancellation, branching, pinning, rename, search, and feedback
@@ -27,6 +32,21 @@ Cloud providers start in prompt-only mode. Credentials entered in the browser st
 server-process memory for that browser session and are never exported.
 Cost estimates use published standard text-token rates. They exclude provider-specific
 discounts, cached tokens, tools, media, taxes, subscriptions, and unverified gateways.
+
+## Screenshots
+
+| Chat workspace | Model comparison |
+|---|---|
+| ![Local AI Chat Studio chat workspace](docs/screenshot-chat.png) | ![Side-by-side model comparison](docs/screenshot-compare.png) |
+
+## Tech stack
+
+- **Backend:** Python 3.12+, FastAPI, Uvicorn, Pydantic, HTTPX
+- **Frontend:** React 19, TypeScript 5.9, Vite 8, Tailwind CSS, Base UI
+- **Data:** SQLite for canonical state and optional Chroma vector retrieval
+- **Providers:** Ollama plus OpenAI-compatible, Anthropic, Gemini, OpenRouter,
+  xAI, Agnes AI, OmniRoute, and OpenCode adapters
+- **Quality:** pytest, Ruff, Vitest, Testing Library, Oxlint, and GitHub Actions
 
 ## Install and run
 
@@ -57,6 +77,17 @@ Open <http://127.0.0.1:8506>. For frontend development, run `npm run dev` in
 `frontend`; Vite proxies `/api` to `http://127.0.0.1:8506`. Stop the managed
 server from **Settings → Stop Studio**, or with Ctrl+C in the launcher console.
 
+## Usage
+
+1. Start the Studio and open <http://127.0.0.1:8506>.
+2. Use an installed Ollama model, enter a session credential under **Providers**,
+   or rely on a supported credential from the launching process environment.
+3. Create a conversation, select a model, and attach any relevant files.
+4. Review the context preflight, safety findings, included sources, and estimated
+   input cost before confirming the turn.
+5. Stream the response, cancel it when needed, then inspect evidence, replay the
+   run, compare models, or export a full or redacted bundle.
+
 ## Data and migration
 
 The canonical stores are `data/app.db` and `data/chroma`. Existing legacy data in
@@ -68,6 +99,10 @@ Set `CHAT_EMBED_MODEL` to an installed Ollama embedding model to use the existin
 Chroma index. Without it, cross-chat retrieval falls back to local lexical search.
 
 Common environment variables:
+
+Use the names in [`.env.example`](.env.example) when configuring your operating-system
+environment. Keep the example file credential-free; the app reads values only from the
+launching process environment.
 
 | Variable | Purpose |
 |---|---|
@@ -82,20 +117,43 @@ Common environment variables:
 | `OPENCODE_SERVER_URL` | Local OpenCode server; defaults to `http://127.0.0.1:4096` |
 | `OPENCODE_SERVER_USERNAME`, `OPENCODE_SERVER_PASSWORD` | Optional OpenCode server basic authentication |
 
+## Configuration
+
+- **Provider credentials:** enter temporary keys in **Providers** or set the
+  corresponding operating-system environment variable before launch.
+- **Provider boundaries:** remote providers begin with prompt-only access;
+  history, memory, files, web results, and profile access are explicit policy toggles.
+- **Context controls:** inspect the token budget, exclude trusted sources, redact
+  sensitive text, and confirm safety findings before a remote request.
+- **Local retrieval:** set `CHAT_EMBED_MODEL` to enable Chroma-backed retrieval;
+  otherwise the workspace uses lexical search.
+- **Runtime data:** set `CHAT_DATA_DIR` to relocate SQLite, uploads, and Chroma state.
+
 ## Architecture
 
 ```text
-frontend/src/          React workspace and typed API client
-backend/app/cli.py     Uvicorn entrypoint on 127.0.0.1:8506 and managed shutdown
-backend/app/main.py    FastAPI routes, session boundary, static frontend, shutdown
-backend/app/runs.py    Async run lifecycle, SSE events, cancellation, receipts
-backend/app/workspace.py  Safety scan, context planning, retrieval, web evidence
-backend/app/store.py   Legacy-compatible SQLite persistence and data controls
-backend/app/providers.py Provider adapters and live model discovery
-src/files.py           Document and image parsing
-src/rag.py             Existing Chroma collections and retrieval helpers
-data/                  Local runtime state
+local-ai-chat-studio/
+├── Launch Chat Studio.cmd  One-click Windows setup and launcher
+├── backend/app/            FastAPI API, runs, providers, sessions, and storage
+├── frontend/src/           React workspace and generated API client
+├── src/                    File parsing, Ollama, retrieval, and shared helpers
+├── scripts/                OpenAPI-to-TypeScript generation
+├── tests/                  Backend contracts and workspace behavior
+├── docs/                   Architecture guides, screenshots, and tutorial
+└── data/                   Local runtime state (created on first launch)
 ```
+
+### How it works
+
+1. The React client preflights a turn through the FastAPI API.
+2. The backend scans for sensitive content, assembles the permitted context,
+   applies the token budget, and returns a reviewable context plan.
+3. After required confirmations, `RunManager` dispatches the normalized request
+   through the selected provider adapter.
+4. Run events and output stream to the browser over server-sent events (SSE),
+   with cancellation and partial-output retention.
+5. SQLite stores conversations, runs, receipts, memories, policies, and replay
+   metadata; Chroma is used only when embedding retrieval is configured.
 
 ## Verification
 

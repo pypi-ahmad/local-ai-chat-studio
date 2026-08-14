@@ -10,6 +10,8 @@ security-relevant surfaces are:
   server's in-memory session vault, never written to SQLite, exports, or logs,
   and sent only to the selected provider. Environment variables are optional
   local fallback credentials and must be protected by the operating system.
+  `.env.example` contains only safe names and public endpoints; never put real
+  credentials in that tracked example.
 - **Local data** — chats, curated memories, uploads, and optional retrieval
   data live under `data/` by default (`app.db`, `chroma`, and uploads). They are
   protected by your OS file permissions and can be exported, imported, or wiped

@@ -52,16 +52,22 @@ Process lifespan shutdown also waits for runs and closes the SQLite connection.
 | Context safety and retrieval | `backend/app/workspace.py` | Context planning, pruning, provenance, retrieval, safety scanning |
 | Local persistence | `backend/app/store.py` | SQLite schema, conversations, memory, exports, imports |
 | Providers and OAuth bridges | `backend/app/providers.py`, `backend/app/sessions.py` | Provider adapters, discovery, credential/session handling |
+| Model pricing | `backend/app/pricing.py` | Official-source standard token-rate catalog and OpenRouter live-price normalization |
 | Web client | `frontend/src/` | React workspaces and generated typed API client |
 | Shared helpers | `src/` | File parsing, Ollama health/embeddings, and Chroma retrieval |
 
 ## Providers and integrations
 
 Ollama is the default local provider. The backend also supports Ollama Cloud,
-OpenAI, Anthropic, Gemini, OpenRouter, xAI, OpenCode Zen/Go, and compatible
+OpenAI, Agnes AI (`agnes-2.5-flash`), Anthropic, Gemini, OpenRouter, xAI, OpenCode Zen/Go, and compatible
 gateways. Provider discovery and request execution use normalized adapters;
 credentials may come from the in-memory session vault or documented environment
 fallbacks.
+
+`ProviderRegistry` attaches `ModelPricing` metadata after discovery. Known direct
+providers use the dated catalog in `pricing.py`; OpenRouter prices are normalized from
+its live Models API. The frontend uses preflight token estimates for input cost only.
+Custom OpenAI base URLs and other unverified gateways deliberately receive no price.
 
 OpenRouter uses a local PKCE flow. ChatGPT, SuperGrok, and Claude subscription
 flows are delegated through a local OpenCode server. The server URL must use a
@@ -76,6 +82,7 @@ loopback host, preventing an accidental remote bridge configuration.
 | `CHAT_EMBED_MODEL` | Installed Ollama embedding model for Chroma retrieval | unset |
 | `OLLAMA_API_KEY` | Ollama Cloud fallback key | unset |
 | `OPENAI_API_KEY`, `AGNES_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY` | Cloud-provider fallback keys | unset |
+| `OPENAI_BASE_URL` | Optional OpenAI-compatible endpoint for the OpenAI provider | official OpenAI endpoint |
 | `OPENROUTER_API_KEY`, `XAI_API_KEY` | Gateway and xAI fallback keys | unset |
 | `OMNIROUTE_BASE_URL`, `OMNIROUTE_API_KEY` | Compatible-gateway endpoint and fallback key | `http://localhost:8082/v1` / unset |
 | `OPENCODE_ZEN_API_KEY`, `OPENCODE_GO_API_KEY` | OpenCode inference fallback keys | unset |

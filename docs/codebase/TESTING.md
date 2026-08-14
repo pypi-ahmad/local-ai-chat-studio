@@ -15,11 +15,11 @@ legacy schema compatibility, safety confirmation/redaction, context policy and
 pruning, provenance/exclusions, replay/diff/bundles, data controls, v2 import, files,
 images, selected per-turn attachments, whole-chat memory curation/provenance, local and
 cloud Ollama behavior, OpenCode loopback validation, focus/backpacks, provider
-simulation, profile, runtime health, and managed shutdown (header required,
+simulation, pricing catalog matching/live OpenRouter normalization, profile, runtime health, and managed shutdown (header required,
 unmanaged servers return 503).
 
 Frontend tests use Vitest, Testing Library, jest-dom, and jsdom. They exercise the
 connected workspace shell, navigation, preflight, SSE output, the OpenCode Claude
-sign-in affordance, and the Settings **Stop Studio** control. There is no browser E2E
+sign-in affordance, model-rate display, and the Settings **Stop Studio** control. There is no browser E2E
 runner or coverage threshold yet; real external-provider calls, OAuth flows, and a
 running Ollama daemon remain manual smoke tests.

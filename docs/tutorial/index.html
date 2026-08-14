@@ -363,7 +363,7 @@
         <p class="chapter-label">04 · Bring-up procedure</p>
         <h2>Install once. Start locally.</h2>
         <p class="chapter-intro">Requirements: Python 3.12+, <code>uv</code>, Node.js/npm, and optionally Ollama for local models.</p>
-        <div class="callout"><strong>Windows one-click path:</strong> double-click <code>Launch Chat Studio.cmd</code> in the repository root. It provisions portable runtimes under <code>.runtime</code>, installs locked dependencies (frontend <code>npm ci --legacy-peer-deps</code>), builds when needed, opens <code>http://127.0.0.1:8506</code> after health succeeds, and keeps server logs visible. Run <code>Launch Chat Studio.cmd --check</code> for a non-installing status report. Ollama remains optional.</div>
+        <div class="callout"><strong>Windows one-click path:</strong> double-click <code>Launch Chat Studio.cmd</code> in the repository root. It provisions portable runtimes under <code>.runtime</code>, installs locked dependencies (frontend <code>npm ci --legacy-peer-deps</code>), builds when needed, opens <code>http://127.0.0.1:8506</code> after health succeeds, and keeps server logs visible. A hash of <code>pyproject.toml</code> and <code>uv.lock</code> lets unchanged later launches skip setup and use <code>uv run --no-sync</code>. Run <code>Launch Chat Studio.cmd --check</code> for a non-installing status report. Ollama remains optional.</div>
         <div class="tabs">
           <div role="tablist" aria-label="Operating system commands">
             <button id="windows-tab" role="tab" aria-selected="true" aria-controls="windows-panel">Windows PowerShell</button>
@@ -398,7 +398,8 @@ uv run chat-studio</code></pre></div>
           <tr><td><code>CHAT_OLLAMA_HOST</code></td><td>Local Ollama endpoint; defaults to <code>http://localhost:11434</code>.</td></tr>
           <tr><td><code>CHAT_EMBED_MODEL</code></td><td>Installed Ollama embedding model for optional Chroma indexing.</td></tr>
           <tr><td><code>OLLAMA_API_KEY</code></td><td>Ollama Cloud credential fallback.</td></tr>
-          <tr><td><code>OPENAI_API_KEY</code>, <code>ANTHROPIC_API_KEY</code>, <code>GEMINI_API_KEY</code>, <code>OPENROUTER_API_KEY</code>, <code>XAI_API_KEY</code></td><td>Cloud provider credential fallbacks.</td></tr>
+          <tr><td><code>OPENAI_API_KEY</code>, <code>AGNES_API_KEY</code>, <code>ANTHROPIC_API_KEY</code>, <code>GEMINI_API_KEY</code>, <code>OPENROUTER_API_KEY</code>, <code>XAI_API_KEY</code></td><td>Cloud provider credential fallbacks. Agnes exposes <code>agnes-2.5-flash</code>.</td></tr>
+          <tr><td><code>OPENAI_BASE_URL</code></td><td>Optional compatible endpoint used only by the OpenAI provider.</td></tr>
           <tr><td><code>OPENCODE_ZEN_API_KEY</code>, <code>OPENCODE_GO_API_KEY</code></td><td>OpenCode inference credentials.</td></tr>
           <tr><td><code>OPENCODE_SERVER_URL</code></td><td>Loopback OpenCode server; defaults to <code>http://127.0.0.1:4096</code>.</td></tr>
         </tbody></table></div>
@@ -439,7 +440,7 @@ uv run chat-studio</code></pre></div>
         <div class="table-wrap"><table><thead><tr><th>Path</th><th>Authentication</th><th>Boundary</th></tr></thead><tbody>
           <tr><td>Ollama Local</td><td>No key</td><td>Local endpoint configured by <code>CHAT_OLLAMA_HOST</code>.</td></tr>
           <tr><td>Ollama Cloud</td><td>Bearer API key</td><td>Remote; separate from local Ollama.</td></tr>
-          <tr><td>OpenAI, Gemini, xAI, OmniRoute</td><td>Session key or environment fallback</td><td>Remote unless a compatible gateway is explicitly local.</td></tr>
+          <tr><td>OpenAI, Agnes AI, Gemini, xAI, OmniRoute</td><td>Session key or environment fallback</td><td>Remote unless a compatible gateway is explicitly local.</td></tr>
           <tr><td>Anthropic</td><td>Session key, environment fallback, or workload identity</td><td>Remote.</td></tr>
           <tr><td>OpenRouter</td><td>Session key, environment fallback, or PKCE sign-in</td><td>Remote routing service.</td></tr>
           <tr><td>OpenCode Zen / Go</td><td>Session key or environment fallback</td><td>Remote OpenCode inference.</td></tr>
@@ -480,7 +481,7 @@ uv run chat-studio</code></pre></div>
         <div class="grid-2">
           <article class="card"><p class="eyebrow">Best-fit teams</p><h3>Knowledge work with mixed sensitivity</h3><p>Developers, analysts, researchers, and small teams that want local models for private work and cloud models for capability—without losing visibility into context.</p></article>
           <article class="card"><p class="eyebrow">Core differentiation</p><h3>Context accountability</h3><p>The value is not merely “many models.” It is preflight, source exclusion, replay, redaction, provenance, and explicit provider boundaries around those models.</p></article>
-          <article class="card"><p class="eyebrow">Cost drivers</p><h3>Hardware, tokens, and support</h3><p>Local inference needs capable hardware and model operations. Cloud inference adds usage spend. Embedding and storage costs are local but require maintenance and backup.</p></article>
+          <article class="card"><p class="eyebrow">Cost drivers</p><h3>Hardware, tokens, and support</h3><p>Local inference needs capable hardware and model operations. Cloud inference adds usage spend. The model picker shows source-linked standard rates, and preflight estimates input cost. Unknown gateways remain unpriced; estimates exclude output, caching, tools, media, discounts, taxes, and subscriptions.</p></article>
           <article class="card"><p class="eyebrow">Current maturity</p><h3>Trusted localhost workspace</h3><p>Suitable for individual use and controlled pilots. User authentication, multi-tenancy, centralized policy, audit administration, and horizontal scaling are not shipped.</p></article>
         </div>
         <h3>Pilot scorecard</h3>
@@ -548,7 +549,7 @@ uv run chat-studio</code></pre></div>
           <article><h3><code>contracts.py</code></h3><p>Pydantic request, response, event, context, memory, provider, and data-control shapes.</p></article>
           <article><h3><code>store.py</code></h3><p>SQLite schema, additive compatibility migrations, ordered messages, runs, memories, policies, and exports.</p></article>
           <article><h3><code>sessions.py</code></h3><p>Thread-safe session credential vault, provider environment mapping, and Anthropic workload-identity detection.</p></article>
-          <article><h3><code>providers.py</code></h3><p>Normalized adapters, model discovery, image formatting, Ollama variants, OpenCode bridge, and registry.</p></article>
+          <article><h3><code>providers.py</code> + <code>pricing.py</code></h3><p>Normalized adapters, model discovery, image formatting, Ollama variants, OpenCode bridge, and source-linked pricing metadata.</p></article>
           <article><h3><code>workspace.py</code></h3><p>Retrieval, safety scan, provider policy, context budgeting, plan hashing, and final message assembly.</p></article>
           <article><h3><code>memory.py</code></h3><p>Whole-chat selection, chunked extraction, consolidation, provenance validation, deduplication, and categorization.</p></article>
           <article><h3><code>runs.py</code></h3><p>Async lifecycle, cancellation, streaming events, durable updates, assistant-message persistence, and receipts.</p></article>

@@ -69,11 +69,20 @@ environment variable. Cloud providers begin with prompt-only access. Enable memo
 retrieval, attachments, web search, or backpacks separately for each provider.
 
 Ollama Local needs no key; Ollama Cloud, OpenCode Zen, and OpenCode Go accept keys.
+Agnes AI uses `AGNES_API_KEY` and discovers `agnes-2.5-flash` from its
+OpenAI-compatible endpoint. OpenAI optionally uses `OPENAI_BASE_URL`; prices are not
+assumed when that URL points to a custom gateway.
 Run an OpenCode server on loopback to expose its ChatGPT, SuperGrok, or Claude sign-in
 methods in the Providers page. Anthropic also discovers configured workload identity.
 
 **Test failover** simulates a rate limit and shows whether the configured fallback
 path recovers, without spending tokens or making a provider request.
+
+The model selector includes source-backed standard input/output rates per million
+tokens when known. After context preflight, the budget rail estimates prompt cost.
+Follow the **official source** link beside the selected model for the published rate;
+the estimate does not include output, cached tokens, tools, media, discounts, taxes,
+or subscription charges.
 
 ### Library
 

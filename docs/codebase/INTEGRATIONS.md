@@ -4,7 +4,8 @@
 |---|---|---|
 | Ollama Local | Local chat, discovery, vision, health, embeddings | No key; `CHAT_OLLAMA_HOST` defaults to `http://localhost:11434` |
 | Ollama Cloud | Cloud chat and discovery | `OLLAMA_API_KEY` session key or environment fallback |
-| OpenAI / xAI / OmniRoute | OpenAI-compatible discovery, chat, vision | Session key or env fallback |
+| OpenAI / xAI / OmniRoute | OpenAI-compatible discovery, chat, vision | Session key or env fallback; `OPENAI_BASE_URL` optionally overrides OpenAI |
+| Agnes AI | OpenAI-compatible `agnes-2.5-flash` discovery and chat | `AGNES_API_KEY` session key or environment fallback |
 | Anthropic | Discovery, chat, vision | Session key, env fallback, or workload identity |
 | Google Gemini | Discovery, chat, vision | Session key or env fallback |
 | OpenRouter | Discovery/chat plus PKCE sign-in | Session key, env, or exchanged key |
@@ -25,6 +26,16 @@ credentials use `OPENCODE_SERVER_USERNAME` and `OPENCODE_SERVER_PASSWORD`. The
 Providers page lists only OAuth methods that the running server reports, then lets the
 server complete the upstream flow. A local bridge is not treated as a local model:
 connected upstream providers still follow the remote-context policy.
+
+## Pricing metadata
+
+Discovered models may carry dated `ModelPricing` metadata from
+`backend/app/pricing.py`. Direct-provider entries use official pricing pages;
+OpenRouter uses the pricing object returned by its Models API. The React model picker
+shows input/output rates and the preflight rail estimates input cost. Custom endpoints,
+subscription routes, and unknown models remain unpriced rather than inheriting a
+possibly incorrect vendor rate. Estimates omit output, caching, tools, media,
+discounts, taxes, and subscription charges.
 
 ## Attachments and memory
 

@@ -33,11 +33,19 @@ it separately if you want to run local models.
 ## Choose a model
 
 Open **Providers** to use a local Ollama model, Ollama Cloud, or a supported
-cloud provider. Browser-entered credentials are available only to the current
+cloud provider, including Agnes AI's `agnes-2.5-flash`. Browser-entered credentials are available only to the current
 server session; they are not saved in the workspace database or exports.
 
 You can instead configure environment-variable fallbacks before starting the
 app. See the configuration table in [TECHNICAL.md](TECHNICAL.md#configuration).
+`OPENAI_BASE_URL` redirects only the OpenAI provider to a compatible endpoint;
+`AGNES_API_KEY` authenticates the dedicated Agnes provider. `.env.example` lists
+safe variable names without containing credentials.
+
+The model picker shows verified standard input/output rates when available. After
+preflight, the context rail calculates an estimated input cost and links to the
+official pricing source. Unknown gateways show **pricing unavailable**; estimates
+exclude caching, tools, media, discounts, subscriptions, taxes, and output cost.
 
 For ChatGPT, SuperGrok, and Claude subscription sign-in, connect a local
 OpenCode server first, then follow the sign-in flow in **Providers**. That

@@ -32,6 +32,12 @@ Provider adapters separate Ollama Local from Ollama Cloud. OpenCode is a loopbac
 server bridge: it owns upstream OAuth and streaming sessions, while this app continues
 to apply remote-provider context policy before sending chat context to it.
 
+After model discovery, `ProviderRegistry` attaches optional `ModelPricing` metadata.
+The pricing catalog is source-linked and dated; OpenRouter pricing is read from its
+live model payload. Preflight token estimates are multiplied by the selected model's
+standard input rate in the browser. Pricing is presentation metadata and does not
+alter routing, billing, or provider requests.
+
 The system is deliberately single-process and localhost-first. Horizontal scaling
 would require external run events and credential/session state.
 

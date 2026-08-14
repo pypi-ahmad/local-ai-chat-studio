@@ -39,6 +39,8 @@ pinned to 5.9.
 - Keep changes focused — a bug fix shouldn't also refactor unrelated code.
 - Update the relevant English documentation when user-visible behavior,
   configuration, security boundaries, or API contracts change.
+- Update `backend/app/pricing.py` only from official provider sources, retain
+  the source URL/date, and leave unknown or custom-gateway models unpriced.
 
 ## Running checks before you open a PR
 

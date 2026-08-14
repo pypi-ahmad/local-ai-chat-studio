@@ -651,8 +651,10 @@ a contract; four concrete classes implement it (`OllamaAdapter`,
 textbook polymorphism, and it's *earned* here — not a speculative "just in
 case" abstraction — because there are genuinely four different wire
 protocols being normalized into one shape. `OpenAICompatibleAdapter` alone
-gets reused three times (`openai`, `openrouter`, `xai`) just by pointing it
-at a different `base_url`, since all three speak the same OpenAI-style API.
+gets reused for OpenAI, Agnes AI, OpenRouter, xAI, OmniRoute, and OpenCode Go
+by pointing it at a different `base_url`, since they speak the same OpenAI-style
+API. `OPENAI_BASE_URL` may override OpenAI; Agnes uses
+`https://apihub.agnes-ai.com/v1` and `AGNES_API_KEY`.
 
 ```python
 async def discover_models(self, credential) -> dict[str, ProviderDiscovery]:
@@ -671,6 +673,13 @@ others, because each `discover()` call catches its own exception and turns
 it into a `ProviderDiscovery(error=...)` result instead of raising. This is
 "isolated failure," a common pattern any time you fan out to multiple
 independent, possibly-flaky external services.
+
+After discovery, `backend/app/pricing.py` attaches optional `ModelPricing`
+metadata. Its static rates are dated and link to official provider pages;
+OpenRouter's per-token values come from its live Models API and are normalized
+to dollars per million tokens. The UI multiplies the preflight input estimate by
+that input rate. It deliberately shows **pricing unavailable** for unverified
+custom gateways rather than guessing.
 
 ### 4.5 `backend/app/runs.py` — the async run lifecycle
 

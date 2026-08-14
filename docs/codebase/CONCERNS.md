@@ -8,6 +8,9 @@
 - There is no user authentication. Do not expose the server to an untrusted network.
 - Provider discovery depends on remote SDK calls; one slow catalog can delay the model
   list even though failures degrade per provider.
+- Cost figures are estimates from dated standard text-token rates. They do not include
+  output usage, cache tiers, tools, media, discounts, tax, or subscription billing;
+  custom and unknown gateways intentionally show no price.
 - SQLite text search uses `LIKE`; add FTS only after profiling a realistically large
   history.
 - Chroma retrieval requires `CHAT_EMBED_MODEL`; otherwise the app uses lexical history
