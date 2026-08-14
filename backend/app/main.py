@@ -36,6 +36,8 @@ from backend.app.contracts import (
     FocusCreate,
     FocusSession,
     FocusUpdate,
+    KnowledgeBase,
+    KnowledgeBaseCreate,
     Memory,
     MemoryCreate,
     MemoryExtractionRequest,
@@ -871,6 +873,40 @@ def create_app(
             store.delete_upload(upload_id)
         except KeyError as exc:
             raise HTTPException(404, "Upload not found") from exc
+        return Response(status_code=204)
+
+    @app.get("/api/v1/knowledge-bases", response_model=list[KnowledgeBase])
+    def list_knowledge_bases() -> list[KnowledgeBase]:
+        return store.list_knowledge_bases()
+
+    @app.post(
+        "/api/v1/knowledge-bases", response_model=KnowledgeBase, status_code=201
+    )
+    def create_knowledge_base(payload: KnowledgeBaseCreate) -> KnowledgeBase:
+        try:
+            return store.create_knowledge_base(payload)
+        except KeyError as exc:
+            raise HTTPException(404, "Knowledge source not found") from exc
+        except ValueError as exc:
+            raise HTTPException(409, str(exc)) from exc
+
+    @app.put("/api/v1/knowledge-bases/{knowledge_base_id}", response_model=KnowledgeBase)
+    def update_knowledge_base(
+        knowledge_base_id: str, payload: KnowledgeBaseCreate
+    ) -> KnowledgeBase:
+        try:
+            return store.update_knowledge_base(knowledge_base_id, payload)
+        except KeyError as exc:
+            raise HTTPException(404, "Knowledge base or source not found") from exc
+        except ValueError as exc:
+            raise HTTPException(409, str(exc)) from exc
+
+    @app.delete("/api/v1/knowledge-bases/{knowledge_base_id}", status_code=204)
+    def delete_knowledge_base(knowledge_base_id: str) -> Response:
+        try:
+            store.delete_knowledge_base(knowledge_base_id)
+        except KeyError as exc:
+            raise HTTPException(404, "Knowledge base not found") from exc
         return Response(status_code=204)
 
     @app.post("/api/v1/runs", response_model=RunSnapshot, status_code=202)

@@ -95,6 +95,7 @@ def test_conversation_settings_are_saved_independently(client: TestClient) -> No
         "auto_compress_history": True,
         "system_prompt": "Answer as a careful reviewer.",
         "layout": "compact",
+        "knowledge_base_id": None,
     }
 
     updated = client.patch(
@@ -121,6 +122,7 @@ def test_conversation_can_start_with_assistant_settings(client: TestClient) -> N
         "auto_compress_history": False,
         "system_prompt": "Review code for correctness and explain each finding.",
         "layout": "conversation",
+        "knowledge_base_id": None,
     }
 
     created = client.post(

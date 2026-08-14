@@ -18,6 +18,10 @@ from backend.app.contracts import (
     ConversationSettings,
     FocusCreate,
     FocusSession,
+    KnowledgeBase,
+    KnowledgeBaseCreate,
+    KnowledgeBaseSource,
+    KnowledgeBaseSourceInput,
     Memory,
     Message,
     Preset,
@@ -153,6 +157,21 @@ CREATE TABLE IF NOT EXISTS uploads (
     text_content TEXT NOT NULL DEFAULT '',
     content_blob BLOB,
     created_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS knowledge_bases (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    description TEXT NOT NULL DEFAULT '',
+    include_retrieval INTEGER NOT NULL DEFAULT 1,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS knowledge_base_sources (
+    knowledge_base_id TEXT NOT NULL REFERENCES knowledge_bases(id) ON DELETE CASCADE,
+    kind TEXT NOT NULL,
+    source_id TEXT NOT NULL,
+    position INTEGER NOT NULL,
+    PRIMARY KEY (knowledge_base_id, kind, source_id)
 );
 CREATE TABLE IF NOT EXISTS schema_migrations (
     version INTEGER PRIMARY KEY,
@@ -313,9 +332,20 @@ class Store:
 
     def delete_conversation(self, conversation_id: str) -> None:
         with self.lock, self.connection:
+            upload_ids = [
+                row[0]
+                for row in self.connection.execute(
+                    "SELECT id FROM uploads WHERE conversation_id = ?", (conversation_id,)
+                )
+            ]
             cursor = self.connection.execute(
                 "DELETE FROM conversations WHERE id = ?", (conversation_id,)
             )
+            if cursor.rowcount and upload_ids:
+                self.connection.executemany(
+                    "DELETE FROM knowledge_base_sources WHERE kind = 'upload' AND source_id = ?",
+                    [(item,) for item in upload_ids],
+                )
         if cursor.rowcount == 0:
             raise KeyError(conversation_id)
 
@@ -577,8 +607,222 @@ class Store:
             cursor = self.connection.execute(
                 "DELETE FROM backpacks WHERE id = ?", (backpack_id,)
             )
+            if cursor.rowcount:
+                self.connection.execute(
+                    "DELETE FROM knowledge_base_sources WHERE kind = 'backpack' AND source_id = ?",
+                    (backpack_id,),
+                )
         if cursor.rowcount == 0:
             raise KeyError(backpack_id)
+
+    def _validate_knowledge_source(self, source: KnowledgeBaseSourceInput) -> None:
+        if source.kind == "upload":
+            row = self.connection.execute(
+                "SELECT 1 FROM uploads WHERE id = ?", (source.source_id,)
+            ).fetchone()
+            if row is None:
+                raise KeyError(source.source_id)
+            return
+        if source.kind == "memory":
+            memory = self.get_memory(source.source_id)
+            if memory.status != "active":
+                raise ValueError("Only active memories can be added to a knowledge base")
+            return
+        self.get_backpack(source.source_id)
+
+    def _knowledge_source(self, kind: str, source_id: str) -> KnowledgeBaseSource | None:
+        if kind == "upload":
+            row = self.connection.execute(
+                "SELECT filename, text_content FROM uploads WHERE id = ?", (source_id,)
+            ).fetchone()
+            if row is None:
+                return None
+            return KnowledgeBaseSource(
+                kind="upload",
+                source_id=source_id,
+                title=row["filename"],
+                preview=row["text_content"][:160],
+                available=bool(row["text_content"]),
+            )
+        if kind == "memory":
+            try:
+                memory = self.get_memory(source_id)
+            except KeyError:
+                return None
+            return KnowledgeBaseSource(
+                kind="memory",
+                source_id=source_id,
+                title=memory.content[:80],
+                preview=memory.content[:160],
+                available=memory.status == "active",
+            )
+        try:
+            backpack = self.get_backpack(source_id)
+        except KeyError:
+            return None
+        return KnowledgeBaseSource(
+            kind="backpack",
+            source_id=source_id,
+            title=backpack.name,
+            preview=f"{len(backpack.items)} item{'s' if len(backpack.items) != 1 else ''}",
+            available=bool(backpack.items),
+        )
+
+    def create_knowledge_base(self, payload: KnowledgeBaseCreate) -> KnowledgeBase:
+        knowledge_base_id, now = str(uuid.uuid4()), utc_now()
+        with self.lock, self.connection:
+            for source in payload.sources:
+                self._validate_knowledge_source(source)
+            self.connection.execute(
+                "INSERT INTO knowledge_bases VALUES (?, ?, ?, ?, ?, ?)",
+                (
+                    knowledge_base_id,
+                    payload.name,
+                    payload.description,
+                    int(payload.include_retrieval),
+                    now,
+                    now,
+                ),
+            )
+            self._replace_knowledge_sources(knowledge_base_id, payload.sources)
+        return self.get_knowledge_base(knowledge_base_id)
+
+    def _replace_knowledge_sources(
+        self, knowledge_base_id: str, sources: list[KnowledgeBaseSourceInput]
+    ) -> None:
+        self.connection.execute(
+            "DELETE FROM knowledge_base_sources WHERE knowledge_base_id = ?",
+            (knowledge_base_id,),
+        )
+        for position, source in enumerate(sources):
+            self.connection.execute(
+                "INSERT OR IGNORE INTO knowledge_base_sources VALUES (?, ?, ?, ?)",
+                (knowledge_base_id, source.kind, source.source_id, position),
+            )
+
+    def get_knowledge_base(self, knowledge_base_id: str) -> KnowledgeBase:
+        with self.lock:
+            row = self.connection.execute(
+                "SELECT * FROM knowledge_bases WHERE id = ?", (knowledge_base_id,)
+            ).fetchone()
+            if row is None:
+                raise KeyError(knowledge_base_id)
+            source_rows = self.connection.execute(
+                "SELECT kind, source_id FROM knowledge_base_sources "
+                "WHERE knowledge_base_id = ? ORDER BY position",
+                (knowledge_base_id,),
+            ).fetchall()
+            sources = [
+                source
+                for item in source_rows
+                if (source := self._knowledge_source(item["kind"], item["source_id"]))
+            ]
+        return KnowledgeBase(
+            id=row["id"],
+            name=row["name"],
+            description=row["description"],
+            include_retrieval=bool(row["include_retrieval"]),
+            created_at=row["created_at"],
+            updated_at=row["updated_at"],
+            sources=sources,
+        )
+
+    def list_knowledge_bases(self) -> list[KnowledgeBase]:
+        with self.lock:
+            ids = [
+                row[0]
+                for row in self.connection.execute(
+                    "SELECT id FROM knowledge_bases ORDER BY updated_at DESC"
+                )
+            ]
+        return [self.get_knowledge_base(item) for item in ids]
+
+    def update_knowledge_base(
+        self, knowledge_base_id: str, payload: KnowledgeBaseCreate
+    ) -> KnowledgeBase:
+        self.get_knowledge_base(knowledge_base_id)
+        with self.lock, self.connection:
+            for source in payload.sources:
+                self._validate_knowledge_source(source)
+            self.connection.execute(
+                "UPDATE knowledge_bases SET name = ?, description = ?, "
+                "include_retrieval = ?, updated_at = ? WHERE id = ?",
+                (
+                    payload.name,
+                    payload.description,
+                    int(payload.include_retrieval),
+                    utc_now(),
+                    knowledge_base_id,
+                ),
+            )
+            self._replace_knowledge_sources(knowledge_base_id, payload.sources)
+        return self.get_knowledge_base(knowledge_base_id)
+
+    def delete_knowledge_base(self, knowledge_base_id: str) -> None:
+        with self.lock, self.connection:
+            cursor = self.connection.execute(
+                "DELETE FROM knowledge_bases WHERE id = ?", (knowledge_base_id,)
+            )
+            if cursor.rowcount == 0:
+                raise KeyError(knowledge_base_id)
+            rows = self.connection.execute(
+                "SELECT id, settings_json FROM conversations"
+            ).fetchall()
+            for row in rows:
+                settings = ConversationSettings.model_validate_json(row["settings_json"])
+                if settings.knowledge_base_id == knowledge_base_id:
+                    settings.knowledge_base_id = None
+                    self.connection.execute(
+                        "UPDATE conversations SET settings_json = ?, updated_at = ? WHERE id = ?",
+                        (settings.model_dump_json(), utc_now(), row["id"]),
+                    )
+
+    def knowledge_base_materials(self, knowledge_base_id: str) -> list[dict[str, str]]:
+        knowledge_base = self.get_knowledge_base(knowledge_base_id)
+        materials: list[dict[str, str]] = []
+        for source in knowledge_base.sources:
+            if not source.available:
+                continue
+            if source.kind == "upload":
+                row = self.connection.execute(
+                    "SELECT filename, text_content FROM uploads WHERE id = ?",
+                    (source.source_id,),
+                ).fetchone()
+                if row and row["text_content"]:
+                    materials.append(
+                        {
+                            "id": f"kb:upload:{source.source_id}",
+                            "source_id": source.source_id,
+                            "source_kind": "upload",
+                            "title": row["filename"],
+                            "content": row["text_content"],
+                        }
+                    )
+            elif source.kind == "memory":
+                memory = self.get_memory(source.source_id)
+                if memory.status == "active":
+                    materials.append(
+                        {
+                            "id": f"kb:memory:{source.source_id}",
+                            "source_id": source.source_id,
+                            "source_kind": "memory",
+                            "title": memory.content[:80],
+                            "content": memory.content,
+                        }
+                    )
+            else:
+                backpack = self.get_backpack(source.source_id)
+                materials.extend(
+                    {
+                        "id": f"kb:backpack:{source.source_id}:{item.id}",
+                        "source_id": source.source_id,
+                        "source_kind": "backpack",
+                        "title": item.title,
+                        "content": item.content,
+                    }
+                    for item in backpack.items
+                )
+        return materials
 
     def create_focus(self, payload: FocusCreate) -> FocusSession:
         self.get_conversation(payload.conversation_id)
@@ -818,6 +1062,11 @@ class Store:
             cursor = self.connection.execute(
                 "DELETE FROM memories WHERE id = ?", (memory_id,)
             )
+            if cursor.rowcount:
+                self.connection.execute(
+                    "DELETE FROM knowledge_base_sources WHERE kind = 'memory' AND source_id = ?",
+                    (memory_id,),
+                )
         if cursor.rowcount == 0:
             raise KeyError(memory_id)
 
@@ -985,6 +1234,8 @@ class Store:
             for table in (
                 "run_events",
                 "runs",
+                "knowledge_base_sources",
+                "knowledge_bases",
                 "backpack_items",
                 "backpacks",
                 "conversations",
@@ -1154,6 +1405,11 @@ class Store:
             deleted = self.connection.execute(
                 "DELETE FROM uploads WHERE id = ?", (upload_id,)
             ).rowcount
+            if deleted:
+                self.connection.execute(
+                    "DELETE FROM knowledge_base_sources WHERE kind = 'upload' AND source_id = ?",
+                    (upload_id,),
+                )
         if not deleted:
             raise KeyError(upload_id)
 

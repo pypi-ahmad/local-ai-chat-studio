@@ -40,6 +40,7 @@ class ConversationSettings(BaseModel):
     auto_compress_history: bool = False
     system_prompt: str = Field(default="", max_length=50_000)
     layout: Literal["conversation", "compact", "full-width"] = "conversation"
+    knowledge_base_id: str | None = Field(default=None, max_length=100)
 
 
 class ConversationUpdate(BaseModel):
@@ -257,6 +258,34 @@ class Backpack(BaseModel):
     created_at: str
     updated_at: str
     items: list[BackpackItem] = []
+
+
+class KnowledgeBaseSourceInput(BaseModel):
+    kind: Literal["upload", "memory", "backpack"]
+    source_id: str = Field(min_length=1, max_length=100)
+
+
+class KnowledgeBaseCreate(BaseModel):
+    name: str = Field(min_length=1, max_length=200)
+    description: str = Field(default="", max_length=2000)
+    include_retrieval: bool = True
+    sources: list[KnowledgeBaseSourceInput] = Field(default_factory=list, max_length=200)
+
+
+class KnowledgeBaseSource(KnowledgeBaseSourceInput):
+    title: str
+    preview: str = ""
+    available: bool = True
+
+
+class KnowledgeBase(BaseModel):
+    id: str
+    name: str
+    description: str = ""
+    include_retrieval: bool = True
+    created_at: str
+    updated_at: str
+    sources: list[KnowledgeBaseSource] = []
 
 
 class FocusCreate(BaseModel):

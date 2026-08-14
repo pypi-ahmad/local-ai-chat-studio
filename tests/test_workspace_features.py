@@ -261,6 +261,115 @@ def test_branch_backpack_focus_and_provider_policy(client: TestClient) -> None:
     assert policy.json()["allow_memory"] is True
 
 
+def test_bound_knowledge_base_supplies_existing_local_sources(client: TestClient) -> None:
+    source_conversation = _conversation(client)
+    client.post(
+        f"/api/v1/conversations/{source_conversation}/messages",
+        json={"role": "user", "content": "Project Atlas uses an unrelated blue cluster"},
+    )
+    upload = client.post(
+        "/api/v1/uploads",
+        json={
+            "conversation_id": source_conversation,
+            "filename": "launch-notes.txt",
+            "content_base64": "TGF1bmNoIHdpbmRvdyBpcyBGcmlkYXkgYXQgMDk6MDAu",
+        },
+    ).json()
+    memory = client.post(
+        "/api/v1/memories",
+        json={"content": "Use concise release summaries", "category": "preference"},
+    ).json()
+    backpack = client.post(
+        "/api/v1/backpacks",
+        json={
+            "name": "Atlas constraints",
+            "items": [{"title": "Environment", "content": "Production is local only"}],
+        },
+    ).json()
+
+    created = client.post(
+        "/api/v1/knowledge-bases",
+        json={
+            "name": "Atlas launch",
+            "description": "Verified launch material",
+            "include_retrieval": False,
+            "sources": [
+                {"kind": "upload", "source_id": upload["id"]},
+                {"kind": "memory", "source_id": memory["id"]},
+                {"kind": "backpack", "source_id": backpack["id"]},
+            ],
+        },
+    )
+    assert created.status_code == 201
+    knowledge_base = created.json()
+    assert {item["kind"] for item in knowledge_base["sources"]} == {
+        "upload",
+        "memory",
+        "backpack",
+    }
+
+    target = client.post(
+        "/api/v1/conversations",
+        json={
+            "title": "Bound chat",
+            "settings": {"knowledge_base_id": knowledge_base["id"]},
+        },
+    ).json()
+    payload = {
+        "provider": "echo",
+        "model": "deterministic",
+        "content": "Summarize the Atlas launch",
+    }
+    plan = client.post(
+        f"/api/v1/conversations/{target['id']}/turns/preflight", json=payload
+    ).json()
+    assert next(item for item in plan["sections"] if item["kind"] == "knowledge")[
+        "included"
+    ]
+    assert {item["title"] for item in plan["sources"] if item["kind"] == "knowledge"} == {
+        "launch-notes.txt",
+        "Use concise release summaries",
+        "Environment",
+    }
+    assert not any(item["kind"] == "retrieval" for item in plan["sources"])
+
+    run = client.post(
+        f"/api/v1/conversations/{target['id']}/turns",
+        json={**payload, "plan_hash": plan["plan_hash"]},
+    )
+    assert run.status_code == 202
+    bundle = client.get(f"/api/v1/runs/{run.json()['id']}/bundle").json()
+    system_message = bundle["messages"][0]["content"]
+    assert "Knowledge base: Atlas launch" in system_message
+    assert "Launch window is Friday at 09:00." in system_message
+    assert "Use concise release summaries" in system_message
+    assert "Production is local only" in system_message
+
+    listed = client.get("/api/v1/knowledge-bases").json()
+    assert [item["id"] for item in listed] == [knowledge_base["id"]]
+    updated = client.put(
+        f"/api/v1/knowledge-bases/{knowledge_base['id']}",
+        json={
+            "name": "Atlas brief",
+            "description": "Release briefing material",
+            "include_retrieval": True,
+            "sources": [{"kind": "memory", "source_id": memory["id"]}],
+        },
+    )
+    assert updated.status_code == 200
+    assert updated.json()["name"] == "Atlas brief"
+    assert [item["kind"] for item in updated.json()["sources"]] == ["memory"]
+
+    assert (
+        client.delete(f"/api/v1/knowledge-bases/{knowledge_base['id']}").status_code
+        == 204
+    )
+    target_after_delete = client.get(
+        f"/api/v1/conversations/{target['id']}"
+    ).json()
+    assert target_after_delete["settings"]["knowledge_base_id"] is None
+
+
 def test_memory_preset_upload_activity_and_replay(client: TestClient) -> None:
     conversation_id = _conversation(client)
     memory = client.post(

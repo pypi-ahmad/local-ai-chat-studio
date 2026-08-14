@@ -197,11 +197,25 @@ def build_context_plan(
     web_results: list[dict[str, str]] | None = None,
 ) -> ContextPlan:
     conversation = store.get_conversation(conversation_id)
+    knowledge_base = None
+    knowledge_materials: list[dict[str, str]] = []
+    if conversation.settings.knowledge_base_id:
+        try:
+            knowledge_base = store.get_knowledge_base(
+                conversation.settings.knowledge_base_id
+            )
+            knowledge_materials = store.knowledge_base_materials(knowledge_base.id)
+        except KeyError:
+            knowledge_base = None
     local = payload.provider in {"echo", "ollama-local", "omniroute"}
     policy = store.get_policy(payload.provider)
     history_allowed = local or policy.allow_retrieval
     memory_allowed = payload.include_memory and (local or policy.allow_memory)
-    retrieval_allowed = payload.include_retrieval and (local or policy.allow_retrieval)
+    retrieval_allowed = (
+        payload.include_retrieval
+        and (local or policy.allow_retrieval)
+        and (knowledge_base is None or knowledge_base.include_retrieval)
+    )
     attachment_allowed = payload.include_attachments and (
         local or policy.allow_attachments
     )
@@ -214,7 +228,20 @@ def build_context_plan(
     history_text = "\n".join(
         [history_summary, *(item.content for item in recent_history)]
     ).strip()
-    memories = relevant_memories(store, payload.content) if memory_allowed else []
+    knowledge_memory_ids = {
+        item["source_id"]
+        for item in knowledge_materials
+        if item["source_kind"] == "memory"
+    }
+    memories = (
+        [
+            item
+            for item in relevant_memories(store, payload.content)
+            if item.id not in knowledge_memory_ids
+        ]
+        if memory_allowed
+        else []
+    )
     selected_uploads = set(payload.attachment_ids)
     uploads = (
         [
@@ -243,6 +270,25 @@ def build_context_plan(
     upload_text = "\n".join(content for _, _, content in uploads)
     web_results = web_results or []
     web_text = "\n".join(item.get("snippet", "") for item in web_results)
+    knowledge_allowed_by_kind = {
+        "memory": memory_allowed,
+        "upload": attachment_allowed,
+        "backpack": backpack_allowed,
+    }
+    knowledge_tokens = sum(
+        estimate_tokens(item["content"])
+        for item in knowledge_materials
+        if not (
+            item["source_kind"] == "upload" and item["source_id"] in selected_uploads
+        )
+    )
+    knowledge_has_allowed = any(
+        knowledge_allowed_by_kind[item["source_kind"]]
+        and not (
+            item["source_kind"] == "upload" and item["source_id"] in selected_uploads
+        )
+        for item in knowledge_materials
+    )
     sections = [
         ContextSection(
             kind="system",
@@ -305,6 +351,16 @@ def build_context_plan(
             reason=None
             if backpack_allowed
             else "Disabled by provider policy or run settings",
+        ),
+        ContextSection(
+            kind="knowledge",
+            estimated_tokens=knowledge_tokens,
+            included=bool(knowledge_base and knowledge_has_allowed),
+            reason=(
+                None
+                if knowledge_base and knowledge_has_allowed
+                else "No bound knowledge base or its sources are blocked by provider policy"
+            ),
         ),
         ContextSection(kind="user", estimated_tokens=estimate_tokens(payload.content)),
     ]
@@ -391,11 +447,31 @@ def build_context_plan(
                     estimated_tokens=estimate_tokens(item.content),
                 )
             )
+    knowledge_by_id = {item["id"]: item for item in knowledge_materials}
+    for item in knowledge_materials:
+        allowed = knowledge_allowed_by_kind[item["source_kind"]]
+        duplicate_upload = (
+            item["source_kind"] == "upload" and item["source_id"] in selected_uploads
+        )
+        if duplicate_upload:
+            continue
+        sources.append(
+            ContextSource(
+                id=item["id"],
+                kind="knowledge",
+                title=item["title"],
+                preview=item["content"][:500],
+                estimated_tokens=estimate_tokens(item["content"]),
+                included=allowed,
+            )
+        )
     findings = scan_text(payload.content)
     for source in sources:
         source_findings = [
             item
-            for item in scan_text(source.preview)
+            for item in scan_text(
+                knowledge_by_id.get(source.id, {}).get("content", source.preview)
+            )
             if item.category == "prompt_injection"
         ]
         if source_findings:
@@ -428,6 +504,7 @@ def build_context_plan(
         "memory": 3,
         "attachment": 4,
         "backpack": 5,
+        "knowledge": 6,
     }
     for source in sorted(
         sources,
@@ -500,6 +577,27 @@ def assemble_messages(
             system_parts.append(
                 "Context backpack:\n"
                 + "\n".join(f"- {item.title}: {item.content}" for item in items)
+            )
+    knowledge_base_id = store.get_conversation(
+        conversation_id
+    ).settings.knowledge_base_id
+    if knowledge_base_id and included.get("knowledge"):
+        try:
+            knowledge_base = store.get_knowledge_base(knowledge_base_id)
+            materials = [
+                item
+                for item in store.knowledge_base_materials(knowledge_base_id)
+                if item["id"] in approved_sources
+            ]
+        except KeyError:
+            materials = []
+            knowledge_base = None
+        if knowledge_base and materials:
+            system_parts.append(
+                f"Knowledge base: {knowledge_base.name}\n"
+                + "\n\n".join(
+                    f"[{item['title']}]\n{item['content']}" for item in materials
+                )
             )
     if included.get("memory"):
         memories = [
