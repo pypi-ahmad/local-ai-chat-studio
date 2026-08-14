@@ -4,6 +4,8 @@ import {
   Backpack,
   Brain,
   CheckCircle,
+  ChevronLeft,
+  ChevronRight,
   CirclePlus,
   Command,
   Copy,
@@ -14,7 +16,9 @@ import {
   GitCompareArrows,
   Library,
   MessageSquare,
+  MoreHorizontal,
   PanelLeft,
+  PanelRightOpen,
   Paperclip,
   Play,
   PlugZap,
@@ -34,9 +38,11 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { MarkdownContent } from '@/components/MarkdownContent'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { Sheet, SheetContent } from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Textarea } from '@/components/ui/textarea'
 import { TooltipProvider } from '@/components/ui/tooltip'
 
@@ -53,6 +59,7 @@ import {
   type Preset,
   type ProviderPolicy,
   type ProviderSummary,
+  type ReasoningEffort,
   type RunSnapshot,
   type TurnPreflight,
   type Upload,
@@ -60,17 +67,44 @@ import {
 
 type Page = 'Chat' | 'Compare' | 'Context' | 'Evidence' | 'Replay' | 'Focus' | 'Providers' | 'Library' | 'Settings'
 
-const navigation = [
-  ['Chat', MessageSquare],
-  ['Compare', GitCompareArrows],
-  ['Context', Brain],
-  ['Evidence', ShieldCheck],
-  ['Replay', RotateCcw],
-  ['Focus', Focus],
-  ['Providers', PlugZap],
-  ['Library', Library],
-  ['Settings', Settings],
-] as const
+const navigationGroups: ReadonlyArray<{ label: string; items: ReadonlyArray<readonly [Page, typeof MessageSquare]> }> = [
+  { label: 'Work', items: [['Chat', MessageSquare], ['Compare', GitCompareArrows]] },
+  { label: 'Inspect', items: [['Context', Brain], ['Evidence', ShieldCheck], ['Replay', RotateCcw]] },
+  { label: 'Personalize', items: [['Focus', Focus], ['Library', Library]] },
+  { label: 'System', items: [['Providers', PlugZap], ['Settings', Settings]] },
+]
+
+type InspectorTab = 'context' | 'evidence'
+
+function readStoredBoolean(key: string, fallback: boolean) {
+  try {
+    const value = localStorage.getItem(key)
+    return value === null ? fallback : value === 'true'
+  } catch {
+    return fallback
+  }
+}
+
+function readInspectorTab() {
+  try {
+    return localStorage.getItem('chat-studio.inspector-tab') === 'evidence' ? 'evidence' : 'context'
+  } catch {
+    return 'context'
+  }
+}
+
+function useMediaQuery(query: string) {
+  const [matches, setMatches] = useState(() => typeof window !== 'undefined' && Boolean(window.matchMedia?.(query).matches))
+  useEffect(() => {
+    const media = window.matchMedia?.(query)
+    if (!media) return
+    const update = () => setMatches(media.matches)
+    update()
+    media.addEventListener('change', update)
+    return () => media.removeEventListener('change', update)
+  }, [query])
+  return matches
+}
 
 const defaultPolicy: ProviderPolicy = {
   allow_memory: false,
@@ -88,27 +122,52 @@ function messageOf(error: unknown) {
   return error instanceof Error ? error.message : 'Request failed'
 }
 
-function Navigation({ page, onPage, connected }: { page: Page; onPage: (page: Page) => void; connected: boolean }) {
+function Navigation({ page, onPage, connected, collapsed, onCollapsed }: { page: Page; onPage: (page: Page) => void; connected: boolean; collapsed: boolean; onCollapsed: (collapsed: boolean) => void }) {
+  const mobile = useMediaQuery('(max-width: 820px)')
+  const [moreOpen, setMoreOpen] = useState(false)
+  const mobilePages: Page[] = ['Chat', 'Compare', 'Library']
+  const hiddenPageActive = !mobilePages.includes(page)
+
+  if (mobile) {
+    return (
+      <>
+        <nav aria-label="Primary navigation" className="mobile-bottom-nav">
+          {navigationGroups.flatMap((group) => group.items).filter(([label]) => mobilePages.includes(label)).map(([label, Icon]) => (
+            <button aria-current={page === label ? 'page' : undefined} className="mobile-nav-button" key={label} onClick={() => onPage(label)} type="button"><Icon /><span>{label}</span></button>
+          ))}
+          <button aria-current={hiddenPageActive ? 'page' : undefined} aria-expanded={moreOpen} className="mobile-nav-button" onClick={() => setMoreOpen(true)} type="button"><MoreHorizontal /><span>More</span></button>
+        </nav>
+        <Sheet onOpenChange={setMoreOpen} open={moreOpen}>
+          <SheetContent className="more-navigation-sheet" side="left">
+            <SheetHeader><SheetTitle>Navigate</SheetTitle><SheetDescription>Open another Studio workspace.</SheetDescription></SheetHeader>
+            <nav aria-label="More navigation" className="more-navigation">
+              {navigationGroups.map((group) => {
+                const items = group.items.filter(([label]) => !mobilePages.includes(label))
+                if (!items.length) return null
+                return <div className="more-navigation-group" key={group.label}><p>{group.label}</p>{items.map(([label, Icon]) => <button aria-current={page === label ? 'page' : undefined} key={label} onClick={() => { onPage(label); setMoreOpen(false) }} type="button"><Icon /><span>{label}</span></button>)}</div>
+              })}
+            </nav>
+          </SheetContent>
+        </Sheet>
+      </>
+    )
+  }
+
   return (
-    <nav aria-label="Primary navigation" className="nav-rail">
-      <div className="brand-mark" aria-label="Local AI Chat Studio"><Command /></div>
+    <nav aria-label="Primary navigation" className={collapsed ? 'nav-rail collapsed' : 'nav-rail expanded'}>
+      <div className="nav-brand"><div className="brand-mark" aria-label="Local AI Chat Studio"><Command /></div><div className="nav-brand-copy"><strong>Chat Studio</strong><small>Local AI workspace</small></div></div>
       <div className="nav-items">
-        {navigation.map(([label, Icon]) => (
-          <Button
-            key={label}
-            aria-label={label}
-            aria-current={page === label ? 'page' : undefined}
-            className="nav-button"
-            onClick={() => onPage(label)}
-            size="icon-lg"
-            title={label}
-            variant={page === label ? 'secondary' : 'ghost'}
-          >
-            <Icon />
-          </Button>
+        {navigationGroups.map((group) => (
+          <div className="nav-group" key={group.label}>
+            <p className="nav-group-label">{group.label}</p>
+            {group.items.map(([label, Icon]) => (
+              <Button key={label} aria-label={label} aria-current={page === label ? 'page' : undefined} className="nav-button" onClick={() => onPage(label)} title={collapsed ? label : undefined} variant={page === label ? 'secondary' : 'ghost'}><Icon /><span className="nav-label">{label}</span></Button>
+            ))}
+          </div>
         ))}
       </div>
-      <span className={connected ? 'status-dot' : 'status-dot offline'} title={connected ? 'Backend connected' : 'Backend unavailable'} />
+      <div className="nav-footer"><span className={connected ? 'status-dot' : 'status-dot offline'} /><span>{connected ? 'Backend connected' : 'Backend unavailable'}</span></div>
+      <Button aria-expanded={!collapsed} aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'} className="nav-collapse" onClick={() => onCollapsed(!collapsed)} size="icon-sm" variant="ghost">{collapsed ? <ChevronRight /> : <ChevronLeft />}</Button>
     </nav>
   )
 }
@@ -185,19 +244,83 @@ function ContextRail({ plan, model }: { plan: ContextPlan | null; model?: ModelS
   )
 }
 
-function ModelPicker({ models, value, onChange }: { models: ModelSummary[]; value: string; onChange: (value: string) => void }) {
+const modelKey = (model: ModelSummary) => `${model.provider}::${model.id}`
+
+function ProviderModelPicker({
+  models,
+  providers,
+  value,
+  onChange,
+  providerLabel = 'Provider',
+  modelLabel = 'Model',
+  disabled = false,
+  excludedKeys = new Set<string>(),
+}: {
+  models: ModelSummary[]
+  providers: ProviderSummary[]
+  value: string
+  onChange: (value: string) => void
+  providerLabel?: string
+  modelLabel?: string
+  disabled?: boolean
+  excludedKeys?: Set<string>
+}) {
+  const selected = models.find((model) => modelKey(model) === value)
+  const providerIds = [...new Set(models.map((model) => model.provider))]
+  const selectedProvider = selected?.provider ?? providerIds[0] ?? ''
+  const availableModels = models.filter((model) => model.provider === selectedProvider && (!excludedKeys.has(modelKey(model)) || modelKey(model) === value))
+  const providerName = (id: string) => providers.find((provider) => provider.id === id)?.label ?? id
+
   return (
-    <select aria-label="Model" onChange={(event) => onChange(event.target.value)} value={value}>
-      {models.map((model) => <option key={`${model.provider}::${model.id}`} value={`${model.provider}::${model.id}`}>{model.label || model.id} · {model.provider} · {pricingLabel(model)}</option>)}
-    </select>
+    <div className="provider-model-picker">
+      <label><span>{providerLabel}</span><select aria-label={providerLabel} disabled={disabled || !providerIds.length} onChange={(event) => {
+        const next = models.find((model) => model.provider === event.target.value && !excludedKeys.has(modelKey(model)))
+        if (next) onChange(modelKey(next))
+      }} value={selectedProvider}>
+        {!providerIds.length && <option value="">No providers available</option>}
+        {providerIds.map((provider) => <option disabled={!models.some((model) => model.provider === provider && (!excludedKeys.has(modelKey(model)) || modelKey(model) === value))} key={provider} value={provider}>{providerName(provider)}</option>)}
+      </select></label>
+      <label><span>{modelLabel}</span><select aria-label={modelLabel} disabled={disabled || !availableModels.length} onChange={(event) => onChange(event.target.value)} value={value}>
+        {!availableModels.length && <option value="">No models available</option>}
+        {availableModels.map((model) => <option key={modelKey(model)} value={modelKey(model)}>{model.label || model.id} · {pricingLabel(model)}</option>)}
+      </select></label>
+    </div>
+  )
+}
+
+function ContextPlanSummary({ plan }: { plan: ContextPlan | null }) {
+  if (!plan) return <p className="muted">Send a message to build a context plan.</p>
+  return <div className="stack-list context-section-list">{plan.sections.map((section) => <div className="data-row" key={section.kind}><div><strong>{section.kind}</strong>{section.reason && <small>{section.reason}</small>}</div><Badge variant={section.included ? 'default' : 'outline'}>{section.included ? `${section.estimated_tokens.toLocaleString()} tokens` : 'excluded'}</Badge></div>)}</div>
+}
+
+function EvidenceSourceList({ plan, excluded, onToggle }: { plan: ContextPlan | null; excluded: Set<string>; onToggle: (id: string) => void }) {
+  if (!plan?.sources.length) return <p className="muted">No evidence sources are available for the current plan.</p>
+  return <div className="stack-list">{plan.sources.map((source) => <div className="source-card" key={source.id}><div><strong>{source.title}</strong><small>{source.kind} · {source.estimated_tokens.toLocaleString()} tokens</small></div><Badge variant={source.trust === 'trusted' ? 'outline' : 'destructive'}>{source.trust}</Badge><p>{source.preview}</p><label><input checked={!excluded.has(source.id)} disabled={source.trust !== 'trusted'} onChange={() => onToggle(source.id)} type="checkbox" /> Include in next send</label>{source.url && <a href={source.url} rel="noreferrer" target="_blank">Open source</a>}</div>)}</div>
+}
+
+function ContextEvidenceInspector({ plan, excluded, onToggle, tab, onTab, onClose, onPage }: { plan: ContextPlan | null; excluded: Set<string>; onToggle: (id: string) => void; tab: InspectorTab; onTab: (tab: InspectorTab) => void; onClose: () => void; onPage: (page: Page) => void }) {
+  return (
+    <aside aria-label="Context and evidence inspector" className="context-inspector">
+      <header className="inspector-header"><div><p className="eyebrow">Prompt trail</p><h2>Inspector</h2></div><Button aria-label="Close inspector" onClick={onClose} size="icon-sm" variant="ghost"><ChevronRight /></Button></header>
+      <Tabs className="inspector-tabs" onValueChange={(value) => onTab(value as InspectorTab)} value={tab}>
+        <TabsList><TabsTrigger value="context"><Brain /> Context</TabsTrigger><TabsTrigger value="evidence"><ShieldCheck /> Evidence</TabsTrigger></TabsList>
+        <ScrollArea className="inspector-scroll">
+          <TabsContent value="context"><div className="inspector-content"><ContextRail plan={plan} /><ContextPlanSummary plan={plan} /><Button onClick={() => onPage('Context')} variant="outline">Open full Context page</Button></div></TabsContent>
+          <TabsContent value="evidence"><div className="inspector-content"><EvidenceSourceList excluded={excluded} onToggle={onToggle} plan={plan} /><Button onClick={() => onPage('Evidence')} variant="outline">Open full Evidence page</Button></div></TabsContent>
+        </ScrollArea>
+      </Tabs>
+    </aside>
   )
 }
 
 function ChatWorkspace({
   conversation,
   models,
+  providers,
   selectedModel,
   onModel,
+  reasoningEffort,
+  onReasoningEffort,
   plan,
   pendingPlan,
   liveOutput,
@@ -216,11 +339,16 @@ function ChatWorkspace({
   onBranch,
   onFeedback,
   onHistory,
+  inspectorOpen,
+  onInspector,
 }: {
   conversation: Conversation | null
   models: ModelSummary[]
+  providers: ProviderSummary[]
   selectedModel: string
   onModel: (value: string) => void
+  reasoningEffort: ReasoningEffort | ''
+  onReasoningEffort: (value: ReasoningEffort | '') => void
   plan: ContextPlan | null
   pendingPlan: ContextPlan | null
   liveOutput: string
@@ -239,6 +367,8 @@ function ChatWorkspace({
   onBranch: (messageId: string) => Promise<void>
   onFeedback: (messageId: string, rating: -1 | 1) => Promise<void>
   onHistory: () => void
+  inspectorOpen: boolean
+  onInspector: () => void
 }) {
   const [prompt, setPrompt] = useState('')
   const fileRef = useRef<HTMLInputElement>(null)
@@ -253,7 +383,7 @@ function ChatWorkspace({
       <header className="workspace-header">
         <Button aria-label="Open conversation history" className="mobile-history-trigger" onClick={onHistory} size="icon" variant="ghost"><PanelLeft /></Button>
         <div className="workspace-title"><p className="eyebrow">Conversation</p><h2>{conversation?.title ?? 'New conversation'}</h2>{selected?.pricing && <small>Estimated pricing: {pricingLabel(selected)} · <a href={selected.pricing.source_url} rel="noreferrer" target="_blank">official source</a></small>}</div>
-        <div className="action-row"><Button disabled={!conversation?.messages.length || savingMemories || !selectedModel} onClick={onSaveMemories} variant="outline"><Brain /> {savingMemories ? 'Saving…' : 'Save memories & close'}</Button><ModelPicker models={models} onChange={onModel} value={selectedModel} /></div>
+        <div className="action-row"><Button aria-expanded={inspectorOpen} aria-label={`${inspectorOpen ? 'Close' : 'Open'} context and evidence inspector`} onClick={onInspector} variant={inspectorOpen ? 'secondary' : 'outline'}><PanelRightOpen /> Inspector</Button><Button disabled={!conversation?.messages.length || savingMemories || !selectedModel} onClick={onSaveMemories} variant="outline"><Brain /> {savingMemories ? 'Saving…' : 'Save memories & close'}</Button></div>
       </header>
       <ContextRail model={selected} plan={plan} />
       <ScrollArea className="message-area">
@@ -264,7 +394,7 @@ function ChatWorkspace({
           {conversation?.messages.map((message) => (
             <article className={`message ${message.role}`} key={message.id}>
               <div className="message-label"><span>{message.role === 'user' ? 'You' : 'Assistant'}</span>{message.run_id && <Badge variant="outline">evidence saved</Badge>}</div>
-              <p>{message.content}</p>
+              <MarkdownContent content={message.content} />
               <div className="message-actions">
                 <Button onClick={() => navigator.clipboard.writeText(message.content)} size="sm" variant="ghost"><Copy /> Copy</Button>
                 <Button onClick={() => onBranch(message.id)} size="sm" variant="ghost"><GitBranch /> Branch here</Button>
@@ -272,7 +402,7 @@ function ChatWorkspace({
               </div>
             </article>
           ))}
-          {liveOutput && <article className="message assistant live"><div className="message-label"><span>Assistant</span><Badge>streaming</Badge></div><p>{liveOutput}</p></article>}
+          {liveOutput && <article className="message assistant live"><div className="message-label"><span>Assistant</span><Badge>streaming</Badge></div><MarkdownContent content={liveOutput} /></article>}
         </div>
       </ScrollArea>
       {pendingPlan && (
@@ -292,6 +422,21 @@ function ChatWorkspace({
           placeholder="Message your model…"
           value={prompt}
         />
+        <div className="composer-config-row">
+          <ProviderModelPicker models={models} onChange={onModel} providers={providers} value={selectedModel} />
+          <label className="effort-picker" title="Higher reasoning effort can increase latency and billed reasoning or output usage.">
+            <span>Effort</span>
+            <select
+              aria-label="Reasoning effort"
+              disabled={!selected?.reasoning_efforts?.length}
+              onChange={(event) => onReasoningEffort(event.target.value as ReasoningEffort | '')}
+              value={reasoningEffort}
+            >
+              <option value="">{selected?.reasoning_efforts?.length ? 'Auto' : 'Provider default'}</option>
+              {selected?.reasoning_efforts?.map((effort) => <option key={effort} value={effort}>{effort}</option>)}
+            </select>
+          </label>
+        </div>
         <div className="composer-actions">
           <input
             accept=".pdf,.txt,.md,.csv,.docx,.doc,.xlsx,.xls,.json,.py,.png,.jpg,.jpeg,.webp"
@@ -321,9 +466,9 @@ type ComparisonResult = {
   error?: string
 }
 
-const comparisonModelKey = (model: ModelSummary) => `${model.provider}::${model.id}`
+const comparisonModelKey = modelKey
 
-function ComparePage({ models }: { models: ModelSummary[] }) {
+function ComparePage({ models, providers }: { models: ModelSummary[]; providers: ProviderSummary[] }) {
   const [prompt, setPrompt] = useState('')
   const [selectedModels, setSelectedModels] = useState<string[]>([])
   const [results, setResults] = useState<ComparisonResult[]>([])
@@ -404,18 +549,12 @@ function ComparePage({ models }: { models: ModelSummary[] }) {
     <Surface eyebrow="Parallel run" title="Compare" description="Send one prompt to 2–4 models and compare their independent streams.">
       <div className="compare-models">
         {selectedModels.map((selected, index) => (
-          <label className="compare-model-field" key={`${index}-${selected}`}>
-            <span>Model {index + 1}</span>
+          <div className="compare-model-field" key={`${index}-${selected}`}>
             <div className="action-row">
-              <select aria-label={`Comparison model ${index + 1}`} disabled={running} onChange={(event) => replaceSelection(index, event.target.value)} value={selected}>
-                {models.map((model) => {
-                  const key = comparisonModelKey(model)
-                  return <option disabled={key !== selected && selectedModels.includes(key)} key={key} value={key}>{model.label || model.id} · {model.provider} · {pricingLabel(model)}</option>
-                })}
-              </select>
+              <ProviderModelPicker disabled={running} excludedKeys={new Set(selectedModels.filter((_, itemIndex) => itemIndex !== index))} modelLabel={`Comparison model ${index + 1}`} models={models} onChange={(key) => replaceSelection(index, key)} providerLabel={`Comparison provider ${index + 1}`} providers={providers} value={selected} />
               {selectedModels.length > 2 && <Button aria-label={`Remove model ${index + 1}`} disabled={running} onClick={() => removeModel(index)} size="icon-sm" variant="ghost"><Trash2 /></Button>}
             </div>
-          </label>
+          </div>
         ))}
         {selectedModels.length < Math.min(4, models.length) && <Button disabled={running} onClick={addModel} variant="outline"><CirclePlus /> Add model</Button>}
       </div>
@@ -427,8 +566,8 @@ function ComparePage({ models }: { models: ModelSummary[] }) {
       <div className="comparison-grid">
         {results.length ? results.map((result) => {
           const model = models.find((candidate) => comparisonModelKey(candidate) === result.key)
-          return <Card key={result.key}><CardHeader><div className="comparison-title"><div><CardTitle>{model?.label || model?.id || result.key}</CardTitle><CardDescription>{model?.provider} · {model ? pricingLabel(model) : 'pricing unavailable'}</CardDescription></div><Badge variant={result.status === 'failed' ? 'destructive' : 'outline'}>{result.status}</Badge></div></CardHeader><CardContent><pre aria-live="polite" className="output-block">{result.error || result.output || (result.status === 'starting' ? 'Starting run…' : 'Waiting for response…')}</pre></CardContent></Card>
-        }) : selectedTargets.map((model) => <Card key={comparisonModelKey(model)}><CardHeader><CardTitle>{model.label || model.id}</CardTitle><CardDescription>{model.provider} · {pricingLabel(model)}</CardDescription></CardHeader><CardContent><pre className="output-block">Waiting for a run.</pre></CardContent></Card>)}
+          return <Card key={result.key}><CardHeader><div className="comparison-title"><div><CardTitle>{model?.label || model?.id || result.key}</CardTitle><CardDescription>{model?.provider} · {model ? pricingLabel(model) : 'pricing unavailable'}</CardDescription></div><Badge variant={result.status === 'failed' ? 'destructive' : 'outline'}>{result.status}</Badge></div></CardHeader><CardContent><MarkdownContent className="comparison-markdown" content={result.error || result.output || (result.status === 'starting' ? 'Starting run…' : 'Waiting for response…')} /></CardContent></Card>
+        }) : selectedTargets.map((model) => <Card key={comparisonModelKey(model)}><CardHeader><CardTitle>{model.label || model.id}</CardTitle><CardDescription>{model.provider} · {pricingLabel(model)}</CardDescription></CardHeader><CardContent><MarkdownContent className="comparison-markdown" content="Waiting for a run." /></CardContent></Card>)}
       </div>
     </Surface>
   )
@@ -438,19 +577,19 @@ function ContextPage({ plan, backpacks, onCreate }: { plan: ContextPlan | null; 
   const [name, setName] = useState('Project context')
   const [title, setTitle] = useState('Constraint')
   const [content, setContent] = useState('')
-  return <Surface eyebrow="What enters the model" title="Context control" description="Budget, inspect, and carry deliberate context between conversations."><ContextRail plan={plan} /><div className="surface-grid"><Card><CardHeader><CardTitle>Current plan</CardTitle><CardDescription>Sections are estimated locally and preserve 20% for output.</CardDescription></CardHeader><CardContent className="stack-list">{plan?.sections.map((section) => <div className="data-row" key={section.kind}><span>{section.kind}</span><Badge variant={section.included ? 'default' : 'outline'}>{section.included ? `${section.estimated_tokens} tokens` : 'excluded'}</Badge></div>) ?? <p className="muted">Send or preflight a message to build a plan.</p>}</CardContent></Card><Card><CardHeader><CardTitle>Context backpack</CardTitle><CardDescription>Pin an immutable local snapshot for reuse.</CardDescription></CardHeader><CardContent className="form-stack"><Input onChange={(event) => setName(event.target.value)} value={name} /><Input onChange={(event) => setTitle(event.target.value)} value={title} /><Textarea onChange={(event) => setContent(event.target.value)} placeholder="Context to carry" value={content} /><Button disabled={!content.trim()} onClick={async () => { await onCreate(name, title, content); setContent('') }}><Backpack /> Save backpack</Button>{backpacks.map((item) => <div className="data-row" key={item.id}><span>{item.name}</span><small>{item.items.length} items</small></div>)}</CardContent></Card></div></Surface>
+  return <Surface eyebrow="What enters the model" title="Context control" description="Budget, inspect, and carry deliberate context between conversations."><ContextRail plan={plan} /><div className="surface-grid"><Card><CardHeader><CardTitle>Current plan</CardTitle><CardDescription>Sections are estimated locally and preserve 20% for output.</CardDescription></CardHeader><CardContent><ContextPlanSummary plan={plan} /></CardContent></Card><Card><CardHeader><CardTitle>Context backpack</CardTitle><CardDescription>Pin an immutable local snapshot for reuse.</CardDescription></CardHeader><CardContent className="form-stack"><Input onChange={(event) => setName(event.target.value)} value={name} /><Input onChange={(event) => setTitle(event.target.value)} value={title} /><Textarea onChange={(event) => setContent(event.target.value)} placeholder="Context to carry" value={content} /><Button disabled={!content.trim()} onClick={async () => { await onCreate(name, title, content); setContent('') }}><Backpack /> Save backpack</Button>{backpacks.map((item) => <div className="data-row" key={item.id}><span>{item.name}</span><small>{item.items.length} items</small></div>)}</CardContent></Card></div></Surface>
 }
 
 function EvidencePage({ activity, plan, excluded, onToggle }: { activity: RunSnapshot[]; plan: ContextPlan | null; excluded: Set<string>; onToggle: (id: string) => void }) {
-  return <Surface eyebrow="Why this answer" title="Evidence" description="Inspect sources, exclude individual records, and verify integrity receipts."><div className="surface-grid"><Card><CardHeader><CardTitle>Retrieved sources</CardTitle></CardHeader><CardContent className="stack-list">{plan?.sources.map((source) => <div className="source-card" key={source.id}><div><strong>{source.title}</strong><small>{source.kind} · {source.estimated_tokens} tokens</small></div><Badge variant={source.trust === 'trusted' ? 'outline' : 'destructive'}>{source.trust}</Badge><p>{source.preview}</p><label><input checked={!excluded.has(source.id)} disabled={source.trust !== 'trusted'} onChange={() => onToggle(source.id)} type="checkbox" /> Include in next send</label>{source.url && <a href={source.url} rel="noreferrer" target="_blank">Open source</a>}</div>) ?? <p className="muted">No context plan selected.</p>}</CardContent></Card><Card><CardHeader><CardTitle>Integrity chain</CardTitle></CardHeader><CardContent className="stack-list">{activity.map((run) => <div className="data-row" key={run.id}><div><strong>{run.model}</strong><small>{run.status} · {String(run.metrics.elapsed_seconds ?? '—')}s</small></div><code>{run.receipt_hash?.slice(0, 12) || 'pending'}</code></div>)}</CardContent></Card></div></Surface>
+  return <Surface eyebrow="Why this answer" title="Evidence" description="Inspect sources, exclude individual records, and verify integrity receipts."><div className="surface-grid"><Card><CardHeader><CardTitle>Retrieved sources</CardTitle></CardHeader><CardContent><EvidenceSourceList excluded={excluded} onToggle={onToggle} plan={plan} /></CardContent></Card><Card><CardHeader><CardTitle>Integrity chain</CardTitle></CardHeader><CardContent className="stack-list">{activity.map((run) => <div className="data-row" key={run.id}><div><strong>{run.model}</strong><small>{run.status} · {String(run.metrics.elapsed_seconds ?? '—')}s</small></div><code>{run.receipt_hash?.slice(0, 12) || 'pending'}</code></div>)}</CardContent></Card></div></Surface>
 }
 
-function ReplayPage({ activity, models, onReplay }: { activity: RunSnapshot[]; models: ModelSummary[]; onReplay: (run: RunSnapshot) => Promise<void> }) {
+function ReplayPage({ activity, models, providers, selectedModel, onModel, onReplay }: { activity: RunSnapshot[]; models: ModelSummary[]; providers: ProviderSummary[]; selectedModel: string; onModel: (value: string) => void; onReplay: (run: RunSnapshot, modelKey: string) => Promise<void> }) {
   const [left, setLeft] = useState<string | null>(null)
   const [diff, setDiff] = useState('')
   const saveBundle = async (run: RunSnapshot, mode: 'full' | 'redacted') => { const bundle = await api.bundle(run.id, mode); const url = URL.createObjectURL(new Blob([JSON.stringify(bundle, null, 2)], { type: 'application/json' })); const anchor = document.createElement('a'); anchor.href = url; anchor.download = `${run.id}-${mode}.json`; anchor.click(); URL.revokeObjectURL(url) }
   const compare = async (run: RunSnapshot) => { if (!left) { setLeft(run.id); setDiff(''); return } const result = await api.diff(left, run.id); setDiff(result.diff || 'Outputs are identical.'); setLeft(null) }
-  return <Surface eyebrow="Prompt tape" title="Replay lab" description="Re-run a recorded prompt, compare outputs, and export full or privacy-safe bundles."><div className="timeline">{activity.map((run) => <Card key={run.id}><CardContent className="run-row"><div><Badge variant="outline">{run.status}</Badge><h3>{run.model}</h3><p>{run.output.slice(0, 180) || run.error || 'No output yet'}</p><small>{run.receipt_hash ? `receipt ${run.receipt_hash.slice(0, 12)}` : 'receipt pending'}</small></div><div className="inline-actions"><Button disabled={!models.length} onClick={() => onReplay(run)} variant="outline"><RotateCcw /> Replay</Button><Button onClick={() => compare(run)} variant="outline">{left ? 'Compare here' : 'Select for diff'}</Button><Button onClick={() => saveBundle(run, 'full')} size="icon-sm" variant="ghost" title="Export full local bundle"><Download /></Button><Button onClick={() => saveBundle(run, 'redacted')} size="icon-sm" variant="ghost" title="Export redacted share bundle"><ShieldCheck /></Button></div></CardContent></Card>)}{diff && <pre className="output-block">{diff}</pre>}</div></Surface>
+  return <Surface eyebrow="Prompt tape" title="Replay lab" description="Re-run a recorded prompt, compare outputs, and export full or privacy-safe bundles."><div className="replay-target"><p className="section-label">Replay target</p><ProviderModelPicker modelLabel="Replay model" models={models} onChange={onModel} providerLabel="Replay provider" providers={providers} value={selectedModel} /></div><div className="timeline">{activity.map((run) => <Card key={run.id}><CardContent className="run-row"><div><Badge variant="outline">{run.status}</Badge><h3>{run.model}</h3><p>{run.output.slice(0, 180) || run.error || 'No output yet'}</p><small>{run.receipt_hash ? `receipt ${run.receipt_hash.slice(0, 12)}` : 'receipt pending'}</small></div><div className="inline-actions"><Button disabled={!selectedModel} onClick={() => onReplay(run, selectedModel)} variant="outline"><RotateCcw /> Replay</Button><Button onClick={() => compare(run)} variant="outline">{left ? 'Compare here' : 'Select for diff'}</Button><Button onClick={() => saveBundle(run, 'full')} size="icon-sm" variant="ghost" title="Export full local bundle"><Download /></Button><Button onClick={() => saveBundle(run, 'redacted')} size="icon-sm" variant="ghost" title="Export redacted share bundle"><ShieldCheck /></Button></div></CardContent></Card>)}{diff && <pre className="output-block">{diff}</pre>}</div></Surface>
 }
 
 function FocusPage({ conversationId, onCreate }: { conversationId: string | null; onCreate: (objective: string, criteria: string, constraints: string[]) => Promise<void> }) {
@@ -491,15 +630,16 @@ function ProvidersPage({ providers, onChanged }: { providers: ProviderSummary[];
 }
 
 function LibraryPage({
-  memories, presets, uploads, conversationId, onMemory, onMemoryUpdate, onMemoryDelete, onPreset, onPresetDelete, onUpload,
+  memories, presets, uploads, conversationId, models, providers, selectedModel, onModel, onMemory, onMemoryUpdate, onMemoryDelete, onPreset, onPresetDelete, onUpload,
 }: {
   memories: Memory[]; presets: Preset[]; uploads: Upload[]; conversationId: string | null
+  models: ModelSummary[]; providers: ProviderSummary[]; selectedModel: string; onModel: (value: string) => void
   onMemory: (content: string) => Promise<void>; onMemoryUpdate: (id: string, payload: { status?: Memory['status']; pinned?: boolean }) => Promise<void>; onMemoryDelete: (id: string) => Promise<void>; onPreset: (name: string, prompt: string) => Promise<void>; onPresetDelete: (id: string) => Promise<void>; onUpload: (file: File) => Promise<void>
 }) {
   const [memory, setMemory] = useState('')
   const [presetName, setPresetName] = useState('')
   const [presetPrompt, setPresetPrompt] = useState('')
-  return <Surface eyebrow="Durable local knowledge" title="Library" description="Manage memories, assistants, and conversation files from one place."><div className="three-grid"><Card><CardHeader><CardTitle>Memory</CardTitle></CardHeader><CardContent className="form-stack"><Textarea onChange={(event) => setMemory(event.target.value)} placeholder="A fact or preference" value={memory} /><Button disabled={!memory.trim()} onClick={async () => { await onMemory(memory); setMemory('') }}><Brain /> Add memory</Button>{memories.map((item) => <div className="data-row" key={item.id}><span>{item.content}</span><Badge variant={item.status === 'active' ? 'outline' : 'destructive'}>{item.status}</Badge><div className="inline-actions">{item.status === 'quarantined' && <Button onClick={() => onMemoryUpdate(item.id, { status: 'active' })} size="icon-sm" variant="ghost"><CheckCircle /></Button>}<Button onClick={() => onMemoryUpdate(item.id, { pinned: !item.pinned })} size="icon-sm" variant="ghost">⌖</Button><Button onClick={() => onMemoryUpdate(item.id, { status: 'archived' })} size="icon-sm" variant="ghost"><XCircle /></Button><Button onClick={() => onMemoryDelete(item.id)} size="icon-sm" variant="ghost"><Trash2 /></Button></div></div>)}</CardContent></Card><Card><CardHeader><CardTitle>Assistants</CardTitle></CardHeader><CardContent className="form-stack"><Input onChange={(event) => setPresetName(event.target.value)} placeholder="Assistant name" value={presetName} /><Textarea onChange={(event) => setPresetPrompt(event.target.value)} placeholder="System prompt" value={presetPrompt} /><Button disabled={!presetName.trim()} onClick={async () => { await onPreset(presetName, presetPrompt); setPresetName(''); setPresetPrompt('') }}>Save assistant</Button>{presets.map((item) => <div className="data-row" key={item.id}><span>{item.name}</span><small>{item.model_key || 'Any model'}</small><Button onClick={() => onPresetDelete(item.id)} size="icon-sm" variant="ghost"><Trash2 /></Button></div>)}</CardContent></Card><Card><CardHeader><CardTitle>Files</CardTitle></CardHeader><CardContent className="form-stack"><label className="file-drop"><FileUp /><span>{conversationId ? 'Add to current conversation' : 'Select a conversation first'}</span><input disabled={!conversationId} onChange={(event) => { const file = event.target.files?.[0]; if (file) void onUpload(file) }} type="file" /></label>{uploads.map((item) => <div className="data-row" key={item.id}><span>{item.filename}</span><small>{Math.ceil(item.size / 1024)} KB</small></div>)}</CardContent></Card></div></Surface>
+  return <Surface eyebrow="Durable local knowledge" title="Library" description="Manage memories, assistants, and conversation files from one place."><div className="three-grid"><Card><CardHeader><CardTitle>Memory</CardTitle></CardHeader><CardContent className="form-stack"><Textarea onChange={(event) => setMemory(event.target.value)} placeholder="A fact or preference" value={memory} /><Button disabled={!memory.trim()} onClick={async () => { await onMemory(memory); setMemory('') }}><Brain /> Add memory</Button>{memories.map((item) => <div className="data-row" key={item.id}><span>{item.content}</span><Badge variant={item.status === 'active' ? 'outline' : 'destructive'}>{item.status}</Badge><div className="inline-actions">{item.status === 'quarantined' && <Button onClick={() => onMemoryUpdate(item.id, { status: 'active' })} size="icon-sm" variant="ghost"><CheckCircle /></Button>}<Button onClick={() => onMemoryUpdate(item.id, { pinned: !item.pinned })} size="icon-sm" variant="ghost">⌖</Button><Button onClick={() => onMemoryUpdate(item.id, { status: 'archived' })} size="icon-sm" variant="ghost"><XCircle /></Button><Button onClick={() => onMemoryDelete(item.id)} size="icon-sm" variant="ghost"><Trash2 /></Button></div></div>)}</CardContent></Card><Card><CardHeader><CardTitle>Assistants</CardTitle></CardHeader><CardContent className="form-stack"><Input onChange={(event) => setPresetName(event.target.value)} placeholder="Assistant name" value={presetName} /><Textarea onChange={(event) => setPresetPrompt(event.target.value)} placeholder="System prompt" value={presetPrompt} /><ProviderModelPicker modelLabel="Assistant model" models={models} onChange={onModel} providerLabel="Assistant provider" providers={providers} value={selectedModel} /><Button disabled={!presetName.trim() || !selectedModel} onClick={async () => { await onPreset(presetName, presetPrompt); setPresetName(''); setPresetPrompt('') }}>Save assistant</Button>{presets.map((item) => <div className="data-row" key={item.id}><span>{item.name}</span><small>{item.model_key || 'Any model'}</small><Button onClick={() => onPresetDelete(item.id)} size="icon-sm" variant="ghost"><Trash2 /></Button></div>)}</CardContent></Card><Card><CardHeader><CardTitle>Files</CardTitle></CardHeader><CardContent className="form-stack"><label className="file-drop"><FileUp /><span>{conversationId ? 'Add to current conversation' : 'Select a conversation first'}</span><input disabled={!conversationId} onChange={(event) => { const file = event.target.files?.[0]; if (file) void onUpload(file) }} type="file" /></label>{uploads.map((item) => <div className="data-row" key={item.id}><span>{item.filename}</span><small>{Math.ceil(item.size / 1024)} KB</small></div>)}</CardContent></Card></div></Surface>
 }
 
 function SettingsPage({ connected, onRefresh }: { connected: boolean; onRefresh: () => Promise<void> }) {
@@ -532,6 +672,10 @@ async function fileAsBase64(file: File) {
 
 function App() {
   const [page, setPage] = useState<Page>('Chat')
+  const [navigationCollapsed, setNavigationCollapsed] = useState(() => readStoredBoolean('chat-studio.navigation-collapsed', false))
+  const [inspectorOpen, setInspectorOpen] = useState(() => readStoredBoolean('chat-studio.inspector-open', false))
+  const [inspectorTab, setInspectorTab] = useState<InspectorTab>(readInspectorTab)
+  const wideInspector = useMediaQuery('(min-width: 1440px)')
   const [connected, setConnected] = useState(false)
   const [conversations, setConversations] = useState<Conversation[]>([])
   const [activeId, setActiveId] = useState<string | null>(null)
@@ -539,6 +683,7 @@ function App() {
   const [providers, setProviders] = useState<ProviderSummary[]>([])
   const [models, setModels] = useState<ModelSummary[]>([])
   const [selectedModel, setSelectedModel] = useState('')
+  const [reasoningEffort, setReasoningEffort] = useState<ReasoningEffort | ''>('')
   const [activity, setActivity] = useState<RunSnapshot[]>([])
   const [memories, setMemories] = useState<Memory[]>([])
   const [presets, setPresets] = useState<Preset[]>([])
@@ -555,12 +700,24 @@ function App() {
   const [excludedSources, setExcludedSources] = useState<Set<string>>(new Set())
   const [historyOpen, setHistoryOpen] = useState(false)
 
+  useEffect(() => {
+    try { localStorage.setItem('chat-studio.navigation-collapsed', String(navigationCollapsed)) } catch { /* Browser storage is optional. */ }
+  }, [navigationCollapsed])
+
+  useEffect(() => {
+    try { localStorage.setItem('chat-studio.inspector-open', String(inspectorOpen)) } catch { /* Browser storage is optional. */ }
+  }, [inspectorOpen])
+
+  useEffect(() => {
+    try { localStorage.setItem('chat-studio.inspector-tab', inspectorTab) } catch { /* Browser storage is optional. */ }
+  }, [inspectorTab])
+
   const refreshProviders = useCallback(async () => {
     const [providerData, modelData] = await Promise.all([api.providers(), api.models()])
     setProviders(providerData.providers)
     const discovered = Object.values(modelData).flatMap((item) => item.models ?? [])
     setModels(discovered)
-    setSelectedModel((current) => current || (discovered[0] ? `${discovered[0].provider}::${discovered[0].id}` : ''))
+    setSelectedModel((current) => discovered.some((model) => modelKey(model) === current) ? current : (discovered[0] ? modelKey(discovered[0]) : ''))
   }, [])
 
   const refreshLibrary = useCallback(async () => {
@@ -595,6 +752,11 @@ function App() {
     return { provider, model: modelParts.join('::') }
   }, [selectedModel])
 
+  useEffect(() => {
+    const selected = models.find((model) => modelKey(model) === selectedModel)
+    if (reasoningEffort && !selected?.reasoning_efforts?.includes(reasoningEffort)) setReasoningEffort('')
+  }, [models, reasoningEffort, selectedModel])
+
   const submitTurn = async (payload: TurnPreflight, contextPlan: ContextPlan, confirmed: string[] = []) => {
     if (!activeId) return
     setPendingPlan(null); setError(''); setLiveOutput('')
@@ -624,6 +786,7 @@ function App() {
       model: target.model,
       content,
       temperature: 0.7,
+      reasoning_effort: reasoningEffort || null,
       include_memory: true,
       include_retrieval: true,
       include_attachments: true,
@@ -671,24 +834,28 @@ function App() {
     setActiveId(created.id); setPage('Chat')
   }
 
+  const toggleSource = (id: string) => setExcludedSources((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })
+  const inspector = <ContextEvidenceInspector excluded={excludedSources} onClose={() => setInspectorOpen(false)} onPage={setPage} onTab={setInspectorTab} onToggle={toggleSource} plan={plan} tab={inspectorTab} />
+
   return (
     <TooltipProvider>
-      <div className="app-shell">
-        <Navigation connected={connected} onPage={setPage} page={page} />
+      <div className={navigationCollapsed ? 'app-shell nav-collapsed' : 'app-shell nav-expanded'}>
+        <Navigation collapsed={navigationCollapsed} connected={connected} onCollapsed={setNavigationCollapsed} onPage={setPage} page={page} />
         {page === 'Chat' && <ConversationHistory activeId={activeId} conversations={conversations} onCreate={createConversation} onDelete={async (id) => { if (!window.confirm('Delete this conversation?')) return; await api.deleteConversation(id); if (activeId === id) setActiveId(null); await refreshConversations() }} onSelect={setActiveId} onUpdate={async (id, payload) => { await api.updateConversation(id, payload); await refreshConversations(); if (activeId === id) setConversation(await api.conversation(id)) }} />}
-        {page === 'Chat' && <ChatWorkspace attachmentIds={attachmentIds} conversation={conversation} error={error} liveOutput={liveOutput} models={models} onAttachment={(id) => setAttachmentIds((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} onBranch={async (messageId) => { if (!activeId) return; const branch = await api.branchConversation(activeId, messageId); await refreshConversations(); setActiveId(branch.id) }} onCancel={async () => { if (activeRun) await api.cancelRun(activeRun) }} onConfirm={async () => { if (pendingPayload && pendingPlan) await submitTurn(pendingPayload, pendingPlan, pendingPlan.findings.map((item) => item.id)) }} onFeedback={api.setFeedback} onHistory={() => setHistoryOpen(true)} onModel={setSelectedModel} onSanitize={async () => { if (!pendingPayload) return; const sanitized = await api.sanitize(pendingPayload.content); setPendingPlan(null); setPendingPayload(null); await send(sanitized.content) }} onSaveMemories={saveMemoriesAndClose} onSend={send} onUpload={async (file) => { await upload(file, true) }} pendingPlan={pendingPlan} plan={plan} running={Boolean(activeRun)} savingMemories={savingMemories} selectedModel={selectedModel} uploads={uploads} />}
+        {page === 'Chat' && <div className={wideInspector && inspectorOpen ? 'chat-stage inspector-docked' : 'chat-stage'}><ChatWorkspace attachmentIds={attachmentIds} conversation={conversation} error={error} inspectorOpen={inspectorOpen} liveOutput={liveOutput} models={models} onAttachment={(id) => setAttachmentIds((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} onBranch={async (messageId) => { if (!activeId) return; const branch = await api.branchConversation(activeId, messageId); await refreshConversations(); setActiveId(branch.id) }} onCancel={async () => { if (activeRun) await api.cancelRun(activeRun) }} onConfirm={async () => { if (pendingPayload && pendingPlan) await submitTurn(pendingPayload, pendingPlan, pendingPlan.findings.map((item) => item.id)) }} onFeedback={api.setFeedback} onHistory={() => setHistoryOpen(true)} onInspector={() => setInspectorOpen((current) => !current)} onModel={setSelectedModel} onReasoningEffort={setReasoningEffort} onSanitize={async () => { if (!pendingPayload) return; const sanitized = await api.sanitize(pendingPayload.content); setPendingPlan(null); setPendingPayload(null); await send(sanitized.content) }} onSaveMemories={saveMemoriesAndClose} onSend={send} onUpload={async (file) => { await upload(file, true) }} pendingPlan={pendingPlan} plan={plan} providers={providers} reasoningEffort={reasoningEffort} running={Boolean(activeRun)} savingMemories={savingMemories} selectedModel={selectedModel} uploads={uploads} />{wideInspector && inspectorOpen && inspector}</div>}
+        {page === 'Chat' && !wideInspector && <Sheet onOpenChange={setInspectorOpen} open={inspectorOpen}><SheetContent className="inspector-sheet" showCloseButton={false} side="right">{inspector}</SheetContent></Sheet>}
         <Sheet onOpenChange={setHistoryOpen} open={historyOpen}>
           <SheetContent className="history-sheet" side="left">
             <ConversationHistory activeId={activeId} conversations={conversations} mobile onCreate={createConversation} onDelete={async (id) => { if (!window.confirm('Delete this conversation?')) return; await api.deleteConversation(id); if (activeId === id) setActiveId(null); await refreshConversations() }} onSelect={(id) => { setActiveId(id); setHistoryOpen(false) }} onUpdate={async (id, payload) => { await api.updateConversation(id, payload); await refreshConversations(); if (activeId === id) setConversation(await api.conversation(id)) }} />
           </SheetContent>
         </Sheet>
-        {page === 'Compare' && <ComparePage models={models} />}
+        {page === 'Compare' && <ComparePage models={models} providers={providers} />}
         {page === 'Context' && <ContextPage backpacks={backpacks} onCreate={async (name, title, content) => { await api.createBackpack(name, title, content); setBackpacks(await api.backpacks()) }} plan={plan} />}
-        {page === 'Evidence' && <EvidencePage activity={activity} excluded={excludedSources} onToggle={(id) => setExcludedSources((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} plan={plan} />}
-        {page === 'Replay' && <ReplayPage activity={activity} models={models} onReplay={async (run) => { const model = models[0]; if (!model) return; const replay = await api.replay(run.id, model.provider, model.id); await streamRun(replay.id, () => {}); setActivity(await api.activity()) }} />}
+        {page === 'Evidence' && <EvidencePage activity={activity} excluded={excludedSources} onToggle={toggleSource} plan={plan} />}
+        {page === 'Replay' && <ReplayPage activity={activity} models={models} onModel={setSelectedModel} onReplay={async (run, key) => { const model = models.find((candidate) => modelKey(candidate) === key); if (!model) return; const replay = await api.replay(run.id, model.provider, model.id); await streamRun(replay.id, () => {}); setActivity(await api.activity()) }} providers={providers} selectedModel={selectedModel} />}
         {page === 'Focus' && <FocusPage conversationId={activeId} onCreate={async (objective, criteria, constraints) => { if (!activeId) return; await api.createFocus({ conversation_id: activeId, objective, success_criteria: criteria, constraints }); setPage('Chat') }} />}
         {page === 'Providers' && <ProvidersPage onChanged={refreshProviders} providers={providers} />}
-        {page === 'Library' && <LibraryPage conversationId={activeId} memories={memories} onMemory={async (content) => { await api.createMemory(content); setMemories(await api.memories()) }} onMemoryDelete={async (id) => { await api.deleteMemory(id); setMemories(await api.memories()) }} onMemoryUpdate={async (id, payload) => { await api.updateMemory(id, payload); setMemories(await api.memories()) }} onPreset={async (name, prompt) => { await api.createPreset({ name, system_prompt: prompt, model_key: selectedModel, temperature: 0.7 }); setPresets(await api.presets()) }} onPresetDelete={async (id) => { await api.deletePreset(id); setPresets(await api.presets()) }} onUpload={async (file) => { await upload(file) }} presets={presets} uploads={uploads} />}
+        {page === 'Library' && <LibraryPage conversationId={activeId} memories={memories} models={models} onMemory={async (content) => { await api.createMemory(content); setMemories(await api.memories()) }} onMemoryDelete={async (id) => { await api.deleteMemory(id); setMemories(await api.memories()) }} onMemoryUpdate={async (id, payload) => { await api.updateMemory(id, payload); setMemories(await api.memories()) }} onModel={setSelectedModel} onPreset={async (name, prompt) => { await api.createPreset({ name, system_prompt: prompt, model_key: selectedModel, temperature: 0.7 }); setPresets(await api.presets()) }} onPresetDelete={async (id) => { await api.deletePreset(id); setPresets(await api.presets()) }} onUpload={async (file) => { await upload(file) }} presets={presets} providers={providers} selectedModel={selectedModel} uploads={uploads} />}
         {page === 'Settings' && <SettingsPage connected={connected} onRefresh={async () => { await Promise.all([refreshConversations(), refreshLibrary()]) }} />}
       </div>
     </TooltipProvider>

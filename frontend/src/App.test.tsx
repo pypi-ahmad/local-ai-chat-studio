@@ -9,13 +9,33 @@ const conversation = {
 }
 
 let holdComparisonStreams = false
+let activityRuns: Array<Record<string, unknown>> = []
 
 function json(value: unknown, status = 200) {
   return new Response(JSON.stringify(value), { status, headers: { 'Content-Type': 'application/json' } })
 }
 
+function setViewport(width: number) {
+  Object.defineProperty(window, 'matchMedia', {
+    configurable: true,
+    value: vi.fn((query: string) => {
+      const max = query.match(/max-width:\s*(\d+)px/)
+      const min = query.match(/min-width:\s*(\d+)px/)
+      return {
+        matches: max ? width <= Number(max[1]) : min ? width >= Number(min[1]) : false,
+        media: query,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+      }
+    }),
+  })
+}
+
 beforeEach(() => {
   holdComparisonStreams = false
+  activityRuns = []
+  localStorage.clear()
+  setViewport(1024)
   vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
     const path = String(input)
     if (path.endsWith('/runtime/health')) return json({ ollama_available: true, running_models: [] })
@@ -42,17 +62,22 @@ beforeEach(() => {
           provider: 'echo', id: 'deterministic', label: 'Deterministic',
           pricing: { input_per_million: 0, output_per_million: 0, source_url: 'https://ollama.com/', as_of: '2026-08-14' },
         }] },
-        openai: { provider: 'openai', models: [{ provider: 'openai', id: 'gpt-5.6-luna', label: 'Luna' }] },
+        openai: { provider: 'openai', models: [{ provider: 'openai', id: 'gpt-5.6-luna', label: 'Luna', reasoning_efforts: ['none', 'low', 'medium', 'high', 'xhigh', 'max'] }] },
         agnes: { provider: 'agnes', models: [{ provider: 'agnes', id: 'agnes-2.5-flash', label: 'Agnes 2.5 Flash' }] },
         broken: { provider: 'broken', models: [{ provider: 'broken', id: 'unavailable', label: 'Unavailable' }] },
       })
     }
-    if (/\/(memories|presets|backpacks|activity|conversations\/c1\/uploads)$/.test(path)) return json([])
+    if (path.endsWith('/activity')) return json(activityRuns)
+    if (path.endsWith('/presets')) {
+      if (init?.method === 'POST') return json({ id: 'p1', ...JSON.parse(String(init.body)) }, 201)
+      return json([])
+    }
+    if (/\/(memories|backpacks|conversations\/c1\/uploads)$/.test(path)) return json([])
     if (path.endsWith('/turns/preflight')) {
       return json({
         plan_hash: 'plan', estimated_tokens: 12, budget_tokens: 6553,
         sections: [{ kind: 'user', estimated_tokens: 3, included: true }],
-        sources: [], findings: [], requires_confirmation: false,
+        sources: [{ id: 'source-1', kind: 'memory', title: 'Working preference', preview: 'Prefer concise answers.', estimated_tokens: 4, included: true, trust: 'trusted' }], findings: [], requires_confirmation: false,
       })
     }
     if (path.endsWith('/turns')) {
@@ -83,6 +108,14 @@ beforeEach(() => {
     }
     if (/\/runs\/compare-[^/]+$/.test(path) && init?.method === 'DELETE') {
       return json({ id: 'cancelled', status: 'cancelled', provider: 'test', model: 'test', output: '', created_at: 'now', metrics: {} })
+    }
+    if (/\/runs\/[^/]+\/replay$/.test(path) && init?.method === 'POST') {
+      const body = JSON.parse(String(init.body)) as { provider: string; model: string }
+      return json({ id: 'replay-1', status: 'queued', provider: body.provider, model: body.model, output: '', created_at: 'now', metrics: {} }, 202)
+    }
+    if (path.endsWith('/runs/replay-1/events')) {
+      const body = new TextEncoder().encode('event: run.completed\ndata: {"type":"run.completed","run_id":"replay-1","data":{"output":"replayed"},"timestamp":"now"}\n\n')
+      return new Response(new ReadableStream({ start(controller) { controller.enqueue(body); controller.close() } }))
     }
     if (path.endsWith('/runs/r1/events')) {
       const body = new TextEncoder().encode(
@@ -118,6 +151,45 @@ describe('studio workspace', () => {
     }
   })
 
+  it('groups and remembers the expandable desktop navigation', async () => {
+    render(<App />)
+
+    for (const group of ['Work', 'Inspect', 'Personalize', 'System']) expect(screen.getByText(group)).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Collapse navigation' }))
+
+    expect(screen.getByRole('button', { name: 'Expand navigation' })).toHaveAttribute('aria-expanded', 'false')
+    await waitFor(() => expect(localStorage.getItem('chat-studio.navigation-collapsed')).toBe('true'))
+  })
+
+  it('inspects current context and controls evidence without leaving Chat', async () => {
+    render(<App />)
+    await screen.findByRole('heading', { name: 'Provider architecture' })
+    fireEvent.change(screen.getByLabelText('Message'), { target: { value: 'hello' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Send message' }))
+    await screen.findByText('hello back')
+
+    fireEvent.click(screen.getByRole('button', { name: 'Open context and evidence inspector' }))
+    expect(await screen.findByLabelText('Context and evidence inspector')).toBeInTheDocument()
+    await waitFor(() => expect(localStorage.getItem('chat-studio.inspector-open')).toBe('true'))
+    fireEvent.click(screen.getByRole('tab', { name: 'Evidence' }))
+    expect(await screen.findByText('Working preference')).toBeInTheDocument()
+    fireEvent.click(screen.getByLabelText('Include in next send'))
+    expect(screen.getByLabelText('Include in next send')).not.toBeChecked()
+    await waitFor(() => expect(localStorage.getItem('chat-studio.inspector-tab')).toBe('evidence'))
+  })
+
+  it('uses three primary destinations and grouped More navigation on mobile', async () => {
+    setViewport(390)
+    render(<App />)
+
+    for (const label of ['Chat', 'Compare', 'Library', 'More']) expect(screen.getByRole('button', { name: label })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Context' })).not.toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'More' }))
+    fireEvent.click(await screen.findByRole('button', { name: 'Context' }))
+
+    expect(await screen.findByRole('heading', { name: 'Context control' })).toBeInTheDocument()
+  })
+
   it('preflights and streams a turn', async () => {
     render(<App />)
     await screen.findByRole('heading', { name: 'Provider architecture' })
@@ -127,11 +199,49 @@ describe('studio workspace', () => {
     await waitFor(() => expect(screen.getByText('hello back')).toBeInTheDocument())
   })
 
+  it('selects supported reasoning effort from the chat composer', async () => {
+    render(<App />)
+    await screen.findByRole('heading', { name: 'Provider architecture' })
+
+    const provider = screen.getByLabelText('Provider')
+    const effort = screen.getByLabelText('Reasoning effort')
+    expect(provider.closest('.composer-shell')).not.toBeNull()
+    expect(effort).toBeDisabled()
+    expect(effort).toHaveValue('')
+
+    fireEvent.change(provider, { target: { value: 'openai' } })
+    expect(effort).toBeEnabled()
+    fireEvent.change(effort, { target: { value: 'high' } })
+    fireEvent.change(screen.getByLabelText('Message'), { target: { value: 'think' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Send message' }))
+
+    await waitFor(() => {
+      const request = vi.mocked(fetch).mock.calls.find(([url]) => String(url).endsWith('/turns/preflight'))
+      expect(JSON.parse(String(request?.[1]?.body))).toMatchObject({ reasoning_effort: 'high' })
+    })
+
+    fireEvent.change(provider, { target: { value: 'agnes' } })
+    await waitFor(() => expect(effort).toBeDisabled())
+    expect(effort).toHaveValue('')
+  })
+
   it('offers Claude subscription sign-in through OpenCode', async () => {
     render(<App />)
     fireEvent.click(screen.getByRole('button', { name: 'Providers' }))
 
     expect(await screen.findByRole('button', { name: 'Connect Claude Pro/Max through OpenCode' })).toBeInTheDocument()
+  })
+
+  it('filters chat models after selecting a provider', async () => {
+    render(<App />)
+    await screen.findByRole('heading', { name: 'Provider architecture' })
+
+    expect(screen.getByLabelText('Provider')).toHaveValue('echo')
+    expect(screen.getByLabelText('Model')).toHaveValue('echo::deterministic')
+    fireEvent.change(screen.getByLabelText('Provider'), { target: { value: 'agnes' } })
+
+    expect(screen.getByLabelText('Model')).toHaveValue('agnes::agnes-2.5-flash')
+    expect(screen.queryByRole('option', { name: /Deterministic/ })).not.toBeInTheDocument()
   })
 
   it('opens conversation history from the compact workspace control', async () => {
@@ -149,6 +259,7 @@ describe('studio workspace', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Compare' }))
 
     expect(await screen.findByLabelText('Comparison model 1')).toHaveValue('echo::deterministic')
+    expect(screen.getByLabelText('Comparison provider 1')).toHaveValue('echo')
     expect(screen.getByLabelText('Comparison model 2')).toHaveValue('openai::gpt-5.6-luna')
     fireEvent.click(screen.getByRole('button', { name: 'Add model' }))
     expect(screen.getByLabelText('Comparison model 3')).toHaveValue('agnes::agnes-2.5-flash')
@@ -160,6 +271,24 @@ describe('studio workspace', () => {
     expect(screen.getByText('answer from agnes-2.5-flash')).toBeInTheDocument()
     const runCalls = vi.mocked(fetch).mock.calls.filter(([url, init]) => String(url).endsWith('/runs') && init?.method === 'POST')
     expect(runCalls).toHaveLength(3)
+  })
+
+  it('uses explicit provider and model targets for Replay and assistants', async () => {
+    activityRuns = [{ id: 'source-run', status: 'completed', provider: 'echo', model: 'deterministic', output: 'original', created_at: 'now', metrics: {} }]
+    render(<App />)
+    fireEvent.click(screen.getByRole('button', { name: 'Replay' }))
+    await screen.findByText('original')
+    fireEvent.change(screen.getByLabelText('Replay provider'), { target: { value: 'agnes' } })
+    fireEvent.click(screen.getAllByRole('button', { name: 'Replay' })[1])
+
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith('/api/v1/runs/source-run/replay', expect.objectContaining({ body: expect.stringContaining('agnes-2.5-flash') })))
+
+    fireEvent.click(screen.getByRole('button', { name: 'Library' }))
+    expect(await screen.findByLabelText('Assistant provider')).toHaveValue('agnes')
+    fireEvent.change(screen.getByPlaceholderText('Assistant name'), { target: { value: 'Agnes helper' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Save assistant' }))
+
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith('/api/v1/presets', expect.objectContaining({ body: expect.stringContaining('agnes::agnes-2.5-flash') })))
   })
 
   it('keeps successful comparison streams when another model fails', async () => {
