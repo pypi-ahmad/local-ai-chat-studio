@@ -181,7 +181,7 @@ def test_mcp_configuration_rejects_shells_and_private_remote_hosts() -> None:
             json={
                 "name": "Private endpoint",
                 "transport": "streamable_http",
-                "url": "http://127.0.0.1:9000/mcp",
+                "url": "https://127.0.0.1:9000/mcp",
             },
         )
 

@@ -447,6 +447,7 @@ class McpServerCreate(BaseModel):
 
     @model_validator(mode="after")
     def _valid_transport(self) -> "McpServerCreate":
+        import ipaddress
         from pathlib import PurePath
         from urllib.parse import urlsplit
 
@@ -464,6 +465,12 @@ class McpServerCreate(BaseModel):
                 raise ValueError("Remote MCP servers require an HTTPS URL")
             if parsed.username or parsed.password or parsed.query or parsed.fragment:
                 raise ValueError("Remote MCP URLs cannot contain credentials, query, or fragment")
+            try:
+                address = ipaddress.ip_address(parsed.hostname)
+            except ValueError:
+                address = None
+            if address is not None and not address.is_global:
+                raise ValueError("Remote MCP URLs cannot target private or reserved addresses")
             if self.command or self.args or self.env_keys:
                 raise ValueError("Remote MCP servers cannot define a local command or environment")
         return self
