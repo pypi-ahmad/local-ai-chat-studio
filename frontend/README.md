@@ -23,6 +23,10 @@ Chat, Compare, Replay, and assistant configuration use this contract.
 Library presents saved presets as a searchable assistant gallery. Favorites and the
 four most recent launches are browser-local preferences; **Start chat** sends the
 preset settings with the conversation-create request so Chat opens fully configured.
+Its Knowledge Bases tab uses `features/knowledge/KnowledgeBasePanel.tsx` to search,
+create, edit, delete, and bind reusable local source ledgers. Keep file selection scoped
+to the current conversation, expose only active memories, preserve backpack references,
+and save the single binding through the conversation settings contract.
 
 Assistant output is rendered as CommonMark/GFM with tables, task lists,
 syntax-highlighted copyable code, and KaTeX math; raw HTML must remain inert.
@@ -39,7 +43,9 @@ Chat settings are conversation-owned, not global UI preferences. Loading a
 conversation hydrates its model, effort, temperature, context policy, web/compression
 flags, system prompt, and message layout. Changes are saved through
 `PATCH /api/v1/conversations/{id}`; keep hydration and save isolation covered when
-changing the composer or Chat header.
+changing the composer or Chat header. `knowledge_base_id` follows the same
+conversation-owned boundary; Library binding updates it explicitly because Library is
+outside Chat's debounced settings editor.
 
 The Chat header exports the active transcript through the typed conversation-export
 client as Markdown, standalone escaped HTML, TXT, or JSON. Its reproducibility item

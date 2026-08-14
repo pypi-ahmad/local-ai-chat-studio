@@ -35,7 +35,7 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 - **Live model discovery:** The Studio asks configured providers for their available models instead of relying only on a fixed list. Discovered entries can include context length, vision support, and provider metadata.
 - **Searchable, capability-aware selection:** Choose a provider first, then search its discovered models by name, ID, or capability in Chat, Compare, Replay, and assistant presets. Provider marks, favorites, recent choices, verified pricing, context size, and vision, tool-use, and reasoning badges make large catalogs easier to scan; favorites and recents stay in local browser storage.
 - **Composer control dock:** Chat keeps attachments, provider/model selection, capability-aware reasoning effort, context scope, and send/stop actions in one responsive dock. Choose **Full context**, **Chat only**, or **Files + chat** per turn; a compact menu holds temperature presets, opt-in web evidence, and optional local compression of older messages. Effort defaults to **Auto** and is disabled for models that do not advertise support; OpenAI GPT-5.6 options follow the [official model guide](https://developers.openai.com/api/docs/guides/latest-model).
-- **Per-conversation settings:** Every chat independently remembers its model, reasoning effort, temperature, context policy, web/compression choices, system prompt, and **Conversation**, **Compact**, or **Full-width** message layout. Open **Settings** in the Chat header to edit the system prompt and layout; branches inherit the source settings once and can then diverge.
+- **Per-conversation settings:** Every chat independently remembers its model, reasoning effort, temperature, context policy, web/compression choices, system prompt, bound knowledge base, and **Conversation**, **Compact**, or **Full-width** message layout. Open **Settings** in the Chat header to edit the system prompt and layout; branches inherit the source settings once and can then diverge.
 - **Focused navigation:** Desktop keeps Chat, Compare, and Library in **Primary**, Focus in **Workspace**, and provider/runtime controls in **Administration**. Mobile keeps the three primary destinations one tap away and moves advanced workspaces into **More**.
 - **Run actions drawer:** Open **Runs** from Chat to replay recorded prompts, compare outputs, or export full and privacy-safe bundles without leaving the conversation.
 - **Session-only credentials:** Keys entered in **Providers** remain in server-process memory for the browser session. Keys can alternatively come from operating-system environment variables; neither source is written to the database or exports.
@@ -53,6 +53,7 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 
 ### Knowledge, files, and focused work
 
+- **Bound knowledge bases:** The Library has a dedicated, searchable Knowledge Bases workspace. Assemble reusable source sets from current-chat files, active memories, and backpacks; decide whether related-chat retrieval participates; inspect source availability; and bind exactly one base to a conversation. Bases and bindings stay in SQLite, while deleting a base safely unbinds its chats without deleting the original sources. The one-base-per-chat workflow is adapted from Chatbox's [Knowledge Base configuration](https://releases.chatboxai.app/en/guide/work-mode/configuration).
 - **Local memory:** Add, pin, archive, approve, or delete durable memories. **Save memories & close** asks the selected model to extract and consolidate candidates from the conversation, records their message provenance, and requires confirmation before sending a full chat to a cloud model.
 - **Cross-chat retrieval:** Reuse relevant details from previous conversations through optional Chroma embeddings. When no embedding model is configured, the Studio falls back to local lexical retrieval.
 - **Context backpacks:** Save reusable project facts or instructions and make them available as an explicit context source.
@@ -84,7 +85,7 @@ bookmarked links preserve the selected workspace.
 |---|---|---|
 | Primary | **Chat** | Hold conversations; restore chat-specific model, effort, temperature, context, prompt, and layout settings; attach files; send or stop a run; and export the transcript or latest reproducibility bundle. |
 | Primary | **Compare** | Send one prompt to two to four models concurrently and compare independent streamed results. |
-| Primary | **Library** | Search and launch assistants, manage favorites and recent choices, create reusable presets, and maintain durable memories and conversation files. |
+| Primary | **Library** | Switch between the assistant gallery and Knowledge Bases; create reusable source sets from files, active memories, backpacks, and optional retrieval; bind one base per chat; and maintain the underlying local sources. |
 | Workspace | **Focus** | Define a temporary objective, success criteria, and constraints for the active conversation. |
 | Administration | **Providers** | Configure session credentials, provider data policies, OAuth connections, discovery, and failover checks. |
 | Administration | **Settings** | Manage local data, personalization, runtime health, migration, wipe, and managed shutdown. |
@@ -129,7 +130,7 @@ local-ai-chat-studio/
 │   ├── src/App.tsx          Workspace composition and feature orchestration
 │   ├── src/api/             Typed client and generated OpenAPI schema
 │   ├── src/components/      Shared workspace and UI primitives
-│   ├── src/features/        Models, assistants, attachments, and safe artifact preview
+│   ├── src/features/        Models, assistants, attachments, knowledge bases, and safe artifact preview
 │   ├── src/hooks/           Reusable responsive browser hooks
 │   ├── src/state/           Local UI preference boundaries
 │   └── package.json         Frontend commands and dependencies
@@ -316,7 +317,7 @@ The searchable model picker displays context length, vision, tool-use, and reaso
 
 ### Persistence and retrieval
 
-Canonical state lives in `data/app.db`, including each conversation's validated settings snapshot; uploads and optional Chroma collections remain under the configured data directory. Existing databases receive the settings column automatically. Without `CHAT_EMBED_MODEL`, cross-chat retrieval uses local lexical search. An earlier `data/v2/studio.db` can be imported explicitly from **Settings**; the Studio backs up `app.db` and records the migration so repeat imports are no-ops.
+Canonical state lives in `data/app.db`, including each conversation's validated settings snapshot, knowledge-base definitions, ordered source references, and per-chat binding; uploads and optional Chroma collections remain under the configured data directory. Deleting a referenced upload, memory, or backpack removes that reference from its bases, and deleting a base clears affected conversation bindings. Existing databases receive compatible schema additions automatically. Without `CHAT_EMBED_MODEL`, cross-chat retrieval uses local lexical search. An earlier `data/v2/studio.db` can be imported explicitly from **Settings**; the Studio backs up `app.db` and records the migration so repeat imports are no-ops.
 
 ## Usage
 

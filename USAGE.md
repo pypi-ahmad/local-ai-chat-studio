@@ -120,6 +120,12 @@ export, import, or wipe local data, or **Stop Studio** to cancel active runs
 and shut down the managed server. For retrieval, install an Ollama embedding
 model and set `CHAT_EMBED_MODEL`; otherwise the app uses local lexical search.
 
+For repeatable project context, open **Library → Knowledge bases**. Create a base
+from current-chat files, active memories, and backpacks, optionally enable related-chat
+retrieval, then bind it to the active conversation. Each conversation keeps at most one
+binding, and provider context policies still decide which source kinds may leave the
+local process.
+
 ## Privacy and troubleshooting
 
 - Keep the server on localhost; it does not provide user-account

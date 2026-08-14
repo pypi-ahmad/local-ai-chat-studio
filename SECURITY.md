@@ -12,8 +12,9 @@ security-relevant surfaces are:
   local fallback credentials and must be protected by the operating system.
   `.env.example` contains only safe names and public endpoints; never put real
   credentials in that tracked example.
-- **Local data** — chats, curated memories, uploads, and optional retrieval
-  data live under `data/` by default (`app.db`, `chroma`, and uploads). They are
+- **Local data** — chats, curated memories, uploads, knowledge-base definitions
+  and bindings, and optional retrieval data live under `data/` by default
+  (`app.db`, `chroma`, and uploads). They are
   protected by your OS file permissions and can be exported, imported, or wiped
   from the product.
 - **Network exposure** — the launcher binds to `127.0.0.1:8506` and the app
@@ -25,7 +26,10 @@ security-relevant surfaces are:
   cancels active runs before Uvicorn exits; it does not stop Ollama or
   OpenCode.
 - **Untrusted context** — uploaded documents, pasted text, retrieval results,
-  and web evidence can contain prompt-injection attempts or sensitive text. The
+  bound knowledge-base sources, and web evidence can contain prompt-injection
+  attempts or sensitive text. Bound files, memories, and backpacks retain their
+  existing provider-policy boundary and are rescanned when the context plan is
+  built. The
   workspace provides warnings, quarantine, provenance, and redaction controls,
   but you should still treat instructions originating in that content as
   untrusted.

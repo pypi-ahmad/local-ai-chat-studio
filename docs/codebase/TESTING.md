@@ -18,7 +18,10 @@ cloud Ollama behavior, OpenCode loopback validation, focus/backpacks, provider
 simulation, deterministic history compression with recent-turn retention, pricing
 catalog matching/live OpenRouter normalization, conversation export content types and
 stored-HTML escaping, profile, runtime health, and managed shutdown (header required,
-unmanaged servers return 503).
+unmanaged servers return 503). Knowledge-base coverage creates mixed file/memory/backpack
+source sets, verifies retrieval gating and assembled prompt content, exercises list/update/
+delete contracts, and confirms deletion clears conversation bindings without deleting
+source records.
 
 Frontend tests use Vitest, Testing Library, jest-dom, and jsdom. They exercise the
 connected workspace shell, semantic desktop/mobile navigation groups, persisted and
@@ -32,6 +35,7 @@ parallel comparison across three models,
 composer control grouping, context/temperature/web-evidence/compression request mapping,
 per-conversation settings hydration, system-prompt persistence, and layout changes,
 assistant search, favorite/recent persistence, and one-click configured chat creation,
+mixed-source knowledge-base creation and binding to the active conversation,
 all transcript export choices and active-conversation reproducibility selection,
 artifact format classification, scriptless/CSP-isolated HTML and SVG rendering,
 strict iframe-isolated Mermaid output, escaped code source, and Chat split-pane lifecycle,

@@ -174,7 +174,8 @@ or subscription charges.
 
 ### Library
 
-The Library contains memories, assistants, and files. **Save memories & close** asks
+The Library is split into **Assistants** and **Knowledge bases**. The Assistants tab
+contains memories, reusable assistants, and current-conversation files. **Save memories & close** asks
 the selected model to reduce the whole chat to durable user facts and preferences,
 stores only supported points in SQLite, and records their source messages. A cloud
 model requires confirmation before the transcript is sent. Memories that resemble
@@ -187,6 +188,20 @@ with the assistant's model, temperature, and system prompt already applied.
 
 Use **Create assistant** below the gallery to save another system prompt. Select the
 assistant's provider first so its model menu contains only valid choices.
+
+In **Knowledge bases**, select **New knowledge base**, give the base a clear name and
+description, and choose any current-chat files, active memories, or backpacks. The
+**Include related conversation retrieval** option adds relevant earlier chat passages;
+turn it off when the base must use only its explicit source ledger. Save the base,
+review its available and missing sources, then choose **Bind base**. One knowledge base
+can be bound to a conversation at a time, while the same base can be reused by several
+conversations. Binding is saved with that conversation and participates in its next
+context preflight subject to the selected context mode and provider data policies.
+
+Editing a base replaces its source selection. Deleting a base unbinds affected chats
+but does not delete its files, memories, or backpacks. Deleting an underlying source
+removes its knowledge-base reference. This local workflow follows the useful
+one-base-per-session pattern from Chatbox's [Knowledge Base configuration](https://releases.chatboxai.app/en/guide/work-mode/configuration).
 
 ### Settings and data controls
 

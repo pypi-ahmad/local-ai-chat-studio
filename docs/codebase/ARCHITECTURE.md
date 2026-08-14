@@ -3,7 +3,7 @@
 ```text
 React workspace
   → FastAPI routes and session cookie
-    → context preflight (policy, safety, selected attachments, retrieval, budget)
+    → context preflight (policy, safety, selected attachments, bound knowledge base, retrieval, budget)
       → RunManager task → provider adapter → retained SSE events
         → SQLite messages/runs/receipts + optional Chroma retrieval
 ```
@@ -26,6 +26,12 @@ copy settings at creation and remain independent afterward.
 Library assistants pass the same snapshot during conversation creation, so the
 preset's model, temperature, and system prompt are committed atomically. Favorite
 and recent assistant IDs stay in browser storage and do not alter preset records.
+Library knowledge bases also use that snapshot: `knowledge_base_id` binds at most one
+base to a conversation. The base stores ordered references to files, active memories,
+and backpacks, plus a switch for related-chat retrieval. Preflight expands those
+references at send time, scans the complete source text, applies provider source
+policies, and exposes each approved item under a separate `knowledge` section. Source
+records remain authoritative; deleting a base only unbinds conversations.
 
 Runs are persisted to SQLite and also retained in memory while the process lives so
 SSE subscribers can replay events and follow new deltas. Run IDs are scoped to the

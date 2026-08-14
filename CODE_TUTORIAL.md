@@ -5,12 +5,14 @@
 > `backend/app/main.py` → `runs.py`/`workspace.py`/`store.py` →
 > `frontend/src/api/client.ts` → `frontend/src/App.tsx`.
 
-> Current UI note (v0.7.8): `App.tsx` and its focused components provide safe rich
+> Current UI note (v0.7.9): `App.tsx` and its focused components provide safe rich
 > Markdown/code/LaTeX rendering, provider-scoped capability-aware model search,
 > attachment status/retry cards, saved-message navigation, exact context overflow
 > warnings with blocking over-budget sends, optional local history compression,
 > grouped responsive navigation, a persisted Context/Evidence inspector, and a
 > sandboxed split-pane preview for fenced HTML, SVG, Mermaid, and code artifacts.
+> Library also provides searchable mixed-source Knowledge Bases with one persisted
+> binding per conversation.
 
 This is a **read-the-code-out-loud** tutorial. It walks every module in this
 repository, in the order data actually flows through it, quoting real
@@ -877,6 +879,12 @@ Library, Activity, and Settings. `frontend/src/api/client.ts` is the typed
 client for conversations, preflight, SSE runs, memory, OpenCode auth, data
 controls, and `api.shutdown()`. Vite's `npm run dev` proxies `/api` to
 `http://127.0.0.1:8506`. TypeScript is pinned to 5.9.
+
+The Knowledge Bases tab builds an ordered ledger of existing upload, active-memory,
+and backpack IDs. `ConversationSettings.knowledge_base_id` binds one ledger to a chat;
+preflight resolves current source content, optionally searches related conversations,
+and applies the same provider-policy, safety, exclusion, and budget rules used by each
+underlying source type. Deleting the ledger clears bindings but preserves its sources.
 
 The Compare workspace holds two to four distinct `provider::model` selections.
 Submitting one prompt creates every run concurrently with `Promise.allSettled`, then

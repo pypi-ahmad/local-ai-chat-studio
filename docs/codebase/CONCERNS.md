@@ -19,6 +19,10 @@
   history.
 - Chroma retrieval requires `CHAT_EMBED_MODEL`; otherwise the app uses lexical history
   retrieval.
+- Knowledge bases store references rather than copies. Their file choices currently
+  come from the active conversation, and the existing context-mode/provider-policy
+  switches still govern whether bound file, memory, backpack, or retrieval content is
+  eligible for a request.
 - Full-chat memory extraction uses the selected LLM. It is deliberately explicit and
   requires confirmation for every remote provider, including an OpenCode bridge.
 - OpenCode capabilities and upstream OAuth methods depend on the locally running server;
@@ -29,6 +33,8 @@
 
 - Run read, event, and cancellation endpoints require the owning browser session.
 - Remote providers default to prompt-only context.
+- Bound knowledge-base sources pass through the same provider policy, prompt-injection
+  scan, evidence exclusion, and token-pruning boundaries as their underlying source kind.
 - Uploads are conversation-scoped and are sent only when selected for that individual
   turn. Image input is blocked when a model explicitly reports no vision capability.
 - Retrieved instruction overrides are quarantined; secrets and PII pause sends.

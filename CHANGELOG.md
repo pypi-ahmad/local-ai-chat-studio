@@ -7,6 +7,28 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.9] - 2026-08-15
+
+### Added
+
+- Added searchable Knowledge Bases in Library, with create, edit, delete, source-ledger,
+  availability, and one-click bind/unbind controls.
+- Added reusable mixed-source bases over current-chat files, active memories,
+  backpacks, and optional related-conversation retrieval.
+- Added a persisted per-conversation knowledge-base binding and a dedicated preflight
+  `knowledge` section with source provenance.
+
+### Changed
+
+- Deleting a knowledge base now safely clears every matching conversation binding;
+  deleting an underlying file, memory, or backpack removes its source reference while
+  preserving the rest of the base.
+
+### Security
+
+- Bound sources reuse the existing provider-policy, prompt-injection scanning,
+  source-exclusion, token-budget, and pruning boundaries before model execution.
+
 ## [0.7.8] - 2026-08-15
 
 ### Added

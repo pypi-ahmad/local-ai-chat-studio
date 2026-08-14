@@ -29,7 +29,8 @@ Process lifespan shutdown also waits for runs and closes the SQLite connection.
 ## Data, sessions, and runs
 
 - `data/app.db` is the canonical SQLite store for conversations, messages,
-  memories, presets, feedback, activity, and data-control metadata.
+  memories, presets, knowledge bases and their ordered source references, feedback,
+  activity, and data-control metadata.
 - `data/chroma` holds the optional retrieval index and `data/uploads` holds
   local uploaded-file data. `CHAT_DATA_DIR` relocates the whole data area.
 - The backend creates an HTTP-only, same-site `chat_session` cookie. API keys
@@ -54,7 +55,7 @@ Process lifespan shutdown also waits for runs and closes the SQLite connection.
 | Process entry | `backend/app/cli.py` | Uvicorn on `127.0.0.1:8506` and shutdown callback |
 | Runs and streaming | `backend/app/runs.py` | Run lifecycle, cancellation, SSE events, receipts, task drain |
 | Context safety and retrieval | `backend/app/workspace.py` | Context planning, pruning, provenance, retrieval, safety scanning |
-| Local persistence | `backend/app/store.py` | SQLite schema, conversations, memory, exports, imports |
+| Local persistence | `backend/app/store.py` | SQLite schema, conversations, memory, knowledge-base source ledgers, exports, imports |
 | Providers and OAuth bridges | `backend/app/providers.py`, `backend/app/sessions.py` | Provider adapters, discovery, credential/session handling |
 | Model pricing | `backend/app/pricing.py` | Official-source standard token-rate catalog and OpenRouter live-price normalization |
 | Web client | `frontend/src/` | React workspaces and generated typed API client |
@@ -85,7 +86,8 @@ sandbox token set, no-referrer policy, and a document CSP that blocks scripts, f
 top navigation, and external resources. Code artifacts are rendered only as React text.
 Each conversation stores a validated JSON settings snapshot in SQLite. The generated
 `Conversation` contract returns model key, reasoning effort, temperature, context
-policy, web/compression flags, system prompt, and layout; the React client hydrates
+policy, web/compression flags, system prompt, layout, and an optional knowledge-base
+ID; the React client hydrates
 these values on selection and saves changes through the conversation PATCH endpoint.
 `ConversationCreate` also accepts the validated settings snapshot, allowing Library
 assistants to create a configured conversation atomically rather than creating and
@@ -98,6 +100,16 @@ extractive summary, retains the latest eight messages verbatim, records compress
 metadata in the hash-bound plan, and prevents over-budget plans from starting a run.
 The grouped desktop/mobile navigation and optional persisted Context/Evidence
 inspector are client-side views over the same workspace APIs.
+
+Knowledge bases are local SQLite records with an ordered polymorphic source ledger:
+`upload`, active `memory`, or `backpack`. `GET/POST /api/v1/knowledge-bases` and
+`PUT/DELETE /api/v1/knowledge-bases/{id}` are the CRUD boundary. A conversation binds
+one base through `ConversationSettings.knowledge_base_id`. Preflight expands referenced
+content into a distinct `knowledge` section, applies the existing attachment, memory,
+backpack, provider-policy, safety-scan, source-exclusion, and token-pruning rules, and
+gates cross-chat retrieval through the base's `include_retrieval` flag. Deleting a base
+clears matching settings snapshots; deleting an underlying source removes its ledger
+references without deleting the base.
 
 Conversation exports use `GET /api/v1/conversations/{id}/export/{format}` for
 `markdown`, `html`, `txt`, and `json`; the legacy `export.md` route remains available.
