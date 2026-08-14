@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import type { ReactNode } from 'react'
 import {
   Backpack,
   Brain,
@@ -52,6 +51,11 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Textarea } from '@/components/ui/textarea'
 import { TooltipProvider } from '@/components/ui/tooltip'
+import { Surface } from '@/components/shared/Surface'
+import { fileAsBase64 } from '@/features/attachments/fileEncoding'
+import { contextLengthLabel, formatUsd, hasVision, modelKey, modelSearchText, pricingLabel } from '@/features/models/modelMetadata'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { readStoredBoolean, writeStoredBoolean } from '@/state/uiPreferences'
 
 import {
   ApiError,
@@ -90,34 +94,12 @@ type AttachmentAttempt = {
   error?: string
 }
 
-function readStoredBoolean(key: string, fallback: boolean) {
-  try {
-    const value = localStorage.getItem(key)
-    return value === null ? fallback : value === 'true'
-  } catch {
-    return fallback
-  }
-}
-
 function readInspectorTab() {
   try {
     return localStorage.getItem('chat-studio.inspector-tab') === 'evidence' ? 'evidence' : 'context'
   } catch {
     return 'context'
   }
-}
-
-function useMediaQuery(query: string) {
-  const [matches, setMatches] = useState(() => typeof window !== 'undefined' && Boolean(window.matchMedia?.(query).matches))
-  useEffect(() => {
-    const media = window.matchMedia?.(query)
-    if (!media) return
-    const update = () => setMatches(media.matches)
-    update()
-    media.addEventListener('change', update)
-    return () => media.removeEventListener('change', update)
-  }, [query])
-  return matches
 }
 
 const defaultPolicy: ProviderPolicy = {
@@ -234,17 +216,6 @@ function ConversationHistory({
   )
 }
 
-function formatUsd(value: number) {
-  if (value === 0) return '$0.00'
-  if (value < 0.01) return `$${value.toFixed(4)}`
-  return `$${value.toFixed(2)}`
-}
-
-function pricingLabel(model: ModelSummary) {
-  const pricing = model.pricing
-  return pricing ? `${formatUsd(pricing.input_per_million)} in / ${formatUsd(pricing.output_per_million)} out per 1M` : 'pricing unavailable'
-}
-
 function ContextRail({ plan, model }: { plan: ContextPlan | null; model?: ModelSummary }) {
   if (!plan) return <div className="context-rail empty"><span>Context preflight appears here</span></div>
   const percent = Math.round((plan.estimated_tokens / plan.budget_tokens) * 100)
@@ -271,24 +242,7 @@ function ContextRail({ plan, model }: { plan: ContextPlan | null; model?: ModelS
   )
 }
 
-const modelKey = (model: ModelSummary) => `${model.provider}::${model.id}`
-
 type ModelCapabilityFilter = 'all' | 'vision' | 'reasoning'
-
-function contextLengthLabel(length?: number | null) {
-  if (!length) return 'Context unknown'
-  if (length >= 1_000_000) return `${Number((length / 1_000_000).toFixed(1))}M context`
-  if (length >= 1_000) return `${Math.round(length / 1_000)}K context`
-  return `${length.toLocaleString()} context`
-}
-
-function hasVision(model: ModelSummary) {
-  return model.capabilities?.some((capability) => ['vision', 'image', 'images'].includes(capability.toLowerCase())) ?? false
-}
-
-function modelSearchText(model: ModelSummary) {
-  return [model.label, model.id, model.provider, ...(model.capabilities ?? []), model.reasoning_efforts?.length ? 'reasoning effort' : '', contextLengthLabel(model.context_length), model.pricing ? 'priced' : 'unpriced'].filter(Boolean).join(' ').toLowerCase()
-}
 
 function ProviderModelPicker({
   models,
@@ -557,10 +511,6 @@ function ChatWorkspace({
   )
 }
 
-function Surface({ eyebrow, title, description, children }: { eyebrow: string; title: string; description: string; children: ReactNode }) {
-  return <main className="page-workspace"><div className="page-heading"><div><p className="eyebrow">{eyebrow}</p><h2>{title}</h2><p>{description}</p></div></div>{children}</main>
-}
-
 type ComparisonResult = {
   key: string
   output: string
@@ -765,13 +715,6 @@ function SettingsPage({ connected, onRefresh }: { connected: boolean; onRefresh:
   return <Surface eyebrow="Local runtime" title="Settings" description="Operational defaults and portable data controls are visible here."><div className="surface-grid"><Card><CardHeader><CardTitle>Privacy and data</CardTitle></CardHeader><CardContent className="stack-list"><div className="data-row"><span>Cloud context</span><Badge>Prompt only</Badge></div><div className="data-row"><span>Credentials</span><Badge variant="outline">Process memory</Badge></div><div className="data-row"><span>Context output reserve</span><Badge variant="outline">20%</Badge></div><Textarea onChange={(event) => setProfile(event.target.value)} placeholder="Personalization profile" value={profile} /><Button onClick={() => api.setProfile(profile)} variant="outline">Save profile</Button><Button onClick={download} variant="outline"><Download /> Export JSONL</Button><input accept=".jsonl,.ndjson,.txt" hidden onChange={async (event) => { const file = event.target.files?.[0]; if (file) { await api.importData(await file.text()); await onRefresh() } }} ref={importRef} type="file" /><Button onClick={() => importRef.current?.click()} variant="outline"><FileUp /> Import JSONL</Button><Button onClick={async () => { if (window.confirm('Import the previous v2 database into data/app.db? A backup is created first.')) { await api.importV2(); await onRefresh() } }} variant="outline">Import previous v2 data</Button><Button onClick={async () => { if (window.confirm('Permanently wipe all local workspace data?')) { await api.wipeData(); await onRefresh() } }} variant="destructive"><Trash2 /> Panic wipe</Button></CardContent></Card><Card><CardHeader><CardTitle>Runtime</CardTitle></CardHeader><CardContent className="stack-list"><div className="data-row"><span>FastAPI</span><Badge variant={connected ? 'default' : 'destructive'}>{connected ? 'Connected' : 'Unavailable'}</Badge></div><div className="data-row"><span>Ollama</span><Badge variant={runtime?.ollama_available ? 'default' : 'outline'}>{runtime?.ollama_available ? 'Available' : 'Offline'}</Badge></div>{runtime?.running_models.map((model) => <div className="data-row" key={model.name}><span>{model.name}</span><small>{model.size_gb.toFixed(1)} GB VRAM</small></div>)}<div className="data-row"><span>Canonical data</span><code>data/app.db</code></div><div className="data-row"><span>Vector data</span><code>data/chroma</code></div><Button aria-label={stopping ? 'Stopping…' : 'Stop Studio'} disabled={stopping} onClick={stopStudio} variant="destructive"><Power /> {stopping ? 'Stopping…' : 'Stop Studio'}</Button>{stopping && <small>Studio stopped. You may close this tab.</small>}{stopError && <small className="error-strip">{stopError}</small>}</CardContent></Card></div></Surface>
 }
 
-async function fileAsBase64(file: File) {
-  const bytes = new Uint8Array(await file.arrayBuffer())
-  let binary = ''
-  for (const byte of bytes) binary += String.fromCharCode(byte)
-  return btoa(binary)
-}
-
 function App() {
   const [page, setPage] = useState<Page>('Chat')
   const [navigationCollapsed, setNavigationCollapsed] = useState(() => readStoredBoolean('chat-studio.navigation-collapsed', false))
@@ -803,11 +746,11 @@ function App() {
   const [historyOpen, setHistoryOpen] = useState(false)
 
   useEffect(() => {
-    try { localStorage.setItem('chat-studio.navigation-collapsed', String(navigationCollapsed)) } catch { /* Browser storage is optional. */ }
+    writeStoredBoolean('chat-studio.navigation-collapsed', navigationCollapsed)
   }, [navigationCollapsed])
 
   useEffect(() => {
-    try { localStorage.setItem('chat-studio.inspector-open', String(inspectorOpen)) } catch { /* Browser storage is optional. */ }
+    writeStoredBoolean('chat-studio.inspector-open', inspectorOpen)
   }, [inspectorOpen])
 
   useEffect(() => {
