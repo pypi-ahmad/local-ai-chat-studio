@@ -235,7 +235,7 @@ def create_app(
 
     @app.post("/api/v1/conversations", response_model=Conversation, status_code=201)
     def create_conversation(payload: ConversationCreate) -> Conversation:
-        return store.create_conversation(payload.title)
+        return store.create_conversation(payload.title, settings=payload.settings)
 
     @app.get("/api/v1/conversations", response_model=list[Conversation])
     def list_conversations(query: str = "") -> list[Conversation]:

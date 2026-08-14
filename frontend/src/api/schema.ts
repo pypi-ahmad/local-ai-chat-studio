@@ -1035,6 +1035,7 @@ export interface components {
              * @default New chat
              */
             title: string;
+            settings?: components["schemas"]["ConversationSettings"] | null;
         };
         /** ConversationSettings */
         ConversationSettings: {

@@ -111,6 +111,28 @@ def test_conversation_settings_are_saved_independently(client: TestClient) -> No
     ] != settings
 
 
+def test_conversation_can_start_with_assistant_settings(client: TestClient) -> None:
+    settings = {
+        "model_key": "openai::gpt-5.6-luna",
+        "reasoning_effort": None,
+        "temperature": 0.2,
+        "context_policy": "full",
+        "include_web": False,
+        "auto_compress_history": False,
+        "system_prompt": "Review code for correctness and explain each finding.",
+        "layout": "conversation",
+    }
+
+    created = client.post(
+        "/api/v1/conversations",
+        json={"title": "Code reviewer", "settings": settings},
+    )
+
+    assert created.status_code == 201
+    assert created.json()["title"] == "Code reviewer"
+    assert created.json()["settings"] == settings
+
+
 def test_provider_secret_is_scoped_to_browser_session(client: TestClient) -> None:
     connected = client.put(
         "/api/v1/providers/openai/credential", json={"api_key": "sk-test"}

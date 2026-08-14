@@ -111,8 +111,8 @@ export const api = {
   conversations: (query = '') =>
     request<Conversation[]>(`/conversations${query ? `?query=${encodeURIComponent(query)}` : ''}`),
   conversation: (id: string) => request<Conversation>(`/conversations/${id}`),
-  createConversation: (title = 'New chat') =>
-    request<Conversation>('/conversations', { method: 'POST', body: JSON.stringify({ title }) }),
+  createConversation: (title = 'New chat', settings?: ConversationSettings) =>
+    request<Conversation>('/conversations', { method: 'POST', body: JSON.stringify({ title, settings }) }),
   updateConversation: (id: string, payload: components['schemas']['ConversationUpdate']) =>
     request<Conversation>(`/conversations/${id}`, { method: 'PATCH', body: JSON.stringify(payload) }),
   deleteConversation: (id: string) => request<void>(`/conversations/${id}`, { method: 'DELETE' }),

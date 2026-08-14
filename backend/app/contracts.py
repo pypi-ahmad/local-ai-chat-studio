@@ -28,6 +28,7 @@ class Message(MessageCreate):
 
 class ConversationCreate(BaseModel):
     title: str = Field(default="New chat", min_length=1, max_length=200)
+    settings: "ConversationSettings | None" = None
 
 
 class ConversationSettings(BaseModel):
