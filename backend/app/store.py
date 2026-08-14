@@ -1080,6 +1080,14 @@ class Store:
             for row in rows
         ]
 
+    def delete_upload(self, upload_id: str) -> None:
+        with self.lock, self.connection:
+            deleted = self.connection.execute(
+                "DELETE FROM uploads WHERE id = ?", (upload_id,)
+            ).rowcount
+        if not deleted:
+            raise KeyError(upload_id)
+
     def upload_texts(self, conversation_id: str) -> list[tuple[str, str, str]]:
         with self.lock:
             rows = self.connection.execute(

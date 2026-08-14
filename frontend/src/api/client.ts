@@ -180,6 +180,7 @@ export const api = {
       body: JSON.stringify({ conversation_id: conversationId, filename, content_base64: contentBase64 }),
     }),
   uploads: (conversationId: string) => request<Upload[]>(`/conversations/${conversationId}/uploads`),
+  deleteUpload: (uploadId: string) => request<void>(`/uploads/${uploadId}`, { method: 'DELETE' }),
   activity: () => request<RunSnapshot[]>('/activity'),
   bundle: (runId: string, mode: 'full' | 'redacted' = 'full') =>
     request<ReplayBundle>(`/runs/${runId}/bundle?mode=${mode}`),

@@ -834,6 +834,14 @@ def create_app(
     def list_uploads(conversation_id: str) -> list[Upload]:
         return store.list_uploads(conversation_id)
 
+    @app.delete("/api/v1/uploads/{upload_id}", status_code=204)
+    def delete_upload(upload_id: str) -> Response:
+        try:
+            store.delete_upload(upload_id)
+        except KeyError as exc:
+            raise HTTPException(404, "Upload not found") from exc
+        return Response(status_code=204)
+
     @app.post("/api/v1/runs", response_model=RunSnapshot, status_code=202)
     async def create_run(payload: RunCreate, request: Request) -> RunSnapshot:
         return runs.create(payload, request.state.session_id)
