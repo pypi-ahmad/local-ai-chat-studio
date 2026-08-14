@@ -7,12 +7,31 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-08-14
+
+### Added
+
+- Added parallel comparison across two to four distinct models, with independent
+  streaming results, per-model status and errors, duplicate prevention, and a
+  shared **Cancel all** action.
+- Added the dedicated Agnes AI provider with live `agnes-2.5-flash` discovery,
+  `AGNES_API_KEY` environment fallback, official documentation links, and
+  source-backed pricing metadata.
+- Added source-linked per-model token pricing and estimated input cost to the UI.
+
 ### Changed
 
-- Refreshed README and companion documentation for v0.3.0: port 8506, managed
-  **Stop Studio** shutdown, Windows launcher `--check` / `--legacy-peer-deps`,
-  and TypeScript 5.9.
-- Added source-linked per-model token pricing and estimated input cost to the UI.
+- OpenAI now honors `OPENAI_BASE_URL` alongside `OPENAI_API_KEY`; the tracked
+  `.env.example` remains a credential-free template for other machines.
+- Refreshed the README, user guides, tutorial, architecture material, and live
+  screenshots for Luna and Agnes 2.5 Flash.
+
+### Fixed
+
+- Omitted the unsupported custom temperature parameter for `gpt-5.6-luna`,
+  allowing it to use the model's required default temperature.
+- Improved the Windows launcher so an existing valid setup launches directly
+  while missing or stale dependencies are installed and rebuilt as needed.
 
 ## [0.3.0] - 2026-08-12
 

@@ -20,6 +20,11 @@ unmanaged servers return 503).
 
 Frontend tests use Vitest, Testing Library, jest-dom, and jsdom. They exercise the
 connected workspace shell, navigation, preflight, SSE output, the OpenCode Claude
-sign-in affordance, model-rate display, and the Settings **Stop Studio** control. There is no browser E2E
+sign-in affordance, model-rate display, parallel comparison across three models,
+four-model partial failure isolation, cancel-all behavior, and the Settings **Stop
+Studio** control. There is no browser E2E
 runner or coverage threshold yet; real external-provider calls, OAuth flows, and a
 running Ollama daemon remain manual smoke tests.
+
+Provider adapter tests also lock the `gpt-5.6-luna` request contract: its OpenAI-
+compatible request must omit a custom temperature and use the model default.

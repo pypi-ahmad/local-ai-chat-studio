@@ -14,3 +14,9 @@ npm run generate:api
 Model discovery includes optional `ModelPricing` metadata. `App.tsx` displays
 the published input/output rates and calculates preflight input-cost estimates;
 unknown pricing must remain visibly unavailable.
+
+The Compare workspace lets users choose two to four distinct discovered models and
+starts one run per model concurrently. Result cards stream and fail independently;
+**Cancel all** aborts each stream and cancels every created run. Keep the selection
+limit, duplicate prevention, provider-charge warning, and focused Vitest coverage when
+changing this surface.

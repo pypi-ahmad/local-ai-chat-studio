@@ -19,6 +19,11 @@ SSE subscribers can replay events and follow new deltas. Run IDs are scoped to t
 owning browser session. Completed runs append assistant messages and chained receipt
 hashes.
 
+The Compare workspace fans one prompt out to two to four ordinary runs concurrently.
+Each result retains its own status, output, and safe error; one failed provider does not
+stop the others. **Cancel all** aborts each browser stream and cancels every created run
+through the existing session-owned run endpoint.
+
 FastAPI serves `frontend/dist` at `/`. Shared helpers under `src/` provide file parsing,
 Ollama health/embeddings, and the existing `data/chroma` collections.
 

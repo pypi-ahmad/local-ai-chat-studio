@@ -859,7 +859,7 @@ boundary, not an accident — it means the server only accepts connections
 from the same machine, so "no built-in authentication" (true throughout this
 API) is an acceptable tradeoff *as long as* this stays loopback-only. Binding
 `0.0.0.0` here would expose every unauthenticated route to the network.
-Port **8506** is the default in v0.3.0. The shutdown callback is what
+Port **8506** is the default in v0.4.0. The shutdown callback is what
 Settings **Stop Studio** uses after `RunManager.shutdown()` cancels active
 runs.
 
@@ -870,6 +870,14 @@ Library, Activity, and Settings. `frontend/src/api/client.ts` is the typed
 client for conversations, preflight, SSE runs, memory, OpenCode auth, data
 controls, and `api.shutdown()`. Vite's `npm run dev` proxies `/api` to
 `http://127.0.0.1:8506`. TypeScript is pinned to 5.9.
+
+The Compare workspace holds two to four distinct `provider::model` selections.
+Submitting one prompt creates every run concurrently with `Promise.allSettled`, then
+maps each SSE stream back to its result card. A failed provider updates only its card;
+**Cancel all** aborts every stream and calls the existing run-cancellation endpoint
+for each created run. `gpt-5.6-luna` uses the OpenAI adapter without a custom
+temperature because its API accepts only the model default, while Agnes
+`agnes-2.5-flash` uses the dedicated official OpenAI-compatible endpoint.
 
 A focused contribution is still a small vertical slice — for example
 tightening one Settings or Providers control plus a Vitest case — but the
@@ -929,4 +937,4 @@ different concurrency primitives because the two web frameworks demand it.
   module in Part 4 is actually guaranteed to do.
 - **A good first contribution**: a focused UI or contract change with a
   matching test. See [CONTRIBUTING.md](CONTRIBUTING.md). The old “wire the
-  static shell” gap list is obsolete as of v0.3.0.
+  static shell” gap list is obsolete as of v0.4.0.

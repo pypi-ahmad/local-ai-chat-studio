@@ -5,7 +5,7 @@
 | Ollama Local | Local chat, discovery, vision, health, embeddings | No key; `CHAT_OLLAMA_HOST` defaults to `http://localhost:11434` |
 | Ollama Cloud | Cloud chat and discovery | `OLLAMA_API_KEY` session key or environment fallback |
 | OpenAI / xAI / OmniRoute | OpenAI-compatible discovery, chat, vision | Session key or env fallback; `OPENAI_BASE_URL` optionally overrides OpenAI |
-| Agnes AI | OpenAI-compatible `agnes-2.5-flash` discovery and chat | `AGNES_API_KEY` session key or environment fallback |
+| Agnes AI | OpenAI-compatible [`agnes-2.5-flash`](https://www.agnes-ai.com/en/docs/agnes-25-flash) discovery and chat ([overview](https://www.agnes-ai.com/en/docs/overview)) | `AGNES_API_KEY` session key or environment fallback |
 | Anthropic | Discovery, chat, vision | Session key, env fallback, or workload identity |
 | Google Gemini | Discovery, chat, vision | Session key or env fallback |
 | OpenRouter | Discovery/chat plus PKCE sign-in | Session key, env, or exchanged key |
@@ -17,6 +17,12 @@
 Cloud context starts prompt-only and is expanded per provider policy. Browser-entered
 keys live in the session vault, are never written to SQLite, and are cleared on panic
 wipe or restart. Provider errors are reduced before they reach run events.
+
+OpenAI-compatible requests normally carry the selected temperature.
+`gpt-5.6-luna` is the narrow exception: its endpoint supports only the model default,
+so the adapter omits that parameter. Parallel comparison still creates ordinary,
+independently cancellable requests; selecting multiple cloud models sends the prompt
+to every selected provider and may incur a charge from each one.
 
 ## OpenCode bridge
 

@@ -11,6 +11,10 @@
 - Cost figures are estimates from dated standard text-token rates. They do not include
   output usage, cache tiers, tools, media, discounts, tax, or subscription billing;
   custom and unknown gateways intentionally show no price.
+- Compare sends the prompt independently to every selected model. Two to four cloud
+  selections can therefore multiply spend and rate-limit pressure; the UI shows a
+  charge warning and provides **Cancel all**, but providers may still bill completed
+  tokens.
 - SQLite text search uses `LIKE`; add FTS only after profiling a realistically large
   history.
 - Chroma retrieval requires `CHAT_EMBED_MODEL`; otherwise the app uses lexical history

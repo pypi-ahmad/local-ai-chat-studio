@@ -11,7 +11,7 @@
 | `backend/app/workspace.py` | Context plans, safety, provenance, web and retrieval |
 | `backend/app/providers.py` | Provider adapters and model discovery |
 | `backend/app/pricing.py` | Source-linked standard token-rate catalog and normalization |
-| `frontend/src/` | React workspace, design system, typed API client |
+| `frontend/src/` | React workspace, 2–4 model parallel comparison, design system, typed API client |
 | `src/files.py` | Shared document/image parsing and upload validation |
 | `src/rag.py` | Existing Chroma collections and embedding retrieval |
 | `src/ollama_client.py` | Shared Ollama discovery, health, and embedding helpers |

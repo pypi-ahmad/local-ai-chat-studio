@@ -29,6 +29,11 @@ security-relevant surfaces are:
   workspace provides warnings, quarantine, provenance, and redaction controls,
   but you should still treat instructions originating in that content as
   untrusted.
+- **Parallel comparison** — Compare sends the same prompt independently to every
+  selected model. Review the selected providers before running it: choosing multiple
+  cloud models crosses each provider's data boundary and can incur separate charges.
+  A failure is isolated to its result card, while **Cancel all** requests cancellation
+  for every active run.
 - **Local bridges** — OpenCode subscription flows use a loopback-only local
   server. Keep its optional credentials private and do not change the bridge to
   a public endpoint.

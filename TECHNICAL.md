@@ -38,6 +38,10 @@ Process lifespan shutdown also waits for runs and closes the SQLite connection.
 - A run is created through `/api/v1/runs`, streamed through an SSE event
   endpoint, persisted with its context and provenance, and can be cancelled,
   replayed, bundled, or compared.
+- The Compare workspace creates one independent run for each of two to four
+  distinct selected models. The browser starts and follows those runs concurrently,
+  keeps output and failures isolated by provider/model key, and cancels every known
+  run when **Cancel all** is selected. No separate batch API is required.
 - Memory curation uses an LLM to keep only durable, explicit user facts,
   preferences, goals, constraints, and project decisions. It excludes secrets,
   raw files, assistant claims, and transient chat details.
@@ -68,6 +72,11 @@ fallbacks.
 providers use the dated catalog in `pricing.py`; OpenRouter prices are normalized from
 its live Models API. The frontend uses preflight token estimates for input cost only.
 Custom OpenAI base URLs and other unverified gateways deliberately receive no price.
+
+The OpenAI-compatible adapter omits `temperature` for `gpt-5.6-luna` because that
+model accepts only its provider default. Other compatible models continue to receive
+the user-selected temperature. Agnes AI uses its fixed official endpoint and discovers
+`agnes-2.5-flash` live rather than relying on a hardcoded catalog.
 
 OpenRouter uses a local PKCE flow. ChatGPT, SuperGrok, and Claude subscription
 flows are delegated through a local OpenCode server. The server URL must use a
