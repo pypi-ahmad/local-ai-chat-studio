@@ -240,6 +240,11 @@ def test_memory_preset_upload_activity_and_replay(client: TestClient) -> None:
     )
     assert upload.status_code == 201
     assert upload.json()["text_preview"] == "Local context only"
+    upload_id = upload.json()["id"]
+    assert len(client.get(f"/api/v1/conversations/{conversation_id}/uploads").json()) == 1
+    assert client.delete(f"/api/v1/uploads/{upload_id}").status_code == 204
+    assert client.get(f"/api/v1/conversations/{conversation_id}/uploads").json() == []
+    assert client.delete(f"/api/v1/uploads/{upload_id}").status_code == 404
 
     run_id = _complete_echo_run(client, conversation_id, "original answer")
     activity = client.get("/api/v1/activity").json()

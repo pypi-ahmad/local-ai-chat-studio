@@ -111,6 +111,11 @@ beforeEach(() => {
       uploadedFiles.push(uploaded)
       return json(uploaded, 201)
     }
+    if (/\/uploads\/[^/]+$/.test(path) && init?.method === 'DELETE') {
+      const uploadId = path.split('/').pop()
+      uploadedFiles = uploadedFiles.filter((item) => item.id !== uploadId)
+      return new Response(null, { status: 204 })
+    }
     if (path.endsWith('/conversations/c1/uploads')) return json(uploadedFiles)
     if (/\/(memories|backpacks)$/.test(path)) return json([])
     if (path.endsWith('/turns/preflight')) {
@@ -301,11 +306,16 @@ describe('studio workspace', () => {
     const input = screen.getByLabelText('Attachment upload') as HTMLInputElement
 
     fireEvent.change(input, { target: { files: [new File(['notes'], 'notes.txt', { type: 'text/plain' })] } })
-    expect(await screen.findByText(/Uploading · 1 KB/)).toBeInTheDocument()
+    expect(await screen.findByText('Parsing & indexing')).toBeInTheDocument()
+    expect(screen.getByText('TXT · 5 B')).toBeInTheDocument()
+    expect(screen.getByRole('progressbar', { name: 'Parsing and indexing notes.txt' })).toBeInTheDocument()
     releaseUpload?.()
 
     expect(await screen.findByText('Ready · included in next message')).toBeInTheDocument()
-    expect(screen.getByText('notes.txt')).toBeInTheDocument()
+    expect(screen.getByText('TXT · 12 B')).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Remove notes.txt' }))
+    await waitFor(() => expect(screen.queryByText('notes.txt')).not.toBeInTheDocument())
+    expect(vi.mocked(fetch).mock.calls.some(([url, init]) => String(url).endsWith('/uploads/upload-1') && init?.method === 'DELETE')).toBe(true)
   })
 
   it('keeps failed attachments actionable and retries them in place', async () => {
@@ -316,6 +326,7 @@ describe('studio workspace', () => {
 
     fireEvent.change(input, { target: { files: [new File(['bad'], 'bad.pdf', { type: 'application/pdf' })] } })
     expect(await screen.findByText('File exceeds the 10 MB upload limit.')).toBeInTheDocument()
+    expect(screen.getByText('PDF · 3 B')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Remove bad.pdf' })).toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: 'Retry bad.pdf' }))
 
