@@ -44,6 +44,7 @@ import {
   ThumbsUp,
   Trash2,
   TriangleAlert,
+  Wrench,
   XCircle,
 } from 'lucide-react'
 
@@ -65,6 +66,7 @@ import { ArtifactPreview } from '@/features/artifact-preview/ArtifactPreview'
 import type { Artifact } from '@/features/artifact-preview/artifact'
 import { readFavoriteAssistants, readRecentAssistants, writeFavoriteAssistants, writeRecentAssistants } from '@/features/assistants/assistantPreferences'
 import { KnowledgeBasePanel } from '@/features/knowledge/KnowledgeBasePanel'
+import { ToolControlCenter } from '@/features/tools/ToolControlCenter'
 import { contextLengthLabel, formatUsd, hasTools, hasVision, modelKey, modelSearchText, pricingLabel, providerMonogram } from '@/features/models/modelMetadata'
 import { readFavoriteModels, readRecentModels, writeFavoriteModels, writeRecentModels } from '@/features/models/modelPreferences'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
@@ -97,7 +99,7 @@ import {
 
 const navigationGroups: ReadonlyArray<{ label: string; items: ReadonlyArray<readonly [Page, typeof MessageSquare]> }> = [
   { label: 'Primary', items: [['Chat', MessageSquare], ['Compare', GitCompareArrows], ['Library', Library]] },
-  { label: 'Workspace', items: [['Focus', Focus]] },
+  { label: 'Workspace', items: [['Focus', Focus], ['Tools', Wrench]] },
   { label: 'Administration', items: [['Providers', PlugZap], ['Settings', Settings]] },
 ]
 
@@ -1336,6 +1338,7 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
         {page === 'Evidence' && <EvidencePage activity={activity} excluded={excludedSources} onToggle={toggleSource} plan={plan} />}
         {page === 'Replay' && <ReplayPage activity={activity} models={models} onModel={setSelectedModel} onReplay={async (run, key) => { const model = models.find((candidate) => modelKey(candidate) === key); if (!model) return; const replay = await api.replay(run.id, model.provider, model.id); await streamRun(replay.id, () => {}); setActivity(await api.activity()) }} providers={providers} selectedModel={selectedModel} />}
         {page === 'Focus' && <FocusPage conversationId={activeId} onCreate={async (objective, criteria, constraints) => { if (!activeId) return; await api.createFocus({ conversation_id: activeId, objective, success_criteria: criteria, constraints }); setPage('Chat') }} />}
+        {page === 'Tools' && <ToolControlCenter />}
         {page === 'Providers' && <ProvidersPage onChanged={refreshProviders} providers={providers} />}
         {page === 'Library' && <LibraryPage backpacks={backpacks} conversation={currentConversation} knowledgeBases={knowledgeBases} memories={memories} models={models} onKnowledgeBaseBind={bindKnowledgeBase} onKnowledgeBaseCreate={async (payload) => { const created = await api.createKnowledgeBase(payload); setKnowledgeBases((current) => [created, ...current]); return created }} onKnowledgeBaseDelete={async (id) => { await api.deleteKnowledgeBase(id); setKnowledgeBases((current) => current.filter((item) => item.id !== id)); await refreshConversations() }} onKnowledgeBaseUpdate={async (id, payload) => { const updated = await api.updateKnowledgeBase(id, payload); setKnowledgeBases((current) => current.map((item) => item.id === id ? updated : item)); return updated }} onMemory={async (content) => { await api.createMemory(content); setMemories(await api.memories()) }} onMemoryDelete={async (id) => { await api.deleteMemory(id); setMemories(await api.memories()) }} onMemoryUpdate={async (id, payload) => { await api.updateMemory(id, payload); setMemories(await api.memories()) }} onModel={setSelectedModel} onPreset={async (name, prompt) => { await api.createPreset({ name, system_prompt: prompt, model_key: selectedModel, temperature: 0.7 }); setPresets(await api.presets()) }} onPresetDelete={async (id) => { await api.deletePreset(id); setPresets(await api.presets()) }} onStartAssistant={async (preset) => { const created = await api.createConversation(preset.name, { ...defaultConversationSettings, model_key: preset.model_key, temperature: preset.temperature, system_prompt: preset.system_prompt }); setConversations((current) => [created, ...current.filter((item) => item.id !== created.id)]); selectConversation(created.id) }} onUpload={async (file) => { try { await upload(file) } catch (cause) { setError(messageOf(cause)) } }} presets={presets} providers={providers} selectedModel={selectedModel} uploads={uploads} />}
         {page === 'Settings' && <SettingsPage connected={connected} onRefresh={async () => { await Promise.all([refreshConversations(), refreshLibrary()]) }} />}

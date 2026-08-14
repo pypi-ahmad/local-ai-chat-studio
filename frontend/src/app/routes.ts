@@ -1,4 +1,4 @@
-export type Page = 'Chat' | 'Compare' | 'Context' | 'Evidence' | 'Replay' | 'Focus' | 'Providers' | 'Library' | 'Settings'
+export type Page = 'Chat' | 'Compare' | 'Context' | 'Evidence' | 'Replay' | 'Focus' | 'Tools' | 'Providers' | 'Library' | 'Settings'
 export type WorkspaceRoute = { page: Page; conversationId: string | null }
 
 const paths: Record<Page, string> = {
@@ -8,6 +8,7 @@ const paths: Record<Page, string> = {
   Evidence: '/evidence',
   Replay: '/replay',
   Focus: '/focus',
+  Tools: '/tools',
   Providers: '/providers',
   Library: '/library',
   Settings: '/settings',

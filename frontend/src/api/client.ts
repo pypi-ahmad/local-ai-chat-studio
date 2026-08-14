@@ -18,6 +18,11 @@ export type Memory = components['schemas']['Memory']
 export type Preset = components['schemas']['Preset']
 export type Upload = components['schemas']['Upload']
 export type ReplayBundle = components['schemas']['ReplayBundle']
+export type McpServer = components['schemas']['McpServer']
+export type McpServerCreate = components['schemas']['McpServerCreate']
+export type McpTool = components['schemas']['McpTool']
+export type ToolRequest = components['schemas']['ToolRequest']
+export type ToolRequestCreate = components['schemas']['ToolRequestCreate']
 export type ConversationExportFormat = 'markdown' | 'html' | 'txt' | 'json'
 
 export type ProviderSummary = {
@@ -136,6 +141,20 @@ export const api = {
   cancelRun: (runId: string) => request<RunSnapshot>(`/runs/${runId}`, { method: 'DELETE' }),
   providers: () => request<{ providers: ProviderSummary[] }>('/providers'),
   models: () => request<Record<string, { provider: string; models: ModelSummary[]; error?: string }>>('/providers/models'),
+  mcpServers: () => request<McpServer[]>('/mcp/servers'),
+  createMcpServer: (payload: McpServerCreate) =>
+    request<McpServer>('/mcp/servers', { method: 'POST', body: JSON.stringify(payload) }),
+  deleteMcpServer: (id: string) => request<void>(`/mcp/servers/${id}`, { method: 'DELETE' }),
+  discoverMcpTools: (id: string) =>
+    request<McpTool[]>(`/mcp/servers/${id}/discover`, { method: 'POST' }),
+  mcpTools: (id: string) => request<McpTool[]>(`/mcp/servers/${id}/tools`),
+  toolRequests: () => request<ToolRequest[]>('/tool-requests'),
+  createToolRequest: (payload: ToolRequestCreate) =>
+    request<ToolRequest>('/tool-requests', { method: 'POST', body: JSON.stringify(payload) }),
+  approveToolRequest: (id: string, reason: string) =>
+    request<ToolRequest>(`/tool-requests/${id}/approve`, { method: 'POST', body: JSON.stringify({ reason }) }),
+  denyToolRequest: (id: string, reason: string) =>
+    request<ToolRequest>(`/tool-requests/${id}/deny`, { method: 'POST', body: JSON.stringify({ reason }) }),
   setCredential: (provider: string, apiKey: string) =>
     request<void>(`/providers/${provider}/credential`, { method: 'PUT', body: JSON.stringify({ api_key: apiKey }) }),
   removeCredential: (provider: string) => request<void>(`/providers/${provider}/credential`, { method: 'DELETE' }),

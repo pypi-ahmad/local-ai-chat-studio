@@ -43,6 +43,9 @@ let createdAssistantConversation: Record<string, unknown> | null = null
 let knowledgeBases: Array<Record<string, unknown>> = []
 let libraryMemories: Array<Record<string, unknown>> = []
 let libraryBackpacks: Array<Record<string, unknown>> = []
+let mcpServers: Array<Record<string, unknown>> = []
+let mcpTools: Array<Record<string, unknown>> = []
+let toolRequests: Array<Record<string, unknown>> = []
 
 function json(value: unknown, status = 200) {
   return new Response(JSON.stringify(value), { status, headers: { 'Content-Type': 'application/json' } })
@@ -91,6 +94,9 @@ beforeEach(() => {
   knowledgeBases = []
   libraryMemories = []
   libraryBackpacks = []
+  mcpServers = [{ id: 'mcp-1', name: 'Workspace reader', transport: 'stdio', command: 'uvx', args: ['safe-reader-mcp'], env_keys: [], url: null, command_preview: 'uvx safe-reader-mcp', tested_at: 'now', created_at: 'now', updated_at: 'now' }]
+  mcpTools = [{ server_id: 'mcp-1', name: 'read_document', title: 'Read document', description: 'Read one approved document.', input_schema: { type: 'object', properties: { path: { type: 'string' } }, required: ['path'] } }]
+  toolRequests = []
   localStorage.clear()
   window.history.replaceState({}, '', '/')
   Object.defineProperty(Element.prototype, 'scrollIntoView', { configurable: true, value: vi.fn() })
@@ -100,6 +106,33 @@ beforeEach(() => {
     if (path.endsWith('/runtime/health')) return json({ ollama_available: true, running_models: [] })
     if (path.endsWith('/health')) return json({ status: 'ok', version: '2' })
     if (path.endsWith('/profile')) return json({ content: '' })
+    if (path.endsWith('/mcp/servers')) {
+      if (init?.method === 'POST') {
+        const created = { id: 'mcp-2', tested_at: null, created_at: 'now', updated_at: 'now', command_preview: 'uvx example-mcp', ...JSON.parse(String(init.body)) }
+        mcpServers = [created, ...mcpServers]
+        return json(created, 201)
+      }
+      return json(mcpServers)
+    }
+    if (path.endsWith('/mcp/servers/mcp-1/tools')) return json(mcpTools)
+    if (path.endsWith('/mcp/servers/mcp-1/discover')) return json(mcpTools)
+    if (path.endsWith('/tool-requests')) {
+      if (init?.method === 'POST') {
+        const body = JSON.parse(String(init.body))
+        const created = { id: 'tool-1', server_name: 'Workspace reader', status: 'pending', argument_hash: 'a'.repeat(64), arguments_preview: body.arguments, decision_reason: null, result_preview: null, error: null, created_at: 'now', decided_at: null, completed_at: null, conversation_id: null, ...body }
+        toolRequests = [created]
+        return json(created, 201)
+      }
+      return json(toolRequests)
+    }
+    if (path.endsWith('/tool-requests/tool-1/approve')) {
+      toolRequests = [{ ...toolRequests[0], status: 'completed', arguments: null, result_preview: 'approved document', decided_at: 'now', completed_at: 'now' }]
+      return json(toolRequests[0])
+    }
+    if (path.endsWith('/tool-requests/tool-1/deny')) {
+      toolRequests = [{ ...toolRequests[0], status: 'denied', arguments: null, decided_at: 'now', completed_at: 'now' }]
+      return json(toolRequests[0])
+    }
     if (path.endsWith('/runtime/shutdown')) return json({ status: 'stopping' }, 202)
     if (path.endsWith('/conversations')) {
       const record = { ...conversation, settings: conversationSettings }
@@ -726,7 +759,7 @@ describe('studio workspace', () => {
     fireEvent.click(screen.getByLabelText('Model'))
     expect(await screen.findByText('128K context')).toBeInTheDocument()
     expect(screen.getByText('Reasoning · 6 levels')).toBeInTheDocument()
-    expect(screen.getByText('Tools')).toBeInTheDocument()
+    expect(screen.getAllByText('Tools').length).toBeGreaterThan(0)
     expect(screen.getAllByLabelText('OpenAI provider').length).toBeGreaterThan(0)
     fireEvent.click(screen.getByRole('button', { name: 'Add Luna to favorites' }))
     expect(screen.getByText('Favorites')).toBeInTheDocument()
@@ -830,6 +863,27 @@ describe('studio workspace', () => {
     expect(fetch).toHaveBeenCalledWith('/api/v1/runtime/shutdown', expect.objectContaining({
       method: 'POST',
       headers: expect.objectContaining({ 'X-Local-Studio': 'shutdown' }),
+    }))
+  })
+
+  it('queues MCP tools behind a visible approval gate and records the result', async () => {
+    render(<App />)
+    fireEvent.click(screen.getByRole('button', { name: 'Tools' }))
+
+    expect(await screen.findByRole('heading', { name: 'Work Mode' })).toBeInTheDocument()
+    fireEvent.change(await screen.findByLabelText('Tool arguments'), { target: { value: '{"path":"notes.md"}' } })
+    fireEvent.change(screen.getByLabelText('Tool rationale'), { target: { value: 'Use the approved notes as evidence.' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Request approval' }))
+
+    expect(await screen.findByText('Approval required')).toBeInTheDocument()
+    expect(screen.getByLabelText('Exact tool arguments')).toHaveTextContent('notes.md')
+    expect(screen.getByText(/aaaaaaaaaaaa/)).toBeInTheDocument()
+    fireEvent.change(screen.getByLabelText('Approval reason'), { target: { value: 'I reviewed the exact request.' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Approve and run' }))
+
+    expect(await screen.findByText('approved document')).toBeInTheDocument()
+    expect(fetch).toHaveBeenCalledWith('/api/v1/tool-requests/tool-1/approve', expect.objectContaining({
+      method: 'POST', body: JSON.stringify({ reason: 'I reviewed the exact request.' }),
     }))
   })
 })
