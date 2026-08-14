@@ -12,6 +12,8 @@ export type RunEvent = { type: string; run_id: string; data: Record<string, unkn
 export type ProviderPolicy = components['schemas']['ProviderPolicy']
 export type Backpack = components['schemas']['Backpack']
 export type FocusSession = components['schemas']['FocusSession']
+export type KnowledgeBase = components['schemas']['KnowledgeBase']
+export type KnowledgeBaseCreate = components['schemas']['KnowledgeBaseCreate']
 export type Memory = components['schemas']['Memory']
 export type Preset = components['schemas']['Preset']
 export type Upload = components['schemas']['Upload']
@@ -169,6 +171,12 @@ export const api = {
     request<Backpack>('/backpacks', {
       method: 'POST', body: JSON.stringify({ name, items: [{ title, content }] }),
     }),
+  knowledgeBases: () => request<KnowledgeBase[]>('/knowledge-bases'),
+  createKnowledgeBase: (payload: KnowledgeBaseCreate) =>
+    request<KnowledgeBase>('/knowledge-bases', { method: 'POST', body: JSON.stringify(payload) }),
+  updateKnowledgeBase: (id: string, payload: KnowledgeBaseCreate) =>
+    request<KnowledgeBase>(`/knowledge-bases/${id}`, { method: 'PUT', body: JSON.stringify(payload) }),
+  deleteKnowledgeBase: (id: string) => request<void>(`/knowledge-bases/${id}`, { method: 'DELETE' }),
   createFocus: (payload: {
     conversation_id: string; objective: string; success_criteria: string; constraints: string[]
   }) => request<FocusSession>('/focus-sessions', { method: 'POST', body: JSON.stringify(payload) }),

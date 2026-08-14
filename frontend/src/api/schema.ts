@@ -747,6 +747,42 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/knowledge-bases": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Knowledge Bases */
+        get: operations["list_knowledge_bases_api_v1_knowledge_bases_get"];
+        put?: never;
+        /** Create Knowledge Base */
+        post: operations["create_knowledge_base_api_v1_knowledge_bases_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/knowledge-bases/{knowledge_base_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update Knowledge Base */
+        put: operations["update_knowledge_base_api_v1_knowledge_bases__knowledge_base_id__put"];
+        post?: never;
+        /** Delete Knowledge Base */
+        delete: operations["delete_knowledge_base_api_v1_knowledge_bases__knowledge_base_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/runs": {
         parameters: {
             query?: never;
@@ -1095,6 +1131,8 @@ export interface components {
              * @enum {string}
              */
             layout: "conversation" | "compact" | "full-width";
+            /** Knowledge Base Id */
+            knowledge_base_id?: string | null;
         };
         /** ConversationUpdate */
         ConversationUpdate: {
@@ -1188,6 +1226,81 @@ export interface components {
             mime: "image/png" | "image/jpeg" | "image/webp" | "image/gif" | "image/bmp";
             /** Data Base64 */
             data_base64: string;
+        };
+        /** KnowledgeBase */
+        KnowledgeBase: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /**
+             * Include Retrieval
+             * @default true
+             */
+            include_retrieval: boolean;
+            /** Created At */
+            created_at: string;
+            /** Updated At */
+            updated_at: string;
+            /**
+             * Sources
+             * @default []
+             */
+            sources: components["schemas"]["KnowledgeBaseSource"][];
+        };
+        /** KnowledgeBaseCreate */
+        KnowledgeBaseCreate: {
+            /** Name */
+            name: string;
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /**
+             * Include Retrieval
+             * @default true
+             */
+            include_retrieval: boolean;
+            /** Sources */
+            sources?: components["schemas"]["KnowledgeBaseSourceInput"][];
+        };
+        /** KnowledgeBaseSource */
+        KnowledgeBaseSource: {
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "upload" | "memory" | "backpack";
+            /** Source Id */
+            source_id: string;
+            /** Title */
+            title: string;
+            /**
+             * Preview
+             * @default
+             */
+            preview: string;
+            /**
+             * Available
+             * @default true
+             */
+            available: boolean;
+        };
+        /** KnowledgeBaseSourceInput */
+        KnowledgeBaseSourceInput: {
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "upload" | "memory" | "backpack";
+            /** Source Id */
+            source_id: string;
         };
         /** Memory */
         Memory: {
@@ -3384,6 +3497,123 @@ export interface operations {
             header?: never;
             path: {
                 upload_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_knowledge_bases_api_v1_knowledge_bases_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["KnowledgeBase"][];
+                };
+            };
+        };
+    };
+    create_knowledge_base_api_v1_knowledge_bases_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["KnowledgeBaseCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["KnowledgeBase"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_knowledge_base_api_v1_knowledge_bases__knowledge_base_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                knowledge_base_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["KnowledgeBaseCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["KnowledgeBase"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_knowledge_base_api_v1_knowledge_bases__knowledge_base_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                knowledge_base_id: string;
             };
             cookie?: never;
         };

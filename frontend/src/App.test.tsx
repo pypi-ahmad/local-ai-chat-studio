@@ -17,11 +17,13 @@ type MockConversationSettings = {
   auto_compress_history: boolean
   system_prompt: string
   layout: 'conversation' | 'compact' | 'full-width'
+  knowledge_base_id: string | null
 }
 
 const defaultConversationSettings: MockConversationSettings = {
   model_key: '', reasoning_effort: null, temperature: 0.7, context_policy: 'full',
   include_web: false, auto_compress_history: false, system_prompt: '', layout: 'conversation',
+  knowledge_base_id: null,
 }
 
 let holdComparisonStreams = false
@@ -38,6 +40,9 @@ let contextBudget = 6553
 let conversationSettings: MockConversationSettings = { ...defaultConversationSettings }
 let libraryPresets: Array<Record<string, unknown>> = []
 let createdAssistantConversation: Record<string, unknown> | null = null
+let knowledgeBases: Array<Record<string, unknown>> = []
+let libraryMemories: Array<Record<string, unknown>> = []
+let libraryBackpacks: Array<Record<string, unknown>> = []
 
 function json(value: unknown, status = 200) {
   return new Response(JSON.stringify(value), { status, headers: { 'Content-Type': 'application/json' } })
@@ -83,6 +88,9 @@ beforeEach(() => {
   conversationSettings = { ...defaultConversationSettings }
   libraryPresets = []
   createdAssistantConversation = null
+  knowledgeBases = []
+  libraryMemories = []
+  libraryBackpacks = []
   localStorage.clear()
   window.history.replaceState({}, '', '/')
   Object.defineProperty(Element.prototype, 'scrollIntoView', { configurable: true, value: vi.fn() })
@@ -145,6 +153,27 @@ beforeEach(() => {
       }
       return json(libraryPresets)
     }
+    if (path.endsWith('/knowledge-bases')) {
+      if (init?.method === 'POST') {
+        const created = { id: 'kb-created', created_at: 'now', updated_at: 'now', ...JSON.parse(String(init.body)) }
+        knowledgeBases = [created, ...knowledgeBases]
+        return json(created, 201)
+      }
+      return json(knowledgeBases)
+    }
+    if (/\/knowledge-bases\/[^/]+$/.test(path)) {
+      const id = path.split('/').pop()
+      const current = knowledgeBases.find((item) => item.id === id)
+      if (init?.method === 'PUT') {
+        const updated = { ...current, ...JSON.parse(String(init.body)), updated_at: 'later' }
+        knowledgeBases = knowledgeBases.map((item) => item.id === id ? updated : item)
+        return json(updated)
+      }
+      if (init?.method === 'DELETE') {
+        knowledgeBases = knowledgeBases.filter((item) => item.id !== id)
+        return new Response(null, { status: 204 })
+      }
+    }
     if (path.endsWith('/uploads') && init?.method === 'POST') {
       if (holdNextUpload) {
         holdNextUpload = false
@@ -165,7 +194,8 @@ beforeEach(() => {
       return new Response(null, { status: 204 })
     }
     if (path.endsWith('/conversations/c1/uploads')) return json(uploadedFiles)
-    if (/\/(memories|backpacks)$/.test(path)) return json([])
+    if (path.endsWith('/memories')) return json(libraryMemories)
+    if (path.endsWith('/backpacks')) return json(libraryBackpacks)
     if (path.endsWith('/turns/preflight')) {
       const body = JSON.parse(String(init?.body ?? '{}')) as { auto_compress_history?: boolean }
       return json({
@@ -404,6 +434,49 @@ describe('studio workspace', () => {
     expect(localStorage.getItem('chat-studio.recent-assistants')).toContain('writer')
   })
 
+  it('creates and binds one knowledge base from existing local sources', async () => {
+    window.history.replaceState({}, '', '/library')
+    uploadedFiles = [{
+      id: 'upload-1', conversation_id: 'c1', filename: 'launch-notes.txt',
+      kind: 'document', mime: 'text/plain', size: 42, text_preview: 'Friday launch', created_at: 'now',
+    }]
+    libraryMemories = [{
+      id: 'memory-1', content: 'Prefer concise summaries', category: 'preference',
+      status: 'active', pinned: false, created_at: 'now', last_used_at: 'now', use_count: 0,
+    }]
+    libraryBackpacks = [{
+      id: 'backpack-1', name: 'Atlas constraints', created_at: 'now', updated_at: 'now',
+      items: [{ id: 'item-1', title: 'Environment', content: 'Local only' }],
+    }]
+    render(<App />)
+
+    fireEvent.click(await screen.findByRole('tab', { name: 'Knowledge bases' }))
+    expect(screen.getByRole('heading', { name: 'Knowledge bases for focused chats' })).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'New knowledge base' }))
+    fireEvent.change(screen.getByLabelText('Knowledge base name'), { target: { value: 'Atlas launch' } })
+    fireEvent.change(screen.getByLabelText('Knowledge base description'), { target: { value: 'Verified launch material' } })
+    fireEvent.click(await screen.findByLabelText('File: launch-notes.txt'))
+    fireEvent.click(screen.getByLabelText('Memory: Prefer concise summaries'))
+    fireEvent.click(screen.getByLabelText('Backpack: Atlas constraints'))
+    fireEvent.click(screen.getByRole('button', { name: 'Save knowledge base' }))
+
+    expect(await screen.findByRole('heading', { name: 'Atlas launch' })).toBeInTheDocument()
+    const createCall = vi.mocked(fetch).mock.calls.find(([url, init]) => String(url).endsWith('/knowledge-bases') && init?.method === 'POST')
+    expect(JSON.parse(String(createCall?.[1]?.body))).toMatchObject({
+      name: 'Atlas launch',
+      include_retrieval: true,
+      sources: [
+        { kind: 'upload', source_id: 'upload-1' },
+        { kind: 'memory', source_id: 'memory-1' },
+        { kind: 'backpack', source_id: 'backpack-1' },
+      ],
+    })
+
+    fireEvent.click(screen.getByRole('button', { name: 'Bind Atlas launch to current chat' }))
+    await waitFor(() => expect(conversationSettings.knowledge_base_id).toBe('kb-created'))
+    expect(screen.getByText('Bound to Provider architecture')).toBeInTheDocument()
+  })
+
   it('groups and remembers the expandable desktop navigation', async () => {
     render(<App />)
 
@@ -600,7 +673,7 @@ describe('studio workspace', () => {
     conversationSettings = {
       model_key: 'openai::gpt-5.6-luna', reasoning_effort: 'high', temperature: 0.2,
       context_policy: 'chat', include_web: true, auto_compress_history: true,
-      system_prompt: 'Be concise and cite uncertainty.', layout: 'compact',
+      system_prompt: 'Be concise and cite uncertainty.', layout: 'compact', knowledge_base_id: null,
     }
     render(<App />)
 
