@@ -37,6 +37,7 @@ import {
   ThumbsDown,
   ThumbsUp,
   Trash2,
+  TriangleAlert,
   XCircle,
 } from 'lucide-react'
 
@@ -243,16 +244,26 @@ function pricingLabel(model: ModelSummary) {
 
 function ContextRail({ plan, model }: { plan: ContextPlan | null; model?: ModelSummary }) {
   if (!plan) return <div className="context-rail empty"><span>Context preflight appears here</span></div>
-  const percent = Math.min(100, Math.round((plan.estimated_tokens / plan.budget_tokens) * 100))
+  const percent = Math.round((plan.estimated_tokens / plan.budget_tokens) * 100)
+  const remainingTokens = plan.budget_tokens - plan.estimated_tokens
+  const state = remainingTokens < 0 ? 'overflow' : percent >= 80 ? 'warning' : 'safe'
   const estimatedInputCost = model?.pricing ? (plan.estimated_tokens / 1_000_000) * model.pricing.input_per_million : null
+  const warning = state === 'overflow'
+    ? `Context exceeds the safe input budget by ${Math.abs(remainingTokens).toLocaleString()} tokens. Remove sources or choose a larger-context model before sending.`
+    : state === 'warning'
+      ? `Only ${remainingTokens.toLocaleString()} tokens remain. Remove optional sources or choose a larger-context model.`
+      : ''
   return (
-    <div className="context-rail" aria-label="Context budget">
-      <div className="rail-copy"><span>{plan.estimated_tokens.toLocaleString()} estimated tokens{estimatedInputCost !== null ? ` · est. input ${formatUsd(estimatedInputCost)}` : ''}</span><strong>{percent}% of safe budget</strong></div>
-      <div className="rail-track">
-        {plan.sections.filter((section) => section.included && section.estimated_tokens).map((section) => (
-          <span key={section.kind} style={{ flexGrow: Math.max(1, section.estimated_tokens) }} title={`${section.kind}: ${section.estimated_tokens}`} />
-        ))}
+    <div className={`context-rail ${state}`} aria-label="Context budget">
+      <div className="rail-copy"><span>{plan.estimated_tokens.toLocaleString()} / {plan.budget_tokens.toLocaleString()} tokens{estimatedInputCost !== null ? ` · est. input ${formatUsd(estimatedInputCost)}` : ''}</span><strong>{percent}% of safe budget</strong></div>
+      <div aria-label={`${percent}% of safe context budget used`} aria-valuemax={100} aria-valuemin={0} aria-valuenow={Math.min(100, percent)} className="rail-track" role="progressbar">
+        <div className="rail-fill" style={{ width: `${Math.min(100, percent)}%` }}>
+          {plan.sections.filter((section) => section.included && section.estimated_tokens).map((section) => (
+            <span key={section.kind} style={{ flexGrow: Math.max(1, section.estimated_tokens) }} title={`${section.kind}: ${section.estimated_tokens}`} />
+          ))}
+        </div>
       </div>
+      {warning && <div className="context-warning" role="alert"><TriangleAlert /><span>{warning}</span></div>}
     </div>
   )
 }

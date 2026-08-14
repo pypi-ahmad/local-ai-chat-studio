@@ -15,6 +15,8 @@ let uploadedFiles: Array<Record<string, unknown>> = []
 let holdNextUpload = false
 let releaseUpload: (() => void) | null = null
 let failNextUpload = false
+let contextEstimate = 12
+let contextBudget = 6553
 
 function json(value: unknown, status = 200) {
   return new Response(JSON.stringify(value), { status, headers: { 'Content-Type': 'application/json' } })
@@ -44,6 +46,8 @@ beforeEach(() => {
   holdNextUpload = false
   releaseUpload = null
   failNextUpload = false
+  contextEstimate = 12
+  contextBudget = 6553
   localStorage.clear()
   Object.defineProperty(Element.prototype, 'scrollIntoView', { configurable: true, value: vi.fn() })
   setViewport(1024)
@@ -101,7 +105,7 @@ beforeEach(() => {
     if (/\/(memories|backpacks)$/.test(path)) return json([])
     if (path.endsWith('/turns/preflight')) {
       return json({
-        plan_hash: 'plan', estimated_tokens: 12, budget_tokens: 6553,
+        plan_hash: 'plan', estimated_tokens: contextEstimate, budget_tokens: contextBudget,
         sections: [{ kind: 'user', estimated_tokens: 3, included: true }],
         sources: [{ id: 'source-1', kind: 'memory', title: 'Working preference', preview: 'Prefer concise answers.', estimated_tokens: 4, included: true, trust: 'trusted' }], findings: [], requires_confirmation: false,
       })
@@ -244,6 +248,32 @@ describe('studio workspace', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Send message' }))
 
     await waitFor(() => expect(screen.getByText('hello back')).toBeInTheDocument())
+  })
+
+  it('warns when context approaches the safe input budget', async () => {
+    contextEstimate = 900
+    contextBudget = 1000
+    render(<App />)
+    await screen.findByRole('heading', { name: 'Provider architecture' })
+    fireEvent.change(screen.getByLabelText('Message'), { target: { value: 'use substantial context' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Send message' }))
+
+    expect(await screen.findByText('90% of safe budget')).toBeInTheDocument()
+    expect(screen.getByRole('progressbar', { name: '90% of safe context budget used' })).toHaveAttribute('aria-valuenow', '90')
+    expect(screen.getByRole('alert')).toHaveTextContent('Only 100 tokens remain')
+  })
+
+  it('reports context overflow without hiding the exact percentage', async () => {
+    contextEstimate = 1250
+    contextBudget = 1000
+    render(<App />)
+    await screen.findByRole('heading', { name: 'Provider architecture' })
+    fireEvent.change(screen.getByLabelText('Message'), { target: { value: 'overflow context' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Send message' }))
+
+    expect(await screen.findByText('125% of safe budget')).toBeInTheDocument()
+    expect(screen.getByRole('alert')).toHaveTextContent('exceeds the safe input budget by 250 tokens')
+    expect(screen.getByLabelText('Context budget')).toHaveClass('overflow')
   })
 
   it('shows attachment upload progress and marks completed files ready', async () => {
