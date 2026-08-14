@@ -10,6 +10,7 @@ const conversation = {
 
 let holdComparisonStreams = false
 let activityRuns: Array<Record<string, unknown>> = []
+let conversationMessages: Array<Record<string, unknown>> = []
 let uploadedFiles: Array<Record<string, unknown>> = []
 let holdNextUpload = false
 let releaseUpload: (() => void) | null = null
@@ -38,11 +39,13 @@ function setViewport(width: number) {
 beforeEach(() => {
   holdComparisonStreams = false
   activityRuns = []
+  conversationMessages = []
   uploadedFiles = []
   holdNextUpload = false
   releaseUpload = null
   failNextUpload = false
   localStorage.clear()
+  Object.defineProperty(Element.prototype, 'scrollIntoView', { configurable: true, value: vi.fn() })
   setViewport(1024)
   vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
     const path = String(input)
@@ -53,7 +56,7 @@ beforeEach(() => {
     if (path.endsWith('/conversations')) {
       return init?.method === 'POST' ? json(conversation, 201) : json([conversation])
     }
-    if (path.endsWith('/conversations/c1')) return json(conversation)
+    if (path.endsWith('/conversations/c1')) return json({ ...conversation, messages: conversationMessages })
     if (path.endsWith('/providers')) return json({ providers: [
       { id: 'echo', label: 'Echo', key_source: null, auth_modes: ['none'], connected: true, health: 'ready' },
       { id: 'opencode-bridge', label: 'OpenCode', key_source: null, auth_modes: ['oauth'], connected: true, health: 'ready' },
@@ -165,6 +168,26 @@ describe('studio workspace', () => {
     expect(screen.getByLabelText('Chat workspace')).toBeInTheDocument()
     fireEvent.click(screen.getByLabelText('Model'))
     expect(await screen.findByRole('option', { name: /\$0\.00 in \/ \$0\.00 out per 1M/ })).toBeInTheDocument()
+  })
+
+  it('navigates saved chat messages with bounded previous and next controls', async () => {
+    conversationMessages = [
+      { id: 'm1', role: 'user', content: 'First question', position: 0, created_at: 'now', run_id: null, metadata: {} },
+      { id: 'm2', role: 'assistant', content: 'First answer', position: 1, created_at: 'now', run_id: null, metadata: {} },
+      { id: 'm3', role: 'user', content: 'Follow-up question', position: 2, created_at: 'now', run_id: null, metadata: {} },
+    ]
+    render(<App />)
+
+    const navigation = await screen.findByRole('navigation', { name: 'Message navigation' })
+    await waitFor(() => expect(navigation).toHaveTextContent('3 / 3'))
+    expect(screen.getByRole('button', { name: 'Next message' })).toBeDisabled()
+    fireEvent.click(screen.getByRole('button', { name: 'Previous message' }))
+
+    expect(navigation).toHaveTextContent('2 / 3')
+    expect(screen.getByText('First answer').closest('article')).toHaveClass('navigation-target')
+    expect(Element.prototype.scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'center' })
+    fireEvent.click(screen.getByRole('button', { name: 'Previous message' }))
+    expect(screen.getByRole('button', { name: 'Previous message' })).toBeDisabled()
   })
 
   it('exposes the consolidated product surfaces', () => {

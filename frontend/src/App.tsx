@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import {
   Backpack,
@@ -7,6 +7,7 @@ import {
   ChevronLeft,
   ChevronDown,
   ChevronRight,
+  ChevronUp,
   CirclePlus,
   Command,
   Copy,
@@ -427,8 +428,12 @@ function ChatWorkspace({
 }) {
   const [prompt, setPrompt] = useState('')
   const [attachmentAttempts, setAttachmentAttempts] = useState<AttachmentAttempt[]>([])
+  const [messageIndex, setMessageIndex] = useState(0)
   const fileRef = useRef<HTMLInputElement>(null)
+  const messageRefs = useRef(new Map<string, HTMLElement>())
   const selected = models.find((model) => `${model.provider}::${model.id}` === selectedModel)
+  const messages = conversation?.messages ?? []
+  useLayoutEffect(() => setMessageIndex(Math.max(0, messages.length - 1)), [conversation?.id, messages.length])
   const submit = async () => {
     if (!prompt.trim()) return
     await onSend(prompt.trim())
@@ -448,6 +453,11 @@ function ChatWorkspace({
     setAttachmentAttempts((current) => [...current, attempt])
     void uploadAttachment(attempt)
   }
+  const navigateMessage = (nextIndex: number) => {
+    const boundedIndex = Math.max(0, Math.min(messages.length - 1, nextIndex))
+    setMessageIndex(boundedIndex)
+    messageRefs.current.get(messages[boundedIndex]?.id)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }
   return (
     <main aria-label="Chat workspace" className="workspace">
       <header className="workspace-header">
@@ -456,13 +466,13 @@ function ChatWorkspace({
         <div className="action-row"><Button aria-expanded={inspectorOpen} aria-label={`${inspectorOpen ? 'Close' : 'Open'} context and evidence inspector`} onClick={onInspector} variant={inspectorOpen ? 'secondary' : 'outline'}><PanelRightOpen /> Inspector</Button><Button disabled={!conversation?.messages.length || savingMemories || !selectedModel} onClick={onSaveMemories} variant="outline"><Brain /> {savingMemories ? 'Saving…' : 'Save memories & close'}</Button></div>
       </header>
       <ContextRail model={selected} plan={plan} />
-      <ScrollArea className="message-area">
+      <div className="message-region"><ScrollArea className="message-area">
         <div className="messages">
           {!conversation?.messages.length && !liveOutput && (
             <div className="welcome"><div className="signal-mark">LOCAL / CONTEXT / CONTROL</div><h3>Work with the whole trail visible.</h3><p>Inspect what enters the prompt, keep private context local, and replay any answer.</p></div>
           )}
-          {conversation?.messages.map((message) => (
-            <article className={`message ${message.role}`} key={message.id}>
+          {messages.map((message, index) => (
+            <article className={`message ${message.role}${index === messageIndex && messages.length > 1 ? ' navigation-target' : ''}`} key={message.id} ref={(node) => { if (node) messageRefs.current.set(message.id, node); else messageRefs.current.delete(message.id) }}>
               <div className="message-label"><span>{message.role === 'user' ? 'You' : 'Assistant'}</span>{message.run_id && <Badge variant="outline">evidence saved</Badge>}</div>
               <MarkdownContent content={message.content} />
               <div className="message-actions">
@@ -474,7 +484,7 @@ function ChatWorkspace({
           ))}
           {liveOutput && <article className="message assistant live"><div className="message-label"><span>Assistant</span><Badge>streaming</Badge></div><MarkdownContent content={liveOutput} /></article>}
         </div>
-      </ScrollArea>
+      </ScrollArea>{messages.length > 1 && <nav aria-label="Message navigation" className="message-navigator"><Button aria-label="Previous message" disabled={messageIndex === 0} onClick={() => navigateMessage(messageIndex - 1)} size="icon-sm" variant="ghost"><ChevronUp /></Button><span aria-live="polite">{messageIndex + 1} / {messages.length}</span><Button aria-label="Next message" disabled={messageIndex === messages.length - 1} onClick={() => navigateMessage(messageIndex + 1)} size="icon-sm" variant="ghost"><ChevronDown /></Button></nav>}</div>
       {pendingPlan && (
         <div className="safety-strip" role="alert">
           <ShieldCheck /><div><strong>Review before sending</strong><p>{pendingPlan.findings.map((finding) => finding.message).join(' · ')}</p></div>
