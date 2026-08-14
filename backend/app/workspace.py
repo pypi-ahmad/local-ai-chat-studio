@@ -25,6 +25,39 @@ SECRET_PATTERNS = (
     re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
     re.compile(r"\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b"),
 )
+
+RECENT_HISTORY_MESSAGES = 8
+HISTORY_SUMMARY_ITEM_CHARS = 220
+HISTORY_SUMMARY_MAX_CHARS = 3200
+
+
+def _history_summary(messages) -> str:
+    lines = []
+    for item in messages:
+        content = " ".join(item.content.split())
+        if len(content) > HISTORY_SUMMARY_ITEM_CHARS:
+            head = content[:150].rsplit(" ", 1)[0]
+            tail = content[-55:].lstrip()
+            content = f"{head} … {tail}"
+        lines.append(f"- {item.role.title()}: {content}")
+        if sum(len(line) + 1 for line in lines) >= HISTORY_SUMMARY_MAX_CHARS:
+            break
+    return "\n".join(lines)[:HISTORY_SUMMARY_MAX_CHARS]
+
+
+def _history_parts(conversation, compress: bool):
+    messages = [
+        item for item in conversation.messages if item.role in {"user", "assistant"}
+    ]
+    if compress and len(messages) > RECENT_HISTORY_MESSAGES:
+        older = messages[:-RECENT_HISTORY_MESSAGES]
+        return older, messages[-RECENT_HISTORY_MESSAGES:], _history_summary(older)
+    return [], messages[-20:], ""
+
+
+def _history_summary_id(messages) -> str:
+    basis = ":".join(item.id for item in messages)
+    return f"history-summary-{hashlib.sha256(basis.encode()).hexdigest()[:16]}"
 PII_PATTERNS = (
     re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECASE),
     re.compile(r"(?<!\d)(?:\+?\d[\d .()-]{8,}\d)(?!\d)"),
@@ -175,7 +208,12 @@ def build_context_plan(
     web_allowed = payload.include_web and (local or policy.allow_web)
     backpack_allowed = payload.include_backpack and (local or policy.allow_backpacks)
 
-    history_text = "\n".join(item.content for item in conversation.messages[-20:])
+    older_history, recent_history, history_summary = _history_parts(
+        conversation, payload.auto_compress_history
+    )
+    history_text = "\n".join(
+        [history_summary, *(item.content for item in recent_history)]
+    ).strip()
     memories = relevant_memories(store, payload.content) if memory_allowed else []
     selected_uploads = set(payload.attachment_ids)
     uploads = (
@@ -211,9 +249,14 @@ def build_context_plan(
             kind="history",
             estimated_tokens=estimate_tokens(history_text),
             included=history_allowed,
-            reason=None
-            if history_allowed
-            else "Provider policy defaults to prompt only",
+            reason=(
+                f"{len(older_history)} older messages summarized; latest "
+                f"{len(recent_history)} kept verbatim"
+                if history_allowed and history_summary
+                else None
+                if history_allowed
+                else "Provider policy defaults to prompt only"
+            ),
         ),
         ContextSection(
             kind="memory",
@@ -261,6 +304,16 @@ def build_context_plan(
     ]
     sources: list[ContextSource] = []
     if history_allowed:
+        if history_summary:
+            sources.append(
+                ContextSource(
+                    id=_history_summary_id(older_history),
+                    kind="history_summary",
+                    title="Earlier conversation summary",
+                    preview=history_summary,
+                    estimated_tokens=estimate_tokens(history_summary),
+                )
+            )
         sources.extend(
             ContextSource(
                 id=item.id,
@@ -269,7 +322,7 @@ def build_context_plan(
                 preview=item.content[:160],
                 estimated_tokens=estimate_tokens(item.content),
             )
-            for item in conversation.messages[-20:]
+            for item in recent_history
         )
     sources.extend(
         ContextSource(
@@ -348,7 +401,7 @@ def build_context_plan(
                 ]
             findings.extend(source_findings)
     section_by_kind = {section.kind: section for section in sections}
-    section_kind = {"attachment": "attachments"}
+    section_kind = {"attachment": "attachments", "history_summary": "history"}
     for source in sources:
         if source.included:
             continue
@@ -363,6 +416,7 @@ def build_context_plan(
     )
     prune_order = {
         "history": 0,
+        "history_summary": 0,
         "retrieval": 1,
         "web": 2,
         "memory": 3,
@@ -401,6 +455,8 @@ def build_context_plan(
         sources=sources,
         findings=findings,
         requires_confirmation=bool(findings),
+        compression_applied=history_allowed and bool(history_summary),
+        compressed_message_count=len(older_history) if history_allowed else 0,
     )
 
 
@@ -492,14 +548,28 @@ def assemble_messages(
                 )
         if web_context:
             system_parts.append("Web search results:\n" + "\n\n".join(web_context))
-    messages.append(ChatMessage(role="system", content="\n\n".join(system_parts)))
+    history_messages: list[ChatMessage] = []
     if included.get("history"):
         conversation = store.get_conversation(conversation_id)
-        messages.extend(
-            ChatMessage(role=item.role, content=item.content)
-            for item in conversation.messages[-20:]
-            if item.id not in excluded and item.role in {"user", "assistant"}
+        older_history, recent_history, history_summary = _history_parts(
+            conversation, payload.auto_compress_history
         )
+        if (
+            history_summary
+            and _history_summary_id(older_history) in approved_sources
+            and _history_summary_id(older_history) not in excluded
+        ):
+            system_parts.append(
+                "Earlier conversation summary (automatically compressed locally):\n"
+                + history_summary
+            )
+        history_messages.extend(
+            ChatMessage(role=item.role, content=item.content)
+            for item in recent_history
+            if item.id in approved_sources and item.id not in excluded
+        )
+    messages.append(ChatMessage(role="system", content="\n\n".join(system_parts)))
+    messages.extend(history_messages)
     images = []
     if included.get("attachments"):
         images = [

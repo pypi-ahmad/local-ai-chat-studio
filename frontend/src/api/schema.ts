@@ -933,6 +933,16 @@ export interface components {
              * @default false
              */
             requires_confirmation: boolean;
+            /**
+             * Compression Applied
+             * @default false
+             */
+            compression_applied: boolean;
+            /**
+             * Compressed Message Count
+             * @default 0
+             */
+            compressed_message_count: number;
         };
         /** ContextSection */
         ContextSection: {
@@ -1516,6 +1526,11 @@ export interface components {
              * @default 8192
              */
             context_limit: number;
+            /**
+             * Auto Compress History
+             * @default false
+             */
+            auto_compress_history: boolean;
             /** Plan Hash */
             plan_hash: string;
             /**
@@ -1578,6 +1593,11 @@ export interface components {
              * @default 8192
              */
             context_limit: number;
+            /**
+             * Auto Compress History
+             * @default false
+             */
+            auto_compress_history: boolean;
         };
         /** Upload */
         Upload: {

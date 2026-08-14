@@ -650,6 +650,65 @@ def test_context_budget_prunes_sources_and_private_text_can_be_sanitized(
     assert "1234567890abcdef" not in sanitized.json()["content"]
 
 
+def test_context_compression_summarizes_old_messages_and_keeps_recent_turns(
+    client: TestClient,
+) -> None:
+    conversation_id = _conversation(client)
+    message_contents = []
+    for index in range(12):
+        content = (
+            f"History marker {index}: "
+            + f"detail-{index} " * 80
+            + f"final decision {index}."
+        )
+        message_contents.append(content)
+        response = client.post(
+            f"/api/v1/conversations/{conversation_id}/messages",
+            json={"role": "user" if index % 2 == 0 else "assistant", "content": content},
+        )
+        assert response.status_code == 201
+
+    base_payload = {
+        "provider": "echo",
+        "model": "deterministic",
+        "content": "Continue from our decisions",
+        "context_limit": 32_768,
+    }
+    full_plan = client.post(
+        f"/api/v1/conversations/{conversation_id}/turns/preflight",
+        json=base_payload,
+    ).json()
+    compressed_plan = client.post(
+        f"/api/v1/conversations/{conversation_id}/turns/preflight",
+        json={**base_payload, "auto_compress_history": True},
+    ).json()
+
+    assert compressed_plan["compression_applied"] is True
+    assert compressed_plan["compressed_message_count"] == 4
+    assert compressed_plan["estimated_tokens"] < full_plan["estimated_tokens"]
+    assert any(
+        source["kind"] == "history_summary"
+        for source in compressed_plan["sources"]
+    )
+
+    created = client.post(
+        f"/api/v1/conversations/{conversation_id}/turns",
+        json={
+            **base_payload,
+            "auto_compress_history": True,
+            "plan_hash": compressed_plan["plan_hash"],
+        },
+    )
+    assert created.status_code == 202
+    bundle = client.get(f"/api/v1/runs/{created.json()['id']}/bundle").json()
+    assert "Earlier conversation summary" in bundle["messages"][0]["content"]
+    assert not any(
+        message["content"] == message_contents[0]
+        for message in bundle["messages"]
+    )
+    assert [message["content"] for message in bundle["messages"][-9:-1]] == message_contents[-8:]
+
+
 def test_profile_runtime_health_and_opt_in_v2_import(tmp_path, monkeypatch) -> None:
     from backend.app.main import create_app
 

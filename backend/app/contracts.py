@@ -196,6 +196,7 @@ class TurnPreflight(BaseModel):
     attachment_ids: list[str] = Field(default_factory=list, max_length=20)
     backpack_id: str | None = None
     context_limit: int = Field(default=8192, ge=512, le=2_000_000)
+    auto_compress_history: bool = False
 
 
 class TurnCreate(TurnPreflight):
@@ -212,6 +213,8 @@ class ContextPlan(BaseModel):
     sources: list[ContextSource] = []
     findings: list[SafetyFinding] = []
     requires_confirmation: bool = False
+    compression_applied: bool = False
+    compressed_message_count: int = 0
 
 
 class ConversationBranch(BaseModel):
