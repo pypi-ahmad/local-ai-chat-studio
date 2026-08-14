@@ -24,7 +24,7 @@ Local AI Chat Studio is a local-first interface for chatting with models served 
 | React workspace | [current] | Grouped desktop/mobile navigation exposes Chat, Compare, Context, Evidence, Providers, Library, Activity, and Settings; an optional persisted Context/Evidence inspector supports in-chat review. |
 | TypeScript API layer | [current] | Generated `schema.ts` plus `frontend/src/api/client.ts` (SSE, shutdown, data controls). |
 | Attachments, retrieval, memory | [current] | Per-turn attachments, context preflight, SQLite memory, optional Chroma. |
-| Rich responses and navigation | [current] | Safe Markdown, highlighted copyable code, KaTeX, transcript navigation, blocking context overflow warnings, and optional local compression of older history. |
+| Rich responses and navigation | [current] | Safe Markdown, highlighted copyable code, KaTeX, sandboxed HTML/SVG/Mermaid/code artifact preview, transcript navigation, blocking context overflow warnings, and optional local compression of older history. |
 | Capability-aware model selection | [current] | Provider-scoped search, Vision/Reasoning filters, context and effort metadata, and verified pricing where available. |
 | Assistants and model comparison | [current] | Presets in Library; Compare runs one prompt across two to four selected models concurrently; Replay records and diffs completed runs. |
 | Managed shutdown | [current] | Settings **Stop Studio** → `POST /api/v1/runtime/shutdown` on a `chat-studio` process. |

@@ -39,6 +39,9 @@
 - Standalone conversation HTML escapes every persisted title, model, role, and message
   value and includes a restrictive CSP; keep stored-XSS coverage whenever export
   rendering changes.
+- Model-generated HTML, SVG, and Mermaid previews stay inside unique-origin iframes
+  with no sandbox permissions, no referrer, and a network-blocking CSP. Never move
+  generated markup into the host DOM or enable scripts, same-origin, forms, or navigation.
 - Provider exceptions are reduced to safe error categories before reaching clients.
 
 ## Change strategy

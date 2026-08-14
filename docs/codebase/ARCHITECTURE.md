@@ -44,6 +44,12 @@ Each result retains its own status, output, and safe error; one failed provider 
 stop the others. **Cancel all** aborts each browser stream and cancels every created run
 through the existing session-owned run endpoint.
 
+Rich message fences can emit a typed client-side artifact. Chat stores only the current
+selection in temporary React state and lays its transcript beside a preview pane.
+HTML, SVG, and Mermaid output cross a unique-origin, scriptless iframe boundary with a
+restrictive CSP; code is displayed as escaped source. Artifact preview does not alter
+messages, runs, exports, or the backend contract.
+
 FastAPI serves `frontend/dist` at `/`. Shared helpers under `src/` provide file parsing,
 Ollama health/embeddings, and the existing `data/chroma` collections.
 

@@ -26,6 +26,10 @@ preset settings with the conversation-create request so Chat opens fully configu
 
 Assistant output is rendered as CommonMark/GFM with tables, task lists,
 syntax-highlighted copyable code, and KaTeX math; raw HTML must remain inert.
+Fenced HTML, SVG, Mermaid, and code blocks expose a Chat-only artifact action. Keep
+renderable output inside the scriptless `sandbox=""` iframe produced by
+`features/artifact-preview/sandboxDocument.ts`; never inject model output into the
+host DOM. Code preview remains escaped source, and the workbench stacks responsively.
 Attachments expose Uploading/Ready/Failed cards with retry and removal. Chat also
 owns saved-message navigation, exact context utilization/overflow warnings, grouped
 desktop/mobile navigation, and a persisted optional Context/Evidence inspector.

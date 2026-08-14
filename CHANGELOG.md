@@ -7,6 +7,18 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.8] - 2026-08-15
+
+### Added
+
+- Added a responsive Chat split pane for previewing fenced HTML, SVG, Mermaid, and
+  code output, with source inspection, copy, and close controls.
+
+### Security
+
+- Isolated rendered artifacts in unique-origin, scriptless iframes with a restrictive
+  content-security policy and no-referrer policy; code output remains escaped text.
+
 ## [0.7.7] - 2026-08-15
 
 ### Added

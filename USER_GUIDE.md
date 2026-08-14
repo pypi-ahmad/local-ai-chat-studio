@@ -81,7 +81,12 @@ return to the bottom. The rail becomes horizontal on smaller screens.
 Assistant answers render headings, links, lists, tables, task lists, blockquotes,
 syntax-highlighted fenced code, and LaTeX math. Use `$...$` for inline math and
 `$$...$$` for display math. Every fenced code block includes its language and a
-copy button. Raw HTML is displayed as text rather than executed.
+copy button. Select **Preview** on fenced HTML, SVG, Mermaid, or code to open an
+artifact workbench beside the transcript. HTML and SVG render in a scriptless iframe
+that blocks external resources; Mermaid uses strict rendering in the same isolation boundary;
+code opens as escaped source. Use **Source** to inspect generated markup and **Close**
+to restore the full transcript. On narrow screens the preview stacks below Chat.
+Raw HTML outside fenced code is displayed as text rather than executed.
 
 Open **Export** in the Chat header to download the active conversation as:
 

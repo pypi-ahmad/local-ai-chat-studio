@@ -78,6 +78,11 @@ Compare, Replay, and assistant configuration. It scopes discovery by provider,
 searches model names/IDs/capabilities, and filters vision or reasoning support.
 Shared presentation contracts also cover safe Markdown/code/KaTeX rendering,
 attachment upload states, transcript navigation, and context utilization warnings.
+Fenced response blocks are classified as HTML, SVG, Mermaid, or source-code artifacts.
+Chat owns the selected artifact and switches to a responsive transcript/preview grid.
+HTML, SVG, and generated Mermaid SVG are placed in unique-origin iframes with an empty
+sandbox token set, no-referrer policy, and a document CSP that blocks scripts, forms,
+top navigation, and external resources. Code artifacts are rendered only as React text.
 Each conversation stores a validated JSON settings snapshot in SQLite. The generated
 `Conversation` contract returns model key, reasoning effort, temperature, context
 policy, web/compression flags, system prompt, and layout; the React client hydrates

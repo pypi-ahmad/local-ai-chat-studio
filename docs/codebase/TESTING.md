@@ -33,6 +33,8 @@ composer control grouping, context/temperature/web-evidence/compression request 
 per-conversation settings hydration, system-prompt persistence, and layout changes,
 assistant search, favorite/recent persistence, and one-click configured chat creation,
 all transcript export choices and active-conversation reproducibility selection,
+artifact format classification, scriptless/CSP-isolated HTML and SVG rendering,
+strict iframe-isolated Mermaid output, escaped code source, and Chat split-pane lifecycle,
 four-model partial failure isolation, cancel-all behavior, and the Settings **Stop
 Studio** control. There is no browser E2E
 runner or coverage threshold yet; real external-provider calls, OAuth flows, and a

@@ -15,7 +15,7 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 ### Conversations and generation
 
 - **Streaming chat:** Responses arrive incrementally through server-sent events. A running generation can be cancelled without discarding the partial output already received.
-- **Rich response rendering:** Chat and comparison answers render CommonMark and GitHub-flavored Markdown, tables, task lists, syntax-highlighted fenced code with copy controls, inline or display LaTeX through KaTeX, and fenced Mermaid diagrams. Mermaid loads only when needed, uses strict security, and shows invalid source with a clear error; raw HTML remains disabled.
+- **Rich response rendering and artifact preview:** Chat and comparison answers render CommonMark and GitHub-flavored Markdown, tables, task lists, syntax-highlighted fenced code with copy controls, inline or display LaTeX through KaTeX, and fenced Mermaid diagrams. In Chat, **Preview** opens fenced HTML, SVG, Mermaid, or code output in a responsive split pane; executable formats use a scriptless iframe sandbox that blocks external resources, while code remains escaped source. Raw HTML outside fenced code remains disabled.
 - **Conversation management:** Create, search, rename, pin, and delete conversations. Branch from any message to explore another direction while preserving the earlier history.
 - **Message navigation:** Use a compact, responsive transcript rail to jump to the top, move through saved messages, or return to the bottom. The exact position counter and active-message marker preserve orientation, while a **New output** signal appears if a response streams while you are reading earlier content. The interaction is adapted from Chatbox's [message navigation pattern](https://github.com/chatboxai/chatbox/blob/main/src/renderer/components/chat/MessageNavigation.tsx).
 - **Feedback and activity:** Rate assistant messages and inspect recorded runs, including status, model, timing, token usage, provenance, and integrity receipts.
@@ -129,7 +129,7 @@ local-ai-chat-studio/
 │   ├── src/App.tsx          Workspace composition and feature orchestration
 │   ├── src/api/             Typed client and generated OpenAPI schema
 │   ├── src/components/      Shared workspace and UI primitives
-│   ├── src/features/        Domain-focused model and attachment modules
+│   ├── src/features/        Models, assistants, attachments, and safe artifact preview
 │   ├── src/hooks/           Reusable responsive browser hooks
 │   ├── src/state/           Local UI preference boundaries
 │   └── package.json         Frontend commands and dependencies
@@ -327,7 +327,8 @@ Canonical state lives in `data/app.db`, including each conversation's validated 
 5. Confirm required findings and send the turn.
 6. Watch streamed events, cancel if needed, and use the transcript navigator to jump to either end or move between saved messages. If **New output** appears while you are reading earlier content, use the bottom action to return to the live answer. Inspect completed runs under **Evidence** or **Replay**.
 7. Open **Compare**, choose two to four distinct models, and run one prompt across them in parallel. Each response streams independently, one provider failure does not stop the others, and **Cancel all** stops every active comparison run. Every selected cloud model receives a separate billable request.
-8. Branch the conversation, provide feedback, or open **Export** to download Markdown, HTML, TXT, JSON, or the latest completed run's reproducibility bundle.
+8. Use **Preview** on a fenced HTML, SVG, Mermaid, or code block to inspect it beside the transcript, then close the pane when finished. Executable previews are isolated and cannot load external resources.
+9. Branch the conversation, provide feedback, or open **Export** to download Markdown, HTML, TXT, JSON, or the latest completed run's reproducibility bundle.
 
 ### Example: launch with OpenAI
 

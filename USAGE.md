@@ -81,7 +81,9 @@ bridge remains on loopback by default.
    failed cards include the server error and **Retry**/**Remove** actions.
 3. Send the prompt. The response streams into the chat and can be cancelled.
    Markdown, tables, task lists, fenced code, and LaTeX (`$...$` or `$$...$$`)
-   render directly in Chat and Compare. Code blocks include a copy action.
+   render directly in Chat and Compare. Code blocks include copy and **Preview**
+   actions. In Chat, Preview opens HTML, SVG, Mermaid, or code in a responsive split
+   pane; rendered markup is scriptless and cannot load external resources, while code stays escaped.
 4. Inspect source provenance and context-budget information before relying on
    an answer that uses files, retrieved history, or web evidence. The context rail
    shows used and available tokens plus an exact percentage, turns amber at 80%,

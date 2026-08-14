@@ -14,6 +14,7 @@
 | `frontend/src/` | React workspace, rich Markdown/LaTeX/Mermaid rendering, capability-aware model selection, per-conversation controls/layouts, context/evidence inspection, 2–4 model comparison, design system, typed API client |
 | `frontend/src/features/models/` | Model metadata/search helpers and browser-local favorite/recent preferences |
 | `frontend/src/features/assistants/` | Browser-local assistant favorite and recent-launch preferences |
+| `frontend/src/features/artifact-preview/` | Fenced-output classification, sandbox document policy, and responsive Chat preview pane |
 | `src/files.py` | Shared document/image parsing and upload validation |
 | `src/rag.py` | Existing Chroma collections and embedding retrieval |
 | `src/ollama_client.py` | Shared Ollama discovery, health, and embedding helpers |
