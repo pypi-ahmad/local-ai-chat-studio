@@ -15,6 +15,7 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 ### Conversations and generation
 
 - **Streaming chat:** Responses arrive incrementally through server-sent events. A running generation can be cancelled without discarding the partial output already received.
+- **Rich response rendering:** Chat and comparison answers render CommonMark and GitHub-flavored Markdown, tables, task lists, syntax-highlighted fenced code with copy controls, and inline or display LaTeX through KaTeX. Raw HTML remains disabled.
 - **Conversation management:** Create, search, rename, pin, and delete conversations. Branch from any message to explore another direction while preserving the earlier history.
 - **Feedback and activity:** Rate assistant messages and inspect recorded runs, including status, model, timing, token usage, provenance, and integrity receipts.
 - **Replay and comparison:** Replay a recorded run with another model and inspect its output diff, or export a full reproducibility bundle. Redacted bundles remove private context and image data for safer sharing.
@@ -30,6 +31,9 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 
 - **Local and cloud providers:** Use Ollama locally without an API key, or connect OpenAI, Agnes AI, Anthropic, Google Gemini, OpenRouter, xAI, OmniRoute, Ollama Cloud, OpenCode Zen, and OpenCode Go.
 - **Live model discovery:** The Studio asks configured providers for their available models instead of relying only on a fixed list. Discovered entries can include context length, vision support, and provider metadata.
+- **Provider-first selection:** Choose a provider first, then select from only that provider's available models in Chat, Compare, Replay, and assistant presets.
+- **Composer model controls:** Chat keeps provider, model, and capability-aware reasoning effort beside the prompt. Effort defaults to **Auto** and is disabled for models that do not advertise support; OpenAI GPT-5.6 options follow the [official model guide](https://developers.openai.com/api/docs/guides/latest-model).
+- **Regrouped navigation:** Desktop destinations are organized into Work, Inspect, Personalize, and System groups with an expandable labelled rail. Mobile keeps Chat, Compare, and Library one tap away and moves the remaining destinations into a grouped **More** sheet.
 - **Session-only credentials:** Keys entered in **Providers** remain in server-process memory for the browser session. Keys can alternatively come from operating-system environment variables; neither source is written to the database or exports.
 - **Subscription OAuth:** ChatGPT, Claude, SuperGrok, and other supported subscription sign-ins are bridged through a loopback-only OpenCode server, which owns the upstream OAuth and streaming sessions.
 - **Source-linked pricing:** Known models display standard input and output token rates with links to provider sources. The UI estimates preflight input cost and reports completed-run cost when usage is available; unknown or custom models stay explicitly unpriced.
@@ -37,6 +41,7 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 ### Controlled context and safety
 
 - **Context preflight:** Before generation, review the exact context plan, estimated token use, automatic pruning, and a reserved 20% output budget. A hash binds the approved plan to the run so changed context must be reviewed again.
+- **Optional Chat inspector:** Open a docked desktop panel or responsive drawer to inspect the current context sections and evidence sources, including source trust and next-send inclusion, without leaving the conversation. The inspector remembers its open state and selected tab locally.
 - **Source-level control:** Inspect and exclude individual conversation-history, memory, retrieval, upload, web, backpack, or focus sources before sending them to a model.
 - **Provider data boundaries:** Cloud providers default to prompt-only access. Enable memory, retrieval, attachments, web results, or backpacks separately for each provider.
 - **Safety findings:** Local scanning detects prompt-injection patterns, secrets, and personally identifiable information. Risky memory is quarantined, blocking findings require confirmation, and sensitive prompt text can be locally redacted before submission.

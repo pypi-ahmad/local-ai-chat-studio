@@ -44,10 +44,19 @@ Open <http://127.0.0.1:8506>.
 
 ### Chat
 
-Create or select a conversation, choose a discovered model, and send a message. The
-answer streams live and **Stop** cancels the active provider request. Hover messages to
-copy, branch from that point, or rate an answer. Conversation controls support rename,
-pin, delete, and text search.
+Create or select a conversation, choose a provider, select one of its discovered
+models in the composer, and send a message. Changing providers immediately filters
+the model list. **Effort** defaults to **Auto**; supported OpenAI GPT-5.6 models offer
+explicit reasoning levels, while other models show a disabled **Provider default**.
+Higher effort can take longer and consume more billed reasoning or output tokens. The
+answer streams live and **Stop** cancels the active provider request. Hover messages
+to copy, branch from that point, or rate an answer. Conversation controls support
+rename, pin, delete, and text search.
+
+Assistant answers render headings, links, lists, tables, task lists, blockquotes,
+syntax-highlighted fenced code, and LaTeX math. Use `$...$` for inline math and
+`$$...$$` for display math. Every fenced code block includes its language and a
+copy button. Raw HTML is displayed as text rather than executed.
 
 Files and images attached to the current conversation are included only when the
 selected provider's data policy permits them. Vision-capable providers receive images
@@ -74,11 +83,12 @@ current conversation.
 
 ### Replay and Compare
 
-**Compare** sends the same prompt to two to four distinct models concurrently. Add
-or remove model slots, watch each response stream independently, and use **Cancel
+**Compare** sends the same prompt to two to four distinct models concurrently. Choose
+a provider and model independently for every slot, add or remove slots, watch each
+response stream independently, and use **Cancel
 all** to stop active comparison runs. A provider failure is shown on its own result
-card without stopping the other models. **Replay** records completed runs, lets you
-run one again, diff two answers, and export either:
+card without stopping the other models. **Replay** has its own provider and model
+target for running a recorded request again, diffing two answers, and exporting either:
 
 - a full local bundle containing the exact request and context; or
 - a redacted share bundle with private context and image bytes removed.
@@ -116,7 +126,8 @@ the selected model to reduce the whole chat to durable user facts and preference
 stores only supported points in SQLite, and records their source messages. A cloud
 model requires confirmation before the transcript is sent. Memories that resemble
 prompt injection start quarantined; review and approve, archive, pin, or delete them.
-Saved assistants retain a system prompt, model preference, and temperature.
+Saved assistants retain a system prompt, model preference, and temperature. Select
+the assistant's provider first so its model menu contains only valid choices.
 
 ### Settings and data controls
 

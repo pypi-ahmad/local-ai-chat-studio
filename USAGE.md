@@ -56,19 +56,27 @@ preflight, the context rail calculates an estimated input cost and links to the
 official pricing source. Unknown gateways show **pricing unavailable**; estimates
 exclude caching, tools, media, discounts, subscriptions, taxes, and output cost.
 
+In Chat, the composer also shows **Effort**. Leave it on **Auto** to use the
+provider default, or choose a supported reasoning level for an OpenAI GPT-5.6
+model. The control is disabled when the selected model does not advertise
+reasoning effort. Higher effort can increase response time and billed usage.
+
 For ChatGPT, SuperGrok, and Claude subscription sign-in, connect a local
 OpenCode server first, then follow the sign-in flow in **Providers**. That
 bridge remains on loopback by default.
 
 ## Work with a conversation
 
-1. Start a conversation and select a model.
+1. Start a conversation, then use the composer to select a provider, one of its
+   available models, and an optional supported reasoning effort.
 2. Attach a supported document, spreadsheet, code file, or image when it helps
    answer the question.
 3. Send the prompt. The response streams into the chat and can be cancelled.
+   Markdown, tables, task lists, fenced code, and LaTeX (`$...$` or `$$...$$`)
+   render directly in Chat and Compare. Code blocks include a copy action.
 4. Inspect source provenance and context-budget information before relying on
    an answer that uses files, retrieved history, or web evidence.
-5. Open **Compare**, select two to four distinct models, and send one prompt to all
+5. Open **Compare**, select a provider and model for each of two to four slots, and send one prompt to all
    of them concurrently. Responses stream independently; one provider failure does
    not stop the others, and **Cancel all** stops every active comparison run.
 6. Branch, pin, rename, search, or replay responses when you need to explore
