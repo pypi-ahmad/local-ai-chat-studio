@@ -46,6 +46,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { MarkdownContent } from '@/components/MarkdownContent'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -88,6 +89,8 @@ const navigationGroups: ReadonlyArray<{ label: string; items: ReadonlyArray<read
 ]
 
 type InspectorTab = 'context' | 'evidence'
+type ContextMode = 'full' | 'chat' | 'files'
+type ComposerSettings = { contextMode: ContextMode; temperature: number; includeWeb: boolean }
 
 type AttachmentAttempt = {
   id: string
@@ -399,6 +402,8 @@ function ChatWorkspace({
   inspectorOpen,
   onInspector,
   onRuns,
+  composerSettings,
+  onComposerSettings,
 }: {
   conversation: Conversation | null
   models: ModelSummary[]
@@ -428,6 +433,8 @@ function ChatWorkspace({
   inspectorOpen: boolean
   onInspector: () => void
   onRuns: () => void
+  composerSettings: ComposerSettings
+  onComposerSettings: (settings: ComposerSettings) => void
 }) {
   const [prompt, setPrompt] = useState('')
   const [attachmentAttempts, setAttachmentAttempts] = useState<AttachmentAttempt[]>([])
@@ -505,7 +512,24 @@ function ChatWorkspace({
           placeholder="Message your model…"
           value={prompt}
         />
-        <div className="composer-config-row">
+        {(attachmentAttempts.length > 0 || uploads.length > 0) && <div className="attachment-tray" aria-label="Conversation attachments">
+          {attachmentAttempts.map((attempt) => <div aria-live="polite" className={`attachment-card ${attempt.status}`} key={attempt.id}>
+            <div className="attachment-icon">{attempt.status === 'uploading' ? <LoaderCircle /> : <XCircle />}</div>
+            <div className="attachment-copy"><strong>{attempt.file.name}</strong><small>{attempt.status === 'uploading' ? `Uploading · ${Math.max(1, Math.ceil(attempt.file.size / 1024))} KB` : attempt.error || 'Upload failed'}</small>{attempt.status === 'uploading' && <span className="attachment-progress"><i /></span>}</div>
+            {attempt.status === 'error' && <div className="attachment-actions"><Button aria-label={`Retry ${attempt.file.name}`} onClick={() => void uploadAttachment(attempt)} size="icon-sm" variant="ghost"><RefreshCw /></Button><Button aria-label={`Remove ${attempt.file.name}`} onClick={() => setAttachmentAttempts((current) => current.filter((item) => item.id !== attempt.id))} size="icon-sm" variant="ghost"><Trash2 /></Button></div>}
+          </div>)}
+          {uploads.map((upload) => <label className={attachmentIds.has(upload.id) ? 'attachment-card ready selected' : 'attachment-card ready'} key={upload.id}><input checked={attachmentIds.has(upload.id)} onChange={() => onAttachment(upload.id)} type="checkbox" /><div className="attachment-icon"><FileText /></div><div className="attachment-copy"><strong>{upload.filename}</strong><small>{attachmentIds.has(upload.id) ? 'Ready · included in next message' : 'Ready · click to include'}</small></div><CheckCircle /></label>)}
+        </div>}
+        <div aria-label="Composer controls" className="composer-control-dock" role="toolbar">
+          <input
+            accept=".pdf,.txt,.md,.csv,.docx,.doc,.xlsx,.xls,.json,.py,.png,.jpg,.jpeg,.webp"
+            aria-label="Attachment upload"
+            hidden
+            onChange={(event) => { const file = event.target.files?.[0]; event.target.value = ''; if (file) addAttachment(file) }}
+            ref={fileRef}
+            type="file"
+          />
+          <Button aria-label="Attach file" className="composer-attach" onClick={() => fileRef.current?.click()} size="icon-sm" variant="ghost"><Paperclip /></Button>
           <ProviderModelPicker models={models} onChange={onModel} providers={providers} value={selectedModel} />
           <label className="effort-picker" title="Higher reasoning effort can increase latency and billed reasoning or output usage.">
             <span>Effort</span>
@@ -519,27 +543,37 @@ function ChatWorkspace({
               {selected?.reasoning_efforts?.map((effort) => <option key={effort} value={effort}>{effort}</option>)}
             </select>
           </label>
+          <label className="context-mode-picker" title="Choose which optional local sources may enter the next prompt.">
+            <span>Context</span>
+            <select aria-label="Context mode" onChange={(event) => onComposerSettings({ ...composerSettings, contextMode: event.target.value as ContextMode })} value={composerSettings.contextMode}>
+              <option value="full">Full context</option>
+              <option value="chat">Chat only</option>
+              <option value="files">Files + chat</option>
+            </select>
+          </label>
+          <DropdownMenu>
+            <DropdownMenuTrigger aria-label="More composer settings" className="composer-more-trigger"><MoreHorizontal /></DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="composer-settings-menu" side="top">
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>Secondary settings</DropdownMenuLabel>
+                <DropdownMenuCheckboxItem checked={composerSettings.includeWeb} onCheckedChange={(checked) => onComposerSettings({ ...composerSettings, includeWeb: checked })}>Web evidence</DropdownMenuCheckboxItem>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>Temperature <span>{composerSettings.temperature.toFixed(1)}</span></DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuRadioGroup onValueChange={(value) => onComposerSettings({ ...composerSettings, temperature: Number(value) })} value={String(composerSettings.temperature)}>
+                      <DropdownMenuRadioItem value="0.2">Precise · 0.2</DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="0.7">Balanced · 0.7</DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="1">Creative · 1.0</DropdownMenuRadioItem>
+                    </DropdownMenuRadioGroup>
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+              <p className="composer-settings-hint">Enter to send · Shift+Enter for newline</p>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          {running ? <Button aria-label="Stop generation" className="composer-send" onClick={onCancel} size="icon" variant="destructive"><Square /></Button> : <Button aria-label="Send message" className="composer-send" disabled={!prompt.trim() || !selectedModel} onClick={submit} size="icon"><Send /></Button>}
         </div>
-        <div className="composer-actions">
-          <input
-            accept=".pdf,.txt,.md,.csv,.docx,.doc,.xlsx,.xls,.json,.py,.png,.jpg,.jpeg,.webp"
-            hidden
-            onChange={(event) => { const file = event.target.files?.[0]; event.target.value = ''; if (file) addAttachment(file) }}
-            ref={fileRef}
-            type="file"
-          />
-          <Button aria-label="Attach file" onClick={() => fileRef.current?.click()} size="icon-sm" variant="ghost"><Paperclip /></Button>
-          <span>Enter to send · Shift+Enter for newline</span>
-          {running ? <Button aria-label="Stop generation" onClick={onCancel} size="icon" variant="destructive"><Square /></Button> : <Button aria-label="Send message" disabled={!prompt.trim() || !selectedModel} onClick={submit} size="icon"><Send /></Button>}
-        </div>
-        {(attachmentAttempts.length > 0 || uploads.length > 0) && <div className="attachment-tray" aria-label="Conversation attachments">
-          {attachmentAttempts.map((attempt) => <div aria-live="polite" className={`attachment-card ${attempt.status}`} key={attempt.id}>
-            <div className="attachment-icon">{attempt.status === 'uploading' ? <LoaderCircle /> : <XCircle />}</div>
-            <div className="attachment-copy"><strong>{attempt.file.name}</strong><small>{attempt.status === 'uploading' ? `Uploading · ${Math.max(1, Math.ceil(attempt.file.size / 1024))} KB` : attempt.error || 'Upload failed'}</small>{attempt.status === 'uploading' && <span className="attachment-progress"><i /></span>}</div>
-            {attempt.status === 'error' && <div className="attachment-actions"><Button aria-label={`Retry ${attempt.file.name}`} onClick={() => void uploadAttachment(attempt)} size="icon-sm" variant="ghost"><RefreshCw /></Button><Button aria-label={`Remove ${attempt.file.name}`} onClick={() => setAttachmentAttempts((current) => current.filter((item) => item.id !== attempt.id))} size="icon-sm" variant="ghost"><Trash2 /></Button></div>}
-          </div>)}
-          {uploads.map((upload) => <label className={attachmentIds.has(upload.id) ? 'attachment-card ready selected' : 'attachment-card ready'} key={upload.id}><input checked={attachmentIds.has(upload.id)} onChange={() => onAttachment(upload.id)} type="checkbox" /><div className="attachment-icon"><FileText /></div><div className="attachment-copy"><strong>{upload.filename}</strong><small>{attachmentIds.has(upload.id) ? 'Ready · included in next message' : 'Ready · click to include'}</small></div><CheckCircle /></label>)}
-        </div>}
       </div>
     </main>
   )
@@ -766,6 +800,7 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
   const [models, setModels] = useState<ModelSummary[]>([])
   const [selectedModel, setSelectedModel] = useState('')
   const [reasoningEffort, setReasoningEffort] = useState<ReasoningEffort | ''>('')
+  const [composerSettings, setComposerSettings] = useState<ComposerSettings>({ contextMode: 'full', temperature: 0.7, includeWeb: false })
   const [activity, setActivity] = useState<RunSnapshot[]>([])
   const [memories, setMemories] = useState<Memory[]>([])
   const [presets, setPresets] = useState<Preset[]>([])
@@ -894,18 +929,20 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
 
   const send = async (content: string) => {
     if (!activeId || !target.provider || !target.model) return
+    const includeFullContext = composerSettings.contextMode === 'full'
+    const includeFiles = composerSettings.contextMode !== 'chat'
     const payload: TurnPreflight = {
       provider: target.provider,
       model: target.model,
       content,
-      temperature: 0.7,
+      temperature: composerSettings.temperature,
       reasoning_effort: reasoningEffort || null,
-      include_memory: true,
-      include_retrieval: true,
-      include_attachments: true,
+      include_memory: includeFullContext,
+      include_retrieval: includeFullContext,
+      include_attachments: includeFiles,
       attachment_ids: [...attachmentIds],
-      include_web: false,
-      include_backpack: true,
+      include_web: composerSettings.includeWeb,
+      include_backpack: includeFullContext,
       context_limit: models.find((item) => item.provider === target.provider && item.id === target.model)?.context_length ?? 8192,
     }
     try {
@@ -953,7 +990,7 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
       <div className={navigationCollapsed ? 'app-shell nav-collapsed' : 'app-shell nav-expanded'}>
         <Navigation collapsed={navigationCollapsed} connected={connected} onCollapsed={setNavigationCollapsed} onPage={setPage} page={page} />
         {page === 'Chat' && <ConversationHistory activeId={activeId} conversations={conversations} onCreate={createConversation} onDelete={async (id) => { if (!window.confirm('Delete this conversation?')) return; await api.deleteConversation(id); if (activeId === id) { setActiveId(null); navigate('/chat') } await refreshConversations() }} onSelect={selectConversation} onUpdate={async (id, payload) => { await api.updateConversation(id, payload); await refreshConversations(); if (activeId === id) setConversation(await api.conversation(id)) }} />}
-        {page === 'Chat' && <div className={wideInspector && inspectorOpen ? 'chat-stage inspector-docked' : 'chat-stage'}><ChatWorkspace attachmentIds={attachmentIds} conversation={conversation} error={error} inspectorOpen={inspectorOpen} liveOutput={liveOutput} models={models} onAttachment={(id) => setAttachmentIds((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} onBranch={async (messageId) => { if (!activeId) return; const branch = await api.branchConversation(activeId, messageId); await refreshConversations(); selectConversation(branch.id) }} onCancel={async () => { if (activeRun) await api.cancelRun(activeRun) }} onConfirm={async () => { if (pendingPayload && pendingPlan) await submitTurn(pendingPayload, pendingPlan, pendingPlan.findings.map((item) => item.id)) }} onFeedback={api.setFeedback} onHistory={() => setHistoryOpen(true)} onInspector={() => setInspectorOpen((current) => !current)} onModel={setSelectedModel} onReasoningEffort={setReasoningEffort} onRuns={() => setRunsOpen(true)} onSanitize={async () => { if (!pendingPayload) return; const sanitized = await api.sanitize(pendingPayload.content); setPendingPlan(null); setPendingPayload(null); await send(sanitized.content) }} onSaveMemories={saveMemoriesAndClose} onSend={send} onUpload={async (file) => { await upload(file, true) }} pendingPlan={pendingPlan} plan={plan} providers={providers} reasoningEffort={reasoningEffort} running={Boolean(activeRun)} savingMemories={savingMemories} selectedModel={selectedModel} uploads={uploads} />{wideInspector && inspectorOpen && inspector}</div>}
+        {page === 'Chat' && <div className={wideInspector && inspectorOpen ? 'chat-stage inspector-docked' : 'chat-stage'}><ChatWorkspace attachmentIds={attachmentIds} composerSettings={composerSettings} conversation={conversation} error={error} inspectorOpen={inspectorOpen} liveOutput={liveOutput} models={models} onAttachment={(id) => setAttachmentIds((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next })} onBranch={async (messageId) => { if (!activeId) return; const branch = await api.branchConversation(activeId, messageId); await refreshConversations(); selectConversation(branch.id) }} onCancel={async () => { if (activeRun) await api.cancelRun(activeRun) }} onComposerSettings={setComposerSettings} onConfirm={async () => { if (pendingPayload && pendingPlan) await submitTurn(pendingPayload, pendingPlan, pendingPlan.findings.map((item) => item.id)) }} onFeedback={api.setFeedback} onHistory={() => setHistoryOpen(true)} onInspector={() => setInspectorOpen((current) => !current)} onModel={setSelectedModel} onReasoningEffort={setReasoningEffort} onRuns={() => setRunsOpen(true)} onSanitize={async () => { if (!pendingPayload) return; const sanitized = await api.sanitize(pendingPayload.content); setPendingPlan(null); setPendingPayload(null); await send(sanitized.content) }} onSaveMemories={saveMemoriesAndClose} onSend={send} onUpload={async (file) => { await upload(file, true) }} pendingPlan={pendingPlan} plan={plan} providers={providers} reasoningEffort={reasoningEffort} running={Boolean(activeRun)} savingMemories={savingMemories} selectedModel={selectedModel} uploads={uploads} />{wideInspector && inspectorOpen && inspector}</div>}
         {page === 'Chat' && !wideInspector && <Sheet onOpenChange={setInspectorOpen} open={inspectorOpen}><SheetContent className="inspector-sheet" showCloseButton={false} side="right">{inspector}</SheetContent></Sheet>}
         <Sheet onOpenChange={setHistoryOpen} open={historyOpen}>
           <SheetContent className="history-sheet" side="left">

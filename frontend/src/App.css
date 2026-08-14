@@ -226,13 +226,23 @@ h3 { margin-bottom: 8px; font-size: 26px; font-weight: 650; letter-spacing: -.03
 .composer-shell { margin: 0 auto 18px; width: min(900px,calc(100% - 48px)); border: 1px solid #3b3038; border-radius: 16px; background: rgba(24,24,31,.96); padding: 8px; box-shadow: 0 18px 55px rgba(0,0,0,.45),inset 0 1px rgba(255,255,255,.035); }
 .composer-shell:focus-within { border-color: #8a3551; box-shadow: 0 0 0 3px rgba(255,61,113,.12),0 18px 55px rgba(0,0,0,.45); }
 .composer-shell textarea { min-height: 72px; resize: none; border: 0; box-shadow: none; background: transparent; }
-.composer-config-row { display: grid; grid-template-columns: minmax(0,1fr) minmax(130px,160px); gap: 8px; align-items: end; padding: 4px 4px 10px; }
-.effort-picker { min-width: 0; display: grid; gap: 5px; color: #948a94; font-size: 10px; font-weight: 680; letter-spacing: .08em; text-transform: uppercase; }
-.composer-config-row select { width: 100%; min-width: 0; max-width: none; height: 38px; border: 1px solid var(--quiet-border); border-radius: 10px; background: #121217; color: #f2ebef; padding: 0 34px 0 12px; font-size: 13px; font-weight: 450; letter-spacing: normal; text-transform: none; }
-.composer-config-row select:disabled { color: #716a72; }
-.composer-actions { display: flex; align-items: center; gap: 10px; }
-.composer-actions span { color: #7d747e; font-size: 11px; flex: 1; }
-.attachment-tray { display: grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); gap: 7px; padding: 9px 3px 2px; }
+.composer-control-dock { display: grid; grid-template-columns: 32px minmax(330px,1fr) minmax(106px,126px) minmax(116px,136px) 34px 38px; align-items: end; gap: 7px; border-top: 1px solid #302933; padding: 9px 3px 2px; }
+.composer-control-dock .provider-model-picker { grid-template-columns: minmax(112px,.7fr) minmax(176px,1.3fr); gap: 7px; }
+.effort-picker,.context-mode-picker { min-width: 0; display: grid; gap: 5px; color: #948a94; font-size: 10px; font-weight: 680; letter-spacing: .08em; text-transform: uppercase; }
+.composer-control-dock select { width: 100%; min-width: 0; max-width: none; height: 38px; border: 1px solid var(--quiet-border); border-radius: 10px; background: #121217; color: #f2ebef; padding: 0 28px 0 10px; font-size: 12px; font-weight: 450; letter-spacing: normal; text-transform: none; }
+.composer-control-dock select:disabled { color: #716a72; }
+.composer-attach,.composer-more-trigger,.composer-send { align-self: end; height: 38px; }
+.composer-attach { width: 32px; }
+.composer-more-trigger { width: 34px; display: grid; place-items: center; border: 1px solid transparent; border-radius: 9px; background: transparent; color: #a49ba5; cursor: pointer; }
+.composer-more-trigger:hover,.composer-more-trigger[data-popup-open] { border-color: #53313e; background: #26171e; color: #ff96b2; }
+.composer-more-trigger:focus-visible { outline: 2px solid #ff4f80; outline-offset: 2px; }
+.composer-more-trigger svg { width: 17px; }
+.composer-settings-menu { width: 238px!important; border: 1px solid #4b303b; background: #121217!important; color: #eee8eb!important; box-shadow: 0 18px 48px rgba(0,0,0,.55)!important; }
+.composer-settings-menu [data-slot='dropdown-menu-label'] { padding: 7px 8px 5px; color: #817984; font-size: 9px; letter-spacing: .11em; text-transform: uppercase; }
+.composer-settings-menu [data-slot='dropdown-menu-checkbox-item'],.composer-settings-menu [data-slot='dropdown-menu-sub-trigger'] { min-height: 34px; padding-inline: 8px; }
+.composer-settings-menu [data-slot='dropdown-menu-sub-trigger'] > span { margin-left: auto; color: #ff8ead; font: 700 10px/1 ui-monospace,monospace; }
+.composer-settings-hint { margin: 0; padding: 7px 8px 6px; color: #77707a; font-size: 10px; line-height: 1.35; }
+.attachment-tray { display: grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); gap: 7px; padding: 7px 3px 9px; }
 .attachment-card { position: relative; min-width: 0; min-height: 52px; display: grid; grid-template-columns: 34px minmax(0,1fr) auto; align-items: center; gap: 9px; overflow: hidden; border: 1px solid #3a343d; border-radius: 11px; background: #121217; color: #dcd4da; padding: 8px 9px; }
 .attachment-card.ready { cursor: pointer; }
 .attachment-card.ready:hover { border-color: #62404d; background: #18151a; }
@@ -350,6 +360,8 @@ h3 { margin-bottom: 8px; font-size: 26px; font-weight: 650; letter-spacing: -.03
   .context-rail { margin: 10px 14px 0; }
   .messages,.composer-shell,.safety-strip,.error-strip { width: calc(100% - 28px); }
   .composer-shell { margin-bottom: 12px; }
+  .composer-control-dock { grid-template-columns: 32px minmax(270px,1fr) minmax(98px,112px) minmax(108px,122px) 34px 38px; gap: 6px; }
+  .composer-control-dock .provider-model-picker { grid-template-columns: minmax(100px,.68fr) minmax(150px,1.32fr); gap: 6px; }
   .message { max-width: 92%; }
   .rail-copy { align-items: flex-start; flex-direction: column; gap: 2px; }
   .comparison-grid { grid-template-columns: 1fr; }
@@ -359,8 +371,13 @@ h3 { margin-bottom: 8px; font-size: 26px; font-weight: 650; letter-spacing: -.03
   .compare-prompt { grid-template-columns: 1fr; }
   .workspace-header .action-row > button { width: 100%; }
   .provider-model-picker { grid-template-columns: 1fr; }
-  .composer-config-row { grid-template-columns: 1fr; }
-  .composer-actions span { display: none; }
+  .composer-control-dock { grid-template-columns: 32px minmax(0,1fr) minmax(0,1fr) 34px 38px; gap: 6px; }
+  .composer-control-dock .provider-model-picker { grid-column: 1 / -1; grid-row: 1; grid-template-columns: minmax(96px,.7fr) minmax(0,1.3fr); }
+  .composer-attach { grid-column: 1; grid-row: 2; }
+  .composer-control-dock > .effort-picker { grid-column: 2; grid-row: 2; }
+  .composer-control-dock > .context-mode-picker { grid-column: 3; grid-row: 2; }
+  .composer-more-trigger { grid-column: 4; grid-row: 2; }
+  .composer-send { grid-column: 5; grid-row: 2; }
   .safety-strip { align-items: stretch; flex-wrap: wrap; }
   .safety-strip div { flex-basis: calc(100% - 40px); }
 }
