@@ -43,6 +43,55 @@ def test_openai_provider_uses_base_url_from_environment(
     assert adapter.base_url == "https://openai.example.test/v1"  # type: ignore[attr-defined]
 
 
+def test_luna_uses_its_supported_default_temperature(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import openai
+
+    captured: dict[str, object] = {}
+
+    class Response:
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *_args):
+            return None
+
+        def __aiter__(self):
+            async def chunks():
+                yield SimpleNamespace(
+                    choices=[SimpleNamespace(delta=SimpleNamespace(content="ok"))]
+                )
+
+            return chunks()
+
+    class Completions:
+        async def create(self, **kwargs):
+            captured.update(kwargs)
+            return Response()
+
+    class Client:
+        def __init__(self, **_kwargs) -> None:
+            self.chat = SimpleNamespace(completions=Completions())
+
+    monkeypatch.setattr(openai, "AsyncOpenAI", Client)
+    adapter = OpenAICompatibleAdapter("openai", "OpenAI")
+
+    async def collect() -> list[str]:
+        return [
+            chunk
+            async for chunk in adapter.stream(
+                "test-key",
+                "gpt-5.6-luna",
+                [ChatMessage(role="user", content="hello")],
+                0.7,
+            )
+        ]
+
+    assert asyncio.run(collect()) == ["ok"]
+    assert "temperature" not in captured
+
+
 def test_agnes_provider_uses_official_openai_compatible_endpoint() -> None:
     adapter = build_provider_registry()["agnes"]
 

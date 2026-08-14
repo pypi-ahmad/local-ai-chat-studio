@@ -307,21 +307,124 @@ function Surface({ eyebrow, title, description, children }: { eyebrow: string; t
   return <main className="page-workspace"><div className="page-heading"><div><p className="eyebrow">{eyebrow}</p><h2>{title}</h2><p>{description}</p></div></div>{children}</main>
 }
 
+type ComparisonResult = {
+  key: string
+  output: string
+  status: 'waiting' | 'starting' | 'streaming' | 'completed' | 'failed' | 'cancelled'
+  error?: string
+}
+
+const comparisonModelKey = (model: ModelSummary) => `${model.provider}::${model.id}`
+
 function ComparePage({ models }: { models: ModelSummary[] }) {
   const [prompt, setPrompt] = useState('')
-  const [outputs, setOutputs] = useState(['', ''])
-  const run = async () => {
-    if (!prompt.trim() || !models.length) return
-    const targets = [models[0], models[1] ?? models[0]]
-    setOutputs(['', ''])
-    await Promise.all(targets.map(async (target, index) => {
-      const created = await api.createRun({ provider: target.provider, model: target.id, messages: [{ role: 'user', content: prompt, images: [] }], temperature: 0.7 })
-      await streamRun(created.id, (event) => {
-        if (event.type === 'run.delta') setOutputs((current) => current.map((item, i) => i === index ? item + String(event.data.delta ?? '') : item))
-      })
-    }))
+  const [selectedModels, setSelectedModels] = useState<string[]>([])
+  const [results, setResults] = useState<ComparisonResult[]>([])
+  const [running, setRunning] = useState(false)
+  const controllers = useRef(new Map<string, AbortController>())
+  const runIds = useRef(new Map<string, string>())
+  const batch = useRef(0)
+
+  useEffect(() => {
+    if (selectedModels.length || !models.length) return
+    setSelectedModels(models.slice(0, 2).map(comparisonModelKey))
+  }, [models, selectedModels.length])
+
+  const selectedTargets = selectedModels.flatMap((key) => {
+    const model = models.find((candidate) => comparisonModelKey(candidate) === key)
+    return model ? [model] : []
+  })
+
+  const updateResult = (key: string, update: Partial<ComparisonResult>, batchId: number) => {
+    if (batch.current !== batchId) return
+    setResults((current) => current.map((result) => result.key === key ? { ...result, ...update } : result))
   }
-  return <Surface eyebrow="Parallel run" title="Compare" description="One prompt, two independent model streams."><div className="action-row"><Input aria-label="Comparison prompt" onChange={(event) => setPrompt(event.target.value)} placeholder="What should both models answer?" value={prompt} /><Button onClick={run}><Play /> Run both</Button></div><div className="split-grid">{outputs.map((output, index) => <Card key={index}><CardHeader><CardTitle>{models[index]?.label || models[index]?.id || `Model ${index + 1}`}</CardTitle></CardHeader><CardContent><pre className="output-block">{output || 'Waiting for a run.'}</pre></CardContent></Card>)}</div></Surface>
+
+  const run = async () => {
+    if (!prompt.trim() || selectedTargets.length < 2) return
+    const batchId = ++batch.current
+    controllers.current.clear()
+    runIds.current.clear()
+    setResults(selectedTargets.map((target) => ({ key: comparisonModelKey(target), output: '', status: 'starting' })))
+    setRunning(true)
+    await Promise.allSettled(selectedTargets.map(async (target) => {
+      const key = comparisonModelKey(target)
+      const controller = new AbortController()
+      controllers.current.set(key, controller)
+      try {
+        const created = await api.createRun({ provider: target.provider, model: target.id, messages: [{ role: 'user', content: prompt.trim(), images: [] }], temperature: 0.7 })
+        runIds.current.set(key, created.id)
+        if (controller.signal.aborted) {
+          await api.cancelRun(created.id).catch(() => undefined)
+          return
+        }
+        await streamRun(created.id, (event) => {
+          if (event.type === 'run.started') updateResult(key, { status: 'streaming' }, batchId)
+          if (event.type === 'run.delta') {
+            const delta = String(event.data.delta ?? '')
+            if (batch.current === batchId) setResults((current) => current.map((result) => result.key === key ? { ...result, output: result.output + delta, status: 'streaming' } : result))
+          }
+          if (event.type === 'run.completed') updateResult(key, { output: String(event.data.output ?? ''), status: 'completed' }, batchId)
+          if (event.type === 'run.failed') updateResult(key, { status: 'failed', error: String(event.data.error ?? 'Generation failed') }, batchId)
+          if (event.type === 'run.cancelled') updateResult(key, { status: 'cancelled' }, batchId)
+        }, controller.signal)
+      } catch (error) {
+        if (controller.signal.aborted) updateResult(key, { status: 'cancelled' }, batchId)
+        else updateResult(key, { status: 'failed', error: error instanceof Error ? error.message : 'Generation failed' }, batchId)
+      }
+    }))
+    if (batch.current === batchId) setRunning(false)
+  }
+
+  const cancelAll = async () => {
+    const activeBatch = batch.current
+    controllers.current.forEach((controller) => controller.abort())
+    await Promise.allSettled([...runIds.current.values()].map((runId) => api.cancelRun(runId)))
+    if (batch.current === activeBatch) {
+      setResults((current) => current.map((result) => ['starting', 'streaming'].includes(result.status) ? { ...result, status: 'cancelled' } : result))
+      setRunning(false)
+    }
+  }
+
+  const replaceSelection = (index: number, key: string) => setSelectedModels((current) => current.map((item, itemIndex) => itemIndex === index ? key : item))
+  const addModel = () => {
+    const available = models.find((model) => !selectedModels.includes(comparisonModelKey(model)))
+    if (available) setSelectedModels((current) => [...current, comparisonModelKey(available)])
+  }
+  const removeModel = (index: number) => setSelectedModels((current) => current.filter((_, itemIndex) => itemIndex !== index))
+
+  return (
+    <Surface eyebrow="Parallel run" title="Compare" description="Send one prompt to 2–4 models and compare their independent streams.">
+      <div className="compare-models">
+        {selectedModels.map((selected, index) => (
+          <label className="compare-model-field" key={`${index}-${selected}`}>
+            <span>Model {index + 1}</span>
+            <div className="action-row">
+              <select aria-label={`Comparison model ${index + 1}`} disabled={running} onChange={(event) => replaceSelection(index, event.target.value)} value={selected}>
+                {models.map((model) => {
+                  const key = comparisonModelKey(model)
+                  return <option disabled={key !== selected && selectedModels.includes(key)} key={key} value={key}>{model.label || model.id} · {model.provider} · {pricingLabel(model)}</option>
+                })}
+              </select>
+              {selectedModels.length > 2 && <Button aria-label={`Remove model ${index + 1}`} disabled={running} onClick={() => removeModel(index)} size="icon-sm" variant="ghost"><Trash2 /></Button>}
+            </div>
+          </label>
+        ))}
+        {selectedModels.length < Math.min(4, models.length) && <Button disabled={running} onClick={addModel} variant="outline"><CirclePlus /> Add model</Button>}
+      </div>
+      <div className="compare-prompt">
+        <Input aria-label="Comparison prompt" disabled={running} onChange={(event) => setPrompt(event.target.value)} placeholder="What should the models answer?" value={prompt} />
+        {running ? <Button onClick={cancelAll} variant="destructive"><Square /> Cancel all</Button> : <Button disabled={!prompt.trim() || selectedTargets.length < 2} onClick={run}><Play /> Run {selectedTargets.length} models</Button>}
+      </div>
+      <p className="compare-cost-note">Each selected cloud model receives a separate request and may incur provider charges.</p>
+      <div className="comparison-grid">
+        {results.length ? results.map((result) => {
+          const model = models.find((candidate) => comparisonModelKey(candidate) === result.key)
+          return <Card key={result.key}><CardHeader><div className="comparison-title"><div><CardTitle>{model?.label || model?.id || result.key}</CardTitle><CardDescription>{model?.provider} · {model ? pricingLabel(model) : 'pricing unavailable'}</CardDescription></div><Badge variant={result.status === 'failed' ? 'destructive' : 'outline'}>{result.status}</Badge></div></CardHeader><CardContent><pre aria-live="polite" className="output-block">{result.error || result.output || (result.status === 'starting' ? 'Starting run…' : 'Waiting for response…')}</pre></CardContent></Card>
+        }) : selectedTargets.map((model) => <Card key={comparisonModelKey(model)}><CardHeader><CardTitle>{model.label || model.id}</CardTitle><CardDescription>{model.provider} · {pricingLabel(model)}</CardDescription></CardHeader><CardContent><pre className="output-block">Waiting for a run.</pre></CardContent></Card>)}
+      </div>
+    </Surface>
+  )
 }
 
 function ContextPage({ plan, backpacks, onCreate }: { plan: ContextPlan | null; backpacks: BackpackRecord[]; onCreate: (name: string, title: string, content: string) => Promise<void> }) {

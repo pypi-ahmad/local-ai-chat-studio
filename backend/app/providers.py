@@ -89,12 +89,14 @@ class OpenAICompatibleAdapter(ProviderAdapter):
                 formatted.append({"role": message.role, "content": content})
             else:
                 formatted.append(message.model_dump(exclude={"images"}))
-        response = await self._client(api_key).chat.completions.create(
-            model=model,
-            messages=formatted,
-            temperature=temperature,
-            stream=True,
-        )
+        request: dict[str, Any] = {
+            "model": model,
+            "messages": formatted,
+            "stream": True,
+        }
+        if model != "gpt-5.6-luna":
+            request["temperature"] = temperature
+        response = await self._client(api_key).chat.completions.create(**request)
         # async with releases the underlying HTTP connection on early exit
         # (cancellation), not just when the stream is fully consumed.
         async with response:
