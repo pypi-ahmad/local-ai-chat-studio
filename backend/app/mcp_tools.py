@@ -6,12 +6,15 @@ import json
 import os
 import re
 import socket
+from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Any, Protocol
 from urllib.parse import urlsplit
 
-from mcp import Client
+import httpx2
+from mcp import Client, ClientSession
 from mcp.client.stdio import StdioServerParameters
+from mcp.client.streamable_http import streamable_http_client
 
 from backend.app.contracts import McpServer
 class McpGateway(Protocol):
@@ -75,11 +78,7 @@ class DefaultMcpGateway:
     def __init__(self, sandbox_root: Path) -> None:
         self.sandbox_root = sandbox_root
 
-    async def _client(self, server: McpServer) -> Client:
-        if server.transport == "streamable_http":
-            await asyncio.to_thread(_public_remote_url, server.url or "")
-            return Client(server.url or "", read_timeout_seconds=30)
-
+    def _stdio_client(self, server: McpServer) -> Client:
         workspace = self.sandbox_root / server.id
         workspace.mkdir(parents=True, exist_ok=True)
         inherited = {"PATH", "PATHEXT", "SYSTEMROOT", "WINDIR"}
@@ -93,10 +92,29 @@ class DefaultMcpGateway:
         )
         return Client(parameters, read_timeout_seconds=30)
 
+    @asynccontextmanager
+    async def _session(self, server: McpServer):
+        if server.transport == "stdio":
+            async with self._stdio_client(server) as client:
+                yield client
+            return
+
+        await asyncio.to_thread(_public_remote_url, server.url or "")
+        timeout = httpx2.Timeout(30, read=30)
+        async with httpx2.AsyncClient(follow_redirects=False, timeout=timeout) as http:
+            async with streamable_http_client(
+                server.url or "", http_client=http
+            ) as streams:
+                read_stream, write_stream, _ = streams
+                async with ClientSession(
+                    read_stream, write_stream, read_timeout_seconds=30
+                ) as session:
+                    await session.initialize()
+                    yield session
+
     async def discover(self, server: McpServer) -> list[dict[str, Any]]:
-        client = await self._client(server)
-        async with asyncio.timeout(30), client:
-            result = await client.list_tools(cache_mode="refresh")
+        async with asyncio.timeout(30), self._session(server) as session:
+            result = await session.list_tools()
         return [
             {
                 "name": tool.name,
@@ -110,9 +128,8 @@ class DefaultMcpGateway:
     async def call(
         self, server: McpServer, tool_name: str, arguments: dict[str, Any]
     ) -> dict[str, Any]:
-        client = await self._client(server)
-        async with asyncio.timeout(30), client:
-            result = await client.call_tool(
+        async with asyncio.timeout(30), self._session(server) as session:
+            result = await session.call_tool(
                 tool_name,
                 arguments,
                 read_timeout_seconds=30,
