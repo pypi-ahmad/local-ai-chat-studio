@@ -123,10 +123,13 @@ beforeEach(() => {
     if (path.endsWith('/conversations/c1/uploads')) return json(uploadedFiles)
     if (/\/(memories|backpacks)$/.test(path)) return json([])
     if (path.endsWith('/turns/preflight')) {
+      const body = JSON.parse(String(init?.body ?? '{}')) as { auto_compress_history?: boolean }
       return json({
         plan_hash: 'plan', estimated_tokens: contextEstimate, budget_tokens: contextBudget,
         sections: [{ kind: 'user', estimated_tokens: 3, included: true }],
         sources: [{ id: 'source-1', kind: 'memory', title: 'Working preference', preview: 'Prefer concise answers.', estimated_tokens: 4, included: true, trust: 'trusted' }], findings: [], requires_confirmation: false,
+        compression_applied: Boolean(body.auto_compress_history),
+        compressed_message_count: body.auto_compress_history ? 4 : 0,
       })
     }
     if (path.endsWith('/turns')) {
@@ -342,6 +345,22 @@ describe('studio workspace', () => {
     expect(await screen.findByText('125% of safe budget')).toBeInTheDocument()
     expect(screen.getByRole('alert')).toHaveTextContent('exceeds the safe input budget by 250 tokens')
     expect(screen.getByLabelText('Context budget')).toHaveClass('overflow')
+    expect(vi.mocked(fetch).mock.calls.some(([url]) => String(url).endsWith('/turns'))).toBe(false)
+  })
+
+  it('optionally compresses older messages and reports the result', async () => {
+    render(<App />)
+    await waitForStudio()
+    fireEvent.click(screen.getByRole('button', { name: 'More composer settings' }))
+    fireEvent.click(await screen.findByRole('menuitemcheckbox', { name: 'Compress older messages' }))
+    fireEvent.change(screen.getByLabelText('Message'), { target: { value: 'continue the long conversation' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Send message' }))
+
+    await waitFor(() => {
+      const request = vi.mocked(fetch).mock.calls.find(([url]) => String(url).endsWith('/turns/preflight'))
+      expect(JSON.parse(String(request?.[1]?.body))).toMatchObject({ auto_compress_history: true })
+    })
+    expect(await screen.findByText('4 older messages compressed')).toBeInTheDocument()
   })
 
   it('shows attachment upload progress and marks completed files ready', async () => {

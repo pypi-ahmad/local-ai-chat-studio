@@ -92,7 +92,7 @@ const navigationGroups: ReadonlyArray<{ label: string; items: ReadonlyArray<read
 
 type InspectorTab = 'context' | 'evidence'
 type ContextMode = 'full' | 'chat' | 'files'
-type ComposerSettings = { contextMode: ContextMode; temperature: number; includeWeb: boolean }
+type ComposerSettings = { contextMode: ContextMode; temperature: number; includeWeb: boolean; autoCompressHistory: boolean }
 
 type AttachmentStage = 'uploading' | 'processing'
 
@@ -260,6 +260,7 @@ function ContextRail({ plan, model }: { plan: ContextPlan | null; model?: ModelS
           ))}
         </div>
       </div>
+      {plan.compression_applied && <div className="compression-status" role="status"><CheckCircle /><span>{plan.compressed_message_count} older messages compressed</span></div>}
       {warning && <div className="context-warning" role="alert"><TriangleAlert /><span>{warning}</span></div>}
     </div>
   )
@@ -436,7 +437,7 @@ function ChatWorkspace({
   liveOutput: string
   running: boolean
   error: string
-  onSend: (content: string) => Promise<void>
+  onSend: (content: string) => Promise<boolean>
   onConfirm: () => Promise<void>
   onSanitize: () => Promise<void>
   onCancel: () => Promise<void>
@@ -508,8 +509,7 @@ function ChatWorkspace({
   }, [liveOutput])
   const submit = async () => {
     if (!prompt.trim()) return
-    await onSend(prompt.trim())
-    setPrompt('')
+    if (await onSend(prompt.trim())) setPrompt('')
   }
   const uploadAttachment = async (attempt: AttachmentAttempt) => {
     setAttachmentAttempts((current) => current.map((item) => item.id === attempt.id ? { ...item, status: 'uploading', error: undefined } : item))
@@ -636,6 +636,7 @@ function ChatWorkspace({
             <DropdownMenuContent align="end" className="composer-settings-menu" side="top">
               <DropdownMenuGroup>
                 <DropdownMenuLabel>Secondary settings</DropdownMenuLabel>
+                <DropdownMenuCheckboxItem checked={composerSettings.autoCompressHistory} onCheckedChange={(checked) => onComposerSettings({ ...composerSettings, autoCompressHistory: checked })}>Compress older messages</DropdownMenuCheckboxItem>
                 <DropdownMenuCheckboxItem checked={composerSettings.includeWeb} onCheckedChange={(checked) => onComposerSettings({ ...composerSettings, includeWeb: checked })}>Web evidence</DropdownMenuCheckboxItem>
                 <DropdownMenuSub>
                   <DropdownMenuSubTrigger>Temperature <span>{composerSettings.temperature.toFixed(1)}</span></DropdownMenuSubTrigger>
@@ -880,7 +881,7 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
   const [models, setModels] = useState<ModelSummary[]>([])
   const [selectedModel, setSelectedModel] = useState('')
   const [reasoningEffort, setReasoningEffort] = useState<ReasoningEffort | ''>('')
-  const [composerSettings, setComposerSettings] = useState<ComposerSettings>({ contextMode: 'full', temperature: 0.7, includeWeb: false })
+  const [composerSettings, setComposerSettings] = useState<ComposerSettings>({ contextMode: 'full', temperature: 0.7, includeWeb: false, autoCompressHistory: false })
   const [activity, setActivity] = useState<RunSnapshot[]>([])
   const [memories, setMemories] = useState<Memory[]>([])
   const [presets, setPresets] = useState<Preset[]>([])
@@ -1008,7 +1009,7 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
   }
 
   const send = async (content: string) => {
-    if (!activeId || !target.provider || !target.model) return
+    if (!activeId || !target.provider || !target.model) return false
     const includeFullContext = composerSettings.contextMode === 'full'
     const includeFiles = composerSettings.contextMode !== 'chat'
     const payload: TurnPreflight = {
@@ -1024,14 +1025,17 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
       include_web: composerSettings.includeWeb,
       include_backpack: includeFullContext,
       context_limit: models.find((item) => item.provider === target.provider && item.id === target.model)?.context_length ?? 8192,
+      auto_compress_history: composerSettings.autoCompressHistory,
     }
     try {
       const nextPlan = await api.preflight(activeId, payload)
       setPlan(nextPlan)
       setExcludedSources(new Set(nextPlan.sources.filter((source) => !source.included || source.trust !== 'trusted').map((source) => source.id)))
-      if (nextPlan.requires_confirmation) { setPendingPlan(nextPlan); setPendingPayload(payload); return }
+      if (nextPlan.estimated_tokens > nextPlan.budget_tokens) return false
+      if (nextPlan.requires_confirmation) { setPendingPlan(nextPlan); setPendingPayload(payload); return true }
       await submitTurn(payload, nextPlan)
-    } catch (cause) { setError(messageOf(cause)) }
+      return true
+    } catch (cause) { setError(messageOf(cause)); return false }
   }
 
   const upload = async (file: File, select = false, onStage?: (stage: AttachmentStage) => void) => {

@@ -187,6 +187,8 @@ h3 { margin-bottom: 8px; font-size: 26px; font-weight: 650; letter-spacing: -.03
 .context-warning { display: flex; align-items: flex-start; gap: 7px; margin-top: 8px; color: #c5ad84; font-size: 10px; line-height: 1.4; }
 .context-rail.overflow .context-warning { color: #f0a1b0; }
 .context-warning svg { flex: 0 0 auto; width: 14px; height: 14px; margin-top: 1px; }
+.compression-status { display: flex; align-items: center; gap: 6px; margin-top: 8px; color: #b8aeb8; font-size: 10px; }
+.compression-status svg { width: 13px; height: 13px; color: #f04a70; }
 .context-inspector { min-width: 0; width: 100%; height: 100%; display: flex; flex-direction: column; overflow: hidden; border-left: 1px solid #4b2733; background: #0d0d11; box-shadow: inset 2px 0 rgba(255,61,113,.12); }
 .inspector-header { min-height: 73px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 16px; border-bottom: 1px solid var(--quiet-border); }
 .inspector-header h2 { margin: 0; }
