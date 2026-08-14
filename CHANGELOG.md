@@ -7,6 +7,24 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-08-15
+
+### Changed
+
+- Refined the React workspace with a clear Geist type hierarchy, balanced
+  responsive geometry, and a dark graphite theme with crimson-rose accents.
+- Added compact-screen conversation access and bottom navigation while keeping
+  chat, composer, and comparison layouts free of horizontal overflow.
+
+### Fixed
+
+- Migrated legacy five-column preset tables in place so existing workspaces no
+  longer fail with a missing `builtin` column.
+- Prevented keyless Gemini discovery from constructing a partial SDK client and
+  explicitly closed configured asynchronous clients.
+- Made both launchers reuse successful setup fingerprints and clear port `8506`
+  before starting a fresh Studio process.
+
 ## [0.4.0] - 2026-08-14
 
 ### Added
