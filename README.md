@@ -121,8 +121,12 @@ local-ai-chat-studio/
 │   ├── store.py             SQLite persistence, migration, and data controls
 │   └── sessions.py          Session credential vault and environment fallbacks
 ├── frontend/
-│   ├── src/App.tsx          Main React workspace
+│   ├── src/App.tsx          Workspace composition and feature orchestration
 │   ├── src/api/             Typed client and generated OpenAPI schema
+│   ├── src/components/      Shared workspace and UI primitives
+│   ├── src/features/        Domain-focused model and attachment modules
+│   ├── src/hooks/           Reusable responsive browser hooks
+│   ├── src/state/           Local UI preference boundaries
 │   └── package.json         Frontend commands and dependencies
 ├── src/                     Ollama, file parsing, retrieval, and shared helpers
 ├── scripts/                 OpenAPI-to-TypeScript generation
