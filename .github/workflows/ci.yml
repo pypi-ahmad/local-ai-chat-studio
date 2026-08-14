@@ -13,6 +13,8 @@ jobs:
         with:
           python-version: "3.12"
           enable-cache: true
+      - run: bash -n './Launch Chat Studio.sh'
+      - run: bash './Launch Chat Studio.sh' --check
       - run: uv sync --locked --dev
       - run: uv run python -m pytest -q
       - run: uv run ruff check backend tests
