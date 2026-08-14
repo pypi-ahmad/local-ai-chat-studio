@@ -349,6 +349,42 @@ def test_api_migrates_the_legacy_five_column_preset_table(tmp_path) -> None:
     assert {"builtin", "created_at"} <= columns
 
 
+def test_conversation_exports_are_complete_and_html_safe(client: TestClient) -> None:
+    conversation_id = _conversation(client)
+    client.post(
+        f"/api/v1/conversations/{conversation_id}/messages",
+        json={"role": "user", "content": '<script>alert("stored xss")</script>'},
+    )
+    client.post(
+        f"/api/v1/conversations/{conversation_id}/messages",
+        json={"role": "assistant", "content": "Use **safe** output."},
+    )
+
+    markdown = client.get(
+        f"/api/v1/conversations/{conversation_id}/export/markdown"
+    )
+    assert markdown.status_code == 200
+    assert markdown.headers["content-type"].startswith("text/markdown")
+    assert "# Workspace" in markdown.text
+    assert "Use **safe** output." in markdown.text
+
+    text = client.get(f"/api/v1/conversations/{conversation_id}/export/txt")
+    assert text.status_code == 200
+    assert text.headers["content-type"].startswith("text/plain")
+    assert "USER\n<script>" in text.text
+
+    structured = client.get(f"/api/v1/conversations/{conversation_id}/export/json")
+    assert structured.status_code == 200
+    assert structured.headers["content-type"].startswith("application/json")
+    assert structured.json()["messages"][1]["content"] == "Use **safe** output."
+
+    html = client.get(f"/api/v1/conversations/{conversation_id}/export/html")
+    assert html.status_code == 200
+    assert html.headers["content-type"].startswith("text/html")
+    assert "&lt;script&gt;alert(&quot;stored xss&quot;)&lt;/script&gt;" in html.text
+    assert "<script>" not in html.text
+
+
 def test_memory_lifecycle_feedback_and_data_controls(client: TestClient) -> None:
     conversation_id = _conversation(client)
     message = client.post(

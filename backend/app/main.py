@@ -18,7 +18,7 @@ from urllib.parse import urlencode
 import httpx
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response, status
-from fastapi.responses import PlainTextResponse, RedirectResponse, StreamingResponse
+from fastapi.responses import RedirectResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
@@ -778,11 +778,31 @@ def create_app(
 
     @app.get(
         "/api/v1/conversations/{conversation_id}/export.md",
-        response_class=PlainTextResponse,
     )
-    def export_conversation(conversation_id: str) -> str:
+    def export_conversation(conversation_id: str) -> Response:
         try:
-            return store.export_conversation_markdown(conversation_id)
+            return Response(
+                store.export_conversation_markdown(conversation_id),
+                media_type="text/markdown",
+            )
+        except KeyError as exc:
+            raise HTTPException(404, "Conversation not found") from exc
+
+    @app.get("/api/v1/conversations/{conversation_id}/export/{export_format}")
+    def export_conversation_format(
+        conversation_id: str, export_format: str
+    ) -> Response:
+        exporters = {
+            "markdown": (store.export_conversation_markdown, "text/markdown"),
+            "html": (store.export_conversation_html, "text/html"),
+            "txt": (store.export_conversation_text, "text/plain"),
+            "json": (store.export_conversation_json, "application/json"),
+        }
+        if export_format not in exporters:
+            raise HTTPException(422, "Export format must be markdown, html, txt, or json")
+        exporter, media_type = exporters[export_format]
+        try:
+            return Response(exporter(conversation_id), media_type=media_type)
         except KeyError as exc:
             raise HTTPException(404, "Conversation not found") from exc
 

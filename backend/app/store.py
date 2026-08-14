@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import base64
+import html
 import json
 import re
 import sqlite3
@@ -884,6 +885,52 @@ class Store:
             who = "**You**" if message.role == "user" else "**Assistant**"
             lines.extend([f"{who}:", "", message.content, "", "---", ""])
         return "\n".join(lines)
+
+    def export_conversation_text(self, conversation_id: str) -> str:
+        conversation = self.get_conversation(conversation_id)
+        lines = [conversation.title, f"Model: {conversation.model}", ""]
+        for message in conversation.messages:
+            lines.extend([message.role.upper(), message.content, "", "---", ""])
+        return "\n".join(lines)
+
+    def export_conversation_json(self, conversation_id: str) -> str:
+        return self.get_conversation(conversation_id).model_dump_json(indent=2)
+
+    def export_conversation_html(self, conversation_id: str) -> str:
+        conversation = self.get_conversation(conversation_id)
+        messages = "\n".join(
+            '<article class="message">'
+            f"<h2>{html.escape(message.role.title())}</h2>"
+            f"<pre>{html.escape(message.content)}</pre>"
+            "</article>"
+            for message in conversation.messages
+        )
+        title = html.escape(conversation.title)
+        model = html.escape(conversation.model)
+        return f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{title}</title>
+  <style>
+    :root {{ color-scheme: dark; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }}
+    body {{ max-width: 900px; margin: 0 auto; padding: 48px 24px; background: #09090b; color: #f4f4f5; }}
+    header {{ border-bottom: 1px solid #3f3f46; margin-bottom: 32px; padding-bottom: 20px; }}
+    header p, h2 {{ color: #fb7185; }}
+    .message {{ margin: 0 0 20px; padding: 20px; border: 1px solid #3f3f46; border-radius: 12px; background: #18181b; }}
+    h1, h2 {{ margin-top: 0; }}
+    h2 {{ font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; }}
+    pre {{ margin: 0; color: inherit; font: inherit; white-space: pre-wrap; overflow-wrap: anywhere; }}
+  </style>
+</head>
+<body>
+  <header><h1>{title}</h1><p>Model: {model}</p></header>
+  <main>{messages}</main>
+</body>
+</html>
+"""
 
     def export_jsonl(self) -> str:
         lines = []
