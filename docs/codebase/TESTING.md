@@ -22,7 +22,8 @@ Frontend tests use Vitest, Testing Library, jest-dom, and jsdom. They exercise t
 connected workspace shell, semantic desktop/mobile navigation groups, persisted and
 keyboard-dismissible context/evidence inspection, bounded transcript message navigation,
 context utilization and overflow states, preflight, SSE output, the OpenCode Claude
-sign-in affordance, searchable capability-aware model selection and rate display,
+sign-in affordance, searchable capability-aware model selection, favorites, recents,
+tool-use filtering, provider marks, and rate display,
 attachment progress/completion/error/retry states, parallel comparison across three models,
 four-model partial failure isolation, cancel-all behavior, and the Settings **Stop
 Studio** control. There is no browser E2E

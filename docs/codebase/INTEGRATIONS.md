@@ -39,8 +39,9 @@ Discovered models may carry dated `ModelPricing` metadata from
 `backend/app/pricing.py`. Direct-provider entries use official pricing pages;
 OpenRouter uses the pricing object returned by its Models API. The provider-scoped
 React model picker searches names, IDs, and reported capabilities; it can filter for
-vision or reasoning support and shows context length, reasoning levels, and
-input/output rates. The preflight rail estimates input cost. Custom endpoints,
+vision, tool-use, or reasoning support and shows provider marks, context length,
+reasoning levels, and input/output rates. Favorites and the six most recent choices
+are browser-local preferences. The preflight rail estimates input cost. Custom endpoints,
 subscription routes, and unknown models remain unpriced rather than inheriting a
 possibly incorrect vendor rate. Estimates omit output, caching, tools, media,
 discounts, taxes, and subscription charges.

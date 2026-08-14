@@ -32,7 +32,7 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 
 - **Local and cloud providers:** Use Ollama locally without an API key, or connect OpenAI, Agnes AI, Anthropic, Google Gemini, OpenRouter, xAI, OmniRoute, Ollama Cloud, OpenCode Zen, and OpenCode Go.
 - **Live model discovery:** The Studio asks configured providers for their available models instead of relying only on a fixed list. Discovered entries can include context length, vision support, and provider metadata.
-- **Searchable, capability-aware selection:** Choose a provider first, then search its discovered models by name, ID, or capability in Chat, Compare, Replay, and assistant presets. Filter for vision or reasoning support and compare context length, reasoning levels, and pricing before selecting.
+- **Searchable, capability-aware selection:** Choose a provider first, then search its discovered models by name, ID, or capability in Chat, Compare, Replay, and assistant presets. Provider marks, favorites, recent choices, verified pricing, context size, and vision, tool-use, and reasoning badges make large catalogs easier to scan; favorites and recents stay in local browser storage.
 - **Composer model controls:** Chat keeps provider, model, and capability-aware reasoning effort beside the prompt. Effort defaults to **Auto** and is disabled for models that do not advertise support; OpenAI GPT-5.6 options follow the [official model guide](https://developers.openai.com/api/docs/guides/latest-model).
 - **Focused navigation:** Desktop keeps Chat, Compare, and Library in **Primary**, Focus in **Workspace**, and provider/runtime controls in **Administration**. Mobile keeps the three primary destinations one tap away and moves advanced workspaces into **More**.
 - **Run actions drawer:** Open **Runs** from Chat to replay recorded prompts, compare outputs, or export full and privacy-safe bundles without leaving the conversation.
@@ -310,7 +310,7 @@ Before a message is sent, the Studio builds a context plan that shows estimated 
 
 ### Pricing
 
-The searchable model picker displays context length, vision and reasoning support, and standard text-token rates when providers report them. Use the **Vision** and **Reasoning** filters to narrow the current provider's catalog. The Studio estimates preflight input cost when verified pricing exists. Estimates exclude cached-token discounts, batch or priority pricing, tools, media, taxes, subscriptions, and other provider-specific adjustments. Unknown models and custom OpenAI-compatible gateways remain visibly unpriced rather than using invented values.
+The searchable model picker displays context length, vision, tool-use, and reasoning support, plus standard text-token rates when providers report them. Use the **Vision**, **Tools**, and **Reasoning** filters to narrow the current provider's catalog, star frequently used models, or return to recent choices. The Studio estimates preflight input cost when verified pricing exists. Estimates exclude cached-token discounts, batch or priority pricing, tools, media, taxes, subscriptions, and other provider-specific adjustments. Unknown models and custom OpenAI-compatible gateways remain visibly unpriced rather than using invented values.
 
 ### Persistence and retrieval
 
@@ -319,7 +319,7 @@ Canonical state lives in `data/app.db`; uploads and optional Chroma collections 
 ## Usage
 
 1. Start the Studio and open <http://127.0.0.1:8506>.
-2. Select an installed Ollama model or connect a provider. Choose the provider, open the model field, then search or filter its available models by capability.
+2. Select an installed Ollama model or connect a provider. Choose the provider, open the model field, then search, filter by capability, star a favorite, or choose a recent model.
 3. Create a conversation and optionally attach documents or images. Wait for each attachment card to show **Ready**; retry or remove any failed upload before sending.
 4. Enter a message and review its context plan, safety findings, sources, and estimated cost.
 5. Confirm required findings and send the turn.
