@@ -1,6 +1,6 @@
 [project]
 name = "local-ai-chat-studio"
-version = "0.6.1"
+version = "0.6.2"
 description = "A local-first, ChatGPT-style AI chat studio over Ollama with optional BYOK cloud providers, built-in memory, and self-improving personalization."
 requires-python = ">=3.12"
 dependencies = [

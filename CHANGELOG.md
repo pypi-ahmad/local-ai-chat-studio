@@ -7,6 +7,15 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.6.2] - 2026-08-15
+
+### Added
+
+- Added inline attachment cards that expose uploading, ready, and failed states
+  without interrupting the chat workflow.
+- Added actionable upload failures with safe server explanations plus Retry and
+  Remove controls; successfully uploaded files are selected for the next message.
+
 ## [0.6.1] - 2026-08-15
 
 ### Added
