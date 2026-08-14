@@ -11,6 +11,8 @@ NODE="$NODE_DIR/bin/node"
 NPM="$NODE_DIR/bin/npm"
 FRONTEND="$ROOT/frontend"
 PYTHON_STATE_FILE="$RUNTIME/python-setup.sha256"
+FRONTEND_INSTALL_STATE_FILE="$RUNTIME/frontend-install.sha256"
+FRONTEND_BUILD_STATE_FILE="$RUNTIME/frontend-build.sha256"
 APP_URL="http://127.0.0.1:8506"
 HEALTH_URL="$APP_URL/api/v1/health"
 CHECK_ONLY=false
@@ -107,22 +109,52 @@ python_ready() {
     [[ "$(tr -d '\r\n' < "$PYTHON_STATE_FILE")" == "$(python_fingerprint)" ]]
 }
 
+files_fingerprint() {
+    local file relative hash
+    for file in "$@"; do
+        relative="${file#"$ROOT/"}"
+        hash="$(sha256_file "$file")"
+        printf '%s:%s\n' "$relative" "$hash"
+    done | LC_ALL=C sort | if command -v sha256sum >/dev/null 2>&1; then
+        sha256sum | awk '{print $1}'
+    else
+        shasum -a 256 | awk '{print $1}'
+    fi
+}
+
+frontend_install_fingerprint() {
+    files_fingerprint "$FRONTEND/package.json" "$FRONTEND/package-lock.json"
+}
+
+frontend_build_fingerprint() {
+    local files=("$FRONTEND/package.json" "$FRONTEND/package-lock.json")
+    while IFS= read -r -d '' file; do files+=("$file"); done < <(
+        find "$FRONTEND/src" -type f -print0
+        find "$FRONTEND" -maxdepth 1 -type f \( -name 'tsconfig*.json' -o -name 'vite.config.*' -o -name 'vitest.config.*' -o -name 'index.html' \) -print0
+    )
+    files_fingerprint "${files[@]}"
+}
+
 frontend_state() {
     FRONTEND_NEEDS_INSTALL=false
     FRONTEND_NEEDS_BUILD=false
     local installed_lock="$FRONTEND/node_modules/.package-lock.json"
     local dist="$FRONTEND/dist/index.html"
 
-    if [[ ! -f "$installed_lock" || "$FRONTEND/package-lock.json" -nt "$installed_lock" ]]; then
+    if [[ -f "$FRONTEND_INSTALL_STATE_FILE" ]]; then
+        if [[ ! -f "$installed_lock" ]] || [[ "$(tr -d '\r\n' < "$FRONTEND_INSTALL_STATE_FILE")" != "$(frontend_install_fingerprint)" ]]; then
+            FRONTEND_NEEDS_INSTALL=true
+        fi
+    elif [[ ! -f "$installed_lock" || "$FRONTEND/package-lock.json" -nt "$installed_lock" ]]; then
         FRONTEND_NEEDS_INSTALL=true
     fi
-    if [[ ! -f "$dist" ]]; then
-        FRONTEND_NEEDS_BUILD=true
-        return
-    fi
-    if [[ -n "$(find "$FRONTEND/src" -type f -newer "$dist" -print -quit)" ]] ||
-       [[ "$FRONTEND/package.json" -nt "$dist" || "$FRONTEND/package-lock.json" -nt "$dist" ]] ||
-       find "$FRONTEND" -maxdepth 1 -type f \( -name 'tsconfig*.json' -o -name 'vite.config.*' -o -name 'index.html' \) -newer "$dist" -print -quit | grep -q .; then
+    if [[ -f "$FRONTEND_BUILD_STATE_FILE" ]]; then
+        if [[ ! -f "$dist" ]] || [[ "$(tr -d '\r\n' < "$FRONTEND_BUILD_STATE_FILE")" != "$(frontend_build_fingerprint)" ]]; then
+            FRONTEND_NEEDS_BUILD=true
+        fi
+    elif [[ ! -f "$dist" ]] || [[ -n "$(find "$FRONTEND/src" -type f -newer "$dist" -print -quit)" ]] ||
+         [[ "$FRONTEND/package.json" -nt "$dist" || "$FRONTEND/package-lock.json" -nt "$dist" ]] ||
+         find "$FRONTEND" -maxdepth 1 -type f \( -name 'tsconfig*.json' -o -name 'vite.config.*' -o -name 'vitest.config.*' -o -name 'index.html' \) -newer "$dist" -print -quit | grep -q .; then
         FRONTEND_NEEDS_BUILD=true
     fi
 }
@@ -148,6 +180,52 @@ port_in_use() {
     else
         return 1
     fi
+}
+
+port_owner_pids() {
+    local owners=""
+    if command -v fuser >/dev/null 2>&1; then
+        owners="$(fuser 8506/tcp 2>/dev/null || true)"
+    elif command -v lsof >/dev/null 2>&1; then
+        owners="$(lsof -nP -t -iTCP:8506 -sTCP:LISTEN 2>/dev/null || true)"
+    elif command -v ss >/dev/null 2>&1; then
+        owners="$(ss -ltnp 'sport = :8506' 2>/dev/null | grep -o 'pid=[0-9]*' | cut -d= -f2 || true)"
+    fi
+    tr ' ' '\n' <<< "$owners" | awk -v self="$$" -v parent="$PPID" '/^[0-9]+$/ && $0 != self && $0 != parent { seen[$0] = 1 } END { for (pid in seen) print pid }'
+}
+
+wait_port_clear() {
+    local attempts="${1:-32}"
+    for ((attempt = 0; attempt < attempts; attempt++)); do
+        port_in_use || return 0
+        sleep 0.25
+    done
+    ! port_in_use
+}
+
+clear_local_port() {
+    port_in_use || return 0
+    if app_healthy; then
+        step "Stopping the previous Local AI Chat Studio"
+        if [[ "$DOWNLOADER" == "curl" ]]; then
+            curl --silent --fail --request POST --header 'X-Local-Studio: shutdown' --max-time 5 "$APP_URL/api/v1/runtime/shutdown" >/dev/null 2>&1 || true
+        else
+            wget --quiet --method=POST --header='X-Local-Studio: shutdown' --timeout=5 --tries=1 "$APP_URL/api/v1/runtime/shutdown" --output-document=/dev/null 2>/dev/null || true
+        fi
+        wait_port_clear 32 && return 0
+    fi
+
+    local pids=() pid
+    mapfile -t pids < <(port_owner_pids)
+    ((${#pids[@]})) || fail "Port 8506 is occupied, but its owning process could not be identified; install fuser, lsof, or ss"
+    for pid in "${pids[@]}"; do
+        step "Terminating port 8506 owner: PID $pid"
+        kill "$pid" 2>/dev/null || fail "Permission denied while terminating PID $pid on port 8506"
+    done
+    if ! wait_port_clear 20; then
+        for pid in "${pids[@]}"; do kill -KILL "$pid" 2>/dev/null || true; done
+    fi
+    wait_port_clear 12 || fail "Port 8506 could not be cleared"
 }
 
 open_browser() {
@@ -219,9 +297,10 @@ if $CHECK_ONLY; then
     printf 'Frontend build:   %s\n' "$($FRONTEND_NEEDS_BUILD && printf 'would build' || printf ready)"
     printf 'Ollama:           %s\n' "$(command -v ollama >/dev/null 2>&1 && printf available || printf 'optional; not installed')"
     if app_healthy; then
-        printf 'Port 8506:        app already running\n'
+        printf 'Port 8506:        Studio running; would restart\n'
     elif port_in_use; then
-        printf 'Port 8506:        occupied by another process\n'
+        owners="$(port_owner_pids | paste -sd, -)"
+        printf 'Port 8506:        occupied; would terminate PID(s) %s\n' "${owners:-unknown}"
     else
         printf 'Port 8506:        available\n'
     fi
@@ -231,12 +310,7 @@ fi
 [[ -n "$DOWNLOADER" ]] || fail "curl or wget is required to bootstrap the launcher"
 command -v sha256sum >/dev/null 2>&1 || command -v shasum >/dev/null 2>&1 || fail "sha256sum or shasum is required"
 
-if app_healthy; then
-    printf 'Local AI Chat Studio is already running.\n'
-    open_browser
-    exit 0
-fi
-port_in_use && fail "Port 8506 is already used by another process"
+clear_local_port
 
 mkdir -p -- "$RUNTIME"
 [[ -x "$UV" ]] || install_uv
@@ -256,15 +330,23 @@ if ! $PYTHON_READY; then
 fi
 
 frontend_state
+if ! $FRONTEND_NEEDS_INSTALL && [[ ! -f "$FRONTEND_INSTALL_STATE_FILE" ]]; then
+    frontend_install_fingerprint > "$FRONTEND_INSTALL_STATE_FILE"
+fi
+if ! $FRONTEND_NEEDS_BUILD && [[ ! -f "$FRONTEND_BUILD_STATE_FILE" ]]; then
+    frontend_build_fingerprint > "$FRONTEND_BUILD_STATE_FILE"
+fi
 if $FRONTEND_NEEDS_INSTALL || $FRONTEND_NEEDS_BUILD; then
     pushd "$FRONTEND" >/dev/null
     if $FRONTEND_NEEDS_INSTALL; then
         step "Installing frontend dependencies"
         "$NPM" ci --legacy-peer-deps --no-audit --no-fund || fail "Frontend dependency installation failed"
+        frontend_install_fingerprint > "$FRONTEND_INSTALL_STATE_FILE"
     fi
     if $FRONTEND_NEEDS_BUILD; then
         step "Building the frontend"
         "$NPM" run build || fail "Frontend build failed"
+        frontend_build_fingerprint > "$FRONTEND_BUILD_STATE_FILE"
     fi
     popd >/dev/null
 fi

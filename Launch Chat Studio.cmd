@@ -21,12 +21,21 @@ $Node = Join-Path $NodeDir "node.exe"
 $Npm = Join-Path $NodeDir "npm.cmd"
 $Frontend = Join-Path $Root "frontend"
 $PythonStateFile = Join-Path $Runtime "python-setup.sha256"
+$FrontendInstallStateFile = Join-Path $Runtime "frontend-install.sha256"
+$FrontendBuildStateFile = Join-Path $Runtime "frontend-build.sha256"
 $AppUrl = "http://127.0.0.1:8506"
 $HealthUrl = "$AppUrl/api/v1/health"
 $CheckOnly = ([string]$env:CHAT_STUDIO_LAUNCH_ARGS).Trim() -eq "--check"
 
 function Write-Step([string]$Message) {
     Write-Host "`n==> $Message" -ForegroundColor Cyan
+}
+
+function Get-Sha256File([string]$Path) {
+    $sha = [Security.Cryptography.SHA256]::Create()
+    $stream = [IO.File]::OpenRead($Path)
+    try { return ([BitConverter]::ToString($sha.ComputeHash($stream))).Replace("-", "").ToLowerInvariant() }
+    finally { $stream.Dispose(); $sha.Dispose() }
 }
 
 function Test-AppHealth {
@@ -50,9 +59,54 @@ function Test-LocalPort {
     }
 }
 
+function Get-PortOwnerIds {
+    $owners = @()
+    if (Get-Command Get-NetTCPConnection -ErrorAction SilentlyContinue) {
+        $owners = @(Get-NetTCPConnection -LocalPort 8506 -State Listen -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess -Unique)
+    }
+    if (!$owners) {
+        $owners = @(netstat -ano -p tcp 2>$null | ForEach-Object {
+            if ($_ -match '^\s*TCP\s+\S+:8506\s+\S+\s+LISTENING\s+(\d+)\s*$') { [int]$Matches[1] }
+        } | Select-Object -Unique)
+    }
+    return @($owners | Where-Object { $_ -and $_ -ne $PID })
+}
+
+function Wait-PortClear([int]$Seconds) {
+    $deadline = (Get-Date).AddSeconds($Seconds)
+    while ((Get-Date) -lt $deadline) {
+        if (!(Test-LocalPort)) { return $true }
+        Start-Sleep -Milliseconds 250
+    }
+    return !(Test-LocalPort)
+}
+
+function Clear-LocalPort {
+    if (!(Test-LocalPort)) { return }
+    if (Test-AppHealth) {
+        Write-Step "Stopping the previous Local AI Chat Studio"
+        try {
+            Invoke-RestMethod -Method Post -Uri "$AppUrl/api/v1/runtime/shutdown" -Headers @{ "X-Local-Studio" = "shutdown" } -TimeoutSec 5 | Out-Null
+        } catch {
+            Write-Host "Managed shutdown was unavailable; resolving the port owner." -ForegroundColor Yellow
+        }
+        if (Wait-PortClear 8) { return }
+    }
+
+    $owners = @(Get-PortOwnerIds)
+    if (!$owners) { throw "Port 8506 is occupied, but its owning process could not be identified" }
+    foreach ($owner in $owners) {
+        $process = Get-Process -Id $owner -ErrorAction SilentlyContinue
+        $label = if ($process) { "$($process.ProcessName) (PID $owner)" } else { "PID $owner" }
+        Write-Step "Terminating port 8506 owner: $label"
+        Stop-Process -Id $owner -Force -ErrorAction Stop
+    }
+    if (!(Wait-PortClear 8)) { throw "Port 8506 could not be cleared" }
+}
+
 function Get-PythonSetupFingerprint {
-    $projectHash = (Get-FileHash (Join-Path $Root "pyproject.toml") -Algorithm SHA256).Hash
-    $lockHash = (Get-FileHash (Join-Path $Root "uv.lock") -Algorithm SHA256).Hash
+    $projectHash = Get-Sha256File (Join-Path $Root "pyproject.toml")
+    $lockHash = Get-Sha256File (Join-Path $Root "uv.lock")
     return "$projectHash`:$lockHash"
 }
 
@@ -65,20 +119,57 @@ function Test-PythonSetup {
     return (Get-Content -LiteralPath $PythonStateFile -Raw).Trim() -eq (Get-PythonSetupFingerprint)
 }
 
+function Get-FilesFingerprint([IO.FileInfo[]]$Files) {
+    $lines = @($Files | Sort-Object FullName -Unique | ForEach-Object {
+        $relative = [IO.Path]::GetRelativePath($Root, $_.FullName).Replace("\", "/")
+        $hash = Get-Sha256File $_.FullName
+        "$relative`:$hash"
+    })
+    $bytes = [Text.Encoding]::UTF8.GetBytes(($lines -join "`n"))
+    $sha = [Security.Cryptography.SHA256]::Create()
+    try { return ([BitConverter]::ToString($sha.ComputeHash($bytes))).Replace("-", "").ToLowerInvariant() }
+    finally { $sha.Dispose() }
+}
+
+function Get-FrontendInstallFingerprint {
+    return Get-FilesFingerprint @(
+        Get-Item (Join-Path $Frontend "package.json"), (Join-Path $Frontend "package-lock.json")
+    )
+}
+
+function Get-FrontendBuildFingerprint {
+    $inputs = @(
+        Get-ChildItem (Join-Path $Frontend "src") -File -Recurse
+        Get-Item (Join-Path $Frontend "package.json"), (Join-Path $Frontend "package-lock.json")
+        Get-ChildItem $Frontend -File | Where-Object Name -Match "^(tsconfig.*\.json|vite\.config\..*|vitest\.config\..*|index\.html)$"
+    )
+    return Get-FilesFingerprint $inputs
+}
+
 function Get-FrontendState {
     $lock = Join-Path $Frontend "package-lock.json"
     $installedLock = Join-Path $Frontend "node_modules/.package-lock.json"
     $dist = Join-Path $Frontend "dist/index.html"
-    $needsInstall = !(Test-Path $installedLock) -or (Get-Item $lock).LastWriteTimeUtc -gt (Get-Item $installedLock).LastWriteTimeUtc
-    $needsBuild = !(Test-Path $dist)
-    if (!$needsBuild) {
-        $builtAt = (Get-Item $dist).LastWriteTimeUtc
-        $inputs = @(
-            Get-ChildItem (Join-Path $Frontend "src") -File -Recurse
-            Get-Item (Join-Path $Frontend "package.json"), (Join-Path $Frontend "package-lock.json")
-            Get-ChildItem $Frontend -File | Where-Object Name -Match "^(tsconfig.*\.json|vite\.config\..*|index\.html)$"
-        )
-        $needsBuild = $null -ne ($inputs | Where-Object LastWriteTimeUtc -gt $builtAt | Select-Object -First 1)
+    if (Test-Path $FrontendInstallStateFile) {
+        $needsInstall = !(Test-Path $installedLock) -or
+            (Get-Content $FrontendInstallStateFile -Raw).Trim() -ne (Get-FrontendInstallFingerprint)
+    } else {
+        $needsInstall = !(Test-Path $installedLock) -or (Get-Item $lock).LastWriteTimeUtc -gt (Get-Item $installedLock).LastWriteTimeUtc
+    }
+    if (Test-Path $FrontendBuildStateFile) {
+        $needsBuild = !(Test-Path $dist) -or
+            (Get-Content $FrontendBuildStateFile -Raw).Trim() -ne (Get-FrontendBuildFingerprint)
+    } else {
+        $needsBuild = !(Test-Path $dist)
+        if (!$needsBuild) {
+            $builtAt = (Get-Item $dist).LastWriteTimeUtc
+            $buildInputs = @(
+                Get-ChildItem (Join-Path $Frontend "src") -File -Recurse
+                Get-Item (Join-Path $Frontend "package.json"), (Join-Path $Frontend "package-lock.json")
+                Get-ChildItem $Frontend -File | Where-Object Name -Match "^(tsconfig.*\.json|vite\.config\..*|vitest\.config\..*|index\.html)$"
+            )
+            $needsBuild = $null -ne ($buildInputs | Where-Object LastWriteTimeUtc -gt $builtAt | Select-Object -First 1)
+        }
     }
     return @{ NeedsInstall = $needsInstall; NeedsBuild = $needsBuild }
 }
@@ -119,7 +210,7 @@ function Install-Node {
         $checksumLine = Get-Content $checksums | Where-Object { $_ -match "\s+$([regex]::Escape($archiveName))$" } | Select-Object -First 1
         if (!$checksumLine) { throw "Official checksum for $archiveName was not found" }
         $expected = ($checksumLine -split "\s+")[0].ToLowerInvariant()
-        $actual = (Get-FileHash $archive -Algorithm SHA256).Hash.ToLowerInvariant()
+        $actual = Get-Sha256File $archive
         if ($actual -ne $expected) { throw "Node.js archive checksum verification failed" }
 
         Expand-Archive -LiteralPath $archive -DestinationPath $stage
@@ -152,16 +243,12 @@ try {
         Write-Host "npm packages:     $(if ($frontendState.NeedsInstall) { 'would install' } else { 'ready' })"
         Write-Host "Frontend build:   $(if ($frontendState.NeedsBuild) { 'would build' } else { 'ready' })"
         Write-Host "Ollama:           $(if (Get-Command ollama -ErrorAction SilentlyContinue) { 'available' } else { 'optional; not installed' })"
-        Write-Host "Port 8506:        $(if (Test-AppHealth) { 'app already running' } elseif (Test-LocalPort) { 'occupied by another process' } else { 'available' })"
+        $owners = @(Get-PortOwnerIds)
+        Write-Host "Port 8506:        $(if (Test-AppHealth) { 'Studio running; would restart' } elseif (Test-LocalPort) { "occupied; would terminate PID(s) $($owners -join ', ')" } else { 'available' })"
         exit 0
     }
 
-    if (Test-AppHealth) {
-        Write-Host "Local AI Chat Studio is already running." -ForegroundColor Green
-        Start-Process $AppUrl
-        exit 0
-    }
-    if (Test-LocalPort) { throw "Port 8506 is already used by another process" }
+    Clear-LocalPort
 
     if (!(Test-Path $Uv)) { Install-Uv }
     if (!(Test-Path $Node)) { Install-Node }
@@ -181,17 +268,25 @@ try {
     }
 
     $frontendState = Get-FrontendState
+    if (!$frontendState.NeedsInstall -and !(Test-Path $FrontendInstallStateFile)) {
+        Set-Content -LiteralPath $FrontendInstallStateFile -Value (Get-FrontendInstallFingerprint) -NoNewline
+    }
+    if (!$frontendState.NeedsBuild -and !(Test-Path $FrontendBuildStateFile)) {
+        Set-Content -LiteralPath $FrontendBuildStateFile -Value (Get-FrontendBuildFingerprint) -NoNewline
+    }
     Push-Location $Frontend
     try {
         if ($frontendState.NeedsInstall) {
             Write-Step "Installing frontend dependencies"
             & $Npm ci --legacy-peer-deps --no-audit --no-fund
             if ($LASTEXITCODE -ne 0) { throw "Frontend dependency installation failed" }
+            Set-Content -LiteralPath $FrontendInstallStateFile -Value (Get-FrontendInstallFingerprint) -NoNewline
         }
         if ($frontendState.NeedsBuild) {
             Write-Step "Building the frontend"
             & $Npm run build
             if ($LASTEXITCODE -ne 0) { throw "Frontend build failed" }
+            Set-Content -LiteralPath $FrontendBuildStateFile -Value (Get-FrontendBuildFingerprint) -NoNewline
         }
     } finally {
         Pop-Location
