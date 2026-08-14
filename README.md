@@ -3,6 +3,7 @@
 A local-first AI workspace for private conversations, controlled context, live model discovery, and replayable runs across Ollama and optional cloud providers.
 
 [![CI](https://github.com/pypi-ahmad/local-ai-chat-studio/actions/workflows/ci.yml/badge.svg)](https://github.com/pypi-ahmad/local-ai-chat-studio/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/pypi-ahmad/local-ai-chat-studio)](https://github.com/pypi-ahmad/local-ai-chat-studio/releases/latest)
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![React 19](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -13,7 +14,7 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 
 - Streaming chat with cancellation, partial-output retention, feedback, branching, pinning, rename, and search
 - Live model discovery from configured providers, including model capabilities and source-linked token pricing when available
-- Parallel comparison across two to four selected models, recorded-run replay, output diffs, and full or redacted export bundles
+- Parallel comparison across two to four distinct models, with independent streaming, isolated failures, shared cancellation, recorded-run replay, output diffs, and full or redacted export bundles
 - Reviewable context preflight with token estimates, automatic pruning, output reserve, and per-source exclusions
 - Provenance for conversation history, memories, retrieval, uploads, web results, and integrity receipts
 - Prompt-injection quarantine, secret and PII warnings, explicit confirmation, and local redaction
@@ -28,9 +29,9 @@ Cloud providers begin with prompt-only access. Credentials entered in the browse
 
 ## Screenshots
 
-| Chat workspace | Model comparison |
+| Chat with OpenAI Luna | Luna and Agnes parallel comparison |
 |---|---|
-| ![Local AI Chat Studio chat workspace](docs/screenshot-chat.png) | ![Side-by-side model comparison](docs/screenshot-compare.png) |
+| ![Chat workspace with gpt-5.6-luna selected](docs/screenshot-chat.png) | ![Completed parallel comparison between gpt-5.6-luna and agnes-2.5-flash](docs/screenshot-compare.png) |
 
 ## Tech Stack
 
@@ -142,6 +143,18 @@ Provider credentials must be set in the operating-system environment before laun
 
 Use [`.env.example`](.env.example) as a credential-free name template. Do not commit real keys.
 
+### Windows user-scoped credentials
+
+To make credentials available to future terminals and double-click launcher sessions on your own Windows account, store them as user environment variables. Replace the placeholders locally; never paste real values into tracked files:
+
+```powershell
+[Environment]::SetEnvironmentVariable('OPENAI_API_KEY', '<your-key>', 'User')
+[Environment]::SetEnvironmentVariable('OPENAI_BASE_URL', 'https://api.openai.com/v1', 'User')
+[Environment]::SetEnvironmentVariable('AGNES_API_KEY', '<your-key>', 'User')
+```
+
+Open a new terminal or restart the launcher after changing user variables. Other users should set their own values; [`.env.example`](.env.example) intentionally contains blank credential placeholders.
+
 ### Runtime and endpoints
 
 | Variable | Default | Purpose |
@@ -217,7 +230,7 @@ Canonical state lives in `data/app.db`; uploads and optional Chroma collections 
 4. Enter a message and review its context plan, safety findings, sources, and estimated cost.
 5. Confirm required findings and send the turn.
 6. Watch streamed events, cancel if needed, and inspect the completed run under **Evidence** or **Replay**.
-7. Open **Compare**, choose two to four distinct models, and run one prompt across them in parallel. Each response streams independently, and **Cancel all** stops every active comparison run.
+7. Open **Compare**, choose two to four distinct models, and run one prompt across them in parallel. Each response streams independently, one provider failure does not stop the others, and **Cancel all** stops every active comparison run. Every selected cloud model receives a separate billable request.
 8. Branch the conversation, provide feedback, or export a replay bundle.
 
 ### Example: launch with OpenAI
@@ -230,7 +243,7 @@ $env:OPENAI_BASE_URL = 'https://api.openai.com/v1'
 uv run chat-studio
 ```
 
-The Studio discovers available OpenAI models at runtime. Remove the variables from the process when finished:
+The Studio discovers available OpenAI models at runtime. `gpt-5.6-luna` uses its required provider-default temperature; the adapter omits the unsupported custom temperature parameter for that model. Remove the variables from the process when finished:
 
 ```powershell
 Remove-Item Env:OPENAI_API_KEY
@@ -251,7 +264,8 @@ Agnes AI uses its official OpenAI-compatible endpoint and exposes `agnes-2.5-fla
 ```text
 React UI
    │
-   ├─ preflight turn
+   ├─ chat: preflight one turn
+   └─ compare: fan one prompt out to 2–4 independent runs
    ▼
 FastAPI API ── session boundary ── in-memory credential vault
    │
@@ -271,6 +285,8 @@ SQLite canonical store + optional Chroma retrieval
 ```
 
 The frontend uses OpenAPI-derived TypeScript contracts. A preflight plan is hashed; if context changes before execution, the API returns a conflict and requires review again. `RunManager` owns asynchronous provider execution and event retention, while SQLite stores durable workspace state.
+
+Comparison uses the same ordinary run and SSE endpoints as chat. The browser creates all selected runs concurrently, maps each stream to its own result card, preserves successful responses when another provider fails, and cancels every created run through the existing session-owned cancellation endpoint.
 
 ## Models and References
 
