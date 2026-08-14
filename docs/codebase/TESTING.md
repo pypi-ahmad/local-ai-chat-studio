@@ -16,7 +16,8 @@ pruning, provenance/exclusions, replay/diff/bundles, data controls, v2 import, f
 images, selected per-turn attachments, whole-chat memory curation/provenance, local and
 cloud Ollama behavior, OpenCode loopback validation, focus/backpacks, provider
 simulation, deterministic history compression with recent-turn retention, pricing
-catalog matching/live OpenRouter normalization, profile, runtime health, and managed shutdown (header required,
+catalog matching/live OpenRouter normalization, conversation export content types and
+stored-HTML escaping, profile, runtime health, and managed shutdown (header required,
 unmanaged servers return 503).
 
 Frontend tests use Vitest, Testing Library, jest-dom, and jsdom. They exercise the
@@ -31,6 +32,7 @@ parallel comparison across three models,
 composer control grouping, context/temperature/web-evidence/compression request mapping,
 per-conversation settings hydration, system-prompt persistence, and layout changes,
 assistant search, favorite/recent persistence, and one-click configured chat creation,
+all transcript export choices and active-conversation reproducibility selection,
 four-model partial failure isolation, cancel-all behavior, and the Settings **Stop
 Studio** control. There is no browser E2E
 runner or coverage threshold yet; real external-provider calls, OAuth flows, and a

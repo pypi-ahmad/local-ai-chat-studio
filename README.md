@@ -20,6 +20,7 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 - **Message navigation:** Use a compact, responsive transcript rail to jump to the top, move through saved messages, or return to the bottom. The exact position counter and active-message marker preserve orientation, while a **New output** signal appears if a response streams while you are reading earlier content. The interaction is adapted from Chatbox's [message navigation pattern](https://github.com/chatboxai/chatbox/blob/main/src/renderer/components/chat/MessageNavigation.tsx).
 - **Feedback and activity:** Rate assistant messages and inspect recorded runs, including status, model, timing, token usage, provenance, and integrity receipts.
 - **Replay and comparison:** Replay a recorded run with another model and inspect its output diff, or export a full reproducibility bundle. Redacted bundles remove private context and image data for safer sharing.
+- **Conversation exports:** Download the active transcript from the Chat header as Markdown, standalone HTML, plain text, or structured JSON. The same menu exports the active conversation's latest completed run as a full reproducibility bundle; generated HTML escapes message content and does not execute embedded markup.
 
 ### Parallel model comparison
 
@@ -63,7 +64,7 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 ### Local data and operations
 
 - **Local-first persistence:** Conversations, messages, policies, memories, runs, and receipts live in SQLite under the configured data directory; uploads and optional Chroma collections remain local as well.
-- **Portable data controls:** Export and import workspace data as JSONL, export conversations as Markdown, and explicitly migrate an earlier v2 database with a backup and repeat-import protection.
+- **Portable data controls:** Export and import workspace data as JSONL; export individual conversations as Markdown, safe standalone HTML, plain text, or structured JSON; and explicitly migrate an earlier v2 database with a backup and repeat-import protection.
 - **Privacy controls:** Redacted replay exports omit private context, **Panic wipe** removes local workspace data and session credentials, and provider keys are never included in exports.
 - **Runtime visibility:** See FastAPI connectivity, Ollama availability, active Ollama models, and approximate VRAM use from **Settings**.
 - **Managed shutdown:** **Stop Studio** cancels and drains active runs, closes SQLite cleanly, and stops the local Uvicorn server without stopping external Ollama or OpenCode processes.
@@ -81,7 +82,7 @@ bookmarked links preserve the selected workspace.
 
 | Group | Tab | Purpose |
 |---|---|---|
-| Primary | **Chat** | Hold conversations; restore chat-specific model, effort, temperature, context, prompt, and layout settings; attach files; and send or stop a run from the unified composer. |
+| Primary | **Chat** | Hold conversations; restore chat-specific model, effort, temperature, context, prompt, and layout settings; attach files; send or stop a run; and export the transcript or latest reproducibility bundle. |
 | Primary | **Compare** | Send one prompt to two to four models concurrently and compare independent streamed results. |
 | Primary | **Library** | Search and launch assistants, manage favorites and recent choices, create reusable presets, and maintain durable memories and conversation files. |
 | Workspace | **Focus** | Define a temporary objective, success criteria, and constraints for the active conversation. |
@@ -89,7 +90,7 @@ bookmarked links preserve the selected workspace.
 | Administration | **Settings** | Manage local data, personalization, runtime health, migration, wipe, and managed shutdown. |
 
 Chat also includes an optional **Context/Evidence inspector**. On wide screens it docks beside the conversation; on smaller screens it opens as a drawer. Its open state and selected tab persist locally.
-Replay, diff, and export controls are available from the **Runs** drawer in Chat. Legacy direct URLs for Context, Evidence, and Replay remain available for bookmarked workflows.
+Transcript and latest-run exports are available from **Export** in the Chat header. Replay, diff, full-bundle, and redacted-bundle controls remain available from the **Runs** drawer. Legacy direct URLs for Context, Evidence, and Replay remain available for bookmarked workflows.
 
 ## Screenshots
 
@@ -326,7 +327,7 @@ Canonical state lives in `data/app.db`, including each conversation's validated 
 5. Confirm required findings and send the turn.
 6. Watch streamed events, cancel if needed, and use the transcript navigator to jump to either end or move between saved messages. If **New output** appears while you are reading earlier content, use the bottom action to return to the live answer. Inspect completed runs under **Evidence** or **Replay**.
 7. Open **Compare**, choose two to four distinct models, and run one prompt across them in parallel. Each response streams independently, one provider failure does not stop the others, and **Cancel all** stops every active comparison run. Every selected cloud model receives a separate billable request.
-8. Branch the conversation, provide feedback, or export a replay bundle.
+8. Branch the conversation, provide feedback, or open **Export** to download Markdown, HTML, TXT, JSON, or the latest completed run's reproducibility bundle.
 
 ### Example: launch with OpenAI
 

@@ -83,6 +83,17 @@ syntax-highlighted fenced code, and LaTeX math. Use `$...$` for inline math and
 `$$...$$` for display math. Every fenced code block includes its language and a
 copy button. Raw HTML is displayed as text rather than executed.
 
+Open **Export** in the Chat header to download the active conversation as:
+
+- **Markdown**, preserving the original message Markdown;
+- **HTML**, as a standalone dark document with all message content escaped;
+- **Plain text**, for simple reading or search;
+- **JSON**, including conversation metadata, settings, and ordered messages; or
+- a **Reproducibility bundle** for this conversation's latest completed run.
+
+The bundle option is disabled until the active conversation has a completed run.
+Use the Runs drawer when you need a different run or a redacted share bundle.
+
 Files and images attached to the current conversation show **Uploading**, **Parsing &
 indexing**, **Ready**, or **Failed** cards above the composer. Each card includes the
 file type and exact size. Failed uploads display the server error and provide **Retry**

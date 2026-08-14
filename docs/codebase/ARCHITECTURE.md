@@ -32,6 +32,13 @@ SSE subscribers can replay events and follow new deltas. Run IDs are scoped to t
 owning browser session. Completed runs append assistant messages and chained receipt
 hashes.
 
+Transcript exports read the persisted conversation and serialize it as Markdown,
+plain text, structured JSON, or escaped standalone HTML. Reproducibility export is a
+separate run artifact: Chat selects the newest completed run for the active
+conversation, then uses the existing session-owned bundle endpoint. This keeps run
+request/context data out of ordinary transcript formats and prevents cross-chat bundle
+selection.
+
 The Compare workspace fans one prompt out to two to four ordinary runs concurrently.
 Each result retains its own status, output, and safe error; one failed provider does not
 stop the others. **Cancel all** aborts each browser stream and cancels every created run

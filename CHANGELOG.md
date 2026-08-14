@@ -7,6 +7,20 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.7] - 2026-08-15
+
+### Added
+
+- Added conversation-level Markdown, standalone HTML, plain-text, and structured-JSON
+  downloads from the Chat header.
+- Added one-click export of the active conversation's latest completed run as a full
+  reproducibility bundle.
+
+### Security
+
+- Standalone HTML exports escape all persisted conversation content and include a
+  restrictive document content-security policy.
+
 ## [0.7.6] - 2026-08-15
 
 ### Added

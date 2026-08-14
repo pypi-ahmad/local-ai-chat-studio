@@ -37,6 +37,12 @@ flags, system prompt, and message layout. Changes are saved through
 `PATCH /api/v1/conversations/{id}`; keep hydration and save isolation covered when
 changing the composer or Chat header.
 
+The Chat header exports the active transcript through the typed conversation-export
+client as Markdown, standalone escaped HTML, TXT, or JSON. Its reproducibility item
+must remain scoped to the newest completed activity record whose `conversation_id`
+matches the active conversation; the Runs drawer remains the place for choosing a
+different run or a redacted bundle.
+
 The Compare workspace lets users choose two to four distinct discovered models and
 starts one run per model concurrently. Result cards stream and fail independently;
 **Cancel all** aborts each stream and cancels every created run. Keep the selection

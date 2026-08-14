@@ -36,6 +36,9 @@
   prompt-injection-like content is quarantined before persistence.
 - Full replay bundles are local artifacts; redacted bundles remove private context and
   image bytes.
+- Standalone conversation HTML escapes every persisted title, model, role, and message
+  value and includes a restrictive CSP; keep stored-XSS coverage whenever export
+  rendering changes.
 - Provider exceptions are reduced to safe error categories before reaching clients.
 
 ## Change strategy

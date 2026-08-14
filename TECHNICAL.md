@@ -94,6 +94,15 @@ metadata in the hash-bound plan, and prevents over-budget plans from starting a 
 The grouped desktop/mobile navigation and optional persisted Context/Evidence
 inspector are client-side views over the same workspace APIs.
 
+Conversation exports use `GET /api/v1/conversations/{id}/export/{format}` for
+`markdown`, `html`, `txt`, and `json`; the legacy `export.md` route remains available.
+Markdown, text, and JSON serialize the persisted conversation directly. Standalone
+HTML escapes the title, model, role, and message content and includes a restrictive
+document CSP, so stored prompt or model markup is never emitted as executable HTML.
+The Chat menu resolves the newest completed run whose `conversation_id` matches the
+active chat and reuses the session-scoped `GET /api/v1/runs/{id}/bundle` contract for
+the reproducibility export.
+
 The OpenAI-compatible adapter omits `temperature` for `gpt-5.6-luna` because that
 model accepts only its provider default. Other compatible models continue to receive
 the user-selected temperature. Agnes AI uses its fixed official endpoint and discovers
