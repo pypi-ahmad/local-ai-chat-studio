@@ -205,7 +205,7 @@ describe('studio workspace', () => {
   it('groups and remembers the expandable desktop navigation', async () => {
     render(<App />)
 
-    for (const group of ['Work', 'Inspect', 'Personalize', 'System']) expect(screen.getByText(group)).toBeInTheDocument()
+    for (const group of ['Work', 'Inspect', 'Personalize', 'System']) expect(screen.getByRole('group', { name: group })).toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: 'Collapse navigation' }))
 
     expect(screen.getByRole('button', { name: 'Expand navigation' })).toHaveAttribute('aria-expanded', 'false')
@@ -227,6 +227,10 @@ describe('studio workspace', () => {
     fireEvent.click(screen.getByLabelText('Include in next send'))
     expect(screen.getByLabelText('Include in next send')).not.toBeChecked()
     await waitFor(() => expect(localStorage.getItem('chat-studio.inspector-tab')).toBe('evidence'))
+    fireEvent.keyDown(window, { key: 'Escape' })
+    await waitFor(() => expect(screen.queryByLabelText('Context and evidence inspector')).not.toBeInTheDocument())
+    expect(screen.getByRole('button', { name: 'Open context and evidence inspector' })).toHaveAttribute('aria-expanded', 'false')
+    await waitFor(() => expect(localStorage.getItem('chat-studio.inspector-open')).toBe('false'))
   })
 
   it('uses three primary destinations and grouped More navigation on mobile', async () => {
@@ -236,6 +240,7 @@ describe('studio workspace', () => {
     for (const label of ['Chat', 'Compare', 'Library', 'More']) expect(screen.getByRole('button', { name: label })).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Context' })).not.toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: 'More' }))
+    expect(await screen.findByRole('group', { name: 'Inspect' })).toBeInTheDocument()
     fireEvent.click(await screen.findByRole('button', { name: 'Context' }))
 
     expect(await screen.findByRole('heading', { name: 'Context control' })).toBeInTheDocument()

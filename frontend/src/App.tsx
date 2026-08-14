@@ -158,7 +158,8 @@ function Navigation({ page, onPage, connected, collapsed, onCollapsed }: { page:
               {navigationGroups.map((group) => {
                 const items = group.items.filter(([label]) => !mobilePages.includes(label))
                 if (!items.length) return null
-                return <div className="more-navigation-group" key={group.label}><p>{group.label}</p>{items.map(([label, Icon]) => <button aria-current={page === label ? 'page' : undefined} key={label} onClick={() => { onPage(label); setMoreOpen(false) }} type="button"><Icon /><span>{label}</span></button>)}</div>
+                const groupId = `more-navigation-${group.label.toLowerCase()}`
+                return <div aria-labelledby={groupId} className="more-navigation-group" key={group.label} role="group"><p id={groupId}>{group.label}</p>{items.map(([label, Icon]) => <button aria-current={page === label ? 'page' : undefined} key={label} onClick={() => { onPage(label); setMoreOpen(false) }} type="button"><Icon /><span>{label}</span></button>)}</div>
               })}
             </nav>
           </SheetContent>
@@ -171,14 +172,16 @@ function Navigation({ page, onPage, connected, collapsed, onCollapsed }: { page:
     <nav aria-label="Primary navigation" className={collapsed ? 'nav-rail collapsed' : 'nav-rail expanded'}>
       <div className="nav-brand"><div className="brand-mark" aria-label="Local AI Chat Studio"><Command /></div><div className="nav-brand-copy"><strong>Chat Studio</strong><small>Local AI workspace</small></div></div>
       <div className="nav-items">
-        {navigationGroups.map((group) => (
-          <div className="nav-group" key={group.label}>
-            <p className="nav-group-label">{group.label}</p>
+        {navigationGroups.map((group) => {
+          const groupId = `primary-navigation-${group.label.toLowerCase()}`
+          return (
+          <div aria-labelledby={groupId} className="nav-group" key={group.label} role="group">
+            <p className="nav-group-label" id={groupId}>{group.label}</p>
             {group.items.map(([label, Icon]) => (
               <Button key={label} aria-label={label} aria-current={page === label ? 'page' : undefined} className="nav-button" onClick={() => onPage(label)} title={collapsed ? label : undefined} variant={page === label ? 'secondary' : 'ghost'}><Icon /><span className="nav-label">{label}</span></Button>
             ))}
           </div>
-        ))}
+        )})}
       </div>
       <div className="nav-footer"><span className={connected ? 'status-dot' : 'status-dot offline'} /><span>{connected ? 'Backend connected' : 'Backend unavailable'}</span></div>
       <Button aria-expanded={!collapsed} aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'} className="nav-collapse" onClick={() => onCollapsed(!collapsed)} size="icon-sm" variant="ghost">{collapsed ? <ChevronRight /> : <ChevronLeft />}</Button>
@@ -366,14 +369,15 @@ function EvidenceSourceList({ plan, excluded, onToggle }: { plan: ContextPlan | 
 }
 
 function ContextEvidenceInspector({ plan, excluded, onToggle, tab, onTab, onClose, onPage }: { plan: ContextPlan | null; excluded: Set<string>; onToggle: (id: string) => void; tab: InspectorTab; onTab: (tab: InspectorTab) => void; onClose: () => void; onPage: (page: Page) => void }) {
+  const openPage = (page: Page) => { onClose(); onPage(page) }
   return (
-    <aside aria-label="Context and evidence inspector" className="context-inspector">
+    <aside aria-label="Context and evidence inspector" className="context-inspector" id="context-evidence-inspector">
       <header className="inspector-header"><div><p className="eyebrow">Prompt trail</p><h2>Inspector</h2></div><Button aria-label="Close inspector" onClick={onClose} size="icon-sm" variant="ghost"><ChevronRight /></Button></header>
       <Tabs className="inspector-tabs" onValueChange={(value) => onTab(value as InspectorTab)} value={tab}>
         <TabsList><TabsTrigger value="context"><Brain /> Context</TabsTrigger><TabsTrigger value="evidence"><ShieldCheck /> Evidence</TabsTrigger></TabsList>
         <ScrollArea className="inspector-scroll">
-          <TabsContent value="context"><div className="inspector-content"><ContextRail plan={plan} /><ContextPlanSummary plan={plan} /><Button onClick={() => onPage('Context')} variant="outline">Open full Context page</Button></div></TabsContent>
-          <TabsContent value="evidence"><div className="inspector-content"><EvidenceSourceList excluded={excluded} onToggle={onToggle} plan={plan} /><Button onClick={() => onPage('Evidence')} variant="outline">Open full Evidence page</Button></div></TabsContent>
+          <TabsContent value="context"><div className="inspector-content"><ContextRail plan={plan} /><ContextPlanSummary plan={plan} /><Button onClick={() => openPage('Context')} variant="outline">Open full Context page</Button></div></TabsContent>
+          <TabsContent value="evidence"><div className="inspector-content"><EvidenceSourceList excluded={excluded} onToggle={onToggle} plan={plan} /><Button onClick={() => openPage('Evidence')} variant="outline">Open full Evidence page</Button></div></TabsContent>
         </ScrollArea>
       </Tabs>
     </aside>
@@ -474,7 +478,7 @@ function ChatWorkspace({
       <header className="workspace-header">
         <Button aria-label="Open conversation history" className="mobile-history-trigger" onClick={onHistory} size="icon" variant="ghost"><PanelLeft /></Button>
         <div className="workspace-title"><p className="eyebrow">Conversation</p><h2>{conversation?.title ?? 'New conversation'}</h2>{selected?.pricing && <small>Estimated pricing: {pricingLabel(selected)} · <a href={selected.pricing.source_url} rel="noreferrer" target="_blank">official source</a></small>}</div>
-        <div className="action-row"><Button aria-expanded={inspectorOpen} aria-label={`${inspectorOpen ? 'Close' : 'Open'} context and evidence inspector`} onClick={onInspector} variant={inspectorOpen ? 'secondary' : 'outline'}><PanelRightOpen /> Inspector</Button><Button disabled={!conversation?.messages.length || savingMemories || !selectedModel} onClick={onSaveMemories} variant="outline"><Brain /> {savingMemories ? 'Saving…' : 'Save memories & close'}</Button></div>
+        <div className="action-row"><Button aria-controls="context-evidence-inspector" aria-expanded={inspectorOpen} aria-label={`${inspectorOpen ? 'Close' : 'Open'} context and evidence inspector`} onClick={onInspector} variant={inspectorOpen ? 'secondary' : 'outline'}><PanelRightOpen /> Inspector</Button><Button disabled={!conversation?.messages.length || savingMemories || !selectedModel} onClick={onSaveMemories} variant="outline"><Brain /> {savingMemories ? 'Saving…' : 'Save memories & close'}</Button></div>
       </header>
       <ContextRail model={selected} plan={plan} />
       <div className="message-region"><ScrollArea className="message-area">
@@ -804,6 +808,13 @@ function App() {
 
   useEffect(() => {
     try { localStorage.setItem('chat-studio.inspector-open', String(inspectorOpen)) } catch { /* Browser storage is optional. */ }
+  }, [inspectorOpen])
+
+  useEffect(() => {
+    if (!inspectorOpen) return
+    const closeInspector = (event: KeyboardEvent) => { if (event.key === 'Escape') setInspectorOpen(false) }
+    window.addEventListener('keydown', closeInspector)
+    return () => window.removeEventListener('keydown', closeInspector)
   }, [inspectorOpen])
 
   useEffect(() => {
