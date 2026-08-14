@@ -257,17 +257,20 @@ class GeminiAdapter(ProviderAdapter):
 
     @staticmethod
     def _client(api_key: str | None):
+        if not api_key:
+            raise RuntimeError("GEMINI_API_KEY is not configured")
         from google import genai
 
         return genai.Client(api_key=api_key)
 
     async def list_models(self, api_key: str | None) -> list[ModelDescriptor]:
-        pager = await self._client(api_key).aio.models.list()
-        return [
-            ModelDescriptor(provider=self.id, id=item.name.removeprefix("models/"))
-            async for item in pager
-            if "generateContent" in (item.supported_actions or [])
-        ]
+        async with self._client(api_key).aio as client:
+            pager = await client.models.list()
+            return [
+                ModelDescriptor(provider=self.id, id=item.name.removeprefix("models/"))
+                async for item in pager
+                if "generateContent" in (item.supported_actions or [])
+            ]
 
     async def stream(
         self,
@@ -287,17 +290,17 @@ class GeminiAdapter(ProviderAdapter):
             for message in messages
             for image in message.images
         )
-        response = await self._client(api_key).aio.models.generate_content_stream(
-            model=model, contents=contents, config={"temperature": temperature}
-        )
-        try:
-            async for chunk in response:
-                if chunk.text:
-                    yield chunk.text
-        finally:
-            # response is an async generator; aclose() on early exit (cancellation)
-            # lets its own internal cleanup close the underlying HTTP stream.
-            await response.aclose()
+        async with self._client(api_key).aio as client:
+            response = await client.models.generate_content_stream(
+                model=model, contents=contents, config={"temperature": temperature}
+            )
+            try:
+                async for chunk in response:
+                    if chunk.text:
+                        yield chunk.text
+            finally:
+                # Close an interrupted stream before closing its owning client.
+                await response.aclose()
 
 
 class OpenCodeZenAdapter(OpenAICompatibleAdapter):

@@ -130,6 +130,89 @@ def test_echo_like_adapter_contract_accepts_normalized_messages() -> None:
     assert ChatMessage(role="user", content="hello").content == "hello"
 
 
+def test_gemini_requires_a_key_without_constructing_a_client() -> None:
+    from backend.app.providers import GeminiAdapter
+
+    adapter = GeminiAdapter()
+
+    with pytest.raises(RuntimeError, match="GEMINI_API_KEY is not configured"):
+        asyncio.run(adapter.list_models(None))
+
+
+def test_gemini_closes_async_clients_for_discovery_and_streaming() -> None:
+    from backend.app.providers import GeminiAdapter
+
+    closed = 0
+    streams_closed = 0
+
+    class Pager:
+        def __aiter__(self):
+            async def items():
+                yield SimpleNamespace(
+                    name="models/gemini-test",
+                    supported_actions=["generateContent"],
+                )
+
+            return items()
+
+    class Response:
+        def __aiter__(self):
+            async def chunks():
+                yield SimpleNamespace(text="hello")
+
+            return chunks()
+
+        async def aclose(self):
+            nonlocal streams_closed
+            streams_closed += 1
+
+    class Models:
+        async def list(self):
+            return Pager()
+
+        async def generate_content_stream(self, **_kwargs):
+            return Response()
+
+    class AsyncClient:
+        models = Models()
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *_args):
+            nonlocal closed
+            closed += 1
+
+    class Client:
+        aio = AsyncClient()
+
+    adapter = GeminiAdapter()
+    adapter._client = lambda _key: Client()  # type: ignore[method-assign]
+
+    models = asyncio.run(adapter.list_models("key"))
+
+    async def collect() -> list[str]:
+        return [chunk async for chunk in adapter.stream("key", "gemini-test", [ChatMessage(role="user", content="hi")], 0.7)]
+
+    chunks = asyncio.run(collect())
+
+    async def cancel_after_first_chunk() -> str:
+        stream = adapter.stream(
+            "key", "gemini-test", [ChatMessage(role="user", content="hi")], 0.7
+        )
+        first = await anext(stream)
+        await stream.aclose()
+        return first
+
+    first = asyncio.run(cancel_after_first_chunk())
+
+    assert [model.id for model in models] == ["gemini-test"]
+    assert chunks == ["hello"]
+    assert first == "hello"
+    assert closed == 3
+    assert streams_closed == 2
+
+
 def test_local_ollama_filters_daemon_cloud_models_and_reports_vision() -> None:
     class Client:
         async def list(self):

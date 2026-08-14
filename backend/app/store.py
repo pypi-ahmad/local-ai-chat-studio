@@ -184,6 +184,10 @@ class Store:
             self._ensure_column("memories", "selection_reason", "TEXT")
             self._ensure_column("memories", "extractor_provider", "TEXT")
             self._ensure_column("memories", "extractor_model", "TEXT")
+            self._ensure_column("presets", "builtin", "INTEGER NOT NULL DEFAULT 0")
+            self._ensure_column(
+                "presets", "created_at", "TEXT NOT NULL DEFAULT ''"
+            )
 
     def _ensure_column(self, table: str, column: str, definition: str) -> None:
         columns = {

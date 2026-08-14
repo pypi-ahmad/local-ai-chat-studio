@@ -5,10 +5,9 @@ import sqlite3
 
 from fastapi.testclient import TestClient
 
-from backend.app.contracts import ModelDescriptor, PresetCreate
+from backend.app.contracts import ModelDescriptor
 from backend.app.main import create_app
 from backend.app.providers import ProviderAdapter, ProviderRegistry
-from backend.app.store import Store
 
 
 def _conversation(client: TestClient) -> str:
@@ -203,24 +202,38 @@ def test_memory_preset_upload_activity_and_replay(client: TestClient) -> None:
     assert diff.json()["changed"] is False
 
 
-def test_store_accepts_the_legacy_seven_column_preset_table(tmp_path) -> None:
+def test_api_migrates_the_legacy_five_column_preset_table(tmp_path) -> None:
     database = tmp_path / "legacy.db"
     connection = sqlite3.connect(database)
     connection.execute(
         "CREATE TABLE presets (id TEXT PRIMARY KEY, name TEXT NOT NULL UNIQUE, "
         "system_prompt TEXT NOT NULL DEFAULT '', model_key TEXT NOT NULL DEFAULT '', "
-        "temperature REAL NOT NULL DEFAULT 0.7, builtin INTEGER NOT NULL DEFAULT 0, "
-        "created_at TEXT NOT NULL)"
+        "temperature REAL NOT NULL DEFAULT 0.7)"
     )
+    connection.execute(
+        "INSERT INTO presets VALUES (?, ?, ?, ?, ?)",
+        ("legacy", "Legacy", "Be concise", "echo::deterministic", 0.2),
+    )
+    connection.commit()
     connection.close()
 
-    store = Store(str(database))
-    preset = store.create_preset(
-        PresetCreate(name="Legacy-safe", system_prompt="Be precise", temperature=0.1)
-    )
+    with TestClient(create_app(database_url=str(database))) as local:
+        existing = local.get("/api/v1/presets")
+        created = local.post(
+            "/api/v1/presets",
+            json={"name": "New", "system_prompt": "Be precise", "temperature": 0.1},
+        )
 
-    assert preset.name == "Legacy-safe"
-    assert store.list_presets() == [preset]
+    assert existing.status_code == 200
+    assert existing.json()[0]["name"] == "Legacy"
+    assert created.status_code == 201
+    assert created.json()["name"] == "New"
+    connection = sqlite3.connect(database)
+    try:
+        columns = {row[1] for row in connection.execute("PRAGMA table_info(presets)")}
+    finally:
+        connection.close()
+    assert {"builtin", "created_at"} <= columns
 
 
 def test_memory_lifecycle_feedback_and_data_controls(client: TestClient) -> None:
