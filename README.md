@@ -17,6 +17,7 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 - **Streaming chat:** Responses arrive incrementally through server-sent events. A running generation can be cancelled without discarding the partial output already received.
 - **Rich response rendering:** Chat and comparison answers render CommonMark and GitHub-flavored Markdown, tables, task lists, syntax-highlighted fenced code with copy controls, and inline or display LaTeX through KaTeX. Raw HTML remains disabled.
 - **Conversation management:** Create, search, rename, pin, and delete conversations. Branch from any message to explore another direction while preserving the earlier history.
+- **Message navigation:** Move through long transcripts one saved message at a time with previous/next controls, an exact position counter, smooth scrolling, and a visible active-message marker.
 - **Feedback and activity:** Rate assistant messages and inspect recorded runs, including status, model, timing, token usage, provenance, and integrity receipts.
 - **Replay and comparison:** Replay a recorded run with another model and inspect its output diff, or export a full reproducibility bundle. Redacted bundles remove private context and image data for safer sharing.
 
@@ -297,7 +298,7 @@ Canonical state lives in `data/app.db`; uploads and optional Chroma collections 
 3. Create a conversation and optionally attach documents or images. Wait for each attachment card to show **Ready**; retry or remove any failed upload before sending.
 4. Enter a message and review its context plan, safety findings, sources, and estimated cost.
 5. Confirm required findings and send the turn.
-6. Watch streamed events, cancel if needed, and inspect the completed run under **Evidence** or **Replay**.
+6. Watch streamed events, cancel if needed, and use the transcript navigator to jump between saved messages. Inspect completed runs under **Evidence** or **Replay**.
 7. Open **Compare**, choose two to four distinct models, and run one prompt across them in parallel. Each response streams independently, one provider failure does not stop the others, and **Cancel all** stops every active comparison run. Every selected cloud model receives a separate billable request.
 8. Branch the conversation, provide feedback, or export a replay bundle.
 
