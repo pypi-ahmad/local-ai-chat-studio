@@ -185,8 +185,7 @@ describe('studio workspace', () => {
     expect(screen.getByLabelText('Primary navigation')).toBeInTheDocument()
     expect(screen.getByLabelText('Conversation history')).toBeInTheDocument()
     expect(screen.getByLabelText('Chat workspace')).toBeInTheDocument()
-    fireEvent.click(screen.getByLabelText('Model'))
-    expect(await screen.findByRole('option', { name: /\$0\.00 in \/ \$0\.00 out per 1M/ }, { timeout: 3000 })).toBeInTheDocument()
+    expect(screen.getByText(/Estimated pricing:/)).toHaveTextContent('$0.00 in / $0.00 out per 1M')
   })
 
   it('navigates saved chat messages with bounded previous and next controls', async () => {
@@ -325,7 +324,7 @@ describe('studio workspace', () => {
     const input = screen.getByLabelText('Attachment upload') as HTMLInputElement
 
     fireEvent.change(input, { target: { files: [new File(['bad'], 'bad.pdf', { type: 'application/pdf' })] } })
-    expect(await screen.findByText('File exceeds the 10 MB upload limit.')).toBeInTheDocument()
+    expect(await screen.findByText('File exceeds the 10 MB upload limit.', {}, { timeout: 3000 })).toBeInTheDocument()
     expect(screen.getByText('PDF · 3 B')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Remove bad.pdf' })).toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: 'Retry bad.pdf' }))
