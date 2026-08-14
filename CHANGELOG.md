@@ -7,6 +7,16 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.6.9] - 2026-08-15
+
+### Added
+
+- Added lazy Mermaid rendering for fenced diagrams in Chat and Compare, with a red-pink dark theme and readable invalid-syntax fallback.
+
+### Security
+
+- Mermaid runs with strict security, disabled click actions, protected site configuration, and no automatic page scanning.
+
 ## [0.6.8] - 2026-08-15
 
 ### Added
