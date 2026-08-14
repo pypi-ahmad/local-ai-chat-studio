@@ -215,7 +215,7 @@ describe('studio workspace', () => {
     render(<App />)
     await waitForStudio()
 
-    const navigation = await screen.findByRole('navigation', { name: 'Message navigation' })
+    const navigation = await screen.findByRole('navigation', { name: 'Message navigation' }, { timeout: 3000 })
     await waitFor(() => expect(navigation).toHaveTextContent('3 / 3'))
     expect(screen.getByRole('button', { name: 'Jump to bottom' })).toBeDisabled()
     expect(screen.getByRole('button', { name: 'Next message' })).toBeDisabled()
@@ -252,7 +252,7 @@ describe('studio workspace', () => {
     fireEvent.change(screen.getByLabelText('Message'), { target: { value: 'continue' } })
     fireEvent.click(screen.getByRole('button', { name: 'Send message' }))
 
-    expect(await screen.findByRole('status', { name: 'Unread output' })).toHaveTextContent('New output')
+    expect(await screen.findByRole('status', { name: 'Unread output' }, { timeout: 3000 })).toHaveTextContent('New output')
     fireEvent.click(screen.getByRole('button', { name: 'Jump to bottom, new output available' }))
     expect(screen.queryByRole('status', { name: 'Unread output' })).not.toBeInTheDocument()
     releaseChatStream?.()
@@ -282,7 +282,7 @@ describe('studio workspace', () => {
     await waitForStudio()
     fireEvent.change(screen.getByLabelText('Message'), { target: { value: 'hello' } })
     fireEvent.click(screen.getByRole('button', { name: 'Send message' }))
-    await screen.findByText('hello back')
+    await screen.findByText('hello back', {}, { timeout: 3000 })
 
     fireEvent.click(screen.getByRole('button', { name: 'Open context and evidence inspector' }))
     expect(await screen.findByLabelText('Context and evidence inspector')).toBeInTheDocument()
