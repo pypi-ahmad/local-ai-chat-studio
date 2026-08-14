@@ -20,6 +20,7 @@ $NodeDir = Join-Path $Runtime "node"
 $Node = Join-Path $NodeDir "node.exe"
 $Npm = Join-Path $NodeDir "npm.cmd"
 $Frontend = Join-Path $Root "frontend"
+$PythonStateFile = Join-Path $Runtime "python-setup.sha256"
 $AppUrl = "http://127.0.0.1:8506"
 $HealthUrl = "$AppUrl/api/v1/health"
 $CheckOnly = ([string]$env:CHAT_STUDIO_LAUNCH_ARGS).Trim() -eq "--check"
@@ -47,6 +48,21 @@ function Test-LocalPort {
     } finally {
         $client.Dispose()
     }
+}
+
+function Get-PythonSetupFingerprint {
+    $projectHash = (Get-FileHash (Join-Path $Root "pyproject.toml") -Algorithm SHA256).Hash
+    $lockHash = (Get-FileHash (Join-Path $Root "uv.lock") -Algorithm SHA256).Hash
+    return "$projectHash`:$lockHash"
+}
+
+function Test-PythonSetup {
+    $python = Join-Path $Root ".venv/Scripts/python.exe"
+    $entrypoint = Join-Path $Root ".venv/Scripts/chat-studio.exe"
+    if (!(Test-Path $python) -or !(Test-Path $entrypoint) -or !(Test-Path $PythonStateFile)) {
+        return $false
+    }
+    return (Get-Content -LiteralPath $PythonStateFile -Raw).Trim() -eq (Get-PythonSetupFingerprint)
 }
 
 function Get-FrontendState {
@@ -125,13 +141,14 @@ try {
         if (!(Test-Path (Join-Path $Root $required))) { throw "Required project file is missing: $required" }
     }
 
+    $pythonReady = Test-PythonSetup
     $frontendState = Get-FrontendState
     if ($CheckOnly) {
         Write-Host "Local AI Chat Studio launcher check" -ForegroundColor Green
         Write-Host "Repository:       $Root"
         Write-Host "Portable uv:      $(if (Test-Path $Uv) { 'ready' } else { 'would install' })"
         Write-Host "Portable Node:    $(if (Test-Path $Node) { 'ready' } else { 'would install' })"
-        Write-Host "Python packages:  $(if (Test-Path (Join-Path $Root '.venv')) { 'present; uv sync will verify' } else { 'would install' })"
+        Write-Host "Python packages:  $(if ($pythonReady) { 'ready' } else { 'would install or update' })"
         Write-Host "npm packages:     $(if ($frontendState.NeedsInstall) { 'would install' } else { 'ready' })"
         Write-Host "Frontend build:   $(if ($frontendState.NeedsBuild) { 'would build' } else { 'ready' })"
         Write-Host "Ollama:           $(if (Get-Command ollama -ErrorAction SilentlyContinue) { 'available' } else { 'optional; not installed' })"
@@ -155,9 +172,13 @@ try {
     $env:npm_config_cache = Join-Path $Runtime "npm-cache"
     $env:PATH = "$NodeDir;$UvDir;$env:PATH"
 
-    Write-Step "Checking Python dependencies"
-    & $Uv sync --locked
-    if ($LASTEXITCODE -ne 0) { throw "Python dependency installation failed" }
+    if (!$pythonReady) {
+        Write-Step "Installing Python dependencies"
+        & $Uv sync --locked
+        if ($LASTEXITCODE -ne 0) { throw "Python dependency installation failed" }
+        New-Item -ItemType Directory -Path $Runtime -Force | Out-Null
+        Set-Content -LiteralPath $PythonStateFile -Value (Get-PythonSetupFingerprint) -NoNewline
+    }
 
     $frontendState = Get-FrontendState
     Push-Location $Frontend
@@ -195,7 +216,7 @@ while ((Get-Date) -lt `$deadline) {
 
     Write-Step "Starting Local AI Chat Studio"
     Write-Host "The browser will open at $AppUrl when the server is ready. Press Ctrl+C to stop.`n"
-    & $Uv run chat-studio
+    & $Uv run --no-sync chat-studio
     exit $LASTEXITCODE
 } catch {
     Write-Host "`nLaunch failed: $($_.Exception.Message)" -ForegroundColor Red

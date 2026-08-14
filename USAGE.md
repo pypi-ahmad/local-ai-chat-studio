@@ -9,7 +9,8 @@ On Windows 11, double-click **Launch Chat Studio.cmd**. It installs the pinned
 runtime dependencies when needed, builds the frontend, starts the local server
 on port 8506, and opens the app at <http://127.0.0.1:8506>. Run
 `Launch Chat Studio.cmd --check` for a status report without installing
-anything.
+anything. Once setup is current, later double-clicks skip installation and launch
+the app directly.
 
 For development, install Python 3.12+, `uv`, and Node.js, then run:
 
