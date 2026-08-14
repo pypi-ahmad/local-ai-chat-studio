@@ -21,6 +21,15 @@
 .markdown-code button svg { width: 12px; }
 .markdown-code pre { margin: 0; overflow: auto; background: #0d0d11; padding: 14px 15px; tab-size: 2; }
 .markdown-code pre code.hljs { overflow: visible; background: transparent; padding: 0; font: 12px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace; }
+.mermaid-diagram,.mermaid-error { margin: 13px 0; overflow: hidden; border: 1px solid #4b2733; border-radius: 10px; background: #0d0d11; }
+.mermaid-diagram > figcaption,.mermaid-error > figcaption { min-height: 34px; display: flex; align-items: center; gap: 7px; border-bottom: 1px solid #34242c; padding: 0 12px; background: #171218; color: #baacb5; font: 650 10px/1 ui-monospace,SFMono-Regular,Consolas,monospace; text-transform: uppercase; letter-spacing: .06em; }
+.mermaid-diagram [role='img'] { min-height: 120px; display: grid; place-items: center; overflow: auto; padding: 18px; background: radial-gradient(circle at 50% 0,rgba(255,61,113,.07),transparent 52%); }
+.mermaid-diagram svg { display: block; max-width: 100%; height: auto; }
+.mermaid-loading { color: #817680; font-size: 11px; }
+.mermaid-error { border-color: #713047; }
+.mermaid-error > figcaption { color: #ff9ab5; }
+.mermaid-error > figcaption svg { width: 14px; }
+.mermaid-error pre { margin: 0; overflow: auto; padding: 14px 15px; color: #d7cdd4; font: 12px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace; white-space: pre-wrap; }
 .markdown-table { max-width: 100%; margin: 13px 0; overflow-x: auto; border: 1px solid #37323b; border-radius: 9px; }
 .markdown-table table { width: 100%; border-collapse: collapse; font-size: 12px; }
 .markdown-table th,.markdown-table td { border-bottom: 1px solid #302c34; padding: 8px 10px; text-align: left; }
