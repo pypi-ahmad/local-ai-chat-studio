@@ -16,6 +16,8 @@ from pathlib import Path
 from urllib.parse import urlencode
 
 import httpx
+from jsonschema import Draft202012Validator
+from jsonschema.exceptions import SchemaError, ValidationError
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response, status
 from fastapi.responses import RedirectResponse, StreamingResponse
@@ -43,6 +45,9 @@ from backend.app.contracts import (
     MemoryExtractionRequest,
     MemoryExtractionResult,
     MemoryUpdate,
+    McpServer,
+    McpServerCreate,
+    McpTool,
     Message,
     MessageCreate,
     OAuthCodeInput,
@@ -60,12 +65,16 @@ from backend.app.contracts import (
     SafetyText,
     TurnCreate,
     TurnPreflight,
+    ToolDecision,
+    ToolRequest,
+    ToolRequestCreate,
     Upload,
     UploadCreate,
     V2ImportRequest,
     WipeRequest,
 )
 from backend.app.memory import extract_memories
+from backend.app.mcp_tools import DefaultMcpGateway, McpGateway, safe_result_preview
 from backend.app.runs import RunManager
 from backend.app.providers import (
     OpenCodeBridgeAdapter,
@@ -111,6 +120,7 @@ def create_app(
     provider_registry: ProviderRegistry | None = None,
     v2_database_url: str | None = None,
     shutdown_callback: Callable[[], None] | None = None,
+    mcp_gateway: McpGateway | None = None,
 ) -> FastAPI:
     data_dir = Path(os.getenv("CHAT_DATA_DIR", "data"))
     store = Store(database_url or str(data_dir / "app.db"))
@@ -128,6 +138,7 @@ def create_app(
             f"Providers missing from PROVIDER_ENV: {sorted(missing_env)}"
         )
     runs = RunManager(registry, vault, store)
+    tool_gateway = mcp_gateway or DefaultMcpGateway(data_dir / "mcp-sandboxes")
     web_by_plan: dict[str, list[dict[str, str]]] = {}
 
     async def context_plan(conversation_id: str, payload: TurnPreflight) -> ContextPlan:
@@ -178,6 +189,7 @@ def create_app(
     app = FastAPI(title="Local AI Chat Studio API", version="2.0.0", lifespan=lifespan)
     app.state.store, app.state.vault, app.state.runs = store, vault, runs
     app.state.providers = registry
+    app.state.mcp_gateway = tool_gateway
 
     @app.middleware("http")
     async def security_headers(request: Request, call_next):
@@ -201,6 +213,146 @@ def create_app(
     @app.get("/api/v1/health")
     def health() -> dict[str, str]:
         return {"status": "ok", "version": "2"}
+
+    @app.post("/api/v1/mcp/servers", response_model=McpServer, status_code=201)
+    def create_mcp_server(payload: McpServerCreate) -> McpServer:
+        return store.create_mcp_server(payload)
+
+    @app.get("/api/v1/mcp/servers", response_model=list[McpServer])
+    def list_mcp_servers() -> list[McpServer]:
+        return store.list_mcp_servers()
+
+    @app.delete("/api/v1/mcp/servers/{server_id}", status_code=204)
+    def delete_mcp_server(server_id: str) -> Response:
+        try:
+            store.delete_mcp_server(server_id)
+        except KeyError as exc:
+            raise HTTPException(404, "MCP server not found") from exc
+        except RuntimeError as exc:
+            raise HTTPException(409, str(exc)) from exc
+        return Response(status_code=204)
+
+    @app.post(
+        "/api/v1/mcp/servers/{server_id}/discover",
+        response_model=list[McpTool],
+    )
+    async def discover_mcp_tools(server_id: str) -> list[McpTool]:
+        try:
+            server = store.get_mcp_server(server_id)
+            tools = await tool_gateway.discover(server)
+            return store.replace_mcp_tools(server_id, tools)
+        except KeyError as exc:
+            raise HTTPException(404, "MCP server not found") from exc
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+        except TimeoutError as exc:
+            raise HTTPException(504, "MCP discovery timed out") from exc
+        except Exception as exc:
+            logger.warning("MCP discovery failed: %s", type(exc).__name__)
+            raise HTTPException(502, "MCP server discovery failed") from exc
+
+    @app.get(
+        "/api/v1/mcp/servers/{server_id}/tools",
+        response_model=list[McpTool],
+    )
+    def list_mcp_tools(server_id: str) -> list[McpTool]:
+        try:
+            return store.list_mcp_tools(server_id)
+        except KeyError as exc:
+            raise HTTPException(404, "MCP server not found") from exc
+
+    @app.post("/api/v1/tool-requests", response_model=ToolRequest, status_code=201)
+    def create_tool_request(payload: ToolRequestCreate, request: Request) -> ToolRequest:
+        try:
+            tool = store.get_mcp_tool(payload.server_id, payload.tool_name)
+            Draft202012Validator.check_schema(tool.input_schema)
+            Draft202012Validator(tool.input_schema).validate(payload.arguments)
+            if payload.conversation_id:
+                store.get_conversation(payload.conversation_id)
+            return store.create_tool_request(
+                store.session_hash(request.state.session_id), payload
+            )
+        except KeyError as exc:
+            raise HTTPException(404, "MCP server, tool, or conversation not found") from exc
+        except (SchemaError, ValidationError) as exc:
+            raise HTTPException(422, f"Tool arguments do not match its schema: {exc.message}") from exc
+
+    @app.get("/api/v1/tool-requests", response_model=list[ToolRequest])
+    def list_tool_requests(request: Request) -> list[ToolRequest]:
+        return store.list_tool_requests(store.session_hash(request.state.session_id))
+
+    @app.post(
+        "/api/v1/tool-requests/{request_id}/approve",
+        response_model=ToolRequest,
+    )
+    async def approve_tool_request(
+        request_id: str, payload: ToolDecision, request: Request
+    ) -> ToolRequest:
+        session_hash = store.session_hash(request.state.session_id)
+        try:
+            pending, arguments = store.claim_tool_request(
+                request_id, session_hash, payload.reason
+            )
+        except KeyError as exc:
+            raise HTTPException(404, "Tool request not found") from exc
+        except RuntimeError as exc:
+            raise HTTPException(409, str(exc)) from exc
+
+        try:
+            server = store.get_mcp_server(pending.server_id)
+            result = await tool_gateway.call(server, pending.tool_name, arguments)
+            preview = safe_result_preview(result)
+            failed = bool(result.get("is_error"))
+            completed = store.finish_tool_request(
+                request_id,
+                session_hash,
+                status="failed" if failed else "completed",
+                result_preview=preview,
+                error="MCP tool reported an error" if failed else None,
+            )
+            if completed.conversation_id and not failed:
+                store.add_message(
+                    completed.conversation_id,
+                    "tool",
+                    preview or "Tool completed without text output.",
+                    metadata={
+                        "server": completed.server_name,
+                        "tool": completed.tool_name,
+                        "tool_request_id": completed.id,
+                    },
+                )
+            return completed
+        except KeyError as exc:
+            store.finish_tool_request(
+                request_id, session_hash, status="failed", error="MCP server was removed"
+            )
+            raise HTTPException(409, "MCP server was removed") from exc
+        except Exception as exc:
+            logger.warning("MCP tool execution failed: %s", type(exc).__name__)
+            return store.finish_tool_request(
+                request_id,
+                session_hash,
+                status="failed",
+                error="MCP tool execution failed or timed out",
+            )
+
+    @app.post(
+        "/api/v1/tool-requests/{request_id}/deny",
+        response_model=ToolRequest,
+    )
+    def deny_tool_request(
+        request_id: str, payload: ToolDecision, request: Request
+    ) -> ToolRequest:
+        try:
+            return store.deny_tool_request(
+                request_id,
+                store.session_hash(request.state.session_id),
+                payload.reason,
+            )
+        except KeyError as exc:
+            raise HTTPException(404, "Tool request not found") from exc
+        except RuntimeError as exc:
+            raise HTTPException(409, str(exc)) from exc
 
     @app.post("/api/v1/safety/sanitize")
     def sanitize(payload: SafetyText) -> dict[str, str]:

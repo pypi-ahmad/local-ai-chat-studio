@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import base64
+import hashlib
 import html
 import json
 import re
@@ -23,6 +24,9 @@ from backend.app.contracts import (
     KnowledgeBaseSource,
     KnowledgeBaseSourceInput,
     Memory,
+    McpServer,
+    McpServerCreate,
+    McpTool,
     Message,
     Preset,
     PresetCreate,
@@ -30,8 +34,11 @@ from backend.app.contracts import (
     RunEvent,
     RunSnapshot,
     Upload,
+    ToolRequest,
+    ToolRequestCreate,
     utc_now,
 )
+from backend.app.mcp_tools import redact_value
 
 
 SCHEMA = """
@@ -173,6 +180,48 @@ CREATE TABLE IF NOT EXISTS knowledge_base_sources (
     position INTEGER NOT NULL,
     PRIMARY KEY (knowledge_base_id, kind, source_id)
 );
+CREATE TABLE IF NOT EXISTS mcp_servers (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    transport TEXT NOT NULL,
+    command TEXT,
+    args_json TEXT NOT NULL DEFAULT '[]',
+    env_keys_json TEXT NOT NULL DEFAULT '[]',
+    url TEXT,
+    tested_at TEXT,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS mcp_tools (
+    server_id TEXT NOT NULL REFERENCES mcp_servers(id) ON DELETE CASCADE,
+    name TEXT NOT NULL,
+    title TEXT,
+    description TEXT,
+    input_schema_json TEXT NOT NULL DEFAULT '{}',
+    PRIMARY KEY (server_id, name)
+);
+CREATE TABLE IF NOT EXISTS tool_requests (
+    id TEXT PRIMARY KEY,
+    session_hash TEXT NOT NULL,
+    server_id TEXT NOT NULL,
+    server_name TEXT NOT NULL,
+    tool_name TEXT NOT NULL,
+    origin TEXT NOT NULL,
+    conversation_id TEXT,
+    rationale TEXT NOT NULL,
+    arguments_json TEXT,
+    arguments_preview_json TEXT NOT NULL DEFAULT '{}',
+    argument_hash TEXT NOT NULL,
+    status TEXT NOT NULL,
+    decision_reason TEXT,
+    result_preview TEXT,
+    error TEXT,
+    created_at TEXT NOT NULL,
+    decided_at TEXT,
+    completed_at TEXT
+);
+CREATE INDEX IF NOT EXISTS idx_tool_requests_session
+    ON tool_requests(session_hash, created_at DESC);
 CREATE TABLE IF NOT EXISTS schema_migrations (
     version INTEGER PRIMARY KEY,
     applied_at TEXT NOT NULL
@@ -223,6 +272,269 @@ class Store:
             self.connection.execute(
                 f"ALTER TABLE {table} ADD COLUMN {column} {definition}"
             )
+
+    @staticmethod
+    def session_hash(session_id: str) -> str:
+        return hashlib.sha256(session_id.encode()).hexdigest()
+
+    @staticmethod
+    def _mcp_server(row: sqlite3.Row) -> McpServer:
+        args = json.loads(row["args_json"] or "[]")
+        command_preview = (
+            " ".join([row["command"], *args])
+            if row["transport"] == "stdio"
+            else row["url"]
+        )
+        return McpServer(
+            id=row["id"],
+            name=row["name"],
+            transport=row["transport"],
+            command=row["command"],
+            args=args,
+            env_keys=json.loads(row["env_keys_json"] or "[]"),
+            url=row["url"],
+            command_preview=command_preview or "",
+            tested_at=row["tested_at"],
+            created_at=row["created_at"],
+            updated_at=row["updated_at"],
+        )
+
+    def create_mcp_server(self, payload: McpServerCreate) -> McpServer:
+        server_id, now = str(uuid.uuid4()), utc_now()
+        with self.lock, self.connection:
+            self.connection.execute(
+                "INSERT INTO mcp_servers "
+                "(id, name, transport, command, args_json, env_keys_json, url, created_at, updated_at) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                (
+                    server_id,
+                    payload.name,
+                    payload.transport,
+                    payload.command,
+                    json.dumps(payload.args),
+                    json.dumps(payload.env_keys),
+                    payload.url,
+                    now,
+                    now,
+                ),
+            )
+        return self.get_mcp_server(server_id)
+
+    def get_mcp_server(self, server_id: str) -> McpServer:
+        with self.lock:
+            row = self.connection.execute(
+                "SELECT * FROM mcp_servers WHERE id = ?", (server_id,)
+            ).fetchone()
+        if row is None:
+            raise KeyError(server_id)
+        return self._mcp_server(row)
+
+    def list_mcp_servers(self) -> list[McpServer]:
+        with self.lock:
+            rows = self.connection.execute(
+                "SELECT * FROM mcp_servers ORDER BY updated_at DESC"
+            ).fetchall()
+        return [self._mcp_server(row) for row in rows]
+
+    def delete_mcp_server(self, server_id: str) -> None:
+        with self.lock, self.connection:
+            pending = self.connection.execute(
+                "SELECT 1 FROM tool_requests WHERE server_id = ? AND status IN ('pending', 'running')",
+                (server_id,),
+            ).fetchone()
+            if pending:
+                raise RuntimeError("Pending tool requests must be resolved first")
+            cursor = self.connection.execute(
+                "DELETE FROM mcp_servers WHERE id = ?", (server_id,)
+            )
+        if cursor.rowcount == 0:
+            raise KeyError(server_id)
+
+    def replace_mcp_tools(
+        self, server_id: str, tools: list[dict[str, Any]]
+    ) -> list[McpTool]:
+        now = utc_now()
+        with self.lock, self.connection:
+            if not self.connection.execute(
+                "SELECT 1 FROM mcp_servers WHERE id = ?", (server_id,)
+            ).fetchone():
+                raise KeyError(server_id)
+            self.connection.execute("DELETE FROM mcp_tools WHERE server_id = ?", (server_id,))
+            for tool in tools:
+                self.connection.execute(
+                    "INSERT INTO mcp_tools "
+                    "(server_id, name, title, description, input_schema_json) VALUES (?, ?, ?, ?, ?)",
+                    (
+                        server_id,
+                        tool["name"],
+                        tool.get("title"),
+                        tool.get("description"),
+                        json.dumps(tool.get("input_schema") or {}),
+                    ),
+                )
+            self.connection.execute(
+                "UPDATE mcp_servers SET tested_at = ?, updated_at = ? WHERE id = ?",
+                (now, now, server_id),
+            )
+        return self.list_mcp_tools(server_id)
+
+    def list_mcp_tools(self, server_id: str) -> list[McpTool]:
+        self.get_mcp_server(server_id)
+        with self.lock:
+            rows = self.connection.execute(
+                "SELECT * FROM mcp_tools WHERE server_id = ? ORDER BY name", (server_id,)
+            ).fetchall()
+        return [
+            McpTool(
+                server_id=row["server_id"],
+                name=row["name"],
+                title=row["title"],
+                description=row["description"],
+                input_schema=json.loads(row["input_schema_json"] or "{}"),
+            )
+            for row in rows
+        ]
+
+    def get_mcp_tool(self, server_id: str, tool_name: str) -> McpTool:
+        with self.lock:
+            row = self.connection.execute(
+                "SELECT * FROM mcp_tools WHERE server_id = ? AND name = ?",
+                (server_id, tool_name),
+            ).fetchone()
+        if row is None:
+            raise KeyError(tool_name)
+        return McpTool(
+            server_id=row["server_id"],
+            name=row["name"],
+            title=row["title"],
+            description=row["description"],
+            input_schema=json.loads(row["input_schema_json"] or "{}"),
+        )
+
+    @staticmethod
+    def _tool_request(row: sqlite3.Row) -> ToolRequest:
+        return ToolRequest(
+            id=row["id"],
+            server_id=row["server_id"],
+            server_name=row["server_name"],
+            tool_name=row["tool_name"],
+            origin=row["origin"],
+            conversation_id=row["conversation_id"],
+            rationale=row["rationale"],
+            arguments=json.loads(row["arguments_json"]) if row["arguments_json"] else None,
+            arguments_preview=json.loads(row["arguments_preview_json"] or "{}"),
+            argument_hash=row["argument_hash"],
+            status=row["status"],
+            decision_reason=row["decision_reason"],
+            result_preview=row["result_preview"],
+            error=row["error"],
+            created_at=row["created_at"],
+            decided_at=row["decided_at"],
+            completed_at=row["completed_at"],
+        )
+
+    def create_tool_request(
+        self, session_hash: str, payload: ToolRequestCreate
+    ) -> ToolRequest:
+        server = self.get_mcp_server(payload.server_id)
+        self.get_mcp_tool(payload.server_id, payload.tool_name)
+        request_id, now = str(uuid.uuid4()), utc_now()
+        canonical = json.dumps(payload.arguments, sort_keys=True, separators=(",", ":"))
+        with self.lock, self.connection:
+            self.connection.execute(
+                "INSERT INTO tool_requests "
+                "(id, session_hash, server_id, server_name, tool_name, origin, conversation_id, "
+                "rationale, arguments_json, arguments_preview_json, argument_hash, status, created_at) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?)",
+                (
+                    request_id,
+                    session_hash,
+                    payload.server_id,
+                    server.name,
+                    payload.tool_name,
+                    payload.origin,
+                    payload.conversation_id,
+                    payload.rationale,
+                    canonical,
+                    json.dumps(redact_value(payload.arguments)),
+                    hashlib.sha256(canonical.encode()).hexdigest(),
+                    now,
+                ),
+            )
+        return self.get_tool_request(request_id, session_hash)
+
+    def get_tool_request(self, request_id: str, session_hash: str) -> ToolRequest:
+        with self.lock:
+            row = self.connection.execute(
+                "SELECT * FROM tool_requests WHERE id = ? AND session_hash = ?",
+                (request_id, session_hash),
+            ).fetchone()
+        if row is None:
+            raise KeyError(request_id)
+        return self._tool_request(row)
+
+    def list_tool_requests(self, session_hash: str) -> list[ToolRequest]:
+        with self.lock:
+            rows = self.connection.execute(
+                "SELECT * FROM tool_requests WHERE session_hash = ? ORDER BY created_at DESC",
+                (session_hash,),
+            ).fetchall()
+        return [self._tool_request(row) for row in rows]
+
+    def claim_tool_request(
+        self, request_id: str, session_hash: str, reason: str
+    ) -> tuple[ToolRequest, dict[str, Any]]:
+        with self.lock, self.connection:
+            row = self.connection.execute(
+                "SELECT * FROM tool_requests WHERE id = ? AND session_hash = ?",
+                (request_id, session_hash),
+            ).fetchone()
+            if row is None:
+                raise KeyError(request_id)
+            if row["status"] != "pending":
+                raise RuntimeError("Tool request has already been resolved")
+            arguments = json.loads(row["arguments_json"] or "{}")
+            self.connection.execute(
+                "UPDATE tool_requests SET status = 'running', decision_reason = ?, decided_at = ? "
+                "WHERE id = ? AND session_hash = ? AND status = 'pending'",
+                (reason, utc_now(), request_id, session_hash),
+            )
+        return self.get_tool_request(request_id, session_hash), arguments
+
+    def deny_tool_request(
+        self, request_id: str, session_hash: str, reason: str
+    ) -> ToolRequest:
+        with self.lock, self.connection:
+            cursor = self.connection.execute(
+                "UPDATE tool_requests SET status = 'denied', decision_reason = ?, "
+                "arguments_json = NULL, decided_at = ?, completed_at = ? "
+                "WHERE id = ? AND session_hash = ? AND status = 'pending'",
+                (reason, utc_now(), utc_now(), request_id, session_hash),
+            )
+            if cursor.rowcount == 0:
+                self.get_tool_request(request_id, session_hash)
+                raise RuntimeError("Tool request has already been resolved")
+        return self.get_tool_request(request_id, session_hash)
+
+    def finish_tool_request(
+        self,
+        request_id: str,
+        session_hash: str,
+        *,
+        status: str,
+        result_preview: str | None = None,
+        error: str | None = None,
+    ) -> ToolRequest:
+        with self.lock, self.connection:
+            cursor = self.connection.execute(
+                "UPDATE tool_requests SET status = ?, result_preview = ?, error = ?, "
+                "arguments_json = NULL, completed_at = ? "
+                "WHERE id = ? AND session_hash = ? AND status = 'running'",
+                (status, result_preview, error, utc_now(), request_id, session_hash),
+            )
+        if cursor.rowcount == 0:
+            raise RuntimeError("Tool request is not running")
+        return self.get_tool_request(request_id, session_hash)
 
     def create_conversation(
         self,
@@ -1232,6 +1544,9 @@ class Store:
     def wipe(self) -> None:
         with self.lock, self.connection:
             for table in (
+                "tool_requests",
+                "mcp_tools",
+                "mcp_servers",
                 "run_events",
                 "runs",
                 "knowledge_base_sources",

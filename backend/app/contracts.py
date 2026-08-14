@@ -4,7 +4,7 @@ from datetime import UTC, datetime
 from enum import StrEnum
 from typing import Any, Literal
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 ReasoningEffort = Literal["none", "minimal", "low", "medium", "high", "xhigh", "max"]
 
@@ -411,3 +411,100 @@ class V2ImportRequest(BaseModel):
 
 class Profile(BaseModel):
     content: str = Field(default="", max_length=50_000)
+
+
+class McpServerCreate(BaseModel):
+    name: str = Field(min_length=1, max_length=100)
+    transport: Literal["stdio", "streamable_http"]
+    command: str | None = Field(default=None, max_length=100)
+    args: list[str] = Field(default_factory=list, max_length=40)
+    env_keys: list[str] = Field(default_factory=list, max_length=20)
+    url: str | None = Field(default=None, max_length=2_048)
+
+    @field_validator("env_keys")
+    @classmethod
+    def _safe_env_names(cls, values: list[str]) -> list[str]:
+        import re
+
+        if any(not re.fullmatch(r"[A-Z][A-Z0-9_]{0,127}", value) for value in values):
+            raise ValueError("Environment variable names must use A-Z, 0-9, and underscore")
+        return list(dict.fromkeys(values))
+
+    @field_validator("args")
+    @classmethod
+    def _bounded_args(cls, values: list[str]) -> list[str]:
+        if any(len(value) > 1_000 or "\x00" in value for value in values):
+            raise ValueError("Each argument must be at most 1000 characters")
+        return values
+
+    @model_validator(mode="after")
+    def _valid_transport(self) -> "McpServerCreate":
+        from pathlib import PurePath
+        from urllib.parse import urlsplit
+
+        if self.transport == "stdio":
+            allowed = {"node", "npx", "py", "python", "python3", "uv", "uvx"}
+            command = (self.command or "").strip()
+            basename = PurePath(command).name.lower().removesuffix(".exe")
+            if not command or basename not in allowed or basename != command.lower().removesuffix(".exe"):
+                raise ValueError("stdio command must be an approved executable name without a path")
+            if self.url:
+                raise ValueError("stdio servers cannot define a URL")
+        else:
+            parsed = urlsplit(self.url or "")
+            if parsed.scheme != "https" or not parsed.hostname:
+                raise ValueError("Remote MCP servers require an HTTPS URL")
+            if parsed.username or parsed.password or parsed.query or parsed.fragment:
+                raise ValueError("Remote MCP URLs cannot contain credentials, query, or fragment")
+            if self.command or self.args or self.env_keys:
+                raise ValueError("Remote MCP servers cannot define a local command or environment")
+        return self
+
+
+class McpServer(McpServerCreate):
+    id: str
+    command_preview: str
+    tested_at: str | None = None
+    created_at: str
+    updated_at: str
+
+
+class McpTool(BaseModel):
+    server_id: str
+    name: str
+    title: str | None = None
+    description: str | None = None
+    input_schema: dict[str, Any] = Field(default_factory=dict)
+
+
+class ToolRequestCreate(BaseModel):
+    server_id: str
+    tool_name: str = Field(min_length=1, max_length=200)
+    arguments: dict[str, Any] = Field(default_factory=dict)
+    rationale: str = Field(min_length=1, max_length=2_000)
+    origin: Literal["user", "agent"] = "user"
+    conversation_id: str | None = Field(default=None, max_length=100)
+
+
+class ToolDecision(BaseModel):
+    reason: str = Field(min_length=1, max_length=1_000)
+
+
+class ToolRequest(BaseModel):
+    id: str
+    server_id: str
+    server_name: str
+    tool_name: str
+    origin: Literal["user", "agent"]
+    conversation_id: str | None = None
+    rationale: str
+    arguments: dict[str, Any] | None = None
+    arguments_preview: dict[str, Any] = Field(default_factory=dict)
+    argument_hash: str
+    status: Literal["pending", "running", "completed", "denied", "failed"]
+    decision_reason: str | None = None
+    result_preview: str | None = None
+    error: str | None = None
+    created_at: str
+    decided_at: str | None = None
+    completed_at: str | None = None
