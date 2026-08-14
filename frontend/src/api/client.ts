@@ -31,6 +31,12 @@ export type ModelSummary = {
   label?: string | null
   context_length?: number | null
   capabilities?: string[]
+  pricing?: {
+    input_per_million: number
+    output_per_million: number
+    source_url: string
+    as_of: string
+  } | null
 }
 
 export class ApiError extends Error {

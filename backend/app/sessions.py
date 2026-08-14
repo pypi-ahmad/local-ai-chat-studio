@@ -9,6 +9,7 @@ PROVIDER_ENV: dict[str, str | None] = {
     "ollama-local": None,
     "ollama-cloud": "OLLAMA_API_KEY",
     "openai": "OPENAI_API_KEY",
+    "agnes": "AGNES_API_KEY",
     "anthropic": "ANTHROPIC_API_KEY",
     "gemini": "GEMINI_API_KEY",
     "openrouter": "OPENROUTER_API_KEY",

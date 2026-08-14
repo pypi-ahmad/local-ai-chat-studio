@@ -75,7 +75,7 @@ loopback host, preventing an accidental remote bridge configuration.
 | `CHAT_OLLAMA_HOST` | Ollama endpoint | `http://localhost:11434` |
 | `CHAT_EMBED_MODEL` | Installed Ollama embedding model for Chroma retrieval | unset |
 | `OLLAMA_API_KEY` | Ollama Cloud fallback key | unset |
-| `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY` | Cloud-provider fallback keys | unset |
+| `OPENAI_API_KEY`, `AGNES_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY` | Cloud-provider fallback keys | unset |
 | `OPENROUTER_API_KEY`, `XAI_API_KEY` | Gateway and xAI fallback keys | unset |
 | `OMNIROUTE_BASE_URL`, `OMNIROUTE_API_KEY` | Compatible-gateway endpoint and fallback key | `http://localhost:8082/v1` / unset |
 | `OPENCODE_ZEN_API_KEY`, `OPENCODE_GO_API_KEY` | OpenCode inference fallback keys | unset |

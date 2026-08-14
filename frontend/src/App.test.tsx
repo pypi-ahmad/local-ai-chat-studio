@@ -34,7 +34,10 @@ beforeEach(() => {
       return json({ allow_memory: false, allow_retrieval: false, allow_attachments: false, allow_web: false, allow_backpack: false })
     }
     if (path.endsWith('/providers/models')) {
-      return json({ echo: { provider: 'echo', models: [{ provider: 'echo', id: 'deterministic', label: 'Deterministic' }] } })
+      return json({ echo: { provider: 'echo', models: [{
+        provider: 'echo', id: 'deterministic', label: 'Deterministic',
+        pricing: { input_per_million: 0, output_per_million: 0, source_url: 'https://ollama.com/', as_of: '2026-08-14' },
+      }] } })
     }
     if (/\/(memories|presets|backpacks|activity|conversations\/c1\/uploads)$/.test(path)) return json([])
     if (path.endsWith('/turns/preflight')) {
@@ -73,6 +76,7 @@ describe('studio workspace', () => {
     expect(screen.getByLabelText('Primary navigation')).toBeInTheDocument()
     expect(screen.getByLabelText('Conversation history')).toBeInTheDocument()
     expect(screen.getByLabelText('Chat workspace')).toBeInTheDocument()
+    expect(screen.getByRole('option', { name: /\$0\.00 in \/ \$0\.00 out per 1M/ })).toBeInTheDocument()
   })
 
   it('exposes the consolidated product surfaces', () => {

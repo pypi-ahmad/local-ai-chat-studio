@@ -2,8 +2,9 @@
 
 A local-first AI workspace built with FastAPI and React (**v0.3.0**). It connects
 to Ollama by default and supports optional session-scoped keys for Ollama Cloud,
-OpenAI, Anthropic, Gemini, OpenRouter, xAI, OpenCode Zen/Go, and compatible
-gateways.
+OpenAI, [Agnes AI](https://www.agnes-ai.com/en/docs/overview), Anthropic,
+Gemini, OpenRouter, xAI, OpenCode Zen/Go, and compatible gateways. Agnes uses
+the [`agnes-2.5-flash`](https://www.agnes-ai.com/en/docs/agnes-25-flash) model.
 
 ## What is included
 
@@ -14,6 +15,7 @@ gateways.
 - Prompt-injection quarantine plus secret/PII warnings and one-click redaction
 - Local context backpacks and temporary focus contracts
 - Provider data-boundary policies and deterministic failover simulation
+- Source-linked model pricing and preflight input-cost estimates
 - PDF, Office, text, spreadsheet, code, and provider-native image inputs
 - Full local replay bundles and redacted bundles safe to share
 - Memory, assistants, personalization profile, runtime/VRAM health, and data controls
@@ -23,6 +25,8 @@ gateways.
 
 Cloud providers start in prompt-only mode. Credentials entered in the browser stay in
 server-process memory for that browser session and are never exported.
+Cost estimates use published standard text-token rates. They exclude provider-specific
+discounts, cached tokens, tools, media, taxes, subscriptions, and unverified gateways.
 
 ## Install and run
 
@@ -33,6 +37,7 @@ On Windows 11, double-click **Launch Chat Studio.cmd**. It installs missing port
 runtimes and locked dependencies inside the project, builds the frontend when needed
 (using `npm ci --legacy-peer-deps` so peer-dependency conflicts do not block install),
 starts the server on port **8506**, and opens the browser. Ollama remains optional.
+After setup, unchanged launches skip dependency installation and start the app directly.
 Run `Launch Chat Studio.cmd --check` for a non-installing status report.
 
 For manual or development setup:
@@ -70,6 +75,8 @@ Common environment variables:
 | `CHAT_OLLAMA_HOST` | Ollama endpoint; defaults to `http://localhost:11434` |
 | `CHAT_EMBED_MODEL` | Ollama embedding model used with Chroma |
 | `OLLAMA_API_KEY`, `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, `OPENROUTER_API_KEY`, `XAI_API_KEY` | Read-only credential fallbacks |
+| `OPENAI_BASE_URL` | Optional OpenAI-compatible API base URL |
+| `AGNES_API_KEY` | Agnes AI credential fallback for `agnes-2.5-flash` |
 | `OMNIROUTE_BASE_URL`, `OMNIROUTE_API_KEY` | Compatible gateway endpoint and credential fallback |
 | `OPENCODE_ZEN_API_KEY`, `OPENCODE_GO_API_KEY` | OpenCode inference API fallbacks |
 | `OPENCODE_SERVER_URL` | Local OpenCode server; defaults to `http://127.0.0.1:4096` |

@@ -6,6 +6,7 @@ __pycache__/
 
 # >>> Codex Local Ignore (env/venv/cache/artifacts) >>>
 .env*
+!.env.example
 .venv/
 venv/
 **/.venv/

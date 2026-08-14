@@ -78,12 +78,20 @@ class ChatMessage(BaseModel):
     images: list[ImageInput] = Field(default_factory=list)
 
 
+class ModelPricing(BaseModel):
+    input_per_million: float
+    output_per_million: float
+    source_url: str
+    as_of: str = "2026-08-14"
+
+
 class ModelDescriptor(BaseModel):
     provider: str
     id: str
     label: str | None = None
     context_length: int | None = None
     capabilities: list[str] = []
+    pricing: ModelPricing | None = None
 
 
 class ProviderDiscovery(BaseModel):

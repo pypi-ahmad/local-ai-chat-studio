@@ -13,6 +13,7 @@ from urllib.parse import urlparse
 import httpx
 
 from backend.app.contracts import ChatMessage, ModelDescriptor, ProviderDiscovery
+from backend.app.pricing import model_pricing, openrouter_pricing
 
 
 class ProviderAdapter(ABC):
@@ -50,7 +51,18 @@ class OpenAICompatibleAdapter(ProviderAdapter):
     async def list_models(self, api_key: str | None) -> list[ModelDescriptor]:
         page = await self._client(api_key).models.list()
         return sorted(
-            [ModelDescriptor(provider=self.id, id=item.id) for item in page.data],
+            [
+                ModelDescriptor(
+                    provider=self.id,
+                    id=item.id,
+                    pricing=openrouter_pricing(
+                        (getattr(item, "model_extra", None) or {}).get("pricing")
+                    )
+                    if self.id == "openrouter"
+                    else None,
+                )
+                for item in page.data
+            ],
             key=lambda item: item.id,
         )
 
@@ -571,6 +583,14 @@ class ProviderRegistry:
         ) -> ProviderDiscovery:
             try:
                 models = await adapter.list_models(credential(provider))
+                models = [
+                    model
+                    if model.pricing
+                    else model.model_copy(
+                        update={"pricing": model_pricing(provider, model.id)}
+                    )
+                    for model in models
+                ]
                 self._models.update({(provider, model.id): model for model in models})
                 return ProviderDiscovery(provider=provider, models=models)
             except Exception as exc:
@@ -600,7 +620,12 @@ def build_provider_registry() -> dict[str, ProviderAdapter]:
         "ollama-cloud": OllamaAdapter(
             "ollama-cloud", "Ollama Cloud", "https://ollama.com", cloud=True
         ),
-        "openai": OpenAICompatibleAdapter("openai", "OpenAI"),
+        "openai": OpenAICompatibleAdapter(
+            "openai", "OpenAI", os.getenv("OPENAI_BASE_URL") or None
+        ),
+        "agnes": OpenAICompatibleAdapter(
+            "agnes", "Agnes AI", "https://apihub.agnes-ai.com/v1"
+        ),
         "anthropic": AnthropicAdapter(),
         "gemini": GeminiAdapter(),
         "openrouter": OpenAICompatibleAdapter(

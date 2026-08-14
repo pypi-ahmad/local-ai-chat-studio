@@ -154,12 +154,24 @@ function ConversationHistory({
   )
 }
 
-function ContextRail({ plan }: { plan: ContextPlan | null }) {
+function formatUsd(value: number) {
+  if (value === 0) return '$0.00'
+  if (value < 0.01) return `$${value.toFixed(4)}`
+  return `$${value.toFixed(2)}`
+}
+
+function pricingLabel(model: ModelSummary) {
+  const pricing = model.pricing
+  return pricing ? `${formatUsd(pricing.input_per_million)} in / ${formatUsd(pricing.output_per_million)} out per 1M` : 'pricing unavailable'
+}
+
+function ContextRail({ plan, model }: { plan: ContextPlan | null; model?: ModelSummary }) {
   if (!plan) return <div className="context-rail empty"><span>Context preflight appears here</span></div>
   const percent = Math.min(100, Math.round((plan.estimated_tokens / plan.budget_tokens) * 100))
+  const estimatedInputCost = model?.pricing ? (plan.estimated_tokens / 1_000_000) * model.pricing.input_per_million : null
   return (
     <div className="context-rail" aria-label="Context budget">
-      <div className="rail-copy"><span>{plan.estimated_tokens.toLocaleString()} estimated tokens</span><strong>{percent}% of safe budget</strong></div>
+      <div className="rail-copy"><span>{plan.estimated_tokens.toLocaleString()} estimated tokens{estimatedInputCost !== null ? ` · est. input ${formatUsd(estimatedInputCost)}` : ''}</span><strong>{percent}% of safe budget</strong></div>
       <div className="rail-track">
         {plan.sections.filter((section) => section.included && section.estimated_tokens).map((section) => (
           <span key={section.kind} style={{ flexGrow: Math.max(1, section.estimated_tokens) }} title={`${section.kind}: ${section.estimated_tokens}`} />
@@ -172,7 +184,7 @@ function ContextRail({ plan }: { plan: ContextPlan | null }) {
 function ModelPicker({ models, value, onChange }: { models: ModelSummary[]; value: string; onChange: (value: string) => void }) {
   return (
     <select aria-label="Model" onChange={(event) => onChange(event.target.value)} value={value}>
-      {models.map((model) => <option key={`${model.provider}::${model.id}`} value={`${model.provider}::${model.id}`}>{model.label || model.id} · {model.provider}</option>)}
+      {models.map((model) => <option key={`${model.provider}::${model.id}`} value={`${model.provider}::${model.id}`}>{model.label || model.id} · {model.provider} · {pricingLabel(model)}</option>)}
     </select>
   )
 }
@@ -224,6 +236,7 @@ function ChatWorkspace({
 }) {
   const [prompt, setPrompt] = useState('')
   const fileRef = useRef<HTMLInputElement>(null)
+  const selected = models.find((model) => `${model.provider}::${model.id}` === selectedModel)
   const submit = async () => {
     if (!prompt.trim()) return
     await onSend(prompt.trim())
@@ -232,10 +245,10 @@ function ChatWorkspace({
   return (
     <main aria-label="Chat workspace" className="workspace">
       <header className="workspace-header">
-        <div><p className="eyebrow">Conversation</p><h2>{conversation?.title ?? 'New conversation'}</h2></div>
+        <div><p className="eyebrow">Conversation</p><h2>{conversation?.title ?? 'New conversation'}</h2>{selected?.pricing && <small>Estimated pricing: {pricingLabel(selected)} · <a href={selected.pricing.source_url} rel="noreferrer" target="_blank">official source</a></small>}</div>
         <div className="action-row"><Button disabled={!conversation?.messages.length || savingMemories || !selectedModel} onClick={onSaveMemories} variant="outline"><Brain /> {savingMemories ? 'Saving…' : 'Save memories & close'}</Button><ModelPicker models={models} onChange={onModel} value={selectedModel} /></div>
       </header>
-      <ContextRail plan={plan} />
+      <ContextRail model={selected} plan={plan} />
       <ScrollArea className="message-area">
         <div className="messages">
           {!conversation?.messages.length && !liveOutput && (

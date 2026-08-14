@@ -9,6 +9,7 @@ from backend.app.contracts import ChatMessage, ModelDescriptor
 from backend.app.providers import (
     OllamaAdapter,
     OpenCodeBridgeAdapter,
+    OpenAICompatibleAdapter,
     ProviderAdapter,
     ProviderRegistry,
     build_provider_registry,
@@ -20,6 +21,7 @@ def test_registry_contains_all_phase_one_providers() -> None:
         "ollama-local",
         "ollama-cloud",
         "openai",
+        "agnes",
         "anthropic",
         "gemini",
         "openrouter",
@@ -29,6 +31,22 @@ def test_registry_contains_all_phase_one_providers() -> None:
         "opencode-zen",
         "opencode-go",
     }
+
+
+def test_openai_provider_uses_base_url_from_environment(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("OPENAI_BASE_URL", "https://openai.example.test/v1")
+
+    adapter = build_provider_registry()["openai"]
+
+    assert adapter.base_url == "https://openai.example.test/v1"  # type: ignore[attr-defined]
+
+
+def test_agnes_provider_uses_official_openai_compatible_endpoint() -> None:
+    adapter = build_provider_registry()["agnes"]
+
+    assert adapter.base_url == "https://apihub.agnes-ai.com/v1"  # type: ignore[attr-defined]
 
 
 def test_model_discovery_is_concurrent_and_degrades_per_provider() -> None:
@@ -107,6 +125,43 @@ def test_ollama_cloud_uses_bearer_auth(monkeypatch: pytest.MonkeyPatch) -> None:
         "host": "https://ollama.com",
         "headers": {"Authorization": "Bearer test-key"},
     }
+
+
+def test_openrouter_models_include_live_api_pricing(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import openai
+
+    class Models:
+        async def list(self):
+            return SimpleNamespace(
+                data=[
+                    SimpleNamespace(
+                        id="vendor/model",
+                        model_extra={
+                            "pricing": {
+                                "prompt": "0.0000025",
+                                "completion": "0.00001",
+                            }
+                        },
+                    )
+                ]
+            )
+
+    class Client:
+        def __init__(self, **_kwargs) -> None:
+            self.models = Models()
+
+    monkeypatch.setattr(openai, "AsyncOpenAI", Client)
+    adapter = OpenAICompatibleAdapter(
+        "openrouter", "OpenRouter", "https://openrouter.ai/api/v1"
+    )
+
+    models = asyncio.run(adapter.list_models("test-key"))
+
+    assert models[0].pricing
+    assert models[0].pricing.input_per_million == 2.5
+    assert models[0].pricing.output_per_million == 10
 
 
 def test_opencode_bridge_rejects_non_loopback_urls() -> None:

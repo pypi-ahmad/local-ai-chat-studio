@@ -12,6 +12,7 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 - Refreshed README and companion documentation for v0.3.0: port 8506, managed
   **Stop Studio** shutdown, Windows launcher `--check` / `--legacy-peer-deps`,
   and TypeScript 5.9.
+- Added source-linked per-model token pricing and estimated input cost to the UI.
 
 ## [0.3.0] - 2026-08-12
 
