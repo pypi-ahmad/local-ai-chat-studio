@@ -56,6 +56,10 @@ preflight, the context rail calculates an estimated input cost and links to the
 official pricing source. Unknown gateways show **pricing unavailable**; estimates
 exclude caching, tools, media, discounts, subscriptions, taxes, and output cost.
 
+Model pickers are provider-scoped and searchable by model name, ID, or capability.
+Use the **Vision** and **Reasoning** filters when needed; each result can show its
+context window, supported reasoning levels, capabilities, and known pricing.
+
 In Chat, the composer also shows **Effort**. Leave it on **Auto** to use the
 provider default, or choose a supported reasoning level for an OpenAI GPT-5.6
 model. The control is disabled when the selected model does not advertise
@@ -70,17 +74,27 @@ bridge remains on loopback by default.
 1. Start a conversation, then use the composer to select a provider, one of its
    available models, and an optional supported reasoning effort.
 2. Attach a supported document, spreadsheet, code file, or image when it helps
-   answer the question.
+   answer the question. Each upload shows **Uploading**, **Ready**, or **Failed**;
+   failed cards include the server error and **Retry**/**Remove** actions.
 3. Send the prompt. The response streams into the chat and can be cancelled.
    Markdown, tables, task lists, fenced code, and LaTeX (`$...$` or `$$...$$`)
    render directly in Chat and Compare. Code blocks include a copy action.
 4. Inspect source provenance and context-budget information before relying on
-   an answer that uses files, retrieved history, or web evidence.
+   an answer that uses files, retrieved history, or web evidence. The context rail
+   shows used and available tokens plus an exact percentage, turns amber at 80%,
+   and reports how far an oversized request exceeds the limit.
 5. Open **Compare**, select a provider and model for each of two to four slots, and send one prompt to all
    of them concurrently. Responses stream independently; one provider failure does
    not stop the others, and **Cancel all** stops every active comparison run.
-6. Branch, pin, rename, search, or replay responses when you need to explore
-   alternatives.
+6. Use the previous/next message controls and current/total counter to move through
+   a long transcript, then branch, pin, rename, search, or replay responses when
+   you need to explore alternatives.
+
+Desktop navigation groups pages under **Work**, **Inspect**, **Personalize**, and
+**System**. On mobile, Chat, Compare, and Library stay visible while **More** opens
+the remaining pages. The optional context/evidence inspector preserves its open
+state and selected tab; press Escape to close it or open the full Context/Evidence
+page for more room.
 
 The safety controls flag possible prompt injection and secret/PII exposure in
 pasted or retrieved content. Treat instructions found inside an attachment or

@@ -45,28 +45,41 @@ Open <http://127.0.0.1:8506>.
 ### Chat
 
 Create or select a conversation, choose a provider, select one of its discovered
-models in the composer, and send a message. Changing providers immediately filters
-the model list. **Effort** defaults to **Auto**; supported OpenAI GPT-5.6 models offer
+models in the composer, and send a message. The provider-scoped picker is searchable
+by model name, ID, or capability and can filter for **Vision** or **Reasoning**.
+Results expose available context length, reasoning levels, capabilities, and known
+pricing. **Effort** defaults to **Auto**; supported OpenAI GPT-5.6 models offer
 explicit reasoning levels, while other models show a disabled **Provider default**.
 Higher effort can take longer and consume more billed reasoning or output tokens. The
 answer streams live and **Stop** cancels the active provider request. Hover messages
 to copy, branch from that point, or rate an answer. Conversation controls support
 rename, pin, delete, and text search.
 
+For long conversations, the previous/next message controls jump between saved
+messages, center the selected message, and show its current/total position. Sending
+a new message returns the navigator to the newest entry.
+
 Assistant answers render headings, links, lists, tables, task lists, blockquotes,
 syntax-highlighted fenced code, and LaTeX math. Use `$...$` for inline math and
 `$$...$$` for display math. Every fenced code block includes its language and a
 copy button. Raw HTML is displayed as text rather than executed.
 
-Files and images attached to the current conversation are included only when the
-selected provider's data policy permits them. Vision-capable providers receive images
-in their native format.
+Files and images attached to the current conversation show **Uploading**, **Ready**,
+or **Failed** cards. Failed uploads display the server error and provide **Retry** and
+**Remove** actions; a successful new upload is selected automatically. Attachments
+are included only when the selected provider's data policy permits them.
+Vision-capable providers receive images in their native format.
 
 ### Context and Evidence
 
-Every turn gets a preflight plan. The context rail shows estimated input against an
-80% safe budget, reserving the rest for output. Oversized plans shed lower-priority
-sources automatically.
+Every turn gets a preflight plan. The context rail shows used and available token
+totals and the exact, uncapped percentage. It turns amber at 80%; overflow warnings
+state the exact excess and suggest removing context or choosing a larger-window
+model. Oversized plans shed lower-priority sources automatically.
+
+The optional inspector provides compact **Context** and **Evidence** tabs beside the
+conversation. It remembers whether it is open and which tab was selected. Press
+Escape to close it, or open the full Context/Evidence page for a larger view.
 
 The **Evidence** page lists each source, its kind, token estimate, trust status,
 origin, and URL when available. Clear its checkbox to exclude it from a pending send.
