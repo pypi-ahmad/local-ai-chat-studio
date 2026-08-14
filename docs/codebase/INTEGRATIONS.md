@@ -47,10 +47,13 @@ discounts, taxes, and subscription charges.
 
 ## Attachments and memory
 
-Uploads stay local until explicitly selected for a turn. Preflight validates selected
-IDs against the active conversation and rejects image input for a model that explicitly
-reports no vision support. Files are parsed locally; images are validated with Pillow
-and PDF uploads require a valid PDF signature.
+Uploads stay local until explicitly selected for a turn. Chat represents each file as
+an uploading, ready, or failed card. Successful new uploads are selected for the next
+message; failed cards retain a safe server error and can be retried or removed without
+leaving the composer. Preflight validates selected IDs against the active conversation
+and rejects image input for a model that explicitly reports no vision support. Files
+are parsed locally; images are validated with Pillow and PDF uploads require a valid
+PDF signature.
 
 SQLite (`data/app.db`) is the canonical memory store. **Save memories & close** sends
 the full transcript to the selected model to extract short, durable, user-grounded
