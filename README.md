@@ -34,7 +34,8 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 - **Live model discovery:** The Studio asks configured providers for their available models instead of relying only on a fixed list. Discovered entries can include context length, vision support, and provider metadata.
 - **Searchable, capability-aware selection:** Choose a provider first, then search its discovered models by name, ID, or capability in Chat, Compare, Replay, and assistant presets. Filter for vision or reasoning support and compare context length, reasoning levels, and pricing before selecting.
 - **Composer model controls:** Chat keeps provider, model, and capability-aware reasoning effort beside the prompt. Effort defaults to **Auto** and is disabled for models that do not advertise support; OpenAI GPT-5.6 options follow the [official model guide](https://developers.openai.com/api/docs/guides/latest-model).
-- **Regrouped navigation:** Desktop destinations are organized into semantically labelled Work, Inspect, Personalize, and System groups with an expandable rail. Mobile keeps Chat, Compare, and Library one tap away and moves the remaining destinations into an equally structured **More** sheet.
+- **Focused navigation:** Desktop keeps Chat, Compare, and Library in **Primary**, Focus in **Workspace**, and provider/runtime controls in **Administration**. Mobile keeps the three primary destinations one tap away and moves advanced workspaces into **More**.
+- **Run actions drawer:** Open **Runs** from Chat to replay recorded prompts, compare outputs, or export full and privacy-safe bundles without leaving the conversation.
 - **Session-only credentials:** Keys entered in **Providers** remain in server-process memory for the browser session. Keys can alternatively come from operating-system environment variables; neither source is written to the database or exports.
 - **Subscription OAuth:** ChatGPT, Claude, SuperGrok, and other supported subscription sign-ins are bridged through a loopback-only OpenCode server, which owns the upstream OAuth and streaming sessions.
 - **Source-linked pricing:** Known models display standard input and output token rates with links to provider sources. The UI estimates preflight input cost and reports completed-run cost when usage is available; unknown or custom models stay explicitly unpriced.
@@ -79,17 +80,15 @@ bookmarked links preserve the selected workspace.
 
 | Group | Tab | Purpose |
 |---|---|---|
-| Work | **Chat** | Hold conversations, attach files, choose a provider/model and reasoning effort, inspect prompt context, and navigate saved messages. |
-| Work | **Compare** | Send one prompt to two to four models concurrently and compare independent streamed results. |
-| Inspect | **Context** | Review token pressure and the current context plan, and create reusable context backpacks. |
-| Inspect | **Evidence** | Inspect retrieved sources, control next-send inclusion, and verify run integrity receipts. |
-| Inspect | **Replay** | Re-run recorded prompts with another model, diff answers, and export full or redacted bundles. |
-| Personalize | **Focus** | Define a temporary objective, success criteria, and constraints for the active conversation. |
-| Personalize | **Library** | Manage durable memories, assistant presets, and conversation files. |
-| System | **Providers** | Configure session credentials, provider data policies, OAuth connections, discovery, and failover checks. |
-| System | **Settings** | Manage local data, personalization, runtime health, migration, wipe, and managed shutdown. |
+| Primary | **Chat** | Hold conversations, attach files, choose a provider/model and reasoning effort, inspect prompt context, navigate messages, and open run actions. |
+| Primary | **Compare** | Send one prompt to two to four models concurrently and compare independent streamed results. |
+| Primary | **Library** | Manage durable memories, assistant presets, and conversation files. |
+| Workspace | **Focus** | Define a temporary objective, success criteria, and constraints for the active conversation. |
+| Administration | **Providers** | Configure session credentials, provider data policies, OAuth connections, discovery, and failover checks. |
+| Administration | **Settings** | Manage local data, personalization, runtime health, migration, wipe, and managed shutdown. |
 
 Chat also includes an optional **Context/Evidence inspector**. On wide screens it docks beside the conversation; on smaller screens it opens as a drawer. Its open state and selected tab persist locally.
+Replay, diff, and export controls are available from the **Runs** drawer in Chat. Legacy direct URLs for Context, Evidence, and Replay remain available for bookmarked workflows.
 
 ## Screenshots
 
