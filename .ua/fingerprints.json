@@ -1,16 +1,16 @@
 {
   "version": "1.0.0",
-  "gitCommitHash": "e437ebdd061bab3ba9234c1f4f209c039505e49d",
-  "generatedAt": "2026-08-13T14:53:56.589Z",
+  "gitCommitHash": "33e6788210cbb75f2992d9d7ab0fff7d9fe6a6db",
+  "generatedAt": "2026-08-14T22:56:31.239Z",
   "files": {
     ".code-review-graph/graph.db": {
       "filePath": ".code-review-graph/graph.db",
-      "contentHash": "ffbce3a96c432a05bb9efbfde43ad893671e5c5de7dedb59284a89fe1c9f1386",
+      "contentHash": "85bc72ff0e9d72f8718a2acf1399bda7b02983a99c257d1ac5482a9707eadb36",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 18392,
+      "totalLines": 18698,
       "hasStructuralAnalysis": false
     },
     ".github/ISSUE_TEMPLATE/bug_report.md": {
@@ -45,12 +45,12 @@
     },
     ".github/workflows/ci.yml": {
       "filePath": ".github/workflows/ci.yml",
-      "contentHash": "4e01f61eb39e6b3270964056f5ba7c2339ddc8f94aa510cb5d098f518a3a5fa8",
+      "contentHash": "8c57795bd163b9dc452189ff36deb4e2ed465822d95886a518c627891d68eef6",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 36,
+      "totalLines": 44,
       "hasStructuralAnalysis": true
     },
     ".graphifyignore": {
@@ -75,12 +75,12 @@
     },
     "CHANGELOG.md": {
       "filePath": "CHANGELOG.md",
-      "contentHash": "c2f104e8e346e6bb956a32ed8518a224808bd211f1a1d436aebd7d92972ab402",
+      "contentHash": "480b4a01ed8b490bbc380df652c33da74c34c3ab2ddb711955eccc9deeeaa676",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 64,
+      "totalLines": 410,
       "hasStructuralAnalysis": true
     },
     "CODE_OF_CONDUCT.md": {
@@ -95,22 +95,22 @@
     },
     "CODE_TUTORIAL.md": {
       "filePath": "CODE_TUTORIAL.md",
-      "contentHash": "8bdfd8824e69721fac853666d188d9f451c799fee02fc33f83e9335a1a9663b9",
+      "contentHash": "615320535766ff676b2210d658d9f143f34fc9f56a07680a3236fa4b49567694",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 924,
+      "totalLines": 988,
       "hasStructuralAnalysis": true
     },
     "CONTRIBUTING.md": {
       "filePath": "CONTRIBUTING.md",
-      "contentHash": "8dd929c2fb346b21e3a65a5ca1ac829b9287be65fef680b766b9c65872dbdae4",
+      "contentHash": "056aebfb35d4016b2528e5c653e85a6c20204a55554eff1a250bf2da65c427f3",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 79,
+      "totalLines": 84,
       "hasStructuralAnalysis": true
     },
     "DATASET.md": {
@@ -125,82 +125,82 @@
     },
     "GRAPH_REPORT.md": {
       "filePath": "GRAPH_REPORT.md",
-      "contentHash": "5f4dc27d1edf7e9adcb9d7d462b08582f91a467a8e8693077f28886852a540f1",
+      "contentHash": "b232f7e789c1ce365f908fadd91e2b977585a53e9c126322bb221cb0dcab4cc5",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 365,
+      "totalLines": 329,
       "hasStructuralAnalysis": true
     },
     "Launch Chat Studio.cmd": {
       "filePath": "Launch Chat Studio.cmd",
-      "contentHash": "a516625d97360ab2a8ab36d722a6a9904f38b16cca97246eeeee7f99220f3356",
+      "contentHash": "297bc17301452f84b4dfe146bb19346e997a468164edcf3abab3d517d2b6559f",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 205,
+      "totalLines": 326,
       "hasStructuralAnalysis": false
     },
     "README.md": {
       "filePath": "README.md",
-      "contentHash": "0535d468f415b54d26002392afcd73dfc7e563a500299ee41c166e17e5f050d0",
+      "contentHash": "d854e5c131a00817131765ca4914ca504d8da0bb5d65968d1ee85945bcd109fd",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 120,
+      "totalLines": 480,
       "hasStructuralAnalysis": true
     },
     "SECURITY.md": {
       "filePath": "SECURITY.md",
-      "contentHash": "cb05f969415f9a19d62ce31f27d97584e5868fd36599b24d49d7e20aaffd8932",
+      "contentHash": "d01ff8fc0ec7db611a658b765b98884a6ccb4356b51c94cf6b860d8c7a6ad95a",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 48,
+      "totalLines": 67,
       "hasStructuralAnalysis": true
     },
     "TECHNICAL.md": {
       "filePath": "TECHNICAL.md",
-      "contentHash": "ccb115c06a54143c0ccc894d8f00902cab86614a71f6848d6175595fb4a04142",
+      "contentHash": "199cfbeb6239f2570794e5addf5bbc60b11f04dfe011e98647e0422c6eeaac0f",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 107,
+      "totalLines": 210,
       "hasStructuralAnalysis": true
     },
     "USAGE.md": {
       "filePath": "USAGE.md",
-      "contentHash": "dd30e685db5292741a5af0f7926db0853decc813658bab411b3af68aa88e2451",
+      "contentHash": "aacde835039d5671be21e7d969a23eff02140767fb6fc9bf6b0eaad4b2b6be0b",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 85,
+      "totalLines": 150,
       "hasStructuralAnalysis": true
     },
     "USER_GUIDE.md": {
       "filePath": "USER_GUIDE.md",
-      "contentHash": "8b7a4fe6229eb0618b87f529e16f87f75823d68efb78b9a04da6356f12c176d1",
+      "contentHash": "16b93d9fae3d4ef59998960f81d178a96e85f4c810d33409cc5205456428de8e",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 119,
+      "totalLines": 253,
       "hasStructuralAnalysis": true
     },
     "ZERO_TO_HERO_STUDY_HANDBOOK.md": {
       "filePath": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
-      "contentHash": "1c7ed70f9b4afca3af62491418365a7aef855e05d4a42ac50b55cab35de352bb",
+      "contentHash": "be7365e7cfb67cb59c299981768c83cd69430b2cca793efb2ecd892494b6fede",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 559,
+      "totalLines": 595,
       "hasStructuralAnalysis": true
     },
     "backend/__init__.py": {
@@ -258,7 +258,7 @@
     },
     "backend/app/contracts.py": {
       "filePath": "backend/app/contracts.py",
-      "contentHash": "d9c475276004277a3e928a25e1e5a8c34f964d885bf205cdc4c7545ec8a5e0b7",
+      "contentHash": "15e9e4fbb6627f476cd9fb8e117cb383040553c6db6e8cb369a248b5a90bf8f1",
       "functions": [
         {
           "name": "utc_now",
@@ -296,20 +296,40 @@
           "name": "ConversationCreate",
           "methods": [],
           "properties": [
-            "title"
+            "title",
+            "settings"
           ],
           "exported": true,
-          "lineCount": 2
+          "lineCount": 3
+        },
+        {
+          "name": "ConversationSettings",
+          "methods": [],
+          "properties": [
+            "model_key",
+            "reasoning_effort",
+            "temperature",
+            "context_policy",
+            "include_web",
+            "auto_compress_history",
+            "system_prompt",
+            "layout",
+            "knowledge_base_id"
+          ],
+          "exported": true,
+          "lineCount": 10
         },
         {
           "name": "ConversationUpdate",
           "methods": [],
           "properties": [
             "title",
-            "pinned"
+            "pinned",
+            "folder",
+            "settings"
           ],
           "exported": true,
-          "lineCount": 3
+          "lineCount": 5
         },
         {
           "name": "Conversation",
@@ -321,10 +341,12 @@
             "updated_at",
             "model",
             "pinned",
+            "folder",
+            "settings",
             "messages"
           ],
           "exported": true,
-          "lineCount": 8
+          "lineCount": 10
         },
         {
           "name": "CredentialInput",
@@ -386,6 +408,18 @@
           "lineCount": 4
         },
         {
+          "name": "ModelPricing",
+          "methods": [],
+          "properties": [
+            "input_per_million",
+            "output_per_million",
+            "source_url",
+            "as_of"
+          ],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
           "name": "ModelDescriptor",
           "methods": [],
           "properties": [
@@ -393,10 +427,12 @@
             "id",
             "label",
             "context_length",
-            "capabilities"
+            "capabilities",
+            "reasoning_efforts",
+            "pricing"
           ],
           "exported": true,
-          "lineCount": 6
+          "lineCount": 8
         },
         {
           "name": "ProviderDiscovery",
@@ -417,10 +453,11 @@
             "model",
             "messages",
             "temperature",
+            "reasoning_effort",
             "conversation_id"
           ],
           "exported": true,
-          "lineCount": 6
+          "lineCount": 7
         },
         {
           "name": "RunStatus",
@@ -534,6 +571,8 @@
             "model",
             "content",
             "temperature",
+            "reasoning_effort",
+            "system_prompt",
             "include_memory",
             "include_retrieval",
             "include_attachments",
@@ -541,10 +580,11 @@
             "include_backpack",
             "attachment_ids",
             "backpack_id",
-            "context_limit"
+            "context_limit",
+            "auto_compress_history"
           ],
           "exported": true,
-          "lineCount": 13
+          "lineCount": 16
         },
         {
           "name": "TurnCreate",
@@ -567,10 +607,12 @@
             "sections",
             "sources",
             "findings",
-            "requires_confirmation"
+            "requires_confirmation",
+            "compression_applied",
+            "compressed_message_count"
           ],
           "exported": true,
-          "lineCount": 8
+          "lineCount": 10
         },
         {
           "name": "ConversationBranch",
@@ -623,6 +665,54 @@
           ],
           "exported": true,
           "lineCount": 6
+        },
+        {
+          "name": "KnowledgeBaseSourceInput",
+          "methods": [],
+          "properties": [
+            "kind",
+            "source_id"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "KnowledgeBaseCreate",
+          "methods": [],
+          "properties": [
+            "name",
+            "description",
+            "include_retrieval",
+            "sources"
+          ],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "KnowledgeBaseSource",
+          "methods": [],
+          "properties": [
+            "title",
+            "preview",
+            "available"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "KnowledgeBase",
+          "methods": [],
+          "properties": [
+            "id",
+            "name",
+            "description",
+            "include_retrieval",
+            "created_at",
+            "updated_at",
+            "sources"
+          ],
+          "exported": true,
+          "lineCount": 8
         },
         {
           "name": "FocusCreate",
@@ -848,6 +938,98 @@
           ],
           "exported": true,
           "lineCount": 2
+        },
+        {
+          "name": "McpServerCreate",
+          "methods": [
+            "_safe_env_names",
+            "_bounded_args",
+            "_valid_transport"
+          ],
+          "properties": [
+            "name",
+            "transport",
+            "command",
+            "args",
+            "env_keys",
+            "url"
+          ],
+          "exported": true,
+          "lineCount": 61
+        },
+        {
+          "name": "McpServer",
+          "methods": [],
+          "properties": [
+            "id",
+            "command_preview",
+            "tested_at",
+            "created_at",
+            "updated_at"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "McpTool",
+          "methods": [],
+          "properties": [
+            "server_id",
+            "name",
+            "title",
+            "description",
+            "input_schema"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "ToolRequestCreate",
+          "methods": [],
+          "properties": [
+            "server_id",
+            "tool_name",
+            "arguments",
+            "rationale",
+            "origin",
+            "conversation_id"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "ToolDecision",
+          "methods": [],
+          "properties": [
+            "reason"
+          ],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "ToolRequest",
+          "methods": [],
+          "properties": [
+            "id",
+            "server_id",
+            "server_name",
+            "tool_name",
+            "origin",
+            "conversation_id",
+            "rationale",
+            "arguments",
+            "arguments_preview",
+            "argument_hash",
+            "status",
+            "decision_reason",
+            "result_preview",
+            "error",
+            "created_at",
+            "decided_at",
+            "completed_at"
+          ],
+          "exported": true,
+          "lineCount": 18
         }
       ],
       "imports": [
@@ -876,7 +1058,8 @@
           "specifiers": [
             "BaseModel",
             "Field",
-            "field_validator"
+            "field_validator",
+            "model_validator"
           ]
         }
       ],
@@ -885,6 +1068,7 @@
         "MessageCreate",
         "Message",
         "ConversationCreate",
+        "ConversationSettings",
         "ConversationUpdate",
         "Conversation",
         "CredentialInput",
@@ -893,6 +1077,7 @@
         "OpenCodeOAuthComplete",
         "ImageInput",
         "ChatMessage",
+        "ModelPricing",
         "ModelDescriptor",
         "ProviderDiscovery",
         "RunCreate",
@@ -912,6 +1097,10 @@
         "BackpackCreate",
         "BackpackItem",
         "Backpack",
+        "KnowledgeBaseSourceInput",
+        "KnowledgeBaseCreate",
+        "KnowledgeBaseSource",
+        "KnowledgeBase",
         "FocusCreate",
         "FocusSession",
         "FocusUpdate",
@@ -931,14 +1120,20 @@
         "DataImport",
         "WipeRequest",
         "V2ImportRequest",
-        "Profile"
+        "Profile",
+        "McpServerCreate",
+        "McpServer",
+        "McpTool",
+        "ToolRequestCreate",
+        "ToolDecision",
+        "ToolRequest"
       ],
-      "totalLines": 354,
+      "totalLines": 528,
       "hasStructuralAnalysis": true
     },
     "backend/app/main.py": {
       "filePath": "backend/app/main.py",
-      "contentHash": "74fb6fef0d96bbb5915e025e62a378aaaaf38256a28c7202c2c18bd4312af4e0",
+      "contentHash": "01c9b20c0f4c630dbd4ef484e2add75b52e88c28dc2301872d11bf50009887ae",
       "functions": [
         {
           "name": "create_app",
@@ -946,14 +1141,25 @@
             "database_url",
             "provider_registry",
             "v2_database_url",
-            "shutdown_callback"
+            "shutdown_callback",
+            "mcp_gateway"
           ],
           "returnType": "FastAPI",
           "exported": true,
-          "lineCount": 836
+          "lineCount": 1059
         }
       ],
-      "classes": [],
+      "classes": [
+        {
+          "name": "SPAStaticFiles",
+          "methods": [
+            "get_response"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 16
+        }
+      ],
       "imports": [
         {
           "source": "base64",
@@ -1047,6 +1253,19 @@
           ]
         },
         {
+          "source": "jsonschema",
+          "specifiers": [
+            "Draft202012Validator"
+          ]
+        },
+        {
+          "source": "jsonschema.exceptions",
+          "specifiers": [
+            "SchemaError",
+            "ValidationError"
+          ]
+        },
+        {
           "source": "fastapi",
           "specifiers": [
             "BackgroundTasks",
@@ -1060,7 +1279,6 @@
         {
           "source": "fastapi.responses",
           "specifiers": [
-            "PlainTextResponse",
             "RedirectResponse",
             "StreamingResponse"
           ]
@@ -1069,6 +1287,12 @@
           "source": "fastapi.staticfiles",
           "specifiers": [
             "StaticFiles"
+          ]
+        },
+        {
+          "source": "starlette.exceptions",
+          "specifiers": [
+            "StarletteHTTPException"
           ]
         },
         {
@@ -1087,11 +1311,16 @@
             "FocusCreate",
             "FocusSession",
             "FocusUpdate",
+            "KnowledgeBase",
+            "KnowledgeBaseCreate",
             "Memory",
             "MemoryCreate",
             "MemoryExtractionRequest",
             "MemoryExtractionResult",
             "MemoryUpdate",
+            "McpServer",
+            "McpServerCreate",
+            "McpTool",
             "Message",
             "MessageCreate",
             "OAuthCodeInput",
@@ -1109,6 +1338,9 @@
             "SafetyText",
             "TurnCreate",
             "TurnPreflight",
+            "ToolDecision",
+            "ToolRequest",
+            "ToolRequestCreate",
             "Upload",
             "UploadCreate",
             "V2ImportRequest",
@@ -1119,6 +1351,14 @@
           "source": "backend.app.memory",
           "specifiers": [
             "extract_memories"
+          ]
+        },
+        {
+          "source": "backend.app.mcp_tools",
+          "specifiers": [
+            "DefaultMcpGateway",
+            "McpGateway",
+            "safe_result_preview"
           ]
         },
         {
@@ -1174,9 +1414,10 @@
         }
       ],
       "exports": [
+        "SPAStaticFiles",
         "create_app"
       ],
-      "totalLines": 924,
+      "totalLines": 1177,
       "hasStructuralAnalysis": true
     },
     "backend/app/memory.py": {
@@ -1311,14 +1552,14 @@
     },
     "backend/app/providers.py": {
       "filePath": "backend/app/providers.py",
-      "contentHash": "dced4c97db23bd902a6587cd2c41a04696f225cca8b99378c9b3eb815e3dcd59",
+      "contentHash": "6d1880e6b0e167d5246316dd3a65b20ea943887fc75caabe5a239e0377adf014",
       "functions": [
         {
           "name": "build_provider_registry",
           "params": [],
           "returnType": "dict[str, ProviderAdapter]",
           "exported": true,
-          "lineCount": 29
+          "lineCount": 34
         }
       ],
       "classes": [
@@ -1334,7 +1575,7 @@
             "auth_modes"
           ],
           "exported": true,
-          "lineCount": 19
+          "lineCount": 20
         },
         {
           "name": "OpenAICompatibleAdapter",
@@ -1346,7 +1587,7 @@
           ],
           "properties": [],
           "exported": true,
-          "lineCount": 53
+          "lineCount": 74
         },
         {
           "name": "OllamaAdapter",
@@ -1358,7 +1599,7 @@
           ],
           "properties": [],
           "exported": true,
-          "lineCount": 85
+          "lineCount": 86
         },
         {
           "name": "AnthropicAdapter",
@@ -1369,7 +1610,7 @@
           ],
           "properties": [],
           "exported": true,
-          "lineCount": 58
+          "lineCount": 59
         },
         {
           "name": "GeminiAdapter",
@@ -1380,7 +1621,7 @@
           ],
           "properties": [],
           "exported": true,
-          "lineCount": 46
+          "lineCount": 50
         },
         {
           "name": "OpenCodeZenAdapter",
@@ -1390,7 +1631,7 @@
           ],
           "properties": [],
           "exported": true,
-          "lineCount": 111
+          "lineCount": 114
         },
         {
           "name": "OpenCodeBridgeAdapter",
@@ -1406,7 +1647,7 @@
           ],
           "properties": [],
           "exported": true,
-          "lineCount": 154
+          "lineCount": 155
         },
         {
           "name": "ProviderRegistry",
@@ -1418,7 +1659,7 @@
           ],
           "properties": [],
           "exported": true,
-          "lineCount": 32
+          "lineCount": 40
         }
       ],
       "imports": [
@@ -1489,7 +1730,15 @@
           "specifiers": [
             "ChatMessage",
             "ModelDescriptor",
-            "ProviderDiscovery"
+            "ProviderDiscovery",
+            "ReasoningEffort"
+          ]
+        },
+        {
+          "source": "backend.app.pricing",
+          "specifiers": [
+            "model_pricing",
+            "openrouter_pricing"
           ]
         }
       ],
@@ -1504,12 +1753,12 @@
         "ProviderRegistry",
         "build_provider_registry"
       ],
-      "totalLines": 621,
+      "totalLines": 672,
       "hasStructuralAnalysis": true
     },
     "backend/app/runs.py": {
       "filePath": "backend/app/runs.py",
-      "contentHash": "77f99ac8d0532260cd6b348f51705e590756352f62e36cacbc12cd8507e623c0",
+      "contentHash": "538b7cae3b8a143bd81ec8cdd3d3d9eb6db2701c781a0c10b08b4e3143a3ab8c",
       "functions": [],
       "classes": [
         {
@@ -1547,7 +1796,7 @@
           ],
           "properties": [],
           "exported": true,
-          "lineCount": 187
+          "lineCount": 200
         }
       ],
       "imports": [
@@ -1633,12 +1882,12 @@
         "RunState",
         "RunManager"
       ],
-      "totalLines": 217,
+      "totalLines": 230,
       "hasStructuralAnalysis": true
     },
     "backend/app/sessions.py": {
       "filePath": "backend/app/sessions.py",
-      "contentHash": "94bf9f5f11a45930ae54b3aa152a052470396701a1d8f990c498969aefe121b9",
+      "contentHash": "4c4b46ed1042656693baaeb45b3965aee48402ff748172aa92cc26818a33bfc5",
       "functions": [
         {
           "name": "_anthropic_wif_configured",
@@ -1689,12 +1938,12 @@
         "SessionVault",
         "_anthropic_wif_configured"
       ],
-      "totalLines": 74,
+      "totalLines": 75,
       "hasStructuralAnalysis": true
     },
     "backend/app/store.py": {
       "filePath": "backend/app/store.py",
-      "contentHash": "6cfee3c419f79046d16082b220dd5907692035d812d9e5001c47e60f6053061e",
+      "contentHash": "6f5d25f9bcdd657038051b720a78d325465716dfe657457c9f00555119a2774c",
       "functions": [],
       "classes": [
         {
@@ -1702,6 +1951,22 @@
           "methods": [
             "__init__",
             "_ensure_column",
+            "session_hash",
+            "_mcp_server",
+            "create_mcp_server",
+            "get_mcp_server",
+            "list_mcp_servers",
+            "delete_mcp_server",
+            "replace_mcp_tools",
+            "list_mcp_tools",
+            "get_mcp_tool",
+            "_tool_request",
+            "create_tool_request",
+            "get_tool_request",
+            "list_tool_requests",
+            "claim_tool_request",
+            "deny_tool_request",
+            "finish_tool_request",
             "create_conversation",
             "list_conversations",
             "search_related_messages",
@@ -1724,6 +1989,15 @@
             "list_backpacks",
             "update_backpack",
             "delete_backpack",
+            "_validate_knowledge_source",
+            "_knowledge_source",
+            "create_knowledge_base",
+            "_replace_knowledge_sources",
+            "get_knowledge_base",
+            "list_knowledge_bases",
+            "update_knowledge_base",
+            "delete_knowledge_base",
+            "knowledge_base_materials",
             "create_focus",
             "active_focus",
             "get_focus",
@@ -1741,6 +2015,9 @@
             "set_feedback",
             "get_feedback",
             "export_conversation_markdown",
+            "export_conversation_text",
+            "export_conversation_json",
+            "export_conversation_html",
             "export_jsonl",
             "import_jsonl",
             "wipe",
@@ -1749,6 +2026,7 @@
             "import_v2_database",
             "create_upload",
             "list_uploads",
+            "delete_upload",
             "upload_texts",
             "upload_images",
             "_messages",
@@ -1757,7 +2035,7 @@
           ],
           "properties": [],
           "exported": true,
-          "lineCount": 991
+          "lineCount": 1579
         }
       ],
       "imports": [
@@ -1765,6 +2043,18 @@
           "source": "base64",
           "specifiers": [
             "base64"
+          ]
+        },
+        {
+          "source": "hashlib",
+          "specifiers": [
+            "hashlib"
+          ]
+        },
+        {
+          "source": "html",
+          "specifiers": [
+            "html"
           ]
         },
         {
@@ -1816,9 +2106,17 @@
             "BackpackCreate",
             "BackpackItem",
             "Conversation",
+            "ConversationSettings",
             "FocusCreate",
             "FocusSession",
+            "KnowledgeBase",
+            "KnowledgeBaseCreate",
+            "KnowledgeBaseSource",
+            "KnowledgeBaseSourceInput",
             "Memory",
+            "McpServer",
+            "McpServerCreate",
+            "McpTool",
             "Message",
             "Preset",
             "PresetCreate",
@@ -1826,20 +2124,55 @@
             "RunEvent",
             "RunSnapshot",
             "Upload",
+            "ToolRequest",
+            "ToolRequestCreate",
             "utc_now"
+          ]
+        },
+        {
+          "source": "backend.app.mcp_tools",
+          "specifiers": [
+            "redact_value"
           ]
         }
       ],
       "exports": [
         "Store"
       ],
-      "totalLines": 1152,
+      "totalLines": 1812,
       "hasStructuralAnalysis": true
     },
     "backend/app/workspace.py": {
       "filePath": "backend/app/workspace.py",
-      "contentHash": "ffacebc947c89db481e7dcfe4040eb16d3ff355bb6c3c916343f083dc4599e63",
+      "contentHash": "d1a1a4b6a48be4437cf2ced526d096517555390e630b46a1031c95e844f64cc8",
       "functions": [
+        {
+          "name": "_history_summary",
+          "params": [
+            "messages"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "_history_parts",
+          "params": [
+            "conversation",
+            "compress"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "_history_summary_id",
+          "params": [
+            "messages"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 3
+        },
         {
           "name": "search_web",
           "params": [
@@ -1909,7 +2242,7 @@
           ],
           "returnType": "ContextPlan",
           "exported": true,
-          "lineCount": 245
+          "lineCount": 351
         },
         {
           "name": "assemble_messages",
@@ -1923,7 +2256,7 @@
           ],
           "returnType": "list[ChatMessage]",
           "exported": true,
-          "lineCount": 105
+          "lineCount": 143
         },
         {
           "name": "_redact",
@@ -1993,6 +2326,9 @@
         }
       ],
       "exports": [
+        "_history_summary",
+        "_history_parts",
+        "_history_summary_id",
         "search_web",
         "retrieve_context",
         "relevant_memories",
@@ -2003,77 +2339,77 @@
         "assemble_messages",
         "_redact"
       ],
-      "totalLines": 518,
+      "totalLines": 695,
       "hasStructuralAnalysis": true
     },
     "docs/codebase/ARCHITECTURE.md": {
       "filePath": "docs/codebase/ARCHITECTURE.md",
-      "contentHash": "1b4f0d0c237b1b65bdf0f98f652f6c3229b2e39f66ed008bacac3eaeb6224f4c",
+      "contentHash": "71b0ba93438e49c216e97bb43e2a74262ba50bee3d5c11068ca8b17c2c61d541",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 43,
+      "totalLines": 111,
       "hasStructuralAnalysis": true
     },
     "docs/codebase/CONCERNS.md": {
       "filePath": "docs/codebase/CONCERNS.md",
-      "contentHash": "b7ce4b03ad51162c39289544eaa35dd2320be110da793b8baeb83df1faed462a",
+      "contentHash": "0cabae0473f2725f0a9786bd5af822c2b86c4f0768d68571722db1c4404692ab",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 40,
+      "totalLines": 67,
       "hasStructuralAnalysis": true
     },
     "docs/codebase/CONVENTIONS.md": {
       "filePath": "docs/codebase/CONVENTIONS.md",
-      "contentHash": "35c970c82411800f7e72794c9fab3b2e79cd05db34874a0d1b7029a68377454b",
+      "contentHash": "70cea2230d0cee9ddcb4f4a2dca5923a06b8b44a92a55f6f16e4527748d00c12",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 17,
+      "totalLines": 23,
       "hasStructuralAnalysis": true
     },
     "docs/codebase/INTEGRATIONS.md": {
       "filePath": "docs/codebase/INTEGRATIONS.md",
-      "contentHash": "9a557f9df378bf1a765f974a84eed9bac9a01b0e16fc2a5bde7bdb74ba8ab259",
+      "contentHash": "dc0bdf659ae7bcb831f541f648ef883126130a6b4899fdf04c259b8efb0d0ccf",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 46,
+      "totalLines": 86,
       "hasStructuralAnalysis": true
     },
     "docs/codebase/STACK.md": {
       "filePath": "docs/codebase/STACK.md",
-      "contentHash": "f854dd8cddc338c0ca96ef2d31c491d3f6e1df94dbea3f89e21a9729035d7bd1",
+      "contentHash": "65a3aa44964e8da788fd0da8906c0fd6748514e0b26a2a7c5adc9d99836efddb",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 30,
+      "totalLines": 35,
       "hasStructuralAnalysis": true
     },
     "docs/codebase/STRUCTURE.md": {
       "filePath": "docs/codebase/STRUCTURE.md",
-      "contentHash": "8fa0a9fea97f79455c0290f4209176d046e3d5c1601a92425a7ba4618a8466fa",
+      "contentHash": "139ebf6a27b34a87fbb434217596beba480d0b1b221e8e2d2181de9d92104841",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 28,
+      "totalLines": 44,
       "hasStructuralAnalysis": true
     },
     "docs/codebase/TESTING.md": {
       "filePath": "docs/codebase/TESTING.md",
-      "contentHash": "32a7f3c6dc851afbb6268dc1b92b065e840b3306c1078d90c5873232e08f62dd",
+      "contentHash": "c8623f52388ae67936233bc9b06b3bfa062c31a7b8321b61960ea60237b5cc7e",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 26,
+      "totalLines": 63,
       "hasStructuralAnalysis": true
     },
     "docs/site/index.html": {
@@ -2088,12 +2424,12 @@
     },
     "docs/tutorial/index.html": {
       "filePath": "docs/tutorial/index.html",
-      "contentHash": "f5e6a8713984df0eaca02dcc0460d4dbfd0e507296dcdcd146c79bf400af33b1",
+      "contentHash": "76b414066735ab6def593027b435da8add958ab3da8e8dbd1b2ef3a0e12d3694",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 754,
+      "totalLines": 758,
       "hasStructuralAnalysis": false
     },
     "frontend/.oxlintrc.json": {
@@ -2108,12 +2444,12 @@
     },
     "frontend/README.md": {
       "filePath": "frontend/README.md",
-      "contentHash": "647e43ec1a0785e825fa2349cccc03661e47919366aca161a7bc676048ddde27",
+      "contentHash": "b9762a5fbe3c8360b686b5dd2783cbcef9eb87116ced6d2cc866726845379dce",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 14,
+      "totalLines": 85,
       "hasStructuralAnalysis": true
     },
     "frontend/components.json": {
@@ -2138,27 +2474,27 @@
     },
     "frontend/package.json": {
       "filePath": "frontend/package.json",
-      "contentHash": "8d79d7a763e8f5db5e4f4164ce425fe2280853cde08ad64af4d842bb0e9acfa8",
+      "contentHash": "83d18ceecc8af43322d60c2563d49b8608827ca491ff82621260ecf514e52a02",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 43,
+      "totalLines": 52,
       "hasStructuralAnalysis": true
     },
     "frontend/src/App.css": {
       "filePath": "frontend/src/App.css",
-      "contentHash": "9cedc9040584c3a8eab4ddc5e54b8f6fb741ce38eea6d481f56b99a9c70e98e3",
+      "contentHash": "dabc4735129908fe89cb9786992daf5b8373779ee081bd2f60d074c02a6b7e8f",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 33,
+      "totalLines": 514,
       "hasStructuralAnalysis": false
     },
     "frontend/src/App.test.tsx": {
       "filePath": "frontend/src/App.test.tsx",
-      "contentHash": "6e8cbc5654449293c0fa50b5cbebc0f1cf1cc981e70ff132294615a6723b98c1",
+      "contentHash": "c7df0f96acb161290b63d7e4fc842768f6c3d7c26dac339bd20b718d401f320b",
       "functions": [
         {
           "name": "json",
@@ -2168,6 +2504,20 @@
           ],
           "exported": false,
           "lineCount": 3
+        },
+        {
+          "name": "setViewport",
+          "params": [
+            "width"
+          ],
+          "exported": false,
+          "lineCount": 15
+        },
+        {
+          "name": "waitForStudio",
+          "params": [],
+          "exported": false,
+          "lineCount": 8
         }
       ],
       "classes": [],
@@ -2201,12 +2551,12 @@
         }
       ],
       "exports": [],
-      "totalLines": 115,
+      "totalLines": 962,
       "hasStructuralAnalysis": true
     },
     "frontend/src/App.tsx": {
       "filePath": "frontend/src/App.tsx",
-      "contentHash": "ec27d5c11516c3497a4d3233030e0733d2c55921809885600bc887ea7702b2cf",
+      "contentHash": "0e3ac329139e757e268c8e3627424489b0d053f4ed6989cc05abf15d31bbf8ea",
       "functions": [
         {
           "name": "messageOf",
@@ -2219,136 +2569,48 @@
         {
           "name": "Navigation",
           "params": [
-            "{ page, onPage, connected }"
+            "{ page, onPage, connected, collapsed, onCollapsed, onCommands }"
           ],
           "exported": false,
-          "lineCount": 24
+          "lineCount": 54
         },
         {
-          "name": "ConversationHistory",
+          "name": "CommandPalette",
           "params": [
-            "{\r\n  conversations,\r\n  activeId,\r\n  onSelect,\r\n  onCreate,\r\n  onUpdate,\r\n  onDelete,\r\n}"
+            "{ open, onOpenChange, onPage, onCreate, onInspector, onRuns }"
           ],
           "exported": false,
-          "lineCount": 42
+          "lineCount": 12
         },
         {
-          "name": "ContextRail",
+          "name": "downloadFile",
           "params": [
-            "{ plan }"
+            "content",
+            "type",
+            "filename"
           ],
           "exported": false,
-          "lineCount": 14
+          "lineCount": 8
         },
         {
-          "name": "ModelPicker",
+          "name": "StudioApp",
           "params": [
-            "{ models, value, onChange }"
+            "{ route }"
           ],
           "exported": false,
-          "lineCount": 7
+          "lineCount": 371
         },
         {
-          "name": "ChatWorkspace",
-          "params": [
-            "{\r\n  conversation,\r\n  models,\r\n  selectedModel,\r\n  onModel,\r\n  plan,\r\n  pendingPlan,\r\n  liveOutput,\r\n  running,\r\n  error,\r\n  onSend,\r\n  onConfirm,\r\n  onSanitize,\r\n  onCancel,\r\n  onUpload,\r\n  uploads,\r\n  attachmentIds,\r\n  onAttachment,\r\n  onSaveMemories,\r\n  savingMemories,\r\n  onBranch,\r\n  onFeedback,\r\n}"
-          ],
-          "exported": false,
-          "lineCount": 112
-        },
-        {
-          "name": "Surface",
-          "params": [
-            "{ eyebrow, title, description, children }"
-          ],
-          "exported": false,
-          "lineCount": 3
-        },
-        {
-          "name": "ComparePage",
-          "params": [
-            "{ models }"
-          ],
-          "exported": false,
-          "lineCount": 16
-        },
-        {
-          "name": "ContextPage",
-          "params": [
-            "{ plan, backpacks, onCreate }"
-          ],
-          "exported": false,
-          "lineCount": 6
-        },
-        {
-          "name": "EvidencePage",
-          "params": [
-            "{ activity, plan, excluded, onToggle }"
-          ],
-          "exported": false,
-          "lineCount": 3
-        },
-        {
-          "name": "ReplayPage",
-          "params": [
-            "{ activity, models, onReplay }"
-          ],
-          "exported": false,
-          "lineCount": 7
-        },
-        {
-          "name": "FocusPage",
-          "params": [
-            "{ conversationId, onCreate }"
-          ],
-          "exported": false,
-          "lineCount": 6
-        },
-        {
-          "name": "ProviderCard",
-          "params": [
-            "{ provider, onChanged }"
-          ],
-          "exported": false,
-          "lineCount": 25
-        },
-        {
-          "name": "ProvidersPage",
-          "params": [
-            "{ providers, onChanged }"
-          ],
-          "exported": false,
-          "lineCount": 3
-        },
-        {
-          "name": "LibraryPage",
-          "params": [
-            "{\r\n  memories, presets, uploads, conversationId, onMemory, onMemoryUpdate, onMemoryDelete, onPreset, onPresetDelete, onUpload,\r\n}"
-          ],
-          "exported": false,
-          "lineCount": 11
-        },
-        {
-          "name": "SettingsPage",
-          "params": [
-            "{ connected, onRefresh }"
-          ],
-          "exported": false,
-          "lineCount": 20
-        },
-        {
-          "name": "fileAsBase64",
-          "params": [
-            "file"
-          ],
+          "name": "RoutedApp",
+          "params": [],
           "exported": false,
           "lineCount": 6
         },
         {
           "name": "App",
           "params": [],
-          "exported": false,
-          "lineCount": 158
+          "exported": true,
+          "lineCount": 3
         }
       ],
       "classes": [],
@@ -2360,51 +2622,34 @@
             "useEffect",
             "useMemo",
             "useRef",
-            "useState"
+            "useState",
+            "CSSProperties",
+            "ReactPointerEvent"
           ]
         },
         {
-          "source": "react",
+          "source": "react-router",
           "specifiers": [
-            "ReactNode"
+            "BrowserRouter",
+            "useLocation",
+            "useNavigate"
           ]
         },
         {
           "source": "lucide-react",
           "specifiers": [
-            "Backpack",
-            "Brain",
-            "CheckCircle",
-            "CirclePlus",
+            "ChevronLeft",
+            "ChevronRight",
             "Command",
-            "Copy",
-            "Download",
-            "FileUp",
             "Focus",
-            "GitBranch",
             "GitCompareArrows",
             "Library",
             "MessageSquare",
-            "Paperclip",
-            "Play",
+            "MoreHorizontal",
             "PlugZap",
-            "Power",
-            "RotateCcw",
             "Search",
-            "Send",
             "Settings",
-            "ShieldCheck",
-            "Square",
-            "ThumbsDown",
-            "ThumbsUp",
-            "Trash2",
-            "XCircle"
-          ]
-        },
-        {
-          "source": "@/components/ui/badge",
-          "specifiers": [
-            "Badge"
+            "Wrench"
           ]
         },
         {
@@ -2414,13 +2659,13 @@
           ]
         },
         {
-          "source": "@/components/ui/card",
+          "source": "@/components/ui/dialog",
           "specifiers": [
-            "Card",
-            "CardContent",
-            "CardDescription",
-            "CardHeader",
-            "CardTitle"
+            "Dialog",
+            "DialogContent",
+            "DialogDescription",
+            "DialogHeader",
+            "DialogTitle"
           ]
         },
         {
@@ -2430,21 +2675,139 @@
           ]
         },
         {
-          "source": "@/components/ui/scroll-area",
+          "source": "@/components/ui/sheet",
           "specifiers": [
-            "ScrollArea"
-          ]
-        },
-        {
-          "source": "@/components/ui/textarea",
-          "specifiers": [
-            "Textarea"
+            "Sheet",
+            "SheetContent",
+            "SheetDescription",
+            "SheetHeader",
+            "SheetTitle"
           ]
         },
         {
           "source": "@/components/ui/tooltip",
           "specifiers": [
             "TooltipProvider"
+          ]
+        },
+        {
+          "source": "@/features/attachments/fileEncoding",
+          "specifiers": [
+            "fileAsBase64"
+          ]
+        },
+        {
+          "source": "@/features/conversations/ConversationHistory",
+          "specifiers": [
+            "ConversationHistory"
+          ]
+        },
+        {
+          "source": "@/features/tools/ToolControlCenter",
+          "specifiers": [
+            "ToolControlCenter"
+          ]
+        },
+        {
+          "source": "@/features/context/ContextInspector",
+          "specifiers": [
+            "ContextEvidenceInspector"
+          ]
+        },
+        {
+          "source": "@/features/models/modelMetadata",
+          "specifiers": [
+            "modelKey"
+          ]
+        },
+        {
+          "source": "@/hooks/useMediaQuery",
+          "specifiers": [
+            "useMediaQuery"
+          ]
+        },
+        {
+          "source": "@/hooks/useWorkspacePreferences",
+          "specifiers": [
+            "useWorkspacePreferences"
+          ]
+        },
+        {
+          "source": "@/app/RouteErrorBoundary",
+          "specifiers": [
+            "RouteErrorBoundary"
+          ]
+        },
+        {
+          "source": "@/app/routes",
+          "specifiers": [
+            "pathForPage",
+            "routeFromPath",
+            "Page",
+            "WorkspaceRoute"
+          ]
+        },
+        {
+          "source": "@/routes/chat/ChatWorkspace",
+          "specifiers": [
+            "ChatWorkspace"
+          ]
+        },
+        {
+          "source": "@/routes/chat/types",
+          "specifiers": [
+            "AttachmentStage",
+            "ChatExportFormat",
+            "ComposerSettings",
+            "ConversationLayout"
+          ]
+        },
+        {
+          "source": "@/routes/compare/ComparePage",
+          "specifiers": [
+            "ComparePage"
+          ]
+        },
+        {
+          "source": "@/routes/context/ContextPage",
+          "specifiers": [
+            "ContextPage"
+          ]
+        },
+        {
+          "source": "@/routes/evidence/EvidencePage",
+          "specifiers": [
+            "EvidencePage"
+          ]
+        },
+        {
+          "source": "@/routes/focus/FocusPage",
+          "specifiers": [
+            "FocusPage"
+          ]
+        },
+        {
+          "source": "@/routes/library/LibraryPage",
+          "specifiers": [
+            "LibraryPage"
+          ]
+        },
+        {
+          "source": "@/routes/replay/ReplayPage",
+          "specifiers": [
+            "ReplayPage"
+          ]
+        },
+        {
+          "source": "@/routes/settings/ProvidersPage",
+          "specifiers": [
+            "ProvidersPage"
+          ]
+        },
+        {
+          "source": "@/routes/settings/SettingsPage",
+          "specifiers": [
+            "SettingsPage"
           ]
         },
         {
@@ -2456,20 +2819,24 @@
             "BackpackRecord",
             "ContextPlan",
             "Conversation",
+            "ConversationExportFormat",
+            "ConversationSettings",
+            "KnowledgeBase",
             "Memory",
             "ModelSummary",
-            "OpenCodeAuthMethod",
             "Preset",
-            "ProviderPolicy",
             "ProviderSummary",
+            "ReasoningEffort",
             "RunSnapshot",
             "TurnPreflight",
             "Upload"
           ]
         }
       ],
-      "exports": [],
-      "totalLines": 570,
+      "exports": [
+        "App"
+      ],
+      "totalLines": 548,
       "hasStructuralAnalysis": true
     },
     "frontend/src/ErrorBoundary.tsx": {
@@ -2509,7 +2876,7 @@
     },
     "frontend/src/api/client.ts": {
       "filePath": "frontend/src/api/client.ts",
-      "contentHash": "fcad168e5ff411ec9a03184e32ee93210d978f55e67101d47de372dcf6aceb12",
+      "contentHash": "179c8136249dba6db1faa3cdd7177f95f2986363368778f50b71b0addfbcde8b",
       "functions": [
         {
           "name": "request",
@@ -2569,17 +2936,17 @@
         "streamRun",
         "api"
       ],
-      "totalLines": 197,
+      "totalLines": 237,
       "hasStructuralAnalysis": true
     },
     "frontend/src/api/schema.ts": {
       "filePath": "frontend/src/api/schema.ts",
-      "contentHash": "ad27aad587593498f25425a084507f4238c1b879e5ba4d84ab5173dec4e946fa",
+      "contentHash": "03983c6ee857179669f80967d3e83e42e65ca969c3037d5ed6fd2aea37458a08",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 3483,
+      "totalLines": 4418,
       "hasStructuralAnalysis": true
     },
     "frontend/src/components/ui/avatar.tsx": {
@@ -4560,12 +4927,12 @@
     },
     "pyproject.toml": {
       "filePath": "pyproject.toml",
-      "contentHash": "01cc7903f82f727d20a1b935541a23ffc5dbbf0e17e4097023f0c0cc358d9864",
+      "contentHash": "b02b903653ac1d6a3cc57bf58846c53836d1ab821bf7127c4cca8b89cf4297f5",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 46,
+      "totalLines": 49,
       "hasStructuralAnalysis": true
     },
     "scripts/generate_api_types.py": {
@@ -6696,8 +7063,17 @@
     },
     "tests/test_api_contract.py": {
       "filePath": "tests/test_api_contract.py",
-      "contentHash": "f068dfc1d50f618b47f1824db670d2b1792287338f4fc49d91a6d25ece6d57a9",
+      "contentHash": "8c793a86e02ec9e043c5f096aa1263ef04b2bd3d957bf44e204176c0885f528b",
       "functions": [
+        {
+          "name": "test_spa_static_files_falls_back_to_index_for_browser_routes",
+          "params": [
+            "tmp_path"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 15
+        },
         {
           "name": "test_health_and_session_cookie",
           "params": [
@@ -6731,6 +7107,33 @@
           "returnType": "None",
           "exported": true,
           "lineCount": 20
+        },
+        {
+          "name": "test_conversation_settings_are_saved_independently",
+          "params": [
+            "client"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 27
+        },
+        {
+          "name": "test_conversation_folder_is_persisted_and_searchable",
+          "params": [
+            "client"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "test_conversation_can_start_with_assistant_settings",
+          "params": [
+            "client"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 21
         },
         {
           "name": "test_provider_secret_is_scoped_to_browser_session",
@@ -6792,6 +7195,12 @@
           ]
         },
         {
+          "source": "fastapi",
+          "specifiers": [
+            "FastAPI"
+          ]
+        },
+        {
           "source": "fastapi.testclient",
           "specifiers": [
             "TestClient"
@@ -6799,28 +7208,57 @@
         }
       ],
       "exports": [
+        "test_spa_static_files_falls_back_to_index_for_browser_routes",
         "test_health_and_session_cookie",
         "test_managed_server_can_be_stopped_from_the_local_ui",
         "test_shutdown_rejects_cross_site_and_unmanaged_requests",
         "test_conversation_crud_preserves_message_order",
+        "test_conversation_settings_are_saved_independently",
+        "test_conversation_folder_is_persisted_and_searchable",
+        "test_conversation_can_start_with_assistant_settings",
         "test_provider_secret_is_scoped_to_browser_session",
         "test_anthropic_reports_workload_identity_source",
         "test_run_stream_contract_retains_completed_output",
         "test_openrouter_auth_uses_session_pkce_and_current_callback_origin"
       ],
-      "totalLines": 143,
+      "totalLines": 233,
       "hasStructuralAnalysis": true
     },
     "tests/test_provider_adapters.py": {
       "filePath": "tests/test_provider_adapters.py",
-      "contentHash": "e0f8295d8742322fd113d68102b76a4a0fdf06f9fcb64ddf5ce7e7fa0f3acbfb",
+      "contentHash": "93c681898fb57530517ac027f03dcab6ee5c2f2b24f5e97e02842ac82c277844",
       "functions": [
         {
           "name": "test_registry_contains_all_phase_one_providers",
           "params": [],
           "returnType": "None",
           "exported": true,
-          "lineCount": 14
+          "lineCount": 15
+        },
+        {
+          "name": "test_openai_provider_uses_base_url_from_environment",
+          "params": [
+            "monkeypatch"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "test_luna_uses_its_supported_default_temperature",
+          "params": [
+            "monkeypatch"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 69
+        },
+        {
+          "name": "test_agnes_provider_uses_official_openai_compatible_endpoint",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 4
         },
         {
           "name": "test_model_discovery_is_concurrent_and_degrades_per_provider",
@@ -6837,6 +7275,20 @@
           "lineCount": 4
         },
         {
+          "name": "test_gemini_requires_a_key_without_constructing_a_client",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "test_gemini_closes_async_clients_for_discovery_and_streaming",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 77
+        },
+        {
           "name": "test_local_ollama_filters_daemon_cloud_models_and_reports_vision",
           "params": [],
           "returnType": "None",
@@ -6851,6 +7303,15 @@
           "returnType": "None",
           "exported": true,
           "lineCount": 20
+        },
+        {
+          "name": "test_openrouter_models_include_live_api_pricing",
+          "params": [
+            "monkeypatch"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 35
         },
         {
           "name": "test_opencode_bridge_rejects_non_loopback_urls",
@@ -6892,6 +7353,7 @@
           "specifiers": [
             "OllamaAdapter",
             "OpenCodeBridgeAdapter",
+            "OpenAICompatibleAdapter",
             "ProviderAdapter",
             "ProviderRegistry",
             "build_provider_registry"
@@ -6900,18 +7362,24 @@
       ],
       "exports": [
         "test_registry_contains_all_phase_one_providers",
+        "test_openai_provider_uses_base_url_from_environment",
+        "test_luna_uses_its_supported_default_temperature",
+        "test_agnes_provider_uses_official_openai_compatible_endpoint",
         "test_model_discovery_is_concurrent_and_degrades_per_provider",
         "test_echo_like_adapter_contract_accepts_normalized_messages",
+        "test_gemini_requires_a_key_without_constructing_a_client",
+        "test_gemini_closes_async_clients_for_discovery_and_streaming",
         "test_local_ollama_filters_daemon_cloud_models_and_reports_vision",
         "test_ollama_cloud_uses_bearer_auth",
+        "test_openrouter_models_include_live_api_pricing",
         "test_opencode_bridge_rejects_non_loopback_urls"
       ],
-      "totalLines": 115,
+      "totalLines": 329,
       "hasStructuralAnalysis": true
     },
     "tests/test_workspace_features.py": {
       "filePath": "tests/test_workspace_features.py",
-      "contentHash": "1b8471f0813d4570a0da855c0ef1fcf329510d0d018871e6e0b2fc04003a560d",
+      "contentHash": "25a19d850e077a4f2c891f7363a94818a35637614766225f638890e2ba3be8e4",
       "functions": [
         {
           "name": "_conversation",
@@ -6952,6 +7420,31 @@
           "lineCount": 25
         },
         {
+          "name": "test_turn_forwards_and_persists_reasoning_effort",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 54
+        },
+        {
+          "name": "test_custom_system_prompt_is_included_in_turn_context",
+          "params": [
+            "client"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 24
+        },
+        {
+          "name": "test_store_migrates_legacy_conversations_with_default_settings",
+          "params": [
+            "tmp_path"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 27
+        },
+        {
           "name": "test_turn_persists_messages_context_and_replay_bundle",
           "params": [
             "client"
@@ -6970,22 +7463,40 @@
           "lineCount": 54
         },
         {
+          "name": "test_bound_knowledge_base_supplies_existing_local_sources",
+          "params": [
+            "client"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 107
+        },
+        {
           "name": "test_memory_preset_upload_activity_and_replay",
           "params": [
             "client"
           ],
           "returnType": "None",
           "exported": true,
-          "lineCount": 47
+          "lineCount": 52
         },
         {
-          "name": "test_store_accepts_the_legacy_seven_column_preset_table",
+          "name": "test_api_migrates_the_legacy_five_column_preset_table",
           "params": [
             "tmp_path"
           ],
           "returnType": "None",
           "exported": true,
-          "lineCount": 18
+          "lineCount": 32
+        },
+        {
+          "name": "test_conversation_exports_are_complete_and_html_safe",
+          "params": [
+            "client"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 34
         },
         {
           "name": "test_memory_lifecycle_feedback_and_data_controls",
@@ -7058,6 +7569,24 @@
           "lineCount": 29
         },
         {
+          "name": "test_context_compression_summarizes_old_messages_and_keeps_recent_turns",
+          "params": [
+            "client"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 57
+        },
+        {
+          "name": "test_turn_rejects_a_context_plan_that_remains_over_budget",
+          "params": [
+            "client"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 22
+        },
+        {
           "name": "test_profile_runtime_health_and_opt_in_v2_import",
           "params": [
             "tmp_path",
@@ -7091,8 +7620,7 @@
         {
           "source": "backend.app.contracts",
           "specifiers": [
-            "ModelDescriptor",
-            "PresetCreate"
+            "ModelDescriptor"
           ]
         },
         {
@@ -7107,12 +7635,6 @@
             "ProviderAdapter",
             "ProviderRegistry"
           ]
-        },
-        {
-          "source": "backend.app.store",
-          "specifiers": [
-            "Store"
-          ]
         }
       ],
       "exports": [
@@ -7120,10 +7642,15 @@
         "_complete_echo_run",
         "test_run_is_owned_by_browser_session",
         "test_cloud_preflight_warns_about_secrets_and_excludes_private_context",
+        "test_turn_forwards_and_persists_reasoning_effort",
+        "test_custom_system_prompt_is_included_in_turn_context",
+        "test_store_migrates_legacy_conversations_with_default_settings",
         "test_turn_persists_messages_context_and_replay_bundle",
         "test_branch_backpack_focus_and_provider_policy",
+        "test_bound_knowledge_base_supplies_existing_local_sources",
         "test_memory_preset_upload_activity_and_replay",
-        "test_store_accepts_the_legacy_seven_column_preset_table",
+        "test_api_migrates_the_legacy_five_column_preset_table",
+        "test_conversation_exports_are_complete_and_html_safe",
         "test_memory_lifecycle_feedback_and_data_controls",
         "test_llm_memory_extraction_requires_cloud_confirmation_and_saves_provenance",
         "test_redacted_replay_bundle_hides_private_context",
@@ -7132,9 +7659,11 @@
         "test_cross_chat_retrieval_has_provenance_and_can_be_excluded",
         "test_image_attachment_is_available_to_full_replay_but_not_redacted_share",
         "test_context_budget_prunes_sources_and_private_text_can_be_sanitized",
+        "test_context_compression_summarizes_old_messages_and_keeps_recent_turns",
+        "test_turn_rejects_a_context_plan_that_remains_over_budget",
         "test_profile_runtime_health_and_opt_in_v2_import"
       ],
-      "totalLines": 625,
+      "totalLines": 982,
       "hasStructuralAnalysis": true
     }
   }

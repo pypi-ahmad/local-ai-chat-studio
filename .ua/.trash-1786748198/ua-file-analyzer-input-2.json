@@ -1,0 +1,100 @@
+{
+  "projectRoot": "D:\\AI\\Github\\local-ai-chat-studio",
+  "batchFiles": [
+    {
+      "path": "backend/app/contracts.py",
+      "language": "python",
+      "sizeLines": 353,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/app/main.py",
+      "language": "python",
+      "sizeLines": 923,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/app/providers.py",
+      "language": "python",
+      "sizeLines": 620,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/app/runs.py",
+      "language": "python",
+      "sizeLines": 216,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/app/sessions.py",
+      "language": "python",
+      "sizeLines": 73,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/app/store.py",
+      "language": "python",
+      "sizeLines": 1151,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/app/workspace.py",
+      "language": "python",
+      "sizeLines": 517,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tests/test_provider_adapters.py",
+      "language": "python",
+      "sizeLines": 114,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tests/test_workspace_features.py",
+      "language": "python",
+      "sizeLines": 624,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "backend/app/contracts.py": [],
+    "backend/app/main.py": [
+      "backend/app/contracts.py",
+      "backend/app/memory.py",
+      "backend/app/providers.py",
+      "backend/app/runs.py",
+      "backend/app/sessions.py",
+      "backend/app/store.py",
+      "backend/app/workspace.py",
+      "src/files.py",
+      "src/ollama_client.py"
+    ],
+    "backend/app/providers.py": [
+      "backend/app/contracts.py"
+    ],
+    "backend/app/runs.py": [
+      "backend/app/contracts.py",
+      "backend/app/providers.py",
+      "backend/app/sessions.py",
+      "backend/app/store.py"
+    ],
+    "backend/app/sessions.py": [],
+    "backend/app/store.py": [
+      "backend/app/contracts.py"
+    ],
+    "backend/app/workspace.py": [
+      "backend/app/contracts.py",
+      "backend/app/store.py"
+    ],
+    "tests/test_provider_adapters.py": [
+      "backend/app/contracts.py",
+      "backend/app/providers.py"
+    ],
+    "tests/test_workspace_features.py": [
+      "backend/app/contracts.py",
+      "backend/app/main.py",
+      "backend/app/providers.py",
+      "backend/app/store.py"
+    ]
+  }
+}

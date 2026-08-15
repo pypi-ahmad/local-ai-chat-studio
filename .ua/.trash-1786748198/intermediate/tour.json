@@ -1,0 +1,100 @@
+[
+  {
+    "order": 1,
+    "title": "Project Overview",
+    "description": "Start with the README to understand the studio's local-first goal: private conversations, controlled context, and optional model providers. It establishes the product vocabulary and the development routes that the remaining steps turn into concrete code paths.",
+    "nodeIds": [
+      "document:README.md"
+    ]
+  },
+  {
+    "order": 2,
+    "title": "Runtime Configuration",
+    "description": "The Python and frontend package manifests define the two local runtimes that make up the workspace. Read these before following the code so the CLI, dependency groups, npm scripts, and Vite tooling have a clear operational context.",
+    "nodeIds": [
+      "config:pyproject.toml",
+      "config:frontend/package.json"
+    ]
+  },
+  {
+    "order": 3,
+    "title": "Browser Bootstrap",
+    "description": "The selected frontend entry point mounts the React application, global styling, and error boundary into the browser. This is the first executable stop in the UI layer and shows how the studio becomes a resilient single-page application.",
+    "nodeIds": [
+      "file:frontend/src/main.tsx",
+      "file:frontend/src/ErrorBoundary.tsx",
+      "file:frontend/src/App.css"
+    ]
+  },
+  {
+    "order": 4,
+    "title": "Workspace Experience",
+    "description": "App.tsx composes the primary workspace: navigation, conversation state, context preflight, live outputs, library actions, and settings. Its typed API client is the browser-side boundary that turns user actions into HTTP and SSE requests.",
+    "nodeIds": [
+      "file:frontend/src/App.tsx",
+      "file:frontend/src/api/client.ts",
+      "file:frontend/src/api/schema.ts"
+    ]
+  },
+  {
+    "order": 5,
+    "title": "FastAPI Boundary",
+    "description": "The FastAPI application creates the server-side boundary that the frontend reaches in the previous step, including routes, sessions, static serving, and runtime integrations. The contract module provides the shared typed vocabulary that keeps those API interactions explicit.",
+    "nodeIds": [
+      "file:backend/app/main.py",
+      "file:backend/app/contracts.py",
+      "file:backend/app/sessions.py"
+    ]
+  },
+  {
+    "order": 6,
+    "title": "Runs and Providers",
+    "description": "Generation requests become managed runs, while provider adapters discover models and stream responses from local or optional remote services. This pair is the core execution bridge between the API boundary and an AI model response.",
+    "nodeIds": [
+      "file:backend/app/runs.py",
+      "file:backend/app/providers.py",
+      "file:src/ollama_client.py"
+    ]
+  },
+  {
+    "order": 7,
+    "title": "Context and Memory",
+    "description": "Before a model is called, the workspace service plans context and applies safety-aware workflow decisions. Memory and persistence modules retain the local conversation state and associated resources that make later turns, replay, and retrieval meaningful.",
+    "nodeIds": [
+      "file:backend/app/workspace.py",
+      "file:backend/app/memory.py",
+      "file:backend/app/store.py",
+      "file:src/config.py"
+    ]
+  },
+  {
+    "order": 8,
+    "title": "Architecture Reference",
+    "description": "After tracing the live request path, use the architecture guide to consolidate the React, FastAPI, persistence, provider, and shutdown boundaries. It provides the project-level map needed to make changes at the narrowest responsible layer.",
+    "nodeIds": [
+      "document:docs/codebase/ARCHITECTURE.md",
+      "document:TECHNICAL.md",
+      "document:docs/codebase/CONVENTIONS.md"
+    ]
+  },
+  {
+    "order": 9,
+    "title": "Verification Strategy",
+    "description": "The API and workspace tests exercise the server contracts, provider behavior, persistence, and safety-sensitive workflows introduced in the earlier steps. The testing guide explains the preferred seams and completes the path from a code change to evidence that it works.",
+    "nodeIds": [
+      "file:tests/test_api_contract.py",
+      "file:tests/test_workspace_features.py",
+      "file:frontend/src/App.test.tsx",
+      "document:docs/codebase/TESTING.md"
+    ]
+  },
+  {
+    "order": 10,
+    "title": "Continuous Integration",
+    "description": "Finish with the GitHub Actions workflow that runs launcher checks plus backend and frontend validation on pushes and pull requests. This operational layer turns the local verification strategy into a repeatable repository gate.",
+    "nodeIds": [
+      "pipeline:.github/workflows/ci.yml",
+      "document:CONTRIBUTING.md"
+    ]
+  }
+]

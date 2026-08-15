@@ -1,0 +1,12 @@
+{
+  "valid": true,
+  "issues": [],
+  "warnings": [],
+  "stats": {
+    "nodes": 443,
+    "edges": 818,
+    "fileNodes": 101,
+    "layers": 10,
+    "tourSteps": 10
+  }
+}

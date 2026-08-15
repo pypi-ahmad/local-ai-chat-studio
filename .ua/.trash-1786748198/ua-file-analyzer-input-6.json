@@ -1,0 +1,20 @@
+{
+  "projectRoot": "D:\\AI\\Github\\local-ai-chat-studio",
+  "batchFiles": [
+    {"path":"CHANGELOG.md","language":"markdown","sizeLines":44,"fileCategory":"docs"},
+    {"path":"CODE_TUTORIAL.md","language":"markdown","sizeLines":906,"fileCategory":"docs"},
+    {"path":"CONTRIBUTING.md","language":"markdown","sizeLines":74,"fileCategory":"docs"},
+    {"path":"GRAPH_REPORT.md","language":"markdown","sizeLines":370,"fileCategory":"docs"},
+    {"path":"Launch Chat Studio.cmd","language":"batch","sizeLines":204,"fileCategory":"script"},
+    {"path":"README.md","language":"markdown","sizeLines":113,"fileCategory":"docs"},
+    {"path":"SECURITY.md","language":"markdown","sizeLines":42,"fileCategory":"docs"},
+    {"path":"TECHNICAL.md","language":"markdown","sizeLines":95,"fileCategory":"docs"},
+    {"path":"USAGE.md","language":"markdown","sizeLines":77,"fileCategory":"docs"},
+    {"path":"USER_GUIDE.md","language":"markdown","sizeLines":111,"fileCategory":"docs"},
+    {"path":"ZERO_TO_HERO_STUDY_HANDBOOK.md","language":"markdown","sizeLines":568,"fileCategory":"docs"},
+    {"path":"pyproject.toml","language":"toml","sizeLines":45,"fileCategory":"config"}
+  ],
+  "batchImportData": {
+    "CHANGELOG.md":[],"CODE_TUTORIAL.md":[],"CONTRIBUTING.md":[],"GRAPH_REPORT.md":[],"Launch Chat Studio.cmd":[],"README.md":[],"SECURITY.md":[],"TECHNICAL.md":[],"USAGE.md":[],"USER_GUIDE.md":[],"ZERO_TO_HERO_STUDY_HANDBOOK.md":[],"pyproject.toml":[]
+  }
+}

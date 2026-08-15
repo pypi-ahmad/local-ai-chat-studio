@@ -1,0 +1,1589 @@
+{
+  "nodes": [
+    {
+      "id": "file:backend/app/workspace.py",
+      "type": "file",
+      "name": "workspace.py",
+      "filePath": "backend/app/workspace.py",
+      "summary": "Builds safe context plans and message payloads from history, retrieval, memory, attachments, and web sources.",
+      "tags": [
+        "workspace",
+        "context-management",
+        "safety"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/app/workspace.py:_history_summary",
+      "type": "function",
+      "name": "_history_summary",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [
+        34,
+        45
+      ],
+      "summary": "Provides history summary behavior for context planning, retrieval, safety, or message assembly.",
+      "tags": [
+        "workspace",
+        "context-management",
+        "safety"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/workspace.py:_history_parts",
+      "type": "function",
+      "name": "_history_parts",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [
+        48,
+        55
+      ],
+      "summary": "Provides history parts behavior for context planning, retrieval, safety, or message assembly.",
+      "tags": [
+        "workspace",
+        "context-management",
+        "safety"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/workspace.py:_history_summary_id",
+      "type": "function",
+      "name": "_history_summary_id",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [
+        58,
+        60
+      ],
+      "summary": "Provides history summary id behavior for context planning, retrieval, safety, or message assembly.",
+      "tags": [
+        "workspace",
+        "context-management",
+        "safety"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/workspace.py:search_web",
+      "type": "function",
+      "name": "search_web",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [
+        79,
+        96
+      ],
+      "summary": "Provides search web behavior for context planning, retrieval, safety, or message assembly.",
+      "tags": [
+        "workspace",
+        "context-management",
+        "safety"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/workspace.py:retrieve_context",
+      "type": "function",
+      "name": "retrieve_context",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [
+        99,
+        116
+      ],
+      "summary": "Provides retrieve context behavior for context planning, retrieval, safety, or message assembly.",
+      "tags": [
+        "workspace",
+        "context-management",
+        "safety"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/workspace.py:relevant_memories",
+      "type": "function",
+      "name": "relevant_memories",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [
+        119,
+        145
+      ],
+      "summary": "Provides relevant memories behavior for context planning, retrieval, safety, or message assembly.",
+      "tags": [
+        "workspace",
+        "context-management",
+        "safety"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/workspace.py:estimate_tokens",
+      "type": "function",
+      "name": "estimate_tokens",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [
+        148,
+        149
+      ],
+      "summary": "Provides estimate tokens behavior for context planning, retrieval, safety, or message assembly.",
+      "tags": [
+        "workspace",
+        "context-management",
+        "safety"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/workspace.py:scan_text",
+      "type": "function",
+      "name": "scan_text",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [
+        152,
+        182
+      ],
+      "summary": "Provides scan text behavior for context planning, retrieval, safety, or message assembly.",
+      "tags": [
+        "workspace",
+        "context-management",
+        "safety"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/workspace.py:sanitize_text",
+      "type": "function",
+      "name": "sanitize_text",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [
+        185,
+        190
+      ],
+      "summary": "Provides sanitize text behavior for context planning, retrieval, safety, or message assembly.",
+      "tags": [
+        "workspace",
+        "context-management",
+        "safety"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/app/workspace.py:build_context_plan",
+      "type": "function",
+      "name": "build_context_plan",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [
+        193,
+        543
+      ],
+      "summary": "Provides build context plan behavior for context planning, retrieval, safety, or message assembly.",
+      "tags": [
+        "workspace",
+        "context-management",
+        "safety"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/app/workspace.py:assemble_messages",
+      "type": "function",
+      "name": "assemble_messages",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [
+        546,
+        688
+      ],
+      "summary": "Provides assemble messages behavior for context planning, retrieval, safety, or message assembly.",
+      "tags": [
+        "workspace",
+        "context-management",
+        "safety"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/app/workspace.py:_redact",
+      "type": "function",
+      "name": "_redact",
+      "filePath": "backend/app/workspace.py",
+      "lineRange": [
+        691,
+        694
+      ],
+      "summary": "Provides redact behavior for context planning, retrieval, safety, or message assembly.",
+      "tags": [
+        "workspace",
+        "context-management",
+        "safety"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/test_provider_adapters.py",
+      "type": "file",
+      "name": "test_provider_adapters.py",
+      "filePath": "tests/test_provider_adapters.py",
+      "summary": "Verifies provider adapter configuration, discovery, streaming behavior, and provider-specific compatibility.",
+      "tags": [
+        "test",
+        "api",
+        "workspace"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/test_provider_adapters.py:test_registry_contains_all_phase_one_providers",
+      "type": "function",
+      "name": "test_registry_contains_all_phase_one_providers",
+      "filePath": "tests/test_provider_adapters.py",
+      "lineRange": [
+        19,
+        33
+      ],
+      "summary": "Tests registry contains all phase one providers behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_provider_adapters.py:test_openai_provider_uses_base_url_from_environment",
+      "type": "function",
+      "name": "test_openai_provider_uses_base_url_from_environment",
+      "filePath": "tests/test_provider_adapters.py",
+      "lineRange": [
+        36,
+        43
+      ],
+      "summary": "Tests openai provider uses base url from environment behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_provider_adapters.py:test_luna_uses_its_supported_default_temperature",
+      "type": "function",
+      "name": "test_luna_uses_its_supported_default_temperature",
+      "filePath": "tests/test_provider_adapters.py",
+      "lineRange": [
+        46,
+        114
+      ],
+      "summary": "Tests luna uses its supported default temperature behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/test_provider_adapters.py:test_agnes_provider_uses_official_openai_compatible_endpoint",
+      "type": "function",
+      "name": "test_agnes_provider_uses_official_openai_compatible_endpoint",
+      "filePath": "tests/test_provider_adapters.py",
+      "lineRange": [
+        117,
+        120
+      ],
+      "summary": "Tests agnes provider uses official openai compatible endpoint behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_provider_adapters.py:test_model_discovery_is_concurrent_and_degrades_per_provider",
+      "type": "function",
+      "name": "test_model_discovery_is_concurrent_and_degrades_per_provider",
+      "filePath": "tests/test_provider_adapters.py",
+      "lineRange": [
+        123,
+        146
+      ],
+      "summary": "Tests model discovery is concurrent and degrades per provider behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_provider_adapters.py:test_echo_like_adapter_contract_accepts_normalized_messages",
+      "type": "function",
+      "name": "test_echo_like_adapter_contract_accepts_normalized_messages",
+      "filePath": "tests/test_provider_adapters.py",
+      "lineRange": [
+        149,
+        152
+      ],
+      "summary": "Tests echo like adapter contract accepts normalized messages behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_provider_adapters.py:test_gemini_requires_a_key_without_constructing_a_client",
+      "type": "function",
+      "name": "test_gemini_requires_a_key_without_constructing_a_client",
+      "filePath": "tests/test_provider_adapters.py",
+      "lineRange": [
+        155,
+        161
+      ],
+      "summary": "Tests gemini requires a key without constructing a client behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_provider_adapters.py:test_gemini_closes_async_clients_for_discovery_and_streaming",
+      "type": "function",
+      "name": "test_gemini_closes_async_clients_for_discovery_and_streaming",
+      "filePath": "tests/test_provider_adapters.py",
+      "lineRange": [
+        164,
+        240
+      ],
+      "summary": "Tests gemini closes async clients for discovery and streaming behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/test_provider_adapters.py:test_local_ollama_filters_daemon_cloud_models_and_reports_vision",
+      "type": "function",
+      "name": "test_local_ollama_filters_daemon_cloud_models_and_reports_vision",
+      "filePath": "tests/test_provider_adapters.py",
+      "lineRange": [
+        243,
+        264
+      ],
+      "summary": "Tests local ollama filters daemon cloud models and reports vision behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_provider_adapters.py:test_ollama_cloud_uses_bearer_auth",
+      "type": "function",
+      "name": "test_ollama_cloud_uses_bearer_auth",
+      "filePath": "tests/test_provider_adapters.py",
+      "lineRange": [
+        267,
+        286
+      ],
+      "summary": "Tests ollama cloud uses bearer auth behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_provider_adapters.py:test_openrouter_models_include_live_api_pricing",
+      "type": "function",
+      "name": "test_openrouter_models_include_live_api_pricing",
+      "filePath": "tests/test_provider_adapters.py",
+      "lineRange": [
+        289,
+        323
+      ],
+      "summary": "Tests openrouter models include live api pricing behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_provider_adapters.py:test_opencode_bridge_rejects_non_loopback_urls",
+      "type": "function",
+      "name": "test_opencode_bridge_rejects_non_loopback_urls",
+      "filePath": "tests/test_provider_adapters.py",
+      "lineRange": [
+        326,
+        328
+      ],
+      "summary": "Tests opencode bridge rejects non loopback urls behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/test_workspace_features.py",
+      "type": "file",
+      "name": "test_workspace_features.py",
+      "filePath": "tests/test_workspace_features.py",
+      "summary": "Exercises workspace API behavior for conversations, context planning, memory, replay, uploads, and data controls.",
+      "tags": [
+        "test",
+        "api",
+        "workspace"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:_conversation",
+      "type": "function",
+      "name": "_conversation",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        13,
+        16
+      ],
+      "summary": "Tests conversation behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:_complete_echo_run",
+      "type": "function",
+      "name": "_complete_echo_run",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        19,
+        46
+      ],
+      "summary": "Tests complete echo run behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_run_is_owned_by_browser_session",
+      "type": "function",
+      "name": "test_run_is_owned_by_browser_session",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        49,
+        55
+      ],
+      "summary": "Tests run is owned by browser session behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_cloud_preflight_warns_about_secrets_and_excludes_private_context",
+      "type": "function",
+      "name": "test_cloud_preflight_warns_about_secrets_and_excludes_private_context",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        58,
+        82
+      ],
+      "summary": "Tests cloud preflight warns about secrets and excludes private context behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_turn_forwards_and_persists_reasoning_effort",
+      "type": "function",
+      "name": "test_turn_forwards_and_persists_reasoning_effort",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        85,
+        138
+      ],
+      "summary": "Tests turn forwards and persists reasoning effort behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_custom_system_prompt_is_included_in_turn_context",
+      "type": "function",
+      "name": "test_custom_system_prompt_is_included_in_turn_context",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        141,
+        164
+      ],
+      "summary": "Tests custom system prompt is included in turn context behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_store_migrates_legacy_conversations_with_default_settings",
+      "type": "function",
+      "name": "test_store_migrates_legacy_conversations_with_default_settings",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        167,
+        193
+      ],
+      "summary": "Tests store migrates legacy conversations with default settings behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_turn_persists_messages_context_and_replay_bundle",
+      "type": "function",
+      "name": "test_turn_persists_messages_context_and_replay_bundle",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        196,
+        208
+      ],
+      "summary": "Tests turn persists messages context and replay bundle behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_branch_backpack_focus_and_provider_policy",
+      "type": "function",
+      "name": "test_branch_backpack_focus_and_provider_policy",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        211,
+        264
+      ],
+      "summary": "Tests branch backpack focus and provider policy behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_bound_knowledge_base_supplies_existing_local_sources",
+      "type": "function",
+      "name": "test_bound_knowledge_base_supplies_existing_local_sources",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        267,
+        373
+      ],
+      "summary": "Tests bound knowledge base supplies existing local sources behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_memory_preset_upload_activity_and_replay",
+      "type": "function",
+      "name": "test_memory_preset_upload_activity_and_replay",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        376,
+        427
+      ],
+      "summary": "Tests memory preset upload activity and replay behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_api_migrates_the_legacy_five_column_preset_table",
+      "type": "function",
+      "name": "test_api_migrates_the_legacy_five_column_preset_table",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        430,
+        461
+      ],
+      "summary": "Tests api migrates the legacy five column preset table behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_conversation_exports_are_complete_and_html_safe",
+      "type": "function",
+      "name": "test_conversation_exports_are_complete_and_html_safe",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        464,
+        497
+      ],
+      "summary": "Tests conversation exports are complete and html safe behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_memory_lifecycle_feedback_and_data_controls",
+      "type": "function",
+      "name": "test_memory_lifecycle_feedback_and_data_controls",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        500,
+        550
+      ],
+      "summary": "Tests memory lifecycle feedback and data controls behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_llm_memory_extraction_requires_cloud_confirmation_and_saves_provenance",
+      "type": "function",
+      "name": "test_llm_memory_extraction_requires_cloud_confirmation_and_saves_provenance",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        553,
+        608
+      ],
+      "summary": "Tests llm memory extraction requires cloud confirmation and saves provenance behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_redacted_replay_bundle_hides_private_context",
+      "type": "function",
+      "name": "test_redacted_replay_bundle_hides_private_context",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        611,
+        639
+      ],
+      "summary": "Tests redacted replay bundle hides private context behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_workspace_resource_lifecycle_and_provider_simulator",
+      "type": "function",
+      "name": "test_workspace_resource_lifecycle_and_provider_simulator",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        642,
+        685
+      ],
+      "summary": "Tests workspace resource lifecycle and provider simulator behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_web_sources_are_provenanced_and_replayed_without_a_second_search",
+      "type": "function",
+      "name": "test_web_sources_are_provenanced_and_replayed_without_a_second_search",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        688,
+        735
+      ],
+      "summary": "Tests web sources are provenanced and replayed without a second search behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_cross_chat_retrieval_has_provenance_and_can_be_excluded",
+      "type": "function",
+      "name": "test_cross_chat_retrieval_has_provenance_and_can_be_excluded",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        738,
+        772
+      ],
+      "summary": "Tests cross chat retrieval has provenance and can be excluded behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_image_attachment_is_available_to_full_replay_but_not_redacted_share",
+      "type": "function",
+      "name": "test_image_attachment_is_available_to_full_replay_but_not_redacted_share",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        775,
+        819
+      ],
+      "summary": "Tests image attachment is available to full replay but not redacted share behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_context_budget_prunes_sources_and_private_text_can_be_sanitized",
+      "type": "function",
+      "name": "test_context_budget_prunes_sources_and_private_text_can_be_sanitized",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        822,
+        850
+      ],
+      "summary": "Tests context budget prunes sources and private text can be sanitized behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_context_compression_summarizes_old_messages_and_keeps_recent_turns",
+      "type": "function",
+      "name": "test_context_compression_summarizes_old_messages_and_keeps_recent_turns",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        853,
+        909
+      ],
+      "summary": "Tests context compression summarizes old messages and keeps recent turns behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_turn_rejects_a_context_plan_that_remains_over_budget",
+      "type": "function",
+      "name": "test_turn_rejects_a_context_plan_that_remains_over_budget",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        912,
+        933
+      ],
+      "summary": "Tests turn rejects a context plan that remains over budget behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/test_workspace_features.py:test_profile_runtime_health_and_opt_in_v2_import",
+      "type": "function",
+      "name": "test_profile_runtime_health_and_opt_in_v2_import",
+      "filePath": "tests/test_workspace_features.py",
+      "lineRange": [
+        936,
+        981
+      ],
+      "summary": "Tests profile runtime health and opt in v2 import behavior in the local AI chat workspace.",
+      "tags": [
+        "test",
+        "api",
+        "regression"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:_history_summary",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:_history_summary",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:_history_parts",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:_history_parts",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:_history_summary_id",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:_history_summary_id",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:search_web",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:search_web",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:retrieve_context",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:retrieve_context",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:relevant_memories",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:relevant_memories",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:estimate_tokens",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:estimate_tokens",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:scan_text",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:scan_text",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:sanitize_text",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:sanitize_text",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:build_context_plan",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:build_context_plan",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:assemble_messages",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:assemble_messages",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:_redact",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "function:backend/app/workspace.py:_redact",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/workspace.py",
+      "target": "file:backend/app/store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_registry_contains_all_phase_one_providers",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_registry_contains_all_phase_one_providers",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_openai_provider_uses_base_url_from_environment",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_openai_provider_uses_base_url_from_environment",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_luna_uses_its_supported_default_temperature",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_luna_uses_its_supported_default_temperature",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_agnes_provider_uses_official_openai_compatible_endpoint",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_agnes_provider_uses_official_openai_compatible_endpoint",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_model_discovery_is_concurrent_and_degrades_per_provider",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_model_discovery_is_concurrent_and_degrades_per_provider",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_echo_like_adapter_contract_accepts_normalized_messages",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_echo_like_adapter_contract_accepts_normalized_messages",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_gemini_requires_a_key_without_constructing_a_client",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_gemini_requires_a_key_without_constructing_a_client",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_gemini_closes_async_clients_for_discovery_and_streaming",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_gemini_closes_async_clients_for_discovery_and_streaming",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_local_ollama_filters_daemon_cloud_models_and_reports_vision",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_local_ollama_filters_daemon_cloud_models_and_reports_vision",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_ollama_cloud_uses_bearer_auth",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_ollama_cloud_uses_bearer_auth",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_openrouter_models_include_live_api_pricing",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_openrouter_models_include_live_api_pricing",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_opencode_bridge_rejects_non_loopback_urls",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "function:tests/test_provider_adapters.py:test_opencode_bridge_rejects_non_loopback_urls",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_provider_adapters.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:_conversation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:_conversation",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:_complete_echo_run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:_complete_echo_run",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_run_is_owned_by_browser_session",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_run_is_owned_by_browser_session",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_cloud_preflight_warns_about_secrets_and_excludes_private_context",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_cloud_preflight_warns_about_secrets_and_excludes_private_context",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_turn_forwards_and_persists_reasoning_effort",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_turn_forwards_and_persists_reasoning_effort",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_custom_system_prompt_is_included_in_turn_context",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_custom_system_prompt_is_included_in_turn_context",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_store_migrates_legacy_conversations_with_default_settings",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_store_migrates_legacy_conversations_with_default_settings",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_turn_persists_messages_context_and_replay_bundle",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_turn_persists_messages_context_and_replay_bundle",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_branch_backpack_focus_and_provider_policy",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_branch_backpack_focus_and_provider_policy",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_bound_knowledge_base_supplies_existing_local_sources",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_bound_knowledge_base_supplies_existing_local_sources",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_memory_preset_upload_activity_and_replay",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_memory_preset_upload_activity_and_replay",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_api_migrates_the_legacy_five_column_preset_table",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_api_migrates_the_legacy_five_column_preset_table",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_conversation_exports_are_complete_and_html_safe",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_conversation_exports_are_complete_and_html_safe",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_memory_lifecycle_feedback_and_data_controls",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_memory_lifecycle_feedback_and_data_controls",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_llm_memory_extraction_requires_cloud_confirmation_and_saves_provenance",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_llm_memory_extraction_requires_cloud_confirmation_and_saves_provenance",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_redacted_replay_bundle_hides_private_context",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_redacted_replay_bundle_hides_private_context",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_workspace_resource_lifecycle_and_provider_simulator",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_workspace_resource_lifecycle_and_provider_simulator",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_web_sources_are_provenanced_and_replayed_without_a_second_search",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_web_sources_are_provenanced_and_replayed_without_a_second_search",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_cross_chat_retrieval_has_provenance_and_can_be_excluded",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_cross_chat_retrieval_has_provenance_and_can_be_excluded",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_image_attachment_is_available_to_full_replay_but_not_redacted_share",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_image_attachment_is_available_to_full_replay_but_not_redacted_share",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_context_budget_prunes_sources_and_private_text_can_be_sanitized",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_context_budget_prunes_sources_and_private_text_can_be_sanitized",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_context_compression_summarizes_old_messages_and_keeps_recent_turns",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_context_compression_summarizes_old_messages_and_keeps_recent_turns",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_turn_rejects_a_context_plan_that_remains_over_budget",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_turn_rejects_a_context_plan_that_remains_over_budget",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_profile_runtime_health_and_opt_in_v2_import",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "function:tests/test_workspace_features.py:test_profile_runtime_health_and_opt_in_v2_import",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "file:backend/app/main.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/test_workspace_features.py",
+      "target": "file:backend/app/store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

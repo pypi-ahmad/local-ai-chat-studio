@@ -1,0 +1,2409 @@
+{
+  "nodes": [
+    {
+      "id": "file:backend/app/contracts.py",
+      "type": "file",
+      "name": "contracts.py",
+      "filePath": "backend/app/contracts.py",
+      "summary": "Defines the Pydantic request, response, and domain contracts shared by the local AI chat API.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/app/contracts.py:utc_now",
+      "type": "function",
+      "name": "utc_now",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        12,
+        13
+      ],
+      "summary": "Defines the utc_now API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:MessageCreate",
+      "type": "class",
+      "name": "MessageCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        16,
+        18
+      ],
+      "summary": "Defines the MessageCreate API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:Message",
+      "type": "class",
+      "name": "Message",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        21,
+        26
+      ],
+      "summary": "Defines the Message API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ConversationCreate",
+      "type": "class",
+      "name": "ConversationCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        29,
+        31
+      ],
+      "summary": "Defines the ConversationCreate API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ConversationSettings",
+      "type": "class",
+      "name": "ConversationSettings",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        34,
+        43
+      ],
+      "summary": "Defines the ConversationSettings API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ConversationUpdate",
+      "type": "class",
+      "name": "ConversationUpdate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        46,
+        50
+      ],
+      "summary": "Defines the ConversationUpdate API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:Conversation",
+      "type": "class",
+      "name": "Conversation",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        53,
+        62
+      ],
+      "summary": "Defines the Conversation API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:CredentialInput",
+      "type": "class",
+      "name": "CredentialInput",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        65,
+        74
+      ],
+      "summary": "Defines the CredentialInput API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:OAuthCodeInput",
+      "type": "class",
+      "name": "OAuthCodeInput",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        77,
+        78
+      ],
+      "summary": "Defines the OAuthCodeInput API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:OpenCodeOAuthStart",
+      "type": "class",
+      "name": "OpenCodeOAuthStart",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        81,
+        82
+      ],
+      "summary": "Defines the OpenCodeOAuthStart API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:OpenCodeOAuthComplete",
+      "type": "class",
+      "name": "OpenCodeOAuthComplete",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        85,
+        86
+      ],
+      "summary": "Defines the OpenCodeOAuthComplete API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ImageInput",
+      "type": "class",
+      "name": "ImageInput",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        89,
+        91
+      ],
+      "summary": "Defines the ImageInput API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ChatMessage",
+      "type": "class",
+      "name": "ChatMessage",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        94,
+        97
+      ],
+      "summary": "Defines the ChatMessage API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ModelPricing",
+      "type": "class",
+      "name": "ModelPricing",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        100,
+        104
+      ],
+      "summary": "Defines the ModelPricing API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ModelDescriptor",
+      "type": "class",
+      "name": "ModelDescriptor",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        107,
+        114
+      ],
+      "summary": "Defines the ModelDescriptor API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ProviderDiscovery",
+      "type": "class",
+      "name": "ProviderDiscovery",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        117,
+        120
+      ],
+      "summary": "Defines the ProviderDiscovery API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:RunCreate",
+      "type": "class",
+      "name": "RunCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        123,
+        129
+      ],
+      "summary": "Defines the RunCreate API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:RunStatus",
+      "type": "class",
+      "name": "RunStatus",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        132,
+        137
+      ],
+      "summary": "Defines the RunStatus API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:RunSnapshot",
+      "type": "class",
+      "name": "RunSnapshot",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        140,
+        152
+      ],
+      "summary": "Defines the RunSnapshot API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:RunEvent",
+      "type": "class",
+      "name": "RunEvent",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        155,
+        159
+      ],
+      "summary": "Defines the RunEvent API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ContextSection",
+      "type": "class",
+      "name": "ContextSection",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        162,
+        166
+      ],
+      "summary": "Defines the ContextSection API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ContextSource",
+      "type": "class",
+      "name": "ContextSource",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        169,
+        179
+      ],
+      "summary": "Defines the ContextSource API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:SafetyFinding",
+      "type": "class",
+      "name": "SafetyFinding",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        182,
+        187
+      ],
+      "summary": "Defines the SafetyFinding API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:SafetyText",
+      "type": "class",
+      "name": "SafetyText",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        190,
+        191
+      ],
+      "summary": "Defines the SafetyText API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ProviderPolicy",
+      "type": "class",
+      "name": "ProviderPolicy",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        194,
+        199
+      ],
+      "summary": "Defines the ProviderPolicy API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:TurnPreflight",
+      "type": "class",
+      "name": "TurnPreflight",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        202,
+        217
+      ],
+      "summary": "Defines the TurnPreflight API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:TurnCreate",
+      "type": "class",
+      "name": "TurnCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        220,
+        223
+      ],
+      "summary": "Defines the TurnCreate API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ContextPlan",
+      "type": "class",
+      "name": "ContextPlan",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        226,
+        235
+      ],
+      "summary": "Defines the ContextPlan API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ConversationBranch",
+      "type": "class",
+      "name": "ConversationBranch",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        238,
+        240
+      ],
+      "summary": "Defines the ConversationBranch API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:BackpackItemInput",
+      "type": "class",
+      "name": "BackpackItemInput",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        243,
+        245
+      ],
+      "summary": "Defines the BackpackItemInput API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:BackpackCreate",
+      "type": "class",
+      "name": "BackpackCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        248,
+        250
+      ],
+      "summary": "Defines the BackpackCreate API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:BackpackItem",
+      "type": "class",
+      "name": "BackpackItem",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        253,
+        254
+      ],
+      "summary": "Defines the BackpackItem API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:Backpack",
+      "type": "class",
+      "name": "Backpack",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        257,
+        262
+      ],
+      "summary": "Defines the Backpack API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:KnowledgeBaseSourceInput",
+      "type": "class",
+      "name": "KnowledgeBaseSourceInput",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        265,
+        267
+      ],
+      "summary": "Defines the KnowledgeBaseSourceInput API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:KnowledgeBaseCreate",
+      "type": "class",
+      "name": "KnowledgeBaseCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        270,
+        274
+      ],
+      "summary": "Defines the KnowledgeBaseCreate API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:KnowledgeBaseSource",
+      "type": "class",
+      "name": "KnowledgeBaseSource",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        277,
+        280
+      ],
+      "summary": "Defines the KnowledgeBaseSource API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:KnowledgeBase",
+      "type": "class",
+      "name": "KnowledgeBase",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        283,
+        290
+      ],
+      "summary": "Defines the KnowledgeBase API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:FocusCreate",
+      "type": "class",
+      "name": "FocusCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        293,
+        298
+      ],
+      "summary": "Defines the FocusCreate API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:FocusSession",
+      "type": "class",
+      "name": "FocusSession",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        301,
+        305
+      ],
+      "summary": "Defines the FocusSession API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:FocusUpdate",
+      "type": "class",
+      "name": "FocusUpdate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        308,
+        309
+      ],
+      "summary": "Defines the FocusUpdate API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ProviderSimulationInput",
+      "type": "class",
+      "name": "ProviderSimulationInput",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        312,
+        314
+      ],
+      "summary": "Defines the ProviderSimulationInput API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ReplayBundle",
+      "type": "class",
+      "name": "ReplayBundle",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        317,
+        322
+      ],
+      "summary": "Defines the ReplayBundle API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:MemoryCreate",
+      "type": "class",
+      "name": "MemoryCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        325,
+        328
+      ],
+      "summary": "Defines the MemoryCreate API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:Memory",
+      "type": "class",
+      "name": "Memory",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        331,
+        342
+      ],
+      "summary": "Defines the Memory API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:MemoryUpdate",
+      "type": "class",
+      "name": "MemoryUpdate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        345,
+        349
+      ],
+      "summary": "Defines the MemoryUpdate API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:MemoryExtractionRequest",
+      "type": "class",
+      "name": "MemoryExtractionRequest",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        352,
+        355
+      ],
+      "summary": "Defines the MemoryExtractionRequest API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:MemoryExtractionResult",
+      "type": "class",
+      "name": "MemoryExtractionResult",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        358,
+        361
+      ],
+      "summary": "Defines the MemoryExtractionResult API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:PresetCreate",
+      "type": "class",
+      "name": "PresetCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        364,
+        368
+      ],
+      "summary": "Defines the PresetCreate API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:Preset",
+      "type": "class",
+      "name": "Preset",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        371,
+        372
+      ],
+      "summary": "Defines the Preset API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:UploadCreate",
+      "type": "class",
+      "name": "UploadCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        375,
+        378
+      ],
+      "summary": "Defines the UploadCreate API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:Upload",
+      "type": "class",
+      "name": "Upload",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        381,
+        389
+      ],
+      "summary": "Defines the Upload API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ReplayCreate",
+      "type": "class",
+      "name": "ReplayCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        392,
+        395
+      ],
+      "summary": "Defines the ReplayCreate API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:FeedbackInput",
+      "type": "class",
+      "name": "FeedbackInput",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        398,
+        399
+      ],
+      "summary": "Defines the FeedbackInput API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:DataImport",
+      "type": "class",
+      "name": "DataImport",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        402,
+        403
+      ],
+      "summary": "Defines the DataImport API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:WipeRequest",
+      "type": "class",
+      "name": "WipeRequest",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        406,
+        407
+      ],
+      "summary": "Defines the WipeRequest API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:V2ImportRequest",
+      "type": "class",
+      "name": "V2ImportRequest",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        410,
+        411
+      ],
+      "summary": "Defines the V2ImportRequest API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:Profile",
+      "type": "class",
+      "name": "Profile",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        414,
+        415
+      ],
+      "summary": "Defines the Profile API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:McpServerCreate",
+      "type": "class",
+      "name": "McpServerCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        418,
+        478
+      ],
+      "summary": "Defines the McpServerCreate API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/app/contracts.py:McpServer",
+      "type": "class",
+      "name": "McpServer",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        481,
+        486
+      ],
+      "summary": "Defines the McpServer API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:McpTool",
+      "type": "class",
+      "name": "McpTool",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        489,
+        494
+      ],
+      "summary": "Defines the McpTool API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ToolRequestCreate",
+      "type": "class",
+      "name": "ToolRequestCreate",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        497,
+        503
+      ],
+      "summary": "Defines the ToolRequestCreate API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ToolDecision",
+      "type": "class",
+      "name": "ToolDecision",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        506,
+        507
+      ],
+      "summary": "Defines the ToolDecision API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/contracts.py:ToolRequest",
+      "type": "class",
+      "name": "ToolRequest",
+      "filePath": "backend/app/contracts.py",
+      "lineRange": [
+        510,
+        527
+      ],
+      "summary": "Defines the ToolRequest API contract used by workspace requests, responses, or persisted records.",
+      "tags": [
+        "api-contracts",
+        "data-model",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/app/main.py",
+      "type": "file",
+      "name": "main.py",
+      "filePath": "backend/app/main.py",
+      "summary": "Builds the FastAPI application and exposes the workspace API, static frontend, and runtime integrations.",
+      "tags": [
+        "api",
+        "fastapi",
+        "entry-point"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/app/main.py:create_app",
+      "type": "function",
+      "name": "create_app",
+      "filePath": "backend/app/main.py",
+      "lineRange": [
+        118,
+        1176
+      ],
+      "summary": "Creates and configures the FastAPI application and its workspace routes.",
+      "tags": [
+        "fastapi",
+        "api-handler",
+        "entry-point"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:backend/app/main.py:SPAStaticFiles",
+      "type": "class",
+      "name": "SPAStaticFiles",
+      "filePath": "backend/app/main.py",
+      "lineRange": [
+        100,
+        115
+      ],
+      "summary": "Serves frontend static files while preserving single-page application routing.",
+      "tags": [
+        "fastapi",
+        "api-handler",
+        "entry-point"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/app/providers.py",
+      "type": "file",
+      "name": "providers.py",
+      "filePath": "backend/app/providers.py",
+      "summary": "Implements provider adapters and registry-based model discovery and streaming for supported AI backends.",
+      "tags": [
+        "providers",
+        "adapters",
+        "streaming"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/app/providers.py:build_provider_registry",
+      "type": "function",
+      "name": "build_provider_registry",
+      "filePath": "backend/app/providers.py",
+      "lineRange": [
+        638,
+        671
+      ],
+      "summary": "Builds the provider registry used to select configured model adapters.",
+      "tags": [
+        "provider",
+        "adapter",
+        "streaming"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/providers.py:ProviderAdapter",
+      "type": "class",
+      "name": "ProviderAdapter",
+      "filePath": "backend/app/providers.py",
+      "lineRange": [
+        24,
+        43
+      ],
+      "summary": "Implements the ProviderAdapter provider adapter or registry for model discovery and chat streaming.",
+      "tags": [
+        "provider",
+        "adapter",
+        "streaming"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/app/providers.py:OpenAICompatibleAdapter",
+      "type": "class",
+      "name": "OpenAICompatibleAdapter",
+      "filePath": "backend/app/providers.py",
+      "lineRange": [
+        46,
+        119
+      ],
+      "summary": "Implements the OpenAICompatibleAdapter provider adapter or registry for model discovery and chat streaming.",
+      "tags": [
+        "provider",
+        "adapter",
+        "streaming"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/app/providers.py:OllamaAdapter",
+      "type": "class",
+      "name": "OllamaAdapter",
+      "filePath": "backend/app/providers.py",
+      "lineRange": [
+        122,
+        207
+      ],
+      "summary": "Implements the OllamaAdapter provider adapter or registry for model discovery and chat streaming.",
+      "tags": [
+        "provider",
+        "adapter",
+        "streaming"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/app/providers.py:AnthropicAdapter",
+      "type": "class",
+      "name": "AnthropicAdapter",
+      "filePath": "backend/app/providers.py",
+      "lineRange": [
+        210,
+        268
+      ],
+      "summary": "Implements the AnthropicAdapter provider adapter or registry for model discovery and chat streaming.",
+      "tags": [
+        "provider",
+        "adapter",
+        "streaming"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/app/providers.py:GeminiAdapter",
+      "type": "class",
+      "name": "GeminiAdapter",
+      "filePath": "backend/app/providers.py",
+      "lineRange": [
+        271,
+        320
+      ],
+      "summary": "Implements the GeminiAdapter provider adapter or registry for model discovery and chat streaming.",
+      "tags": [
+        "provider",
+        "adapter",
+        "streaming"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/app/providers.py:OpenCodeZenAdapter",
+      "type": "class",
+      "name": "OpenCodeZenAdapter",
+      "filePath": "backend/app/providers.py",
+      "lineRange": [
+        323,
+        436
+      ],
+      "summary": "Implements the OpenCodeZenAdapter provider adapter or registry for model discovery and chat streaming.",
+      "tags": [
+        "provider",
+        "adapter",
+        "streaming"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/app/providers.py:OpenCodeBridgeAdapter",
+      "type": "class",
+      "name": "OpenCodeBridgeAdapter",
+      "filePath": "backend/app/providers.py",
+      "lineRange": [
+        439,
+        593
+      ],
+      "summary": "Implements the OpenCodeBridgeAdapter provider adapter or registry for model discovery and chat streaming.",
+      "tags": [
+        "provider",
+        "adapter",
+        "streaming"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/app/providers.py:ProviderRegistry",
+      "type": "class",
+      "name": "ProviderRegistry",
+      "filePath": "backend/app/providers.py",
+      "lineRange": [
+        596,
+        635
+      ],
+      "summary": "Implements the ProviderRegistry provider adapter or registry for model discovery and chat streaming.",
+      "tags": [
+        "provider",
+        "adapter",
+        "streaming"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "function:backend/app/contracts.py:utc_now",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "function:backend/app/contracts.py:utc_now",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:MessageCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:MessageCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Message",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Message",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ConversationCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ConversationCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ConversationSettings",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ConversationSettings",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ConversationUpdate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ConversationUpdate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Conversation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Conversation",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:CredentialInput",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:CredentialInput",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:OAuthCodeInput",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:OAuthCodeInput",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:OpenCodeOAuthStart",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:OpenCodeOAuthStart",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:OpenCodeOAuthComplete",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:OpenCodeOAuthComplete",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ImageInput",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ImageInput",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ChatMessage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ChatMessage",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ModelPricing",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ModelPricing",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ModelDescriptor",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ModelDescriptor",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ProviderDiscovery",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ProviderDiscovery",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:RunCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:RunCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:RunStatus",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:RunStatus",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:RunSnapshot",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:RunSnapshot",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:RunEvent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:RunEvent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ContextSection",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ContextSection",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ContextSource",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ContextSource",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:SafetyFinding",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:SafetyFinding",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:SafetyText",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:SafetyText",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ProviderPolicy",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ProviderPolicy",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:TurnPreflight",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:TurnPreflight",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:TurnCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:TurnCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ContextPlan",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ContextPlan",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ConversationBranch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ConversationBranch",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:BackpackItemInput",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:BackpackItemInput",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:BackpackCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:BackpackCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:BackpackItem",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:BackpackItem",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Backpack",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Backpack",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:KnowledgeBaseSourceInput",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:KnowledgeBaseSourceInput",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:KnowledgeBaseCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:KnowledgeBaseCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:KnowledgeBaseSource",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:KnowledgeBaseSource",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:KnowledgeBase",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:KnowledgeBase",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:FocusCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:FocusCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:FocusSession",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:FocusSession",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:FocusUpdate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:FocusUpdate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ProviderSimulationInput",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ProviderSimulationInput",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ReplayBundle",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ReplayBundle",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:MemoryCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:MemoryCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Memory",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Memory",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:MemoryUpdate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:MemoryUpdate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:MemoryExtractionRequest",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:MemoryExtractionRequest",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:MemoryExtractionResult",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:MemoryExtractionResult",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:PresetCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:PresetCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Preset",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Preset",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:UploadCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:UploadCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Upload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Upload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ReplayCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ReplayCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:FeedbackInput",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:FeedbackInput",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:DataImport",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:DataImport",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:WipeRequest",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:WipeRequest",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:V2ImportRequest",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:V2ImportRequest",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Profile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:Profile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:McpServerCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:McpServerCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:McpServer",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:McpServer",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:McpTool",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:McpTool",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ToolRequestCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ToolRequestCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ToolDecision",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ToolDecision",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ToolRequest",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/contracts.py",
+      "target": "class:backend/app/contracts.py:ToolRequest",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "function:backend/app/main.py:create_app",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "function:backend/app/main.py:create_app",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "class:backend/app/main.py:SPAStaticFiles",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "class:backend/app/main.py:SPAStaticFiles",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/memory.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/providers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/runs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/sessions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:backend/app/workspace.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:src/files.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/main.py",
+      "target": "file:src/ollama_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "function:backend/app/providers.py:build_provider_registry",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "function:backend/app/providers.py:build_provider_registry",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:ProviderAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:ProviderAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OpenAICompatibleAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OpenAICompatibleAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OllamaAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OllamaAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:AnthropicAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:AnthropicAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:GeminiAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:GeminiAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OpenCodeZenAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OpenCodeZenAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OpenCodeBridgeAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:OpenCodeBridgeAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:ProviderRegistry",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "class:backend/app/providers.py:ProviderRegistry",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/app/providers.py",
+      "target": "file:backend/app/contracts.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

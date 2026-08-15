@@ -1,0 +1,23 @@
+{
+  "projectRoot": "D:\\AI\\Github\\local-ai-chat-studio",
+  "batchFiles": [
+    {"path": ".code-review-graph/graph.db", "language": "db", "sizeLines": 16242, "fileCategory": "code"},
+    {"path": ".github/ISSUE_TEMPLATE/bug_report.md", "language": "markdown", "sizeLines": 27, "fileCategory": "docs"},
+    {"path": ".github/pull_request_template.md", "language": "markdown", "sizeLines": 22, "fileCategory": "docs"},
+    {"path": "docs/site/index.html", "language": "html", "sizeLines": 148, "fileCategory": "markup"},
+    {"path": "docs/tutorial/index.html", "language": "html", "sizeLines": 752, "fileCategory": "markup"},
+    {"path": "frontend/src/App.css", "language": "css", "sizeLines": 32, "fileCategory": "markup"},
+    {"path": "frontend/vite.config.ts", "language": "typescript", "sizeLines": 20, "fileCategory": "code"},
+    {"path": "tests/test_api_contract.py", "language": "python", "sizeLines": 142, "fileCategory": "code"}
+  ],
+  "batchImportData": {
+    ".code-review-graph/graph.db": [],
+    ".github/ISSUE_TEMPLATE/bug_report.md": [],
+    ".github/pull_request_template.md": [],
+    "docs/site/index.html": [],
+    "docs/tutorial/index.html": [],
+    "frontend/src/App.css": [],
+    "frontend/vite.config.ts": [],
+    "tests/test_api_contract.py": []
+  }
+}

@@ -1,0 +1,2534 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 4,
+  "filesSkipped": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 4,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 4,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "frontend/src/App.test.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 961,
+      "nonEmptyLines": 849,
+      "functions": [
+        {
+          "name": "json",
+          "startLine": 53,
+          "endLine": 55,
+          "params": [
+            "value",
+            "status"
+          ]
+        },
+        {
+          "name": "setViewport",
+          "startLine": 57,
+          "endLine": 71,
+          "params": [
+            "width"
+          ]
+        },
+        {
+          "name": "waitForStudio",
+          "startLine": 73,
+          "endLine": 80,
+          "params": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "json",
+          "callee": "JSON.stringify",
+          "lineNumber": 54
+        },
+        {
+          "caller": "setViewport",
+          "callee": "Object.defineProperty",
+          "lineNumber": 58
+        },
+        {
+          "caller": "setViewport",
+          "callee": "vi.fn",
+          "lineNumber": 60
+        },
+        {
+          "caller": "setViewport",
+          "callee": "query.match",
+          "lineNumber": 61
+        },
+        {
+          "caller": "setViewport",
+          "callee": "query.match",
+          "lineNumber": 62
+        },
+        {
+          "caller": "setViewport",
+          "callee": "Number",
+          "lineNumber": 64
+        },
+        {
+          "caller": "setViewport",
+          "callee": "Number",
+          "lineNumber": 64
+        },
+        {
+          "caller": "setViewport",
+          "callee": "vi.fn",
+          "lineNumber": 66
+        },
+        {
+          "caller": "setViewport",
+          "callee": "vi.fn",
+          "lineNumber": 67
+        },
+        {
+          "caller": "waitForStudio",
+          "callee": "waitFor",
+          "lineNumber": 74
+        },
+        {
+          "caller": "waitForStudio",
+          "callee": "expect(window.location.pathname).toBe",
+          "lineNumber": 74
+        },
+        {
+          "caller": "waitForStudio",
+          "callee": "expect",
+          "lineNumber": 74
+        },
+        {
+          "caller": "waitForStudio",
+          "callee": "expect(await screen.findByRole('heading', { name: 'Provider architecture' })).toBeInTheDocument",
+          "lineNumber": 75
+        },
+        {
+          "caller": "waitForStudio",
+          "callee": "expect",
+          "lineNumber": 75
+        },
+        {
+          "caller": "waitForStudio",
+          "callee": "screen.findByRole",
+          "lineNumber": 75
+        },
+        {
+          "caller": "waitForStudio",
+          "callee": "screen.findByText",
+          "lineNumber": 76
+        },
+        {
+          "caller": "waitForStudio",
+          "callee": "setTimeout",
+          "lineNumber": 77
+        },
+        {
+          "caller": "waitForStudio",
+          "callee": "waitFor",
+          "lineNumber": 78
+        },
+        {
+          "caller": "waitForStudio",
+          "callee": "expect(screen.getByLabelText('Provider')).toHaveValue",
+          "lineNumber": 78
+        },
+        {
+          "caller": "waitForStudio",
+          "callee": "expect",
+          "lineNumber": 78
+        },
+        {
+          "caller": "waitForStudio",
+          "callee": "screen.getByLabelText",
+          "lineNumber": 78
+        },
+        {
+          "caller": "waitForStudio",
+          "callee": "waitFor",
+          "lineNumber": 79
+        },
+        {
+          "caller": "waitForStudio",
+          "callee": "expect(screen.getByLabelText('Model')).toHaveTextContent",
+          "lineNumber": 79
+        },
+        {
+          "caller": "waitForStudio",
+          "callee": "expect",
+          "lineNumber": 79
+        },
+        {
+          "caller": "waitForStudio",
+          "callee": "screen.getByLabelText",
+          "lineNumber": 79
+        },
+        {
+          "caller": "start",
+          "callee": "controller.enqueue",
+          "lineNumber": 266
+        },
+        {
+          "caller": "start",
+          "callee": "new TextEncoder().encode",
+          "lineNumber": 266
+        },
+        {
+          "caller": "start",
+          "callee": "init?.signal?.addEventListener",
+          "lineNumber": 267
+        },
+        {
+          "caller": "start",
+          "callee": "controller.error",
+          "lineNumber": 267
+        },
+        {
+          "caller": "start",
+          "callee": "controller.enqueue",
+          "lineNumber": 274
+        },
+        {
+          "caller": "start",
+          "callee": "controller.close",
+          "lineNumber": 274
+        },
+        {
+          "caller": "start",
+          "callee": "controller.enqueue",
+          "lineNumber": 288
+        },
+        {
+          "caller": "start",
+          "callee": "controller.close",
+          "lineNumber": 288
+        },
+        {
+          "caller": "start",
+          "callee": "controller.enqueue",
+          "lineNumber": 294
+        },
+        {
+          "caller": "start",
+          "callee": "new TextEncoder().encode",
+          "lineNumber": 294
+        },
+        {
+          "caller": "start",
+          "callee": "controller.enqueue",
+          "lineNumber": 296
+        },
+        {
+          "caller": "start",
+          "callee": "new TextEncoder().encode",
+          "lineNumber": 296
+        },
+        {
+          "caller": "start",
+          "callee": "controller.close",
+          "lineNumber": 297
+        },
+        {
+          "caller": "start",
+          "callee": "controller.enqueue",
+          "lineNumber": 305
+        },
+        {
+          "caller": "start",
+          "callee": "controller.close",
+          "lineNumber": 305
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "frontend/src/App.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 547,
+      "nonEmptyLines": 509,
+      "functions": [
+        {
+          "name": "messageOf",
+          "startLine": 81,
+          "endLine": 87,
+          "params": [
+            "error"
+          ]
+        },
+        {
+          "name": "Navigation",
+          "startLine": 89,
+          "endLine": 142,
+          "params": [
+            "{ page, onPage, connected, collapsed, onCollapsed, onCommands }"
+          ]
+        },
+        {
+          "name": "CommandPalette",
+          "startLine": 144,
+          "endLine": 155,
+          "params": [
+            "{ open, onOpenChange, onPage, onCreate, onInspector, onRuns }"
+          ]
+        },
+        {
+          "name": "downloadFile",
+          "startLine": 157,
+          "endLine": 164,
+          "params": [
+            "content",
+            "type",
+            "filename"
+          ]
+        },
+        {
+          "name": "StudioApp",
+          "startLine": 166,
+          "endLine": 536,
+          "params": [
+            "{ route }"
+          ]
+        },
+        {
+          "name": "RoutedApp",
+          "startLine": 538,
+          "endLine": 543,
+          "params": []
+        },
+        {
+          "name": "App",
+          "startLine": 545,
+          "endLine": 547,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "App",
+          "line": 545,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Navigation",
+          "callee": "useMediaQuery",
+          "lineNumber": 90
+        },
+        {
+          "caller": "Navigation",
+          "callee": "useState",
+          "lineNumber": 91
+        },
+        {
+          "caller": "Navigation",
+          "callee": "mobilePages.includes",
+          "lineNumber": 93
+        },
+        {
+          "caller": "Navigation",
+          "callee": "navigationGroups.flatMap((group) => group.items).filter(([label]) => mobilePages.includes(label)).map",
+          "lineNumber": 99
+        },
+        {
+          "caller": "Navigation",
+          "callee": "navigationGroups.flatMap((group) => group.items).filter",
+          "lineNumber": 99
+        },
+        {
+          "caller": "Navigation",
+          "callee": "navigationGroups.flatMap",
+          "lineNumber": 99
+        },
+        {
+          "caller": "Navigation",
+          "callee": "mobilePages.includes",
+          "lineNumber": 99
+        },
+        {
+          "caller": "Navigation",
+          "callee": "onPage",
+          "lineNumber": 100
+        },
+        {
+          "caller": "Navigation",
+          "callee": "setMoreOpen",
+          "lineNumber": 102
+        },
+        {
+          "caller": "Navigation",
+          "callee": "navigationGroups.map",
+          "lineNumber": 108
+        },
+        {
+          "caller": "Navigation",
+          "callee": "group.items.filter",
+          "lineNumber": 109
+        },
+        {
+          "caller": "Navigation",
+          "callee": "mobilePages.includes",
+          "lineNumber": 109
+        },
+        {
+          "caller": "Navigation",
+          "callee": "group.label.toLowerCase",
+          "lineNumber": 111
+        },
+        {
+          "caller": "Navigation",
+          "callee": "items.map",
+          "lineNumber": 112
+        },
+        {
+          "caller": "Navigation",
+          "callee": "onPage",
+          "lineNumber": 112
+        },
+        {
+          "caller": "Navigation",
+          "callee": "setMoreOpen",
+          "lineNumber": 112
+        },
+        {
+          "caller": "Navigation",
+          "callee": "setMoreOpen",
+          "lineNumber": 114
+        },
+        {
+          "caller": "Navigation",
+          "callee": "onCommands",
+          "lineNumber": 114
+        },
+        {
+          "caller": "Navigation",
+          "callee": "navigationGroups.map",
+          "lineNumber": 126
+        },
+        {
+          "caller": "Navigation",
+          "callee": "group.label.toLowerCase",
+          "lineNumber": 127
+        },
+        {
+          "caller": "Navigation",
+          "callee": "group.items.map",
+          "lineNumber": 131
+        },
+        {
+          "caller": "Navigation",
+          "callee": "onPage",
+          "lineNumber": 132
+        },
+        {
+          "caller": "Navigation",
+          "callee": "onCollapsed",
+          "lineNumber": 139
+        },
+        {
+          "caller": "CommandPalette",
+          "callee": "useState",
+          "lineNumber": 145
+        },
+        {
+          "caller": "CommandPalette",
+          "callee": "navigationGroups.flatMap",
+          "lineNumber": 147
+        },
+        {
+          "caller": "CommandPalette",
+          "callee": "group.items.map",
+          "lineNumber": 147
+        },
+        {
+          "caller": "CommandPalette",
+          "callee": "onPage",
+          "lineNumber": 147
+        },
+        {
+          "caller": "CommandPalette",
+          "callee": "commands.filter",
+          "lineNumber": 152
+        },
+        {
+          "caller": "CommandPalette",
+          "callee": "`${command.label} ${command.hint}`.toLowerCase().includes",
+          "lineNumber": 152
+        },
+        {
+          "caller": "CommandPalette",
+          "callee": "`${command.label} ${command.hint}`.toLowerCase",
+          "lineNumber": 152
+        },
+        {
+          "caller": "CommandPalette",
+          "callee": "query.trim().toLowerCase",
+          "lineNumber": 152
+        },
+        {
+          "caller": "CommandPalette",
+          "callee": "query.trim",
+          "lineNumber": 152
+        },
+        {
+          "caller": "run",
+          "callee": "action",
+          "lineNumber": 153
+        },
+        {
+          "caller": "run",
+          "callee": "onOpenChange",
+          "lineNumber": 153
+        },
+        {
+          "caller": "run",
+          "callee": "setQuery",
+          "lineNumber": 153
+        },
+        {
+          "caller": "CommandPalette",
+          "callee": "onOpenChange",
+          "lineNumber": 154
+        },
+        {
+          "caller": "CommandPalette",
+          "callee": "setQuery",
+          "lineNumber": 154
+        },
+        {
+          "caller": "CommandPalette",
+          "callee": "setQuery",
+          "lineNumber": 154
+        },
+        {
+          "caller": "CommandPalette",
+          "callee": "visible.map",
+          "lineNumber": 154
+        },
+        {
+          "caller": "CommandPalette",
+          "callee": "run",
+          "lineNumber": 154
+        },
+        {
+          "caller": "downloadFile",
+          "callee": "URL.createObjectURL",
+          "lineNumber": 158
+        },
+        {
+          "caller": "downloadFile",
+          "callee": "document.createElement",
+          "lineNumber": 159
+        },
+        {
+          "caller": "downloadFile",
+          "callee": "anchor.click",
+          "lineNumber": 162
+        },
+        {
+          "caller": "downloadFile",
+          "callee": "URL.revokeObjectURL",
+          "lineNumber": 163
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useNavigate",
+          "lineNumber": 167
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useWorkspacePreferences",
+          "lineNumber": 169
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useMediaQuery",
+          "lineNumber": 170
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 171
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 172
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 173
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 174
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 175
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 176
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useRef",
+          "lineNumber": 177
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 178
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 179
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 180
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 181
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 182
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 183
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 184
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 185
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 186
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 187
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 188
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 189
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 190
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 191
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 192
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 193
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 194
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 195
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 196
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 197
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 198
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 199
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 200
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 201
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 202
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useState",
+          "lineNumber": 203
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useRef",
+          "lineNumber": 204
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useRef",
+          "lineNumber": 205
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useCallback",
+          "lineNumber": 208
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "navigate",
+          "lineNumber": 209
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "pathForPage",
+          "lineNumber": 209
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useCallback",
+          "lineNumber": 212
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setActiveId",
+          "lineNumber": 213
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "navigate",
+          "lineNumber": 214
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "pathForPage",
+          "lineNumber": 214
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useEffect",
+          "lineNumber": 217
+        },
+        {
+          "caller": "openCommands",
+          "callee": "event.key.toLowerCase",
+          "lineNumber": 219
+        },
+        {
+          "caller": "openCommands",
+          "callee": "event.preventDefault",
+          "lineNumber": 220
+        },
+        {
+          "caller": "openCommands",
+          "callee": "setCommandOpen",
+          "lineNumber": 221
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "window.addEventListener",
+          "lineNumber": 224
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "window.removeEventListener",
+          "lineNumber": 225
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useEffect",
+          "lineNumber": 228
+        },
+        {
+          "caller": "closeInspector",
+          "callee": "setInspectorOpen",
+          "lineNumber": 230
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "window.addEventListener",
+          "lineNumber": 231
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "window.removeEventListener",
+          "lineNumber": 232
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useCallback",
+          "lineNumber": 235
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "Promise.all",
+          "lineNumber": 236
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.providers",
+          "lineNumber": 236
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.models",
+          "lineNumber": 236
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setProviders",
+          "lineNumber": 237
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "Object.values(modelData).flatMap",
+          "lineNumber": 238
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "Object.values",
+          "lineNumber": 238
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setModels",
+          "lineNumber": 239
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setSelectedModel",
+          "lineNumber": 240
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "discovered.some",
+          "lineNumber": 240
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "modelKey",
+          "lineNumber": 240
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "modelKey",
+          "lineNumber": 240
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useCallback",
+          "lineNumber": 243
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "Promise.all",
+          "lineNumber": 244
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.memories",
+          "lineNumber": 245
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.presets",
+          "lineNumber": 245
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.backpacks",
+          "lineNumber": 245
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.knowledgeBases",
+          "lineNumber": 245
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.activity",
+          "lineNumber": 245
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setMemories",
+          "lineNumber": 247
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setPresets",
+          "lineNumber": 247
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setBackpacks",
+          "lineNumber": 247
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setKnowledgeBases",
+          "lineNumber": 247
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setActivity",
+          "lineNumber": 247
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useCallback",
+          "lineNumber": 250
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.conversations",
+          "lineNumber": 251
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setConversations",
+          "lineNumber": 252
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setActiveId",
+          "lineNumber": 253
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useEffect",
+          "lineNumber": 256
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "conversations.some",
+          "lineNumber": 259
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "navigate",
+          "lineNumber": 260
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setActiveId",
+          "lineNumber": 263
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "conversations.some",
+          "lineNumber": 266
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "navigate",
+          "lineNumber": 267
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "pathForPage",
+          "lineNumber": 267
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useEffect",
+          "lineNumber": 270
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "Promise.all([api.health(), refreshConversations(), refreshProviders(), refreshLibrary()])\n      .then(() => setConnected(true))\n      .catch((cause) => setError(messageOf(cause)))\n      .finally",
+          "lineNumber": 271
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "Promise.all([api.health(), refreshConversations(), refreshProviders(), refreshLibrary()])\n      .then(() => setConnected(true))\n      .catch",
+          "lineNumber": 271
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "Promise.all([api.health(), refreshConversations(), refreshProviders(), refreshLibrary()])\n      .then",
+          "lineNumber": 271
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "Promise.all",
+          "lineNumber": 271
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.health",
+          "lineNumber": 271
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "refreshConversations",
+          "lineNumber": 271
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "refreshProviders",
+          "lineNumber": 271
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "refreshLibrary",
+          "lineNumber": 271
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setConnected",
+          "lineNumber": 272
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setError",
+          "lineNumber": 273
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "messageOf",
+          "lineNumber": 273
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setWorkspaceLoading",
+          "lineNumber": 274
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useEffect",
+          "lineNumber": 277
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setAttachmentIds",
+          "lineNumber": 279
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setConversation",
+          "lineNumber": 281
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setUploads",
+          "lineNumber": 281
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setConversationLoading",
+          "lineNumber": 281
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setConversationLoading",
+          "lineNumber": 283
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setConversation",
+          "lineNumber": 284
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "Promise.all([api.conversation(activeId), api.uploads(activeId)])\n      .then(([detail, fileItems]) => {\n        if (cancelled) return\n        const settings = detail.settings ?? defaultConversationSettings\n        setConversation(detail)\n        setUploads(fileItems)\n        setSelectedModel((current) => settings.model_key || (modelsRef.current[0] ? modelKey(modelsRef.current[0]) : current))\n        setReasoningEffort(settings.reasoning_effort ?? '')\n        setComposerSettings({\n          contextMode: settings.context_policy,\n          temperature: settings.temperature,\n          includeWeb: settings.include_web,\n          autoCompressHistory: settings.auto_compress_history,\n        })\n        setSystemPrompt(settings.system_prompt)\n        setConversationLayout(settings.layout)\n        setKnowledgeBaseId(settings.knowledge_base_id ?? null)\n        lastSavedSettings.current = JSON.stringify(settings)\n        settingsOwner.current = detail.id\n      })\n      .catch((cause) => setError(messageOf(cause)))\n      .finally",
+          "lineNumber": 285
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "Promise.all([api.conversation(activeId), api.uploads(activeId)])\n      .then(([detail, fileItems]) => {\n        if (cancelled) return\n        const settings = detail.settings ?? defaultConversationSettings\n        setConversation(detail)\n        setUploads(fileItems)\n        setSelectedModel((current) => settings.model_key || (modelsRef.current[0] ? modelKey(modelsRef.current[0]) : current))\n        setReasoningEffort(settings.reasoning_effort ?? '')\n        setComposerSettings({\n          contextMode: settings.context_policy,\n          temperature: settings.temperature,\n          includeWeb: settings.include_web,\n          autoCompressHistory: settings.auto_compress_history,\n        })\n        setSystemPrompt(settings.system_prompt)\n        setConversationLayout(settings.layout)\n        setKnowledgeBaseId(settings.knowledge_base_id ?? null)\n        lastSavedSettings.current = JSON.stringify(settings)\n        settingsOwner.current = detail.id\n      })\n      .catch",
+          "lineNumber": 285
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "Promise.all([api.conversation(activeId), api.uploads(activeId)])\n      .then",
+          "lineNumber": 285
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "Promise.all",
+          "lineNumber": 285
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.conversation",
+          "lineNumber": 285
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.uploads",
+          "lineNumber": 285
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setConversation",
+          "lineNumber": 289
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setUploads",
+          "lineNumber": 290
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setSelectedModel",
+          "lineNumber": 291
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "modelKey",
+          "lineNumber": 291
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setReasoningEffort",
+          "lineNumber": 292
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setComposerSettings",
+          "lineNumber": 293
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setSystemPrompt",
+          "lineNumber": 299
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setConversationLayout",
+          "lineNumber": 300
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setKnowledgeBaseId",
+          "lineNumber": 301
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "JSON.stringify",
+          "lineNumber": 302
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setError",
+          "lineNumber": 305
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "messageOf",
+          "lineNumber": 305
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setConversationLoading",
+          "lineNumber": 306
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useEffect",
+          "lineNumber": 310
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "Promise.all([api.conversation(activeId), api.uploads(activeId)])\n      .then(([detail, fileItems]) => { setConversation(detail); setUploads(fileItems) })\n      .catch",
+          "lineNumber": 312
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "Promise.all([api.conversation(activeId), api.uploads(activeId)])\n      .then",
+          "lineNumber": 312
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "Promise.all",
+          "lineNumber": 312
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.conversation",
+          "lineNumber": 312
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.uploads",
+          "lineNumber": 312
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setConversation",
+          "lineNumber": 313
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setUploads",
+          "lineNumber": 313
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setError",
+          "lineNumber": 314
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "messageOf",
+          "lineNumber": 314
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useMemo",
+          "lineNumber": 317
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useEffect",
+          "lineNumber": 329
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "JSON.stringify",
+          "lineNumber": 331
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "window.setTimeout",
+          "lineNumber": 333
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.updateConversation(activeId, { settings: activeConversationSettings })\n        .then((updated) => {\n          if (settingsOwner.current !== activeId) return\n          lastSavedSettings.current = serialized\n          setConversation(updated)\n          setConversations((current) => current.map((item) => item.id === updated.id ? updated : item))\n        })\n        .catch",
+          "lineNumber": 334
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.updateConversation(activeId, { settings: activeConversationSettings })\n        .then",
+          "lineNumber": 334
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.updateConversation",
+          "lineNumber": 334
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setConversation",
+          "lineNumber": 338
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setConversations",
+          "lineNumber": 339
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "current.map",
+          "lineNumber": 339
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setError",
+          "lineNumber": 341
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "messageOf",
+          "lineNumber": 341
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "window.clearTimeout",
+          "lineNumber": 343
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useMemo",
+          "lineNumber": 346
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "selectedModel.split",
+          "lineNumber": 347
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "modelParts.join",
+          "lineNumber": 348
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "useEffect",
+          "lineNumber": 351
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "models.find",
+          "lineNumber": 352
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "modelKey",
+          "lineNumber": 352
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "selected.reasoning_efforts?.includes",
+          "lineNumber": 353
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setReasoningEffort",
+          "lineNumber": 353
+        },
+        {
+          "caller": "submitTurn",
+          "callee": "setPendingPlan",
+          "lineNumber": 358
+        },
+        {
+          "caller": "submitTurn",
+          "callee": "setError",
+          "lineNumber": 358
+        },
+        {
+          "caller": "submitTurn",
+          "callee": "setLiveOutput",
+          "lineNumber": 358
+        },
+        {
+          "caller": "submitTurn",
+          "callee": "api.createTurn",
+          "lineNumber": 359
+        },
+        {
+          "caller": "submitTurn",
+          "callee": "setAttachmentIds",
+          "lineNumber": 365
+        },
+        {
+          "caller": "submitTurn",
+          "callee": "setActiveRun",
+          "lineNumber": 366
+        },
+        {
+          "caller": "submitTurn",
+          "callee": "streamRun",
+          "lineNumber": 367
+        },
+        {
+          "caller": "submitTurn",
+          "callee": "setLiveOutput",
+          "lineNumber": 368
+        },
+        {
+          "caller": "submitTurn",
+          "callee": "String",
+          "lineNumber": 368
+        },
+        {
+          "caller": "submitTurn",
+          "callee": "setLiveOutput",
+          "lineNumber": 369
+        },
+        {
+          "caller": "submitTurn",
+          "callee": "String",
+          "lineNumber": 369
+        },
+        {
+          "caller": "submitTurn",
+          "callee": "setError",
+          "lineNumber": 370
+        },
+        {
+          "caller": "submitTurn",
+          "callee": "String",
+          "lineNumber": 370
+        },
+        {
+          "caller": "submitTurn",
+          "callee": "setActiveRun",
+          "lineNumber": 372
+        },
+        {
+          "caller": "submitTurn",
+          "callee": "Promise.all",
+          "lineNumber": 373
+        },
+        {
+          "caller": "submitTurn",
+          "callee": "api.conversation",
+          "lineNumber": 373
+        },
+        {
+          "caller": "submitTurn",
+          "callee": "api.activity",
+          "lineNumber": 373
+        },
+        {
+          "caller": "submitTurn",
+          "callee": "setConversation",
+          "lineNumber": 374
+        },
+        {
+          "caller": "submitTurn",
+          "callee": "setActivity",
+          "lineNumber": 374
+        },
+        {
+          "caller": "submitTurn",
+          "callee": "detail.messages.some",
+          "lineNumber": 375
+        },
+        {
+          "caller": "submitTurn",
+          "callee": "setLiveOutput",
+          "lineNumber": 375
+        },
+        {
+          "caller": "send",
+          "callee": "models.find",
+          "lineNumber": 395
+        },
+        {
+          "caller": "send",
+          "callee": "api.preflight",
+          "lineNumber": 399
+        },
+        {
+          "caller": "send",
+          "callee": "setPlan",
+          "lineNumber": 400
+        },
+        {
+          "caller": "send",
+          "callee": "setExcludedSources",
+          "lineNumber": 401
+        },
+        {
+          "caller": "send",
+          "callee": "nextPlan.sources.filter((source) => !source.included || source.trust !== 'trusted').map",
+          "lineNumber": 401
+        },
+        {
+          "caller": "send",
+          "callee": "nextPlan.sources.filter",
+          "lineNumber": 401
+        },
+        {
+          "caller": "send",
+          "callee": "setPendingPlan",
+          "lineNumber": 403
+        },
+        {
+          "caller": "send",
+          "callee": "setPendingPayload",
+          "lineNumber": 403
+        },
+        {
+          "caller": "send",
+          "callee": "submitTurn",
+          "lineNumber": 404
+        },
+        {
+          "caller": "send",
+          "callee": "setError",
+          "lineNumber": 406
+        },
+        {
+          "caller": "send",
+          "callee": "messageOf",
+          "lineNumber": 406
+        },
+        {
+          "caller": "upload",
+          "callee": "onStage",
+          "lineNumber": 411
+        },
+        {
+          "caller": "upload",
+          "callee": "fileAsBase64",
+          "lineNumber": 412
+        },
+        {
+          "caller": "upload",
+          "callee": "onStage",
+          "lineNumber": 413
+        },
+        {
+          "caller": "upload",
+          "callee": "api.upload",
+          "lineNumber": 414
+        },
+        {
+          "caller": "upload",
+          "callee": "setUploads",
+          "lineNumber": 415
+        },
+        {
+          "caller": "upload",
+          "callee": "api.uploads",
+          "lineNumber": 415
+        },
+        {
+          "caller": "upload",
+          "callee": "setAttachmentIds",
+          "lineNumber": 416
+        },
+        {
+          "caller": "upload",
+          "callee": "new Set(current).add",
+          "lineNumber": 416
+        },
+        {
+          "caller": "removeUpload",
+          "callee": "api.deleteUpload",
+          "lineNumber": 422
+        },
+        {
+          "caller": "removeUpload",
+          "callee": "setUploads",
+          "lineNumber": 423
+        },
+        {
+          "caller": "removeUpload",
+          "callee": "current.filter",
+          "lineNumber": 423
+        },
+        {
+          "caller": "removeUpload",
+          "callee": "setAttachmentIds",
+          "lineNumber": 424
+        },
+        {
+          "caller": "removeUpload",
+          "callee": "next.delete",
+          "lineNumber": 424
+        },
+        {
+          "caller": "removeUpload",
+          "callee": "setError",
+          "lineNumber": 426
+        },
+        {
+          "caller": "removeUpload",
+          "callee": "messageOf",
+          "lineNumber": 426
+        },
+        {
+          "caller": "saveMemoriesAndClose",
+          "callee": "window.confirm",
+          "lineNumber": 433
+        },
+        {
+          "caller": "saveMemoriesAndClose",
+          "callee": "setSavingMemories",
+          "lineNumber": 434
+        },
+        {
+          "caller": "saveMemoriesAndClose",
+          "callee": "setError",
+          "lineNumber": 434
+        },
+        {
+          "caller": "saveMemoriesAndClose",
+          "callee": "api.extractMemories",
+          "lineNumber": 436
+        },
+        {
+          "caller": "saveMemoriesAndClose",
+          "callee": "setMemories",
+          "lineNumber": 437
+        },
+        {
+          "caller": "saveMemoriesAndClose",
+          "callee": "api.memories",
+          "lineNumber": 437
+        },
+        {
+          "caller": "saveMemoriesAndClose",
+          "callee": "window.alert",
+          "lineNumber": 438
+        },
+        {
+          "caller": "saveMemoriesAndClose",
+          "callee": "setActiveId",
+          "lineNumber": 439
+        },
+        {
+          "caller": "saveMemoriesAndClose",
+          "callee": "setConversation",
+          "lineNumber": 439
+        },
+        {
+          "caller": "saveMemoriesAndClose",
+          "callee": "setUploads",
+          "lineNumber": 439
+        },
+        {
+          "caller": "saveMemoriesAndClose",
+          "callee": "setAttachmentIds",
+          "lineNumber": 439
+        },
+        {
+          "caller": "saveMemoriesAndClose",
+          "callee": "navigate",
+          "lineNumber": 439
+        },
+        {
+          "caller": "saveMemoriesAndClose",
+          "callee": "setError",
+          "lineNumber": 440
+        },
+        {
+          "caller": "saveMemoriesAndClose",
+          "callee": "messageOf",
+          "lineNumber": 440
+        },
+        {
+          "caller": "saveMemoriesAndClose",
+          "callee": "setSavingMemories",
+          "lineNumber": 441
+        },
+        {
+          "caller": "createConversation",
+          "callee": "api.createConversation",
+          "lineNumber": 445
+        },
+        {
+          "caller": "createConversation",
+          "callee": "refreshConversations",
+          "lineNumber": 446
+        },
+        {
+          "caller": "createConversation",
+          "callee": "selectConversation",
+          "lineNumber": 447
+        },
+        {
+          "caller": "updateHistoryWidth",
+          "callee": "Math.min",
+          "lineNumber": 451
+        },
+        {
+          "caller": "updateHistoryWidth",
+          "callee": "Math.max",
+          "lineNumber": 451
+        },
+        {
+          "caller": "updateHistoryWidth",
+          "callee": "Math.round",
+          "lineNumber": 451
+        },
+        {
+          "caller": "updateHistoryWidth",
+          "callee": "setHistoryWidth",
+          "lineNumber": 452
+        },
+        {
+          "caller": "beginHistoryResize",
+          "callee": "event.preventDefault",
+          "lineNumber": 455
+        },
+        {
+          "caller": "move",
+          "callee": "updateHistoryWidth",
+          "lineNumber": 458
+        },
+        {
+          "caller": "stop",
+          "callee": "window.removeEventListener",
+          "lineNumber": 459
+        },
+        {
+          "caller": "stop",
+          "callee": "window.removeEventListener",
+          "lineNumber": 459
+        },
+        {
+          "caller": "beginHistoryResize",
+          "callee": "window.addEventListener",
+          "lineNumber": 460
+        },
+        {
+          "caller": "beginHistoryResize",
+          "callee": "window.addEventListener",
+          "lineNumber": 461
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "activity.find",
+          "lineNumber": 464
+        },
+        {
+          "caller": "exportActiveConversation",
+          "callee": "conversation.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace",
+          "lineNumber": 468
+        },
+        {
+          "caller": "exportActiveConversation",
+          "callee": "conversation.title.toLowerCase().replace",
+          "lineNumber": 468
+        },
+        {
+          "caller": "exportActiveConversation",
+          "callee": "conversation.title.toLowerCase",
+          "lineNumber": 468
+        },
+        {
+          "caller": "exportActiveConversation",
+          "callee": "api.bundle",
+          "lineNumber": 471
+        },
+        {
+          "caller": "exportActiveConversation",
+          "callee": "downloadFile",
+          "lineNumber": 472
+        },
+        {
+          "caller": "exportActiveConversation",
+          "callee": "JSON.stringify",
+          "lineNumber": 472
+        },
+        {
+          "caller": "exportActiveConversation",
+          "callee": "api.conversationExport",
+          "lineNumber": 481
+        },
+        {
+          "caller": "exportActiveConversation",
+          "callee": "downloadFile",
+          "lineNumber": 483
+        },
+        {
+          "caller": "exportActiveConversation",
+          "callee": "setError",
+          "lineNumber": 485
+        },
+        {
+          "caller": "exportActiveConversation",
+          "callee": "messageOf",
+          "lineNumber": 485
+        },
+        {
+          "caller": "toggleSource",
+          "callee": "setExcludedSources",
+          "lineNumber": 489
+        },
+        {
+          "caller": "toggleSource",
+          "callee": "next.has",
+          "lineNumber": 489
+        },
+        {
+          "caller": "toggleSource",
+          "callee": "next.delete",
+          "lineNumber": 489
+        },
+        {
+          "caller": "toggleSource",
+          "callee": "next.add",
+          "lineNumber": 489
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "conversations.find",
+          "lineNumber": 490
+        },
+        {
+          "caller": "bindKnowledgeBase",
+          "callee": "api.conversation",
+          "lineNumber": 493
+        },
+        {
+          "caller": "bindKnowledgeBase",
+          "callee": "api.updateConversation",
+          "lineNumber": 495
+        },
+        {
+          "caller": "bindKnowledgeBase",
+          "callee": "setConversation",
+          "lineNumber": 496
+        },
+        {
+          "caller": "bindKnowledgeBase",
+          "callee": "setKnowledgeBaseId",
+          "lineNumber": 497
+        },
+        {
+          "caller": "bindKnowledgeBase",
+          "callee": "setConversations",
+          "lineNumber": 498
+        },
+        {
+          "caller": "bindKnowledgeBase",
+          "callee": "current.map",
+          "lineNumber": 498
+        },
+        {
+          "caller": "bindKnowledgeBase",
+          "callee": "JSON.stringify",
+          "lineNumber": 499
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setInspectorOpen",
+          "lineNumber": 501
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setCommandOpen",
+          "lineNumber": 506
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "window.confirm",
+          "lineNumber": 507
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.deleteConversation",
+          "lineNumber": 507
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setActiveId",
+          "lineNumber": 507
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "navigate",
+          "lineNumber": 507
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "refreshConversations",
+          "lineNumber": 507
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.updateConversation",
+          "lineNumber": 507
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "refreshConversations",
+          "lineNumber": 507
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setConversation",
+          "lineNumber": 507
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.conversation",
+          "lineNumber": 507
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "updateHistoryWidth",
+          "lineNumber": 508
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "updateHistoryWidth",
+          "lineNumber": 508
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "Boolean",
+          "lineNumber": 509
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setAttachmentIds",
+          "lineNumber": 509
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "next.has",
+          "lineNumber": 509
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "next.delete",
+          "lineNumber": 509
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "next.add",
+          "lineNumber": 509
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.branchConversation",
+          "lineNumber": 509
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "refreshConversations",
+          "lineNumber": 509
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "selectConversation",
+          "lineNumber": 509
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.cancelRun",
+          "lineNumber": 509
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "submitTurn",
+          "lineNumber": 509
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "pendingPlan.findings.map",
+          "lineNumber": 509
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setHistoryOpen",
+          "lineNumber": 509
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setInspectorOpen",
+          "lineNumber": 509
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setRunsOpen",
+          "lineNumber": 509
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.sanitize",
+          "lineNumber": 509
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setPendingPlan",
+          "lineNumber": 509
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setPendingPayload",
+          "lineNumber": 509
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "send",
+          "lineNumber": 509
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "upload",
+          "lineNumber": 509
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "Boolean",
+          "lineNumber": 509
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "window.confirm",
+          "lineNumber": 513
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.deleteConversation",
+          "lineNumber": 513
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setActiveId",
+          "lineNumber": 513
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "navigate",
+          "lineNumber": 513
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "refreshConversations",
+          "lineNumber": 513
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "selectConversation",
+          "lineNumber": 513
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setHistoryOpen",
+          "lineNumber": 513
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.updateConversation",
+          "lineNumber": 513
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "refreshConversations",
+          "lineNumber": 513
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setConversation",
+          "lineNumber": 513
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.conversation",
+          "lineNumber": 513
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "models.find",
+          "lineNumber": 519
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "modelKey",
+          "lineNumber": 519
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.replay",
+          "lineNumber": 519
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "streamRun",
+          "lineNumber": 519
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setActivity",
+          "lineNumber": 519
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.activity",
+          "lineNumber": 519
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "createConversation",
+          "lineNumber": 523
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setPage",
+          "lineNumber": 523
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setInspectorOpen",
+          "lineNumber": 523
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setRunsOpen",
+          "lineNumber": 523
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.createBackpack",
+          "lineNumber": 525
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setBackpacks",
+          "lineNumber": 525
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.backpacks",
+          "lineNumber": 525
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "models.find",
+          "lineNumber": 527
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "modelKey",
+          "lineNumber": 527
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.replay",
+          "lineNumber": 527
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "streamRun",
+          "lineNumber": 527
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setActivity",
+          "lineNumber": 527
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.activity",
+          "lineNumber": 527
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.createFocus",
+          "lineNumber": 528
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setPage",
+          "lineNumber": 528
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.createKnowledgeBase",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setKnowledgeBases",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.deleteKnowledgeBase",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setKnowledgeBases",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "current.filter",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "refreshConversations",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.updateKnowledgeBase",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setKnowledgeBases",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "current.map",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.createMemory",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setMemories",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.memories",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.deleteMemory",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setMemories",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.memories",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.updateMemory",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setMemories",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.memories",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.createPreset",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setPresets",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.presets",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.deletePreset",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setPresets",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.presets",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "api.createConversation",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setConversations",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "current.filter",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "selectConversation",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "upload",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "setError",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "messageOf",
+          "lineNumber": 531
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "Promise.all",
+          "lineNumber": 532
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "refreshConversations",
+          "lineNumber": 532
+        },
+        {
+          "caller": "StudioApp",
+          "callee": "refreshLibrary",
+          "lineNumber": 532
+        },
+        {
+          "caller": "RoutedApp",
+          "callee": "useLocation",
+          "lineNumber": 539
+        },
+        {
+          "caller": "RoutedApp",
+          "callee": "routeFromPath",
+          "lineNumber": 540
+        }
+      ],
+      "metrics": {
+        "importCount": 8,
+        "exportCount": 1,
+        "functionCount": 7,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "frontend/src/api/client.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 236,
+      "nonEmptyLines": 228,
+      "functions": [
+        {
+          "name": "request",
+          "startLine": 64,
+          "endLine": 75,
+          "params": [
+            "path",
+            "init"
+          ]
+        },
+        {
+          "name": "requestText",
+          "startLine": 77,
+          "endLine": 81,
+          "params": [
+            "path"
+          ]
+        },
+        {
+          "name": "streamRun",
+          "startLine": 83,
+          "endLine": 107,
+          "params": [
+            "runId",
+            "onEvent",
+            "signal"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ApiError",
+          "startLine": 53,
+          "endLine": 62,
+          "methods": [
+            "constructor"
+          ],
+          "properties": [
+            "status",
+            "detail"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ApiError",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "streamRun",
+          "line": 83,
+          "isDefault": false
+        },
+        {
+          "name": "api",
+          "line": 109,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 58
+        },
+        {
+          "caller": "request",
+          "callee": "fetch",
+          "lineNumber": 65
+        },
+        {
+          "caller": "request",
+          "callee": "response.json().catch",
+          "lineNumber": 71
+        },
+        {
+          "caller": "request",
+          "callee": "response.json",
+          "lineNumber": 71
+        },
+        {
+          "caller": "request",
+          "callee": "response.json",
+          "lineNumber": 74
+        },
+        {
+          "caller": "requestText",
+          "callee": "fetch",
+          "lineNumber": 78
+        },
+        {
+          "caller": "requestText",
+          "callee": "response.text",
+          "lineNumber": 80
+        },
+        {
+          "caller": "streamRun",
+          "callee": "fetch",
+          "lineNumber": 88
+        },
+        {
+          "caller": "streamRun",
+          "callee": "response.body.getReader",
+          "lineNumber": 93
+        },
+        {
+          "caller": "streamRun",
+          "callee": "reader.read",
+          "lineNumber": 97
+        },
+        {
+          "caller": "streamRun",
+          "callee": "decoder.decode",
+          "lineNumber": 98
+        },
+        {
+          "caller": "streamRun",
+          "callee": "buffer.split",
+          "lineNumber": 99
+        },
+        {
+          "caller": "streamRun",
+          "callee": "frames.pop",
+          "lineNumber": 100
+        },
+        {
+          "caller": "streamRun",
+          "callee": "frame.split('\\n').find",
+          "lineNumber": 102
+        },
+        {
+          "caller": "streamRun",
+          "callee": "frame.split",
+          "lineNumber": 102
+        },
+        {
+          "caller": "streamRun",
+          "callee": "line.startsWith",
+          "lineNumber": 102
+        },
+        {
+          "caller": "streamRun",
+          "callee": "onEvent",
+          "lineNumber": 103
+        },
+        {
+          "caller": "streamRun",
+          "callee": "JSON.parse",
+          "lineNumber": 103
+        },
+        {
+          "caller": "streamRun",
+          "callee": "data.slice",
+          "lineNumber": 103
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "frontend/src/api/schema.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 4417,
+      "nonEmptyLines": 4416,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    }
+  ]
+}

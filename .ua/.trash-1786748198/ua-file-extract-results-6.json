@@ -1,0 +1,1686 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 11,
+  "filesSkipped": [
+    "Launch Chat Studio.cmd"
+  ],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 11,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 0,
+      "failed": 0,
+      "skipped": 11
+    }
+  },
+  "results": [
+    {
+      "path": "CHANGELOG.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 409,
+      "nonEmptyLines": 272,
+      "sections": [
+        {
+          "heading": "Changelog",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "[Unreleased]",
+          "level": 2,
+          "line": 8
+        },
+        {
+          "heading": "[0.7.13] - 2026-08-15",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "Changed",
+          "level": 3,
+          "line": 12
+        },
+        {
+          "heading": "[0.7.12] - 2026-08-15",
+          "level": 2,
+          "line": 21
+        },
+        {
+          "heading": "Changed",
+          "level": 3,
+          "line": 23
+        },
+        {
+          "heading": "[0.7.11] - 2026-08-15",
+          "level": 2,
+          "line": 33
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 35
+        },
+        {
+          "heading": "Changed",
+          "level": 3,
+          "line": 44
+        },
+        {
+          "heading": "[0.7.10] - 2026-08-15",
+          "level": 2,
+          "line": 49
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 51
+        },
+        {
+          "heading": "Security",
+          "level": 3,
+          "line": 59
+        },
+        {
+          "heading": "[0.7.9] - 2026-08-15",
+          "level": 2,
+          "line": 68
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 70
+        },
+        {
+          "heading": "Changed",
+          "level": 3,
+          "line": 79
+        },
+        {
+          "heading": "Security",
+          "level": 3,
+          "line": 85
+        },
+        {
+          "heading": "[0.7.8] - 2026-08-15",
+          "level": 2,
+          "line": 90
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 92
+        },
+        {
+          "heading": "Security",
+          "level": 3,
+          "line": 97
+        },
+        {
+          "heading": "[0.7.7] - 2026-08-15",
+          "level": 2,
+          "line": 102
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 104
+        },
+        {
+          "heading": "Security",
+          "level": 3,
+          "line": 111
+        },
+        {
+          "heading": "[0.7.6] - 2026-08-15",
+          "level": 2,
+          "line": 116
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 118
+        },
+        {
+          "heading": "Changed",
+          "level": 3,
+          "line": 125
+        },
+        {
+          "heading": "[0.7.5] - 2026-08-15",
+          "level": 2,
+          "line": 130
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 132
+        },
+        {
+          "heading": "Changed",
+          "level": 3,
+          "line": 139
+        },
+        {
+          "heading": "[0.7.4] - 2026-08-15",
+          "level": 2,
+          "line": 148
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 150
+        },
+        {
+          "heading": "Changed",
+          "level": 3,
+          "line": 156
+        },
+        {
+          "heading": "[0.7.3] - 2026-08-15",
+          "level": 2,
+          "line": 163
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 165
+        },
+        {
+          "heading": "Changed",
+          "level": 3,
+          "line": 171
+        },
+        {
+          "heading": "[0.7.2] - 2026-08-15",
+          "level": 2,
+          "line": 176
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 178
+        },
+        {
+          "heading": "[0.7.1] - 2026-08-15",
+          "level": 2,
+          "line": 185
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 187
+        },
+        {
+          "heading": "Changed",
+          "level": 3,
+          "line": 193
+        },
+        {
+          "heading": "[0.7.0] - 2026-08-15",
+          "level": 2,
+          "line": 198
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 200
+        },
+        {
+          "heading": "Changed",
+          "level": 3,
+          "line": 204
+        },
+        {
+          "heading": "[0.6.9] - 2026-08-15",
+          "level": 2,
+          "line": 208
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 210
+        },
+        {
+          "heading": "Security",
+          "level": 3,
+          "line": 214
+        },
+        {
+          "heading": "[0.6.8] - 2026-08-15",
+          "level": 2,
+          "line": 218
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 220
+        },
+        {
+          "heading": "Changed",
+          "level": 3,
+          "line": 224
+        },
+        {
+          "heading": "[0.6.7] - 2026-08-15",
+          "level": 2,
+          "line": 228
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 230
+        },
+        {
+          "heading": "[0.6.6] - 2026-08-15",
+          "level": 2,
+          "line": 237
+        },
+        {
+          "heading": "Changed",
+          "level": 3,
+          "line": 239
+        },
+        {
+          "heading": "[0.6.5] - 2026-08-15",
+          "level": 2,
+          "line": 246
+        },
+        {
+          "heading": "Changed",
+          "level": 3,
+          "line": 248
+        },
+        {
+          "heading": "[0.6.4] - 2026-08-15",
+          "level": 2,
+          "line": 256
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 258
+        },
+        {
+          "heading": "[0.6.3] - 2026-08-15",
+          "level": 2,
+          "line": 265
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 267
+        },
+        {
+          "heading": "[0.6.2] - 2026-08-15",
+          "level": 2,
+          "line": 274
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 276
+        },
+        {
+          "heading": "[0.6.1] - 2026-08-15",
+          "level": 2,
+          "line": 283
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 285
+        },
+        {
+          "heading": "[0.6.0] - 2026-08-15",
+          "level": 2,
+          "line": 292
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 294
+        },
+        {
+          "heading": "Changed",
+          "level": 3,
+          "line": 301
+        },
+        {
+          "heading": "[0.5.1] - 2026-08-15",
+          "level": 2,
+          "line": 309
+        },
+        {
+          "heading": "Fixed",
+          "level": 3,
+          "line": 311
+        },
+        {
+          "heading": "[0.5.0] - 2026-08-15",
+          "level": 2,
+          "line": 318
+        },
+        {
+          "heading": "Changed",
+          "level": 3,
+          "line": 320
+        },
+        {
+          "heading": "Fixed",
+          "level": 3,
+          "line": 327
+        },
+        {
+          "heading": "[0.4.0] - 2026-08-14",
+          "level": 2,
+          "line": 336
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 338
+        },
+        {
+          "heading": "Changed",
+          "level": 3,
+          "line": 348
+        },
+        {
+          "heading": "Fixed",
+          "level": 3,
+          "line": 355
+        },
+        {
+          "heading": "[0.3.0] - 2026-08-12",
+          "level": 2,
+          "line": 362
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 364
+        },
+        {
+          "heading": "Changed",
+          "level": 3,
+          "line": 371
+        },
+        {
+          "heading": "Fixed",
+          "level": 3,
+          "line": 380
+        },
+        {
+          "heading": "[0.2.0] - 2026-07-23",
+          "level": 2,
+          "line": 387
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 389
+        },
+        {
+          "heading": "Changed",
+          "level": 3,
+          "line": 397
+        },
+        {
+          "heading": "Fixed",
+          "level": 3,
+          "line": 401
+        },
+        {
+          "heading": "[2026-06-13]",
+          "level": 2,
+          "line": 405
+        },
+        {
+          "heading": "Added",
+          "level": 3,
+          "line": 407
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 84
+      }
+    },
+    {
+      "path": "CODE_TUTORIAL.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 987,
+      "nonEmptyLines": 822,
+      "sections": [
+        {
+          "heading": "Local AI Chat Studio — Code Tutorial: Zero to Hero",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Part 1 — Foundations: the ideas this codebase is built on",
+          "level": 2,
+          "line": 31
+        },
+        {
+          "heading": "Part 2 — The 10,000-foot view",
+          "level": 2,
+          "line": 97
+        },
+        {
+          "heading": "Part 3 — Historical Streamlit path (retired UI)",
+          "level": 2,
+          "line": 127
+        },
+        {
+          "heading": "3.1 `src/config.py` — one object everything else reads from",
+          "level": 3,
+          "line": 137
+        },
+        {
+          "heading": "3.2 `src/chat_store.py` — SQLite, the durable memory",
+          "level": 3,
+          "line": 164
+        },
+        {
+          "heading": "3.3 `src/ollama_client.py` — talking to the model server",
+          "level": 3,
+          "line": 203
+        },
+        {
+          "heading": "3.4 `src/catalog.py` + `src/model_labels.py` — one dropdown, many sources",
+          "level": 3,
+          "line": 240
+        },
+        {
+          "heading": "3.5 `src/providers.py` — cloud providers and the secrets vault",
+          "level": 3,
+          "line": 269
+        },
+        {
+          "heading": "3.6 `src/files.py` — turning an upload into text",
+          "level": 3,
+          "line": 295
+        },
+        {
+          "heading": "3.7 `src/rag.py` — the vector search layer",
+          "level": 3,
+          "line": 328
+        },
+        {
+          "heading": "3.8 `src/memory.py` + `src/personalization.py` — the two forms of \"knowing you\"",
+          "level": 3,
+          "line": 358
+        },
+        {
+          "heading": "3.9 `src/orchestrator.py` — assembling the prompt",
+          "level": 3,
+          "line": 396
+        },
+        {
+          "heading": "3.10 `src/jobs.py` — the background worker (the heart of the legacy app)",
+          "level": 3,
+          "line": 433
+        },
+        {
+          "heading": "3.11 `app.py` — tying it together",
+          "level": 3,
+          "line": 507
+        },
+        {
+          "heading": "Part 4 — The v2 stack (FastAPI + React): the target architecture",
+          "level": 2,
+          "line": 553
+        },
+        {
+          "heading": "4.1 `backend/app/contracts.py` — one file, every shape",
+          "level": 3,
+          "line": 560
+        },
+        {
+          "heading": "4.2 `backend/app/store.py` — SQLite, v2 style",
+          "level": 3,
+          "line": 596
+        },
+        {
+          "heading": "4.3 `backend/app/sessions.py` — the v2 credential vault",
+          "level": 3,
+          "line": 632
+        },
+        {
+          "heading": "4.4 `backend/app/providers.py` — the adapter pattern, for real",
+          "level": 3,
+          "line": 654
+        },
+        {
+          "heading": "4.5 `backend/app/runs.py` — the async run lifecycle",
+          "level": 3,
+          "line": 700
+        },
+        {
+          "heading": "4.6 `backend/app/main.py` — composition root, and a live bug-fix case study",
+          "level": 3,
+          "line": 769
+        },
+        {
+          "heading": "4.7 `backend/app/cli.py` — the entrypoint",
+          "level": 3,
+          "line": 853
+        },
+        {
+          "heading": "4.8 `frontend/` — the current React workspace",
+          "level": 3,
+          "line": 882
+        },
+        {
+          "heading": "4.9 `backend/app/mcp_tools.py` — approval before capability",
+          "level": 3,
+          "line": 912
+        },
+        {
+          "heading": "Part 5 — Two full traces, side by side",
+          "level": 2,
+          "line": 935
+        },
+        {
+          "heading": "Part 6 — Where to go from here",
+          "level": 2,
+          "line": 973
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 27
+      }
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 83,
+      "nonEmptyLines": 64,
+      "sections": [
+        {
+          "heading": "Contributing to Local AI Chat Studio",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Before you start",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "Setup",
+          "level": 2,
+          "line": 18
+        },
+        {
+          "heading": "Code style",
+          "level": 2,
+          "line": 32
+        },
+        {
+          "heading": "Running checks before you open a PR",
+          "level": 2,
+          "line": 47
+        },
+        {
+          "heading": "Opening a PR",
+          "level": 2,
+          "line": 61
+        },
+        {
+          "heading": "Good first issues",
+          "level": 2,
+          "line": 72
+        },
+        {
+          "heading": "Code of Conduct",
+          "level": 2,
+          "line": 81
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 8
+      }
+    },
+    {
+      "path": "GRAPH_REPORT.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 329,
+      "nonEmptyLines": 272,
+      "sections": [
+        {
+          "heading": "Graph Report - D:\\AI\\Github\\local-ai-chat-studio  (2026-08-15)",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Corpus Check",
+          "level": 2,
+          "line": 3
+        },
+        {
+          "heading": "Summary",
+          "level": 2,
+          "line": 7
+        },
+        {
+          "heading": "Community Hubs (Navigation)",
+          "level": 2,
+          "line": 12
+        },
+        {
+          "heading": "God Nodes (most connected - your core abstractions)",
+          "level": 2,
+          "line": 91
+        },
+        {
+          "heading": "Surprising Connections (you probably didn't know these)",
+          "level": 2,
+          "line": 103
+        },
+        {
+          "heading": "Import Cycles",
+          "level": 2,
+          "line": 115
+        },
+        {
+          "heading": "Hyperedges (group relationships)",
+          "level": 2,
+          "line": 118
+        },
+        {
+          "heading": "Communities (80 total, 31 thin omitted)",
+          "level": 2,
+          "line": 122
+        },
+        {
+          "heading": "Community 0 - \"Backend API Contracts\"",
+          "level": 3,
+          "line": 124
+        },
+        {
+          "heading": "Community 1 - \"Run Data Models\"",
+          "level": 3,
+          "line": 128
+        },
+        {
+          "heading": "Community 2 - \"Provider Adapters\"",
+          "level": 3,
+          "line": 132
+        },
+        {
+          "heading": "Community 3 - \"Legacy Chat Persistence\"",
+          "level": 3,
+          "line": 136
+        },
+        {
+          "heading": "Community 4 - \"Sheet UI Components\"",
+          "level": 3,
+          "line": 140
+        },
+        {
+          "heading": "Community 5 - \"Dropdown UI Components\"",
+          "level": 3,
+          "line": 144
+        },
+        {
+          "heading": "Community 6 - \"Model Catalog and Ollama\"",
+          "level": 3,
+          "line": 148
+        },
+        {
+          "heading": "Community 7 - \"Legacy Application Modules\"",
+          "level": 3,
+          "line": 152
+        },
+        {
+          "heading": "Community 8 - \"Frontend Dependencies\"",
+          "level": 3,
+          "line": 156
+        },
+        {
+          "heading": "Community 9 - \"Frontend Lint Rules\"",
+          "level": 3,
+          "line": 160
+        },
+        {
+          "heading": "Community 10 - \"Run Lifecycle Management\"",
+          "level": 3,
+          "line": 164
+        },
+        {
+          "heading": "Community 11 - \"TypeScript App Configuration\"",
+          "level": 3,
+          "line": 168
+        },
+        {
+          "heading": "Community 12 - \"Retrieval and Vector Storage\"",
+          "level": 3,
+          "line": 172
+        },
+        {
+          "heading": "Community 13 - \"Project Documentation\"",
+          "level": 3,
+          "line": 176
+        },
+        {
+          "heading": "Community 14 - \"Workspace Feature Tests\"",
+          "level": 3,
+          "line": 180
+        },
+        {
+          "heading": "Community 15 - \"Frontend Chat Application\"",
+          "level": 3,
+          "line": 184
+        },
+        {
+          "heading": "Community 16 - \"Component Configuration\"",
+          "level": 3,
+          "line": 188
+        },
+        {
+          "heading": "Community 17 - \"Frontend API Client\"",
+          "level": 3,
+          "line": 192
+        },
+        {
+          "heading": "Community 18 - \"Node TypeScript Configuration\"",
+          "level": 3,
+          "line": 196
+        },
+        {
+          "heading": "Community 19 - \"Legacy Job Management\"",
+          "level": 3,
+          "line": 200
+        },
+        {
+          "heading": "Community 20 - \"Application Configuration\"",
+          "level": 3,
+          "line": 204
+        },
+        {
+          "heading": "Community 21 - \"Legacy Streaming Pipeline\"",
+          "level": 3,
+          "line": 208
+        },
+        {
+          "heading": "Community 22 - \"Card UI Components\"",
+          "level": 3,
+          "line": 212
+        },
+        {
+          "heading": "Community 23 - \"Field UI Components\"",
+          "level": 3,
+          "line": 216
+        },
+        {
+          "heading": "Community 24 - \"File Upload Processing\"",
+          "level": 3,
+          "line": 220
+        },
+        {
+          "heading": "Community 25 - \"Button and Dialog UI\"",
+          "level": 3,
+          "line": 224
+        },
+        {
+          "heading": "Community 26 - \"Memory Extraction Pipeline\"",
+          "level": 3,
+          "line": 228
+        },
+        {
+          "heading": "Community 27 - \"Model Pricing Metadata\"",
+          "level": 3,
+          "line": 232
+        },
+        {
+          "heading": "Community 28 - \"Backend API Tests\"",
+          "level": 3,
+          "line": 236
+        },
+        {
+          "heading": "Community 29 - \"Legacy Generation Workflow\"",
+          "level": 3,
+          "line": 240
+        },
+        {
+          "heading": "Community 30 - \"Application Settings\"",
+          "level": 3,
+          "line": 244
+        },
+        {
+          "heading": "Community 31 - \"Frontend App Features\"",
+          "level": 3,
+          "line": 248
+        },
+        {
+          "heading": "Community 32 - \"Frontend Error Handling\"",
+          "level": 3,
+          "line": 252
+        },
+        {
+          "heading": "Community 33 - \"Avatar UI Components\"",
+          "level": 3,
+          "line": 256
+        },
+        {
+          "heading": "Community 34 - \"Base TypeScript Configuration\"",
+          "level": 3,
+          "line": 260
+        },
+        {
+          "heading": "Community 35 - \"Sidebar UI Components\"",
+          "level": 3,
+          "line": 264
+        },
+        {
+          "heading": "Community 36 - \"OpenAPI Schema\"",
+          "level": 3,
+          "line": 268
+        },
+        {
+          "heading": "Community 37 - \"Tabs UI Components\"",
+          "level": 3,
+          "line": 272
+        },
+        {
+          "heading": "Community 38 - \"Hero Architecture Artwork\"",
+          "level": 3,
+          "line": 276
+        },
+        {
+          "heading": "Community 39 - \"Vite Brand Artwork\"",
+          "level": 3,
+          "line": 280
+        },
+        {
+          "heading": "Community 40 - \"Continuous Integration\"",
+          "level": 3,
+          "line": 284
+        },
+        {
+          "heading": "Community 41 - \"External Integrations\"",
+          "level": 3,
+          "line": 288
+        },
+        {
+          "heading": "Community 42 - \"Application Favicon\"",
+          "level": 3,
+          "line": 292
+        },
+        {
+          "heading": "Community 43 - \"Documentation Icon Artwork\"",
+          "level": 3,
+          "line": 296
+        },
+        {
+          "heading": "Community 44 - \"React Brand Artwork\"",
+          "level": 3,
+          "line": 300
+        },
+        {
+          "heading": "Community 46 - \"Model Runtime Handoff\"",
+          "level": 3,
+          "line": 304
+        },
+        {
+          "heading": "Knowledge Gaps",
+          "level": 2,
+          "line": 308
+        },
+        {
+          "heading": "Suggested Questions",
+          "level": 2,
+          "line": 313
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 57
+      }
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 479,
+      "nonEmptyLines": 355,
+      "sections": [
+        {
+          "heading": "Local AI Chat Studio",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Features",
+          "level": 2,
+          "line": 13
+        },
+        {
+          "heading": "Conversations and generation",
+          "level": 3,
+          "line": 15
+        },
+        {
+          "heading": "Parallel model comparison",
+          "level": 3,
+          "line": 25
+        },
+        {
+          "heading": "Models, providers, and pricing",
+          "level": 3,
+          "line": 32
+        },
+        {
+          "heading": "Controlled context and safety",
+          "level": 3,
+          "line": 46
+        },
+        {
+          "heading": "Knowledge, files, and focused work",
+          "level": 3,
+          "line": 55
+        },
+        {
+          "heading": "Local data and operations",
+          "level": 3,
+          "line": 67
+        },
+        {
+          "heading": "Workspace Navigation",
+          "level": 2,
+          "line": 78
+        },
+        {
+          "heading": "Screenshots",
+          "level": 2,
+          "line": 99
+        },
+        {
+          "heading": "Tech Stack",
+          "level": 2,
+          "line": 105
+        },
+        {
+          "heading": "Project Structure",
+          "level": 2,
+          "line": 117
+        },
+        {
+          "heading": "Installation and Setup",
+          "level": 2,
+          "line": 152
+        },
+        {
+          "heading": "Windows 11: one-click setup",
+          "level": 3,
+          "line": 154
+        },
+        {
+          "heading": "Linux: one-file setup",
+          "level": 3,
+          "line": 177
+        },
+        {
+          "heading": "Manual setup",
+          "level": 3,
+          "line": 201
+        },
+        {
+          "heading": "Development mode",
+          "level": 3,
+          "line": 226
+        },
+        {
+          "heading": "Environment Variables",
+          "level": 2,
+          "line": 243
+        },
+        {
+          "heading": "Windows user-scoped credentials",
+          "level": 3,
+          "line": 249
+        },
+        {
+          "heading": "Runtime and endpoints",
+          "level": 3,
+          "line": 261
+        },
+        {
+          "heading": "Provider credentials",
+          "level": 3,
+          "line": 274
+        },
+        {
+          "heading": "Anthropic workload identity",
+          "level": 3,
+          "line": 289
+        },
+        {
+          "heading": "Advanced shared settings",
+          "level": 3,
+          "line": 298
+        },
+        {
+          "heading": "Configuration Options",
+          "level": 2,
+          "line": 310
+        },
+        {
+          "heading": "Providers and data boundaries",
+          "level": 3,
+          "line": 312
+        },
+        {
+          "heading": "Context and safety",
+          "level": 3,
+          "line": 316
+        },
+        {
+          "heading": "Pricing",
+          "level": 3,
+          "line": 320
+        },
+        {
+          "heading": "Persistence and retrieval",
+          "level": 3,
+          "line": 324
+        },
+        {
+          "heading": "MCP and agent-tool approvals",
+          "level": 3,
+          "line": 328
+        },
+        {
+          "heading": "Usage",
+          "level": 2,
+          "line": 334
+        },
+        {
+          "heading": "Example: launch with OpenAI",
+          "level": 3,
+          "line": 347
+        },
+        {
+          "heading": "Example: launch with Agnes AI",
+          "level": 3,
+          "line": 364
+        },
+        {
+          "heading": "How It Works",
+          "level": 2,
+          "line": 373
+        },
+        {
+          "heading": "Frontend architecture",
+          "level": 3,
+          "line": 403
+        },
+        {
+          "heading": "Models and References",
+          "level": 2,
+          "line": 418
+        },
+        {
+          "heading": "Verification",
+          "level": 2,
+          "line": 448
+        },
+        {
+          "heading": "Security",
+          "level": 2,
+          "line": 469
+        },
+        {
+          "heading": "License",
+          "level": 2,
+          "line": 475
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 38
+      }
+    },
+    {
+      "path": "SECURITY.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 66,
+      "nonEmptyLines": 58,
+      "sections": [
+        {
+          "heading": "Security Policy",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Scope",
+          "level": 2,
+          "line": 3
+        },
+        {
+          "heading": "Reporting a vulnerability",
+          "level": 2,
+          "line": 53
+        },
+        {
+          "heading": "Supported versions",
+          "level": 2,
+          "line": 64
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 4
+      }
+    },
+    {
+      "path": "TECHNICAL.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 209,
+      "nonEmptyLines": 182,
+      "sections": [
+        {
+          "heading": "Technical Guide",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Runtime architecture",
+          "level": 2,
+          "line": 8
+        },
+        {
+          "heading": "Data, sessions, and runs",
+          "level": 2,
+          "line": 29
+        },
+        {
+          "heading": "Main subsystems",
+          "level": 2,
+          "line": 50
+        },
+        {
+          "heading": "Providers and integrations",
+          "level": 2,
+          "line": 68
+        },
+        {
+          "heading": "Configuration",
+          "level": 2,
+          "line": 162
+        },
+        {
+          "heading": "API contracts and development",
+          "level": 2,
+          "line": 178
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 7
+      }
+    },
+    {
+      "path": "USAGE.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 149,
+      "nonEmptyLines": 122,
+      "sections": [
+        {
+          "heading": "Using Local AI Chat Studio",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Start the studio",
+          "level": 2,
+          "line": 6
+        },
+        {
+          "heading": "Choose a model",
+          "level": 2,
+          "line": 42
+        },
+        {
+          "heading": "Work with a conversation",
+          "level": 2,
+          "line": 72
+        },
+        {
+          "heading": "Use memory deliberately",
+          "level": 2,
+          "line": 119
+        },
+        {
+          "heading": "Privacy and troubleshooting",
+          "level": 2,
+          "line": 137
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 6
+      }
+    },
+    {
+      "path": "USER_GUIDE.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 252,
+      "nonEmptyLines": 198,
+      "sections": [
+        {
+          "heading": "Local AI Chat Studio — User Guide",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Start the studio",
+          "level": 2,
+          "line": 3
+        },
+        {
+          "heading": "Main workflows",
+          "level": 2,
+          "line": 43
+        },
+        {
+          "heading": "Chat",
+          "level": 3,
+          "line": 45
+        },
+        {
+          "heading": "Context and Evidence",
+          "level": 3,
+          "line": 117
+        },
+        {
+          "heading": "Context backpacks and Focus",
+          "level": 3,
+          "line": 138
+        },
+        {
+          "heading": "Tools and Work Mode",
+          "level": 3,
+          "line": 144
+        },
+        {
+          "heading": "Replay and Compare",
+          "level": 3,
+          "line": 152
+        },
+        {
+          "heading": "Providers",
+          "level": 3,
+          "line": 166
+        },
+        {
+          "heading": "Library",
+          "level": 3,
+          "line": 190
+        },
+        {
+          "heading": "Settings and data controls",
+          "level": 3,
+          "line": 221
+        },
+        {
+          "heading": "Privacy defaults",
+          "level": 2,
+          "line": 234
+        },
+        {
+          "heading": "Troubleshooting",
+          "level": 2,
+          "line": 242
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 13
+      }
+    },
+    {
+      "path": "ZERO_TO_HERO_STUDY_HANDBOOK.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 594,
+      "nonEmptyLines": 435,
+      "sections": [
+        {
+          "heading": "Local AI Chat Studio: Zero-to-Hero Study Handbook",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "1. Start with the product boundary",
+          "level": 2,
+          "line": 14
+        },
+        {
+          "heading": "2. Foundations: the ideas behind the code",
+          "level": 2,
+          "line": 36
+        },
+        {
+          "heading": "2.1 LLMs, tokens, context, and temperature",
+          "level": 3,
+          "line": 38
+        },
+        {
+          "heading": "2.2 Embeddings, cosine similarity, vector databases, and RAG",
+          "level": 3,
+          "line": 46
+        },
+        {
+          "heading": "2.3 BYOK, SPA, REST, SSE, and PKCE",
+          "level": 3,
+          "line": 62
+        },
+        {
+          "heading": "2.4 Persistence and concurrency",
+          "level": 3,
+          "line": 70
+        },
+        {
+          "heading": "3. Install and run",
+          "level": 2,
+          "line": 83
+        },
+        {
+          "heading": "3.1 Prerequisites",
+          "level": 3,
+          "line": 85
+        },
+        {
+          "heading": "3.2 Windows PowerShell",
+          "level": 3,
+          "line": 93
+        },
+        {
+          "heading": "3.3 POSIX shells",
+          "level": 3,
+          "line": 123
+        },
+        {
+          "heading": "3.4 Configuration and data",
+          "level": 3,
+          "line": 140
+        },
+        {
+          "heading": "4. Repository map",
+          "level": 2,
+          "line": 151
+        },
+        {
+          "heading": "5. FastAPI v2, module by module",
+          "level": 2,
+          "line": 171
+        },
+        {
+          "heading": "5.1 `backend/app/main.py`: composition and HTTP contracts",
+          "level": 3,
+          "line": 173
+        },
+        {
+          "heading": "5.2 `contracts.py`: one source for request/response shapes",
+          "level": 3,
+          "line": 200
+        },
+        {
+          "heading": "5.3 `store.py`: SQLite and ordering",
+          "level": 3,
+          "line": 206
+        },
+        {
+          "heading": "5.4 `sessions.py`: credential isolation",
+          "level": 3,
+          "line": 210
+        },
+        {
+          "heading": "5.5 `providers.py`: normalized adapters",
+          "level": 3,
+          "line": 214
+        },
+        {
+          "heading": "5.6 `runs.py`: lifecycle, events, and cancellation",
+          "level": 3,
+          "line": 225
+        },
+        {
+          "heading": "5.7 `cli.py` and static serving",
+          "level": 3,
+          "line": 246
+        },
+        {
+          "heading": "6. React workspace: orchestration, routes, features, and contracts",
+          "level": 2,
+          "line": 250
+        },
+        {
+          "heading": "7. Historical Streamlit notes (retired UI)",
+          "level": 2,
+          "line": 272
+        },
+        {
+          "heading": "7.1 `app.py` and pages",
+          "level": 3,
+          "line": 277
+        },
+        {
+          "heading": "7.2 `src/jobs.py` and `src/orchestrator.py`",
+          "level": 3,
+          "line": 288
+        },
+        {
+          "heading": "7.3 Catalog, providers, and Ollama",
+          "level": 3,
+          "line": 304
+        },
+        {
+          "heading": "7.4 Files and RAG",
+          "level": 3,
+          "line": 312
+        },
+        {
+          "heading": "7.5 Memory and personalization",
+          "level": 3,
+          "line": 320
+        },
+        {
+          "heading": "7.6 `src/chat_store.py`",
+          "level": 3,
+          "line": 326
+        },
+        {
+          "heading": "8. End-to-end traces",
+          "level": 2,
+          "line": 330
+        },
+        {
+          "heading": "8.1 Current Chat turn",
+          "level": 3,
+          "line": 332
+        },
+        {
+          "heading": "8.2 Conversation persistence and ordinary runs",
+          "level": 3,
+          "line": 348
+        },
+        {
+          "heading": "8.3 legacy rich turn",
+          "level": 3,
+          "line": 361
+        },
+        {
+          "heading": "8.4 legacy RAG question",
+          "level": 3,
+          "line": 375
+        },
+        {
+          "heading": "9. Data, privacy, and security",
+          "level": 2,
+          "line": 382
+        },
+        {
+          "heading": "10. Contributor tutorials",
+          "level": 2,
+          "line": 394
+        },
+        {
+          "heading": "10.1 Add a v2 provider",
+          "level": 3,
+          "line": 396
+        },
+        {
+          "heading": "10.2 Add an endpoint and regenerate frontend types",
+          "level": 3,
+          "line": 407
+        },
+        {
+          "heading": "10.3 Wire one React workspace",
+          "level": 3,
+          "line": 418
+        },
+        {
+          "heading": "10.4 Add a legacy file parser",
+          "level": 3,
+          "line": 429
+        },
+        {
+          "heading": "11. Testing, CI, and debugging",
+          "level": 2,
+          "line": 439
+        },
+        {
+          "heading": "11.1 Local checks",
+          "level": 3,
+          "line": 441
+        },
+        {
+          "heading": "11.2 Debugging playbook",
+          "level": 3,
+          "line": 456
+        },
+        {
+          "heading": "12. Module atlas",
+          "level": 2,
+          "line": 472
+        },
+        {
+          "heading": "13. Exercises and solution outlines",
+          "level": 2,
+          "line": 508
+        },
+        {
+          "heading": "14. Glossary",
+          "level": 2,
+          "line": 546
+        },
+        {
+          "heading": "15. Official sources",
+          "level": 2,
+          "line": 570
+        },
+        {
+          "heading": "16. A practical contributor path",
+          "level": 2,
+          "line": 590
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 48
+      }
+    },
+    {
+      "path": "pyproject.toml",
+      "language": "toml",
+      "fileCategory": "config",
+      "totalLines": 48,
+      "nonEmptyLines": 43,
+      "sections": [
+        {
+          "heading": "project",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "project.scripts",
+          "level": 2,
+          "line": 29
+        },
+        {
+          "heading": "build-system",
+          "level": 1,
+          "line": 32
+        },
+        {
+          "heading": "tool.hatch.build.targets.wheel",
+          "level": 5,
+          "line": 36
+        },
+        {
+          "heading": "tool.uv",
+          "level": 2,
+          "line": 39
+        },
+        {
+          "heading": "dependency-groups",
+          "level": 1,
+          "line": 42
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 6
+      }
+    }
+  ]
+}

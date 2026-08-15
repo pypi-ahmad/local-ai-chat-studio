@@ -1,0 +1,15 @@
+{
+  "nodes": [
+    {
+      "id": "pipeline:.github/workflows/ci.yml",
+      "type": "pipeline",
+      "name": "ci.yml",
+      "filePath": ".github/workflows/ci.yml",
+      "summary": "GitHub Actions continuous-integration workflow that validates the Windows launcher and runs backend and frontend quality checks on pushes and pull requests.",
+      "tags": ["ci-cd", "automation", "testing", "build-system"],
+      "complexity": "simple",
+      "languageNotes": "YAML defines three independently scheduled jobs with platform-specific setup and command steps."
+    }
+  ],
+  "edges": []
+}

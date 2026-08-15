@@ -1,0 +1,21 @@
+{
+  "projectRoot": "D:\\AI\\Github\\local-ai-chat-studio",
+  "batchFiles": [
+    {
+      "path": "frontend/README.md",
+      "language": "markdown",
+      "sizeLines": 13,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "frontend/package.json",
+      "language": "json",
+      "sizeLines": 42,
+      "fileCategory": "config"
+    }
+  ],
+  "batchImportData": {
+    "frontend/README.md": [],
+    "frontend/package.json": []
+  }
+}

@@ -1,35 +1,4 @@
 {
-  "version": "1.0.0",
-  "project": {
-    "name": "local-ai-chat-studio",
-    "languages": [
-      "batch",
-      "css",
-      "db",
-      "html",
-      "json",
-      "markdown",
-      "python",
-      "toml",
-      "typescript",
-      "unknown",
-      "yaml"
-    ],
-    "frameworks": [
-      "FastAPI",
-      "GitHub Actions",
-      "Pydantic",
-      "Pytest",
-      "React",
-      "Tailwind CSS",
-      "Uvicorn",
-      "Vite",
-      "Vitest"
-    ],
-    "description": "A local-first, ChatGPT-style AI chat studio over Ollama with optional BYOK cloud providers, built-in memory, and self-improving personalization. Note: this project has over 100 source files; consider scoping analysis to a subdirectory for faster results.",
-    "analyzedAt": "2026-08-14T22:56:20.280Z",
-    "gitCommitHash": "33e6788210cbb75f2992d9d7ab0fff7d9fe6a6db"
-  },
   "nodes": [
     {
       "id": "file:frontend/src/components/ui/avatar.tsx",
@@ -12627,42 +12596,42 @@
       "target": "function:frontend/src/App.test.tsx:setViewport",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:frontend/src/App.test.tsx",
       "target": "function:frontend/src/App.test.tsx:waitForStudio",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:frontend/src/App.tsx",
       "target": "function:frontend/src/App.tsx:Navigation",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:frontend/src/App.tsx",
       "target": "function:frontend/src/App.tsx:CommandPalette",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:frontend/src/App.tsx",
       "target": "function:frontend/src/App.tsx:StudioApp",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:frontend/src/App.tsx",
       "target": "function:frontend/src/App.tsx:App",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:frontend/src/App.tsx",
@@ -12676,7 +12645,7 @@
       "target": "class:frontend/src/api/client.ts:ApiError",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:frontend/src/api/client.ts",
@@ -12690,14 +12659,14 @@
       "target": "function:frontend/src/api/client.ts:request",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:frontend/src/api/client.ts",
       "target": "function:frontend/src/api/client.ts:streamRun",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:frontend/src/api/client.ts",
@@ -12725,42 +12694,42 @@
       "target": "function:Launch Chat Studio.cmd:Test-LocalPort",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:Launch Chat Studio.cmd",
       "target": "function:Launch Chat Studio.cmd:Get-PortOwnerIds",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:Launch Chat Studio.cmd",
       "target": "function:Launch Chat Studio.cmd:Clear-LocalPort",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:Launch Chat Studio.cmd",
       "target": "function:Launch Chat Studio.cmd:Get-FilesFingerprint",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:Launch Chat Studio.cmd",
       "target": "function:Launch Chat Studio.cmd:Get-FrontendState",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:Launch Chat Studio.cmd",
       "target": "function:Launch Chat Studio.cmd:Install-Node",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "document:README.md",
@@ -12879,84 +12848,84 @@
       "target": "function:tests/test_api_contract.py:test_spa_static_files_falls_back_to_index_for_browser_routes",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:tests/test_api_contract.py",
       "target": "function:tests/test_api_contract.py:test_health_and_session_cookie",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:tests/test_api_contract.py",
       "target": "function:tests/test_api_contract.py:test_managed_server_can_be_stopped_from_the_local_ui",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:tests/test_api_contract.py",
       "target": "function:tests/test_api_contract.py:test_shutdown_rejects_cross_site_and_unmanaged_requests",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:tests/test_api_contract.py",
       "target": "function:tests/test_api_contract.py:test_conversation_crud_preserves_message_order",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:tests/test_api_contract.py",
       "target": "function:tests/test_api_contract.py:test_conversation_settings_are_saved_independently",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:tests/test_api_contract.py",
       "target": "function:tests/test_api_contract.py:test_conversation_folder_is_persisted_and_searchable",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:tests/test_api_contract.py",
       "target": "function:tests/test_api_contract.py:test_conversation_can_start_with_assistant_settings",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:tests/test_api_contract.py",
       "target": "function:tests/test_api_contract.py:test_provider_secret_is_scoped_to_browser_session",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:tests/test_api_contract.py",
       "target": "function:tests/test_api_contract.py:test_anthropic_reports_workload_identity_source",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:tests/test_api_contract.py",
       "target": "function:tests/test_api_contract.py:test_run_stream_contract_retains_completed_output",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:tests/test_api_contract.py",
       "target": "function:tests/test_api_contract.py:test_openrouter_auth_uses_session_pkce_and_current_callback_origin",
       "type": "contains",
       "direction": "forward",
-      "weight": 1
+      "weight": 1.0
     },
     {
       "source": "file:tests/test_api_contract.py",
@@ -13095,273 +13064,52 @@
     {
       "id": "layer:ui",
       "name": "User Interface",
-      "description": "React workspace composition, reusable UI primitives, styles, and browser-facing route orchestration.",
-      "nodeIds": [
-        "file:frontend/src/components/ui/avatar.tsx",
-        "file:frontend/src/components/ui/button.tsx",
-        "file:frontend/src/components/ui/dialog.tsx",
-        "file:frontend/src/components/ui/dropdown-menu.tsx",
-        "file:frontend/src/components/ui/field.tsx",
-        "file:frontend/src/components/ui/input.tsx",
-        "file:frontend/src/components/ui/label.tsx",
-        "file:frontend/src/components/ui/select.tsx",
-        "file:frontend/src/components/ui/separator.tsx",
-        "file:frontend/src/components/ui/sheet.tsx",
-        "file:frontend/src/components/ui/sidebar.tsx",
-        "file:frontend/src/components/ui/skeleton.tsx",
-        "file:frontend/src/components/ui/switch.tsx",
-        "file:frontend/src/components/ui/table.tsx",
-        "file:frontend/src/components/ui/tabs.tsx",
-        "file:frontend/src/ErrorBoundary.tsx",
-        "file:frontend/src/components/ui/badge.tsx",
-        "file:frontend/src/components/ui/card.tsx",
-        "file:frontend/src/components/ui/scroll-area.tsx",
-        "file:frontend/src/components/ui/textarea.tsx",
-        "file:frontend/src/components/ui/tooltip.tsx",
-        "file:frontend/src/main.tsx",
-        "file:frontend/src/index.css",
-        "file:frontend/src/App.tsx",
-        "file:frontend/src/App.css"
-      ]
+      "description": "React workspace composition, reusable UI primitives, styles, and browser-facing route orchestration."
     },
     {
       "id": "layer:api",
       "name": "API Layer",
-      "description": "FastAPI application composition and typed frontend transport clients that connect the browser workspace to local backend routes.",
-      "nodeIds": [
-        "file:backend/app/cli.py",
-        "file:backend/app/main.py",
-        "file:frontend/src/api/client.ts"
-      ]
+      "description": "FastAPI application composition and typed frontend transport clients that connect the browser workspace to local backend routes."
     },
     {
       "id": "layer:service",
       "name": "AI Services",
-      "description": "Provider adapters, run orchestration, context assembly, memory, retrieval, file processing, and shared AI workflow services.",
-      "nodeIds": [
-        "file:frontend/src/hooks/use-mobile.ts",
-        "file:frontend/src/lib/utils.ts",
-        "file:backend/app/memory.py",
-        "file:src/files.py",
-        "file:src/catalog.py",
-        "file:src/jobs.py",
-        "file:src/memory.py",
-        "file:src/model_labels.py",
-        "file:src/ollama_client.py",
-        "file:src/orchestrator.py",
-        "file:src/personalization.py",
-        "file:src/providers.py",
-        "file:src/rag.py",
-        "file:frontend/vitest.config.ts",
-        "file:backend/app/providers.py",
-        "file:backend/app/runs.py",
-        "file:backend/app/sessions.py",
-        "file:backend/app/workspace.py"
-      ]
+      "description": "Provider adapters, run orchestration, context assembly, memory, retrieval, file processing, and shared AI workflow services."
     },
     {
       "id": "layer:data",
       "name": "Data Layer",
-      "description": "SQLite and retrieval-backed persistence helpers that retain workspace conversations and related local state.",
-      "nodeIds": [
-        "file:src/chat_store.py",
-        "file:backend/app/store.py"
-      ]
+      "description": "SQLite and retrieval-backed persistence helpers that retain workspace conversations and related local state."
     },
     {
       "id": "layer:types",
       "name": "Contract Types",
-      "description": "Pydantic and generated TypeScript contracts that define the backend-to-frontend API surface.",
-      "nodeIds": [
-        "file:backend/app/contracts.py",
-        "file:frontend/src/api/schema.ts"
-      ]
+      "description": "Pydantic and generated TypeScript contracts that define the backend-to-frontend API surface."
     },
     {
       "id": "layer:test",
       "name": "Test Layer",
-      "description": "Pytest and Vitest fixtures and integration tests that verify API, provider, and workspace behavior.",
-      "nodeIds": [
-        "file:frontend/src/test/setup.ts",
-        "file:tests/conftest.py",
-        "file:tests/test_provider_adapters.py",
-        "file:tests/test_workspace_features.py",
-        "file:frontend/src/App.test.tsx",
-        "file:tests/test_api_contract.py"
-      ]
+      "description": "Pytest and Vitest fixtures and integration tests that verify API, provider, and workspace behavior."
     },
     {
       "id": "layer:config",
       "name": "Configuration",
-      "description": "Build, lint, runtime, package, and project metadata that configure the local Python and Vite applications.",
-      "nodeIds": [
-        "file:src/config.py",
-        "config:frontend/.oxlintrc.json",
-        "config:frontend/components.json",
-        "file:frontend/index.html",
-        "config:frontend/tsconfig.json",
-        "config:frontend/tsconfig.node.json",
-        "file:.graphifyignore",
-        "file:.python-version",
-        "file:backend/__init__.py",
-        "file:backend/app/__init__.py",
-        "config:frontend/tsconfig.app.json",
-        "config:pyproject.toml",
-        "config:frontend/package.json",
-        "file:frontend/vite.config.ts"
-      ]
+      "description": "Build, lint, runtime, package, and project metadata that configure the local Python and Vite applications."
     },
     {
       "id": "layer:documentation",
       "name": "Documentation",
-      "description": "Project, codebase, contribution, task, and issue-template documentation, including published guide pages.",
-      "nodeIds": [
-        "document:CODE_OF_CONDUCT.md",
-        "document:DATASET.md",
-        "document:.github/ISSUE_TEMPLATE/feature_request.md",
-        "document:tasks/plan.md",
-        "document:tasks/todo.md",
-        "document:CHANGELOG.md",
-        "document:CODE_TUTORIAL.md",
-        "document:CONTRIBUTING.md",
-        "document:GRAPH_REPORT.md",
-        "document:README.md",
-        "document:SECURITY.md",
-        "document:TECHNICAL.md",
-        "document:USAGE.md",
-        "document:USER_GUIDE.md",
-        "document:ZERO_TO_HERO_STUDY_HANDBOOK.md",
-        "document:docs/codebase/ARCHITECTURE.md",
-        "document:docs/codebase/CONCERNS.md",
-        "document:docs/codebase/CONVENTIONS.md",
-        "document:docs/codebase/INTEGRATIONS.md",
-        "document:docs/codebase/STACK.md",
-        "document:docs/codebase/STRUCTURE.md",
-        "document:docs/codebase/TESTING.md",
-        "document:frontend/README.md",
-        "document:.github/ISSUE_TEMPLATE/bug_report.md",
-        "document:.github/pull_request_template.md",
-        "file:docs/site/index.html",
-        "file:docs/tutorial/index.html"
-      ]
+      "description": "Project, codebase, contribution, task, and issue-template documentation, including published guide pages."
     },
     {
       "id": "layer:ci-cd",
       "name": "CI/CD",
-      "description": "GitHub Actions automation that validates the application through the repository workflow.",
-      "nodeIds": [
-        "pipeline:.github/workflows/ci.yml"
-      ]
+      "description": "GitHub Actions automation that validates the application through the repository workflow."
     },
     {
       "id": "layer:operations",
       "name": "Project Operations",
-      "description": "Local launch, code-generation, and graph-support artifacts used to operate and maintain the workspace.",
-      "nodeIds": [
-        "file:scripts/generate_api_types.py",
-        "file:Launch Chat Studio.cmd",
-        "file:.code-review-graph/graph.db"
-      ]
-    }
-  ],
-  "tour": [
-    {
-      "order": 1,
-      "title": "Project Overview",
-      "description": "Start with the README to understand the studio's local-first goal: private conversations, controlled context, and optional model providers. It establishes the product vocabulary and the development routes that the remaining steps turn into concrete code paths.",
-      "nodeIds": [
-        "document:README.md"
-      ]
-    },
-    {
-      "order": 2,
-      "title": "Runtime Configuration",
-      "description": "The Python and frontend package manifests define the two local runtimes that make up the workspace. Read these before following the code so the CLI, dependency groups, npm scripts, and Vite tooling have a clear operational context.",
-      "nodeIds": [
-        "config:pyproject.toml",
-        "config:frontend/package.json"
-      ]
-    },
-    {
-      "order": 3,
-      "title": "Browser Bootstrap",
-      "description": "The selected frontend entry point mounts the React application, global styling, and error boundary into the browser. This is the first executable stop in the UI layer and shows how the studio becomes a resilient single-page application.",
-      "nodeIds": [
-        "file:frontend/src/main.tsx",
-        "file:frontend/src/ErrorBoundary.tsx",
-        "file:frontend/src/App.css"
-      ]
-    },
-    {
-      "order": 4,
-      "title": "Workspace Experience",
-      "description": "App.tsx composes the primary workspace: navigation, conversation state, context preflight, live outputs, library actions, and settings. Its typed API client is the browser-side boundary that turns user actions into HTTP and SSE requests.",
-      "nodeIds": [
-        "file:frontend/src/App.tsx",
-        "file:frontend/src/api/client.ts",
-        "file:frontend/src/api/schema.ts"
-      ]
-    },
-    {
-      "order": 5,
-      "title": "FastAPI Boundary",
-      "description": "The FastAPI application creates the server-side boundary that the frontend reaches in the previous step, including routes, sessions, static serving, and runtime integrations. The contract module provides the shared typed vocabulary that keeps those API interactions explicit.",
-      "nodeIds": [
-        "file:backend/app/main.py",
-        "file:backend/app/contracts.py",
-        "file:backend/app/sessions.py"
-      ]
-    },
-    {
-      "order": 6,
-      "title": "Runs and Providers",
-      "description": "Generation requests become managed runs, while provider adapters discover models and stream responses from local or optional remote services. This pair is the core execution bridge between the API boundary and an AI model response.",
-      "nodeIds": [
-        "file:backend/app/runs.py",
-        "file:backend/app/providers.py",
-        "file:src/ollama_client.py"
-      ]
-    },
-    {
-      "order": 7,
-      "title": "Context and Memory",
-      "description": "Before a model is called, the workspace service plans context and applies safety-aware workflow decisions. Memory and persistence modules retain the local conversation state and associated resources that make later turns, replay, and retrieval meaningful.",
-      "nodeIds": [
-        "file:backend/app/workspace.py",
-        "file:backend/app/memory.py",
-        "file:backend/app/store.py",
-        "file:src/config.py"
-      ]
-    },
-    {
-      "order": 8,
-      "title": "Architecture Reference",
-      "description": "After tracing the live request path, use the architecture guide to consolidate the React, FastAPI, persistence, provider, and shutdown boundaries. It provides the project-level map needed to make changes at the narrowest responsible layer.",
-      "nodeIds": [
-        "document:docs/codebase/ARCHITECTURE.md",
-        "document:TECHNICAL.md",
-        "document:docs/codebase/CONVENTIONS.md"
-      ]
-    },
-    {
-      "order": 9,
-      "title": "Verification Strategy",
-      "description": "The API and workspace tests exercise the server contracts, provider behavior, persistence, and safety-sensitive workflows introduced in the earlier steps. The testing guide explains the preferred seams and completes the path from a code change to evidence that it works.",
-      "nodeIds": [
-        "file:tests/test_api_contract.py",
-        "file:tests/test_workspace_features.py",
-        "file:frontend/src/App.test.tsx",
-        "document:docs/codebase/TESTING.md"
-      ]
-    },
-    {
-      "order": 10,
-      "title": "Continuous Integration",
-      "description": "Finish with the GitHub Actions workflow that runs launcher checks plus backend and frontend validation on pushes and pull requests. This operational layer turns the local verification strategy into a repeatable repository gate.",
-      "nodeIds": [
-        "pipeline:.github/workflows/ci.yml",
-        "document:CONTRIBUTING.md"
-      ]
+      "description": "Local launch, code-generation, and graph-support artifacts used to operate and maintain the workspace."
     }
   ]
 }

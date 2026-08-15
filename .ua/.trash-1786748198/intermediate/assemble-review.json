@@ -1,0 +1,13 @@
+{
+  "fixedSectionOk": true,
+  "nodesRecovered": 0,
+  "edgesRestored": 0,
+  "crossBatchEdgesAdded": 0,
+  "typesRemapped": 0,
+  "complexityRemapped": 0,
+  "notes": [
+    "The two dropped documentation targets, backend/app/mcp_tools.py and backend/app/pricing.py, are absent from the authoritative scan file list and importMap; they were not recovered.",
+    "All 91 authoritative importMap relationships have matching imports edges in the assembled graph.",
+    "The assembled graph contains 443 nodes and 818 edges with no duplicate node IDs, dangling edges, or invalid complexity values."
+  ]
+}
