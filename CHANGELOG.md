@@ -7,6 +7,38 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.14] - 2026-08-17
+
+### Added
+
+- Added `launch.cmd` (Windows) and `launch.sh` (Linux) — lightweight launchers
+  for users who already have `uv` and Node.js on their PATH. They create `.venv`
+  in the project root via `uv sync --locked`, build the frontend once, and start
+  the Studio with `uv run chat-studio`.
+- Added `DISCLAIMER.md` — data responsibility, no-warranty statement, API key and
+  cost ownership, third-party provider non-affiliation, MCP server trust guidance,
+  and explicit no-financial-support statement.
+- Added `SUPPORT.md` — documentation index, where to report bugs, feature ideas,
+  and security issues; explicit no-paid-support and no-donations statement.
+
+### Changed
+
+- Updated `README.md`: added Table of Contents, GitHub URL, Documentation reference
+  table for all project docs, simple-launcher installation sections, and a
+  "Made with ❤️ by Ahmad Mujtaba" closing line.
+- Updated `CONTRIBUTING.md`: warm welcome, "Ways to contribute" section covering
+  eight contribution types, no-financial-support note, and data/API key
+  responsibility reminder; all original technical content preserved.
+- Improved issue templates (`bug_report.md`, `feature_request.md`) and pull
+  request template with expanded fields and clearer guidance.
+- Fixed `TECHNICAL.md` defaults: `OPENCODE_SERVER_USERNAME` correctly documents
+  its default value of `opencode`; `OPENCODE_SERVER_PASSWORD` is documented as
+  unset by default. Added Anthropic Workload Identity Federation environment
+  variables (`ANTHROPIC_PROFILE`, `ANTHROPIC_FEDERATION_RULE_ID`,
+  `ANTHROPIC_ORGANIZATION_ID`, `ANTHROPIC_SERVICE_ACCOUNT_ID`,
+  `ANTHROPIC_IDENTITY_TOKEN`, `ANTHROPIC_IDENTITY_TOKEN_FILE`).
+- Updated `USAGE.md` with an Anthropic WIF note in the "Choose a model" section.
+
 ## [0.7.13] - 2026-08-15
 
 ### Changed
