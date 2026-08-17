@@ -8,10 +8,31 @@ A local-first AI workspace for private conversations, controlled context, live m
 [![React 19](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+**GitHub:** <https://github.com/pypi-ahmad/local-ai-chat-studio>
+
 Local AI Chat Studio runs on your machine with a FastAPI backend and React frontend. It works with local Ollama models without an API key, while optional session-scoped credentials connect OpenAI, Agnes AI, Anthropic, Gemini, OpenRouter, xAI, OmniRoute, and OpenCode services.
 
 > [!IMPORTANT]
 > **This is a free, community-driven project.** Everything runs on your own machine with your own API keys. All data you process through the app is your sole responsibility — see [DISCLAIMER.md](DISCLAIMER.md) for the full scope. The author does not accept donations or financial support of any kind; the best way to give back is to open an issue or pull request.
+
+## Table of Contents
+
+- [Features](#features)
+- [Workspace Navigation](#workspace-navigation)
+- [Screenshots](#screenshots)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Installation and Setup](#installation-and-setup)
+- [Environment Variables](#environment-variables)
+- [Configuration Options](#configuration-options)
+- [Usage](#usage)
+- [How It Works](#how-it-works)
+- [Models and References](#models-and-references)
+- [Verification](#verification)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+- [Security](#security)
+- [License](#license)
 
 ## Features
 
@@ -121,8 +142,10 @@ Transcript and latest-run exports are available from **Export** in the Chat head
 
 ```text
 local-ai-chat-studio/
-├── Launch Chat Studio.cmd   One-click Windows setup and launcher
-├── Launch Chat Studio.sh    One-file Linux setup and launcher
+├── launch.cmd               Simple Windows launcher (requires uv + Node.js on PATH)
+├── launch.sh                Simple Linux launcher (requires uv + Node.js on PATH)
+├── Launch Chat Studio.cmd   Self-contained Windows setup launcher (downloads tooling)
+├── Launch Chat Studio.sh    Self-contained Linux setup launcher (downloads tooling)
 ├── backend/app/
 │   ├── cli.py               Uvicorn entrypoint and managed shutdown
 │   ├── main.py              FastAPI routes, sessions, and static frontend
@@ -154,7 +177,29 @@ local-ai-chat-studio/
 
 ## Installation and Setup
 
-### Windows 11: one-click setup
+Two launcher styles are included. **Simple launchers** (`launch.cmd` / `launch.sh`) require `uv` and Node.js to already be on your PATH and are the quickest route for developers. **Self-contained launchers** (`Launch Chat Studio.cmd` / `Launch Chat Studio.sh`) download their own portable `uv` and Node.js into `.runtime/` and need no prerequisites beyond a shell.
+
+### Windows: simple launcher (uv + Node.js required)
+
+If `uv` and Node.js are already installed:
+
+```powershell
+.\launch.cmd
+```
+
+This creates `.venv` in the project root via `uv sync --locked`, builds the frontend once, and starts the server. Install `uv` with `winget install --id=astral-sh.uv -e` or from <https://docs.astral.sh/uv/getting-started/installation/>.
+
+### Linux: simple launcher (uv + Node.js required)
+
+```bash
+bash launch.sh
+```
+
+This does the same setup on Linux. Install `uv` with `curl -LsSf https://astral.sh/uv/install.sh | sh`. Install Node.js LTS from <https://nodejs.org> or via [nvm](https://github.com/nvm-sh/nvm).
+
+---
+
+### Windows 11: self-contained one-click setup
 
 Double-click **`Launch Chat Studio.cmd`**.
 
@@ -471,6 +516,25 @@ Regenerate the frontend API schema after changing FastAPI contracts:
 cd frontend
 npm run generate:api
 ```
+
+## Documentation
+
+All project documentation is included in the repository. Start with [USAGE.md](USAGE.md) for task-based how-to guides and [TECHNICAL.md](TECHNICAL.md) for the full reference.
+
+| File | Type | Contents |
+|---|---|---|
+| [USAGE.md](USAGE.md) | How-to guide | Task-based instructions: starting the Studio, choosing a model, working with conversations, MCP tools, memory, and troubleshooting |
+| [TECHNICAL.md](TECHNICAL.md) | Reference | Complete configuration table, all environment variables, API overview, authentication, data storage, and provider contracts |
+| [USER_GUIDE.md](USER_GUIDE.md) | Tutorial | Full narrative walkthrough from first launch through advanced features |
+| [CODE_TUTORIAL.md](CODE_TUTORIAL.md) | Tutorial | Code-level walkthrough of the backend and frontend architecture |
+| [ZERO_TO_HERO_STUDY_HANDBOOK.md](ZERO_TO_HERO_STUDY_HANDBOOK.md) | Tutorial | Study handbook: concepts, patterns, and exercises for understanding the codebase |
+| [CODEBASE.md](CODEBASE.md) | Reference | Cited architecture document: tech-stack, entry points, C4 diagrams, subsystem deep-dives, and ADRs |
+| [CHANGELOG.md](CHANGELOG.md) | Reference | Version history and release notes |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | How-to guide | Contribution workflow, code-style guide, and checklist |
+| [SECURITY.md](SECURITY.md) | Reference | Security model and private vulnerability-reporting instructions |
+| [SUPPORT.md](SUPPORT.md) | Reference | Where to get help and how to report issues |
+| [DISCLAIMER.md](DISCLAIMER.md) | Reference | Data responsibility, no-warranty statement, and provider terms |
+| [GRAPH_REPORT.md](GRAPH_REPORT.md) | Reference | Code-graph analysis: hub nodes, coupling, complexity, and knowledge gaps |
 
 ## Contributing
 
