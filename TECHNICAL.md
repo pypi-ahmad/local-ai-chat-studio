@@ -168,12 +168,16 @@ embedded credentials and private/reserved DNS targets. This is not an OS sandbox
 | `CHAT_EMBED_MODEL` | Installed Ollama embedding model for Chroma retrieval | unset |
 | `OLLAMA_API_KEY` | Ollama Cloud fallback key | unset |
 | `OPENAI_API_KEY`, `AGNES_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY` | Cloud-provider fallback keys | unset |
+| `ANTHROPIC_PROFILE` | Anthropic Workload Identity Federation (WIF) profile name; when set, API key is not required | unset |
+| `ANTHROPIC_FEDERATION_RULE_ID`, `ANTHROPIC_ORGANIZATION_ID`, `ANTHROPIC_SERVICE_ACCOUNT_ID` | WIF service-account identity fields (all three required together with an identity token) | unset |
+| `ANTHROPIC_IDENTITY_TOKEN`, `ANTHROPIC_IDENTITY_TOKEN_FILE` | WIF identity token or file path | unset |
 | `OPENAI_BASE_URL` | Optional OpenAI-compatible endpoint for the OpenAI provider | official OpenAI endpoint |
 | `OPENROUTER_API_KEY`, `XAI_API_KEY` | Gateway and xAI fallback keys | unset |
 | `OMNIROUTE_BASE_URL`, `OMNIROUTE_API_KEY` | Compatible-gateway endpoint and fallback key | `http://localhost:8082/v1` / unset |
 | `OPENCODE_ZEN_API_KEY`, `OPENCODE_GO_API_KEY` | OpenCode inference fallback keys | unset |
 | `OPENCODE_SERVER_URL` | Local OpenCode bridge | `http://127.0.0.1:4096` |
-| `OPENCODE_SERVER_USERNAME`, `OPENCODE_SERVER_PASSWORD` | Optional OpenCode bridge authentication | unset / `opencode` |
+| `OPENCODE_SERVER_USERNAME` | Optional OpenCode bridge username | `opencode` |
+| `OPENCODE_SERVER_PASSWORD` | Optional OpenCode bridge password | unset |
 
 ## API contracts and development
 

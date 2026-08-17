@@ -10,6 +10,9 @@ A local-first AI workspace for private conversations, controlled context, live m
 
 Local AI Chat Studio runs on your machine with a FastAPI backend and React frontend. It works with local Ollama models without an API key, while optional session-scoped credentials connect OpenAI, Agnes AI, Anthropic, Gemini, OpenRouter, xAI, OmniRoute, and OpenCode services.
 
+> [!IMPORTANT]
+> **This is a free, community-driven project.** Everything runs on your own machine with your own API keys. All data you process through the app is your sole responsibility — see [DISCLAIMER.md](DISCLAIMER.md) for the full scope. The author does not accept donations or financial support of any kind; the best way to give back is to open an issue or pull request.
+
 ## Features
 
 ### Conversations and generation
@@ -444,6 +447,9 @@ Additional project references:
 - [Chatbox Work Mode overview](https://releases.chatboxai.app/en/guide/work-mode/overview) — interaction reference for explicit tool approvals
 - [Chatbox releases](https://github.com/chatboxai/chatbox/releases) — interaction-pattern reference for context pressure and compression
 - [Changelog](CHANGELOG.md)
+- [Disclaimer](DISCLAIMER.md)
+- [Support](SUPPORT.md)
+- [Contributing](CONTRIBUTING.md)
 
 ## Verification
 
@@ -465,6 +471,18 @@ Regenerate the frontend API schema after changing FastAPI contracts:
 cd frontend
 npm run generate:api
 ```
+
+## Contributing
+
+Contributions of any kind are welcome — bug reports, feature ideas, documentation fixes, new provider adapters, file parsers, and code improvements all help.
+
+- Read [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow, code-style guide, and how to run checks before opening a PR.
+- Use the [bug report template](https://github.com/pypi-ahmad/local-ai-chat-studio/issues/new?template=bug_report.md) or [feature request template](https://github.com/pypi-ahmad/local-ai-chat-studio/issues/new?template=feature_request.md) on GitHub Issues.
+- Good first contributions: new file parsers (`src/files.py`), BYOK provider adapters (`backend/app/providers.py`), retrieval improvements, and React workspace polish.
+
+**No financial support needed or wanted.** The project is free, and the author does not accept donations, sponsorships, or any form of financial contribution. The best support is a useful issue or a well-tested PR.
+
+For help, see [SUPPORT.md](SUPPORT.md). For data responsibility and provider terms, see [DISCLAIMER.md](DISCLAIMER.md).
 
 ## Security
 

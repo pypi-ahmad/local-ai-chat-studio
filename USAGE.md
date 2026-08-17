@@ -69,6 +69,12 @@ For ChatGPT, SuperGrok, and Claude subscription sign-in, connect a local
 OpenCode server first, then follow the sign-in flow in **Providers**. That
 bridge remains on loopback by default.
 
+Anthropic also supports Workload Identity Federation (WIF) as an alternative
+to a raw API key. Set `ANTHROPIC_PROFILE` in the environment before starting the
+Studio; the provider credential dialog will show the active credential source.
+See the configuration table in [TECHNICAL.md](TECHNICAL.md#configuration)
+for the full set of WIF environment variable names.
+
 ## Work with a conversation
 
 1. Start a conversation, then use the composer to select a provider, one of its

@@ -1,11 +1,39 @@
 # Contributing to Local AI Chat Studio
 
-Contributions are welcome — PRs, issues, and ideas are all appreciated. This
-guide covers the mechanics of contributing. Start with
-[TECHNICAL.md](TECHNICAL.md) and the current architecture map in
-[`docs/codebase/`](docs/codebase/). The longer handbook and code tutorial still
-contain clearly marked historical Streamlit walkthroughs; they are not the
-operating application.
+All contributions are welcome and appreciated — whether that's a bug report, a
+feature idea, a documentation fix, or a code change. This project gets better
+because people take the time to improve it, and every contribution matters.
+
+## Ways to contribute
+
+You don't have to write code to contribute meaningfully:
+
+- **Bug reports** — clear reproduction steps help more than almost anything
+- **Feature requests** — describe the problem you're trying to solve
+- **Documentation improvements** — fix typos, clarify confusing sections, add examples
+- **Bug fixes** — pick up an open issue and submit a PR
+- **New file parsers** — expand what document types the Studio can read (`src/files.py`)
+- **New provider adapters** — add support for more BYOK providers (`backend/app/providers.py`)
+- **Test coverage** — add backend tests under `tests/`, frontend tests beside their feature
+- **UI polish** — improve the React workspace in `frontend/src/`
+
+## A note on financial support
+
+The best way to support this project is through code, documentation, bug reports,
+and ideas — not money. **The author does not accept donations, sponsorships, GitHub
+Sponsors contributions, or financial contributions of any kind.** This project is
+free and is meant to stay that way. If you want to give back, open a PR or file a
+useful issue.
+
+## A note on data and API keys
+
+When running the app during development, use your own API keys. Any data you send to
+cloud providers (OpenAI, Anthropic, Gemini, and others) is subject to those
+providers' own terms of service and privacy policies. Do not commit real credentials
+to the repository, and do not use other people's real data in test scenarios without
+their knowledge and consent.
+
+---
 
 ## Before you start
 
@@ -14,6 +42,11 @@ operating application.
    sessions, or anything network-facing.
 3. Check [open issues](https://github.com/pypi-ahmad/local-ai-chat-studio/issues)
    and [CHANGELOG.md](CHANGELOG.md) so you're not duplicating in-flight work.
+
+Start with [TECHNICAL.md](TECHNICAL.md) and the current architecture map in
+[`docs/codebase/`](docs/codebase/) to understand how the pieces fit together. The
+longer handbook and code tutorial still contain clearly marked historical Streamlit
+walkthroughs; they are not the operating application.
 
 ## Setup
 
