@@ -57,5 +57,8 @@ _embed_cache/
 .codex/
 .claude/
 .agents/
+.codegraph/
+.code-review-graph/
+.ua/
 /openapi.json
 .playwright-mcp/
