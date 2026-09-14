@@ -13,7 +13,7 @@ A local-first AI workspace for private conversations, controlled context, live m
 Local AI Chat Studio runs on your machine with a FastAPI backend and React frontend. It works with local Ollama models without an API key, while optional session-scoped credentials connect OpenAI, Agnes AI, Anthropic, Gemini, OpenRouter, xAI, OmniRoute, and OpenCode services.
 
 > [!IMPORTANT]
-> **This is a free, community-driven project.** Everything runs on your own machine with your own API keys. All data you process through the app is your sole responsibility — see [DISCLAIMER.md](DISCLAIMER.md) for the full scope. The author does not accept donations or financial support of any kind; the best way to give back is to open an issue or pull request.
+> **This is a free, community-driven project.** Everything runs on your own machine with your own API keys. All data you process through the app is your sole responsibility. See [DISCLAIMER.md](DISCLAIMER.md) for the full scope. The author does not accept donations or financial support of any kind; the best way to give back is to open an issue or pull request.
 
 ## Table of Contents
 
@@ -29,6 +29,7 @@ Local AI Chat Studio runs on your machine with a FastAPI backend and React front
 - [How It Works](#how-it-works)
 - [Models and References](#models-and-references)
 - [Verification](#verification)
+- [Known Limitations](#known-limitations)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
 - [Security](#security)
@@ -101,7 +102,7 @@ Cloud providers begin with prompt-only access. Credentials entered in the browse
 
 ## Workspace Navigation
 
-Desktop navigation is grouped by purpose and can be collapsed. Drag the divider beside conversation history—or focus it and use Left/Right Arrow—to resize the chat list. On mobile, **Chat**, **Compare**, and **Library** remain in the bottom bar; the other destinations are available through **More**. Use `Ctrl/Cmd+K` anywhere to open the command palette.
+Desktop navigation is grouped by purpose and can be collapsed. Drag the divider beside conversation history (or focus it and use Left/Right Arrow) to resize the chat list. On mobile, **Chat**, **Compare**, and **Library** remain in the bottom bar; the other destinations are available through **More**. Use `Ctrl/Cmd+K` anywhere to open the command palette.
 
 Every destination has a direct browser URL, such as `/chat/<conversation-id>`,
 `/compare`, `/library`, `/tools`, and `/settings`. Browser Back/Forward navigation and
@@ -375,9 +376,9 @@ Canonical state lives in `data/app.db`, including each conversation's validated 
 
 ### MCP and agent-tool approvals
 
-The **Tools** page supports local stdio servers launched by an allowlisted executable name (`uvx`, `uv`, `npx`, `node`, `python`, `python3`, or `py`) and public HTTPS Streamable HTTP endpoints. Registration is inert; **Connect and discover** is the first action that starts or contacts a server. Stdio arguments cannot contain credential flags—enter environment-variable names instead, and set their values in the launching process. Remote URLs reject embedded credentials, query strings, fragments, and private or reserved DNS targets.
+The **Tools** page supports local stdio servers launched by an allowlisted executable name (`uvx`, `uv`, `npx`, `node`, `python`, `python3`, or `py`) and public HTTPS Streamable HTTP endpoints. Registration is inert; **Connect and discover** is the first action that starts or contacts a server. Stdio arguments cannot contain credential flags: enter environment-variable names instead, and set their values in the launching process. Remote URLs reject embedded credentials, query strings, fragments, and private or reserved DNS targets.
 
-Every invocation is stored as **pending** before execution. Review the server, tool, redacted argument preview, rationale, origin, and hash, then enter a decision reason and choose **Approve and run** or **Deny**. Approval is single-use and limited to the browser session that created the request. Terminal records discard raw arguments while retaining the redacted preview, hash, decision, bounded/redacted result, and timestamps. There is intentionally no “always allow” or unrestricted shell mode.
+Every invocation is stored as **pending** before execution. Review the server, tool, redacted argument preview, rationale, origin, and hash, then enter a decision reason and choose **Approve and run** or **Deny**. Approval is single-use and limited to the browser session that created the request. Terminal records discard raw arguments while retaining the redacted preview, hash, decision, bounded/redacted result, and timestamps. There is intentionally no "always allow" or unrestricted shell mode.
 
 ## Usage
 
@@ -489,8 +490,8 @@ Additional project references:
 - [Model Context Protocol documentation](https://modelcontextprotocol.io/docs/getting-started/intro)
 - [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk)
 - [MCP security best practices](https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices)
-- [Chatbox Work Mode overview](https://releases.chatboxai.app/en/guide/work-mode/overview) — interaction reference for explicit tool approvals
-- [Chatbox releases](https://github.com/chatboxai/chatbox/releases) — interaction-pattern reference for context pressure and compression
+- [Chatbox Work Mode overview](https://releases.chatboxai.app/en/guide/work-mode/overview): interaction reference for explicit tool approvals
+- [Chatbox releases](https://github.com/chatboxai/chatbox/releases): interaction-pattern reference for context pressure and compression
 - [Changelog](CHANGELOG.md)
 - [Disclaimer](DISCLAIMER.md)
 - [Support](SUPPORT.md)
@@ -510,12 +511,56 @@ npm test
 npm run build
 ```
 
+`uv run python -m pytest -q` and `uv run ruff check backend tests` require a
+`tests/` directory at the repo root (tracked in Git as `tests/conftest.py` and
+five `test_*.py` modules covering API contracts, MCP tools, pricing, provider
+adapters, and workspace features). If your working tree is missing `tests/`,
+restore it with `git restore tests` before running these checks. See
+[Known Limitations](#known-limitations).
+
 Regenerate the frontend API schema after changing FastAPI contracts:
 
 ```powershell
 cd frontend
 npm run generate:api
 ```
+
+## Known Limitations
+
+These constraints are visible in the current code and configuration, not
+aspirational. See [`docs/codebase/CONCERNS.md`](docs/codebase/CONCERNS.md)
+for the fuller list.
+
+- **No authentication or multi-tenancy.** The server binds to `127.0.0.1`
+  only (`backend/app/cli.py`) and has no login layer. See
+  [Security](#security).
+- **In-memory state only.** Session-scoped provider credentials
+  (`backend/app/sessions.py`) and in-flight runs (`backend/app/runs.py`) live
+  in server-process memory; restarting the process clears both.
+- **Console-only logging.** `backend/app/*.py` uses Python's standard
+  `logging` module and `src/*.py` uses `loguru`; neither configures a file
+  handler or `logging.basicConfig()` anywhere in the codebase, so log output
+  goes only to the console running the process. There is no on-disk log file
+  to tail. Redirect stdout/stderr yourself if you need persistent logs.
+- **Some `src/` modules are not wired into the running app.** Only
+  `src/files.py`, `src/ollama_client.py`, `src/rag.py`, and (transitively,
+  through those two) `src/config.py` are imported by `backend/app/` or
+  `backend/app/cli.py`. `src/catalog.py`, `src/chat_store.py`, `src/jobs.py`,
+  `src/memory.py`, `src/model_labels.py`, `src/orchestrator.py`,
+  `src/personalization.py`, and `src/providers.py` only import each other;
+  they are not reachable from any current entry point. Their docstrings and
+  comments (e.g. `src/jobs.py`: "so the user can start another chat... while
+  the answer keeps streaming... Workers must never call `st.*`") confirm they
+  are leftover business logic from the deleted Streamlit `pages/` UI, not
+  dead code that happens to look unused.
+- **SQLite text search uses `LIKE`, not FTS** (`backend/app/store.py`); cross-chat
+  retrieval falls back to local lexical search unless `CHAT_EMBED_MODEL` is set.
+- **Pricing is estimated, not authoritative.** Preflight cost figures come
+  from a dated rate table (`backend/app/pricing.py`) or OpenRouter's live
+  Models API, and exclude cached-token discounts, batch/priority pricing,
+  tools, media, tax, and subscription billing.
+- **The self-contained Linux launcher requires glibc**; Alpine and other
+  musl-based distributions are not supported by its portable Node.js setup.
 
 ## Documentation
 
@@ -538,7 +583,7 @@ All project documentation is included in the repository. Start with [USAGE.md](U
 
 ## Contributing
 
-Contributions of any kind are welcome — bug reports, feature ideas, documentation fixes, new provider adapters, file parsers, and code improvements all help.
+Contributions of any kind are welcome: bug reports, feature ideas, documentation fixes, new provider adapters, file parsers, and code improvements all help.
 
 - Read [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow, code-style guide, and how to run checks before opening a PR.
 - Use the [bug report template](https://github.com/pypi-ahmad/local-ai-chat-studio/issues/new?template=bug_report.md) or [feature request template](https://github.com/pypi-ahmad/local-ai-chat-studio/issues/new?template=feature_request.md) on GitHub Issues.

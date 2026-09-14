@@ -28,11 +28,17 @@ Process lifespan shutdown also waits for runs and closes the SQLite connection.
 
 ## Data, sessions, and runs
 
-- `data/app.db` is the canonical SQLite store for conversations, messages,
-  memories, presets, knowledge bases and their ordered source references, MCP server
-  definitions, tool approvals/audit records, feedback, activity, and data-control metadata.
+- `data/app.db` is the canonical SQLite store. `backend/app/store.py` creates these
+  tables on startup (`CREATE TABLE IF NOT EXISTS`): `conversations`, `messages`, `runs`,
+  `run_events`, `provider_policies`, `backpacks`, `backpack_items`, `focus_sessions`,
+  `memories`, `presets`, `feedback`, `kv`, `uploads`, `knowledge_bases`,
+  `knowledge_base_sources`, `mcp_servers`, `mcp_tools`, `tool_requests`, and
+  `schema_migrations`. New columns are added compatibly at startup rather than through
+  a migration framework.
 - `data/chroma` holds the optional retrieval index and `data/uploads` holds
-  local uploaded-file data. `CHAT_DATA_DIR` relocates the whole data area.
+  local uploaded-file data. `CHAT_DATA_DIR` relocates the whole data area (backend
+  reads it directly via `os.getenv("CHAT_DATA_DIR", "data")` in `create_app()`,
+  independently of the `src/config.py` settings object described below).
 - The backend creates an HTTP-only, same-site `chat_session` cookie. API keys
   entered in the browser are held by an in-memory session vault and are cleared
   by the data-wipe flow; they are not written to SQLite or replay bundles.
@@ -64,6 +70,39 @@ Process lifespan shutdown also waits for runs and closes the SQLite connection.
 | Chat features | `frontend/src/features/composer/`, `messages/`, `models/`, `context/` | Composer controls, transcript/navigation, model metadata/selection, and prompt inspection |
 | Client state and contracts | `frontend/src/hooks/`, `frontend/src/api/` | Browser-persisted shell preferences plus generated backend-authoritative types and SSE requests |
 | Shared helpers | `src/` | File parsing, Ollama health/embeddings, and Chroma retrieval |
+
+Only three `src/` modules are reachable from `backend/app`: `src/files.py` (upload
+parsing, `chunk_text`), `src/ollama_client.py` (Ollama health/discovery/embeddings),
+and `src/rag.py` (optional Chroma retrieval, lazily imported so `chromadb` is only
+touched when `CHAT_EMBED_MODEL` is set). `src/config.py` is live transitively through
+those two. The remaining `src/` modules (`catalog.py`, `chat_store.py`, `jobs.py`,
+`memory.py`, `model_labels.py`, `orchestrator.py`, `personalization.py`, and
+`providers.py`) only import each other and are not imported anywhere under
+`backend/app/` or `backend/app/cli.py`; their comments (`src/jobs.py`: "so the user
+can start another chat... while the answer keeps streaming"; "Workers must never call
+`st.*`") place them as remnants of the deleted Streamlit `pages/` UI rather than code
+on the FastAPI app's live path.
+
+## Error handling
+
+Routes in `backend/app/main.py` translate internal exceptions into `HTTPException`
+by convention: `KeyError` (missing conversation/run/memory/etc.) becomes `404`,
+invalid or conflicting client state (schema mismatch, stale context-plan hash, unmet
+safety confirmation, duplicate preset name) becomes `409` or `422`, and unsupported
+upload types or oversized files become `415`/`413`. Startup itself fails fast:
+`create_app()` raises `RuntimeError` if any provider adapter in `ProviderRegistry` is
+missing a matching entry in `backend/app/sessions.py`'s `PROVIDER_ENV`, rather than
+letting a misconfigured provider 404 later at request time.
+
+Provider and MCP failures are deliberately reduced before reaching the client.
+`RunManager._safe_error` (`backend/app/runs.py`) maps a raw provider exception to
+either its message (for `ValueError`/`KeyError`) or a generic `"Provider request
+failed (<ExceptionType>)"`, so upstream stack traces and credentials never reach a run
+record. `backend/app/mcp_tools.py`'s `redact_value` scrubs authorization/cookie/
+credential/secret/token/API-key-shaped dict keys and inline `key: value` patterns
+from MCP tool output before it is stored or returned, and discovery/call failures in
+`main.py` are logged with only the exception type (`logger.warning(..., type(exc).__name__)`),
+not its message, to avoid leaking provider-specific error detail into server logs.
 
 ## Providers and integrations
 
@@ -158,6 +197,10 @@ bounded result, and terminal timestamp. Stdio uses an argument vector rather tha
 shell, an executable allowlist, an isolated directory under `data/mcp-sandboxes`, a
 minimal environment, and a 30-second timeout. Public HTTPS endpoints are checked for
 embedded credentials and private/reserved DNS targets. This is not an OS sandbox.
+
+MCP transport uses the `mcp` Python SDK plus `httpx2` (a separate dependency from the
+`httpx` used everywhere else in `backend/app`) for the Streamable HTTP client and
+30-second read timeout in `backend/app/mcp_tools.py`.
 
 ## Configuration
 

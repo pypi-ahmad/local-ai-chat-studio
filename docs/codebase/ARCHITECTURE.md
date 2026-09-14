@@ -1,11 +1,35 @@
 # Architecture
 
-```text
-React workspace
-  → FastAPI routes and session cookie
-    → context preflight (policy, safety, selected attachments, bound knowledge base, retrieval, budget)
-      → RunManager task → provider adapter → retained SSE events
-        → SQLite messages/runs/receipts + optional Chroma retrieval
+```mermaid
+flowchart TD
+    UI["React workspace<br/>frontend/src/App.tsx"]
+    API["FastAPI app<br/>backend/app/main.py::create_app()"]
+    WS["Context preflight<br/>backend/app/workspace.py<br/>(safety scan, provenance, retrieval, budget)"]
+    RM["RunManager<br/>backend/app/runs.py"]
+    PR["ProviderRegistry / adapters<br/>backend/app/providers.py"]
+    STORE["Store (SQLite)<br/>backend/app/store.py -> data/app.db"]
+    RAG["src/rag.py (optional)<br/>ChromaDB -> data/chroma"]
+    VAULT["SessionVault<br/>backend/app/sessions.py<br/>(in-memory credentials)"]
+    MCP["McpGateway<br/>backend/app/mcp_tools.py"]
+    WEB["ddgs (DuckDuckGo)<br/>opt-in web evidence"]
+
+    UI -- "cookie: chat_session" --> API
+    API -- "POST .../turns/preflight" --> WS
+    WS -- "opt-in search" --> WEB
+    WS -- "CHAT_EMBED_MODEL set" --> RAG
+    API -- "POST .../turns, /runs" --> RM
+    RM --> PR
+    PR --> OLLAMA["Ollama (local/cloud)"]
+    PR --> OPENAI["OpenAI-compatible<br/>OpenAI, Agnes AI, OpenRouter,<br/>xAI, OmniRoute, OpenCode Zen/Go"]
+    PR --> ANTHROPIC["Anthropic"]
+    PR --> GEMINI["Google Gemini (google-genai)"]
+    PR --> OPENCODE["OpenCode bridge<br/>loopback HTTP"]
+    RM -- "SSE events" --> UI
+    RM --> STORE
+    API --> STORE
+    API -- "credential lookup" --> VAULT
+    API -- "register/discover/call" --> MCP
+    MCP --> MCPSERVER["Local stdio or public HTTPS MCP server"]
 ```
 
 `create_app()` composes one legacy-compatible `Store`, session credential vault,
@@ -108,3 +132,33 @@ posts to `/api/v1/runtime/shutdown`, `RunManager.shutdown()` cancels and awaits
 active generation tasks, then the CLI sets `uvicorn.Server.should_exit`. Process
 lifespan performs the same run drain and closes SQLite. Ollama and OpenCode are
 not stopped.
+
+## Main types and where they live
+
+| Type/state | Location | Lifetime |
+| --- | --- | --- |
+| `Store` | `backend/app/store.py` | One instance per `create_app()` call; owns the `sqlite3` connection and all SQL. |
+| `RunManager` / `RunState` | `backend/app/runs.py` | Process memory only. `RunState` (snapshot, SSE event log, cancel flag, asyncio task) is dropped once a run completes and no client still holds a reference; `RunSnapshot`/events are also persisted to `runs`/`run_events` tables. |
+| `SessionVault` | `backend/app/sessions.py` | Process memory only, keyed by the `chat_session` cookie value; cleared by `/api/v1/data/wipe` or a process restart. Never touches SQLite. |
+| `ProviderRegistry` / `ProviderAdapter` subclasses | `backend/app/providers.py` | Built once in `create_app()` from `build_provider_registry()`; adapters are stateless except for a `_models` cache used by `supports_images()`. |
+| Pydantic contracts (`ContextPlan`, `TurnPreflight`, `RunSnapshot`, `Conversation`, `McpServer`, etc.) | `backend/app/contracts.py` | Request/response shapes; also the source FastAPI uses to generate `openapi.json`, which `frontend/src/api/schema.ts` is generated from. |
+| `McpGateway` (`DefaultMcpGateway`) | `backend/app/mcp_tools.py` | Stateless; opens a new stdio/Streamable HTTP session per discover/call. |
+| Chroma collections (`doc_chunks`, `chat_history`, `memories`) | `src/rag.py` | Persisted under `data/chroma` via `chromadb.PersistentClient`; only touched when `CHAT_EMBED_MODEL` is set. |
+| React session/route state | `frontend/src/App.tsx`, `frontend/src/app/`, `frontend/src/routes/` | Backend-derived state (conversations, runs, settings) is fetched through generated `frontend/src/api/` types; only shell preferences (navigation collapse, inspector state, sidebar width) live in browser storage. |
+
+## External systems
+
+Verified against actual imports in `backend/app/providers.py`, `backend/app/workspace.py`,
+`src/rag.py`, and `pyproject.toml`:
+
+| System | Where it's called | Client library | Optional? |
+| --- | --- | --- | --- |
+| Ollama (local and `:cloud`) | `OllamaAdapter` in `backend/app/providers.py`; `src/ollama_client.py` for health/embeddings | `ollama` (`AsyncClient`) | Local Ollama is optional if a cloud provider is configured |
+| OpenAI | `OpenAICompatibleAdapter` | `openai` (`AsyncOpenAI`) | Yes — BYOK |
+| Agnes AI, OpenRouter, xAI, OmniRoute, OpenCode Zen, OpenCode Go | `OpenAICompatibleAdapter` / `OpenCodeZenAdapter` (OpenAI-compatible endpoints) | `openai` (`AsyncOpenAI`), plus raw `httpx` for OpenCode Zen's Gemini-shaped and Anthropic-shaped model families | Yes — BYOK |
+| Anthropic | `AnthropicAdapter`; also reachable inside `OpenCodeZenAdapter` for `claude-`/`qwen` models | `anthropic` (`AsyncAnthropic`) | Yes — BYOK or workload identity federation |
+| Google Gemini | `GeminiAdapter` | `google-genai` (`google.genai`) | Yes — BYOK |
+| OpenCode bridge | `OpenCodeBridgeAdapter` | `httpx` (loopback HTTP only; `OPENCODE_SERVER_URL` must resolve to `127.0.0.1`/`localhost`/`::1`) | Yes — only if an OpenCode server is running |
+| ChromaDB | `src/rag.py` | `chromadb` (`PersistentClient` under `data/chroma`) | Yes — only when `CHAT_EMBED_MODEL` is set; otherwise retrieval falls back to SQLite `LIKE` search |
+| DuckDuckGo (web search) | `search_web()` in `backend/app/workspace.py` | `ddgs` (`DDGS().text()`) | Yes — opt-in per turn |
+| Model Context Protocol servers | `backend/app/mcp_tools.py` | `mcp` SDK + `httpx2` (Streamable HTTP) | Yes — user-registered, per server |

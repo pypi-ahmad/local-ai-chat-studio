@@ -1,6 +1,6 @@
 # Contributing to Local AI Chat Studio
 
-All contributions are welcome and appreciated — whether that's a bug report, a
+All contributions are welcome and appreciated, whether that's a bug report, a
 feature idea, a documentation fix, or a code change. This project gets better
 because people take the time to improve it, and every contribution matters.
 
@@ -8,19 +8,19 @@ because people take the time to improve it, and every contribution matters.
 
 You don't have to write code to contribute meaningfully:
 
-- **Bug reports** — clear reproduction steps help more than almost anything
-- **Feature requests** — describe the problem you're trying to solve
-- **Documentation improvements** — fix typos, clarify confusing sections, add examples
-- **Bug fixes** — pick up an open issue and submit a PR
-- **New file parsers** — expand what document types the Studio can read (`src/files.py`)
-- **New provider adapters** — add support for more BYOK providers (`backend/app/providers.py`)
-- **Test coverage** — add backend tests under `tests/`, frontend tests beside their feature
-- **UI polish** — improve the React workspace in `frontend/src/`
+- **Bug reports**: clear reproduction steps help more than almost anything
+- **Feature requests**: describe the problem you're trying to solve
+- **Documentation improvements**: fix typos, clarify confusing sections, add examples
+- **Bug fixes**: pick up an open issue and submit a PR
+- **New file parsers**: expand what document types the Studio can read (`src/files.py`)
+- **New provider adapters**: add support for more BYOK providers (`backend/app/providers.py`)
+- **Test coverage**: add backend tests under `tests/`, frontend tests beside their feature
+- **UI polish**: improve the React workspace in `frontend/src/`
 
 ## A note on financial support
 
 The best way to support this project is through code, documentation, bug reports,
-and ideas — not money. **The author does not accept donations, sponsorships, GitHub
+and ideas, not money. **The author does not accept donations, sponsorships, GitHub
 Sponsors contributions, or financial contributions of any kind.** This project is
 free and is meant to stay that way. If you want to give back, open a PR or file a
 useful issue.
@@ -71,7 +71,7 @@ pinned to 5.9.
   `frontend/src/components/`, and backend calls/types under `frontend/src/api/`.
   Match the existing shadcn-style primitives; `frontend/.oxlintrc.json` is the
   linter config.
-- Keep changes focused — a bug fix shouldn't also refactor unrelated code.
+- Keep changes focused: a bug fix shouldn't also refactor unrelated code.
 - Update the relevant English documentation when user-visible behavior,
   configuration, security boundaries, or API contracts change.
 - Update `backend/app/pricing.py` only from official provider sources, retain
@@ -88,13 +88,16 @@ npm test
 npm run build
 ```
 
-These are the same checks CI (`.github/workflows/ci.yml`) runs on every PR —
-green locally means green in CI.
+These are the same checks CI (`.github/workflows/ci.yml`) runs on every PR:
+green locally means green in CI. Both backend commands expect a `tests/`
+directory (`conftest.py` plus five `test_*.py` modules); if your local clone
+is missing it, run `git restore tests` first. See
+[docs/RUNBOOK.md](docs/RUNBOOK.md#common-failures).
 
 ## Opening a PR
 
 1. Run the app and verify your change end-to-end (not just unit tests).
-2. Open a PR describing *why*, not just *what* — link any related issue.
+2. Open a PR describing *why*, not just *what*, and link any related issue.
 3. If you touched `backend/app/contracts.py` (any request/response shape),
    regenerate the frontend types with `npm run generate:api` from `frontend/`,
    remove the temporary root `openapi.json`, and commit the diff to
@@ -108,7 +111,7 @@ New file parsers (`src/files.py`), more BYOK providers
 (`backend/app/providers.py`), retrieval improvements, and React workspace polish.
 
 Found a bug but don't have time to fix it?
-[Open an issue](https://github.com/pypi-ahmad/local-ai-chat-studio/issues) —
+[Open an issue](https://github.com/pypi-ahmad/local-ai-chat-studio/issues):
 include reproduction steps and, if you can, the affected file/line.
 
 ## Code of Conduct
