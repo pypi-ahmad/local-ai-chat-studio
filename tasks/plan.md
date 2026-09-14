@@ -5,7 +5,7 @@
 A static, multipage website under `docs/site/` that presents every project `.md`
 doc through one htmx-driven shell: a sidebar nav, hash-routed pages (so links and
 the browser back button work), and client-side Markdown rendering. No build step,
-no server-side code, no new dependency in `pyproject.toml`/`package.json` — the
+no server-side code, no new dependency in `pyproject.toml`/`package.json`. The
 renderer loads from CDN at runtime, same pattern as `docs/tutorial/`.
 
 ## Architecture Decisions
@@ -13,12 +13,12 @@ renderer loads from CDN at runtime, same pattern as `docs/tutorial/`.
 - **Location: `docs/site/`.** Keeps it alongside the existing `docs/tutorial/`
   (interactive handbook walkthrough) and `docs/archive/` (legacy PDF) without
   colliding with either.
-- **Source of truth stays in the root `.md` files — no copies.** The site fetches
+- **Source of truth stays in the root `.md` files, no copies.** The site fetches
   `../../README.md` etc. via `hx-get` at view time. One doc, one place to edit;
   the site can never drift out of sync with the docs it displays.
 - **htmx for navigation, marked.js for rendering, both from CDN.** No local
   Markdown parser to write or maintain (checked: no `markdown`/`mistune`/etc.
-  package is installed anywhere in this repo — writing one from scratch would be
+  package is installed anywhere in this repo. Writing one from scratch would be
   the only alternative, and it's strictly more code for a worse result on tables/
   fenced code blocks, which several of these docs use heavily).
 - **Must be served over HTTP, not opened as `file://`.** Browsers block `fetch()`
@@ -151,10 +151,10 @@ including the one-line serve command and the file:// caveat.
 
 | Risk | Impact | Mitigation |
 |------|--------|------------|
-| CDN unavailable (offline/air-gapped use) | Low — site just won't render | Acceptable for a docs site; not worth vendoring htmx/marked for this |
+| CDN unavailable (offline/air-gapped use) | Low: site just won't render | Acceptable for a docs site; not worth vendoring htmx/marked for this |
 | `file://` fetch blocked, user opens index.html directly | Medium — looks broken with no explanation | Task 1 includes an on-page notice with the serve command |
 | Marked.js doesn't perfectly match GitHub-flavored Markdown extensions (e.g. task-list checkboxes in plan.md itself) | Low | Acceptable for prose docs; none of the curated 8 docs rely on GFM task lists in body text |
 
 ## Open Questions
 
-- None — file list, location, and rendering approach are decided above. Flag here if any should change before Task 1 starts.
+- None. File list, location, and rendering approach are decided above. Flag here if any should change before Task 1 starts.

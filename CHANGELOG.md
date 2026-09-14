@@ -11,14 +11,14 @@ and aims to follow [Semantic Versioning](https://semver.org/).
 
 ### Added
 
-- Added `launch.cmd` (Windows) and `launch.sh` (Linux) — lightweight launchers
+- Added `launch.cmd` (Windows) and `launch.sh` (Linux): lightweight launchers
   for users who already have `uv` and Node.js on their PATH. They create `.venv`
   in the project root via `uv sync --locked`, build the frontend once, and start
   the Studio with `uv run chat-studio`.
-- Added `DISCLAIMER.md` — data responsibility, no-warranty statement, API key and
+- Added `DISCLAIMER.md`: data responsibility, no-warranty statement, API key and
   cost ownership, third-party provider non-affiliation, MCP server trust guidance,
   and explicit no-financial-support statement.
-- Added `SUPPORT.md` — documentation index, where to report bugs, feature ideas,
+- Added `SUPPORT.md`: documentation index, where to report bugs, feature ideas,
   and security issues; explicit no-paid-support and no-donations statement.
 
 ### Changed

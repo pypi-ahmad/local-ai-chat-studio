@@ -5,8 +5,8 @@ project. Please read the following before using it.
 
 ## Your data is your responsibility
 
-Everything you type, upload, or process through this app — conversations, documents,
-memories, knowledge bases, and any other content — is entirely your own responsibility.
+Everything you type, upload, or process through this app (conversations, documents,
+memories, knowledge bases, and any other content) is entirely your own responsibility.
 
 The app runs on your machine and stores data locally under your `data/` directory.
 When you choose to use a cloud provider (OpenAI, Anthropic, Google Gemini, xAI,
@@ -21,7 +21,7 @@ or private information through a cloud model.**
 ## No warranty
 
 This software is provided **as-is**, under the [MIT License](LICENSE), without
-warranties of any kind — express or implied. There is no guarantee of fitness for a
+warranties of any kind, express or implied. There is no guarantee of fitness for a
 particular purpose, accuracy of AI-generated outputs, absence of bugs, or
 uninterrupted availability. Use it at your own risk.
 

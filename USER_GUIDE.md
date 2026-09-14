@@ -1,4 +1,4 @@
-# Local AI Chat Studio — User Guide
+# Local AI Chat Studio: User Guide
 
 ## Start the studio
 
@@ -147,7 +147,7 @@ Open **Tools** to connect trusted Model Context Protocol servers and execute too
 
 Select a discovered tool, enter JSON arguments and a task-specific rationale, then choose whether the proposal is user-initiated or agent-proposed. **Request approval** creates a pending record without running the tool. The approval card shows the server, tool, exact redacted arguments, rationale, origin, and immutable SHA-256 hash. Enter a decision reason, then approve once or deny. Another browser session cannot see or act on the request, and a decided request cannot be reused.
 
-Terminal records keep a redacted audit preview and discard raw arguments. Credential-like stdio flags are rejected; provide only environment-variable names in configuration and set their values before launch. Local stdio uses no shell, a minimal environment, a 30-second timeout, and an isolated working directory. These controls reduce exposure but do not provide a full operating-system sandbox—install and connect only MCP servers you trust.
+Terminal records keep a redacted audit preview and discard raw arguments. Credential-like stdio flags are rejected; provide only environment-variable names in configuration and set their values before launch. Local stdio uses no shell, a minimal environment, a 30-second timeout, and an isolated working directory. These controls reduce exposure but do not provide a full operating-system sandbox. Install and connect only MCP servers you trust.
 
 ### Replay and Compare
 

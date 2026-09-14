@@ -6,26 +6,26 @@ Local AI Chat Studio is a **local-first** FastAPI and React workspace: it has
 no hosted service of ours, no telemetry, and no account layer. The
 security-relevant surfaces are:
 
-- **API keys and OAuth tokens** — browser-entered credentials are held in the
+- **API keys and OAuth tokens**: browser-entered credentials are held in the
   server's in-memory session vault, never written to SQLite, exports, or logs,
   and sent only to the selected provider. Environment variables are optional
   local fallback credentials and must be protected by the operating system.
   `.env.example` contains only safe names and public endpoints; never put real
   credentials in that tracked example.
-- **Local data** — chats, curated memories, uploads, knowledge-base definitions
+- **Local data**: chats, curated memories, uploads, knowledge-base definitions
   and bindings, and optional retrieval data live under `data/` by default
   (`app.db`, `chroma`, and uploads). They are
   protected by your OS file permissions and can be exported, imported, or wiped
   from the product.
-- **Network exposure** — the launcher binds to `127.0.0.1:8506` and the app
+- **Network exposure**: the launcher binds to `127.0.0.1:8506` and the app
   ships without a user-account layer. Do not expose it beyond localhost on an
   untrusted network.
-- **Managed shutdown** — `POST /api/v1/runtime/shutdown` stops the process
+- **Managed shutdown**: `POST /api/v1/runtime/shutdown` stops the process
   started by `chat-studio`. It requires the `X-Local-Studio: shutdown` header
   from the Studio UI and is unavailable in unmanaged/test servers. The route
   cancels active runs before Uvicorn exits; it does not stop Ollama or
   OpenCode.
-- **Untrusted context** — uploaded documents, pasted text, retrieval results,
+- **Untrusted context**: uploaded documents, pasted text, retrieval results,
   bound knowledge-base sources, and web evidence can contain prompt-injection
   attempts or sensitive text. Bound files, memories, and backpacks retain their
   existing provider-policy boundary and are rescanned when the context plan is
@@ -33,15 +33,15 @@ security-relevant surfaces are:
   workspace provides warnings, quarantine, provenance, and redaction controls,
   but you should still treat instructions originating in that content as
   untrusted.
-- **Parallel comparison** — Compare sends the same prompt independently to every
+- **Parallel comparison**: Compare sends the same prompt independently to every
   selected model. Review the selected providers before running it: choosing multiple
   cloud models crosses each provider's data boundary and can incur separate charges.
   A failure is isolated to its result card, while **Cancel all** requests cancellation
   for every active run.
-- **Local bridges** — OpenCode subscription flows use a loopback-only local
+- **Local bridges**: OpenCode subscription flows use a loopback-only local
   server. Keep its optional credentials private and do not change the bridge to
   a public endpoint.
-- **MCP and agent tools** — saving an MCP configuration is inert, discovery is an
+- **MCP and agent tools**: saving an MCP configuration is inert, discovery is an
   explicit connection action, and every invocation requires a single-use approval
   from the browser session that created it. Review the exact redacted arguments,
   rationale, and execution hash. Stdio servers launch without a shell, receive only

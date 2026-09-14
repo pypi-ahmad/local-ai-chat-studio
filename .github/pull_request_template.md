@@ -22,7 +22,7 @@ Closes #
 
 ## Checklist
 
-- [ ] Focused on one topic (bug fix / feature / docs — not a mixed bag)
+- [ ] Focused on one topic (bug fix / feature / docs, not a mixed bag)
 - [ ] Verified end-to-end in the running app, not just unit tests
 - [ ] Python: type hints on new public functions; no `print` debugging
 - [ ] TypeScript/React: new UI lives in the correct layer (`routes/`, `features/`, `components/`, `api/`)

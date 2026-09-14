@@ -88,7 +88,7 @@
 - Directory Initialization
 - Provider Secrets Vault
 
-## God Nodes (most connected - your core abstractions)
+## God Nodes (most connected, your core abstractions)
 1. `cn()` - 120 edges
 2. `Store` - 82 edges
 3. `create_app()` - 32 edges
@@ -116,8 +116,8 @@
 - None detected.
 
 ## Hyperedges (group relationships)
-- **Documentation Site Delivery** — tasks_plan_documentation_site_plan, tasks_todo_documentation_site_status [EXTRACTED 1.00]
-- **Vite Brand Mark Composition** — frontend_src_assets_vite_lightning_bolt, frontend_src_assets_vite_parentheses, frontend_src_assets_vite_glowing_gradient [INFERRED 0.95]
+- **Documentation Site Delivery**: tasks_plan_documentation_site_plan, tasks_todo_documentation_site_status [EXTRACTED 1.00]
+- **Vite Brand Mark Composition**: frontend_src_assets_vite_lightning_bolt, frontend_src_assets_vite_parentheses, frontend_src_assets_vite_glowing_gradient [INFERRED 0.95]
 
 ## Communities (80 total, 31 thin omitted)
 
@@ -307,23 +307,23 @@ Nodes (3): ModelInfo Boundary Contract, ModelInfo Lifecycle, Selected Model Runt
 
 ## Knowledge Gaps
 - **169 isolated node(s):** `$schema`, `oxc`, `react/rules-of-hooks`, `warn`, `$schema` (+164 more)
-  These have ≤1 connection - possible missing edges or undocumented components.
-- **31 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection: possible missing edges or undocumented components.
+- **31 thin communities (<3 nodes) omitted from report.** Run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
-_Questions this graph is uniquely positioned to answer:_
+_Questions this graph can answer:_
 
 - **Why does `Store` connect `Run Data Models` to `Backend API Contracts`, `Provider Adapters`, `Run Lifecycle Management`, `Retrieval and Vector Storage`, `Workspace Feature Tests`?**
-  _High betweenness centrality (0.067) - this node is a cross-community bridge._
+  _High betweenness centrality (0.067): this node is a cross-community bridge._
 - **Why does `cn()` connect `Dropdown UI Components` to `Avatar UI Components`, `Sidebar UI Components`, `Sheet UI Components`, `Tabs UI Components`, `Badge UI Components`, `Card UI Components`, `Field UI Components`, `Button and Dialog UI`?**
-  _High betweenness centrality (0.041) - this node is a cross-community bridge._
+  _High betweenness centrality (0.041): this node is a cross-community bridge._
 - **Why does `create_app()` connect `Backend API Contracts` to `Run Data Models`, `Provider Adapters`, `Run Lifecycle Management`, `Retrieval and Vector Storage`, `Workspace Feature Tests`, `File Upload Processing`, `Backend API Tests`, `Application Settings`?**
-  _High betweenness centrality (0.035) - this node is a cross-community bridge._
+  _High betweenness centrality (0.035): this node is a cross-community bridge._
 - **Are the 16 inferred relationships involving `Store` (e.g. with `RunManager` and `RunState`) actually correct?**
-  _`Store` has 16 INFERRED edges - model-reasoned connections that need verification._
+  _`Store` has 16 INFERRED edges: model-reasoned connections that need verification._
 - **What connects `$schema`, `oxc`, `react/rules-of-hooks` to the rest of the system?**
-  _169 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _169 weakly-connected nodes found: possible documentation gaps or missing edges._
 - **Should `Backend API Contracts` be split into smaller, more focused modules?**
-  _Cohesion score 0.07023214810461358 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07023214810461358: nodes in this community are weakly interconnected._
 - **Should `Run Data Models` be split into smaller, more focused modules?**
-  _Cohesion score 0.0636523266022827 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0636523266022827: nodes in this community are weakly interconnected._

@@ -36,7 +36,7 @@ The more detail you provide, the easier it is to reproduce and fix.
 
 [Open a feature request](https://github.com/pypi-ahmad/local-ai-chat-studio/issues/new?template=feature_request.md).
 Describe the problem you're trying to solve and how a new feature might address it.
-Ideas are very welcome — the issue tracker is where the project's direction gets
+Ideas are very welcome. The issue tracker is where the project's direction gets
 shaped by the community.
 
 ## Found a security issue?
@@ -54,8 +54,8 @@ no professional services arrangement. The author does not offer private consulti
 one-on-one troubleshooting, or priority responses for this project.
 
 **No donations needed.** The author does not want or accept financial contributions
-of any kind — no donations, no GitHub Sponsors, no "buy me a coffee", no bounties,
-no sponsorships. If you'd like to give something back, the most valuable things are:
+of any kind: no donations, no GitHub Sponsors, no "buy me a coffee", no bounties,
+no sponsorships. If you'd like to give something back, the most useful things are:
 
 - A well-written bug report or feature request
 - A pull request with a fix, improvement, or new capability
@@ -70,5 +70,5 @@ tend to get picked up faster than vague ones. Patience is appreciated.
 ## Community standards
 
 The issue tracker and pull requests are the community spaces for this project. Please
-be respectful and constructive — see [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for the
+be respectful and constructive; see [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for the
 expected standards of interaction.

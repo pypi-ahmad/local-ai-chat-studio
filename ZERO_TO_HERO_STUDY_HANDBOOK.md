@@ -5,9 +5,9 @@
 > describe a **retired UI**. Use `README.md`, `USER_GUIDE.md`, `TECHNICAL.md`,
 > and `docs/codebase/` as the source of truth.
 
-> Verified against repository version **v0.7.13 on 2026-08-15**. Status markers: **[current]** FastAPI/React workspace, **[legacy]** retired Streamlit material, **[shared]** repository-wide tooling, and **[gap]** remaining limits (not “the React app is a shell”).
+> Verified against repository version **v0.7.13 on 2026-08-15**. Status markers: **[current]** FastAPI/React workspace, **[legacy]** retired Streamlit material, **[shared]** repository-wide tooling, and **[gap]** remaining limits (not "the React app is a shell").
 
-This handbook takes a beginner from “what is an LLM?” to making a focused contribution. Chat, compare, providers, memory, files, replay, guarded MCP tools, and Settings **Stop Studio** all run in the React workspace against `data/app.db`.
+This handbook takes a beginner from "what is an LLM?" to making a focused contribution. Chat, compare, providers, memory, files, replay, guarded MCP tools, and Settings **Stop Studio** all run in the React workspace against `data/app.db`.
 
 The app is still not a production multi-user deployment: it has no account layer and must stay on localhost.
 
@@ -61,7 +61,7 @@ A **vector database** stores embeddings plus source text and metadata, then perf
 
 ### 2.3 BYOK, SPA, REST, SSE, and PKCE
 
-- **BYOK** means “bring your own key.” Keys entered into this app are used to call the selected external provider.
+- **BYOK** means "bring your own key." Keys entered into this app are used to call the selected external provider.
 - A **SPA** (single-page application) loads one browser application and changes views client-side. [v2] React is the SPA; Vite builds it into static files.
 - **REST** uses HTTP resources and verbs. [v2] examples include `POST /api/v1/conversations` and `DELETE /api/v1/runs/{run_id}`.
 - **SSE** (Server-Sent Events) is a one-way HTTP stream from server to browser. [v2] run events use `text/event-stream`, with named events such as `run.delta`. It is simpler than WebSockets when only server-to-client updates are needed.
@@ -383,7 +383,7 @@ question → embed → nearest chunks → bounded context → model answer
 
 - Conversation, memory, run, and policy data persist in `data/app.db`. Optional vectors live in `data/chroma`. An older `data/v2/studio.db` is imported only from Settings.
 - Session-entered keys remain in process memory. Environment fallback keys live outside app storage but are readable by the process.
-- A cloud-provider request sends its messages and selected context to that provider. “Local-first” is not “always local.”
+- A cloud-provider request sends its messages and selected context to that provider. "Local-first" is not "always local."
 - Uploaded content is parsed locally and is sent only when selected for a turn and permitted by provider policy.
 - The cookie is `HttpOnly` and `SameSite=Lax`, but `secure=False` for local HTTP. It scopes secrets; it is not authentication, authorization, or encryption at rest.
 - PKCE protects code exchange, not the application itself. Pending verifiers and keys disappear on restart.
@@ -398,7 +398,7 @@ question → embed → nearest chunks → bounded context → model answer
 1. Add the provider ID and environment variable to `backend/app/sessions.py::PROVIDER_ENV`.
 2. Add its user-facing label to `PROVIDER_LABELS` in `main.py`.
 3. Implement a `ProviderAdapter` or configure `OpenAICompatibleAdapter` in `build_provider_registry`.
-4. Normalize results to `ModelDescriptor` and messages to the provider’s format.
+4. Normalize results to `ModelDescriptor` and messages to the provider's format.
 5. Add adapter tests for registry presence, discovery failure isolation, and streamed deltas.
 6. Add API tests for credential scope if behavior differs.
 
@@ -460,7 +460,7 @@ Current tests cover API contracts, session-owned runs, cancellation, managed shu
 | `/` returns 404 on port 8506 | Build `frontend/dist`; confirm backend startup directory. |
 | Vite UI cannot call API | Confirm backend on 8506 and `vite.config.ts` proxy. |
 | Stop Studio returns 503 | The process was not started via `chat-studio` (no shutdown callback). |
-| provider discovery shows an error | Check only that provider’s key, base URL, and network; discovery intentionally degrades independently. |
+| provider discovery shows an error | Check only that provider's key, base URL, and network; discovery intentionally degrades independently. |
 | run stays queued/running | Inspect `/runs/{id}` and `/events`; check provider stream and server exception. |
 | cancel appears delayed | Cancellation is checked between received chunks. |
 | key disappears | Session keys are memory-only; restart/new cookie loses them. |
@@ -507,7 +507,7 @@ Debug in the sequence reproduce → localize → form one hypothesis → change 
 
 ## 13. Exercises and solution outlines
 
-1. **Classify a feature.** Is “Memory” available because the navigation button exists?
+1. **Classify a feature.** Is "Memory" available because the navigation button exists?
    **Outline:** Yes for the current app: Library talks to `/api/v1/memories` and whole-chat extract. Historical Streamlit memory pages are retired.
 
 2. **Trace a run without the UI.** Create a run using the `echo` provider and consume events.
