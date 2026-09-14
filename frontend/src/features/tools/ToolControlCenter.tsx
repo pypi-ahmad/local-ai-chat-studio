@@ -9,6 +9,14 @@ import { Textarea } from '@/components/ui/textarea'
 
 import './ToolControlCenter.css'
 
+// Tools feature ("Work Mode"): connects MCP servers, proposes tool calls, and requires
+// an explicit approve/deny decision (with a reason) before anything actually executes.
+// All server/tool/request state comes from api/client.ts (see the `api` import) — this
+// component only orchestrates the UI flow around those calls, it doesn't run tools itself.
+// Local stdio servers are launched by the backend without a shell and with a trimmed
+// environment, but that is not a full OS sandbox — only connecting trusted MCP servers
+// is what actually limits the blast radius here.
+
 const messageOf = (cause: unknown) => cause instanceof Error ? cause.message : String(cause)
 
 function RequestCard({ request, onDecision }: { request: ToolRequest; onDecision: (id: string, decision: 'approve' | 'deny', reason: string) => Promise<void> }) {
@@ -23,8 +31,12 @@ function RequestCard({ request, onDecision }: { request: ToolRequest; onDecision
       <div className="tool-request-route"><span>{request.server_name}</span><span>→</span><span>{request.origin}</span></div>
       <p>{request.rationale}</p>
       <pre aria-label="Exact tool arguments">{JSON.stringify(request.arguments ?? request.arguments_preview, null, 2)}</pre>
+      {/* argument_hash lets a reviewer confirm the exact arguments a later audit record
+          matches, without needing to re-read the full arguments payload. */}
       <div className="execution-hash"><Fingerprint /><code>{request.argument_hash}</code></div>
       {request.status === 'pending' && <div className="approval-actions">
+        {/* A reason is required for both approve and deny — the decision trail always
+            records why, not just what was decided. */}
         <Input aria-label="Approval reason" onChange={(event) => setReason(event.target.value)} placeholder="Why is this action allowed or denied?" value={reason} />
         <Button disabled={!reason.trim() || busy} onClick={() => void onDecision(request.id, 'approve', reason)}><ShieldCheck /> Approve and run</Button>
         <Button disabled={!reason.trim() || busy} onClick={() => void onDecision(request.id, 'deny', reason)} variant="outline"><CircleOff /> Deny</Button>
@@ -54,6 +66,8 @@ export function ToolControlCenter() {
 
   const selectedServer = servers.find((server) => server.id === selectedServerId)
   const tool = tools.find((item) => item.name === selectedTool)
+  // Same requests list split into the approval inbox (pending) and the audit log
+  // (everything already decided or finished) — no separate fetch for each.
   const pending = requests.filter((request) => request.status === 'pending')
   const history = requests.filter((request) => request.status !== 'pending')
 
@@ -80,6 +94,8 @@ export function ToolControlCenter() {
     ? JSON.stringify({ command: selectedServer.command, args: selectedServer.args, env_keys: selectedServer.env_keys }, null, 2)
     : selectedServer?.url ?? '', [selectedServer])
 
+  // Connecting to a server (even just to list its tools) is itself a trust decision,
+  // so it requires an explicit confirmation showing the exact command/URL that will run.
   const discover = async (server: McpServer) => {
     if (!window.confirm(`Connect to this MCP server and discover its tools?\n\n${server.command_preview}`)) return
     setBusy(true); setError('')
@@ -90,6 +106,8 @@ export function ToolControlCenter() {
     } catch (cause) { setError(messageOf(cause)) } finally { setBusy(false) }
   }
 
+  // Saves the server configuration only — it does not connect or discover tools
+  // (that happens separately via discover()), matching the "Save without connecting" label.
   const createServer = async () => {
     setBusy(true); setError('')
     try {

@@ -21,6 +21,11 @@ import { Textarea } from '@/components/ui/textarea'
 import { ProviderModelPicker } from '@/features/models/ProviderModelPicker'
 import type { AttachmentStage, ComposerSettings, ContextMode } from '@/routes/chat/types'
 
+// Composer feature: the message input, attachment upload UI, model/effort/context
+// pickers, and secondary send settings. It does not call the API directly — uploads go
+// through onUpload (provided by ChatWorkspace/routes/chat), which is expected to report
+// progress via the onStage callback; sending goes through onSend.
+
 type AttachmentAttempt = {
   id: string
   file: File
@@ -97,6 +102,9 @@ export function ChatComposer({
     if (!prompt.trim()) return
     if (await onSend(prompt.trim())) onPrompt('')
   }
+  // On success the in-flight attempt is dropped from this local list entirely — the
+  // finished upload then shows up via the `uploads` prop (the parent's persisted list),
+  // not as a lingering "attempt" here. On failure the attempt stays so it can be retried.
   const uploadAttachment = async (attempt: AttachmentAttempt) => {
     setAttachmentAttempts((current) => current.map((item) => item.id === attempt.id ? { ...item, status: 'uploading', error: undefined } : item))
     try {
@@ -107,6 +115,9 @@ export function ChatComposer({
     }
   }
   const addAttachment = (file: File) => {
+    // id is timestamp+filename, not a uuid; adding the identical file twice within the
+    // same millisecond would collide, but attempts are only ever looked up by this id
+    // within this component's own short-lived list.
     const attempt: AttachmentAttempt = { id: `${Date.now()}-${file.name}`, file, status: 'uploading' }
     setAttachmentAttempts((current) => [...current, attempt])
     void uploadAttachment(attempt)
@@ -116,6 +127,7 @@ export function ChatComposer({
     <Textarea
       aria-label="Message"
       onChange={(event) => onPrompt(event.target.value)}
+      // Enter sends the message; Shift+Enter inserts a newline (see the hint text below).
       onKeyDown={(event) => {
         if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); void submit() }
       }}

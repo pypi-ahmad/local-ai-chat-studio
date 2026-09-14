@@ -8,6 +8,11 @@ import type { Artifact } from './artifact'
 import { sandboxDocument } from './sandboxDocument'
 import './ArtifactPreview.css'
 
+// Artifact-preview feature: renders a single artifact extracted from model or file
+// content (artifact.ts decides the kind). html/svg are untrusted and are rendered only
+// inside a fully locked-down iframe — see the sandbox="" attribute below and
+// sandboxDocument.ts for the CSP wrapping. Mermaid and plain code are rendered as text
+// or through MermaidDiagram, never as live HTML, so they don't need the sandbox.
 export function ArtifactPreview({ artifact, onClose }: { artifact: Artifact; onClose: () => void }) {
   const [showSource, setShowSource] = useState(artifact.kind === 'code')
   const copy = () => void navigator.clipboard.writeText(artifact.source)
@@ -34,6 +39,9 @@ export function ArtifactPreview({ artifact, onClose }: { artifact: Artifact; onC
         ) : artifact.kind === 'mermaid' ? (
           <MermaidDiagram source={artifact.source} />
         ) : (
+          // sandbox="" grants none of the opt-in permissions (no scripts, no forms, no
+          // same-origin, no top navigation) — this is what actually isolates untrusted
+          // artifact.source, not just the CSP inside sandboxDocument().
           <iframe
             referrerPolicy="no-referrer"
             sandbox=""

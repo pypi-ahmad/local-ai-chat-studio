@@ -16,6 +16,12 @@ import type {
 
 import './KnowledgeBasePanel.css'
 
+// Knowledge feature: lets a user assemble a knowledge base from existing local sources
+// (uploads, memories, backpacks) and bind one to a conversation. It does not fetch or
+// mutate these records itself — all reads come in as props and all writes go through
+// the onBind/onCreate/onDelete/onUpdate callbacks supplied by the parent (routes/library/LibraryPage.tsx),
+// which are the ones that actually call the API.
+
 type KnowledgeBasePanelProps = {
   backpacks: BackpackRecord[]
   conversation: Conversation | null
@@ -63,6 +69,8 @@ export function KnowledgeBasePanel({
     return knowledgeBases.filter((item) => `${item.name} ${item.description} ${item.sources.map((source) => source.title).join(' ')}`.toLowerCase().includes(normalized))
   }, [knowledgeBases, query])
   const activeMemories = memories.filter((item) => item.status === 'active')
+  // Only one knowledge base can be bound to a conversation at a time, so "bound" is
+  // just an equality check against the conversation's single knowledge_base_id.
   const bound = conversation?.settings?.knowledge_base_id === selected?.id
 
   const beginNew = () => {
@@ -109,6 +117,8 @@ export function KnowledgeBasePanel({
       setSelectedId(saved.id)
       setEditing(false)
     } catch (cause) {
+      // Non-Error throws (e.g. from a rejected fetch) fall back to a generic message
+      // rather than surfacing raw thrown values to the user; same pattern below.
       setError(cause instanceof Error ? cause.message : 'Could not save this knowledge base.')
     } finally {
       setBusy(false)

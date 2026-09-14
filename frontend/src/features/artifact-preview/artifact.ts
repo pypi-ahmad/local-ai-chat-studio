@@ -1,3 +1,7 @@
+// Artifact-preview feature: classifies a fenced code block from model output into a
+// renderable artifact kind. Does not render anything itself — html/svg go through
+// sandboxDocument.ts and an iframe in ArtifactPreview.tsx, since that source is untrusted.
+
 export type ArtifactKind = 'html' | 'svg' | 'mermaid' | 'code'
 
 export type Artifact = {

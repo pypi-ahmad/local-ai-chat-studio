@@ -18,6 +18,9 @@ type ComparisonResult = {
   error?: string
 }
 
+// Compare route: fans one prompt out to 2-4 models as independent concurrent runs and
+// streams each back via streamRun (api/client.ts). Cancellation and stale-update
+// guarding below are the non-obvious parts — see the comments on `run`/`cancelAll`.
 export function ComparePage({ models, providers }: { models: ModelSummary[]; providers: ProviderSummary[] }) {
   const [prompt, setPrompt] = useState('')
   const [selectedModels, setSelectedModels] = useState<string[]>([])
@@ -25,6 +28,11 @@ export function ComparePage({ models, providers }: { models: ModelSummary[]; pro
   const [running, setRunning] = useState(false)
   const controllers = useRef(new Map<string, AbortController>())
   const runIds = useRef(new Map<string, string>())
+  // Incremented on every new run() call; each in-flight stream closure captures the id
+  // it started with and checks it still matches batch.current before writing to state.
+  // This stops results from a superseded batch (e.g. the user hit Run again, or
+  // cancelled and started over) from landing after a newer batch has already reset
+  // `results` — without this, a slow late-arriving event could clobber the new batch.
   const batch = useRef(0)
 
   useEffect(() => {
@@ -36,6 +44,8 @@ export function ComparePage({ models, providers }: { models: ModelSummary[]; pro
     const model = models.find((candidate) => modelKey(candidate) === key)
     return model ? [model] : []
   })
+  // Every write site passes the batchId it started with; if a newer batch has started
+  // since, the write is dropped (see the comment on `batch` above).
   const updateResult = (key: string, update: Partial<ComparisonResult>, batchId: number) => {
     if (batch.current !== batchId) return
     setResults((current) => current.map((result) => result.key === key ? { ...result, ...update } : result))
@@ -54,6 +64,9 @@ export function ComparePage({ models, providers }: { models: ModelSummary[]; pro
       try {
         const created = await api.createRun({ provider: target.provider, model: target.id, messages: [{ role: 'user', content: prompt.trim(), images: [] }], temperature: 0.7 })
         runIds.current.set(key, created.id)
+        // The run was created but may have already been aborted (cancelAll fired while
+        // createRun was still in flight) — cancel it server-side too instead of streaming
+        // a run nothing is listening for; a failure to cancel is not worth surfacing here.
         if (controller.signal.aborted) { await api.cancelRun(created.id).catch(() => undefined); return }
         await streamRun(created.id, (event) => {
           if (event.type === 'run.started') updateResult(key, { status: 'streaming' }, batchId)
@@ -73,6 +86,9 @@ export function ComparePage({ models, providers }: { models: ModelSummary[]; pro
     if (batch.current === batchId) setRunning(false)
   }
   const cancelAll = async () => {
+    // Snapshot the batch id before the awaited cancel calls: if the user starts a new
+    // run while those are still in flight, batch.current will have moved on and this
+    // stale cancelAll must not overwrite the new batch's results below.
     const activeBatch = batch.current
     controllers.current.forEach((controller) => controller.abort())
     await Promise.allSettled([...runIds.current.values()].map((runId) => api.cancelRun(runId)))

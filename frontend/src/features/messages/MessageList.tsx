@@ -11,6 +11,11 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { MarkdownContent } from '@/components/MarkdownContent'
 import type { ConversationLayout } from '@/routes/chat/types'
 
+// Messages feature: renders the transcript, tracks scroll position to decide whether to
+// auto-follow a streaming response, and hosts the artifact preview panel opened from
+// message content. `conversation` and `liveOutput` are owned by the parent route
+// (routes/chat/ChatWorkspace.tsx) — this component only reads them and reports
+// branch/feedback/suggestion actions back up through callbacks.
 export function MessageList({
   conversation,
   liveOutput,
@@ -35,12 +40,17 @@ export function MessageList({
   const messageRefs = useRef(new Map<string, HTMLElement>())
   const messageRegionRef = useRef<HTMLDivElement>(null)
   const liveMessageRef = useRef<HTMLElement>(null)
+  // Mirrors atTranscriptEnd in a ref so the scroll listener and the liveOutput effect
+  // (both set up once, or re-bound only on conversation/message-count changes) always
+  // read the latest "should we auto-follow" value instead of one captured at bind time.
   const atTranscriptEndRef = useRef(true)
   const previousConversationId = useRef<string | undefined>(undefined)
   const previousLiveOutput = useRef('')
   const messages = conversation?.messages ?? []
   const lastMessageId = messages.at(-1)?.id
 
+  // useLayoutEffect (not useEffect) so the jump to the last message on a conversation
+  // switch happens before the browser paints, avoiding a visible scroll flash.
   useLayoutEffect(() => {
     const changedConversation = previousConversationId.current !== conversation?.id
     previousConversationId.current = conversation?.id
@@ -51,13 +61,21 @@ export function MessageList({
       setUnreadOutput(false)
       messageRefs.current.get(lastMessageId ?? '')?.scrollIntoView({ behavior: 'auto', block: 'end' })
     }
+    // Keep the navigator pinned to the newest message while streaming/appending, as
+    // long as the user hasn't scrolled away (atTranscriptEndRef.current is false once they have).
     if (changedConversation || atTranscriptEndRef.current) setMessageIndex(Math.max(0, messages.length - 1))
   }, [conversation?.id, lastMessageId, messages.length])
   useEffect(() => {
+    // ScrollArea (components/ui/scroll-area) renders its actual scrollable element as a
+    // child marked data-slot="scroll-area-viewport"; there's no ref exposed for it, so
+    // this reaches into that internal structure directly. Breaks if that component's
+    // internals change.
     const viewport = messageRegionRef.current?.querySelector<HTMLElement>('[data-slot="scroll-area-viewport"]')
     if (!viewport) return
     const trackPosition = () => {
       if (!viewport.scrollHeight && !viewport.clientHeight) return
+      // "At the end" allows a 32px slop so momentum scrolling or sub-pixel rounding
+      // near the bottom still counts as following the transcript.
       const atEnd = viewport.scrollHeight - viewport.scrollTop - viewport.clientHeight <= 32
       atTranscriptEndRef.current = atEnd
       setAtTranscriptEnd(atEnd)
@@ -71,6 +89,10 @@ export function MessageList({
     return () => viewport.removeEventListener('scroll', trackPosition)
   }, [conversation?.id, messages.length])
   useEffect(() => {
+    // liveOutput is the streaming assistant response as a whole string, appended to on
+    // each chunk; comparing lengths (not content) is enough to detect new text arrived,
+    // but this only works because the caller never shrinks liveOutput mid-stream — a
+    // reset to a new, shorter string would be missed here.
     const receivedOutput = liveOutput.length > previousLiveOutput.current.length
     previousLiveOutput.current = liveOutput
     if (!receivedOutput) return
@@ -78,6 +100,8 @@ export function MessageList({
     else setUnreadOutput(true)
   }, [liveOutput])
 
+  // Manually navigating away from the end always disables auto-follow, even if the
+  // target happens to be the last message — only jumpToBottom re-enables it.
   const navigateMessage = (nextIndex: number, block: ScrollLogicalPosition = 'center') => {
     const boundedIndex = Math.max(0, Math.min(messages.length - 1, nextIndex))
     atTranscriptEndRef.current = false

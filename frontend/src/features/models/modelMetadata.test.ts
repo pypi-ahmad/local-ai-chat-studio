@@ -1,3 +1,5 @@
+// Covers the capability-alias matching and monogram fallback in modelMetadata.ts,
+// and the localStorage persistence (including malformed data) in modelPreferences.ts.
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { hasTools, modelSearchText, providerMonogram } from './modelMetadata'

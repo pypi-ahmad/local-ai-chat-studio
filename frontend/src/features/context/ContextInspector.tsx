@@ -8,12 +8,20 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { formatUsd } from '@/features/models/modelMetadata'
 
+// Context feature: read-only views over a ContextPlan computed elsewhere (the backend,
+// via api/client.ts) — this file only renders the plan/evidence and reports toggles
+// back through onToggle/onTab/onPage callbacks. ChatWorkspace/ContextPage/EvidencePage
+// are the routes that fetch the plan and own the excluded-sources state.
+
 export type InspectorTab = 'context' | 'evidence'
 
 export function ContextRail({ plan, model }: { plan: ContextPlan | null; model?: ModelSummary }) {
   if (!plan) return <div className="context-rail empty"><span>Context preflight appears here</span></div>
   const percent = Math.round((plan.estimated_tokens / plan.budget_tokens) * 100)
   const remainingTokens = plan.budget_tokens - plan.estimated_tokens
+  // budget_tokens already reserves an output allowance (see ContextPage's "preserve 20%
+  // for output" copy), so exceeding it here means the request itself won't fit, not
+  // just that output room is tight. warning kicks in at 80% of budget as an early flag.
   const state = remainingTokens < 0 ? 'overflow' : percent >= 80 ? 'warning' : 'safe'
   const estimatedInputCost = model?.pricing ? (plan.estimated_tokens / 1_000_000) * model.pricing.input_per_million : null
   const warning = state === 'overflow'
@@ -44,6 +52,8 @@ export function ContextPlanSummary({ plan }: { plan: ContextPlan | null }) {
 
 export function EvidenceSourceList({ plan, excluded, onToggle }: { plan: ContextPlan | null; excluded: Set<string>; onToggle: (id: string) => void }) {
   if (!plan?.sources.length) return <p className="muted">No evidence sources are available for the current plan.</p>
+  // Only trust === 'trusted' sources can be toggled; untrusted sources keep whatever
+  // included/excluded state the plan assigned them and can't be manually re-included here.
   return <div className="stack-list">{plan.sources.map((source) => <div className="source-card" key={source.id}><div><strong>{source.title}</strong><small>{source.kind} · {source.estimated_tokens.toLocaleString()} tokens</small></div><Badge variant={source.trust === 'trusted' ? 'outline' : 'destructive'}>{source.trust}</Badge><p>{source.preview}</p><label><input checked={!excluded.has(source.id)} disabled={source.trust !== 'trusted'} onChange={() => onToggle(source.id)} type="checkbox" /> Include in next send</label>{source.url && <a href={source.url} rel="noreferrer" target="_blank">Open source</a>}</div>)}</div>
 }
 

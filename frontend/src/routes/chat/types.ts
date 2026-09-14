@@ -1,3 +1,5 @@
+// Chat route: shared types passed between ChatWorkspace and the composer/message
+// components it composes. No logic here — see ChatWorkspace.tsx for how these are used.
 import type { ConversationExportFormat, ConversationSettings } from '@/api/client'
 
 export type ContextMode = 'full' | 'chat' | 'files'

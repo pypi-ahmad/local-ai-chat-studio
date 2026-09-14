@@ -8,6 +8,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Textarea } from '@/components/ui/textarea'
 import { Surface } from '@/components/shared/Surface'
 
+// Settings route: local runtime status/controls and portable data import/export/wipe,
+// all through api/client.ts. Destructive actions (wipe, v2 import, stop) are gated
+// behind window.confirm with explicit copy about what will happen, not a custom dialog.
 function messageOf(error: unknown) {
   if (error instanceof ApiError && typeof error.detail === 'object' && error.detail) {
     const detail = error.detail as { message?: string }
@@ -23,6 +26,9 @@ export function SettingsPage({ connected, onRefresh }: { connected: boolean; onR
   const [stopError, setStopError] = useState('')
   useEffect(() => { void Promise.all([api.runtimeHealth(), api.profile()]).then(([health, saved]) => { setRuntime(health); setProfile(saved.content) }) }, [])
   const download = async () => { const { jsonl } = await api.exportData(); const url = URL.createObjectURL(new Blob([jsonl], { type: 'application/x-ndjson' })); const anchor = document.createElement('a'); anchor.href = url; anchor.download = 'local-ai-chat-studio.jsonl'; anchor.click(); URL.revokeObjectURL(url) }
+  // Only asks the backend to shut itself down; this tab and page stay open afterward
+  // (see the "you may close this tab" copy below) since there's nothing to navigate to
+  // once the backend is gone.
   const stopStudio = async () => {
     if (!window.confirm('Stop Local AI Chat Studio? Active generations will be cancelled. Ollama and OpenCode will keep running.')) return
     setStopError('')

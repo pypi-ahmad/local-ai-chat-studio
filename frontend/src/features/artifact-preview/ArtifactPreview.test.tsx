@@ -1,3 +1,6 @@
+// Verifies the untrusted-content boundary: the iframe carries sandbox="" and a
+// no-referrer policy, the CSP is present in the rendered srcdoc, and script/HTML
+// content lands only inside srcdoc — never as a real DOM <script> element.
 import { fireEvent, render, screen } from '@testing-library/react'
 import { expect, it, vi } from 'vitest'
 

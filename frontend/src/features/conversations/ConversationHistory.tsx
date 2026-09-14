@@ -7,6 +7,14 @@ import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Skeleton } from '@/components/ui/skeleton'
 
+// Conversations feature: sidebar list and search over conversations already loaded by
+// the parent route (ChatWorkspace) — reads/renames/deletes go through the onSelect/
+// onUpdate/onDelete/onCreate callbacks, not the API directly.
+
+// Buckets by calendar day in the browser's local timezone (not UTC), comparing
+// midnight-to-midnight so a conversation from earlier today always counts as "Today"
+// regardless of time of day. age is in milliseconds; a negative/zero age from an
+// unexpected future timestamp still falls into "Today" rather than "Older".
 function conversationDateGroup(updatedAt: string) {
   const updated = new Date(updatedAt)
   if (Number.isNaN(updated.getTime())) return 'Older'
@@ -41,6 +49,9 @@ export function ConversationHistory({
   const [query, setQuery] = useState('')
   const normalizedQuery = query.trim().toLowerCase()
   const visible = conversations.filter((item) => `${item.title} ${item.folder ?? ''}`.toLowerCase().includes(normalizedQuery))
+  // Grouping precedence: pinned first (regardless of folder or date), then any
+  // remaining items with a folder are grouped by folder name, and only what's left
+  // (unpinned, unfiled) falls into the date buckets from conversationDateGroup.
   const grouped = useMemo(() => {
     const groups: Array<{ key: string; label: string; items: Conversation[] }> = []
     const pinned = visible.filter((item) => item.pinned)

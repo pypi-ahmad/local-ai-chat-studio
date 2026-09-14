@@ -9,6 +9,10 @@ import { Textarea } from '@/components/ui/textarea'
 import { Surface } from '@/components/shared/Surface'
 import { ContextPlanSummary, ContextRail } from '@/features/context/ContextInspector'
 
+// Context route: full-page view of the same ContextRail/ContextPlanSummary used in the
+// chat inspector, plus a form for saving a "backpack" (an immutable local context
+// snapshot). The plan itself is computed and passed in by the app; saving a backpack
+// goes through the onCreate callback, not a direct API call from this file.
 export function ContextPage({ plan, backpacks, onCreate }: { plan: ContextPlan | null; backpacks: BackpackRecord[]; onCreate: (name: string, title: string, content: string) => Promise<void> }) {
   const [name, setName] = useState('Project context')
   const [title, setTitle] = useState('Constraint')

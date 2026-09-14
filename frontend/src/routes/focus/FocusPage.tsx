@@ -7,6 +7,10 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Surface } from '@/components/shared/Surface'
 
+// Focus route: a short form for a one-off objective/success-criteria/constraints
+// "contract" attached to the current conversation. Deliberately has no scoring or
+// streak tracking (per the page description). Submission goes through onCreate; this
+// file holds no persisted state of its own beyond the in-progress form fields.
 export function FocusPage({ conversationId, onCreate }: { conversationId: string | null; onCreate: (objective: string, criteria: string, constraints: string[]) => Promise<void> }) {
   const [objective, setObjective] = useState('')
   const [criteria, setCriteria] = useState('')

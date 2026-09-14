@@ -7,6 +7,11 @@ import type { ModelSummary, ProviderSummary } from '@/api/client'
 import { contextLengthLabel, hasTools, hasVision, modelKey, modelSearchText, pricingLabel, providerMonogram } from '@/features/models/modelMetadata'
 import { readFavoriteModels, readRecentModels, writeFavoriteModels, writeRecentModels } from '@/features/models/modelPreferences'
 
+// Models feature: provider + model selector used by the composer, compare, replay,
+// and library pages. Model data and provider list come in as props (fetched by a
+// parent route via api/client.ts); this component only reads/writes favorites and
+// recents through modelPreferences.ts and derives labels via modelMetadata.ts.
+
 type ModelCapabilityFilter = 'all' | 'vision' | 'reasoning' | 'tools'
 
 function ProviderMark({ id, label }: { id: string; label: string }) {
@@ -40,6 +45,9 @@ export function ProviderModelPicker({
   const selected = models.find((model) => modelKey(model) === value)
   const providerIds = [...new Set(models.map((model) => model.provider))]
   const selectedProvider = selected?.provider ?? providerIds[0] ?? ''
+  // excludedKeys lets a caller (e.g. ComparePage running several pickers side by side)
+  // hide models already chosen elsewhere, while still allowing this picker's own
+  // current value through so it doesn't disappear from its own list.
   const availableModels = models.filter((model) => model.provider === selectedProvider && (!excludedKeys.has(modelKey(model)) || modelKey(model) === value))
   const displayedModel = selected?.provider === selectedProvider ? selected : availableModels[0]
   const providerName = (id: string) => providers.find((provider) => provider.id === id)?.label ?? ({ openai: 'OpenAI', agnes: 'Agnes', anthropic: 'Anthropic', google: 'Google', openrouter: 'OpenRouter', xai: 'xAI' }[id] ?? id)
@@ -56,9 +64,13 @@ export function ProviderModelPicker({
   const recentOptions = visibleModels.filter((model) => recentSet.has(modelKey(model)) && !favoriteSet.has(modelKey(model)))
   const otherOptions = visibleModels.filter((model) => !favoriteSet.has(modelKey(model)) && !recentSet.has(modelKey(model)))
 
+  // Favorite/recent state is loaded once from localStorage and mirrored back on every
+  // change, so multiple picker instances on the same page share the same persisted lists.
   useEffect(() => writeFavoriteModels(favoriteModels), [favoriteModels])
   useEffect(() => writeRecentModels(recentModels), [recentModels])
 
+  // Search text and capability filter are dialog-local UI state, reset whenever the
+  // picker closes so the next open starts from an unfiltered list.
   const changeOpen = (next: boolean) => {
     setOpen(next)
     if (!next) { setQuery(''); setCapability('all') }

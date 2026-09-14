@@ -14,6 +14,12 @@ import { KnowledgeBasePanel } from '@/features/knowledge/KnowledgeBasePanel'
 import { modelKey } from '@/features/models/modelMetadata'
 import { ProviderModelPicker } from '@/features/models/ProviderModelPicker'
 
+// Library route: browse/start reusable assistant presets and manage knowledge bases
+// (via features/knowledge/KnowledgeBasePanel.tsx). Assistant favorites/recents persist
+// through features/assistants/assistantPreferences.ts (localStorage only); preset,
+// memory, and upload data itself is fetched by the app and passed in as props, with
+// mutations going through the on*/onPreset*/onMemory* callbacks.
+
 function messageOf(error: unknown) {
   if (error instanceof ApiError && typeof error.detail === 'object' && error.detail) {
     const detail = error.detail as { message?: string }
@@ -25,6 +31,9 @@ function AssistantCard({ item, favorite, model, starting, onFavorite, onStart, o
   item: Preset; favorite: boolean; model?: ModelSummary; starting: boolean
   onFavorite: () => void; onStart: () => void; onDelete: () => void
 }) {
+  // Icon is a cosmetic guess from keywords in the assistant's own name/system prompt;
+  // there's no explicit category field, so this is heuristic and can be wrong or
+  // change if the assistant is renamed or its prompt edited.
   const copy = `${item.name} ${item.system_prompt}`.toLowerCase()
   const Icon = /code|developer|program/.test(copy) ? Code2 : /write|editor|copy/.test(copy) ? FileText : /research|analyst|evidence/.test(copy) ? Search : Sparkles
   const description = item.system_prompt.trim() || 'A reusable assistant ready for your next conversation.'
@@ -57,6 +66,9 @@ function AssistantLibraryPage({
     setFavoriteIds(next)
     writeFavoriteAssistants(next)
   }
+  // Optimistically records this assistant as "recent" before the chat actually starts,
+  // then rolls the recent list back to its prior value if starting fails — so a failed
+  // start doesn't leave a phantom entry in "Recently used".
   const startAssistant = async (item: Preset) => {
     const previous = recentIds
     const next = [item.id, ...recentIds.filter((id) => id !== item.id)]

@@ -11,6 +11,12 @@ import { MessageList } from '@/features/messages/MessageList'
 import { pricingLabel } from '@/features/models/modelMetadata'
 import type { AttachmentStage, ChatExportFormat, ComposerSettings, ConversationLayout } from '@/routes/chat/types'
 
+// Chat route: the main conversation screen. Composes ContextRail, MessageList, and
+// ChatComposer from features/, and owns only this screen's local UI state (prompt
+// draft, settings dialog); conversation data, streaming output, and all API calls are
+// owned by the app-level chat state and passed in as props/callbacks. Open features/
+// composer/ChatComposer.tsx or features/messages/MessageList.tsx next for how sending
+// and streaming actually work.
 export function ChatWorkspace({
   conversation,
   models,
@@ -95,6 +101,9 @@ export function ChatWorkspace({
   const [systemPromptDraft, setSystemPromptDraft] = useState(systemPrompt)
   const [layoutDraft, setLayoutDraft] = useState<ConversationLayout>(layout)
   const selected = models.find((model) => `${model.provider}::${model.id}` === selectedModel)
+  // Only resync the drafts from props while the settings dialog is closed, so an
+  // in-progress edit isn't overwritten if the underlying conversation prop changes
+  // while the dialog happens to be open; closing without saving discards the draft.
   useEffect(() => {
     if (settingsOpen) return
     setSystemPromptDraft(systemPrompt)
