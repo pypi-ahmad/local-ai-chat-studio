@@ -1,3 +1,14 @@
+"""FastAPI application factory and HTTP route definitions for the web layer.
+
+This module wires the domain logic in ``src/`` and the persistence/session
+helpers in the sibling ``backend/app`` modules into the HTTP API the frontend
+(``frontend/``) consumes. It should stay a thin translation between HTTP
+requests/responses and those modules rather than growing business logic of
+its own — context assembly lives in ``workspace.py``, provider streaming in
+``providers.py`` and ``runs.py``, and persistence in ``store.py``; start
+there for the mechanics behind any given route.
+"""
+
 from __future__ import annotations
 
 import base64
@@ -98,6 +109,13 @@ logger = logging.getLogger(__name__)
 
 
 class SPAStaticFiles(StaticFiles):
+    """Serves the built frontend, falling back to index.html for client-side routes.
+
+    A 404 for a path with no file extension that isn't under ``api/`` is
+    assumed to be a React Router route rather than a missing asset, so it is
+    rewritten to index.html instead of surfacing as a 404.
+    """
+
     async def get_response(self, path: str, scope: dict) -> Response:
         try:
             response = await super().get_response(path, scope)
@@ -122,6 +140,14 @@ def create_app(
     shutdown_callback: Callable[[], None] | None = None,
     mcp_gateway: McpGateway | None = None,
 ) -> FastAPI:
+    """Build and configure the FastAPI app, its routes, and process-lifetime state.
+
+    All mutable server state (the SQLite-backed Store, per-session credential
+    vault, run manager, and the ephemeral web-search cache) is created here
+    and closed over by the route handlers below, rather than living only on
+    app.state, so tests can construct independent app instances via this
+    function's arguments.
+    """
     data_dir = Path(os.getenv("CHAT_DATA_DIR", "data"))
     store = Store(database_url or str(data_dir / "app.db"))
     v2_database = v2_database_url or str(data_dir / "v2" / "studio.db")
@@ -139,9 +165,21 @@ def create_app(
         )
     runs = RunManager(registry, vault, store)
     tool_gateway = mcp_gateway or DefaultMcpGateway(data_dir / "mcp-sandboxes")
+    # Web search results are rate-limited/slow, so preflight (context_plan) runs
+    # the search once and create_turn reuses it by plan_hash instead of
+    # re-searching. Bounded to 128 entries below with insertion-order (not LRU)
+    # eviction — a small in-memory cache, not persisted, cleared by wipe_data.
     web_by_plan: dict[str, list[dict[str, str]]] = {}
 
     async def context_plan(conversation_id: str, payload: TurnPreflight) -> ContextPlan:
+        """Resolve the context plan for a turn, running a web search only if the plan needs it.
+
+        payload.attachment_ids is client-supplied and is validated here
+        against the conversation's actual uploads before use. The plan is
+        built twice: once to see whether the web section would be included
+        (build_context_plan is deterministic without search results), then
+        again with real results once a search is known to be worth paying for.
+        """
         if payload.attachment_ids:
             uploads = {item.id: item for item in store.list_uploads(conversation_id)}
             if missing := set(payload.attachment_ids) - uploads.keys():
@@ -166,6 +204,9 @@ def create_app(
         return plan
 
     def sync_memory_index(memory: Memory) -> None:
+        # Vector indexing is best-effort: embedding/index failures are logged
+        # and swallowed so the memory write itself still succeeds even when
+        # the vector store is unavailable.
         embed_model = os.getenv("CHAT_EMBED_MODEL")
         if not embed_model:
             return
@@ -183,6 +224,8 @@ def create_app(
         try:
             yield
         finally:
+            # Cancel/await in-flight runs before closing the connection they
+            # may still be writing to on shutdown — order matters here.
             await runs.shutdown()
             store.connection.close()
 
@@ -201,10 +244,15 @@ def create_app(
 
     @app.middleware("http")
     async def session_cookie(request: Request, call_next):
+        # session_id scopes runs, credentials, and tool requests per browser —
+        # it is an unauthenticated identity for a single local user's browser,
+        # not an authentication token.
         session_id = request.cookies.get("chat_session") or vault.new_id()
         request.state.session_id = session_id
         response = await call_next(request)
         if "chat_session" not in request.cookies:
+            # secure=False because this app is served over plain HTTP on
+            # localhost (see backend/app/cli.py); would need True behind TLS.
             response.set_cookie(
                 "chat_session", session_id, httponly=True, samesite="lax", secure=False
             )
@@ -265,6 +313,8 @@ def create_app(
     def create_tool_request(payload: ToolRequestCreate, request: Request) -> ToolRequest:
         try:
             tool = store.get_mcp_tool(payload.server_id, payload.tool_name)
+            # payload.arguments is user/agent-controlled; validate it against
+            # the tool's own JSON Schema before it is ever persisted or run.
             Draft202012Validator.check_schema(tool.input_schema)
             Draft202012Validator(tool.input_schema).validate(payload.arguments)
             if payload.conversation_id:
@@ -298,6 +348,11 @@ def create_app(
         except RuntimeError as exc:
             raise HTTPException(409, str(exc)) from exc
 
+        # claim_tool_request already flipped status to "running"; every exit
+        # path below must call finish_tool_request so the request doesn't get
+        # stuck there. A generic tool-call failure is reported as a completed
+        # (failed) ToolRequest with a 200, not an HTTP error, so the caller
+        # can see it via the request's own status/error fields.
         try:
             server = store.get_mcp_server(pending.server_id)
             result = await tool_gateway.call(server, pending.tool_name, arguments)
@@ -473,8 +528,19 @@ def create_app(
     async def create_turn(
         conversation_id: str, payload: TurnCreate, request: Request
     ) -> RunSnapshot:
+        """Recompute the context plan the client previewed and start a run from it.
+
+        The client is expected to have called preflight_turn first and to
+        echo back its plan_hash and confirmed_finding_ids. Recomputing here —
+        rather than trusting the client's copy of the plan — guards against
+        the context (uploads, memories, policy) having changed between
+        preflight and submission, and against a client skipping confirmation
+        of flagged findings.
+        """
         base = TurnPreflight(**payload.model_dump())
         try:
+            # Reuse the web search results a matching preflight already
+            # cached, instead of re-running the slow/rate-limited search.
             cached_web = web_by_plan.get(payload.plan_hash)
             if cached_web is None:
                 plan = await context_plan(conversation_id, base)
@@ -482,6 +548,9 @@ def create_app(
             else:
                 plan = build_context_plan(store, conversation_id, base, cached_web)
             if plan.plan_hash != payload.plan_hash:
+                # Context drifted since the client's preflight (e.g. a message
+                # or upload arrived concurrently) — force a re-preflight
+                # rather than silently sending different context than shown.
                 raise HTTPException(
                     409,
                     detail={"message": "Context changed", "plan": plan.model_dump()},
@@ -494,6 +563,7 @@ def create_app(
                         "plan": plan.model_dump(),
                     },
                 )
+            # Any safety finding the client hasn't explicitly confirmed blocks the run.
             required = {finding.id for finding in plan.findings}
             if not required.issubset(payload.confirmed_finding_ids):
                 raise HTTPException(
@@ -624,6 +694,10 @@ def create_app(
 
     @app.post("/api/v1/providers/openrouter/auth/start")
     def start_openrouter_auth(request: Request) -> dict[str, str]:
+        # PKCE (RFC 7636) flow: the verifier is kept server-side only, keyed
+        # by session id, and exchanged for the OpenRouter API key once the
+        # callback returns an authorization code. time.monotonic() avoids
+        # wall-clock jumps affecting the TTL prune below.
         now = time.monotonic()
         for sid, (_, started_at) in list(oauth_verifiers.items()):
             if now - started_at > OAUTH_VERIFIER_TTL:
@@ -664,6 +738,7 @@ def create_app(
         return RedirectResponse("/?provider=openrouter&connected=1", status_code=303)
 
     async def exchange_openrouter_code(code: str, session_id: str) -> None:
+        # Popping (not peeking) makes the code exchange single-use per pending flow.
         entry = oauth_verifiers.pop(session_id, None)
         if entry is None:
             raise HTTPException(409, "No OpenRouter authorization is pending")
@@ -719,6 +794,9 @@ def create_app(
     def simulate_provider(
         provider: str, payload: ProviderSimulationInput
     ) -> dict[str, object]:
+        # Fabricates a canned event sequence for the requested scenario; it
+        # never calls the real provider. Lets the frontend demo/preview
+        # failure and fallback UI without a live failure needing to occur.
         if provider not in registry.adapters:
             raise HTTPException(404, "Provider not found")
         fallback = payload.fallback_provider
@@ -798,6 +876,9 @@ def create_app(
 
     @app.post("/api/v1/memories", response_model=Memory, status_code=201)
     def create_memory(payload: MemoryCreate) -> Memory:
+        # Untrusted content (user-authored) is scanned for prompt-injection
+        # phrasing before being trusted for future context assembly; flagged
+        # content is stored quarantined rather than rejected outright.
         findings = [
             item
             for item in scan_text(payload.content)
@@ -825,6 +906,9 @@ def create_app(
         adapter = registry.adapters.get(payload.provider)
         if adapter is None:
             raise HTTPException(404, "Provider not found")
+        # Sending a full conversation to a non-local provider needs explicit
+        # confirmation, since ollama-local is the only provider assumed to
+        # keep data on-device.
         if payload.provider != "ollama-local" and not payload.cloud_confirmed:
             raise HTTPException(
                 409, "Confirm sending the full conversation to this provider"
@@ -842,6 +926,10 @@ def create_app(
             raise HTTPException(404, "Conversation not found") from exc
         except ValueError as exc:
             raise HTTPException(502, str(exc)) from exc
+        # The model-produced candidates are themselves untrusted output derived
+        # from conversation content; re-scan each one before it can become
+        # trusted long-term-memory context — secrets/PII are dropped,
+        # injection-like content is quarantined rather than saved active.
         safe_candidates = []
         discarded = outcome.discarded
         for candidate in outcome.candidates:
@@ -886,6 +974,8 @@ def create_app(
             store.delete_memory(memory_id)
         except KeyError as exc:
             raise HTTPException(404, "Memory not found") from exc
+        # Same best-effort vector cleanup as sync_memory_index above, inlined
+        # here since the memory row (and its content) is already gone.
         if os.getenv("CHAT_EMBED_MODEL"):
             try:
                 from src.rag import delete_memory_vector
@@ -904,6 +994,9 @@ def create_app(
         try:
             return store.create_preset(payload)
         except Exception as exc:
+            # sqlite3's IntegrityError text is matched by substring rather
+            # than a narrower exception type, since sqlite3 doesn't
+            # distinguish which constraint was violated.
             if "UNIQUE constraint" in str(exc):
                 raise HTTPException(409, "Preset name already exists") from exc
             raise
@@ -980,6 +1073,9 @@ def create_app(
 
     @app.post("/api/v1/data/wipe", status_code=204)
     async def wipe_data(_: WipeRequest, request: Request) -> Response:
+        # store.wipe is a synchronous SQLite operation, offloaded to a thread
+        # so it doesn't block the event loop; in-memory session/run state is
+        # cleared after it completes.
         await asyncio.to_thread(store.wipe)
         runs.clear()
         vault.clear(request.state.session_id)
@@ -989,6 +1085,10 @@ def create_app(
 
     @app.post("/api/v1/uploads", response_model=Upload, status_code=201)
     def create_upload(payload: UploadCreate) -> Upload:
+        # Trust boundary: filename/content are entirely client-controlled.
+        # Path(...).name strips any directory components before the
+        # extension check, and validate=True below rejects non-canonical
+        # base64 rather than silently truncating it.
         filename = Path(payload.filename).name
         extension = filename.rsplit(".", 1)[-1].lower() if "." in filename else ""
         if extension not in ACCEPTED_TYPES:
@@ -1081,6 +1181,9 @@ def create_app(
             raise HTTPException(404, "Run not found") from exc
 
         async def stream() -> AsyncIterator[str]:
+            # Standard SSE framing: an "event: <type>" line, a "data: <json>"
+            # line, then a blank line to terminate the event. runs.events()
+            # blocks between events via an asyncio.Event rather than polling.
             async for event in runs.events(run_id, request.state.session_id):
                 yield f"event: {event.type}\ndata: {json.dumps(event.model_dump())}\n\n"
 
@@ -1103,6 +1206,10 @@ def create_app(
             raise HTTPException(404, "Run not found") from exc
         run = bundle["snapshot"]
         request_data = bundle["request"]
+        # "redacted" mode is for exporting/sharing a run bundle: it strips
+        # images, runs sanitize_text's secret/PII patterns over content, and
+        # drops the error detail and full context — best-effort, not a
+        # guarantee, since sanitize_text only matches known patterns.
         if mode == "redacted":
             run = run.model_copy(
                 update={"output": sanitize_text(run.output), "error": None}
@@ -1169,6 +1276,9 @@ def create_app(
         )
         return {"changed": left.output != right.output, "diff": diff}
 
+    # Only mounted when a built frontend exists (e.g. a packaged/production
+    # run); during frontend development the Vite dev server serves the UI
+    # separately and talks to this API directly.
     frontend_dist = Path(__file__).parents[2] / "frontend" / "dist"
     if frontend_dist.is_dir():
         app.mount("/", SPAStaticFiles(directory=frontend_dist, html=True), name="frontend")

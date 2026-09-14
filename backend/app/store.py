@@ -1,3 +1,14 @@
+"""SQLite persistence layer for conversations, runs, memories, and related entities.
+
+Owns the on-disk schema (SCHEMA below) and every read/write query; callers in
+main.py pass validated Pydantic models in and get them back out — this module
+does not itself validate untrusted input beyond what SQL/foreign-key
+constraints enforce. All access goes through self.lock (a re-entrant lock)
+because sqlite3 connections opened with check_same_thread=False are shared
+across the asyncio event loop and any threads FastAPI's threadpool spins up
+for sync routes.
+"""
+
 from __future__ import annotations
 
 import base64
@@ -41,6 +52,10 @@ from backend.app.contracts import (
 from backend.app.mcp_tools import redact_value
 
 
+# Base schema, applied once via executescript() in Store.__init__. Columns
+# added after the initial release are appended via _ensure_column calls
+# below instead of editing the CREATE TABLE statements, so existing
+# on-disk databases pick up new columns without a real migration framework.
 SCHEMA = """
 PRAGMA foreign_keys = ON;
 CREATE TABLE IF NOT EXISTS conversations (
@@ -237,6 +252,10 @@ class Store:
             Path(database_url).parent.mkdir(parents=True, exist_ok=True)
         self.connection = sqlite3.connect(database_url, check_same_thread=False)
         self.connection.row_factory = sqlite3.Row
+        # Guards every connection.execute call below: sqlite3 connections
+        # aren't safe for concurrent use from multiple threads even with
+        # check_same_thread=False, and FastAPI can run sync route handlers in
+        # a threadpool alongside the asyncio event loop.
         self.lock = threading.RLock()
         with self.connection:
             self.connection.executescript(SCHEMA)
@@ -266,6 +285,7 @@ class Store:
             )
 
     def _ensure_column(self, table: str, column: str, definition: str) -> None:
+        """Add `column` to `table` if it doesn't already exist (idempotent ad hoc migration)."""
         columns = {
             row["name"]
             for row in self.connection.execute(f"PRAGMA table_info({table})")
@@ -277,6 +297,8 @@ class Store:
 
     @staticmethod
     def session_hash(session_id: str) -> str:
+        # Used only for tool_requests, which key off this hash rather than
+        # the raw session id used elsewhere (e.g. runs); see main.py callers.
         return hashlib.sha256(session_id.encode()).hexdigest()
 
     @staticmethod
@@ -340,6 +362,9 @@ class Store:
 
     def delete_mcp_server(self, server_id: str) -> None:
         with self.lock, self.connection:
+            # Blocks deletion while a tool call is in flight or awaiting
+            # approval, since the FK's ON DELETE CASCADE would otherwise
+            # silently orphan the in-progress request.
             pending = self.connection.execute(
                 "SELECT 1 FROM tool_requests WHERE server_id = ? AND status IN ('pending', 'running')",
                 (server_id,),
@@ -441,6 +466,9 @@ class Store:
         server = self.get_mcp_server(payload.server_id)
         self.get_mcp_tool(payload.server_id, payload.tool_name)
         request_id, now = str(uuid.uuid4()), utc_now()
+        # Canonical (sorted-keys, no whitespace) JSON so identical arguments
+        # always hash the same way regardless of key order; argument_hash is
+        # a stable fingerprint shown to the user, not used for deduplication.
         canonical = json.dumps(payload.arguments, sort_keys=True, separators=(",", ":"))
         with self.lock, self.connection:
             self.connection.execute(
@@ -457,6 +485,12 @@ class Store:
                     payload.origin,
                     payload.conversation_id,
                     payload.rationale,
+                    # arguments_json (raw) is only needed while the request is
+                    # pending/running, to actually invoke the tool with real
+                    # arguments (see claim_tool_request); it is nulled out by
+                    # deny_tool_request/finish_tool_request once the request
+                    # is terminal. arguments_preview_json (redact_value()'d)
+                    # is what's kept permanently for history/audit.
                     canonical,
                     json.dumps(redact_value(payload.arguments)),
                     hashlib.sha256(canonical.encode()).hexdigest(),
@@ -507,6 +541,8 @@ class Store:
         self, request_id: str, session_hash: str, reason: str
     ) -> ToolRequest:
         with self.lock, self.connection:
+            # Clears the raw arguments now that the request is terminal; the
+            # redacted preview from create_tool_request remains.
             cursor = self.connection.execute(
                 "UPDATE tool_requests SET status = 'denied', decision_reason = ?, "
                 "arguments_json = NULL, decided_at = ?, completed_at = ? "
@@ -528,6 +564,8 @@ class Store:
         error: str | None = None,
     ) -> ToolRequest:
         with self.lock, self.connection:
+            # Clears the raw arguments now that the request is terminal; the
+            # redacted preview from create_tool_request remains.
             cursor = self.connection.execute(
                 "UPDATE tool_requests SET status = ?, result_preview = ?, error = ?, "
                 "arguments_json = NULL, completed_at = ? "
@@ -1464,6 +1502,11 @@ class Store:
         return self.get_conversation(conversation_id).model_dump_json(indent=2)
 
     def export_conversation_html(self, conversation_id: str) -> str:
+        # Message content, title, and model are conversation data the user
+        # controls (chat input, titles, etc); html.escape on each below is
+        # what keeps this a plain document rather than an XSS vector when
+        # opened in a browser. The CSP meta tag further down is defense in
+        # depth for the same reason.
         conversation = self.get_conversation(conversation_id)
         messages = "\n".join(
             '<article class="message">'
@@ -1521,6 +1564,9 @@ class Store:
         return "\n".join(lines)
 
     def import_jsonl(self, data: str) -> int:
+        # data is client-supplied (see DataImport in contracts.py); each line
+        # is validated ad hoc below and malformed or malformed-shaped lines
+        # are silently skipped rather than rejecting the whole import.
         imported = 0
         for line in data.splitlines():
             try:
@@ -1549,6 +1595,11 @@ class Store:
 
     def wipe(self) -> None:
         with self.lock, self.connection:
+            # messages, uploads, feedback, and focus_sessions aren't listed
+            # below because their foreign keys cascade from
+            # conversations/messages (ON DELETE CASCADE, with
+            # PRAGMA foreign_keys = ON in SCHEMA) — deleting conversations
+            # removes them too.
             for table in (
                 "tool_requests",
                 "mcp_tools",
@@ -1585,6 +1636,9 @@ class Store:
         return content
 
     def import_v2_database(self, source_path: str) -> int:
+        # One-shot import: schema_migrations gates this so re-invoking the
+        # endpoint after a successful import is a no-op rather than
+        # re-importing/duplicating data.
         migration_version = 2001
         with self.lock:
             applied = self.connection.execute(
@@ -1597,6 +1651,8 @@ class Store:
         if not source.is_file():
             raise FileNotFoundError(source)
         if self.database_url != ":memory:":
+            # Snapshot the live database via sqlite3's own backup API before
+            # mutating it, in case the import fails partway or imports bad data.
             target = Path(self.database_url)
             backup = target.with_name(
                 f"{target.name}.pre-v2-import-{uuid.uuid4().hex[:8]}.bak"
@@ -1642,6 +1698,10 @@ class Store:
                             f"PRAGMA table_info({table})"
                         )
                     }
+                    # Only columns present in both schemas are copied, so a v2
+                    # database from an older/newer schema version than this
+                    # Store's still imports its common columns instead of
+                    # failing outright.
                     columns = [
                         column for column in source_columns if column in target_columns
                     ]
@@ -1650,6 +1710,9 @@ class Store:
                     names = ", ".join(columns)
                     placeholders = ", ".join("?" for _ in columns)
                     for row in previous.execute(f"SELECT {names} FROM {table}"):
+                        # INSERT OR IGNORE skips rows whose primary key
+                        # already exists, so re-running with a stale/partial
+                        # v2 database is safe.
                         cursor = self.connection.execute(
                             f"INSERT OR IGNORE INTO {table} ({names}) VALUES ({placeholders})",
                             tuple(row[column] for column in columns),

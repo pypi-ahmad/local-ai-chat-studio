@@ -1,3 +1,12 @@
+"""Static per-model pricing lookup tables used to annotate discovered models with a cost estimate.
+
+Prices here are hand-maintained snapshots (not fetched live) of each
+provider's published rate card; source_url on each ModelPricing points at
+where a given rate was last verified. openrouter_pricing is the one path
+where per-model pricing comes from a live API response instead of these
+tables (see providers.OpenAICompatibleAdapter.list_models).
+"""
+
 from __future__ import annotations
 
 import os
@@ -24,16 +33,28 @@ def _price(input_rate: float, output_rate: float, source_url: str) -> ModelPrici
 
 def model_pricing(provider: str, model: str) -> ModelPricing | None:
     name = model.lower()
+    # ollama-local (fully offline) and the echo test provider are treated as
+    # free; ollama-cloud isn't in the tables below either, so it returns no
+    # pricing information rather than $0.
     if provider in {"echo", "ollama-local"}:
         return _price(0, 0, "https://ollama.com/")
+    # Only this specific Agnes model is priced (at zero) here; other Agnes
+    # models aren't in the tables below and return no pricing info.
     if provider == "agnes" and name == "agnes-2.5-flash":
         return _price(0, 0, AGNES_PRICING)
+    # If OPENAI_BASE_URL points somewhere other than OpenAI's own API (e.g. a
+    # proxy or a compatible third-party endpoint), the OpenAI price table
+    # below doesn't apply — a proxied model with the same name may be priced
+    # differently or not billed the same way.
     if provider == "openai" and os.getenv("OPENAI_BASE_URL", "").rstrip("/") not in {
         "",
         "https://api.openai.com/v1",
     }:
         return None
 
+    # First matching prefix wins (name.startswith(prefix) below), so a new,
+    # more specific prefix must be listed before any shorter prefix it could
+    # also match.
     tables: dict[str, tuple[tuple[str, float, float], ...]] = {
         "openai": (
             ("gpt-5.4-mini", 0.75, 4.5),
@@ -93,6 +114,9 @@ def model_pricing(provider: str, model: str) -> ModelPricing | None:
 
 
 def openrouter_pricing(raw: object) -> ModelPricing | None:
+    # OpenRouter's API reports price per single token; ModelPricing stores
+    # per-million-token rates, hence the *1_000_000. Any missing or malformed
+    # field in the raw payload just yields no pricing rather than an error.
     if not isinstance(raw, dict):
         return None
     try:

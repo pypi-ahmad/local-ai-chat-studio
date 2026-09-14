@@ -1,3 +1,14 @@
+"""Provider adapters: translate the app's ChatMessage/ModelDescriptor shapes into each LLM vendor's own streaming API.
+
+Every concrete adapter below implements ProviderAdapter's two methods
+(list_models, stream) against a different vendor SDK or raw HTTP API. This is
+the only place vendor-specific request/response shapes should appear —
+callers (runs.py) only see the common ChatMessage/AsyncIterator[str]
+interface. Credentials (api_key) arrive already resolved by the caller (see
+sessions.py) and are passed straight through to each vendor client; this
+module does not itself decide whether a key is present or where it came from.
+"""
+
 from __future__ import annotations
 
 import asyncio
@@ -39,6 +50,9 @@ class ProviderAdapter(ABC):
         temperature: float,
         reasoning_effort: ReasoningEffort | None = None,
     ) -> AsyncIterator[str]:
+        # The unreachable yield makes this an async generator function (not a
+        # coroutine returning one), matching the -> AsyncIterator[str]
+        # signature every concrete override actually implements.
         if False:
             yield ""
 
@@ -61,6 +75,9 @@ class OpenAICompatibleAdapter(ProviderAdapter):
                 ModelDescriptor(
                     provider=self.id,
                     id=item.id,
+                    # Only OpenAI's gpt-5.6 family exposes a reasoning_effort
+                    # parameter; other OpenAI-compatible providers (openrouter,
+                    # agnes, xai, ...) get an empty list here.
                     reasoning_efforts=(
                         ["none", "low", "medium", "high", "xhigh", "max"]
                         if self.id == "openai" and item.id.startswith("gpt-5.6")
@@ -106,6 +123,8 @@ class OpenAICompatibleAdapter(ProviderAdapter):
             "messages": formatted,
             "stream": True,
         }
+        # gpt-5.6-luna rejects an explicit temperature parameter; every other
+        # model gets the caller's value.
         if model != "gpt-5.6-luna":
             request["temperature"] = temperature
         if model.startswith("gpt-5.6") and reasoning_effort:
@@ -141,6 +160,9 @@ class OllamaAdapter(ProviderAdapter):
         descriptors = []
         for item in models:
             model_id = getattr(item, "model", None) or item["model"]
+            # A local Ollama instance can still list cloud-hosted model names
+            # it proxies to; skip those here since this adapter instance is
+            # the local-only one.
             if not self.cloud and model_id.endswith("-cloud"):
                 continue
             capabilities: list[str] = []
@@ -152,6 +174,8 @@ class OllamaAdapter(ProviderAdapter):
                 if "vision" in raw:
                     capabilities.append("vision")
             except Exception:
+                # Best-effort: if a model's capabilities can't be fetched, it
+                # is listed without any rather than failing discovery entirely.
                 pass
             descriptors.append(
                 ModelDescriptor(
@@ -334,6 +358,15 @@ class OpenCodeZenAdapter(OpenAICompatibleAdapter):
         temperature: float,
         reasoning_effort: ReasoningEffort | None = None,
     ) -> AsyncIterator[str]:
+        """Route to the upstream vendor's own protocol based on the model id prefix.
+
+        OpenCode Zen proxies several upstream vendors behind one base URL,
+        but each upstream's streaming response shape differs (OpenAI
+        Responses API events, Anthropic messages, raw Gemini SSE), so this
+        dispatches by model name prefix instead of using one shared client.
+        Anything that doesn't match a known prefix falls through to the
+        OpenAI-compatible chat.completions path inherited from the parent class.
+        """
         if model.startswith("gpt-"):
             formatted = []
             for message in messages:
@@ -446,6 +479,9 @@ class OpenCodeBridgeAdapter(ProviderAdapter):
         self.url = (
             url or os.getenv("OPENCODE_SERVER_URL", "http://127.0.0.1:4096")
         ).rstrip("/")
+        # Restricted to loopback because OPENCODE_SERVER_URL is meant to
+        # point at a locally-running OpenCode server process; this isn't a
+        # general-purpose remote provider endpoint.
         parsed = urlparse(self.url)
         if parsed.scheme != "http" or parsed.hostname not in {
             "127.0.0.1",
@@ -549,6 +585,11 @@ class OpenCodeBridgeAdapter(ProviderAdapter):
             created.raise_for_status()
             session_id = created.json()["id"]
             try:
+                # /event is a global SSE stream shared by every session on
+                # the bridge, so events are filtered by session_id below
+                # rather than the bridge scoping the stream itself. Every
+                # tool id is mapped to False in the prompt request — this
+                # adapter only wants a text completion, not agentic tool calls.
                 tool_response = await client.get("/experimental/tool/ids")
                 tool_ids = tool_response.json() if tool_response.is_success else []
                 async with client.stream("GET", "/event") as events:
@@ -587,6 +628,11 @@ class OpenCodeBridgeAdapter(ProviderAdapter):
                         elif kind == "session.idle":
                             break
             finally:
+                # Best-effort cleanup on any exit path (including
+                # cancellation): abort a still-running prompt, then delete the
+                # session so it doesn't linger on the bridge. Failures here
+                # are swallowed since the stream itself has already ended one
+                # way or another.
                 with suppress(httpx.HTTPError):
                     await client.post(f"/session/{session_id}/abort")
                 with suppress(httpx.HTTPError):
@@ -620,8 +666,17 @@ class ProviderRegistry:
                 self._models.update({(provider, model.id): model for model in models})
                 return ProviderDiscovery(provider=provider, models=models)
             except Exception as exc:
+                # str(exc) is returned to the client as-is; some SDK
+                # exceptions (e.g. an HTTP error body echoed back by a
+                # provider) can include request details, potentially the API
+                # key that was sent — unlike RunManager._safe_error, this path
+                # doesn't sanitize the message before it reaches the response.
                 return ProviderDiscovery(provider=provider, error=str(exc))
 
+        # One provider's failure becomes an error string in its own
+        # ProviderDiscovery entry (caught above) rather than failing the
+        # whole /providers/models request, so gather() needs no
+        # return_exceptions here.
         results = await asyncio.gather(
             *(
                 discover(provider, adapter)

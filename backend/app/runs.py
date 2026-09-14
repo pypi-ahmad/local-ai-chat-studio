@@ -1,3 +1,15 @@
+"""In-memory run orchestration: streams provider output and persists progress.
+
+RunManager owns the lifecycle of a single chat "run" (queued -> running ->
+completed/cancelled/failed), including the asyncio task that streams tokens
+from a ProviderAdapter and the receipt-hash chain used for replay integrity.
+Run state lives only in memory (self._runs); store.py mirrors it to SQLite
+for durability/history, but this module — not the Store — is the source of
+truth for a run while it is in flight. See providers.py for what "stream"
+actually calls, and store.py for how a finished run is read back for
+replay/export.
+"""
+
 from __future__ import annotations
 
 import asyncio
@@ -22,6 +34,9 @@ class RunState:
     request: RunCreate
     context: dict | None = None
     events: list[RunEvent] = field(default_factory=list)
+    # changed wakes any events() subscribers (SSE) waiting for new events;
+    # cancel is only ever set/read from the event loop despite being a
+    # threading.Event.
     changed: asyncio.Event = field(default_factory=asyncio.Event)
     cancel: threading.Event = field(default_factory=threading.Event)
     task: asyncio.Task | None = None
@@ -70,10 +85,16 @@ class RunManager:
     def get(self, run_id: str, session_id: str) -> RunSnapshot:
         state = self._state(run_id, session_id)
         with self._lock:
+            # Copy while still holding the lock: state.snapshot is mutated in
+            # place by _execute, so handing out the live object could let a
+            # caller observe a torn/mid-update snapshot after the lock is released.
             return state.snapshot.model_copy()
 
     def cancel(self, run_id: str, session_id: str) -> RunSnapshot:
         state = self._state(run_id, session_id)
+        # Signal the cooperative cancel flag (checked between stream chunks in
+        # _execute) and cancel the asyncio task directly, since a provider
+        # call awaiting I/O won't observe the flag until its next loop iteration.
         state.cancel.set()
         if state.task and not state.task.done():
             state.task.cancel()
@@ -92,24 +113,39 @@ class RunManager:
     async def shutdown(self) -> None:
         self.clear()
         if self._tasks:
+            # return_exceptions=True so one run's cancellation error doesn't
+            # prevent awaiting the rest; clear() has already requested
+            # cancellation for all of them.
             await asyncio.gather(*tuple(self._tasks), return_exceptions=True)
 
     async def events(self, run_id: str, session_id: str) -> AsyncIterator[RunEvent]:
         state, offset = self._state(run_id, session_id), 0
         terminal = {RunStatus.completed, RunStatus.cancelled, RunStatus.failed}
         while True:
+            # Replays every event from offset 0, so a subscriber that attaches
+            # mid-run (or reconnects) sees full history, not just new events.
             while offset < len(state.events):
                 event = state.events[offset]
                 offset += 1
                 yield event
             if state.snapshot.status in terminal:
                 return
+            # Clear before waiting to avoid missing a change that happened
+            # between the drain loop above and this wait.
             state.changed.clear()
             await state.changed.wait()
 
     async def _execute(
         self, state: RunState, request: RunCreate, session_id: str
     ) -> None:
+        """Drive one run to completion: stream deltas, persist the transcript, record a receipt.
+
+        Cancellation, provider errors, and normal completion all converge on
+        the same pattern (set a terminal status, timestamp, metrics, and a
+        receipt hash, then emit one terminal event) so callers streaming
+        events() always see exactly one closing event regardless of how the
+        run ended.
+        """
         started = time.monotonic()
         with self._lock:
             state.snapshot.status = RunStatus.running
@@ -118,6 +154,9 @@ class RunManager:
         stream = None
         try:
             if request.provider == "echo":
+                # 'echo' is a built-in provider (used by tests/demos) that
+                # never touches ProviderRegistry; every other provider must
+                # be a registered adapter.
                 stream = self._echo(request.messages[-1].content)
             else:
                 try:
@@ -132,6 +171,10 @@ class RunManager:
                     request.reasoning_effort,
                 )
             async for delta in stream:
+                # Checked once per delta rather than relying on asyncio
+                # cancellation alone, so a cancelled run still closes out its
+                # provider stream cleanly (finally block below) instead of
+                # leaving it half-consumed.
                 if state.cancel.is_set():
                     with self._lock:
                         state.snapshot.status = RunStatus.cancelled
@@ -181,6 +224,8 @@ class RunManager:
                 state.snapshot.receipt_hash = self._receipt(state)
             self._emit(state, "run.failed", {"error": state.snapshot.error})
         finally:
+            # Ensures the provider's underlying stream is released even on
+            # cancellation or an exception raised before iteration started.
             if stream is not None:
                 await stream.aclose()
 
@@ -193,6 +238,9 @@ class RunManager:
     def _emit(
         self, state: RunState, event_type: str, data: dict[str, str] | None = None
     ) -> None:
+        # Persists the current snapshot and the new event together so SQLite
+        # never falls behind what SSE subscribers have already seen;
+        # changed.set() wakes them after both writes land.
         event = RunEvent(type=event_type, run_id=state.snapshot.id, data=data or {})
         state.events.append(event)
         self._store.update_run(state.snapshot)
@@ -207,6 +255,14 @@ class RunManager:
         return state
 
     def _receipt(self, state: RunState) -> str:
+        """Hash-chain this run onto the previous receipt for tamper-evident replay bundles.
+
+        Chaining to the store's latest receipt_hash (rather than hashing this
+        run in isolation) means altering or reordering a past run's stored
+        output would change every receipt hash computed after it — this is
+        for detecting tampering with exported/replayed run history, not a
+        cryptographic signature.
+        """
         previous = self._store.latest_receipt_hash()
         payload = {
             "previous": previous,
@@ -223,6 +279,10 @@ class RunManager:
 
     @staticmethod
     def _safe_error(exc: Exception) -> str:
+        # Only ValueError/KeyError messages (raised deliberately elsewhere in
+        # this class, e.g. unknown provider) are surfaced verbatim; anything
+        # else collapses to a generic message so provider SDK internals or
+        # exception text aren't leaked to the client.
         name = type(exc).__name__
         if isinstance(exc, (ValueError, KeyError)):
             return str(exc).strip("'")[:300]

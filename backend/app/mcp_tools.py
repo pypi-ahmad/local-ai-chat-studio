@@ -1,3 +1,15 @@
+"""MCP (Model Context Protocol) tool discovery/execution gateway and redaction helpers.
+
+McpGateway is the interface main.py depends on; DefaultMcpGateway is the real
+implementation that spawns a stdio subprocess or connects to a remote
+streamable-HTTP MCP server. Untrusted data flows both ways here: server
+configs (env var names, args, URLs) are already validated by
+contracts.McpServerCreate, but tool results coming back from a (possibly
+untrusted) MCP server are opaque and are passed through redact_value/
+safe_result_preview before they're ever shown to a user or fed back into a
+conversation (see main.py's approve_tool_request).
+"""
+
 from __future__ import annotations
 
 import asyncio
@@ -11,6 +23,8 @@ from pathlib import Path
 from typing import Any, Protocol
 from urllib.parse import urlsplit
 
+# httpx2 (a distinct package from httpx used elsewhere in this project, see
+# pyproject.toml) is the streamable-http transport's HTTP client here.
 import httpx2
 from mcp import Client, ClientSession
 from mcp.client.stdio import StdioServerParameters
@@ -25,6 +39,11 @@ class McpGateway(Protocol):
     ) -> dict[str, Any]: ...
 
 
+# Heuristic redaction only: SENSITIVE_KEY matches dict keys that look like
+# credentials, INLINE_SECRET matches "key: value"-shaped text, and
+# TOKEN_SECRET matches specific known key formats (OpenAI/Anthropic/GitHub).
+# This will miss secrets in formats not covered here — it's a best-effort
+# filter over MCP tool output, not a guarantee.
 SENSITIVE_KEY = re.compile(
     r"(?:authorization|cookie|credential|password|secret|token|api[_-]?key)", re.I
 )
@@ -51,6 +70,9 @@ def redact_value(value: Any) -> Any:
 
 
 def safe_result_preview(result: dict[str, Any], limit: int = 12_000) -> str:
+    # result.content comes from the MCP server (untrusted); this is what gets
+    # persisted as a tool message and shown to the user, so it's redacted and
+    # length-capped before that happens.
     content = result.get("content", "")
     text = content if isinstance(content, str) else json.dumps(content, ensure_ascii=False)
     text = redact_value(text)
@@ -58,6 +80,14 @@ def safe_result_preview(result: dict[str, Any], limit: int = 12_000) -> str:
 
 
 def _public_remote_url(url: str) -> None:
+    """Reject a remote MCP URL that resolves to a private/loopback/reserved address.
+
+    Re-checks by resolving the hostname (unlike the IP-literal-only check in
+    contracts.McpServerCreate) to catch a DNS name that points at an internal
+    address. This is called right before connecting (see _session below), but
+    a DNS record can still change between this check and the actual
+    connection (DNS rebinding); it narrows that window rather than closing it.
+    """
     parsed = urlsplit(url)
     if parsed.scheme != "https" or not parsed.hostname:
         raise ValueError("Remote MCP servers require an HTTPS URL")
@@ -79,6 +109,12 @@ class DefaultMcpGateway:
         self.sandbox_root = sandbox_root
 
     def _stdio_client(self, server: McpServer) -> Client:
+        # The child process gets a minimal environment: a small set of
+        # variables needed to actually run a Windows executable, plus only
+        # the specific keys server.env_keys declared (see
+        # McpServerCreate._safe_env_names) — not this process's full
+        # environment, so a server config can't read arbitrary host secrets.
+        # cwd below is a per-server sandbox directory under sandbox_root.
         workspace = self.sandbox_root / server.id
         workspace.mkdir(parents=True, exist_ok=True)
         inherited = {"PATH", "PATHEXT", "SYSTEMROOT", "WINDIR"}
@@ -99,6 +135,8 @@ class DefaultMcpGateway:
                 yield client
             return
 
+        # DNS resolution is blocking; offloaded to a thread so it doesn't
+        # stall the event loop.
         await asyncio.to_thread(_public_remote_url, server.url or "")
         timeout = httpx2.Timeout(30, read=30)
         async with httpx2.AsyncClient(follow_redirects=False, timeout=timeout) as http:

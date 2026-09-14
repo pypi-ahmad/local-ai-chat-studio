@@ -1,3 +1,15 @@
+"""Pydantic request/response models shared by the HTTP API in main.py.
+
+These are the wire schemas for the FastAPI routes: request bodies are
+untrusted client input validated by the field constraints and validators
+below, and the response models double as the OpenAPI schema
+scripts/generate_api_types.py uses to generate the frontend's TypeScript
+types. Field constraints here are the primary trust-boundary check for this
+HTTP layer, so keep validation in these models rather than duplicating it ad
+hoc in main.py. See main.py for how these are used and store.py for how they
+map onto SQLite rows.
+"""
+
 from __future__ import annotations
 
 from datetime import UTC, datetime
@@ -101,7 +113,7 @@ class ModelPricing(BaseModel):
     input_per_million: float
     output_per_million: float
     source_url: str
-    as_of: str = "2026-08-14"
+    as_of: str = "2026-08-14"  # last-verified date for the hardcoded tables in pricing.py
 
 
 class ModelDescriptor(BaseModel):
@@ -176,6 +188,8 @@ class ContextSource(BaseModel):
     score: float | None = None
     url: str | None = None
     conversation_id: str | None = None
+    # Set server-side by workspace.build_context_plan's safety scan, never by
+    # client input; a "suspicious" source is excluded from assembled messages.
     trust: Literal["trusted", "suspicious", "quarantined"] = "trusted"
 
 
@@ -218,6 +232,13 @@ class TurnPreflight(BaseModel):
 
 
 class TurnCreate(TurnPreflight):
+    """Turn submission that echoes back a prior preflight_turn response.
+
+    plan_hash and confirmed_finding_ids are re-validated against a freshly
+    computed plan in main.create_turn — they are not trusted on their own,
+    since context may have changed since the client's preflight call.
+    """
+
     plan_hash: str
     confirmed_finding_ids: list[str] = []
     excluded_source_ids: list[str] = []
@@ -426,6 +447,10 @@ class McpServerCreate(BaseModel):
     @field_validator("env_keys")
     @classmethod
     def _safe_env_names(cls, values: list[str]) -> list[str]:
+        # Only the listed environment variable *names* are declared here —
+        # their values come from the server's own process environment at
+        # spawn time (see mcp_tools.DefaultMcpGateway._stdio_client), so a
+        # malicious server config can request an env var but not set its value.
         import re
 
         if any(not re.fullmatch(r"[A-Z][A-Z0-9_]{0,127}", value) for value in values):
@@ -435,6 +460,9 @@ class McpServerCreate(BaseModel):
     @field_validator("args")
     @classmethod
     def _bounded_args(cls, values: list[str]) -> list[str]:
+        # CLI args are stored (and shown back to the user) as plain text, so
+        # anything that looks like a secret-bearing flag is rejected below;
+        # secrets must go through env_keys instead, which only stores names.
         import re
 
         if any(len(value) > 1_000 or "\x00" in value for value in values):
@@ -449,6 +477,16 @@ class McpServerCreate(BaseModel):
 
     @model_validator(mode="after")
     def _valid_transport(self) -> "McpServerCreate":
+        """Enforce transport-specific constraints on a server config.
+
+        A stdio server's command must be an allowlisted interpreter name with
+        no path; a remote server's URL must be HTTPS and not a bare
+        private/reserved IP literal. This only rejects IP-literal hostnames —
+        a DNS name that resolves to a private address is not caught here; it
+        is re-checked at connection time in mcp_tools.DefaultMcpGateway (see
+        _public_remote_url), which resolves the hostname right before
+        connecting.
+        """
         import ipaddress
         from pathlib import PurePath
         from urllib.parse import urlsplit

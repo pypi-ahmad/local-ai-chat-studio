@@ -1,3 +1,14 @@
+"""LLM-driven long-term memory extraction: turns a conversation transcript into candidate memories.
+
+Two model calls per extraction: a selection pass per transcript chunk, then
+one consolidation pass across all chunks' candidates to dedupe/merge them
+against what's already stored. The model's JSON output is untrusted (it's
+LLM-generated text, not a validated API response) — _parse_memories and the
+filtering in extract_memories are what stand between that output and the
+Memory rows main.py will persist; further prompt-injection/secret scanning of
+the result happens back in main.py's extract_conversation_memories route.
+"""
+
 from __future__ import annotations
 
 import json
@@ -22,6 +33,13 @@ async def extract_memories(
     model: str,
     existing: list[str],
 ) -> ExtractionOutcome:
+    """Extract and consolidate candidate long-term memories from a conversation.
+
+    Runs a selection pass over each ~12k-character transcript chunk (long
+    conversations are chunked so a single prompt doesn't exceed context),
+    then one consolidation pass across every chunk's candidates together with
+    the existing memory contents, to dedupe and filter before returning.
+    """
     transcript = "\n\n".join(
         f"[{message.id}] {message.role.upper()}: {message.content}"
         for message in conversation.messages
@@ -54,6 +72,9 @@ async def extract_memories(
     discarded = 0
     for item in consolidated:
         content = str(item.get("content", "")).strip()
+        # The model can only cite message ids that actually belong to this
+        # conversation's user messages here — any id it invents or copies
+        # from elsewhere is silently dropped rather than trusted.
         source_ids = [
             str(message_id)
             for message_id in item.get("source_message_ids", [])
@@ -61,6 +82,11 @@ async def extract_memories(
         ]
         disposition = item.get("disposition")
         normalized = re.sub(r"\W+", " ", content.lower()).strip()
+        # A candidate with no valid source message id, no content, or a
+        # near-duplicate of something already accepted/existing
+        # (case/punctuation-insensitive) is discarded. Model-assigned
+        # "discard" dispositions fall into this branch too, since only
+        # active/quarantined pass the check above.
         if (
             disposition not in {"active", "quarantined"}
             or not content
@@ -104,6 +130,7 @@ async def _complete(
         async for text in stream:
             parts.append(text)
     finally:
+        # Ensures the provider stream is released even if consuming it raises.
         await stream.aclose()
     return "".join(parts)
 
@@ -134,6 +161,11 @@ EXISTING:
 
 
 def _parse_memories(text: str) -> list[dict]:
+    # Strips a markdown code fence some models wrap JSON in, then takes
+    # everything between the first '{' and last '}' — tolerant of leading or
+    # trailing commentary the model might add outside the JSON object. The
+    # exact shape expected here must match what _selection_prompt and
+    # _consolidation_prompt ask the model for.
     cleaned = text.strip()
     if cleaned.startswith("```"):
         cleaned = re.sub(r"^```(?:json)?\s*|\s*```$", "", cleaned, flags=re.IGNORECASE)

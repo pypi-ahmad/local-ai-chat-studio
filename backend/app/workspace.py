@@ -1,3 +1,15 @@
+"""Context assembly and safety scanning: turns a turn's inputs into the chat messages sent to a provider, plus a previewable ContextPlan.
+
+build_context_plan is the "preflight" step (estimate what will be included,
+scan for safety findings, apply token-budget pruning) and assemble_messages
+renders the approved sources into ChatMessage objects for a run — see
+main.py's preflight_turn/create_turn for how the two connect via plan_hash.
+Everything folded into the prompt here (history, memories, uploads, web
+results, knowledge base materials) is potentially attacker-influenced content
+the model will read as instructions, which is why scan_text/sanitize_text
+exist — read those before changing what gets included by default.
+"""
+
 from __future__ import annotations
 
 import hashlib
@@ -26,12 +38,22 @@ SECRET_PATTERNS = (
     re.compile(r"\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b"),
 )
 
+# Character counts, not tokens or messages — used to truncate the
+# older-history summary text itself (see _history_summary), separately from
+# the token-budget pruning in build_context_plan.
 RECENT_HISTORY_MESSAGES = 8
 HISTORY_SUMMARY_ITEM_CHARS = 220
 HISTORY_SUMMARY_MAX_CHARS = 3200
 
 
 def _history_summary(messages) -> str:
+    """Render older conversation messages as a compact bullet list, not a real LLM summary.
+
+    Despite the name, this is mechanical truncation (head + ... + tail per
+    message, capped total length), not anything summarized by a model — it
+    exists so auto_compress_history can shrink old history without an extra
+    provider call.
+    """
     lines = []
     for item in messages:
         content = " ".join(item.content.split())
@@ -46,6 +68,13 @@ def _history_summary(messages) -> str:
 
 
 def _history_parts(conversation, compress: bool):
+    """Split conversation history into (older, recent, summary-of-older).
+
+    When compress is False (or there isn't enough history to bother),
+    "older" is always empty and only the most recent 20 messages are kept as
+    "recent" — that 20 is an unconditional cap independent of
+    RECENT_HISTORY_MESSAGES, which only applies once compression kicks in.
+    """
     messages = [
         item for item in conversation.messages if item.role in {"user", "assistant"}
     ]
@@ -56,6 +85,9 @@ def _history_parts(conversation, compress: bool):
 
 
 def _history_summary_id(messages) -> str:
+    # Deterministic id derived from the exact set/order of summarized message
+    # ids, so the same older-history slice always produces the same
+    # ContextSource id across preflight and the later create_turn call.
     basis = ":".join(item.id for item in messages)
     return f"history-summary-{hashlib.sha256(basis.encode()).hexdigest()[:16]}"
 PII_PATTERNS = (
@@ -117,6 +149,14 @@ def retrieve_context(
 
 
 def relevant_memories(store: Store, query: str, top_k: int = 8):
+    """Select up to top_k relevant active memories, with pinned ones always included.
+
+    Falls back from vector search (when CHAT_EMBED_MODEL is set) to a simple
+    term-overlap ranking, on either a missing embedding config or any vector
+    search failure. Pinned memories are unconditionally prepended and are
+    exempt from the top_k cap applied to the ranked set — the return value
+    can exceed top_k if there are many pinned memories.
+    """
     active = [item for item in store.list_memories() if item.status == "active"]
     pinned = [item for item in active if item.pinned]
     by_id = {item.id: item for item in active}
@@ -146,10 +186,20 @@ def relevant_memories(store: Store, query: str, top_k: int = 8):
 
 
 def estimate_tokens(text: str) -> int:
+    # Rough heuristic (~4 characters per token), not an actual tokenizer
+    # call — good enough for budgeting/pruning decisions, not exact billing.
     return math.ceil(len(text) / 4)
 
 
 def scan_text(text: str) -> list[SafetyFinding]:
+    """Scan text for secrets, PII, and prompt-injection phrasing using fixed regex patterns.
+
+    Categories are checked in priority order (secret, then pii, then
+    prompt_injection) and matching spans are tracked in `occupied` so a later
+    category's pattern can't re-flag text a higher-priority category already
+    claimed — this only affects which category a given span is reported
+    under, not whether it's flagged at all.
+    """
     findings: list[SafetyFinding] = []
     occupied: list[tuple[int, int]] = []
     for category, severity, patterns in (
@@ -183,6 +233,9 @@ def scan_text(text: str) -> list[SafetyFinding]:
 
 
 def sanitize_text(text: str) -> str:
+    # Unlike scan_text, this doesn't check INJECTION_PATTERNS — an injection
+    # attempt is a phrase, not sensitive data to redact, so sanitize_text
+    # (used for redacted run bundle exports) leaves it in place.
     sanitized = text
     for label, patterns in (("SECRET", SECRET_PATTERNS), ("PRIVATE", PII_PATTERNS)):
         for pattern in patterns:
@@ -196,6 +249,17 @@ def build_context_plan(
     payload: TurnPreflight,
     web_results: list[dict[str, str]] | None = None,
 ) -> ContextPlan:
+    """Decide what context to include in a turn and compute a stable hash identifying that decision.
+
+    Combines three kinds of gating for each context kind (history, memory,
+    retrieval, attachments, web, backpack, knowledge): the payload's own
+    include_* flags, the provider's ProviderPolicy (bypassed entirely for
+    "local" providers, trusted not to leak context off-device), and — for
+    knowledge-base sources specifically — whether that base itself allows
+    retrieval. The resulting plan_hash covers the full sections/sources/
+    findings, so main.create_turn can detect if anything relevant changed
+    since a client's preflight call before actually spending a run on it.
+    """
     conversation = store.get_conversation(conversation_id)
     knowledge_base = None
     knowledge_materials: list[dict[str, str]] = []
@@ -207,6 +271,9 @@ def build_context_plan(
             knowledge_materials = store.knowledge_base_materials(knowledge_base.id)
         except KeyError:
             knowledge_base = None
+    # "local" providers are treated as running on the same machine (never
+    # leaving it), so provider policy toggles are skipped for them entirely —
+    # policy only restricts what's sent to a remote/cloud provider.
     local = payload.provider in {"echo", "ollama-local", "omniroute"}
     policy = store.get_policy(payload.provider)
     history_allowed = local or policy.allow_retrieval
@@ -228,6 +295,9 @@ def build_context_plan(
     history_text = "\n".join(
         [history_summary, *(item.content for item in recent_history)]
     ).strip()
+    # Memories already pulled in via the bound knowledge base are excluded
+    # from the separately-ranked "memory" section below, so the same memory
+    # isn't sent twice (once as a memory source, once as a knowledge source).
     knowledge_memory_ids = {
         item["source_id"]
         for item in knowledge_materials
@@ -275,6 +345,10 @@ def build_context_plan(
         "upload": attachment_allowed,
         "backpack": backpack_allowed,
     }
+    # Symmetric to the memory de-duplication above: an upload already
+    # selected as an explicit attachment_id is excluded from the
+    # knowledge-base token count/availability check, since it's counted under
+    # "attachments" instead.
     knowledge_tokens = sum(
         estimate_tokens(item["content"])
         for item in knowledge_materials
@@ -466,6 +540,14 @@ def build_context_plan(
             )
         )
     findings = scan_text(payload.content)
+    # Every context source (history, memory, upload, retrieval, web,
+    # knowledge...) is itself scanned for prompt-injection phrasing — content
+    # here can originate from a web search result, an uploaded document, or
+    # another conversation's retrieved text, all untrusted relative to the
+    # user's direct input. A hit demotes the source to "suspicious" and
+    # excludes it by default; only injection findings do this (secret/pii
+    # findings on a source aren't checked here, only on the raw user payload
+    # above).
     for source in sources:
         source_findings = [
             item
@@ -478,6 +560,9 @@ def build_context_plan(
             source.trust = "suspicious"
             source.included = False
             for item in source_findings:
+                # Re-hashed with the owning source's id mixed in, since
+                # scan_text's ids are only unique within a single scanned
+                # string and could otherwise collide across different sources.
                 item.id = hashlib.sha256(f"{source.id}:{item.id}".encode()).hexdigest()[
                     :12
                 ]
@@ -492,6 +577,9 @@ def build_context_plan(
             section.estimated_tokens = max(
                 0, section.estimated_tokens - source.estimated_tokens
             )
+    # Only 80% of context_limit is budgeted for retrieved/injected context,
+    # leaving headroom for the model's own response and any framing overhead
+    # not accounted for by estimate_tokens.
     budget = max(1, int(payload.context_limit * 0.8))
     estimated = sum(
         section.estimated_tokens for section in sections if section.included
@@ -506,6 +594,12 @@ def build_context_plan(
         "backpack": 5,
         "knowledge": 6,
     }
+    # Pruned lowest-priority-first when over budget: prune_order ranks
+    # auto-retrieved kinds (history, retrieval, web, memory) ahead of
+    # user-selected ones (attachment, backpack, knowledge); within a kind,
+    # lower-scoring sources go first (score defaults to 0 for kinds that
+    # don't have one, e.g. history/memory, so those are pruned in their
+    # original order since Python's sort is stable).
     for source in sorted(
         sources,
         key=lambda item: (prune_order.get(item.kind, 99), item.score or 0),
@@ -551,6 +645,15 @@ def assemble_messages(
     excluded_source_ids: set[str] | None = None,
     web_results: list[dict[str, str]] | None = None,
 ) -> list[ChatMessage]:
+    """Render an already-computed ContextPlan into the ChatMessage list sent to a provider.
+
+    Only sources that are plan-included, trust == "trusted" (scan_text found
+    nothing on them), and not explicitly excluded by the caller
+    (excluded_source_ids, from the user unchecking a source in the UI) are
+    folded into the system prompt or history messages — a "suspicious"
+    source from build_context_plan is never included here even if the caller
+    doesn't list it in excluded_source_ids.
+    """
     excluded = excluded_source_ids or set()
     included = {section.kind: section.included for section in plan.sections}
     approved_sources = {
@@ -677,6 +780,9 @@ def assemble_messages(
         )
     messages.append(ChatMessage(role="system", content="\n\n".join(system_parts)))
     messages.extend(history_messages)
+    # Images are attached to the final user message (not folded into the
+    # system prompt text like other context), matching how provider adapters
+    # expect multimodal input (see providers.py).
     images = []
     if included.get("attachments"):
         images = [
@@ -689,6 +795,9 @@ def assemble_messages(
 
 
 def _redact(value: str) -> str:
+    # Used only for SafetyFinding previews (scan_text) — short matches are
+    # fully masked rather than partially shown, since 8 characters isn't
+    # enough to usefully show a prefix/suffix without revealing most of it.
     if len(value) <= 8:
         return "••••"
     return f"{value[:3]}…{value[-4:]}"
