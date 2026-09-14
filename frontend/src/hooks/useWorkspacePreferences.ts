@@ -1,3 +1,8 @@
+// Persists app-shell UI preferences (nav collapse, inspector open/tab,
+// history sidebar width) to localStorage so they survive a reload. Must
+// stay UI-state-only — no conversation/business data here, see
+// state/uiPreferences.ts for the underlying storage helpers and
+// App.tsx for how these values are consumed.
 import { useCallback, useEffect, useState } from 'react'
 
 import type { InspectorTab } from '@/features/context/ContextInspector'
@@ -13,6 +18,10 @@ function readInspectorTab(): InspectorTab {
 
 function readHistoryWidth() {
   try {
+    // Clamp to the same [224, 420] px range (inclusive) that App.tsx enforces
+    // when the sidebar is resized, so a value edited or corrupted outside
+    // that range in storage falls back to the default instead of rendering
+    // an invalid width.
     const stored = Number(localStorage.getItem('chat-studio.history-width'))
     return Number.isFinite(stored) && stored >= 224 && stored <= 420 ? stored : 272
   } catch {

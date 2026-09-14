@@ -1,3 +1,6 @@
+// Covers MarkdownContent's trust-boundary behavior (raw HTML stripped,
+// external links sandboxed) alongside its GFM/code/Mermaid rendering paths.
+// Mermaid itself is mocked below so tests don't depend on its real renderer.
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 

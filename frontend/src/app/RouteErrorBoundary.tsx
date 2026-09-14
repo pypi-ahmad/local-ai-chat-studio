@@ -1,3 +1,8 @@
+// Per-route error boundary. App.tsx remounts this (keyed by `route.page`)
+// around each page so a render error on one page doesn't need the hard
+// reload that the top-level ErrorBoundary.tsx would require, and switching
+// pages clears a previous error automatically. Must stay page-agnostic —
+// no page-specific recovery logic here.
 import { Component, type ErrorInfo, type ReactNode } from 'react'
 
 type Props = { children: ReactNode }

@@ -1,3 +1,9 @@
+// Integration tests for the App shell: stubs `fetch` with an in-memory fake
+// backend (see the handler below) rather than hitting a real server, so
+// these exercise the full StudioApp wiring (routing, providers/models,
+// conversation load, turns, exports, etc.) against fixed responses. The
+// fake's SSE frames must stay in the `event: <type>\ndata: <json>\n\n` shape
+// that api/client.ts's streamRun() parses.
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 

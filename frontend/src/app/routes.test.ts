@@ -1,3 +1,5 @@
+// Round-trip coverage for the path <-> route encoding in routes.ts,
+// including the conversation-id percent-encoding edge case.
 import { describe, expect, it } from 'vitest'
 
 import { pathForPage, routeFromPath } from './routes'

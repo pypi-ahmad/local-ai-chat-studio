@@ -1,3 +1,8 @@
+// Top-level React error boundary, mounted once around <App /> in main.tsx.
+// Responsible only for catching render-time errors and showing a static
+// fallback; must not attempt to recover state or re-render the failed tree.
+// For route-scoped recovery (remounted per page instead of a full reload),
+// see app/RouteErrorBoundary.tsx.
 import { Component, type ErrorInfo, type ReactNode } from 'react'
 
 interface Props {

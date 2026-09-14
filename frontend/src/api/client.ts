@@ -1,3 +1,9 @@
+// Typed HTTP client for the backend API. Responsible for building requests,
+// normalizing error responses into ApiError, and parsing the SSE run-event
+// stream; must not contain UI or React state — callers (App.tsx and the
+// route/feature components) own all of that. Response/request shapes below
+// are re-exported from the generated `./schema` (see that file's header —
+// it's produced by openapi-typescript and should not be hand-edited).
 import type { components } from './schema'
 
 export type Conversation = components['schemas']['Conversation']
@@ -8,6 +14,11 @@ export type ReasoningEffort = NonNullable<TurnPreflight['reasoning_effort']>
 export type TurnCreate = components['schemas']['TurnCreate']
 export type RunCreate = components['schemas']['RunCreate']
 export type RunSnapshot = components['schemas']['RunSnapshot']
+// On-wire shape of one Server-Sent Event frame from the run stream, after
+// JSON-decoding the `data:` line. `type` is a discriminant the caller
+// switches on (e.g. 'run.delta' | 'run.completed' | 'run.failed' — see
+// App.tsx's submitTurn); `data`'s shape depends on `type` and isn't
+// otherwise typed here, so callers must narrow it themselves.
 export type RunEvent = { type: string; run_id: string; data: Record<string, unknown>; timestamp: string }
 export type ProviderPolicy = components['schemas']['ProviderPolicy']
 export type Backpack = components['schemas']['Backpack']
@@ -50,6 +61,10 @@ export type ModelSummary = {
   } | null
 }
 
+// Wraps every non-2xx HTTP response from the backend. `detail` carries the
+// raw, untrusted response body (or plain statusText as a last resort) so
+// callers can decide how to surface it; it is not guaranteed to be a string
+// (see messageOf() in App.tsx for how callers narrow it safely).
 export class ApiError extends Error {
   status: number
   detail: unknown
@@ -68,9 +83,14 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     headers: { 'Content-Type': 'application/json', ...init?.headers },
   })
   if (!response.ok) {
+    // The backend's error body is JSON with a `detail` field, but a proxy or
+    // network layer in front of it could return something else (or nothing
+    // parseable) — fall back to statusText rather than letting .json() throw.
     const body = await response.json().catch(() => ({ detail: response.statusText }))
     throw new ApiError(response.status, body.detail ?? body)
   }
+  // A 204 has no body; response.json() would throw on the empty string, so
+  // short-circuit to undefined instead of trying to parse it.
   return response.status === 204 ? (undefined as T) : response.json()
 }
 
@@ -92,6 +112,9 @@ export async function streamRun(
   if (!response.ok || !response.body) throw new ApiError(response.status, 'Run stream unavailable')
   const reader = response.body.getReader()
   const decoder = new TextDecoder()
+  // Minimal SSE parser: frames are separated by a blank line, and a chunk
+  // read from the stream can end mid-frame, so any trailing partial frame
+  // is kept in `buffer` and prefixed onto the next chunk rather than parsed.
   let buffer = ''
   while (true) {
     const { done, value } = await reader.read()
@@ -99,6 +122,9 @@ export async function streamRun(
     const frames = buffer.split('\n\n')
     buffer = frames.pop() ?? ''
     for (const frame of frames) {
+      // Only the `data:` line is consumed; an `event:` line (if present,
+      // see the mocked streams in App.test.tsx) is currently ignored since
+      // the payload's own `type` field is the discriminant callers use.
       const data = frame.split('\n').find((line) => line.startsWith('data: '))
       if (data) onEvent(JSON.parse(data.slice(6)) as RunEvent)
     }
@@ -109,6 +135,8 @@ export async function streamRun(
 export const api = {
   health: () => request<{ status: string; version: string }>('/health'),
   runtimeHealth: () => request<{ ollama_available: boolean; running_models: { name: string; size_gb: number }[] }>('/runtime/health'),
+  // Backend rejects this endpoint without the header, so it can't be
+  // triggered by anything other than the local UI (see CODEBASE.md).
   shutdown: () => request<{ status: string }>('/runtime/shutdown', {
     method: 'POST', headers: { 'X-Local-Studio': 'shutdown' },
   }),
@@ -227,6 +255,9 @@ export const api = {
   exportData: () => request<{ jsonl: string }>('/data/export'),
   importData: (jsonl: string) =>
     request<{ imported: number }>('/data/import', { method: 'POST', body: JSON.stringify({ jsonl }) }),
+  // The literal confirmation strings must match the backend's required
+  // literal exactly (see backend/app/contracts.py) — a guard against
+  // accidentally invoking these destructive endpoints, not a secret.
   importV2: () => request<{ imported: number }>('/data/import-v2', { method: 'POST', body: JSON.stringify({ confirmation: 'IMPORT_V2' }) }),
   wipeData: () => request<void>('/data/wipe', { method: 'POST', body: JSON.stringify({ confirmation: 'WIPE' }) }),
   simulateProvider: (provider: string, scenario: string, fallbackProvider?: string) =>

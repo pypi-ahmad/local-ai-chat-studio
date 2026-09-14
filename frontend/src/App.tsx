@@ -1,3 +1,11 @@
+// App shell: navigation, command palette, routing glue, and the top-level
+// StudioApp component that owns conversation/provider/model state and wires
+// it into the route pages under frontend/src/routes/**. Must not contain
+// page-specific rendering logic beyond what's needed to pass props down —
+// that belongs in the route/feature components themselves. For the shapes
+// coming back from the backend (Conversation, RunSnapshot, etc.) see
+// api/client.ts and its re-exported schema.ts types; for page<->URL mapping
+// see app/routes.ts.
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from 'react'
 import { BrowserRouter, useLocation, useNavigate } from 'react-router'
 import {
@@ -78,6 +86,11 @@ const defaultConversationSettings: ConversationSettings = {
   knowledge_base_id: null,
 }
 
+// Narrows a caught (unknown) error down to a user-facing string.
+// ApiError.detail is untrusted, backend-controlled JSON (see api/client.ts)
+// that isn't guaranteed to have a `message` field, so this falls back to
+// the generic Error message and finally a fixed string rather than risking
+// rendering something unexpected from the response body.
 function messageOf(error: unknown) {
   if (error instanceof ApiError && typeof error.detail === 'object' && error.detail) {
     const detail = error.detail as { message?: string }
@@ -160,6 +173,9 @@ function downloadFile(content: BlobPart, type: string, filename: string) {
   anchor.href = url
   anchor.download = filename
   anchor.click()
+  // revokeObjectURL is safe to call synchronously right after click(): the
+  // download is already initiated from the blob's data by then, and leaving
+  // the object URL alive would otherwise leak memory for the page's lifetime.
   URL.revokeObjectURL(url)
 }
 
@@ -215,6 +231,8 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
   }, [navigate])
 
   useEffect(() => {
+    // Check both ctrlKey and metaKey so Ctrl+K works on Windows/Linux and
+    // Cmd+K works on macOS with the same handler.
     const openCommands = (event: KeyboardEvent) => {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
         event.preventDefault()
@@ -253,6 +271,10 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
     setActiveId((current) => current ?? items[0]?.id ?? null)
   }, [])
 
+  // Keeps activeId and the URL in sync for the Chat route: if the URL names
+  // a conversation that isn't in the loaded list (deleted, or a bad link),
+  // redirect to /chat; if it names one that exists, adopt it; otherwise pick
+  // the current or first conversation and push its id into the URL.
   useEffect(() => {
     if (route.page !== 'Chat') return
     if (route.conversationId) {
@@ -279,6 +301,9 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
     setAttachmentIds(new Set())
     settingsOwner.current = null
     if (!activeId) { setConversation(null); setUploads([]); setConversationLoading(false); return }
+    // `cancelled` prevents a race when activeId changes again before this
+    // fetch resolves: without it, an older conversation's response could
+    // land after a newer selection and overwrite it with stale data.
     let cancelled = false
     setConversationLoading(true)
     setConversation(null)
@@ -307,6 +332,9 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
     return () => { cancelled = true }
   }, [activeId, page])
 
+  // Unlike the Chat-loading effect above, this has no cancellation guard: if
+  // activeId changes again while this fetch is in flight, a stale response
+  // can still land and overwrite `conversation`/`uploads`.
   useEffect(() => {
     if (page !== 'Library' || !activeId) return
     void Promise.all([api.conversation(activeId), api.uploads(activeId)])
@@ -326,6 +354,13 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
     knowledge_base_id: knowledgeBaseId,
   }), [composerSettings, conversationLayout, knowledgeBaseId, reasoningEffort, selectedModel, systemPrompt])
 
+  // Debounced autosave for conversation settings. `settingsOwner` records
+  // which conversation's settings were last loaded from the server; it
+  // guards both the trigger (don't save before that load finishes, or the
+  // in-memory defaults would overwrite real settings) and the response
+  // (don't apply a save's result if the active conversation changed while it
+  // was in flight). `lastSavedSettings` dedupes so identical settings don't
+  // re-trigger a PATCH.
   useEffect(() => {
     if (page !== 'Chat' || !activeId || settingsOwner.current !== activeId) return
     const serialized = JSON.stringify(activeConversationSettings)
@@ -343,6 +378,9 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
     return () => window.clearTimeout(timeout)
   }, [activeConversationSettings, activeId, page])
 
+  // selectedModel is the "provider::model" key produced by modelKey() (see
+  // features/models/modelMetadata.ts); split on the first '::' only, since a
+  // model id itself may legitimately contain '::'.
   const target = useMemo(() => {
     const [provider, ...modelParts] = selectedModel.split('::')
     return { provider, model: modelParts.join('::') }
@@ -364,6 +402,9 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
     })
     setAttachmentIds(new Set())
     setActiveRun(run.id)
+    // event.data's shape depends on event.type (see RunEvent in
+    // api/client.ts): 'run.delta' carries an incremental text chunk,
+    // 'run.completed' the full final output, 'run.failed' an error message.
     await streamRun(run.id, (event) => {
       if (event.type === 'run.delta') setLiveOutput((current) => current + String(event.data.delta ?? ''))
       if (event.type === 'run.completed') setLiveOutput(String(event.data.output ?? ''))
@@ -398,8 +439,16 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
     try {
       const nextPlan = await api.preflight(activeId, payload)
       setPlan(nextPlan)
+      // Sources are server-assembled context (memory, retrieval, files); a
+      // source that's excluded or not marked 'trusted' starts unchecked so
+      // the user has to opt it back in rather than silently including
+      // untrusted context in the next turn.
       setExcludedSources(new Set(nextPlan.sources.filter((source) => !source.included || source.trust !== 'trusted').map((source) => source.id)))
+      // Over budget: block the send outright rather than truncating silently.
       if (nextPlan.estimated_tokens > nextPlan.budget_tokens) return false
+      // Backend flags turns that need explicit user confirmation (e.g.
+      // sanitization findings) before running; stage the plan/payload and
+      // let onConfirm/onSanitize (passed to ChatWorkspace) resume it.
       if (nextPlan.requires_confirmation) { setPendingPlan(nextPlan); setPendingPayload(payload); return true }
       await submitTurn(payload, nextPlan)
       return true
@@ -429,6 +478,9 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
 
   const saveMemoriesAndClose = async () => {
     if (!activeId || !target.provider || !target.model) return
+    // 'ollama-local' is the only provider treated as running on-device; any
+    // other provider means the full conversation would leave the machine to
+    // be summarized into memories, so require explicit confirmation first.
     const cloud = target.provider !== 'ollama-local'
     if (cloud && !window.confirm('Send this entire conversation to the selected provider to curate memory?')) return
     setSavingMemories(true); setError('')
@@ -448,6 +500,8 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
   }
 
   const updateHistoryWidth = (width: number) => {
+    // Keep in sync with the [224, 420] px bounds that
+    // hooks/useWorkspacePreferences.ts validates when restoring a stored width.
     const next = Math.min(420, Math.max(224, Math.round(width)))
     setHistoryWidth(next)
   }
@@ -456,6 +510,9 @@ function StudioApp({ route }: { route: WorkspaceRoute }) {
     const startX = event.clientX
     const startWidth = historyWidth
     const move = (next: PointerEvent) => updateHistoryWidth(startWidth + next.clientX - startX)
+    // Listen on window (not the handle) so the drag keeps tracking even once
+    // the pointer leaves the resizer element, and always remove both
+    // listeners on pointerup so a drag can't leave them attached.
     const stop = () => { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', stop) }
     window.addEventListener('pointermove', move)
     window.addEventListener('pointerup', stop)
@@ -539,6 +596,9 @@ function RoutedApp() {
   const location = useLocation()
   const route = routeFromPath(location.pathname)
   if (!route) return <main className="route-error"><p className="eyebrow">Page not found</p><h1>This workspace does not exist.</h1><p>Use the main navigation or return to Chat.</p><a href="/chat">Return to Chat</a></main>
+  // Keying by page forces RouteErrorBoundary to remount when navigating to a
+  // different page, so a caught error doesn't keep showing after the user
+  // has moved away from the page that threw.
   return <RouteErrorBoundary key={route.page}><StudioApp route={route} /></RouteErrorBoundary>
 }
 
