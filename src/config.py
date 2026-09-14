@@ -1,4 +1,11 @@
-"""Application configuration via Pydantic Settings (env-overridable)."""
+"""Application configuration via Pydantic Settings (env-overridable).
+
+Defines the single ``config`` object every other module in this package reads
+for paths and tuning constants. Must not import any other ``src`` module (it
+sits at the bottom of the import graph — everything else imports this one)
+and must not perform network or database I/O itself. See chat_store.py next
+for how ``config.db_path`` and the tuning fields below get used.
+"""
 
 from pathlib import Path
 
@@ -57,5 +64,7 @@ class AppConfig(BaseSettings):
             p.mkdir(parents=True, exist_ok=True)
 
 
+# Importing this module has the side effect of creating data/chroma/uploads
+# directories on disk (via ensure_dirs) — there is no lazy-init entry point.
 config = AppConfig()
 config.ensure_dirs()

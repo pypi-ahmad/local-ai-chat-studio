@@ -1,4 +1,16 @@
-"""ChatGPT-style memory: extract durable facts from chats, retrieve per turn."""
+"""ChatGPT-style memory: extract durable facts from chats, retrieve per turn.
+
+Combines chat_store.py (canonical fact rows) with rag.py (embeddings, used
+for both dedup and retrieval). Must not decide when extraction should run or
+how a profile gets built from these facts — that scheduling lives in
+jobs.py and personalization.py respectively.
+
+Not currently imported by any live entry point (backend/app or elsewhere) —
+this module and its callers appear to be leftover from the Streamlit UI
+removed in commit 240e80f ("feat: complete trusted workspace cutover"). See
+jobs.py's ``_maybe_extract`` and orchestrator.py's ``build_messages`` for how
+this module was wired into a turn.
+"""
 
 from __future__ import annotations
 
@@ -30,6 +42,8 @@ def extract_memories(conv_id: str, helper_model: str, embed_model: str) -> int:
     user_turns = [m["content"] for m in messages if m["role"] == "user"]
     if not user_turns:
         return 0
+    # Last 30 messages, 800 chars each: bounds the prompt sent to helper_model,
+    # which is typically a small local model with a limited context window.
     transcript = "\n".join(
         f"{m['role'].upper()}: {m['content'][:800]}" for m in messages[-30:]
     )
@@ -46,6 +60,9 @@ def extract_memories(conv_id: str, helper_model: str, embed_model: str) -> int:
         category = str(fact.get("category", "fact")).strip() or "fact"
         if not content or len(content) < 8:
             continue
+        # "Duplicate" is an embedding-similarity match (see rag.similar_memory's
+        # threshold), not an exact-text match, so near-restatements of an
+        # existing fact refresh it instead of piling up as separate rows.
         dup_id = rag.similar_memory(embed_model, content)
         if dup_id:
             chat_store.touch_memories([dup_id])

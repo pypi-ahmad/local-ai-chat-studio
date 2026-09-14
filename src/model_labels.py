@@ -2,6 +2,11 @@
 
 Purely rule-based on runtime metadata (capabilities, name patterns, size) so
 any newly pulled model gets a sensible 2-3 word hint with zero code changes.
+Must not call Ollama itself — takes a ``ModelInfo`` already fetched by
+ollama_client.py. Its only caller is catalog.py, which is not itself
+imported by any live entry point (backend/app or elsewhere) — this module
+appears to be leftover from the Streamlit UI removed in commit 240e80f
+("feat: complete trusted workspace cutover").
 """
 
 from __future__ import annotations

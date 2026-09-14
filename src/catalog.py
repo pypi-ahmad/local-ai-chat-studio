@@ -1,4 +1,14 @@
-"""Unified model catalog shared by the chat page and the Compare page."""
+"""Unified model catalog shared by the chat page and the Compare page.
+
+Pure aggregation over data fetched elsewhere (ollama_client.py,
+providers.py) — must not call Ollama or a provider API itself.
+
+Not currently imported by any live entry point (backend/app or elsewhere) —
+this module appears to be leftover from the Streamlit UI removed in commit
+240e80f ("feat: complete trusted workspace cutover"). ollama_client.py and
+providers.py are the two modules this one stitches together, so either is a
+reasonable next read.
+"""
 
 from __future__ import annotations
 
@@ -104,5 +114,8 @@ def best_coding_model(catalog: dict[str, SelectedModel]) -> str | None:
         coders.sort(key=lambda v: v.group_rank)
         return coders[0].key
     # fall back to the largest local general model
+    # `local[0]` relies on catalog dict order: build_model_catalog inserts
+    # local models in the order chat_models() sorts them (size descending),
+    # and dicts preserve insertion order, so this isn't independently sorted.
     local = [v for v in catalog.values() if v.group_rank == 0]
     return local[0].key if local else (next(iter(catalog), None))

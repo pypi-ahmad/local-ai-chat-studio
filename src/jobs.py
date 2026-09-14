@@ -8,6 +8,12 @@ survives even if the user never looks back at that conversation.
 
 Workers must never call ``st.*`` — Streamlit APIs only work on the main script
 thread. They touch SQLite / ChromaDB / Ollama directly.
+
+Not currently imported by any live entry point (backend/app or elsewhere) —
+this module (and its references to a "Streamlit script" above) appear to be
+leftover from the Streamlit UI removed in commit 240e80f ("feat: complete
+trusted workspace cutover"). orchestrator.py is the natural next file to
+read to see what a turn's prompt looked like once assembled here.
 """
 
 from __future__ import annotations
@@ -28,7 +34,11 @@ from src.ollama_client import stream_chat as ollama_stream
 from src.orchestrator import after_turn_indexing, build_messages
 from src.personalization import note_conversation_done, rebuild_profile
 
-MEMORY_EXTRACT_EVERY = 8  # keep in sync with app.py
+MEMORY_EXTRACT_EVERY = 8  # extract memories every N messages in a conversation
+# Note: this comment used to say "keep in sync with app.py", but no app.py
+# exists anywhere in this repo and nothing outside src/ currently calls into
+# jobs.py — there is no other copy of this constant to stay in sync with
+# right now (verified by a repo-wide search).
 
 
 @dataclass
@@ -235,12 +245,17 @@ def _process_attachments(
                 context_parts.append(f"## Uploaded document: {att.name}\n(no text could be extracted)")
                 continue
             if len(att.text) <= config.doc_context_budget_chars:
+                # Small enough to paste in full: simplest option, no retrieval latency.
                 context_parts.append(f"## Uploaded document: {att.name}\n{att.text}")
             elif embed_model:
+                # Too large for the context budget but we can chunk + embed it
+                # and let rag.search_docs pull back only the relevant pieces.
                 job.notes.append(f"indexing {att.name} for retrieval (large file)")
                 chunks = chunk_text(att.text, config.chunk_chars, config.chunk_overlap_chars)
                 rag.index_doc_chunks(embed_model, job.conv_id, att.name, chunks)
             else:
+                # No embedding model available to index it: best effort is to
+                # cut it to the budget rather than drop it or blow the context.
                 context_parts.append(
                     f"## Uploaded document: {att.name} (truncated)\n"
                     f"{att.text[: config.doc_context_budget_chars]}"
@@ -325,6 +340,10 @@ def _run(
         answer = "".join(parts).strip()
         secs = time.monotonic() - t0
 
+        # `meta` piggybacks on the messages.attachments_json column (see
+        # chat_store.py) to carry non-attachment metadata alongside the
+        # answer: reference/source/meta entries distinguished by "kind", read
+        # back by the UI to render citations and the timing/token footer.
         meta: list[dict[str, Any]] = [{"name": r, "kind": "reference"} for r in references]
         meta.extend({"kind": "source", "name": s["title"][:80], "url": s["url"]} for s in sources)
         tok_s = _tokens_per_sec(stats, secs)
@@ -368,7 +387,13 @@ def _run(
 
 
 def _friendly_error(raw: str) -> str:
-    """Turn a raw exception string into a clear, actionable chat message."""
+    """Turn a raw exception string into a clear, actionable chat message.
+
+    Matching is by substring against whatever text the underlying SDK
+    (ollama/openai/anthropic/httpx) happened to raise; if a dependency
+    changes its wording these branches quietly stop matching and fall
+    through to the generic case below rather than failing loudly.
+    """
     low = raw.lower()
     if "requires a subscription" in low or "upgrade for access" in low:
         return ("⚠️ This Ollama Cloud model needs a paid subscription, so it can't run "
@@ -406,6 +431,9 @@ def _maybe_extract(conv_id: str, helper_model: str, embed_model: str) -> None:
     n = chat_store.message_count(conv_id)
     if n == 0 or n % MEMORY_EXTRACT_EVERY != 0:
         return
+    # Guards against re-extracting from the same messages: memory_extracted_at
+    # is only >= updated_at once extraction has run since the last new message
+    # (both are ISO-8601 strings, comparable lexicographically as in chat_store.py).
     already = conv["memory_extracted_at"] and conv["memory_extracted_at"] >= conv["updated_at"]
     if already:
         return

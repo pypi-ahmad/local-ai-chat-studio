@@ -1,4 +1,15 @@
-"""Assemble the per-turn message list: system prompt + retrieved context + history."""
+"""Assemble the per-turn message list: system prompt + retrieved context + history.
+
+Pure assembly: this module must not call a model or stream a completion, and
+must not persist anything — it only reads from chat_store/memory/rag and
+returns a message list for the caller to send.
+
+jobs.py is the only caller, and is not itself imported by any live entry
+point (backend/app or elsewhere) — this module appears to be leftover from
+the Streamlit UI removed in commit 240e80f ("feat: complete trusted
+workspace cutover"). Continue to jobs.py's ``_run`` to see how
+``build_messages``'s output was turned into a model response.
+"""
 
 from __future__ import annotations
 
@@ -29,8 +40,13 @@ def build_messages(
     Returns (messages, reference_titles) where reference_titles names the past
     conversations that contributed context (for UI display).
     """
+    # Deferred import — not clearly required to avoid a cycle from what's
+    # visible in this file (personalization.py doesn't import back into this
+    # module); check personalization.py before assuming it's load-bearing.
     from src.personalization import get_profile
 
+    # custom_system fully replaces BASE_SYSTEM when set (not appended to it);
+    # the profile/memory/rag sections below are still layered on top either way.
     sections: list[str] = [custom_system.strip() or BASE_SYSTEM]
     references: list[str] = []
 
@@ -85,8 +101,13 @@ def after_turn_indexing(
 ) -> None:
     """Embed the new turn into the cross-chat history index."""
     if not embed_model:
+        # No embedding model configured: cross-chat indexing degrades to a
+        # silent no-op rather than an error for this turn.
         return
     conv = chat_store.get_conversation(conv_id)
+    # This runs from a background worker (see jobs.py) after the reply is
+    # generated, so the conversation could have been deleted in the meantime
+    # from the main thread; fall back rather than let a race fail indexing.
     title = conv["title"] if conv else "Untitled"
     rag.index_history_turn(embed_model, conv_id, title, "user", user_text)
     rag.index_history_turn(embed_model, conv_id, title, "assistant", assistant_text)

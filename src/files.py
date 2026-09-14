@@ -1,4 +1,12 @@
-"""Parse uploaded files into text, and prepare images for vision models."""
+"""Parse uploaded files into text, and prepare images for vision models.
+
+Pure parsing/chunking on bytes already in memory: this module must not talk
+to the network, SQLite, or the vector store, and must not decide whether a
+document gets inlined or indexed — that policy belongs to its callers
+(jobs.py in this package; ``backend/app/main.py`` for the live upload
+endpoint). Continue to jobs.py's ``_process_attachments`` to see how
+``Attachment`` and ``chunk_text`` feed into a turn.
+"""
 
 from __future__ import annotations
 
@@ -61,6 +69,9 @@ def parse_upload(filename: str, raw: bytes) -> Attachment:
             detected = (image.format or "").lower()
         expected = "jpeg" if ext in {"jpg", "jpeg"} else ext
         if detected != expected:
+            # Filename extension is user-supplied and untrusted; check the
+            # actual decoded format so a mislabeled/renamed file isn't passed
+            # to a vision model as if it were what its name claims.
             raise ValueError("Image content does not match its extension")
         return Attachment(
             name=filename,
@@ -70,6 +81,8 @@ def parse_upload(filename: str, raw: bytes) -> Attachment:
         )
     if ext == "pdf":
         if not raw.startswith(b"%PDF-"):
+            # Same untrusted-extension concern as images above: verify the
+            # magic bytes before handing content claimed to be a PDF to pypdf.
             raise ValueError("Invalid PDF signature")
         return Attachment(name=filename, kind="document", text=_parse_pdf(raw))
     if ext == "docx":
@@ -179,6 +192,9 @@ def chunk_text(text: str, chunk_chars: int, overlap_chars: int) -> list[str]:
             window = text[start:end]
             for sep in ("\n\n", "\n", ". "):
                 cut = window.rfind(sep)
+                # Only accept a boundary past the window's midpoint, so a
+                # stray separator near the start doesn't shrink the chunk to
+                # a fraction of chunk_chars.
                 if cut > chunk_chars // 2:
                     end = start + cut + len(sep)
                     break
@@ -187,5 +203,8 @@ def chunk_text(text: str, chunk_chars: int, overlap_chars: int) -> list[str]:
             chunks.append(chunk)
         if end >= len(text):
             break
+        # `+ 1` guarantees start strictly advances even if overlap_chars >=
+        # the chunk just produced, which would otherwise make `start` stall
+        # and loop forever.
         start = max(end - overlap_chars, start + 1)
     return chunks

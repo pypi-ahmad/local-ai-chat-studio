@@ -1,4 +1,16 @@
-"""SQLite persistence: conversations, messages, memories, feedback, profile."""
+"""SQLite persistence: conversations, messages, memories, feedback, profile.
+
+This is the only module that talks to the app's SQLite database (``config.db_path``).
+It must not embed text, call a model, or touch the vector store — that's
+ollama_client.py's and rag.py's job; memory.py and personalization.py sit on
+top of this module to combine SQLite rows with vector search.
+
+Not currently imported by any live entry point (backend/app or elsewhere) —
+this module and its two callers above appear to be leftover from the
+Streamlit UI removed in commit 240e80f ("feat: complete trusted workspace
+cutover"). Continue to memory.py to see how memory rows here relate to their
+ChromaDB counterparts.
+"""
 
 from __future__ import annotations
 
@@ -62,6 +74,9 @@ CREATE TABLE IF NOT EXISTS presets (
 
 
 def _now() -> str:
+    # ISO-8601 UTC strings sort lexicographically in the same order as time,
+    # which is what lets ``ts >= ?`` / ``ORDER BY ts`` below work as plain
+    # text comparisons without parsing dates back out of SQLite.
     return datetime.now(timezone.utc).isoformat()
 
 
@@ -69,6 +84,8 @@ def _conn() -> sqlite3.Connection:
     conn = sqlite3.connect(config.db_path)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA journal_mode=WAL")
+    # foreign_keys is per-connection in SQLite (not persisted in the db file),
+    # so it has to be set here on every new connection, not just at init_db time.
     conn.execute("PRAGMA foreign_keys=ON")
     return conn
 
@@ -239,6 +256,9 @@ def touch_memories(mem_ids: list[str]) -> None:
 
 
 def update_memory(mem_id: str, **fields: Any) -> None:
+    # Column names are interpolated into the SQL string below (values stay
+    # parameterized), so `allowed` guards against building a query out of
+    # arbitrary caller-supplied keys.
     allowed = {"content", "category", "pinned", "active"}
     sets = {k: v for k, v in fields.items() if k in allowed}
     if not sets:
@@ -378,6 +398,8 @@ def import_jsonl(data: str) -> int:
                     add_message(conv_id, m["role"], m["content"])
             n += 1
         except (json.JSONDecodeError, KeyError, TypeError):
+            # Malformed lines are silently skipped rather than failing the
+            # whole import — the caller only sees the count of what succeeded.
             continue
     return n
 
@@ -385,6 +407,9 @@ def import_jsonl(data: str) -> int:
 def wipe_everything() -> None:
     """Panic wipe: all conversations, messages, memories, feedback, profile, presets."""
     with _conn() as conn:
+        # messages and feedback aren't listed explicitly: both reference
+        # conversations/messages with ON DELETE CASCADE, so deleting
+        # conversations removes them too.
         for table in ("conversations", "memories", "kv", "presets"):
             conn.execute(f"DELETE FROM {table}")
 

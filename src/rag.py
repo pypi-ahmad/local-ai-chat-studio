@@ -1,4 +1,11 @@
-"""Vector retrieval over uploaded documents and past conversations (ChromaDB)."""
+"""Vector retrieval over uploaded documents and past conversations (ChromaDB).
+
+Only module that talks to ChromaDB. Must not decide *what* or *when* to
+retrieve — that policy lives in orchestrator.py/jobs.py/memory.py, which
+call the search_* functions here. Used by backend/app (workspace.py,
+main.py) as well as by src/jobs.py, memory.py and orchestrator.py — check
+both before changing a collection's schema or the similarity math below.
+"""
 
 from __future__ import annotations
 
@@ -11,6 +18,8 @@ from loguru import logger
 from src.config import config
 from src.ollama_client import embed_texts
 
+# Importing this module opens/creates the on-disk Chroma store immediately
+# (module-level singleton), the same import-time-I/O pattern as config.py.
 _chroma = chromadb.PersistentClient(path=str(config.chroma_dir))
 
 DOCS_COLLECTION = "doc_chunks"
@@ -19,6 +28,8 @@ MEMORY_COLLECTION = "memories"
 
 
 def _collection(name: str) -> chromadb.Collection:
+    # cosine space is what makes `1.0 - dist` in _flatten() below a valid
+    # 0..1-ish similarity score, rather than an arbitrary distance unit.
     return _chroma.get_or_create_collection(name, metadata={"hnsw:space": "cosine"})
 
 
@@ -68,6 +79,8 @@ def index_history_turn(
     if len(content.strip()) < 40:  # skip trivial turns
         return
     col = _collection(HISTORY_COLLECTION)
+    # This 4000-char slice is Chroma's snippet/search copy only, not canonical
+    # storage — chat_store.py's messages table holds the full, untruncated text.
     col.add(
         ids=[uuid.uuid4().hex],
         embeddings=_embed(embed_model, [content[:4000]]),
@@ -92,6 +105,9 @@ def search_history(
 
 
 def delete_conv_vectors(conv_id: str) -> None:
+    # Each collection is deleted independently so one failure doesn't block
+    # cleanup of the other; a warning is logged but the caller is not told
+    # cleanup was partial.
     for name in (DOCS_COLLECTION, HISTORY_COLLECTION):
         try:
             _collection(name).delete(where={"conv_id": conv_id})

@@ -2,7 +2,13 @@
 
 All model knowledge comes from the Ollama API at runtime (``/api/tags`` +
 ``/api/show``) so the app never needs a code change when models are added,
-removed, or the machine is upgraded.
+removed, or the machine is upgraded. Must not read chat/memory state from
+SQLite or the vector store — this module only talks to Ollama.
+
+``ollama_alive`` and ``running_models`` are used by backend/app/main.py
+today; the model-discovery helpers below (``list_models``, ``chat_models``,
+etc.) are currently only exercised via catalog.py, which itself has no
+caller outside src/ in this snapshot.
 """
 
 from __future__ import annotations
@@ -32,6 +38,9 @@ def _client() -> ollama.Client:
     sig = (host, key)
     client = _client_cache.get(sig)
     if client is None:
+        # Despite the dict type, this cache holds at most one client: any
+        # (host, key) change clears it first, so switching endpoints can't
+        # accumulate stale clients for hosts no longer in use.
         _client_cache.clear()
         headers = {"Authorization": f"Bearer {key}"} if key else None
         # Generous timeout so model-load latency is tolerated, but a wedged or
@@ -74,8 +83,9 @@ def list_models() -> list[ModelInfo]:
     """Fetch all models Ollama knows about, with capabilities.
 
     ``/api/tags`` carries capabilities for most models; for entries where it
-    is missing we fall back to one ``/api/show`` call (cached by Streamlit at
-    the caller level, so this stays cheap).
+    is missing we fall back to one ``/api/show`` call per model. This
+    function itself does no caching — whether that fallback path is cheap
+    depends on the caller calling it infrequently.
     """
     models: list[ModelInfo] = []
     resp = _client().list()

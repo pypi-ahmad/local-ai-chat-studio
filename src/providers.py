@@ -8,6 +8,14 @@ speak the OpenAI-compatible API via the ``openai`` SDK.
 API keys are kept ONLY in the server's process memory for the session — never
 written to disk, logged, or exported. Environment variables are supported as a
 read-only fallback. Keys never leave this machine except to their own provider.
+
+Must not touch SQLite or the vector store — this module only talks to cloud
+provider APIs and holds their credentials. Its only callers, catalog.py and
+jobs.py, are themselves not imported by any live entry point (backend/app or
+elsewhere) in this snapshot — this module appears to be leftover from the
+Streamlit UI removed in commit 240e80f ("feat: complete trusted workspace
+cutover"). See jobs.py's ``_stream`` for how ``stream_chat`` was wired into
+a turn.
 """
 
 from __future__ import annotations
@@ -316,6 +324,9 @@ def _stream_anthropic(
     converted: list[dict[str, Any]] = []
     for m in messages:
         if m["role"] == "system":
+            # Anthropic's API takes system as a dedicated top-level parameter,
+            # not a message with role "system" — pull it out here rather than
+            # passing it through in `converted`.
             system = m["content"]
             continue
         images = m.get("images") or []
